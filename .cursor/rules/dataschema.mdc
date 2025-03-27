@@ -1,0 +1,131 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<schema name="farmers_market_schema" version="1.0">
+  <types>
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+    <fieldType name="int" class="solr.IntField" />
+    <fieldType name="float" class="solr.FloatField" />
+    <fieldType name="boolean" class="solr.BoolField" />
+    <fieldType name="date" class="solr.DateField" />
+    <fieldType name="text" class="solr.TextField">
+      <analyzer>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+    <fieldType name="location" class="solr.LatLonPointSpatialField" />
+  </types>
+  
+  <fields>
+    <!-- Basic Information -->
+    <field name="id" type="int" indexed="true" stored="true" required="true" />
+    <field name="name" type="text" indexed="true" stored="true" required="true" />
+    <field name="last_updated" type="date" indexed="true" stored="true" />
+    
+    <!-- Location Information -->
+    <field name="address" type="text" indexed="true" stored="true" />
+    <field name="city" type="string" indexed="true" stored="true" />
+    <field name="state" type="string" indexed="true" stored="true" />
+    <field name="zip_code" type="string" indexed="true" stored="true" />
+    <field name="location" type="location" indexed="true" stored="true" />
+    <field name="location_description" type="text" indexed="true" stored="true" />
+    <field name="site_type" type="string" indexed="true" stored="true" />
+    <field name="indoor_outdoor" type="string" indexed="true" stored="true" />
+    
+    <!-- Organization Information -->
+    <field name="organization_types" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="organization_description" type="text" indexed="true" stored="true" />
+    
+    <!-- Contact Information -->
+    <field name="phone_numbers" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="emails" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="websites" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="social_media" type="string" indexed="true" stored="true" multiValued="true" />
+    
+    <!-- Operational Information -->
+    <field name="season" type="string" indexed="true" stored="true" />
+    <field name="days" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="vendor_count" type="int" indexed="true" stored="true" />
+    
+    <!-- Products and Production Methods -->
+    <field name="products" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="production_methods" type="string" indexed="true" stored="true" multiValued="true" />
+    
+    <!-- Payment and Assistance Programs -->
+    <field name="payment_methods" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="wic" type="boolean" indexed="true" stored="true" />
+    <field name="sfmnp" type="boolean" indexed="true" stored="true" />
+    <field name="fmnp" type="boolean" indexed="true" stored="true" />
+    <field name="snap" type="boolean" indexed="true" stored="true" />
+    <field name="snap_option" type="string" indexed="true" stored="true" />
+    
+    <!-- Sales Channels -->
+    <field name="online_ordering_available" type="boolean" indexed="true" stored="true" />
+    <field name="online_ordering_links" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="phone_ordering" type="boolean" indexed="true" stored="true" />
+    <field name="csa_available" type="boolean" indexed="true" stored="true" />
+    <field name="csa_description" type="text" indexed="true" stored="true" />
+    <field name="delivery_available" type="boolean" indexed="true" stored="true" />
+    <field name="delivery_methods" type="text" indexed="true" stored="true" />
+    
+    <!-- Market Options -->
+    <field name="accepts_cash" type="boolean" indexed="true" stored="true" />
+    <field name="accepts_credit_debit" type="boolean" indexed="true" stored="true" />
+    <field name="accepts_checks" type="boolean" indexed="true" stored="true" />
+    
+    <!-- Production Options -->
+    <field name="has_organic" type="boolean" indexed="true" stored="true" />
+    <field name="has_naturally_grown" type="boolean" indexed="true" stored="true" />
+    <field name="has_chemical_free" type="boolean" indexed="true" stored="true" />
+    <field name="has_grass_fed" type="boolean" indexed="true" stored="true" />
+    <field name="has_free_range" type="boolean" indexed="true" stored="true" />
+    <field name="has_hormone_free" type="boolean" indexed="true" stored="true" />
+    <field name="has_gmo_free" type="boolean" indexed="true" stored="true" />
+    
+    <!-- Product Options -->
+    <field name="has_fresh_produce" type="boolean" indexed="true" stored="true" />
+    <field name="has_meat" type="boolean" indexed="true" stored="true" />
+    <field name="has_dairy" type="boolean" indexed="true" stored="true" />
+    <field name="has_eggs" type="boolean" indexed="true" stored="true" />
+    <field name="has_herbs" type="boolean" indexed="true" stored="true" />
+    <field name="has_crafts" type="boolean" indexed="true" stored="true" />
+    <field name="has_prepared_food" type="boolean" indexed="true" stored="true" />
+    <field name="has_baked_goods" type="boolean" indexed="true" stored="true" />
+    <field name="has_flowers" type="boolean" indexed="true" stored="true" />
+    <field name="has_honey" type="boolean" indexed="true" stored="true" />
+    <field name="has_jams" type="boolean" indexed="true" stored="true" />
+    <field name="has_wine" type="boolean" indexed="true" stored="true" />
+    
+    <!-- Service Options -->
+    <field name="has_parking" type="boolean" indexed="true" stored="true" />
+    <field name="has_restrooms" type="boolean" indexed="true" stored="true" />
+    <field name="has_picnic_area" type="boolean" indexed="true" stored="true" />
+    <field name="wheelchair_accessible" type="boolean" indexed="true" stored="true" />
+    <field name="pet_friendly" type="boolean" indexed="true" stored="true" />
+    
+    <!-- Full Text Search Field -->
+    <field name="text" type="text" indexed="true" stored="false" multiValued="true" />
+  </fields>
+  
+  <!-- Field to use as the default search field -->
+  <defaultSearchField>text</defaultSearchField>
+  
+  <!-- Field to use as the default unique key -->
+  <uniqueKey>id</uniqueKey>
+  
+  <!-- Copy fields for better text searching -->
+  <copyField source="name" dest="text"/>
+  <copyField source="address" dest="text"/>
+  <copyField source="city" dest="text"/>
+  <copyField source="state" dest="text"/>
+  <copyField source="location_description" dest="text"/>
+  <copyField source="organization_description" dest="text"/>
+  <copyField source="products" dest="text"/>
+  <copyField source="production_methods" dest="text"/>
+  <copyField source="payment_methods" dest="text"/>
+  <copyField source="delivery_methods" dest="text"/>
+</schema>
