@@ -1,10 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Filter, Map, Grid, Store } from "lucide-react";
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { Input } from "@/components/ui/input";
+import { Search, Map, Grid, Store } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
 import { MarketCard } from "@/components/MarketCard";
-import { MarketFilters } from "@/components/MarketFilters";
 import dynamic from "next/dynamic";
 import type { FarmerMarket } from "@/lib/api";
 
@@ -22,25 +22,31 @@ const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
 });
 
 export function Markets({ markets }: MarketsProps) {
-  const [showFilters, setShowFilters] = useState(false);
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
-  const [itemsPerPage] = useState(9);
+  const [itemsPerPage] = useState(30);
+  const [searchTerm, setSearchTerm] = useState('');
   const [filteredMarkets, setFilteredMarkets] = useState<FarmerMarket[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   
-  // Initialize filtered markets and total pages only once on mount
+  // Filter markets based on search term
   useEffect(() => {
-    setFilteredMarkets(markets);
-    setTotalPages(Math.ceil(markets.length / itemsPerPage));
-  }, [markets, itemsPerPage]);
-
-  // Memoize the filter change callback to prevent it from causing re-renders
-  const handleFilterChange = useCallback((filtered: FarmerMarket[]) => {
+    const filtered = markets.filter(market => {
+      if (!searchTerm) return true;
+      
+      const searchLower = searchTerm.toLowerCase();
+      return [
+        market.name,
+        market.city,
+        market.state,
+        market.address
+      ].some(field => field?.toLowerCase().includes(searchLower));
+    });
+    
     setFilteredMarkets(filtered);
-    setPage(1); // Reset to first page when filters change
+    setPage(1); // Reset to first page when search changes
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-  }, [itemsPerPage]);
+  }, [markets, searchTerm, itemsPerPage]);
 
   // Memoize the current page items calculation to prevent unnecessary recalculation
   const currentMarkets = useMemo(() => {
@@ -65,23 +71,26 @@ export function Markets({ markets }: MarketsProps) {
         </div>
       </section>
 
-      {/* Search and Filter Section */}
+      {/* Google-style Search Bar */}
       <section className="sticky top-16 z-10 w-full py-4 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-wrap gap-4 items-center justify-between">
-            <Button
-              variant={showFilters ? "default" : "outline"}
-              size="sm"
-              className={`text-xs ${showFilters ? "bg-green-600 hover:bg-green-700" : ""}`}
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              <Filter className="w-4 h-4 mr-2" />
-              {showFilters ? "Hide Filters" : "Show Filters"}
-            </Button>
+        <div className="w-full max-w-2xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center gap-4">
+            <div className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <Search className="h-4 w-4 text-gray-400" />
+              </div>
+              <Input
+                type="text"
+                placeholder="Search markets by name, location..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 pr-4 py-2 w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              />
+            </div>
             <Button
               variant="outline"
               size="sm"
-              className="text-xs"
+              className="text-xs whitespace-nowrap"
               onClick={() => setView(view === 'grid' ? 'map' : 'grid')}
             >
               {view === 'grid' ? (
@@ -97,15 +106,6 @@ export function Markets({ markets }: MarketsProps) {
               )}
             </Button>
           </div>
-          
-          {showFilters && (
-            <div className="mt-4">
-              <MarketFilters 
-                markets={markets} 
-                onFilterChange={handleFilterChange} 
-              />
-            </div>
-          )}
         </div>
       </section>
 

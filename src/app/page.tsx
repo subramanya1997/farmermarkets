@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { fetchMarkets } from "@/lib/api";
 import { MarketCard } from "@/components/MarketCard";
-import { HeroSearch } from "@/components/HeroSearch";
 import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf, Apple, Carrot, Beef, Fish, Milk, Cookie, Coffee, Flower, Sandwich } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
@@ -34,20 +33,11 @@ export default async function Home() {
                 </p>
               </div>
               
-              {/* Search Box */}
-              <div className="w-full max-w-2xl mt-4 sm:mt-8">
-                <HeroSearch />
-              </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
                 <Link href="/markets" className="w-full sm:w-auto">
                   <Button className="w-full sm:w-auto px-4 sm:px-8 bg-green-600 hover:bg-green-700">
                     Find Markets Near Me
-                  </Button>
-                </Link>
-                <Link href="/map" className="w-full sm:w-auto">
-                  <Button variant="outline" className="w-full sm:w-auto px-4 sm:px-8">
-                    View on Map
                   </Button>
                 </Link>
               </div>

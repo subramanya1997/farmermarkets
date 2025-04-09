@@ -3,9 +3,7 @@ import Link from "next/link";
 export function Footer() {
   const navigation = {
     main: [
-      { name: 'Home', href: '/' },
-      { name: 'All Markets', href: '/markets' },
-      { name: 'Map', href: '/map' },
+      { name: 'Discover', href: '/markets' },
       { name: 'About', href: '/about' },
     ],
     legal: [
@@ -62,9 +60,14 @@ export function Footer() {
 
           {/* Bottom section */}
           <div className="pt-8 border-t flex flex-col sm:flex-row justify-between gap-4">
-            <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              &copy; {new Date().getFullYear()} Farmer Markets. All rights reserved.
-            </p>
+            <div className="flex flex-col gap-1">
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                &copy; {new Date().getFullYear()} Farmer Markets. All rights reserved.
+              </p>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                Built by <a href="https://subramanya.ai/" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">Subramanya N</a>
+              </p>
+            </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
               Data sourced from the USDA Local Food Portal
             </p>

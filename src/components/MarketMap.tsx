@@ -98,7 +98,8 @@ export default function MarketMap({
         leafletMapRef.current = null;
       }
     };
-  }, []); // Only run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run once on mount to prevent re-initialization issues
   
   // Handle resize to fix map issues when container size changes
   useEffect(() => {
