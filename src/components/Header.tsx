@@ -4,7 +4,38 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Time with Timezone component
+function TimeDisplay() {
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    // Update time immediately
+    updateTime();
+    
+    // Update time every minute
+    const interval = setInterval(updateTime, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const updateTime = () => {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZoneName: 'short'
+    });
+    setCurrentTime(timeString);
+  };
+
+  return (
+    <div className="text-sm font-medium text-gray-600 dark:text-gray-400">
+      {currentTime}
+    </div>
+  );
+}
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +54,8 @@ export function Header() {
           </Link>
 
           {/* Desktop navigation */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-4">
+            <TimeDisplay />
             {navigation.map((item) => (
               <Link key={item.name} href={item.href}>
                 <Button variant="ghost" className="hover:text-green-600">
@@ -46,6 +78,7 @@ export function Header() {
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-4 mt-8">
+                <TimeDisplay />
                 {navigation.map((item) => (
                   <Link 
                     key={item.name} 
