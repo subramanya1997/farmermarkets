@@ -2,14 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Map, Grid, Store } from "lucide-react";
+import { Search, Map, Grid, Store, MapPin } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import { MarketCard } from "@/components/MarketCard";
+import { FilterBar } from "@/components/FilterBar";
 import dynamic from "next/dynamic";
 import type { FarmerMarket } from "@/lib/api";
+import { useGeolocation } from "@/hooks/useGeolocation";
+import { calculateDistance } from "@/lib/utils";
+import { extractFilterOptions, applyFilters } from "@/lib/filters";
 
 interface MarketsProps {
   markets: FarmerMarket[];
+  title?: string;
+  description?: string;
+  hideHero?: boolean;
 }
 
 const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
@@ -21,32 +28,64 @@ const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
   ),
 });
 
-export function Markets({ markets }: MarketsProps) {
+export function Markets({ 
+  markets, 
+  title = "Find Local Farmers Markets",
+  description = "Discover fresh produce and artisanal goods at farmers markets near you",
+  hideHero = false
+}: MarketsProps) {
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
   const [itemsPerPage] = useState(30);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMarkets, setFilteredMarkets] = useState<FarmerMarket[]>([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   
-  // Filter markets based on search term
+  // Get user's approximate location
+  const { location, loading: locationLoading } = useGeolocation();
+  
+  // Extract filter options from data
+  const filterCategories = useMemo(() => extractFilterOptions(markets), [markets]);
+  
+  // Add distance to markets and sort by proximity
+  const marketsWithDistance = useMemo(() => {
+    if (!location || !markets) return markets;
+    
+    return markets.map(market => {
+      if (market.location?.lat && market.location?.lon) {
+        const distance = calculateDistance(
+          location.lat,
+          location.lon,
+          market.location.lat,
+          market.location.lon
+        );
+        return { ...market, distance };
+      }
+      return { ...market, distance: Infinity };
+    }).sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
+  }, [markets, location]);
+  
+  // Apply search and filters
   useEffect(() => {
-    const filtered = markets.filter(market => {
-      if (!searchTerm) return true;
-      
+    // First apply search
+    let filtered = marketsWithDistance;
+    
+    if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
-      return [
-        market.name,
-        market.city,
-        market.state,
-        market.address
-      ].some(field => field?.toLowerCase().includes(searchLower));
-    });
+      filtered = filtered.filter(market => 
+        [market.name, market.city, market.state, market.address]
+          .some(field => field?.toLowerCase().includes(searchLower))
+      );
+    }
+    
+    // Then apply category filters
+    filtered = applyFilters(filtered, activeFilters, filterCategories);
     
     setFilteredMarkets(filtered);
-    setPage(1); // Reset to first page when search changes
+    setPage(1); // Reset to first page when filters change
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-  }, [markets, searchTerm, itemsPerPage]);
+  }, [marketsWithDistance, searchTerm, activeFilters, filterCategories, itemsPerPage]);
 
   // Memoize the current page items calculation to prevent unnecessary recalculation
   const currentMarkets = useMemo(() => {
@@ -58,56 +97,77 @@ export function Markets({ markets }: MarketsProps) {
   return (
     <div className="min-h-[calc(100vh-4rem)]">
       {/* Hero Section */}
-      <section className="w-full py-8 sm:py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
-              Find Local Farmers Markets
-            </h1>
-            <p className="mx-auto max-w-[700px] text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400">
-              Discover fresh produce and artisanal goods at farmers markets near you
-            </p>
+      {!hideHero && (
+        <section className="w-full py-8 sm:py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
+                {title}
+              </h1>
+              <p className="mx-auto max-w-[700px] text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400">
+                {description}
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Google-style Search Bar */}
       <section className="sticky top-16 z-10 w-full py-4 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
         <div className="w-full max-w-2xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Search className="h-4 w-4 text-gray-400" />
-              </div>
-              <Input
-                type="text"
-                placeholder="Search markets by name, location..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              />
+          {/* Location Indicator */}
+          {location && !locationLoading && (
+            <div className="mb-3 flex items-center justify-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+              <MapPin className="w-3 h-3" />
+              <span>
+                Showing markets near {location.city}, {location.state}
+              </span>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-xs whitespace-nowrap"
-              onClick={() => setView(view === 'grid' ? 'map' : 'grid')}
-            >
-              {view === 'grid' ? (
-                <>
-                  <Map className="w-4 h-4 mr-2" />
-                  Map View
-                </>
-              ) : (
-                <>
-                  <Grid className="w-4 h-4 mr-2" />
-                  Grid View
-                </>
-              )}
-            </Button>
+          )}
+          
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <Search className="h-4 w-4 text-gray-400" />
+                </div>
+                <Input
+                  type="text"
+                  placeholder="Search markets by name, location..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-2 w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                />
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs whitespace-nowrap"
+                onClick={() => setView(view === 'grid' ? 'map' : 'grid')}
+              >
+                {view === 'grid' ? (
+                  <>
+                    <Map className="w-4 h-4 mr-2" />
+                    Map View
+                  </>
+                ) : (
+                  <>
+                    <Grid className="w-4 h-4 mr-2" />
+                    Grid View
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Linear Filter Bar */}
+      <FilterBar 
+        categories={filterCategories} 
+        activeFilters={activeFilters}
+        onFilterChange={setActiveFilters}
+      />
 
       {/* Markets Grid/Map Section */}
       <section className="w-full py-8">

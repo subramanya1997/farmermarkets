@@ -80,21 +80,6 @@ export default function PrivacyPage() {
               </div>
 
               <div className="space-y-4 sm:space-y-6">
-                <h2 className="text-xl sm:text-2xl font-bold">Contact Us</h2>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  If you have any questions about our Privacy Policy, please contact us at:
-                </p>
-                <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4 sm:p-6">
-                  <p className="text-sm sm:text-base font-medium">Farmer Markets</p>
-                  <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2">
-                    Email: privacy@farmermarkets.app<br />
-                    Address: 123 Market Street, Suite 100<br />
-                    San Francisco, CA 94105
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-4 sm:space-y-6">
                 <h2 className="text-xl sm:text-2xl font-bold">Updates to This Policy</h2>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
                   We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the &quot;Last Updated&quot; date below.

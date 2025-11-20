@@ -4,6 +4,7 @@
 import { 
   fetchMarkets, 
   fetchMarketById,
+  fetchMarketBySlug,
   getMarketProducts,
   getMarketHours, 
   getMarketAddress,
@@ -38,6 +39,17 @@ export async function getMarketById(id: string): Promise<FarmerMarket | undefine
     return market;
   } catch (error) {
     console.error('Error fetching market by ID:', error);
+    return undefined;
+  }
+}
+
+// Get market by slug
+export async function getMarketBySlug(slug: string): Promise<FarmerMarket | undefined> {
+  try {
+    const market = await fetchMarketBySlug(slug);
+    return market;
+  } catch (error) {
+    console.error('Error fetching market by slug:', error);
     return undefined;
   }
 }

@@ -165,7 +165,7 @@ export default function MarketMap({
           marker.bindPopup(`
             <strong>${name}</strong><br>
             ${city}${city && state ? ', ' : ''}${state}<br>
-            <a href="/markets/${market.id}">View Details</a>
+            <a href="/markets/${market.slug}">View Details</a>
           `);
           
           // Extend bounds to include this marker

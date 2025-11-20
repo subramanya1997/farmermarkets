@@ -1,7 +1,8 @@
-import { getMarketById } from "@/lib/data";
+import { getMarketBySlug } from "@/lib/data";
 import { getMarketProducts, getMarketHours, getMarketAddress } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ClientSingleMarketMap from "@/components/ClientSingleMarketMap";
@@ -12,13 +13,13 @@ export const fetchCache = 'force-no-store';
 
 interface MarketDetailPageProps {
   params: Promise<{
-    id: string;
+    slug: string;
   }>;
 }
 
 export async function generateMetadata({ params }: MarketDetailPageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const market = await getMarketById(resolvedParams.id);
+  const market = await getMarketBySlug(resolvedParams.slug);
   
   if (!market) {
     return {
@@ -29,16 +30,21 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
 
   const products = getMarketProducts(market);
   const productsList = products?.join(', ') || '';
+  
+  // Avoid duplicate city/state like "California, California"
+  const cityStateDisplay = market.city && market.state && market.city !== market.state
+    ? `${market.city}, ${market.state}`
+    : market.city || market.state || '';
 
   return {
-    title: `${market.name} - Farmer Market in ${market.city}, ${market.state}`,
-    description: `Visit ${market.name} in ${market.city}, ${market.state}. Find fresh ${productsList}. ${market.location_description || ''}`,
+    title: `${market.name} - Farmer Market in ${cityStateDisplay}`,
+    description: `Visit ${market.name} in ${cityStateDisplay}. Find fresh ${productsList}. ${market.location_description || ''}`,
     openGraph: {
-      title: `${market.name} - Farmer Market in ${market.city}, ${market.state}`,
-      description: `Visit ${market.name} in ${market.city}, ${market.state}. Find fresh ${productsList}. ${market.location_description || ''}`,
+      title: `${market.name} - Farmer Market in ${cityStateDisplay}`,
+      description: `Visit ${market.name} in ${cityStateDisplay}. Find fresh ${productsList}. ${market.location_description || ''}`,
     },
     alternates: {
-      canonical: `https://farmermarkets.app/markets/${resolvedParams.id}`,
+      canonical: `https://farmermarkets.app/markets/${resolvedParams.slug}`,
     },
   };
 }
@@ -47,19 +53,19 @@ export default async function MarketDetailPage({
   params 
 }: MarketDetailPageProps) {
   try {
-    // Safely extract the ID
+    // Safely extract the slug
     const resolvedParams = await params;
-    const id = resolvedParams?.id;
+    const slug = resolvedParams?.slug;
     
-    if (!id) {
-      console.error("Market ID is undefined");
+    if (!slug) {
+      console.error("Market slug is undefined");
       notFound();
     }
     
-    const market = await getMarketById(id);
+    const market = await getMarketBySlug(slug);
 
     if (!market) {
-      console.error(`No market found with ID: ${id}`);
+      console.error(`No market found with slug: ${slug}`);
       notFound();
     }
 
@@ -67,9 +73,12 @@ export default async function MarketDetailPage({
     const hours = getMarketHours(market);
     const address = getMarketAddress(market);
     
-    // Get city/state from market data
+    // Get city/state from market data (avoid duplicates like "California, California")
     const city = market.city;
     const state = market.state;
+    const cityStateDisplay = city && state && city !== state 
+      ? `${city}, ${state}` 
+      : city || state || '';
     
     // Get coordinates from location object
     const latitude = market.location?.lat;
@@ -88,10 +97,10 @@ export default async function MarketDetailPage({
     const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
-      '@id': `https://farmermarkets.app/markets/${market.id}`,
+      '@id': `https://farmermarkets.app/markets/${market.slug}`,
       name: market.name,
-      description: market.location_description || `${market.name} is a local farmer market in ${market.city}, ${market.state}.`,
-      url: `https://farmermarkets.app/markets/${market.id}`,
+      description: market.location_description || `${market.name} is a local farmer market${cityStateDisplay ? ` in ${cityStateDisplay}` : ''}.`,
+      url: `https://farmermarkets.app/markets/${market.slug}`,
       telephone: market.phone_numbers?.[0],
       email: market.emails?.[0],
       address: {
@@ -120,7 +129,7 @@ export default async function MarketDetailPage({
       image: '/market-image.jpg', // Add a default market image
       potentialAction: {
         '@type': 'ViewAction',
-        target: `https://farmermarkets.com/markets/${market.id}`
+        target: `https://farmermarkets.app/markets/${market.slug}`
       }
     };
 
@@ -135,18 +144,17 @@ export default async function MarketDetailPage({
           <section className="w-full py-6 sm:py-8 md:py-12 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
               <div className="flex flex-col gap-3 sm:gap-4">
-                <div className="mb-2 sm:mb-4">
-                  <Link href="/markets">
-                    <Button variant="ghost" className="pl-0 -ml-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200">
-                      ← Back to Markets
-                    </Button>
-                  </Link>
-                </div>
+                <Breadcrumbs 
+                  items={[
+                    { label: 'Markets', href: '/markets' },
+                    { label: market.name, href: `/markets/${market.slug}` }
+                  ]} 
+                />
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                   {market.name}
                 </h1>
                 <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
-                  {city && state ? `${city}, ${state}` : ''}
+                  {cityStateDisplay}
                 </p>
               </div>
             </div>
@@ -187,9 +195,9 @@ export default async function MarketDetailPage({
                       <CardContent className="p-4">
                         <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Location & Hours</h2>
                         <div className="space-y-2 text-sm sm:text-base">
-                          {address && (
+                          {address && address.trim() && address.trim() !== ',' && (
                             <p className="text-zinc-600 dark:text-zinc-400">
-                              <span className="font-medium text-zinc-900 dark:text-zinc-200">Address:</span><br className="sm:hidden" /> {address}
+                              <span className="font-medium text-zinc-900 dark:text-zinc-200">Address:</span><br className="sm:hidden" /> {address.replace(/^[,\s]+/, '').trim()}
                             </p>
                           )}
                           {hours && (
@@ -238,7 +246,7 @@ export default async function MarketDetailPage({
                   <div className="prose max-w-none dark:prose-invert">
                     <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-3 sm:mb-4">About This Market</h2>
                     <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                      {market.name} is a local farmer market located in {city || ''}, {state || ''}. 
+                      {market.name} is a local farmer market{cityStateDisplay && ` located in ${cityStateDisplay}`}. 
                       Visitors can find a variety of fresh, locally-grown produce and artisanal goods.
                     </p>
                     

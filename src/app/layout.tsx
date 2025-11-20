@@ -93,9 +93,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Organization Schema for SEO
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Farmer Markets',
+    url: 'https://farmermarkets.app',
+    logo: 'https://farmermarkets.app/leaf-hq.png',
+    description: 'Discover local farmer markets across the United States. Find fresh produce, artisanal goods, and support local farmers.',
+    sameAs: [
+      // Add social media profiles here when available
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      availableLanguage: ['English'],
+    },
+  };
+
   return (
     <html lang="en" className="h-full">
       <body className={`${inter.className} h-full`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <div className="min-h-screen flex flex-col">
           <Header />
           <main className="flex-1 w-full">

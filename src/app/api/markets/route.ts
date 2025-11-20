@@ -9,13 +9,19 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get('search') || '';
   const state = searchParams.get('state') || '';
   
+  // Get user location for distance sorting
+  const userLat = searchParams.get('lat');
+  const userLon = searchParams.get('lon');
+  
   try {
     // Get markets with all the filters applied through the service
     const result = await marketService.getMarkets({
       page,
       limit,
       search,
-      state
+      state,
+      userLat: userLat ? parseFloat(userLat) : undefined,
+      userLon: userLon ? parseFloat(userLon) : undefined,
     });
     
     // Return response with pagination metadata

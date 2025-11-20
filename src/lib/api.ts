@@ -4,8 +4,10 @@
 // FarmerMarket type definition
 export interface FarmerMarket {
   id: string;
+  slug: string;
   name: string;
   last_updated?: string;
+  distance?: number;
   address?: string;
   city?: string;
   state?: string;
@@ -78,6 +80,8 @@ export interface MarketFilterOptions {
   limit?: number;
   search?: string;
   state?: string;
+  userLat?: number;
+  userLon?: number;
   products?: string[];
   paymentMethods?: {
     wic?: boolean;
@@ -158,6 +162,8 @@ export async function fetchMarkets(options: MarketFilterOptions = {}): Promise<M
     limit = 50, 
     search = '', 
     state = '',
+    userLat,
+    userLon,
     products = [],
     paymentMethods = {},
     productionMethods = {},
@@ -171,6 +177,8 @@ export async function fetchMarkets(options: MarketFilterOptions = {}): Promise<M
   params.append('limit', limit.toString());
   if (search) params.append('search', search);
   if (state) params.append('state', state);
+  if (userLat !== undefined) params.append('lat', userLat.toString());
+  if (userLon !== undefined) params.append('lon', userLon.toString());
   
   // Add array parameters
   if (products.length > 0) {
@@ -220,6 +228,21 @@ export async function fetchMarketById(id: string): Promise<FarmerMarket> {
 }
 
 /**
+ * Fetch a single market by slug
+ */
+export async function fetchMarketBySlug(slug: string): Promise<FarmerMarket> {
+  const baseUrl = getBaseUrl();
+  const response = await fetch(`${baseUrl}/api/markets/${slug}`);
+  
+  if (!response.ok) {
+    throw new Error('Failed to fetch market');
+  }
+  
+  const result = await response.json();
+  return result.data;
+}
+
+/**
  * Get products from a market
  */
 export function getMarketProducts(market: FarmerMarket): string[] {
@@ -243,10 +266,17 @@ export function getMarketHours(market: FarmerMarket): string {
 
 /**
  * Get address string
+ * Note: The address field in the data often already contains city, state, and zip
+ * So we return it as-is to avoid duplication
  */
 export function getMarketAddress(market: FarmerMarket): string {
+  // If address exists, use it as-is (it usually contains full address)
+  if (market.address) {
+    return market.address;
+  }
+  
+  // Fallback: construct from parts if address field is missing
   const parts = [];
-  if (market.address) parts.push(market.address);
   if (market.city) parts.push(market.city);
   if (market.state) parts.push(market.state);
   if (market.zip_code) parts.push(market.zip_code);
@@ -255,28 +285,29 @@ export function getMarketAddress(market: FarmerMarket): string {
 }
 
 /**
- * Get payment methods from a market
+ * Get payment methods from a market (deduplicated)
  */
 export function getMarketPaymentMethods(market: FarmerMarket): string[] {
-  const methods = [];
+  const methodsSet = new Set<string>();
   
   // Add standard payment methods
   if (market.payment_methods) {
-    methods.push(...market.payment_methods);
+    market.payment_methods.forEach(method => methodsSet.add(method));
   }
   
-  // Add assistance programs
-  if (market.wic) methods.push('WIC');
-  if (market.snap) methods.push('SNAP');
-  if (market.fmnp) methods.push('FMNP');
-  if (market.sfmnp) methods.push('SFMNP');
+  // Add assistance programs (only if not already present)
+  if (market.wic) methodsSet.add('WIC');
+  if (market.snap) methodsSet.add('SNAP');
+  if (market.fmnp) methodsSet.add('FMNP');
+  if (market.sfmnp) methodsSet.add('SFMNP');
   
-  // Add basic payment methods
-  if (market.accepts_cash) methods.push('Cash');
-  if (market.accepts_credit_debit) methods.push('Credit/Debit');
-  if (market.accepts_checks) methods.push('Checks');
+  // Add basic payment methods (only if not already present)
+  if (market.accepts_cash) methodsSet.add('Cash');
+  if (market.accepts_credit_debit) methodsSet.add('Credit/Debit');
+  if (market.accepts_checks) methodsSet.add('Checks');
   
-  return methods;
+  // Convert Set to Array and return
+  return Array.from(methodsSet);
 }
 
 /**

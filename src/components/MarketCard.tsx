@@ -22,20 +22,32 @@ export function MarketCard({ market }: MarketCardProps) {
   // Format the street address and location
   const streetAddress = address;
 
+  // Clean up city/state display (avoid duplicates like "California, California")
+  const cityStateDisplay = city && state && city !== state 
+    ? `${city}, ${state}` 
+    : city || state || '';
+
   return (
     <Card className="h-full flex flex-col">
       <CardHeader>
         <CardTitle className="line-clamp-1">{market.name}</CardTitle>
         <CardDescription>
-          {city && state ? `${city}, ${state}` : ''}
+          <div className="flex items-center justify-between">
+            <span>{cityStateDisplay}</span>
+            {market.distance !== undefined && market.distance !== Infinity && (
+              <span className="text-xs text-green-600 dark:text-green-500 font-medium">
+                {market.distance} mi
+              </span>
+            )}
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1">
         <div className="space-y-2 text-sm">
-          {/* Address display */}
-          {streetAddress && (
+          {/* Address display - clean up leading commas and duplicates */}
+          {streetAddress && streetAddress.trim() && streetAddress !== ', , ' && (
             <div className="text-muted-foreground">
-              {streetAddress && <p>{streetAddress}</p>}
+              <p>{streetAddress.replace(/^[,\s]+/, '').replace(/\s*,\s*,\s*/g, ', ')}</p>
             </div>
           )}
           
@@ -82,7 +94,7 @@ export function MarketCard({ market }: MarketCardProps) {
       </CardContent>
       <CardFooter>
         <div className="flex justify-between w-full">
-          <Link href={`/markets/${market.id}`} passHref>
+          <Link href={`/markets/${market.slug}`} passHref>
             <Button variant="outline">View Details</Button>
           </Link>
           {website && (

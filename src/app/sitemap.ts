@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Generate market URLs
   const marketUrls = markets.map((market) => ({
-    url: `${baseUrl}/markets/${market.id}`,
+    url: `${baseUrl}/markets/${market.slug}`,
     lastModified: formatDate(market.last_updated),
     changeFrequency: 'weekly' as const,
     priority: 0.8,

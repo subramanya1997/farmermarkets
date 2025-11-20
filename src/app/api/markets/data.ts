@@ -3,12 +3,15 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
+import { generateSlug, calculateDistance } from '@/lib/utils';
 
 // FarmerMarket interface for TypeScript typing
 export interface FarmerMarket {
   id: string;
+  slug: string;
   name: string;
   last_updated?: string;
+  distance?: number;
   address?: string;
   city?: string;
   state?: string;
@@ -76,6 +79,7 @@ export interface FarmerMarket {
 // Interface for raw market data from JSON
 interface RawMarketData {
   id?: string | number;
+  slug?: string;
   name: string;
   last_updated?: string;
   location?: {
@@ -272,8 +276,13 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
           market.amenities?.pet_friendly === true
         );
 
+        const marketId = market.id?.toString() || (index + 1).toString();
+        // Use existing slug from data if available, otherwise generate it
+        const slug = market.slug || generateSlug(market.name, market.location?.city);
+        
         return {
-          id: market.id?.toString() || (index + 1).toString(),
+          id: marketId,
+          slug: slug,
           name: market.name,
           last_updated: market.last_updated,
           address: market.location?.address,
@@ -358,8 +367,10 @@ export const marketService = {
     state?: string;
     page?: number;
     limit?: number;
+    userLat?: number;
+    userLon?: number;
   } = {}) => {
-    const { search = '', state = '', page = 1, limit = 50 } = options;
+    const { search = '', state = '', page = 1, limit = 50, userLat, userLon } = options;
     const markets = await loadMarketsData();
     
     // Apply filters
@@ -378,6 +389,20 @@ export const marketService = {
       filteredMarkets = filteredMarkets.filter(market => 
         market.state && market.state.toLowerCase() === state.toLowerCase()
       );
+    }
+    
+    // Sort by distance if user location is provided
+    if (userLat !== undefined && userLon !== undefined) {
+      filteredMarkets = filteredMarkets
+        .map(market => {
+          // Calculate distance if market has coordinates
+          const distance = market.location?.lat && market.location?.lon
+            ? calculateDistance(userLat, userLon, market.location.lat, market.location.lon)
+            : Infinity;
+          
+          return { ...market, distance };
+        })
+        .sort((a, b) => a.distance - b.distance);
     }
     
     // Apply pagination
@@ -400,6 +425,13 @@ export const marketService = {
   getMarketById: async (id: string) => {
     const markets = await loadMarketsData();
     const market = markets.find(m => String(m.id) === id);
+    return market || null;
+  },
+  
+  // Get a single market by slug
+  getMarketBySlug: async (slug: string) => {
+    const markets = await loadMarketsData();
+    const market = markets.find(m => m.slug === slug);
     return market || null;
   }
 }; 

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { fetchMarkets } from "@/lib/api";
-import { MarketCard } from "@/components/MarketCard";
+import { PopularMarkets } from "@/components/PopularMarkets";
+import { FAQ } from "@/components/FAQ";
 import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf, Apple, Carrot, Beef, Fish, Milk, Cookie, Coffee, Flower, Sandwich } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
@@ -13,14 +14,45 @@ export default async function Home() {
     const marketsData = await fetchMarkets({ limit: 100 });
     const markets = marketsData.data;
     
-    // Get featured markets - we'll choose a few with good data
-    const featuredMarkets = markets
-      .filter(market => market.name && market.location?.lat && market.location?.lon)
-      .slice(0, 3);
+    // Enhanced structured data for homepage
+    const websiteSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Farmer Markets',
+      description: 'Discover local farmer markets across the United States',
+      url: 'https://farmermarkets.app',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://farmermarkets.app/markets?search={search_term_string}'
+        },
+        'query-input': 'required name=search_term_string'
+      }
+    };
+    
+    const organizationSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Farmer Markets',
+      url: 'https://farmermarkets.app',
+      logo: 'https://farmermarkets.app/leaf-hq.png',
+      description: 'Connecting consumers with local farmers and producers across the United States',
+      sameAs: []
+    };
 
     return (
-      <div className="flex flex-col min-h-[calc(100vh-4rem)]">
-        {/* Hero Section */}
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+          {/* Hero Section */}
         <section className="relative w-full py-8 sm:py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
@@ -157,29 +189,8 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Featured Markets Section */}
-        <section className="w-full py-8 sm:py-12 md:py-16 bg-white dark:bg-zinc-900">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="flex flex-col items-center justify-center space-y-2 sm:space-y-4 text-center mb-8 sm:mb-12">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">Popular Markets Near You</h2>
-              <p className="mx-auto max-w-[700px] text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                Discover highly-rated farmers markets in your area
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {featuredMarkets.map((market) => (
-                <MarketCard key={market.id} market={market} />
-              ))}
-            </div>
-            <div className="flex justify-center mt-6 sm:mt-8">
-              <Link href="/markets" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full sm:w-auto px-4 sm:px-8">
-                  View All Markets
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* Popular Markets Section with Geolocation */}
+        <PopularMarkets markets={markets} limit={6} />
 
         {/* Benefits Section */}
         <section className="w-full py-8 sm:py-12 md:py-16 bg-green-50 dark:bg-green-900/20">
@@ -216,7 +227,11 @@ export default async function Home() {
             </div>
           </div>
         </section>
-      </div>
+
+        {/* FAQ Section */}
+        <FAQ />
+        </div>
+      </>
     );
   } catch (error) {
     console.error('Error fetching markets for homepage:', error);

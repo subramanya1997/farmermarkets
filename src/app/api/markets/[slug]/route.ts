@@ -1,22 +1,22 @@
 import { marketService } from '../data';
 import { NextRequest, NextResponse } from 'next/server';
 
-// GET /api/markets/[id] - Get a specific market
+// GET /api/markets/[slug] - Get a specific market
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   const resolvedParams = await params;
-  const marketId = resolvedParams.id;
+  const marketSlug = resolvedParams.slug;
   try {
-    if (!marketId) {
+    if (!marketSlug) {
       return NextResponse.json(
-        { error: 'Market ID is required' },
+        { error: 'Market slug is required' },
         { status: 400 }
       );
     }
     
-    const market = await marketService.getMarketById(marketId);
+    const market = await marketService.getMarketBySlug(marketSlug);
     
     if (!market) {
       return NextResponse.json(
