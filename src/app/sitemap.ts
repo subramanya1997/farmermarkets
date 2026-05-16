@@ -13,14 +13,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (!date) {
       return new Date().toISOString();
     }
-    
+
     // If it's already a string, try to parse it
     if (typeof date === 'string') {
       const parsedDate = new Date(date);
       // Check if parsed date is valid
       return isNaN(parsedDate.getTime()) ? new Date().toISOString() : parsedDate.toISOString();
     }
-    
+
     // Otherwise it's a Date object
     return date.toISOString();
   };
@@ -37,8 +37,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = [
     '',
     '/markets',
-    '/map',
     '/about',
+    '/privacy',
     '/terms',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
@@ -48,4 +48,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   return [...routes, ...marketUrls];
-} 
+}

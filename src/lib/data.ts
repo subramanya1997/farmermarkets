@@ -1,10 +1,9 @@
 // Server-side adapter for backward compatibility
-// This file uses the fetch for data access but works on both server and client
+// This file is used by server-rendered pages and sitemap generation.
 
+import 'server-only';
+import { marketService } from '@/app/api/markets/data';
 import { 
-  fetchMarkets, 
-  fetchMarketById,
-  fetchMarketBySlug,
   getMarketProducts,
   getMarketHours, 
   getMarketAddress,
@@ -28,15 +27,14 @@ export {
 
 // Compatibility function for existing code
 export async function getMarkets(): Promise<FarmerMarket[]> {
-  const response = await fetchMarkets({ limit: 1000 });
-  return response.data;
+  return await marketService.getAllMarkets();
 }
 
 // Compatibility function for existing code  
 export async function getMarketById(id: string): Promise<FarmerMarket | undefined> {
   try {
-    const market = await fetchMarketById(id);
-    return market;
+    const market = await marketService.getMarketById(id);
+    return market ?? undefined;
   } catch (error) {
     console.error('Error fetching market by ID:', error);
     return undefined;
@@ -46,8 +44,8 @@ export async function getMarketById(id: string): Promise<FarmerMarket | undefine
 // Get market by slug
 export async function getMarketBySlug(slug: string): Promise<FarmerMarket | undefined> {
   try {
-    const market = await fetchMarketBySlug(slug);
-    return market;
+    const market = await marketService.getMarketBySlug(slug);
+    return market ?? undefined;
   } catch (error) {
     console.error('Error fetching market by slug:', error);
     return undefined;

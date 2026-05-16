@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { fetchMarkets } from "@/lib/api";
+import { getMarkets } from "@/lib/data";
 import { PopularMarkets } from "@/components/PopularMarkets";
 import { FAQ } from "@/components/FAQ";
 import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf, Apple, Carrot, Beef, Fish, Milk, Cookie, Coffee, Flower, Sandwich } from "lucide-react";
@@ -11,8 +11,7 @@ export const fetchCache = 'force-no-store';
 export default async function Home() {
   // Get markets data
   try {
-    const marketsData = await fetchMarkets({ limit: 100 });
-    const markets = marketsData.data;
+    const markets = (await getMarkets()).slice(0, 100);
     
     // Enhanced structured data for homepage
     const websiteSchema = {
