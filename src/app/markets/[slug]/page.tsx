@@ -11,6 +11,9 @@ import { Metadata } from "next";
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 
+const SITE_URL = 'https://farmermarkets.app';
+const MARKET_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
+
 interface MarketDetailPageProps {
   params: Promise<{
     slug: string;
@@ -20,7 +23,7 @@ interface MarketDetailPageProps {
 export async function generateMetadata({ params }: MarketDetailPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const market = await getMarketBySlug(resolvedParams.slug);
-  
+
   if (!market) {
     return {
       title: 'Market Not Found',
@@ -30,7 +33,7 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
 
   const products = getMarketProducts(market);
   const productsList = products?.join(', ') || '';
-  
+
   // Avoid duplicate city/state like "California, California"
   const cityStateDisplay = market.city && market.state && market.city !== market.state
     ? `${market.city}, ${market.state}`
@@ -44,24 +47,24 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
       description: `Visit ${market.name} in ${cityStateDisplay}. Find fresh ${productsList}. ${market.location_description || ''}`,
     },
     alternates: {
-      canonical: `https://farmermarkets.app/markets/${resolvedParams.slug}`,
+      canonical: `${SITE_URL}/markets/${resolvedParams.slug}`,
     },
   };
 }
 
-export default async function MarketDetailPage({ 
-  params 
+export default async function MarketDetailPage({
+  params
 }: MarketDetailPageProps) {
   try {
     // Safely extract the slug
     const resolvedParams = await params;
     const slug = resolvedParams?.slug;
-    
+
     if (!slug) {
       console.error("Market slug is undefined");
       notFound();
     }
-    
+
     const market = await getMarketBySlug(slug);
 
     if (!market) {
@@ -72,21 +75,21 @@ export default async function MarketDetailPage({
     const products = getMarketProducts(market);
     const hours = getMarketHours(market);
     const address = getMarketAddress(market);
-    
+
     // Get city/state from market data (avoid duplicates like "California, California")
     const city = market.city;
     const state = market.state;
-    const cityStateDisplay = city && state && city !== state 
-      ? `${city}, ${state}` 
+    const cityStateDisplay = city && state && city !== state
+      ? `${city}, ${state}`
       : city || state || '';
-    
+
     // Get coordinates from location object
     const latitude = market.location?.lat;
     const longitude = market.location?.lon;
-    
+
     // Get website from websites array
     const website = market.websites?.[0];
-    
+
     // Handle payment method flags
     const hasWic = market.wic === true;
     const hasSnap = market.snap === true;
@@ -97,10 +100,10 @@ export default async function MarketDetailPage({
     const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
-      '@id': `https://farmermarkets.app/markets/${market.slug}`,
+      '@id': `${SITE_URL}/markets/${market.slug}`,
       name: market.name,
       description: market.location_description || `${market.name} is a local farmer market${cityStateDisplay ? ` in ${cityStateDisplay}` : ''}.`,
-      url: `https://farmermarkets.app/markets/${market.slug}`,
+      url: `${SITE_URL}/markets/${market.slug}`,
       telephone: market.phone_numbers?.[0],
       email: market.emails?.[0],
       address: {
@@ -126,10 +129,10 @@ export default async function MarketDetailPage({
         ...(hasSfmnp ? ['SFMNP'] : [])
       ].join(', '),
       priceRange: '$$',
-      image: '/market-image.jpg', // Add a default market image
+      image: MARKET_IMAGE_URL,
       potentialAction: {
         '@type': 'ViewAction',
-        target: `https://farmermarkets.app/markets/${market.slug}`
+        target: `${SITE_URL}/markets/${market.slug}`
       }
     };
 
@@ -144,11 +147,11 @@ export default async function MarketDetailPage({
           <section className="w-full py-6 sm:py-8 md:py-12 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
               <div className="flex flex-col gap-3 sm:gap-4">
-                <Breadcrumbs 
+                <Breadcrumbs
                   items={[
                     { label: 'Markets', href: '/markets' },
                     { label: market.name, href: `/markets/${market.slug}` }
-                  ]} 
+                  ]}
                 />
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                   {market.name}
@@ -174,9 +177,9 @@ export default async function MarketDetailPage({
                       </div>
                       {latitude && longitude && (
                         <div className="mt-4">
-                          <a 
-                            href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`} 
-                            target="_blank" 
+                          <a
+                            href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="w-full block"
                           >
@@ -246,10 +249,10 @@ export default async function MarketDetailPage({
                   <div className="prose max-w-none dark:prose-invert">
                     <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-3 sm:mb-4">About This Market</h2>
                     <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                      {market.name} is a local farmer market{cityStateDisplay && ` located in ${cityStateDisplay}`}. 
+                      {market.name} is a local farmer market{cityStateDisplay && ` located in ${cityStateDisplay}`}.
                       Visitors can find a variety of fresh, locally-grown produce and artisanal goods.
                     </p>
-                    
+
                     {/* Payment options */}
                     {(hasCredit || hasWic || hasSnap || hasFmnp || hasSfmnp) && (
                       <div className="mt-6 sm:mt-8">
@@ -288,17 +291,17 @@ export default async function MarketDetailPage({
                         </ul>
                       </div>
                     )}
-                    
+
                     {market.location_description && (
                       <div className="mt-6 sm:mt-8">
                         <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-3 sm:mb-4">Location Description</h3>
                         <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">{market.location_description}</p>
                       </div>
                     )}
-                    
+
                     <p className="mt-6 sm:mt-8 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                      Supporting local farmers and producers is vital for sustainable communities. 
-                      By shopping at {market.name}, you&apos;re helping to strengthen the local economy 
+                      Supporting local farmers and producers is vital for sustainable communities.
+                      By shopping at {market.name}, you&apos;re helping to strengthen the local economy
                       and reduce the environmental impact of food transportation.
                     </p>
                   </div>
@@ -314,9 +317,9 @@ export default async function MarketDetailPage({
                       </div>
                       {latitude && longitude && (
                         <div className="mt-4">
-                          <a 
-                            href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`} 
-                            target="_blank" 
+                          <a
+                            href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`}
+                            target="_blank"
                             rel="noopener noreferrer"
                             className="w-full block"
                           >
@@ -335,13 +338,13 @@ export default async function MarketDetailPage({
     );
   } catch (error) {
     console.error('Error fetching market details:', error);
-    
+
     // Return a more graceful error state
     return (
       <div className="flex flex-col min-h-[calc(100vh-4rem)] items-center justify-center p-4">
         <h1 className="text-2xl font-bold text-red-600 mb-4">Market Information Unavailable</h1>
         <p className="text-center max-w-md mb-6">
-          We&apos;re experiencing some technical difficulties fetching the market details. 
+          We&apos;re experiencing some technical difficulties fetching the market details.
           Please try again in a few moments.
         </p>
         <div className="flex gap-4">
@@ -355,4 +358,4 @@ export default async function MarketDetailPage({
       </div>
     );
   }
-} 
+}

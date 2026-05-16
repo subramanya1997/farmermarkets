@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import type { FarmerMarket } from '@/lib/api';
+import { buildSingleMarketPopupHtml } from './leafletPopupHtml';
 import 'leaflet/dist/leaflet.css';
 
 // Fix for Leaflet marker icon issue in Next.js
@@ -25,8 +26,8 @@ interface SingleMarketMapProps {
   height?: string;
 }
 
-export default function SingleMarketMap({ 
-  market, 
+export default function SingleMarketMap({
+  market,
   height = '300px'
 }: SingleMarketMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -55,14 +56,14 @@ export default function SingleMarketMap({
 
       // Initialize the map
       const coordinates: [number, number] = [latitude, longitude];
-      
+
       try {
         // Create map with invalidateSize called after creation
         const map = L.map(mapRef.current, {
           zoomControl: true,
           attributionControl: true
         }).setView(coordinates, 13); // Zoom level 13 for closer view
-        
+
         map.invalidateSize();
         leafletMapRef.current = map;
 
@@ -73,10 +74,7 @@ export default function SingleMarketMap({
 
         // Add a marker for the market
         const marker = L.marker(coordinates).addTo(map);
-        marker.bindPopup(`
-          <strong>${name}</strong><br>
-          ${city}${city && state ? ', ' : ''}${state}
-        `).openPopup();
+        marker.bindPopup(buildSingleMarketPopupHtml({ name, city, state })).openPopup();
       } catch (error) {
         console.error('Error initializing Leaflet map:', error);
       }
@@ -106,7 +104,7 @@ export default function SingleMarketMap({
     };
 
     window.addEventListener('resize', handleResize);
-    
+
     // Also invalidate size when component mounts
     if (leafletMapRef.current) {
       leafletMapRef.current.invalidateSize();
@@ -119,8 +117,8 @@ export default function SingleMarketMap({
 
   if (!latitude || !longitude) {
     return (
-      <div 
-        style={{ height, width: '100%' }} 
+      <div
+        style={{ height, width: '100%' }}
         className="bg-muted rounded-md flex items-center justify-center"
       >
         <p className="text-center text-sm text-muted-foreground">
@@ -133,4 +131,4 @@ export default function SingleMarketMap({
   return (
     <div ref={mapRef} style={{ height, width: '100%' }} className="rounded-md overflow-hidden" />
   );
-} 
+}

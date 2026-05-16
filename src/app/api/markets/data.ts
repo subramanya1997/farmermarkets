@@ -1,5 +1,4 @@
-// This file handles the data layer for API routes
-// Since this file is only imported by API routes, we don't need server-only
+// Server market data layer shared by API routes and server-rendered pages.
 
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -164,14 +163,39 @@ interface RawMarketData {
   };
 }
 
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 50;
+const MAX_LIMIT = 500;
+
+function normalizePositiveInteger(
+  value: number | undefined,
+  fallback: number,
+  max = Number.MAX_SAFE_INTEGER
+): number {
+  if (!Number.isFinite(value)) {
+    return fallback;
+  }
+
+  return Math.min(Math.max(Math.floor(value as number), 1), max);
+}
+
+function hasValidCoordinates(userLat?: number, userLon?: number): userLat is number {
+  return (
+    Number.isFinite(userLat) &&
+    Number.isFinite(userLon) &&
+    Math.abs(userLat as number) <= 90 &&
+    Math.abs(userLon as number) <= 180
+  );
+}
+
 // Load markets data from JSON file
 async function loadMarketsData(): Promise<FarmerMarket[]> {
   try {
     const filePath = path.join(process.cwd(), 'public/data/farmers_markets.json');
-    
+
     // Log the file path for debugging in Vercel
     console.log(`Attempting to load market data from: ${filePath}`);
-    
+
     // Check if the file exists
     try {
       await fs.access(filePath);
@@ -179,37 +203,37 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
       console.error(`File does not exist or is not accessible: ${filePath}`, err);
       return [];
     }
-    
+
     const fileContents = await fs.readFile(filePath, 'utf8');
-    
+
     if (!fileContents || fileContents.trim() === '') {
       console.error('Market data file is empty');
       return [];
     }
-    
+
     try {
       const data = JSON.parse(fileContents);
-      
+
       if (!Array.isArray(data)) {
         console.error('Market data is not an array:', typeof data);
         return [];
       }
-      
+
       console.log(`Successfully loaded ${data.length} markets from data file`);
-      
+
       // Transform the data to match our schema
       return data.map((market: RawMarketData, index: number) => {
         // Extract payment methods and check for specific payment types
         const paymentMethods = market.payment?.methods || [];
-        const acceptsCash = paymentMethods.some((method: string) => 
+        const acceptsCash = paymentMethods.some((method: string) =>
           method.toLowerCase().includes('cash')
         );
-        const acceptsCredit = paymentMethods.some((method: string) => 
-          method.toLowerCase().includes('credit') || 
+        const acceptsCredit = paymentMethods.some((method: string) =>
+          method.toLowerCase().includes('credit') ||
           method.toLowerCase().includes('debit') ||
           method.toLowerCase().includes('card')
         );
-        const acceptsChecks = paymentMethods.some((method: string) => 
+        const acceptsChecks = paymentMethods.some((method: string) =>
           method.toLowerCase().includes('check')
         );
 
@@ -253,24 +277,24 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
 
         const hasParking = amenitiesText.includes('parking') || market.amenities?.parking === true;
         const hasRestrooms = (
-          amenitiesText.includes('restroom') || 
-          amenitiesText.includes('bathroom') || 
+          amenitiesText.includes('restroom') ||
+          amenitiesText.includes('bathroom') ||
           amenitiesText.includes('facilities') ||
           market.amenities?.restrooms === true
         );
         const hasPicnicArea = (
-          amenitiesText.includes('picnic') || 
+          amenitiesText.includes('picnic') ||
           amenitiesText.includes('seating') ||
           market.amenities?.picnic_area === true
         );
         const isWheelchairAccessible = (
-          amenitiesText.includes('wheelchair') || 
-          amenitiesText.includes('accessible') || 
+          amenitiesText.includes('wheelchair') ||
+          amenitiesText.includes('accessible') ||
           amenitiesText.includes('ada') ||
           market.amenities?.wheelchair_accessible === true
         );
         const isPetFriendly = (
-          amenitiesText.includes('pet friendly') || 
+          amenitiesText.includes('pet friendly') ||
           amenitiesText.includes('dog friendly') ||
           amenitiesText.includes('pets welcome') ||
           market.amenities?.pet_friendly === true
@@ -279,7 +303,7 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
         const marketId = market.id?.toString() || (index + 1).toString();
         // Use existing slug from data if available, otherwise generate it
         const slug = market.slug || generateSlug(market.name, market.location?.city);
-        
+
         return {
           id: marketId,
           slug: slug,
@@ -361,7 +385,11 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
 
 // Our API data service
 export const marketService = {
-  // Get all markets with optional filtering 
+  getAllMarkets: async () => {
+    return await loadMarketsData();
+  },
+
+  // Get all markets with optional filtering
   getMarkets: async (options: {
     search?: string;
     state?: string;
@@ -370,45 +398,56 @@ export const marketService = {
     userLat?: number;
     userLon?: number;
   } = {}) => {
-    const { search = '', state = '', page = 1, limit = 50, userLat, userLon } = options;
+    const {
+      search = '',
+      state = '',
+      page: rawPage = DEFAULT_PAGE,
+      limit: rawLimit = DEFAULT_LIMIT,
+      userLat,
+      userLon
+    } = options;
+    const page = normalizePositiveInteger(rawPage, DEFAULT_PAGE);
+    const limit = normalizePositiveInteger(rawLimit, DEFAULT_LIMIT, MAX_LIMIT);
     const markets = await loadMarketsData();
-    
+
     // Apply filters
     let filteredMarkets = markets;
-    
+
     if (search) {
       const searchLower = search.toLowerCase();
       filteredMarkets = filteredMarkets.filter(market => {
-        return market.name.toLowerCase().includes(searchLower) || 
-               (market.city && market.city.toLowerCase().includes(searchLower)) || 
+        return market.name.toLowerCase().includes(searchLower) ||
+               (market.city && market.city.toLowerCase().includes(searchLower)) ||
                (market.state && market.state.toLowerCase().includes(searchLower));
       });
     }
-    
+
     if (state) {
-      filteredMarkets = filteredMarkets.filter(market => 
+      filteredMarkets = filteredMarkets.filter(market =>
         market.state && market.state.toLowerCase() === state.toLowerCase()
       );
     }
-    
+
     // Sort by distance if user location is provided
-    if (userLat !== undefined && userLon !== undefined) {
+    if (hasValidCoordinates(userLat, userLon)) {
+      const lat = userLat;
+      const lon = userLon as number;
       filteredMarkets = filteredMarkets
         .map(market => {
           // Calculate distance if market has coordinates
           const distance = market.location?.lat && market.location?.lon
-            ? calculateDistance(userLat, userLon, market.location.lat, market.location.lon)
+            ? calculateDistance(lat, lon, market.location.lat, market.location.lon)
             : Infinity;
-          
+
           return { ...market, distance };
         })
         .sort((a, b) => a.distance - b.distance);
     }
-    
+
     // Apply pagination
     const startIndex = (page - 1) * limit;
     const paginatedMarkets = filteredMarkets.slice(startIndex, startIndex + limit);
-    
+
     // Return with pagination info
     return {
       data: paginatedMarkets,
@@ -420,18 +459,18 @@ export const marketService = {
       }
     };
   },
-  
+
   // Get a single market by ID
   getMarketById: async (id: string) => {
     const markets = await loadMarketsData();
     const market = markets.find(m => String(m.id) === id);
     return market || null;
   },
-  
+
   // Get a single market by slug
   getMarketBySlug: async (slug: string) => {
     const markets = await loadMarketsData();
     const market = markets.find(m => m.slug === slug);
     return market || null;
   }
-}; 
+};
