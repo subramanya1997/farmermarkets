@@ -67,7 +67,10 @@ export default function PrivacyPage() {
                   Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery survey uses predefined answers and does not request contact information. Browser storage is used only to avoid showing the same survey repeatedly.
                 </p>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Analytics loads automatically when you visit the site. Approximate-location events may include a country or state/region, but analytics events do not include latitude or longitude.
+                  We use Google Consent Mode v2. The Google tag loads on every visit, but in the EEA, United Kingdom, and Switzerland it defaults to restricted cookieless measurement until you make a choice. Granting analytics consent enables analytics cookies and full measurement. Advertising storage, advertising user data, and ad personalization remain denied. Outside those regions, analytics storage is enabled by default. You can change your choice through “Analytics settings” in the site footer.
+                </p>
+                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
+                  Approximate-location events may include a country or state/region, but analytics events do not include latitude or longitude. If the regional lookup fails, the site uses the consent-required behavior.
                 </p>
               </div>
 

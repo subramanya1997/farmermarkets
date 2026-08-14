@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnalyticsPreferencesButton } from "@/components/AnalyticsPreferencesButton";
 
 export function Footer() {
   const navigation = {
@@ -54,6 +55,9 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <AnalyticsPreferencesButton />
+                </li>
               </ul>
             </div>
           </div>

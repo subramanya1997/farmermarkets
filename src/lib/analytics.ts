@@ -4,8 +4,16 @@ import { track as trackVercelEvent } from "@vercel/analytics/react";
 
 export const ANALYTICS_CONSENT_KEY = "farmermarkets.analytics-consent.v1";
 export const ANALYTICS_CONSENT_EVENT = "farmermarkets:analytics-consent-changed";
+export const ANALYTICS_REGION_KEY = "farmermarkets.analytics-region.v1";
+
+export const CONSENT_REQUIRED_REGIONS = [
+  "AT", "BE", "BG", "CH", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR",
+  "GB", "GR", "HR", "HU", "IE", "IS", "IT", "LI", "LT", "LU", "LV", "MT",
+  "NL", "NO", "PL", "PT", "RO", "SE", "SI", "SK"
+] as const;
 
 export type AnalyticsConsent = "granted" | "denied";
+export type AnalyticsRegionStatus = "required" | "not_required";
 export type AnalyticsProperties = Record<string, string | number | boolean | null | undefined>;
 
 declare global {
@@ -24,15 +32,45 @@ export function getAnalyticsConsent(): AnalyticsConsent | null {
 export function setAnalyticsConsent(consent: AnalyticsConsent) {
   window.localStorage.setItem(ANALYTICS_CONSENT_KEY, consent);
   window.gtag?.("consent", "update", {
-    analytics_storage: consent === "granted" ? "granted" : "denied"
+    analytics_storage: consent,
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied"
   });
   window.dispatchEvent(new CustomEvent(ANALYTICS_CONSENT_EVENT, { detail: consent }));
 }
 
 export function openAnalyticsPreferences() {
   window.localStorage.removeItem(ANALYTICS_CONSENT_KEY);
-  window.gtag?.("consent", "update", { analytics_storage: "denied" });
+  window.gtag?.("consent", "update", {
+    analytics_storage: "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied"
+  });
   window.dispatchEvent(new CustomEvent(ANALYTICS_CONSENT_EVENT, { detail: null }));
+}
+
+export function isConsentRequiredRegion(countryCode: string) {
+  return CONSENT_REQUIRED_REGIONS.includes(
+    countryCode.trim().toUpperCase() as (typeof CONSENT_REQUIRED_REGIONS)[number]
+  );
+}
+
+export function getAnalyticsRegionStatus(): AnalyticsRegionStatus | null {
+  if (typeof window === "undefined") return null;
+  const stored = window.sessionStorage.getItem(ANALYTICS_REGION_KEY);
+  return stored === "required" || stored === "not_required" ? stored : null;
+}
+
+export function setAnalyticsRegionStatus(status: AnalyticsRegionStatus) {
+  window.sessionStorage.setItem(ANALYTICS_REGION_KEY, status);
+}
+
+function canUseFullAnalytics() {
+  const consent = getAnalyticsConsent();
+  if (consent === "denied") return false;
+  return consent === "granted" || getAnalyticsRegionStatus() === "not_required";
 }
 
 export function analyticsSafeSearchTerm(value: string) {
@@ -61,6 +99,8 @@ export function trackEvent(name: string, properties: AnalyticsProperties = {}) {
   if (typeof window === "undefined") return;
 
   const compacted = compactProperties(properties);
-  trackVercelEvent(name, compacted);
+  if (canUseFullAnalytics()) {
+    trackVercelEvent(name, compacted);
+  }
   window.gtag?.("event", googleEventName(name), compacted);
 }

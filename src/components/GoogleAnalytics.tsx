@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
+import { ANALYTICS_CONSENT_KEY, CONSENT_REQUIRED_REGIONS } from "@/lib/analytics";
 
 interface GoogleAnalyticsProps {
   measurementId?: string;
@@ -31,8 +32,30 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           window.gtag = gtag;
+          gtag('consent', 'default', {
+            analytics_storage: 'denied',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            region: ${JSON.stringify(CONSENT_REQUIRED_REGIONS)}
+          });
+          gtag('consent', 'default', {
+            analytics_storage: 'granted',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied'
+          });
+          var storedConsent = window.localStorage.getItem('${ANALYTICS_CONSENT_KEY}');
+          if (storedConsent === 'granted' || storedConsent === 'denied') {
+            gtag('consent', 'update', {
+              analytics_storage: storedConsent,
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied'
+            });
+          }
+          gtag('set', 'ads_data_redaction', true);
           gtag('js', new Date());
-          gtag('consent', 'default', { analytics_storage: 'granted' });
         `}
       </Script>
       <Script
