@@ -64,10 +64,10 @@ export default function PrivacyPage() {
                   <li>Prioritize new official data sources and directory features</li>
                 </ul>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery survey uses predefined answers and does not request contact information. Browser storage is used to remember your analytics choice and avoid showing the same survey repeatedly.
+                  Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery survey uses predefined answers and does not request contact information. Browser storage is used to avoid showing the same survey repeatedly.
                 </p>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  We use Google Consent Mode v2 for every visitor. Analytics storage defaults to denied until you choose. Allowing analytics enables Google Analytics and Vercel Web Analytics, including analytics cookies where those services use them. If you decline, Vercel Analytics remains disabled and Google receives only restricted cookieless signals. Advertising storage, advertising user data, and ad personalization remain denied in either case.
+                  Google Analytics and Vercel Web Analytics load automatically on every visit. They collect page views and the interaction events listed above, and Google Analytics may store analytics cookies. The site does not display a separate analytics consent banner.
                 </p>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
                   Approximate-location events may include a country or state/region, but analytics events do not include latitude or longitude.
