@@ -64,13 +64,13 @@ export default function PrivacyPage() {
                   <li>Prioritize new official data sources and directory features</li>
                 </ul>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery survey uses predefined answers and does not request contact information. Browser storage is used only to avoid showing the same survey repeatedly.
+                  Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery survey uses predefined answers and does not request contact information. Browser storage is used to remember your analytics choice and avoid showing the same survey repeatedly.
                 </p>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  We use Google Consent Mode v2. The Google tag loads on every visit, but in the EEA, United Kingdom, and Switzerland it defaults to restricted cookieless measurement until you make a choice. Granting analytics consent enables analytics cookies and full measurement. Advertising storage, advertising user data, and ad personalization remain denied. Outside those regions, analytics storage is enabled by default. You can change your choice through “Analytics settings” in the site footer.
+                  We use Google Consent Mode v2 for every visitor. Analytics storage defaults to denied until you choose. Allowing analytics enables Google Analytics and Vercel Web Analytics, including analytics cookies where those services use them. If you decline, Vercel Analytics remains disabled and Google receives only restricted cookieless signals. Advertising storage, advertising user data, and ad personalization remain denied in either case.
                 </p>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Approximate-location events may include a country or state/region, but analytics events do not include latitude or longitude. If the regional lookup fails, the site uses the consent-required behavior.
+                  Approximate-location events may include a country or state/region, but analytics events do not include latitude or longitude.
                 </p>
               </div>
 

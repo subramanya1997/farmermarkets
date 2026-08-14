@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
-import { ANALYTICS_CONSENT_KEY, CONSENT_REQUIRED_REGIONS } from "@/lib/analytics";
+import { ANALYTICS_CONSENT_KEY } from "@/lib/analytics";
 
 interface GoogleAnalyticsProps {
   measurementId?: string;
@@ -34,13 +34,6 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
           window.gtag = gtag;
           gtag('consent', 'default', {
             analytics_storage: 'denied',
-            ad_storage: 'denied',
-            ad_user_data: 'denied',
-            ad_personalization: 'denied',
-            region: ${JSON.stringify(CONSENT_REQUIRED_REGIONS)}
-          });
-          gtag('consent', 'default', {
-            analytics_storage: 'granted',
             ad_storage: 'denied',
             ad_user_data: 'denied',
             ad_personalization: 'denied'

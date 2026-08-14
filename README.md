@@ -98,7 +98,7 @@ For local development, the app falls back to `http://localhost:3000`.
 
 ## Analytics and discovery feedback
 
-The app sends the same normalized events to Vercel Web Analytics and Google Analytics 4. The bundled GA4 stream is `G-S2P5DZTJC8`; `NEXT_PUBLIC_GA_MEASUREMENT_ID` can override it per deployment. Google Consent Mode v2 keeps the tag detectable while applying region-specific consent behavior: analytics storage defaults to denied in the EEA, United Kingdom, and Switzerland, and to granted elsewhere. Advertising storage, advertising user data, and ad personalization remain denied in every region. Event coverage includes:
+The app sends the same normalized events to Vercel Web Analytics and Google Analytics 4. The bundled GA4 stream is `G-S2P5DZTJC8`; `NEXT_PUBLIC_GA_MEASUREMENT_ID` can override it per deployment. Google Consent Mode v2 keeps the tag detectable while analytics storage defaults to denied for every visitor. Advertising storage, advertising user data, and ad personalization remain denied in every case. Event coverage includes:
 
 - `Market Search`, with a truncated query, result count, and selected country
 - `Country Filter Changed`
@@ -112,7 +112,7 @@ The app sends the same normalized events to Vercel Web Analytics and Google Anal
 - `Navigation Selected`
 - `Discovery Survey Response`, using predefined answer IDs rather than free-form text
 
-Search values that look like email addresses or phone numbers are replaced with `[redacted]`. The one-click discovery survey stores only an `answered` marker in the visitor's browser so it is not repeatedly displayed. Visitors in consent-required regions can allow or decline analytics and reopen their choice through **Analytics settings** in the footer. When consent is denied, Google receives restricted cookieless signals for modeling while Vercel Analytics remains disabled. Event reporting is available in Vercel when Web Analytics and custom events are enabled, and in the configured GA4 property after deployment.
+Search values that look like email addresses or phone numbers are replaced with `[redacted]`. The one-click discovery survey stores only an `answered` marker in the visitor's browser so it is not repeatedly displayed. Every visitor must allow or decline analytics cookies before full analytics is enabled. When consent is denied, Google receives restricted cookieless signals for modeling while Vercel Analytics remains disabled. Event reporting is available in Vercel when Web Analytics and custom events are enabled, and in the configured GA4 property after deployment.
 
 ## Project Structure
 
