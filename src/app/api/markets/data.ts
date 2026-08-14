@@ -10,6 +10,8 @@ export interface FarmerMarket {
   slug: string;
   name: string;
   last_updated?: string;
+  country?: string;
+  country_code?: string;
   distance?: number;
   address?: string;
   city?: string;
@@ -73,6 +75,18 @@ export interface FarmerMarket {
   has_picnic_area?: boolean;
   wheelchair_accessible?: boolean;
   pet_friendly?: boolean;
+  provenance?: {
+    official: boolean;
+    source_id: string;
+    source_record_id: string;
+    publisher: string;
+    dataset_name: string;
+    catalog_url: string;
+    data_url: string;
+    license: string;
+    retrieved_at?: string;
+    scope_note?: string;
+  };
 }
 
 // Interface for raw market data from JSON
@@ -81,6 +95,8 @@ interface RawMarketData {
   slug?: string;
   name: string;
   last_updated?: string;
+  country?: string;
+  country_code?: string;
   location?: {
     address?: string;
     city?: string;
@@ -161,6 +177,18 @@ interface RawMarketData {
     wheelchair_accessible?: boolean;
     pet_friendly?: boolean;
   };
+  provenance?: {
+    official: boolean;
+    source_id: string;
+    source_record_id: string;
+    publisher: string;
+    dataset_name: string;
+    catalog_url: string;
+    data_url: string;
+    license: string;
+    retrieved_at?: string;
+    scope_note?: string;
+  };
 }
 
 const DEFAULT_PAGE = 1;
@@ -188,38 +216,43 @@ function hasValidCoordinates(userLat?: number, userLon?: number): userLat is num
   );
 }
 
-// Load markets data from JSON file
+// Load the legacy snapshot and the independently generated official-government snapshot.
 async function loadMarketsData(): Promise<FarmerMarket[]> {
   try {
-    const filePath = path.join(process.cwd(), 'public/data/farmers_markets.json');
-
-    // Log the file path for debugging in Vercel
-    console.log(`Attempting to load market data from: ${filePath}`);
-
-    // Check if the file exists
-    try {
-      await fs.access(filePath);
-    } catch (err) {
-      console.error(`File does not exist or is not accessible: ${filePath}`, err);
-      return [];
-    }
-
-    const fileContents = await fs.readFile(filePath, 'utf8');
-
-    if (!fileContents || fileContents.trim() === '') {
-      console.error('Market data file is empty');
-      return [];
-    }
-
-    try {
-      const data = JSON.parse(fileContents);
-
-      if (!Array.isArray(data)) {
-        console.error('Market data is not an array:', typeof data);
-        return [];
+    const dataSources = [
+      {
+        filePath: path.join(process.cwd(), 'public/data/farmers_markets.json'),
+        defaultCountry: 'United States',
+        defaultCountryCode: 'US'
+      },
+      {
+        filePath: path.join(process.cwd(), 'public/data/government_markets.json')
       }
+    ];
+    const datasets = await Promise.all(dataSources.map(async ({ filePath, defaultCountry, defaultCountryCode }) => {
+      try {
+        const fileContents = await fs.readFile(filePath, 'utf8');
+        if (!fileContents.trim()) throw new Error('file is empty');
+        const parsed = JSON.parse(fileContents);
+        if (!Array.isArray(parsed)) throw new Error('top-level value is not an array');
+        console.log(`Loaded ${parsed.length} markets from ${path.basename(filePath)}`);
+        return (parsed as RawMarketData[]).map((market) => ({
+          ...market,
+          country: market.country || defaultCountry,
+          country_code: market.country_code || defaultCountryCode
+        }));
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+          console.warn(`Optional market data file is not present: ${filePath}`);
+          return [];
+        }
+        throw new Error(`Unable to load ${filePath}: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }));
+    const data = datasets.flat();
 
-      console.log(`Successfully loaded ${data.length} markets from data file`);
+    try {
+      console.log(`Successfully loaded ${data.length} total markets`);
 
       // Transform the data to match our schema
       return data.map((market: RawMarketData, index: number) => {
@@ -309,6 +342,8 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
           slug: slug,
           name: market.name,
           last_updated: market.last_updated,
+          country: market.country,
+          country_code: market.country_code,
           address: market.location?.address,
           city: market.location?.city,
           state: market.location?.state,
@@ -370,7 +405,8 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
           has_restrooms: hasRestrooms,
           has_picnic_area: hasPicnicArea,
           wheelchair_accessible: isWheelchairAccessible,
-          pet_friendly: isPetFriendly
+          pet_friendly: isPetFriendly,
+          provenance: market.provenance
         };
       });
     } catch (error) {
@@ -392,6 +428,7 @@ export const marketService = {
   // Get all markets with optional filtering
   getMarkets: async (options: {
     search?: string;
+    country?: string;
     state?: string;
     page?: number;
     limit?: number;
@@ -400,6 +437,7 @@ export const marketService = {
   } = {}) => {
     const {
       search = '',
+      country = '',
       state = '',
       page: rawPage = DEFAULT_PAGE,
       limit: rawLimit = DEFAULT_LIMIT,
@@ -418,8 +456,18 @@ export const marketService = {
       filteredMarkets = filteredMarkets.filter(market => {
         return market.name.toLowerCase().includes(searchLower) ||
                (market.city && market.city.toLowerCase().includes(searchLower)) ||
-               (market.state && market.state.toLowerCase().includes(searchLower));
+               (market.state && market.state.toLowerCase().includes(searchLower)) ||
+               (market.country && market.country.toLowerCase().includes(searchLower)) ||
+               (market.country_code && market.country_code.toLowerCase() === searchLower);
       });
+    }
+
+    if (country) {
+      const countryLower = country.toLowerCase();
+      filteredMarkets = filteredMarkets.filter(market =>
+        market.country?.toLowerCase() === countryLower ||
+        market.country_code?.toLowerCase() === countryLower
+      );
     }
 
     if (state) {

@@ -6,6 +6,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ClientSingleMarketMap from "@/components/ClientSingleMarketMap";
+import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
+import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { Metadata } from "next";
 
 export const dynamic = 'force-dynamic';
@@ -35,9 +37,11 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
   const productsList = products?.join(', ') || '';
 
   // Avoid duplicate city/state like "California, California"
-  const cityStateDisplay = market.city && market.state && market.city !== market.state
-    ? `${market.city}, ${market.state}`
-    : market.city || market.state || '';
+  const cityStateDisplay = [market.city, market.state, market.country_code === 'US' ? undefined : market.country]
+    .filter((part, index, parts): part is string => (
+      Boolean(part) && parts.findIndex((candidate) => candidate?.toLowerCase() === part?.toLowerCase()) === index
+    ))
+    .join(', ');
 
   return {
     title: `${market.name} - Farmer Market in ${cityStateDisplay}`,
@@ -79,9 +83,11 @@ export default async function MarketDetailPage({
     // Get city/state from market data (avoid duplicates like "California, California")
     const city = market.city;
     const state = market.state;
-    const cityStateDisplay = city && state && city !== state
-      ? `${city}, ${state}`
-      : city || state || '';
+    const cityStateDisplay = [city, state, market.country_code === 'US' ? undefined : market.country]
+      .filter((part, index, parts): part is string => (
+        Boolean(part) && parts.findIndex((candidate) => candidate?.toLowerCase() === part?.toLowerCase()) === index
+      ))
+      .join(', ');
 
     // Get coordinates from location object
     const latitude = market.location?.lat;
@@ -89,6 +95,21 @@ export default async function MarketDetailPage({
 
     // Get website from websites array
     const website = market.websites?.[0];
+    const websiteHost = (() => {
+      try {
+        return website ? new URL(website).hostname : undefined;
+      } catch {
+        return undefined;
+      }
+    })();
+    const marketType = market.organization_types?.find((type) => type !== 'Official government dataset');
+    const analyticsProperties = {
+      market_id: market.id,
+      market_name: market.name.slice(0, 80),
+      country: market.country,
+      market_type: marketType,
+      source_id: market.provenance?.source_id
+    };
 
     // Handle payment method flags
     const hasWic = market.wic === true;
@@ -112,7 +133,7 @@ export default async function MarketDetailPage({
         addressLocality: market.city,
         addressRegion: market.state,
         postalCode: market.zip_code,
-        addressCountry: 'US'
+        addressCountry: market.country_code || market.country || 'US'
       },
       geo: {
         '@type': 'GeoCoordinates',
@@ -138,6 +159,13 @@ export default async function MarketDetailPage({
 
     return (
       <>
+        <MarketDetailAnalytics
+          marketId={market.id}
+          marketName={market.name}
+          country={market.country}
+          marketType={marketType}
+          sourceId={market.provenance?.source_id}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -177,14 +205,16 @@ export default async function MarketDetailPage({
                       </div>
                       {latitude && longitude && (
                         <div className="mt-4">
-                          <a
+                          <TrackedExternalLink
                             href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-full block"
+                            eventName="Market Directions Opened"
+                            eventProperties={{ ...analyticsProperties, destination: 'openstreetmap' }}
                           >
                             <Button className="w-full bg-green-600 hover:bg-green-700">Get Directions</Button>
-                          </a>
+                          </TrackedExternalLink>
                         </div>
                       )}
                     </CardContent>
@@ -211,14 +241,16 @@ export default async function MarketDetailPage({
                           {website && (
                             <p className="text-zinc-600 dark:text-zinc-400">
                               <span className="font-medium text-zinc-900 dark:text-zinc-200">Website:</span>{" "}
-                              <a
+                              <TrackedExternalLink
                                 href={website}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 hover:underline break-all"
+                                eventName="Official Market Website Opened"
+                                eventProperties={{ ...analyticsProperties, destination_host: websiteHost }}
                               >
                                 Visit Website
-                              </a>
+                              </TrackedExternalLink>
                             </p>
                           )}
                         </div>
@@ -317,14 +349,16 @@ export default async function MarketDetailPage({
                       </div>
                       {latitude && longitude && (
                         <div className="mt-4">
-                          <a
+                          <TrackedExternalLink
                             href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-full block"
+                            eventName="Market Directions Opened"
+                            eventProperties={{ ...analyticsProperties, destination: 'openstreetmap' }}
                           >
                             <Button className="w-full bg-green-600 hover:bg-green-700">Get Directions</Button>
-                          </a>
+                          </TrackedExternalLink>
                         </div>
                       )}
                     </CardContent>

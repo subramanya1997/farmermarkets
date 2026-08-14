@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 // Time with Timezone component
 function TimeDisplay() {
@@ -49,7 +50,11 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/60">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="font-bold text-xl sm:text-2xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+          <Link
+            href="/"
+            onClick={() => trackEvent('Navigation Selected', { destination: 'home', location: 'header_logo' })}
+            className="font-bold text-xl sm:text-2xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
+          >
             Farmer Markets
           </Link>
 
@@ -57,7 +62,11 @@ export function Header() {
           <nav className="hidden md:flex items-center gap-4">
             <TimeDisplay />
             {navigation.map((item) => (
-              <Link key={item.name} href={item.href}>
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => trackEvent('Navigation Selected', { destination: item.href, location: 'desktop_header' })}
+              >
                 <Button variant="ghost" className="hover:text-green-600">
                   {item.name}
                 </Button>
@@ -83,7 +92,10 @@ export function Header() {
                   <Link 
                     key={item.name} 
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      setIsOpen(false);
+                      trackEvent('Navigation Selected', { destination: item.href, location: 'mobile_menu' });
+                    }}
                   >
                     <Button variant="ghost" className="w-full justify-start hover:text-green-600">
                       {item.name}
@@ -97,4 +109,4 @@ export function Header() {
       </div>
     </header>
   );
-} 
+}

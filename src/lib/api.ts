@@ -7,6 +7,8 @@ export interface FarmerMarket {
   slug: string;
   name: string;
   last_updated?: string;
+  country?: string;
+  country_code?: string;
   distance?: number;
   address?: string;
   city?: string;
@@ -70,6 +72,18 @@ export interface FarmerMarket {
   has_picnic_area?: boolean;
   wheelchair_accessible?: boolean;
   pet_friendly?: boolean;
+  provenance?: {
+    official: boolean;
+    source_id: string;
+    source_record_id: string;
+    publisher: string;
+    dataset_name: string;
+    catalog_url: string;
+    data_url: string;
+    license: string;
+    retrieved_at?: string;
+    scope_note?: string;
+  };
 }
 
 /**
@@ -79,6 +93,7 @@ export interface MarketFilterOptions {
   page?: number;
   limit?: number;
   search?: string;
+  country?: string;
   state?: string;
   userLat?: number;
   userLon?: number;
@@ -161,6 +176,7 @@ export async function fetchMarkets(options: MarketFilterOptions = {}): Promise<M
     page = 1, 
     limit = 50, 
     search = '', 
+    country = '',
     state = '',
     userLat,
     userLon,
@@ -176,6 +192,7 @@ export async function fetchMarkets(options: MarketFilterOptions = {}): Promise<M
   params.append('page', page.toString());
   params.append('limit', limit.toString());
   if (search) params.append('search', search);
+  if (country) params.append('country', country);
   if (state) params.append('state', state);
   if (userLat !== undefined) params.append('lat', userLat.toString());
   if (userLon !== undefined) params.append('lon', userLon.toString());
@@ -347,11 +364,11 @@ export function getMarketAmenities(market: FarmerMarket): string[] {
  */
 export function getMarketSalesChannels(market: FarmerMarket): string[] {
   const channels = [];
-  
+
   if (market.online_ordering_available) channels.push('Online Ordering');
   if (market.phone_ordering) channels.push('Phone Ordering');
   if (market.csa_available) channels.push('CSA Available');
   if (market.delivery_available) channels.push('Delivery Available');
-  
+
   return channels;
-} 
+}

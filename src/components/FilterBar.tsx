@@ -6,6 +6,7 @@ import { Badge } from './ui/badge';
 import { ChevronDown } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import type { FilterCategory } from '@/lib/filters';
+import { trackEvent } from '@/lib/analytics';
 
 interface FilterBarProps {
   categories: FilterCategory[];
@@ -22,16 +23,19 @@ export function FilterBar({ categories, activeFilters, onFilterChange }: FilterB
 
   const toggleFilter = (filterId: string) => {
     const newFilters = new Set(activeFilters);
+    const enabled = !newFilters.has(filterId);
     if (newFilters.has(filterId)) {
       newFilters.delete(filterId);
     } else {
       newFilters.add(filterId);
     }
     onFilterChange(newFilters);
+    trackEvent('Market Filter Changed', { filter: filterId, enabled });
   };
 
   const clearFilters = () => {
     onFilterChange(new Set());
+    trackEvent('Market Filters Cleared', { previous_filter_count: activeFilters.size });
   };
 
   if (!mounted) {
@@ -142,4 +146,3 @@ export function FilterBar({ categories, activeFilters, onFilterChange }: FilterB
     </div>
   );
 }
-

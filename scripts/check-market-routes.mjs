@@ -27,6 +27,26 @@ assert(negativePagination.pagination.totalPages >= 1, 'negative pagination produ
 
 await fetchJson('/api/markets?lat=abc&lon=def&limit=1', 400);
 
+const officialCanada = await fetchJson('/api/markets?search=Canada&limit=5');
+assert(officialCanada.pagination.total >= 388, 'official Canadian markets were not merged into the API');
+assert(
+  officialCanada.data.some((market) => market.country === 'Canada' && market.provenance?.official === true),
+  'Canadian search results do not include official source provenance'
+);
+
+const newZealand = await fetchJson('/api/markets?country=New%20Zealand&limit=50');
+assert(newZealand.pagination.total === 12, `New Zealand filter returned ${newZealand.pagination.total}, expected 12`);
+assert(
+  newZealand.data.every((market) => market.country === 'New Zealand'),
+  'New Zealand filter returned a record from another country'
+);
+
+const unitedStates = await fetchJson('/api/markets?country=US&limit=1');
+assert(
+  unitedStates.pagination.total >= 7916,
+  `United States filter returned ${unitedStates.pagination.total}, expected the legacy and official US records`
+);
+
 const marketsPage = await fetch(`${baseUrl}/markets`);
 assert(marketsPage.status === 200, `/markets returned ${marketsPage.status}`);
 

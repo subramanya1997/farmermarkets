@@ -1,12 +1,12 @@
 # Farmer Markets
 
-Farmer Markets is a Next.js application for discovering local farmers markets across the United States. It provides searchable market listings, map-based browsing, individual market detail pages, state-specific landing pages, SEO metadata, structured data, sitemap generation, and JSON API endpoints backed by a local market dataset.
+Farmer Markets is a Next.js application for discovering local farmers markets. It provides searchable market listings, map-based browsing, individual market detail pages, regional landing pages, SEO metadata, structured data, sitemap generation, and JSON API endpoints backed by local snapshots.
 
 The app is built as a public consumer directory for people who want to find nearby markets, check available products, compare payment options, and get location details before visiting.
 
 ## Features
 
-- Use a 6,832-record farmers market dataset from `public/data/farmers_markets.json`.
+- Use the 6,832-record legacy dataset plus a provenance-aware 1,975-record snapshot generated from 14 official government feeds across eight countries and territories.
 - Search markets by name, city, state, or address.
 - Filter markets by products, payment options, production methods, and amenities.
 - Sort nearby markets using browser geolocation when the user grants permission.
@@ -70,6 +70,19 @@ npm run lint
 
 Runs the configured lint command.
 
+```bash
+npm run data:update
+```
+
+Downloads enabled official sources, validates record counts and coordinates, preserves the last good records for a failed source, and atomically regenerates the official snapshot and manifest.
+
+```bash
+npm run data:check
+npm run test:data
+```
+
+Validates the generated snapshot/checksum and runs the ingestion parser and failure-retention tests.
+
 ## Environment Variables
 
 The app can run locally without required environment variables. Server-side API calls derive their base URL from the following optional variables:
@@ -79,8 +92,27 @@ The app can run locally without required environment variables. Server-side API 
 | `NEXT_PUBLIC_API_BASE_URL` | Explicit API origin for server-side requests. |
 | `VERCEL_URL` | Vercel-provided deployment hostname. |
 | `NEXT_PUBLIC_VERCEL_URL` | Optional public deployment hostname fallback. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional GA4 web-stream measurement ID override. Defaults to `G-S2P5DZTJC8`. |
 
 For local development, the app falls back to `http://localhost:3000`.
+
+## Analytics and discovery feedback
+
+After a visitor grants analytics consent, the app sends the same normalized events to Vercel Web Analytics and Google Analytics 4. The bundled GA4 stream is `G-S2P5DZTJC8`; `NEXT_PUBLIC_GA_MEASUREMENT_ID` can override it per deployment. Event coverage includes:
+
+- `Market Search`, with a truncated query, result count, and selected country
+- `Country Filter Changed`
+- `Market Filter Changed` and `Market Filters Cleared`
+- `Market View Changed`
+- `Market Results Page Changed`
+- `Map Marker Selected`
+- `Market Detail Selected` and `Market Detail Viewed`
+- `Official Market Website Opened` and `Market Directions Opened`
+- `Approximate Location Resolved` or `Approximate Location Unavailable`, without latitude or longitude
+- `Navigation Selected`
+- `Discovery Survey Response`, using predefined answer IDs rather than free-form text
+
+Search values that look like email addresses or phone numbers are replaced with `[redacted]`. The one-click discovery survey stores only an `answered` marker in the visitor's browser so it is not repeatedly displayed. Visitors can decline analytics or reopen the consent choice through **Analytics settings** in the footer. Event reporting is available in Vercel when Web Analytics and custom events are enabled, and in the configured GA4 property after deployment.
 
 ## Project Structure
 
@@ -102,11 +134,35 @@ src/
 public/
   data/farmers_markets.json   Source market dataset
   *.png, *.svg, *.ico         Icons, map markers, and social assets
+  data/government_markets.json
+                              Generated official-government snapshot
+  data/government_markets.manifest.json
+                              Source status, counts, retrieval times, and checksum
+data/
+  government-market-sources.json
+                              Official source registry and safety thresholds
+scripts/
+  update-government-markets.mjs
+                              Fetch, normalize, validate, and atomically write data
+  check-government-markets.mjs
+                              Validate snapshot provenance, counts, and checksum
+.github/workflows/
+  update-government-markets.yml
+                              Nightly data refresh
 ```
 
 ## Data Source
 
-The market directory is powered by `public/data/farmers_markets.json`. API routes load this file on the server, normalize each raw record, and expose a flattened `FarmerMarket` shape to the app.
+The API merges two independent files at read time:
+
+- `public/data/farmers_markets.json` is the unchanged legacy snapshot.
+- `public/data/government_markets.json` is generated only from enabled sources in `data/government-market-sources.json`.
+
+Every generated record identifies its official publisher, dataset, source record, catalog URL, data URL, and license in `provenance`. The companion manifest records each source's last retrieval result and record count, plus a SHA-256 checksum for the complete snapshot.
+
+The enabled official sources cover Ontario, New York State, the District of Columbia/DMV program feed, California WIC-authorized farmers' markets, Lyon, Toulouse, Brussels, Dún Laoghaire-Rathdown, Upper Hutt, Hong Kong FEHD public markets, and Singapore NEA hawker centres. California, Dún Laoghaire-Rathdown, and Upper Hutt are explicitly local or program subsets rather than complete national directories. Alberta remains registered but disabled until its downloadable resource can be parsed and monitored reliably.
+
+The shared schema also accommodates official local-food places that are not producer-only farmers markets. Their category is preserved in `organization.types`, for example `Public food market`, `Food cooperative pickup`, `Community garden`, or `Hawker centre and public market`.
 
 Important normalized fields include:
 
@@ -120,6 +176,23 @@ Important normalized fields include:
 - contact details, websites, online ordering, CSA, and delivery information
 
 If the source data changes, confirm that each record still has a stable `name` and preferably a stable `slug`. Records without a slug are assigned one with `generateSlug()`.
+
+### Nightly update behavior
+
+The GitHub Actions workflow runs daily at 08:17 UTC and can also be started manually. It:
+
+1. Fetches every enabled government source with timeouts and retries.
+2. Normalizes source-specific fields and groups duplicate operating-day rows.
+3. Rejects invalid coordinates, duplicate IDs/slugs, counts below the configured minimum, and suspicious drops versus the previous snapshot.
+4. Retains the last good records for an individual failed source while allowing healthy sources to update.
+5. Runs parser tests, checksum validation, and the production build before committing generated files.
+6. Marks the workflow failed after committing a valid partial snapshot so source failures remain visible in GitHub Actions.
+
+To test with pre-downloaded payloads instead of network requests, name the fixture files as listed in the source registry and run:
+
+```bash
+node scripts/update-government-markets.mjs --fixtures-dir /absolute/path/to/fixtures
+```
 
 ## Routes
 
@@ -219,6 +292,7 @@ For production:
 ## Maintenance Checklist
 
 - Run `npm run build` before publishing app changes.
+- Run `npm run test:data` and `npm run data:check` after changing the source registry or any parser.
 - Verify `/markets`, `/markets/[slug]`, `/api/markets`, `/sitemap.xml`, and `/robots.txt` after data or routing changes.
 - Keep the market dataset schema aligned with the normalization logic in `src/app/api/markets/data.ts`.
 - Update SEO copy and canonical URLs if the production domain changes from `farmermarkets.app`.

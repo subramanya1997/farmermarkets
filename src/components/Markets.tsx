@@ -2,15 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Map, Grid, Store, MapPin } from "lucide-react";
-import { useState, useEffect, useMemo } from "react";
+import { Search, Map as MapIcon, Grid, Store, MapPin, Globe2 } from "lucide-react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { MarketCard } from "@/components/MarketCard";
 import { FilterBar } from "@/components/FilterBar";
+import { DiscoverySurvey } from "@/components/DiscoverySurvey";
 import dynamic from "next/dynamic";
 import type { FarmerMarket } from "@/lib/api";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { calculateDistance } from "@/lib/utils";
 import { extractFilterOptions, applyFilters } from "@/lib/filters";
+import { analyticsSafeSearchTerm, trackEvent } from "@/lib/analytics";
 
 interface MarketsProps {
   markets: FarmerMarket[];
@@ -30,23 +32,44 @@ const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
 
 export function Markets({ 
   markets, 
-  title = "Find Local Farmers Markets",
-  description = "Discover fresh produce and artisanal goods at farmers markets near you",
+  title = "Find Local Food Markets",
+  description = "Discover farmers markets, public food markets, cooperatives, and other local-food places around the world",
   hideHero = false
 }: MarketsProps) {
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
   const [itemsPerPage] = useState(30);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('');
   const [filteredMarkets, setFilteredMarkets] = useState<FarmerMarket[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
+  const lastTrackedSearch = useRef('');
+  const lastTrackedLocation = useRef('');
   
   // Get user's approximate location
-  const { location, loading: locationLoading } = useGeolocation();
+  const { location, loading: locationLoading, error: locationError } = useGeolocation();
   
-  // Extract filter options from data
-  const filterCategories = useMemo(() => extractFilterOptions(markets), [markets]);
+  const marketsInSelectedCountry = useMemo(() => (
+    selectedCountry ? markets.filter((market) => market.country === selectedCountry) : markets
+  ), [markets, selectedCountry]);
+
+  // Product and payment counts should describe the country currently being viewed.
+  const filterCategories = useMemo(
+    () => extractFilterOptions(marketsInSelectedCountry),
+    [marketsInSelectedCountry]
+  );
+
+  const countries = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const market of markets) {
+      if (!market.country) continue;
+      counts.set(market.country, (counts.get(market.country) ?? 0) + 1);
+    }
+    return [...counts.entries()]
+      .map(([name, count]) => ({ name, count }))
+      .sort((left, right) => left.name.localeCompare(right.name));
+  }, [markets]);
   
   // Add distance to markets and sort by proximity
   const marketsWithDistance = useMemo(() => {
@@ -74,9 +97,13 @@ export function Markets({
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
       filtered = filtered.filter(market => 
-        [market.name, market.city, market.state, market.address]
+        [market.name, market.city, market.state, market.country, market.country_code, market.address]
           .some(field => field?.toLowerCase().includes(searchLower))
       );
+    }
+
+    if (selectedCountry) {
+      filtered = filtered.filter((market) => market.country === selectedCountry);
     }
     
     // Then apply category filters
@@ -85,7 +112,64 @@ export function Markets({
     setFilteredMarkets(filtered);
     setPage(1); // Reset to first page when filters change
     setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-  }, [marketsWithDistance, searchTerm, activeFilters, filterCategories, itemsPerPage]);
+  }, [marketsWithDistance, searchTerm, selectedCountry, activeFilters, filterCategories, itemsPerPage]);
+
+  useEffect(() => {
+    const safeQuery = analyticsSafeSearchTerm(searchTerm);
+    if (safeQuery.length < 2) return;
+
+    const eventKey = [safeQuery, selectedCountry || 'All countries', filteredMarkets.length].join('|');
+    const timer = window.setTimeout(() => {
+      if (lastTrackedSearch.current === eventKey) return;
+      lastTrackedSearch.current = eventKey;
+      trackEvent('Market Search', {
+        query: safeQuery,
+        result_count: filteredMarkets.length,
+        country: selectedCountry || 'All countries',
+        sensitive_value_redacted: safeQuery === '[redacted]'
+      });
+    }, 1200);
+
+    return () => window.clearTimeout(timer);
+  }, [searchTerm, selectedCountry, filteredMarkets.length]);
+
+  useEffect(() => {
+    if (locationLoading) return;
+    const locationKey = location
+      ? [location.state, location.country].filter(Boolean).join('|')
+      : 'unavailable';
+    if (lastTrackedLocation.current === locationKey) return;
+    lastTrackedLocation.current = locationKey;
+
+    trackEvent(location ? 'Approximate Location Resolved' : 'Approximate Location Unavailable', {
+      state: location?.state,
+      country: location?.country,
+      source: 'ip_lookup',
+      reason: location ? undefined : locationError ? 'lookup_failed' : 'not_available'
+    });
+  }, [location, locationError, locationLoading]);
+
+  const handleCountryChange = (country: string) => {
+    setSelectedCountry(country);
+    setActiveFilters(new Set());
+    trackEvent('Country Filter Changed', { country: country || 'All countries' });
+  };
+
+  const toggleView = () => {
+    const nextView = view === 'grid' ? 'map' : 'grid';
+    setView(nextView);
+    trackEvent('Market View Changed', { view: nextView, result_count: filteredMarkets.length });
+  };
+
+  const changePage = (nextPage: number) => {
+    setPage(nextPage);
+    trackEvent('Market Results Page Changed', {
+      page: nextPage,
+      country: selectedCountry || 'All countries',
+      result_count: filteredMarkets.length
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Memoize the current page items calculation to prevent unnecessary recalculation
   const currentMarkets = useMemo(() => {
@@ -126,7 +210,7 @@ export function Markets({
           )}
           
           <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <div className="relative flex-1">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Search className="h-4 w-4 text-gray-400" />
@@ -139,15 +223,32 @@ export function Markets({
                   className="pl-10 pr-4 py-2 w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
               </div>
+              <div className="relative sm:w-56">
+                <Globe2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400 pointer-events-none" />
+                <label htmlFor="country-filter" className="sr-only">Country</label>
+                <select
+                  id="country-filter"
+                  value={selectedCountry}
+                  onChange={(event) => handleCountryChange(event.target.value)}
+                  className="h-10 w-full appearance-none rounded-full border border-zinc-300 bg-white pl-9 pr-8 text-sm text-zinc-800 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+                >
+                  <option value="">All countries ({markets.length})</option>
+                  {countries.map((country) => (
+                    <option key={country.name} value={country.name}>
+                      {country.name} ({country.count})
+                    </option>
+                  ))}
+                </select>
+              </div>
               <Button
                 variant="outline"
                 size="sm"
                 className="text-xs whitespace-nowrap"
-                onClick={() => setView(view === 'grid' ? 'map' : 'grid')}
+                onClick={toggleView}
               >
                 {view === 'grid' ? (
                   <>
-                    <Map className="w-4 h-4 mr-2" />
+                    <MapIcon className="w-4 h-4 mr-2" />
                     Map View
                   </>
                 ) : (
@@ -172,6 +273,12 @@ export function Markets({
       {/* Markets Grid/Map Section */}
       <section className="w-full py-8">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              {filteredMarkets.length.toLocaleString()} places
+              {selectedCountry ? ` in ${selectedCountry}` : ` across ${countries.length} countries and territories`}
+            </p>
+          </div>
           {view === 'grid' ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -184,7 +291,7 @@ export function Markets({
                   <Store className="w-12 h-12 text-zinc-400 mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No Markets Found</h3>
                   <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-[500px]">
-                    Try adjusting your search or filters to find farmers markets in your area.
+                    Try adjusting your search, country, or filters to find local-food places.
                   </p>
                 </div>
               )}
@@ -197,6 +304,11 @@ export function Markets({
         </div>
       </section>
 
+      <DiscoverySurvey
+        selectedCountry={selectedCountry || 'All countries'}
+        resultCount={filteredMarkets.length}
+      />
+
       {/* Pagination Section */}
       {filteredMarkets.length > 0 && (
         <section className="w-full py-4 sm:py-6">
@@ -206,7 +318,7 @@ export function Markets({
                 variant="outline"
                 size="sm"
                 disabled={page === 1}
-                onClick={() => setPage(page - 1)}
+                onClick={() => changePage(page - 1)}
               >
                 Previous
               </Button>
@@ -217,7 +329,7 @@ export function Markets({
                 variant="outline"
                 size="sm"
                 disabled={page === totalPages}
-                onClick={() => setPage(page + 1)}
+                onClick={() => changePage(page + 1)}
               >
                 Next
               </Button>
@@ -227,4 +339,4 @@ export function Markets({
       )}
     </div>
   );
-} 
+}

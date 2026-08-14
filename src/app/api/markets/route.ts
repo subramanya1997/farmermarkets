@@ -56,6 +56,7 @@ export async function GET(request: NextRequest) {
   const page = parsePositiveIntegerParam(searchParams.get('page'), DEFAULT_PAGE);
   const limit = parsePositiveIntegerParam(searchParams.get('limit'), DEFAULT_LIMIT, MAX_LIMIT);
   const search = searchParams.get('search') || '';
+  const country = searchParams.get('country') || '';
   const state = searchParams.get('state') || '';
 
   // Get user location for distance sorting
@@ -73,6 +74,7 @@ export async function GET(request: NextRequest) {
       page,
       limit,
       search,
+      country,
       state,
       userLat: coordinates.userLat,
       userLon: coordinates.userLon,

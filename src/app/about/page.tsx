@@ -3,10 +3,10 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Farmer Markets - Our Mission and Values",
-  description: "Learn about Farmer Markets' mission to support local agriculture and sustainable food systems. Discover how we connect consumers with local farmers and producers across the United States.",
+  description: "Learn how Farmer Markets connects people with farmers markets and public local-food places around the world.",
   openGraph: {
     title: "About Farmer Markets - Our Mission and Values",
-    description: "Learn about Farmer Markets' mission to support local agriculture and sustainable food systems. Discover how we connect consumers with local farmers and producers across the United States.",
+    description: "Learn how Farmer Markets connects people with farmers markets and public local-food places around the world.",
   },
 };
 
@@ -21,7 +21,7 @@ export default function AboutPage() {
               About Farmer Markets
             </h1>
             <p className="text-zinc-600 dark:text-zinc-400 max-w-[700px] md:text-xl">
-              Farmer Markets is a platform dedicated to connecting consumers with local farmers and producers across the United States.
+              Farmer Markets is a platform dedicated to connecting people with farmers markets, producers, and public local-food places around the world.
             </p>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function AboutPage() {
 
             <h2 className="text-2xl font-bold tracking-tight mt-12 mb-4">About Our Data</h2>
             <p className="text-zinc-600 dark:text-zinc-400">
-              Our platform features comprehensive information about farmer markets across the United States, sourced from the <a href="https://www.usdalocalfoodportal.com" className="text-green-600 hover:text-green-700 underline">USDA Local Food Portal</a>. The data includes market locations, hours of operation, products offered, and detailed market information.
+              Our platform combines a legacy USDA Local Food Portal snapshot with normalized records from official government portals. The data includes market locations, schedules, market types, contact details, and source provenance where available.
             </p>
             <p className="text-zinc-600 dark:text-zinc-400 mt-4">
               We regularly update our database to ensure accuracy and provide the most current information about local farmer markets, helping you find fresh, local produce and supporting local agriculture across the nation.
@@ -84,4 +84,4 @@ export default function AboutPage() {
       </section>
     </div>
   );
-} 
+}

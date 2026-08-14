@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AnalyticsPreferencesButton } from "@/components/AnalyticsPreferencesButton";
 
 export function Footer() {
   const navigation = {
@@ -23,7 +24,7 @@ export function Footer() {
                 Farmer Markets
               </Link>
               <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400 max-w-xs">
-                Connecting consumers with local farmers and producers across the United States.
+                Connecting people with farmers markets and public local-food places around the world.
               </p>
             </div>
             <div>
@@ -54,6 +55,9 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <AnalyticsPreferencesButton />
+                </li>
               </ul>
             </div>
           </div>
@@ -69,11 +73,11 @@ export function Footer() {
               </p>
             </div>
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              Data sourced from the USDA Local Food Portal
+              Data sourced from official government portals and the legacy USDA Local Food Portal snapshot
             </p>
           </div>
         </div>
       </div>
     </footer>
   );
-} 
+}

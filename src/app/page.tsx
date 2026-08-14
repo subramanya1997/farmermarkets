@@ -18,7 +18,7 @@ export default async function Home() {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Farmer Markets',
-      description: 'Discover local farmer markets across the United States',
+      description: 'Discover farmers markets and local-food places around the world',
       url: 'https://farmermarkets.app',
       potentialAction: {
         '@type': 'SearchAction',
@@ -36,7 +36,7 @@ export default async function Home() {
       name: 'Farmer Markets',
       url: 'https://farmermarkets.app',
       logo: 'https://farmermarkets.app/leaf-hq.png',
-      description: 'Connecting consumers with local farmers and producers across the United States',
+      description: 'Connecting people with farmers markets and local-food places around the world',
       sameAs: []
     };
 

@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/react";
+import { AnalyticsProviders } from "@/components/AnalyticsProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     default: "Farmer Markets - Find Local Fresh Produce Near You",
     template: "%s | Farmer Markets"
   },
-  description: "Discover local farmer markets across the United States. Find fresh produce, artisanal goods, and support local farmers in your community.",
+  description: "Discover farmers markets, public food markets, cooperatives, and local-food places around the world.",
   keywords: ["farmer markets", "local produce", "fresh food", "organic", "farmers market", "local food", "farm to table"],
   authors: [{ name: "Farmer Markets" }],
   creator: "Farmer Markets",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://farmermarkets.app',
     title: 'Farmer Markets - Find Local Fresh Produce Near You',
-    description: 'Discover local farmer markets across the United States. Find fresh produce, artisanal goods, and support local farmers in your community.',
+    description: 'Discover farmers markets, public food markets, cooperatives, and local-food places around the world.',
     siteName: 'Farmer Markets',
     images: [
       {
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Farmer Markets - Find Local Fresh Produce Near You',
-    description: 'Discover local farmer markets across the United States. Find fresh produce, artisanal goods, and support local farmers.',
+    description: 'Discover farmers markets, public food markets, cooperatives, and local-food places around the world.',
     images: ['/og-image.jpg'],
     creator: '@farmermarkets',
   },
@@ -95,7 +95,7 @@ export default function RootLayout({
     name: 'Farmer Markets',
     url: 'https://farmermarkets.app',
     logo: 'https://farmermarkets.app/leaf-hq.png',
-    description: 'Discover local farmer markets across the United States. Find fresh produce, artisanal goods, and support local farmers.',
+    description: 'Discover farmers markets, public food markets, cooperatives, and local-food places around the world.',
     sameAs: [
       // Add social media profiles here when available
     ],
@@ -120,7 +120,10 @@ export default function RootLayout({
           </main>
           <Footer />
         </div>
-        <Analytics />
+        <AnalyticsProviders
+          googleMeasurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-S2P5DZTJC8"}
+          enableVercelAnalytics={Boolean(process.env.VERCEL)}
+        />
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import type { FarmerMarket } from '@/lib/api';
 import { buildMarketPopupHtml } from './leafletPopupHtml';
+import { trackEvent } from '@/lib/analytics';
 import 'leaflet/dist/leaflet.css';
 
 // Fix for Leaflet marker icon issue in Next.js
@@ -164,6 +165,14 @@ export default function MarketMap({
         if (latitude && longitude) {
           const marker = L.marker([latitude, longitude]).addTo(map);
           marker.bindPopup(buildMarketPopupHtml({ name, city, state, slug: market.slug }));
+          marker.on('click', () => {
+            trackEvent('Map Marker Selected', {
+              market_id: market.id,
+              market_name: market.name.slice(0, 80),
+              country: market.country,
+              source_id: market.provenance?.source_id
+            });
+          });
 
           // Extend bounds to include this marker
           bounds.extend([latitude, longitude]);

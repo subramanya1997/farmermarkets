@@ -1,0 +1,55 @@
+name: Update official government market data
+
+on:
+  schedule:
+    - cron: '17 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: official-government-market-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - id: update_data
+        continue-on-error: true
+        run: npm run data:update
+
+      - run: npm run test:data
+
+      - run: npm run data:check
+
+      - run: npm run build
+
+      - name: Commit a validated snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/government_markets.json public/data/government_markets.manifest.json
+          if git diff --cached --quiet; then
+            echo "No generated data changes"
+          else
+            git commit -m "data: refresh official government markets"
+            git push
+          fi
+
+      - name: Report partial source failures
+        if: steps.update_data.outcome == 'failure'
+        run: |
+          echo "One or more sources failed. Successful sources were updated and last-good records were retained for failed sources."
+          exit 1
