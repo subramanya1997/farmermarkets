@@ -23,12 +23,12 @@ export default function PrivacyPage() {
               <div className="space-y-4 sm:space-y-6">
                 <h2 className="text-xl sm:text-2xl font-bold">Information We Collect</h2>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  When you allow analytics, we collect limited information about how the directory is used, including:
+                  We collect limited information about how the directory is used, including:
                 </p>
                 <ul className="list-disc pl-5 space-y-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
                   <li>An approximate country and state or region from an IP-based location lookup, used to sort nearby markets</li>
                   <li>Search terms, selected countries, filters, and structured survey answers used to improve market coverage</li>
-                  <li>Page views, device information, and aggregate usage statistics collected through Google Analytics and Vercel Web Analytics after consent</li>
+                  <li>Page views, device information, and aggregate usage statistics collected through Google Analytics and Vercel Web Analytics</li>
                 </ul>
               </div>
 
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
               <div className="space-y-4 sm:space-y-6">
                 <h2 className="text-xl sm:text-2xl font-bold">Cookies and Tracking</h2>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  With your permission, we use Google Analytics, Vercel Web Analytics, and limited browser storage to:
+                  We use Google Analytics, Vercel Web Analytics, and limited browser storage to:
                 </p>
                 <ul className="list-disc pl-5 space-y-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
                   <li>Remember your preferences</li>
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
                   Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery survey uses predefined answers and does not request contact information. Browser storage is used only to avoid showing the same survey repeatedly.
                 </p>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Analytics is disabled until you choose “Allow analytics.” You can decline it or reopen your choice through “Analytics settings” in the site footer. Approximate-location events may include a country or state/region, but analytics events do not include latitude or longitude.
+                  Analytics loads automatically when you visit the site. Approximate-location events may include a country or state/region, but analytics events do not include latitude or longitude.
                 </p>
               </div>
 

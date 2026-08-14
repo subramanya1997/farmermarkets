@@ -58,7 +58,7 @@ function googleEventName(name: string) {
 }
 
 export function trackEvent(name: string, properties: AnalyticsProperties = {}) {
-  if (typeof window === "undefined" || getAnalyticsConsent() !== "granted") return;
+  if (typeof window === "undefined") return;
 
   const compacted = compactProperties(properties);
   trackVercelEvent(name, compacted);
