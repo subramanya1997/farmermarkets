@@ -28,6 +28,7 @@ export default function PrivacyPage() {
                 <ul className="list-disc pl-5 space-y-2 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
                   <li>An approximate country and state or region from an IP-based location lookup, used to sort nearby markets</li>
                   <li>Search terms, selected countries, filters, and structured survey answers used to improve market coverage</li>
+                  <li>Optional name, organization, email address, phone number, and message when you ask us to contact you</li>
                   <li>Page views, device information, and aggregate usage statistics collected through Google Analytics and Vercel Web Analytics</li>
                 </ul>
               </div>
@@ -64,7 +65,7 @@ export default function PrivacyPage() {
                   <li>Prioritize new official data sources and directory features</li>
                 </ul>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery survey uses predefined answers and does not request contact information. Browser storage is used to avoid showing the same survey repeatedly.
+                  Search terms are truncated before analytics collection, and values that look like email addresses or phone numbers are replaced with a redacted marker. The discovery form may optionally collect contact details and a message so we can respond about listings, corrections, operations, data coverage, or partnerships. Those contact fields and messages are delivered privately through Resend to our designated inbox and are not sent to Google Analytics or Vercel Analytics. Analytics receives only non-identifying details such as the selected answer, country filter, help-topic count, and whether a contact method was provided. Browser storage is used to avoid showing the same form repeatedly.
                 </p>
                 <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
                   Google Analytics and Vercel Web Analytics load automatically on every visit. They collect page views and the interaction events listed above, and Google Analytics may store analytics cookies. The site does not display a separate analytics consent banner.

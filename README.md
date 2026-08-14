@@ -93,6 +93,9 @@ The app can run locally without required environment variables. Server-side API 
 | `VERCEL_URL` | Vercel-provided deployment hostname. |
 | `NEXT_PUBLIC_VERCEL_URL` | Optional public deployment hostname fallback. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional GA4 web-stream measurement ID override. Defaults to `G-S2P5DZTJC8`. |
+| `RESEND_API_KEY` | Server-only Resend API key used to deliver discovery requests. |
+| `DISCOVERY_FROM_EMAIL` | Verified sender used for discovery request emails. |
+| `DISCOVERY_NOTIFICATION_EMAIL` | Private inbox that receives discovery requests. |
 
 For local development, the app falls back to `http://localhost:3000`.
 
@@ -110,9 +113,9 @@ The deployed app sends the same normalized events to Vercel Web Analytics and Go
 - `Official Market Website Opened` and `Market Directions Opened`
 - `Approximate Location Resolved` or `Approximate Location Unavailable`, without latitude or longitude
 - `Navigation Selected`
-- `Discovery Survey Response`, using predefined answer IDs rather than free-form text
+- `Discovery Popup Opened`, `Discovery Popup Dismissed`, and `Discovery Survey Response`, using non-identifying fields only
 
-Search values that look like email addresses or phone numbers are replaced with `[redacted]`. The one-click discovery survey stores only an `answered` marker in the visitor's browser so it is not repeatedly displayed. The site does not display a separate analytics consent banner. Event reporting is available in Vercel when Web Analytics and custom events are enabled, and in the configured GA4 property after deployment.
+Search values that look like email addresses or phone numbers are replaced with `[redacted]`. The discovery modal can optionally collect a name, organization, email, phone number, and message. Those fields are sent server-side through Resend to the configured private inbox and are never included in Google or Vercel Analytics; analytics receives only answer IDs, counts, country filters, and boolean contact indicators. A `submitted` marker in browser storage prevents the modal from reappearing after a successful request. The site does not display a separate analytics consent banner. Event reporting is available in Vercel when Web Analytics and custom events are enabled, and in the configured GA4 property after deployment.
 
 ## Project Structure
 
@@ -120,6 +123,7 @@ Search values that look like email addresses or phone numbers are replaced with 
 src/
   app/
     api/markets/              Market list and market detail API routes
+    api/discovery/            Validated server-only Resend contact submissions
     markets/                  Market listing, detail, and state pages
     about/                    Static about page
     privacy/                  Static privacy page
