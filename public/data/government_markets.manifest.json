@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-19T08:29:08.562Z",
+  "generated_at": "2026-08-20T08:29:01.168Z",
   "status": "ok",
   "record_count": 1975,
   "sha256": "1422bff6087317d6343f0e291ca2f5cef31100ca3095007cacb435def58bf9ac",
@@ -19,7 +19,7 @@
       "catalog_url": "https://open.canada.ca/data/en/dataset/05f72a28-01f3-4d8e-b6e8-71d2d494ab22",
       "data_url": "https://services1.arcgis.com/pbmLC0kii9WWwA29/arcgis/rest/services/Farmers_Market_Master_2023/FeatureServer/12/query?where=1%3D1&outFields=*&returnGeometry=true&f=geojson&resultRecordCount=2000",
       "license": "Open Government Licence - Ontario",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "us_ny_farmers_markets",
@@ -35,7 +35,7 @@
       "catalog_url": "https://catalog.data.gov/dataset/farmers-markets-in-new-york-state",
       "data_url": "https://data.ny.gov/resource/qq4h-8p86.json?%24limit=50000",
       "license": "Public data published by New York State",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "us_dc_farmers_markets",
@@ -51,7 +51,7 @@
       "catalog_url": "https://catalog.data.gov/dataset/farmers-market-locations",
       "data_url": "https://opendata.dc.gov/api/download/v1/items/f2e1c2ef9eb44f2899f4a310a80ecec9/geojson?layers=2",
       "license": "District of Columbia open data terms",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "us_ca_wic_farmers_markets",
@@ -67,7 +67,7 @@
       "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
       "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
       "license": "Creative Commons Attribution",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "fr_lyon_market_instances",
@@ -83,7 +83,7 @@
       "catalog_url": "https://www.data.gouv.fr/datasets/instances-de-marches-forains-sur-le-territoire-de-la-metropole-de-lyon",
       "data_url": "https://data.grandlyon.com/geoserver/metropole-de-lyon/ows?SERVICE=WFS&VERSION=2.0.0&request=GetFeature&typename=metropole-de-lyon%3Aeco_economie.ecomarcheinstance_latest&outputFormat=application%2Fjson&SRSNAME=EPSG%3A4326",
       "license": "Licence Ouverte 2.0",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "fr_toulouse_food_markets",
@@ -99,7 +99,7 @@
       "catalog_url": "https://data.toulouse-metropole.fr/explore/dataset/marches-couverts-et-de-plein-vent/",
       "data_url": "https://data.toulouse-metropole.fr/api/explore/v2.1/catalog/datasets/marches-couverts-et-de-plein-vent/exports/geojson",
       "license": "Licence Ouverte 2.0",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "be_brussels_food_markets",
@@ -115,7 +115,7 @@
       "catalog_url": "https://opendata.brussels.be/explore/dataset/marches-alimentaires-region-bruxelloise/information/",
       "data_url": "https://opendata.brussels.be/api/explore/v2.1/catalog/datasets/marches-alimentaires-region-bruxelloise/exports/geojson",
       "license": "Creative Commons Attribution 4.0",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "ie_dlr_coco_markets",
@@ -131,7 +131,7 @@
       "catalog_url": "https://data.smartdublin.ie/dataset/coco-markets-dlr",
       "data_url": "https://data.smartdublin.ie/dataset/bce90e0c-2c64-4321-bcd6-8370d9bf415e/resource/b3f9069d-5fc2-4228-9c6d-69506ccf9552/download/dlr_markets.geojson",
       "license": "Creative Commons Attribution 4.0",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "nz_upper_hutt_food_coops",
@@ -147,7 +147,7 @@
       "catalog_url": "https://catalogue.data.govt.nz/dataset/food-cooperatives",
       "data_url": "https://maps.upperhutt.govt.nz/arcgis/rest/services/Community_Information/FeatureServer/1/query?where=1%3D1&outFields=*&returnGeometry=true&f=geojson",
       "license": "Creative Commons Attribution 4.0",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "nz_upper_hutt_mara_kai",
@@ -163,7 +163,7 @@
       "catalog_url": "https://catalogue.data.govt.nz/dataset/mara-kai-community-gardens",
       "data_url": "https://maps.upperhutt.govt.nz/arcgis/rest/services/Community_Information/FeatureServer/3/query?where=1%3D1&outFields=*&returnGeometry=true&f=geojson",
       "license": "Creative Commons Attribution 4.0",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "hk_fehd_public_markets_hong_kong",
@@ -172,14 +172,14 @@
       "country": "Hong Kong",
       "country_code": "HK",
       "region": "Hong Kong Island",
-      "status": "updated",
+      "status": "unchanged",
       "record_count": 26,
       "previous_record_count": 26,
       "sha256": "39118d28eb90c1a9975225d4a26b9c362a37fdea80c3e3d67ce55a9f740ffbd6",
       "catalog_url": "https://www.fehd.gov.hk/english/pleasant_environment/tidy_market/Markets_CFC_list.html",
       "data_url": "https://www.fehd.gov.hk/english/map/getMapData.php?type=market&area=hk",
       "license": "Hong Kong Government open data terms",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "hk_fehd_public_markets_kowloon",
@@ -195,7 +195,7 @@
       "catalog_url": "https://www.fehd.gov.hk/english/pleasant_environment/tidy_market/Markets_CFC_list.html",
       "data_url": "https://www.fehd.gov.hk/english/map/getMapData.php?type=market&area=kln",
       "license": "Hong Kong Government open data terms",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "hk_fehd_public_markets_new_territories",
@@ -211,7 +211,7 @@
       "catalog_url": "https://www.fehd.gov.hk/english/pleasant_environment/tidy_market/Markets_CFC_list.html",
       "data_url": "https://www.fehd.gov.hk/english/map/getMapData.php?type=market&area=nt",
       "license": "Hong Kong Government open data terms",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     },
     {
       "id": "sg_nea_hawker_centres",
@@ -227,7 +227,7 @@
       "catalog_url": "https://data.gov.sg/datasets/d_4a086da0a5553be1d89383cd90d07ecd/view",
       "data_url": "https://api-open.data.gov.sg/v1/public/api/datasets/d_4a086da0a5553be1d89383cd90d07ecd/poll-download",
       "license": "Singapore Open Data Licence",
-      "retrieved_at": "2026-08-19T08:29:08.562Z"
+      "retrieved_at": "2026-08-20T08:29:01.168Z"
     }
   ],
   "disabled_sources": [
