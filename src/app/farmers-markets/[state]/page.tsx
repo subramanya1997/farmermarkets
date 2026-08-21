@@ -168,7 +168,7 @@ export default async function StateHubPage({ params }: StatePageProps) {
                         {market.name}
                       </Link>
                       <span className="text-zinc-600 dark:text-zinc-400">
-                        {' — '}
+                        {' - '}
                         <Link href={market.cityHref} className="hover:underline">
                           {market.cityName}
                         </Link>

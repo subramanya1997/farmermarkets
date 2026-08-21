@@ -55,7 +55,7 @@ function assertNoEmptyValues(value: unknown, path = '$'): void {
 }
 
 /* ------------------------------------------------------------------ *
- * Hours — the real formats in the two datasets
+ * Hours - the real formats in the two datasets
  * ------------------------------------------------------------------ */
 
 test('parses the clock formats the datasets actually ship', () => {
@@ -85,7 +85,7 @@ test('refuses to read a date span or an ambiguous number pair as times', () => {
   assert.equal(parseHourRange('Year Round'), undefined);
   assert.equal(parseHourRange(''), undefined);
   assert.equal(parseHourRange(undefined), undefined);
-  // Wraps past midnight — not expressible as one specification.
+  // Wraps past midnight - not expressible as one specification.
   assert.equal(parseHourRange('6:00 a.m. to 2:00 a.m.'), undefined);
 });
 
@@ -99,7 +99,7 @@ test('maps month ranges to ISO dates in the current or next season year', () => 
     validFrom: '2026-05-01',
     validThrough: '2026-10-31',
   });
-  assert.deepEqual(parseSeasonRange('May – November', now), {
+  assert.deepEqual(parseSeasonRange('May - November', now), {
     validFrom: '2026-05-01',
     validThrough: '2026-11-30',
   });
@@ -324,7 +324,7 @@ test('asks only the questions the record can answer', () => {
   ]);
   assert.equal(
     faqs[0].answer,
-    'Brighton Farmers Market is open on Sundays. The season runs May–Oct.'
+    'Brighton Farmers Market is open on Sundays. The season runs May-Oct.'
   );
   assert.equal(faqs[2].answer, 'Brighton Farmers Market is located at 1150 Winton Road South, Rochester, NY 14618.');
   assert.equal(faqs[3].answer, 'Yes. Brighton Farmers Market accepts SNAP/EBT benefits.');

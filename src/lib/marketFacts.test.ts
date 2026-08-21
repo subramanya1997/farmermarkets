@@ -96,7 +96,7 @@ test('fact rows carry only the fields the record fills', () => {
 
   const byTerm = new Map(rows.map((row) => [row.term, row.values]));
   assert.deepEqual(byTerm.get('Days'), ['Saturday']);
-  assert.deepEqual(byTerm.get('Hours'), ['8am–1pm']);
+  assert.deepEqual(byTerm.get('Hours'), ['8am-1pm']);
   assert.deepEqual(byTerm.get('Vendors'), ['24']);
   assert.deepEqual(byTerm.get('Setting'), ['Outdoor']);
   assert.deepEqual(byTerm.get('Amenities'), ['Parking']);
@@ -239,7 +239,7 @@ test('the summary is built from the fields the record has', () => {
 
   assertWellFormed(sentences);
   assert.equal(sentences[0], 'Durham Farmers Market is at 501 Foster St in Durham, NC.');
-  assert.equal(sentences[1], 'It is open Saturdays from 8am–1pm.');
+  assert.equal(sentences[1], 'It is open Saturdays from 8am-1pm.');
   assert.equal(sentences[2], '24 vendors are listed at this outdoor market.');
   assert.equal(sentences[3], 'It accepts SNAP/EBT and WIC.');
 });

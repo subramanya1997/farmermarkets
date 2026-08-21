@@ -77,19 +77,18 @@ const MAX_SITEMAP_CHUNK_URLS = 5000;
 /**
  * Fragments that only ever appear when a template interpolated a field the
  * record does not have. Each one is a bug we have actually shipped.
- *
- * Deliberately not on this list: " , " and runs of whitespace. Those do occur —
- * "Open Mon-Fri 4pm–7pm , Sat/Sun 11am–3pm" is a real description today —
- * but they come from punctuation inside the upstream schedule string, not from
- * an empty field, so failing on them would make this suite red about something
- * it is not testing.
  */
 const BANNED_DESCRIPTION_FRAGMENTS = [
   'Find fresh .',
   ' in .',
   ' at .',
+  ' , ',
   'undefined',
   'null ',
+  // Generated copy uses plain hyphens; an en/em dash means a builder regressed
+  // or raw upstream text leaked past `clean()` (see docs/seo-decisions.md).
+  '–',
+  '—',
 ];
 
 /* ------------------------------------------------------------------ *
@@ -150,7 +149,7 @@ const SAMPLE = [
     kind: 'market (with hours)',
     minInternalLinks: 20, // renders 35
     robots: 'indexable',
-    mustContain: ['4pm–7pm'],
+    mustContain: ['4pm-7pm'],
   },
   {
     // A legacy record the geo index could not place in any city (25 of them).

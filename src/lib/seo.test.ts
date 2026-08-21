@@ -21,7 +21,7 @@ const { stateTitle, stateDescription } = seo;
 /** Every title has to survive the SERP cut and read as a finished phrase. */
 function assertWellFormedTitle(title: string) {
   assert.ok(title.length <= TITLE_MAX_LENGTH, `title too long (${title.length}): ${title}`);
-  assert.doesNotMatch(title, /[,\-—]\s*$/, `title ends on a separator: ${title}`);
+  assert.doesNotMatch(title, /[,\--]\s*$/, `title ends on a separator: ${title}`);
   assert.doesNotMatch(title, /\b(in|at|of|and)\s*$/i, `title ends on a preposition: ${title}`);
   assert.doesNotMatch(title, /\s{2,}/, `title has a collapsed empty slot: ${title}`);
 }
@@ -59,7 +59,7 @@ const durham = {
 test('full record: title keeps name and abbreviated location, description names place, hours, season and programs', () => {
   const title = marketTitle(durham);
   assertWellFormedTitle(title);
-  assert.equal(title, "Durham Farmers' Market — Durham, NC");
+  assert.equal(title, "Durham Farmers' Market - Durham, NC");
 
   const description = marketDescription(durham);
   assertWellFormedDescription(description);
@@ -98,7 +98,7 @@ test('record with nothing but a name gets a self-contained sentence', () => {
   const market = { name: 'Beaumont Growers' };
   const title = marketTitle(market);
   assertWellFormedTitle(title);
-  assert.equal(title, 'Beaumont Growers — Farmers Market');
+  assert.equal(title, 'Beaumont Growers - Farmers Market');
 
   const description = marketDescription(market);
   assertWellFormedDescription(description);
@@ -123,7 +123,7 @@ test('city and state are recovered from the address when the fields are null', (
     city: 'Durham',
     state: 'CT',
   });
-  assert.equal(marketTitle(market), "Durham Farmers' Market — Durham, CT");
+  assert.equal(marketTitle(market), "Durham Farmers' Market - Durham, CT");
   assert.match(marketDescription(market), /^Durham Farmers' Market at Town Green, Durham CT\./);
 });
 
@@ -168,7 +168,7 @@ test('international record keeps its own wording and localized schedule', () => 
   const description = marketDescription(market);
   assertWellFormedDescription(description);
   assert.match(description, /Avenue de Mai 2, Woluwe-Saint-Lambert, Brussels-Capital Region\./);
-  assert.match(description, /Open Samedi 8:30–12:00\./);
+  assert.match(description, /Open Samedi 8:30-12:00\./);
   // The Dutch duplicate of the same slot is not repeated.
   assert.doesNotMatch(description, /Zaterdag/);
 });
@@ -188,20 +188,20 @@ test('long name degrades by dropping the suffix, then the location, never mid-wo
   const mediumName = 'Chestnut Hill Growers Collective';
   const medium = marketTitle({ ...long, name: mediumName });
   assertWellFormedTitle(medium);
-  // "… — Pittsburgh, PA Farmers Market" would overflow, so the keyword suffix
+  // "… - Pittsburgh, PA Farmers Market" would overflow, so the keyword suffix
   // goes first and the location survives.
-  assert.equal(medium, `${mediumName} — Pittsburgh, PA`);
+  assert.equal(medium, `${mediumName} - Pittsburgh, PA`);
 });
 
 test('a name that already says "market" never gets a second "Farmers Market"', () => {
   assert.equal(
     marketTitle({ name: 'Union Square Greenmarket', city: 'New York', state: 'NY', country_code: 'US' }),
-    'Union Square Greenmarket — New York, NY'
+    'Union Square Greenmarket - New York, NY'
   );
   assert.equal(marketTitle({ name: 'The Public Market' }), 'The Public Market');
   assert.doesNotMatch(marketTitle({ name: 'Ann Arbor Farmers Market' }), /Market.*Market/);
   // A name without the word does get the keyword suffix.
-  assert.equal(marketTitle({ name: 'Grange Hall Produce Stand' }), 'Grange Hall Produce Stand — Farmers Market');
+  assert.equal(marketTitle({ name: 'Grange Hall Produce Stand' }), 'Grange Hall Produce Stand - Farmers Market');
 });
 
 test('state abbreviations map both directions and ignore non-US regions', () => {
@@ -228,13 +228,13 @@ test('schedules are normalized from every shape in the data', () => {
   assert.equal(scheduleClause({ name: 'x', days: ['saturday', 'wednesday'] }), 'Open Saturdays and Wednesdays');
   assert.equal(
     scheduleClause({ name: 'x', days: ['saturday'], season: 'Saturdays 8am to 1pm' }),
-    'Open Saturdays 8am–1pm'
+    'Open Saturdays 8am-1pm'
   );
-  assert.equal(scheduleClause({ name: 'x', days: ['Friday 11:00 AM - 03:30 PM'] }), 'Open Friday 11am–3:30pm');
+  assert.equal(scheduleClause({ name: 'x', days: ['Friday 11:00 AM - 03:30 PM'] }), 'Open Friday 11am-3:30pm');
   assert.equal(scheduleClause({ name: 'x', season: 'summer, fall' }), undefined);
   assert.equal(scheduleClause({ name: 'x', season: 'year-round' }), undefined);
   assert.equal(scheduleClause({ name: 'x' }), undefined);
-  assert.equal(formatSchedule('Monday to Sunday 9am to 5pm'), 'Monday to Sunday 9am–5pm');
+  assert.equal(formatSchedule('Monday to Sunday 9am to 5pm'), 'Monday to Sunday 9am-5pm');
 });
 
 test('a city/state tail glued to the street line is not repeated in the snippet', () => {
@@ -257,16 +257,16 @@ test('a city/state tail glued to the street line is not repeated in the snippet'
     zip_code: '77707',
     country_code: 'US',
   };
-  assert.equal(marketTitle(noCommas), "Beaumont Farmers' Market — Beaumont, TX");
+  assert.equal(marketTitle(noCommas), "Beaumont Farmers' Market - Beaumont, TX");
   assert.match(marketDescription(noCommas), /^Beaumont Farmers' Market in Beaumont TX\./);
 });
 
 test('an all-caps name is un-shouted, but acronyms keep their case', () => {
   assert.equal(
     marketTitle({ name: 'MONTEVALLO FARMERS MARKET', city: 'Montevallo', state: 'AL', country_code: 'US' }),
-    'Montevallo Farmers Market — Montevallo, AL'
+    'Montevallo Farmers Market - Montevallo, AL'
   );
-  assert.equal(marketTitle({ name: 'CFFMA' }), 'CFFMA — Farmers Market');
+  assert.equal(marketTitle({ name: 'CFFMA' }), 'CFFMA - Farmers Market');
 });
 
 test('on-page location line spells the state out and never duplicates it', () => {
@@ -327,9 +327,9 @@ test('a market reports its weekdays from days and from season, in week order', (
 });
 
 test('hours are only reported when the record states clock times', () => {
-  assert.equal(marketHours({ name: 'x', season: 'Saturdays 8am to 1pm' }), '8am–1pm');
-  assert.equal(marketHours({ name: 'x', days: ['Samedi 08:30:00 - 12:00:00'] }), '8:30–12:00');
-  assert.equal(marketHours({ name: 'x', days: ['Friday 11:00 AM - 03:30 PM'] }), '11am–3:30pm');
+  assert.equal(marketHours({ name: 'x', season: 'Saturdays 8am to 1pm' }), '8am-1pm');
+  assert.equal(marketHours({ name: 'x', days: ['Samedi 08:30:00 - 12:00:00'] }), '8:30-12:00');
+  assert.equal(marketHours({ name: 'x', days: ['Friday 11:00 AM - 03:30 PM'] }), '11am-3:30pm');
   // Date ranges and bare weekdays are not hours.
   assert.equal(marketHours({ name: 'x', season: 'June 1-October 31' }), undefined);
   assert.equal(marketHours({ name: 'x', days: ['saturday'] }), undefined);
@@ -340,7 +340,7 @@ test('the season column carries seasons, not the weekly schedule', () => {
   assert.equal(marketSeasonLabel({ name: 'x', season: 'Year Round' }), 'Year-round');
   assert.equal(marketSeasonLabel({ name: 'x', season: 'year-round' }), 'Year-round');
   assert.equal(marketSeasonLabel({ name: 'x', season: 'summer, fall' }), 'Summer, Fall');
-  assert.equal(marketSeasonLabel({ name: 'x', season: 'May-Oct' }), 'May–Oct');
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'May-Oct' }), 'May-Oct');
   // Already rendered in the Days/Hours columns, so it is not repeated here.
   assert.equal(marketSeasonLabel({ name: 'x', season: 'Saturdays 8am to 1pm' }), undefined);
   assert.equal(marketSeasonLabel({ name: 'x' }), undefined);
@@ -349,11 +349,11 @@ test('the season column carries seasons, not the weekly schedule', () => {
 test('city title carries the count and degrades one clause at a time', () => {
   const title = cityTitle({ city: 'Colorado Springs', region: 'CO', marketCount: 10 });
   assertWellFormedTitle(title);
-  assert.equal(title, 'Farmers Markets in Colorado Springs, CO — 10 Local Markets');
+  assert.equal(title, 'Farmers Markets in Colorado Springs, CO - 10 Local Markets');
 
   assert.equal(
     cityTitle({ city: 'Durham', region: 'NC', marketCount: 1 }),
-    'Farmers Markets in Durham, NC — 1 Local Market'
+    'Farmers Markets in Durham, NC - 1 Local Market'
   );
 
   // A long city/region pair drops the count, then the region, rather than
@@ -364,7 +364,7 @@ test('city title carries the count and degrades one clause at a time', () => {
     marketCount: 3,
   });
   assertWellFormedTitle(long);
-  assert.equal(long, 'Farmers Markets in Woluwe-Saint-Lambert — 3 Local Markets');
+  assert.equal(long, 'Farmers Markets in Woluwe-Saint-Lambert - 3 Local Markets');
 
   const veryLong = cityTitle({
     city: 'Sault Sainte Marie Charter Township',
@@ -425,7 +425,7 @@ test('city description answers the count question first and only adds true claus
 test('state title carries both counts and degrades one clause at a time', () => {
   const full = stateTitle({ state: 'Colorado', marketCount: 144, cityCount: 80 });
   assertWellFormedTitle(full);
-  assert.equal(full, 'Farmers Markets in Colorado — 144 Markets in 80 Cities');
+  assert.equal(full, 'Farmers Markets in Colorado - 144 Markets in 80 Cities');
 
   // A long region name loses the city clause, then the market clause, rather
   // than being cut mid-phrase.
@@ -440,7 +440,7 @@ test('state title carries both counts and degrades one clause at a time', () => 
   // Singulars stay grammatical.
   const one = stateTitle({ state: 'Ireland', marketCount: 1, cityCount: 1 });
   assertWellFormedTitle(one);
-  assert.equal(one, 'Farmers Markets in Ireland — 1 Market in 1 City');
+  assert.equal(one, 'Farmers Markets in Ireland - 1 Market in 1 City');
 
   assert.equal(stateTitle({ state: '  ', marketCount: 0, cityCount: 0 }), 'Farmers Markets');
 });
@@ -477,4 +477,35 @@ test('state description answers the counts first and only adds true clauses', ()
     sparse,
     'There is 1 farmers market in Ireland. Browse every city with addresses, days and hours.'
   );
+});
+
+test('upstream punctuation is normalized: no space before commas, no en/em dashes', () => {
+  // Real record shape: NY farm stands pack the whole week into one `days`
+  // string with its own " , " (gov:us_ny_farmers_markets, 5 records).
+  const description = marketDescription({
+    name: '13 Petals Roadside Farm Stand',
+    address: '23 Mergner Road',
+    city: 'Fort Johnson',
+    state: 'NY',
+    days: ['Mon-Fri 4pm-7pm , Sat/Sun 11am-3pm'],
+    season: 'May 1-December 1',
+    fmnp: true,
+  });
+  assert.doesNotMatch(description, / [,.]/, `space before punctuation: ${description}`);
+  assert.match(description, /4pm-7pm, Sat\/Sun 11am-3pm/);
+
+  // One record's *name* carries the same flaw ("Agricenter International , Farmers Market").
+  const title = marketTitle({ name: 'Agricenter International , Farmers Market', city: 'Memphis', state: 'TN' });
+  assert.doesNotMatch(title, / ,/);
+
+  // Generated copy never emits en/em dashes; upstream ones become hyphens.
+  const dashed = marketDescription({
+    name: 'Riverside Market — Main Stand',
+    city: 'Dayton',
+    state: 'OH',
+    days: ['saturday'],
+    season: '9am–1pm Saturdays',
+  });
+  assert.doesNotMatch(dashed, /[–—]/, `en/em dash in copy: ${dashed}`);
+  assert.doesNotMatch(marketTitle({ name: 'Riverside Market — Main Stand', city: 'Dayton', state: 'OH' }), /[–—]/);
 });

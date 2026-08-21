@@ -62,7 +62,7 @@ test('a record dropped from the USDA directory is unverified, whatever its date'
   assert.equal(result.level, 'unverified');
   assert.equal(
     result.notice,
-    'This listing is no longer published in the USDA directory and may be closed. It was last verified June 1, 2025 — please check before visiting.'
+    'This listing is no longer published in the USDA directory and may be closed. It was last verified June 1, 2025, so please check before visiting.'
   );
 });
 

@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   };
 }
 
-function cell(value: string | undefined, fallback = '—') {
+function cell(value: string | undefined, fallback = '-') {
   return value && value.trim() ? value : fallback;
 }
 
@@ -120,7 +120,7 @@ function MarketTable({ data }: { data: CityPageData }) {
               )}
               {columns.snap && (
                 <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
-                  {row.snap ? 'Accepted' : '—'}
+                  {row.snap ? 'Accepted' : '-'}
                 </td>
               )}
             </tr>
@@ -139,7 +139,7 @@ function DayRow({ row }: { row: CityMarketRow }) {
       <Link href={row.href} className="font-medium text-green-700 hover:underline dark:text-green-500">
         {row.name}
       </Link>
-      {detail && <span className="text-zinc-600 dark:text-zinc-400"> — {detail}</span>}
+      {detail && <span className="text-zinc-600 dark:text-zinc-400"> - {detail}</span>}
     </li>
   );
 }
@@ -274,7 +274,7 @@ export default async function CityPage({ params }: CityPageProps) {
 
             <div>
               <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
-                Frequently asked questions
+                Frequently Asked Questions
               </h2>
               <dl className="mt-4 space-y-5">
                 {data.faqs.map((faq) => (

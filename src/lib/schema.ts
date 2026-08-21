@@ -649,7 +649,7 @@ export function marketSchemaGraph(
     nodes.push({
       '@type': 'Event',
       '@id': `${url}#event`,
-      name: `${name} — Weekly Farmers Market`,
+      name: `${name} weekly market day`,
       url,
       image: imageUrl,
       description: marketDescription(market),

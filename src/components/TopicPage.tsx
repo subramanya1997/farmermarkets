@@ -191,7 +191,7 @@ export function TopicDayTable({
                 {row.count.toLocaleString('en-US')}
               </td>
               <td className="px-4 py-2.5 text-right text-zinc-600 tabular-nums dark:text-zinc-400">
-                {row.share === undefined ? '—' : `${row.share}%`}
+                {row.share === undefined ? '-' : `${row.share}%`}
               </td>
             </tr>
           ))}
@@ -229,7 +229,7 @@ export function TopicMarketList({ markets }: { markets: TopicMarketRow[] }) {
             <span className="text-zinc-600 dark:text-zinc-400">
               {market.placeLabel && (
                 <>
-                  {' — '}
+                  {' - '}
                   {market.placeHref ? (
                     <Link href={market.placeHref} className="hover:underline">
                       {market.placeLabel}
@@ -254,7 +254,7 @@ function TopicFaqs({ data }: { data: TopicPageData }) {
 
   return (
     <section>
-      <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Frequently asked questions</h2>
+      <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Frequently Asked Questions</h2>
       <dl className="mt-4 space-y-5">
         {data.faqs.map((faq) => (
           <div key={faq.question}>

@@ -121,9 +121,9 @@ export function marketTitle(market: MarketSeoRecord): string {
   const needsKeyword = !nameSaysMarket(name);
 
   const candidates = [
-    label && needsKeyword ? `${name} — ${label} Farmers Market` : undefined,
-    label ? `${name} — ${label}` : undefined,
-    needsKeyword ? `${name} — Farmers Market` : undefined,
+    label && needsKeyword ? `${name} - ${label} Farmers Market` : undefined,
+    label ? `${name} - ${label}` : undefined,
+    needsKeyword ? `${name} - Farmers Market` : undefined,
     name,
   ].filter((candidate): candidate is string => Boolean(candidate));
 
@@ -172,7 +172,7 @@ export function formatSchedule(value: string): string {
     // en dash between two times, but never for "Monday to Sunday"
     .replace(
       /(\d{1,2}(?::\d{2})?(?:\s?[ap]m)?)\s*(?:-|–|to|tp)\s*(\d{1,2}(?::\d{2})?(?:\s?[ap]m)?)/gi,
-      '$1–$2'
+      '$1-$2'
     )
     .trim();
 }
@@ -487,7 +487,7 @@ export function marketHours(market: MarketSeoRecord): string | undefined {
     if (!text) continue;
     const match = TIME_RANGE_RE.exec(text);
     if (!match || !isClockTime(match[1]) || !isClockTime(match[2])) continue;
-    return formatSchedule(`${match[1].trim()}–${match[2].trim()}`);
+    return formatSchedule(`${match[1].trim()}-${match[2].trim()}`);
   }
   return undefined;
 }
@@ -517,7 +517,7 @@ export function marketSeasonLabel(market: MarketSeoRecord): string | undefined {
   if (weekdaysFromText(season).length > 0) return undefined;
 
   // "May-Oct" / "June 1-October 31" — an en dash reads better between months.
-  return formatSchedule(season).replace(/([A-Za-z0-9])\s*-\s*([A-Za-z])/g, '$1–$2');
+  return formatSchedule(season).replace(/([A-Za-z0-9])\s*-\s*([A-Za-z])/g, '$1-$2');
 }
 
 /** Inputs for the city page's title tag. */
@@ -544,9 +544,9 @@ export function cityTitle({ city, region, marketCount }: CityTitleInput): string
   const count = `${marketCount} Local Market${marketCount === 1 ? '' : 's'}`;
 
   const candidates = [
-    `Farmers Markets in ${place} — ${count}`,
+    `Farmers Markets in ${place} - ${count}`,
     `Farmers Markets in ${place}`,
-    `Farmers Markets in ${name} — ${count}`,
+    `Farmers Markets in ${name} - ${count}`,
     `Farmers Markets in ${name}`,
   ];
 
@@ -640,8 +640,8 @@ export function stateTitle({ state, marketCount, cityCount }: StateTitleInput): 
   const candidates = [
     // A region whose markets all failed to resolve to a city has no city
     // clause to offer; "in 0 Cities" is worse than saying nothing.
-    cityCount > 0 ? `Farmers Markets in ${name} — ${markets} in ${cities}` : undefined,
-    `Farmers Markets in ${name} — ${markets}`,
+    cityCount > 0 ? `Farmers Markets in ${name} - ${markets} in ${cities}` : undefined,
+    `Farmers Markets in ${name} - ${markets}`,
     `Farmers Markets in ${name}`,
   ].filter((candidate): candidate is string => Boolean(candidate));
 
