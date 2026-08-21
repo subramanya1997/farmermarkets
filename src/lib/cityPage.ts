@@ -17,6 +17,7 @@ import { getCity, getStateByCode, type GeoCity, type GeoState } from './geoIndex
 import { statePath } from './statePage';
 import { getMarketBySlug, type FarmerMarket } from './data';
 import { resolveLocation } from './geo';
+import { newerInstant, toIsoInstant } from './dates';
 import {
   WEEKDAY_NAMES,
   cityDescription,
@@ -94,6 +95,16 @@ export interface CityPageData {
   opener: string;
   /** True when the city is too thin to be worth indexing (see `isThin`). */
   noindex: boolean;
+  /**
+   * Newest `last_updated` among the markets this page lists, as an ISO
+   * instant, or undefined when not one of them carries a usable date.
+   *
+   * This is the same value `sitemapEntries.ts` publishes as the page's
+   * `lastmod` — deliberately, so the `dateModified` in the page's JSON-LD and
+   * the sitemap agree rather than offering a crawler two different dates for
+   * one URL. Both derive from `city.market_slugs`, so they cannot drift.
+   */
+  lastModified?: string;
 }
 
 /** Canonical path for a city page. */
@@ -416,6 +427,11 @@ export async function getCityPageData(
   const snapRows = rows.filter((row) => row.snap);
   const notable = rows[0]?.completeness > 0 ? rows[0] : undefined;
 
+  let lastModified: string | undefined;
+  for (const market of markets) {
+    lastModified = newerInstant(lastModified, toIsoInstant(market.last_updated));
+  }
+
   const isUnitedStates = state.country_code === 'US';
   const regionShort = state.code ?? state.name;
   const regionFull = state.name;
@@ -470,5 +486,6 @@ export async function getCityPageData(
       dayGroups,
     }),
     noindex: isThin(rows, markets),
+    lastModified,
   };
 }

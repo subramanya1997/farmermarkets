@@ -24,7 +24,13 @@
  *   - the legacy redirects (numeric market IDs, `/markets/state/*`, uppercase
  *     paths) degrading into 404s and dropping their accumulated equity;
  *   - a sitemap chunk that grew past the 5,000-URL cap, started advertising a
- *     retired route, or gained a fetch-time `lastmod`.
+ *     retired route, or gained a fetch-time `lastmod`;
+ *   - a page with no H1, more than one H1, or an H1 that stopped naming what
+ *     the page is about (the homepage's used to be a slogan);
+ *   - a hub page whose JSON-LD `dateModified` went missing or drifted away
+ *     from the `lastmod` the sitemap publishes for the same URL;
+ *   - `robots.txt` losing its sitemap line, or quietly gaining a `Disallow`
+ *     that shuts a crawler out of the directory.
  *
  * The sample is fixed and deterministic on purpose. A random sample fails
  * differently on every run and teaches you nothing; these URLs were selected
@@ -97,6 +103,10 @@ const BANNED_DESCRIPTION_FRAGMENTS = [
  * counts in the comments) so a normal data refresh never trips it, while the
  * loss of a whole navigation block does.
  *
+ * `h1Contains` asserts a case-insensitive substring of the page's single H1.
+ * `expectDateModified` says the page must publish a JSON-LD `dateModified`,
+ * which the sitemap block then cross-checks against that URL's `lastmod`.
+ *
  * `robots` is one of:
  *   'indexable'      — no robots meta may say noindex
  *   'noindex,follow' — deliberately unindexed but still crawled
@@ -108,6 +118,9 @@ const SAMPLE = [
     kind: 'home',
     minInternalLinks: 20, // renders 37
     robots: 'indexable',
+    // The site's most weighted heading has to name the site's subject. It read
+    // "Fresh from Farm to Your Table" until T18 — a slogan with no entity in it.
+    h1Contains: 'farmers market',
   },
   {
     path: '/markets',
@@ -183,12 +196,14 @@ const SAMPLE = [
     kind: 'city (small)',
     minInternalLinks: 25, // renders 47
     robots: 'indexable',
+    expectDateModified: true,
   },
   {
     path: '/farmers-markets/alabama/birmingham',
     kind: 'city (10 markets)',
     minInternalLinks: 25, // renders 55
     robots: 'indexable',
+    expectDateModified: true,
   },
   {
     // One market, no schedule, no description of its own: `isThin` in
@@ -207,6 +222,7 @@ const SAMPLE = [
     kind: 'state hub',
     minInternalLinks: 60, // renders 170
     robots: 'indexable',
+    expectDateModified: true,
   },
   {
     // The largest hub (965 markets across 397 cities) — the response-size
@@ -215,6 +231,7 @@ const SAMPLE = [
     kind: 'state hub (largest)',
     minInternalLinks: 60, // renders 434
     robots: 'indexable',
+    expectDateModified: true,
   },
 
   /* --- Two topic pages ---------------------------------------------- */
@@ -223,12 +240,14 @@ const SAMPLE = [
     kind: 'topic page',
     minInternalLinks: 40, // renders 77
     robots: 'indexable',
+    expectDateModified: true,
   },
   {
     path: '/farmers-markets/saturday',
     kind: 'topic page',
     minInternalLinks: 40, // renders 77
     robots: 'indexable',
+    expectDateModified: true,
   },
 
   /* --- The dataset page --------------------------------------------- */
@@ -325,6 +344,19 @@ function canonicalHrefs(html) {
   return [
     ...html.matchAll(/<link[^>]+rel=["']canonical["'][^>]*href=["']([^"']+)["']/gi),
   ].map((match) => decodeEntities(match[1]).trim());
+}
+
+/**
+ * The text of every `<h1>` on the page, tags stripped and entities decoded.
+ *
+ * Crude on purpose: these pages render their H1 as a single element with plain
+ * text (or a gradient span) inside it, so a regex is enough and pulling in an
+ * HTML parser for one check is not worth the dependency.
+ */
+function h1Texts(html) {
+  return [...html.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map((match) =>
+    decodeEntities(match[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
+  );
 }
 
 /** Distinct root-relative hrefs — the crawl paths out of this page. */
@@ -480,6 +512,15 @@ function printReport() {
 
 let homeTitle = '';
 
+/**
+ * path → the `dateModified` the page published, filled in as pages are
+ * checked and read back by the sitemap block, which asserts each one equals
+ * the `lastmod` the sitemap advertises for the same URL. Two different dates
+ * for one URL is worse than one date: it tells a crawler the page's own
+ * markup and the site's own sitemap disagree.
+ */
+const publishedDateModified = new Map();
+
 function assertPage(page, response) {
   const { path, kind } = page;
   const group = path;
@@ -587,6 +628,47 @@ function assertPage(page, response) {
     );
     assert.deepEqual(empties, [], `empty JSON-LD values: ${empties.join(', ')}`);
   });
+
+  check(group, 'exactly one H1', () => {
+    const headings = h1Texts(html);
+    assert.equal(
+      headings.length,
+      1,
+      `expected 1 <h1>, found ${headings.length}: ${JSON.stringify(headings)}`
+    );
+    assert.ok(headings[0].length > 0, 'the <h1> is empty');
+  });
+
+  if (page.h1Contains) {
+    check(group, `H1 names "${page.h1Contains}"`, () => {
+      const [heading = ''] = h1Texts(html);
+      assert.ok(
+        heading.toLowerCase().includes(page.h1Contains.toLowerCase()),
+        `the H1 is "${heading}" — it does not name "${page.h1Contains}"`
+      );
+    });
+  }
+
+  if (page.expectDateModified) {
+    check(group, 'publishes a JSON-LD dateModified', () => {
+      const dates = parsedNodes
+        .map((node) => node?.dateModified)
+        .filter((value) => typeof value === 'string' && value.length > 0);
+      assert.ok(dates.length > 0, 'no node on the page carries a dateModified');
+      // One page, one answer: several nodes may repeat the date, none may
+      // contradict it.
+      assert.equal(
+        new Set(dates).size,
+        1,
+        `the page publishes ${new Set(dates).size} different dateModified values: ${[...new Set(dates)].join(', ')}`
+      );
+      assert.ok(
+        !Number.isNaN(Date.parse(dates[0])),
+        `dateModified "${dates[0]}" is not a parseable date`
+      );
+      publishedDateModified.set(path, dates[0]);
+    });
+  }
 
   if (page.breadcrumbLength !== undefined) {
     check(group, `breadcrumb trail has ${page.breadcrumbLength} items`, () => {
@@ -738,6 +820,30 @@ if (!reachable) {
         );
       });
 
+      // The pages that publish a JSON-LD `dateModified` must publish the same
+      // instant the sitemap advertises as that URL's `lastmod`. They are built
+      // from one rule (newest `last_updated` among the markets the page lists)
+      // in two places; this is what keeps the two in step.
+      const sitemapLastmod = new Map();
+      for (const entry of chunks.join('\n').matchAll(
+        /<url>[\s\S]*?<loc>([^<]+)<\/loc>([\s\S]*?)<\/url>/g
+      )) {
+        const lastmod = /<lastmod>([^<]+)<\/lastmod>/.exec(entry[2]);
+        if (lastmod) sitemapLastmod.set(new URL(entry[1]).pathname, lastmod[1].trim());
+      }
+
+      for (const [pagePath, dateModified] of publishedDateModified) {
+        check(pagePath, 'dateModified matches the sitemap lastmod', () => {
+          const lastmod = sitemapLastmod.get(pagePath);
+          assert.ok(lastmod, `the sitemap advertises no lastmod for ${pagePath}`);
+          assert.equal(
+            Date.parse(dateModified),
+            Date.parse(lastmod),
+            `page says ${dateModified}, sitemap says ${lastmod}`
+          );
+        });
+      }
+
       // A `lastmod` built from the fetch time would tell Google every URL
       // changed on every crawl; two reads of one chunk must be identical.
       const second = await request(chunkPaths[0]);
@@ -746,6 +852,42 @@ if (!reachable) {
           second.body,
           chunks[0],
           'the chunk changed between two fetches — a fetch-time lastmod?'
+        );
+      });
+    });
+
+    await t.test('robots.txt', async () => {
+      const group = '/robots.txt';
+      const response = await request('/robots.txt');
+      const body = response.body;
+
+      check(group, 'reachable', () => {
+        assert.equal(response.status, 200, `returned ${response.status}`);
+      });
+
+      check(group, 'points at the sitemap index on the canonical host', () => {
+        const sitemaps = [...body.matchAll(/^\s*Sitemap:\s*(\S+)\s*$/gim)].map((m) => m[1]);
+        assert.deepEqual(sitemaps, [`${CANONICAL_ORIGIN}/sitemap.xml`]);
+      });
+
+      check(group, 'disallows /api/* and nothing else', () => {
+        const disallowed = [...body.matchAll(/^\s*Disallow:\s*(\S*)\s*$/gim)]
+          .map((m) => m[1])
+          .filter(Boolean);
+        // `/private/*` used to be here and referred to a path that has never
+        // existed. Anything new in this list is a crawler being shut out of a
+        // public directory, which is a decision, not a tidy-up — see the
+        // rationale in `src/app/robots.ts` and `docs/seo-decisions.md`.
+        assert.deepEqual(disallowed, ['/api/*']);
+      });
+
+      check(group, 'singles out no crawler', () => {
+        const agents = [...body.matchAll(/^\s*User-agent:\s*(\S+)\s*$/gim)].map((m) => m[1]);
+        assert.deepEqual(
+          agents,
+          ['*'],
+          `robots.txt now has per-agent blocks (${agents.join(', ')}) — retrieval bots ` +
+            'gate AI-answer inclusion, so this is deliberate or it is a regression'
         );
       });
     });
