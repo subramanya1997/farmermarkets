@@ -1,5 +1,5 @@
 import { getMarketBySlug, getMarkets, getSlugByLegacyId } from "@/lib/data";
-import { getMarketProducts, getMarketHours, getMarketAddress } from "@/lib/api";
+import { getMarketAddress } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -14,8 +14,15 @@ import { getCityForMarketSlug } from "@/lib/geoIndex";
 import { cityPath } from "@/lib/cityPage";
 import { statePath } from "@/lib/statePage";
 import { displayName, marketDescription, marketLocationLine, marketTitle } from "@/lib/seo";
+import { composedSummary } from "@/lib/marketFacts";
+import { getMarketProse } from "@/lib/marketProse";
+import { getNearbyMarkets } from "@/lib/nearby";
+import { getMarketProvenance } from "@/lib/provenance";
 import { marketFaqs, marketSchemaGraph } from "@/lib/schema";
 import { MarketFaq } from "@/components/MarketFaq";
+import { MarketFacts } from "@/components/MarketFacts";
+import { MarketSourceNote } from "@/components/MarketSourceNote";
+import { NearbyMarkets } from "@/components/NearbyMarkets";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -137,9 +144,16 @@ export default async function MarketDetailPage({
     notFound();
   }
 
-  const products = getMarketProducts(market);
-  const hours = getMarketHours(market);
-  const address = getMarketAddress(market);
+  const rawAddress = getMarketAddress(market);
+  const address = rawAddress.replace(/^[,\s]+/, '').trim();
+  const hasAddress = Boolean(address) && address !== ',';
+
+  // The record's own words where they are its own — `getMarketProse` drops the
+  // per-source blurbs that hundreds of records share — otherwise a summary
+  // composed from the fields this record does have. Both replace the two
+  // paragraphs that used to be byte-identical on all 8,807 pages.
+  const prose = await getMarketProse(market);
+  const summary = prose.about.length ? [] : composedSummary(market);
 
   // "Durham, North Carolina" — deduplicated, and undefined (rather than an
   // empty string that rendered as a blank subtitle) when the record has no
@@ -174,15 +188,6 @@ export default async function MarketDetailPage({
   const latitude = market.location?.lat;
   const longitude = market.location?.lon;
 
-  // Get website from websites array
-  const website = market.websites?.[0];
-  const websiteHost = (() => {
-    try {
-      return website ? new URL(website).hostname : undefined;
-    } catch {
-      return undefined;
-    }
-  })();
   const marketType = market.organization_types?.find((type) => type !== 'Official government dataset');
   const analyticsProperties = {
     market_id: market.id,
@@ -192,12 +197,14 @@ export default async function MarketDetailPage({
     source_id: market.provenance?.source_id
   };
 
-  // Handle payment method flags
-  const hasWic = market.wic === true;
-  const hasSnap = market.snap === true;
-  const hasFmnp = market.fmnp === true;
-  const hasSfmnp = market.sfmnp === true;
-  const hasCredit = market.payment_methods?.includes("Credit/Debit");
+  // The five nearest markets by great-circle distance, from a half-degree grid
+  // built once per server process (see src/lib/nearby.ts) — a per-page scan of
+  // all 8,451 geocoded records would be 74M distance calls across the build.
+  const nearby = await getNearbyMarkets(market);
+
+  // Publisher, dataset and fetch date for the 1,975 official records; null for
+  // the legacy ones, which name no publisher to credit.
+  const provenance = await getMarketProvenance(market);
 
   // One `@graph` per page: GroceryStore/LocalBusiness, the recurring Event
   // when a day *and* a time are known, and the FAQPage mirroring the visible
@@ -233,7 +240,7 @@ export default async function MarketDetailPage({
             <div className="flex flex-col gap-3 sm:gap-4">
               <Breadcrumbs items={breadcrumbItems} />
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                {market.name}
+                {displayName(market.name)}
               </h1>
               {cityStateDisplay && (
                 <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
@@ -257,160 +264,74 @@ export default async function MarketDetailPage({
         <section className="w-full py-6 sm:py-8 md:py-12 bg-white dark:bg-zinc-900">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
             <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-              {/* Map section for mobile - shown at top */}
-              <div className="lg:hidden">
-                <Card className="bg-white dark:bg-zinc-800">
-                  <CardContent className="p-4">
-                    <h2 className="text-xl font-semibold mb-4">Location</h2>
-                    <div className="rounded-lg overflow-hidden">
-                      <ClientSingleMarketMap market={market} height="250px" />
-                    </div>
-                    {latitude && longitude && (
-                      <div className="mt-4">
-                        <TrackedExternalLink
-                          href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full block"
-                          eventName="Market Directions Opened"
-                          eventProperties={{ ...analyticsProperties, destination: 'openstreetmap' }}
-                        >
-                          <Button className="w-full bg-green-600 hover:bg-green-700">Get Directions</Button>
-                        </TrackedExternalLink>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </div>
-
               {/* Main content */}
               <div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 sm:mb-8">
-                  <Card className="bg-white dark:bg-zinc-800">
-                    <CardContent className="p-4">
-                      <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Location & Hours</h2>
-                      <div className="space-y-2 text-sm sm:text-base">
-                        {address && address.trim() && address.trim() !== ',' && (
-                          <p className="text-zinc-600 dark:text-zinc-400">
-                            <span className="font-medium text-zinc-900 dark:text-zinc-200">Address:</span><br className="sm:hidden" /> {address.replace(/^[,\s]+/, '').trim()}
-                          </p>
-                        )}
-                        {hours && (
-                          <p className="text-zinc-600 dark:text-zinc-400">
-                            <span className="font-medium text-zinc-900 dark:text-zinc-200">Hours:</span><br className="sm:hidden" /> {hours}
-                          </p>
-                        )}
-                        {website && (
-                          <p className="text-zinc-600 dark:text-zinc-400">
-                            <span className="font-medium text-zinc-900 dark:text-zinc-200">Website:</span>{" "}
-                            <TrackedExternalLink
-                              href={website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 hover:underline break-all"
-                              eventName="Official Market Website Opened"
-                              eventProperties={{ ...analyticsProperties, destination_host: websiteHost }}
-                            >
-                              Visit Website
-                            </TrackedExternalLink>
-                          </p>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
+                <div className="max-w-none">
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-3 sm:mb-4">
+                    About {displayName(market.name)}
+                  </h2>
+                  {/* The market's own description where the record has one,
+                      otherwise a summary composed from its schedule, size,
+                      setting and programs — every clause backed by a field
+                      this record actually carries. */}
+                  {(prose.about.length ? prose.about : summary).map((paragraph) => (
+                    <p
+                      key={paragraph}
+                      className="mb-3 text-sm sm:text-base text-zinc-600 last:mb-0 dark:text-zinc-400"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
 
-                  <Card className="bg-white dark:bg-zinc-800">
-                    <CardContent className="p-4">
-                      <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Available Products</h2>
-                      {products && products.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                          {products.map((product, index) => (
-                            <span
-                              key={index}
-                              className="inline-flex items-center px-2 py-1 rounded-full text-xs sm:text-sm bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                            >
-                              {product}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-zinc-500 dark:text-zinc-400 text-sm">No product information available.</p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="prose max-w-none dark:prose-invert">
-                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-3 sm:mb-4">About This Market</h2>
-                  <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                    {market.name} is a local farmer market{cityStateDisplay && ` located in ${cityStateDisplay}`}.
-                    Visitors can find a variety of fresh, locally-grown produce and artisanal goods.
-                  </p>
-
-                  {/* Payment options */}
-                  {(hasCredit || hasWic || hasSnap || hasFmnp || hasSfmnp) && (
+                  {prose.location.length > 0 && (
                     <div className="mt-6 sm:mt-8">
-                      <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-3 sm:mb-4">Payment Options</h3>
-                      <ul className="list-none space-y-2 text-sm sm:text-base">
-                        {hasCredit && (
-                          <li className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                            <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
-                            Credit Cards Accepted
-                          </li>
-                        )}
-                        {hasWic && (
-                          <li className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                            <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
-                            WIC Accepted
-                          </li>
-                        )}
-                        {hasSnap && (
-                          <li className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                            <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
-                            SNAP Accepted
-                          </li>
-                        )}
-                        {hasFmnp && (
-                          <li className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                            <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
-                            Farmers&apos; Market Nutrition Program
-                          </li>
-                        )}
-                        {hasSfmnp && (
-                          <li className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
-                            <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
-                            Senior Farmers&apos; Market Nutrition Program
-                          </li>
-                        )}
-                      </ul>
+                      <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-3 sm:mb-4">
+                        Finding the market
+                      </h3>
+                      {prose.location.map((paragraph) => (
+                        <p
+                          key={paragraph}
+                          className="mb-3 text-sm sm:text-base text-zinc-600 last:mb-0 dark:text-zinc-400"
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
                     </div>
                   )}
 
-                  {market.location_description && (
-                    <div className="mt-6 sm:mt-8">
-                      <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-3 sm:mb-4">Location Description</h3>
-                      <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">{market.location_description}</p>
-                    </div>
-                  )}
+                  {/* Days, hours, season, vendors, setting, what is sold,
+                      amenities, payment, ordering, phone, website, socials —
+                      only the rows this record can fill. */}
+                  <MarketFacts market={market} analyticsProperties={analyticsProperties} />
 
                   {/* Answers in the words searchers type, in the HTML itself:
                       AI answer engines extract visible text on a direct fetch
                       and never run the JSON-LD. */}
                   <MarketFaq faqs={faqs} />
 
-                  <p className="mt-6 sm:mt-8 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                    Supporting local farmers and producers is vital for sustainable communities.
-                    By shopping at {market.name}, you&apos;re helping to strengthen the local economy
-                    and reduce the environmental impact of food transportation.
-                  </p>
+                  <NearbyMarkets
+                    markets={nearby}
+                    cityHref={cityPageHref}
+                    cityName={placement?.city.name}
+                  />
+
+                  <MarketSourceNote provenance={provenance} lastUpdated={market.last_updated} />
                 </div>
               </div>
 
-              {/* Map section for desktop - shown on side */}
-              <div className="hidden lg:block">
+              {/* Location card. One instance, ordered first on a narrow screen
+                  and into the right-hand column on a wide one — rendering it
+                  twice put two <h2>Location</h2> headings in every page's
+                  HTML, which is one heading more than the page has sections. */}
+              <div className="order-first lg:order-none">
                 <Card className="sticky top-24 bg-white dark:bg-zinc-800">
                   <CardContent className="p-4 sm:p-6">
                     <h2 className="text-xl font-semibold mb-4">Location</h2>
+                    {hasAddress && (
+                      <address className="mb-4 not-italic text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
+                        {address}
+                      </address>
+                    )}
                     <div className="rounded-lg overflow-hidden">
                       <ClientSingleMarketMap market={market} height="300px" />
                     </div>
