@@ -12,7 +12,7 @@
     "data:check": "node scripts/check-government-markets.mjs",
     "data:geo": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/build-geo-index.mjs",
     "indexnow:ping": "node scripts/indexnow-ping.mjs",
-    "test": "npm run test:data && npm run test:data-legacy && npm run test:geo && npm run test:popup && npm run test:seo-meta && npm run test:topic-copy && npm run test:schema && npm run test:market-facts && npm run test:indexnow && npm run test:freshness && npm run test:site",
+    "test": "npm run test:data && npm run test:data-legacy && npm run test:geo && npm run test:popup && npm run test:seo-meta && npm run test:topic-copy && npm run test:schema && npm run test:market-facts && npm run test:indexnow && npm run test:freshness && npm run test:site && npm run test:seo",
     "test:data": "node --test scripts/update-government-markets.test.mjs",
     "test:data-legacy": "node --test scripts/update-legacy-markets.test.mjs",
     "test:indexnow": "node --test scripts/indexnow-ping.test.mjs",
@@ -25,7 +25,8 @@
     "test:schema": "node --test --experimental-strip-types src/lib/schema.test.ts",
     "test:market-facts": "node --test --experimental-strip-types src/lib/marketFacts.test.ts",
     "test:freshness": "node --test --experimental-strip-types src/lib/freshness.test.ts",
-    "test:site": "node --test --experimental-strip-types src/lib/site.test.ts"
+    "test:site": "node --test --experimental-strip-types src/lib/site.test.ts",
+    "test:seo": "node --test scripts/seo-smoke.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
