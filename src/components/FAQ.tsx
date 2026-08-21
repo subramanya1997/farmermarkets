@@ -1,11 +1,4 @@
-'use client';
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { FaqSection } from '@/components/FaqSection';
 
 interface FAQItem {
   question: string;
@@ -68,31 +61,15 @@ export function FAQ() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <section className="w-full py-12 md:py-16 lg:py-20 bg-zinc-50 dark:bg-zinc-800">
+      <div className="w-full py-12 md:py-16 lg:py-20 bg-zinc-50 dark:bg-zinc-800">
         <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-              Everything you need to know about finding and visiting farmers markets
-            </p>
-          </div>
-
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-zinc-600 dark:text-zinc-400">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <FaqSection
+            align="center"
+            subtitle="Everything you need to know about finding and visiting farmers markets"
+            items={faqs}
+          />
         </div>
-      </section>
+      </div>
     </>
   );
 }
