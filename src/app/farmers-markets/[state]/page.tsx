@@ -130,7 +130,7 @@ export default async function StateHubPage({ params }: StatePageProps) {
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
-          <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
+          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
             <Breadcrumbs
               items={[
                 { label: 'Markets', href: '/markets' },
@@ -149,7 +149,7 @@ export default async function StateHubPage({ params }: StatePageProps) {
         </section>
 
         <section className="w-full bg-white py-6 sm:py-8 md:py-10 dark:bg-zinc-900">
-          <div className="mx-auto w-full max-w-5xl space-y-10 px-4 sm:px-6">
+          <div className="mx-auto w-full max-w-7xl space-y-10 px-4 sm:px-6">
             {data.notableMarkets.length > 0 && (
               <div>
                 <h2 className="mb-4 text-xl font-bold tracking-tight sm:text-2xl">
