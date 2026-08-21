@@ -29,9 +29,13 @@ export default async function LegacyStatePage({ params }: LegacyStatePageProps) 
   const { state } = await params;
   const target = await resolveLegacyStateSlug(state);
 
-  // "usa"/"us" (193 records) name no single state, so there is nothing to
-  // redirect to and a 404 is the honest answer.
-  if (!target) notFound();
+  if (!target) {
+    // "usa"/"us" (193 records) name no single state. Those URLs were real
+    // pages Google may hold, so send them to the directory root rather than
+    // dropping their equity on a 404. Anything else unresolvable is junk.
+    if (state === 'usa' || state === 'us') permanentRedirect('/markets');
+    notFound();
+  }
 
   permanentRedirect(statePath(target));
 }
