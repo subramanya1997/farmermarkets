@@ -16,6 +16,8 @@ const {
   DESCRIPTION_MAX_LENGTH,
 } = seo;
 
+const { stateTitle, stateDescription } = seo;
+
 /** Every title has to survive the SERP cut and read as a finished phrase. */
 function assertWellFormedTitle(title: string) {
   assert.ok(title.length <= TITLE_MAX_LENGTH, `title too long (${title.length}): ${title}`);
@@ -418,4 +420,61 @@ test('city description answers the count question first and only adds true claus
   assertWellFormedDescription(noSchedule);
   assert.doesNotMatch(noSchedule, /is open/);
   assert.match(noSchedule, /1 accepts SNAP\/EBT\./);
+});
+
+test('state title carries both counts and degrades one clause at a time', () => {
+  const full = stateTitle({ state: 'Colorado', marketCount: 144, cityCount: 80 });
+  assertWellFormedTitle(full);
+  assert.equal(full, 'Farmers Markets in Colorado — 144 Markets in 80 Cities');
+
+  // A long region name loses the city clause, then the market clause, rather
+  // than being cut mid-phrase.
+  const long = stateTitle({
+    state: 'Brussels-Capital Region of Belgium',
+    marketCount: 64,
+    cityCount: 19,
+  });
+  assertWellFormedTitle(long);
+  assert.equal(long, 'Farmers Markets in Brussels-Capital Region of Belgium');
+
+  // Singulars stay grammatical.
+  const one = stateTitle({ state: 'Ireland', marketCount: 1, cityCount: 1 });
+  assertWellFormedTitle(one);
+  assert.equal(one, 'Farmers Markets in Ireland — 1 Market in 1 City');
+
+  assert.equal(stateTitle({ state: '  ', marketCount: 0, cityCount: 0 }), 'Farmers Markets');
+});
+
+test('state description answers the counts first and only adds true clauses', () => {
+  const full = stateDescription({
+    state: 'Colorado',
+    marketCount: 144,
+    cityCount: 80,
+    biggestCity: 'Denver',
+    biggestCityCount: 19,
+    snapCount: 12,
+  });
+  assertWellFormedDescription(full);
+  assert.match(full, /^There are 144 farmers markets in Colorado across 80 cities\./);
+  assert.match(full, /Denver has the most with 19\./);
+  assert.match(full, /12 accept SNAP\/EBT\./);
+
+  // A single SNAP market is never described in the plural.
+  const oneSnap = stateDescription({
+    state: 'Colorado',
+    marketCount: 144,
+    cityCount: 80,
+    snapCount: 1,
+  });
+  assertWellFormedDescription(oneSnap);
+  assert.match(oneSnap, /1 accepts SNAP\/EBT\./);
+  assert.doesNotMatch(oneSnap, /has the most/);
+
+  // Nothing but a count still reads as a finished sentence.
+  const sparse = stateDescription({ state: 'Ireland', marketCount: 1, cityCount: 1 });
+  assertWellFormedDescription(sparse);
+  assert.equal(
+    sparse,
+    'There is 1 farmers market in Ireland. Browse every city with addresses, days and hours.'
+  );
 });

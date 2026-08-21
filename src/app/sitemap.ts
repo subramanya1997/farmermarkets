@@ -1,81 +1,35 @@
-import { getMarkets } from "@/lib/data";
-import { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
-import { getStateSummaries, getTotalMarketPages, marketsPagePath } from "@/lib/marketsIndex";
-import { getAllCityParams } from "@/lib/geoIndex";
+import type { MetadataRoute } from 'next';
+import { getSitemapChunk, getSitemapChunkCount } from '@/lib/sitemapEntries';
 
-// Generated at build time and revalidated daily rather than rebuilt per crawl.
+/**
+ * The chunk sitemaps, published at `/sitemap/{id}.xml`.
+ *
+ * `generateSitemaps` is what splits the directory's ~13.9k URLs into files of
+ * at most `SITEMAP_CHUNK_SIZE`; the index that lists them lives in
+ * `src/app/sitemap.xml/route.ts`, because Next does not emit one itself.
+ *
+ * Everything about the entries — which URLs are in, and the rule that a page
+ * with no truthful date carries no `lastmod` — lives in
+ * `src/lib/sitemapEntries.ts`.
+ */
 export const revalidate = 86400;
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const markets = await getMarkets();
-  const baseUrl = SITE_URL;
+export async function generateSitemaps(): Promise<{ id: number }[]> {
+  const count = await getSitemapChunkCount();
+  return Array.from({ length: count }, (_unused, id) => ({ id }));
+}
 
-  // Function to format dates properly for sitemap
-  const formatDate = (date: Date | string | null | undefined): string => {
-    if (!date) {
-      return new Date().toISOString();
-    }
+export default async function sitemap({
+  id,
+}: {
+  id: number;
+}): Promise<MetadataRoute.Sitemap> {
+  const entries = await getSitemapChunk(Number(id));
 
-    // If it's already a string, try to parse it
-    if (typeof date === 'string') {
-      const parsedDate = new Date(date);
-      // Check if parsed date is valid
-      return isNaN(parsedDate.getTime()) ? new Date().toISOString() : parsedDate.toISOString();
-    }
-
-    // Otherwise it's a Date object
-    return date.toISOString();
-  };
-
-  // Generate market URLs
-  const marketUrls = markets.map((market) => ({
-    url: `${baseUrl}/markets/${market.slug}`,
-    lastModified: formatDate(market.last_updated),
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
+  return entries.map((entry) => ({
+    url: entry.url,
+    // Omitted rather than defaulted: Next drops the `<lastmod>` element for an
+    // undefined value, which is the whole point (see sitemapEntries.ts).
+    ...(entry.lastModified ? { lastModified: entry.lastModified } : {}),
   }));
-
-  // Static routes
-  const routes = [
-    '',
-    '/markets',
-    '/about',
-    '/privacy',
-    '/terms',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: formatDate(new Date()),
-    changeFrequency: 'daily' as const,
-    priority: 1.0,
-  }));
-
-  // Index pages 2+ (`/markets` itself is already in `routes` above) and the
-  // state directory pages, both of which are now linked from `/markets`.
-  const totalPages = await getTotalMarketPages();
-  const indexPageUrls = Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => ({
-    url: `${baseUrl}${marketsPagePath(index + 2)}`,
-    lastModified: formatDate(new Date()),
-    changeFrequency: 'weekly' as const,
-    priority: 0.5,
-  }));
-
-  const stateUrls = (await getStateSummaries()).map((state) => ({
-    url: `${baseUrl}/markets/state/${state.slug}`,
-    lastModified: formatDate(new Date()),
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
-
-  // One entry per city page (`/farmers-markets/{state}/{city}`). These are the
-  // pages that answer "farmers markets in {city}", so they sit above the
-  // paginated index and level with the state hubs in priority.
-  const cityUrls = (await getAllCityParams()).map(({ state, city }) => ({
-    url: `${baseUrl}/farmers-markets/${state}/${city}`,
-    lastModified: formatDate(new Date()),
-    changeFrequency: 'weekly' as const,
-    priority: 0.7,
-  }));
-
-  return [...routes, ...indexPageUrls, ...stateUrls, ...cityUrls, ...marketUrls];
 }

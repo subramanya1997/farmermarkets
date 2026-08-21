@@ -605,6 +605,101 @@ export function cityDescription({
   return description.replace(/\s+/g, ' ').trim();
 }
 
+/* ------------------------------------------------------------------ *
+ * State hubs (`/farmers-markets/{state}`)
+ * ------------------------------------------------------------------ */
+
+/** Inputs for the state hub's title tag. */
+export interface StateTitleInput {
+  /** "Colorado", "Ontario", "France" — always spelled out. */
+  state: string;
+  marketCount: number;
+  cityCount: number;
+}
+
+/**
+ * SERP title for a state hub: `Farmers Markets in Colorado — 144 Markets`.
+ *
+ * Same degradation ladder as `cityTitle`: the count is the click driver, so
+ * the city clause goes first and the count is the last thing dropped. Never
+ * exceeds `TITLE_MAX_LENGTH`.
+ */
+export function stateTitle({ state, marketCount, cityCount }: StateTitleInput): string {
+  const name = clean(state);
+  if (!name) return 'Farmers Markets';
+
+  const markets = `${marketCount} Market${marketCount === 1 ? '' : 's'}`;
+  const cities = `${cityCount} Cit${cityCount === 1 ? 'y' : 'ies'}`;
+
+  const candidates = [
+    // A region whose markets all failed to resolve to a city has no city
+    // clause to offer; "in 0 Cities" is worse than saying nothing.
+    cityCount > 0 ? `Farmers Markets in ${name} — ${markets} in ${cities}` : undefined,
+    `Farmers Markets in ${name} — ${markets}`,
+    `Farmers Markets in ${name}`,
+  ].filter((candidate): candidate is string => Boolean(candidate));
+
+  const fitting = candidates.find((candidate) => candidate.length <= TITLE_MAX_LENGTH);
+  return fitting ?? truncateOnWordBoundary(`Farmers Markets in ${name}`, TITLE_MAX_LENGTH);
+}
+
+/** Inputs for the state hub's meta description. */
+export interface StateDescriptionInput {
+  state: string;
+  marketCount: number;
+  cityCount: number;
+  /** The city in the state with the most markets, if it has any cities. */
+  biggestCity?: string | null;
+  biggestCityCount?: number;
+  /** How many of the state's markets accept SNAP/EBT. */
+  snapCount?: number;
+}
+
+/**
+ * Answer-first meta description for a state hub, assembled only from clauses
+ * the state's data supports and capped at `DESCRIPTION_MAX_LENGTH`.
+ */
+export function stateDescription({
+  state,
+  marketCount,
+  cityCount,
+  biggestCity,
+  biggestCityCount = 0,
+  snapCount = 0,
+}: StateDescriptionInput): string {
+  const name = clean(state) || 'this state';
+
+  const opening =
+    marketCount === 1
+      ? `There is 1 farmers market in ${name}.`
+      : cityCount > 0
+        ? `There are ${marketCount} farmers markets in ${name} across ${cityCount} ${
+            cityCount === 1 ? 'city' : 'cities'
+          }.`
+        : `There are ${marketCount} farmers markets in ${name}.`;
+
+  const biggest = clean(biggestCity);
+  const optional = [
+    biggest && biggestCityCount > 0
+      ? `${biggest} has the most with ${biggestCityCount}.`
+      : undefined,
+    snapCount === 1
+      ? '1 accepts SNAP/EBT.'
+      : snapCount > 1
+        ? `${snapCount} accept SNAP/EBT.`
+        : undefined,
+    'Browse every city with addresses, days and hours.',
+  ].filter((sentence): sentence is string => Boolean(sentence));
+
+  let description = opening;
+  for (const sentence of optional) {
+    if (`${description} ${sentence}`.length > DESCRIPTION_MAX_LENGTH) continue;
+    description = `${description} ${sentence}`;
+  }
+
+  return description.replace(/\s+/g, ' ').trim();
+}
+
 /** Human-readable "Durham, North Carolina" line for on-page display. */
 export function marketLocationLine(market: MarketSeoRecord): string | undefined {
   const location = resolveLocation(market);

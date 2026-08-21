@@ -88,9 +88,11 @@ export function getGeoIndex(): Promise<GeoIndex> {
 let stateLookupPromise: Promise<Map<string, GeoState>> | null = null;
 
 /**
- * Lookup by state code *and* by slug, so a route can resolve either
- * `/markets/state/ny` or `/markets/state/new-york` to the same entry — which is
- * what stops the two spellings in the source data from becoming two pages.
+ * Lookup by state code *and* by slug, so a route can resolve both `ny` and
+ * `new-york` to the same entry — which is what stops the two spellings in the
+ * source data from becoming two pages. The hub itself only *serves* the slug
+ * (the code 308s to it); the code lookup is what lets the retired
+ * `/markets/state/{slug}` URLs find their target.
  */
 function getStateLookup(): Promise<Map<string, GeoState>> {
   if (!stateLookupPromise) {

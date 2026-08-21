@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { dedupeStates, getFeaturedMarkets, getStateSummaries } from "@/lib/marketsIndex";
+import { getFeaturedMarkets } from "@/lib/marketsIndex";
+import { getStateHubSummaries } from "@/lib/statePage";
 import { PopularMarkets } from "@/components/PopularMarkets";
 import { FAQ } from "@/components/FAQ";
 import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf } from "lucide-react";
@@ -28,9 +29,9 @@ export default async function Home() {
     // them in the server HTML.
     const [featuredMarkets, states] = await Promise.all([
       getFeaturedMarkets(6),
-      getStateSummaries(),
+      getStateHubSummaries(),
     ]);
-    const topStates = dedupeStates(states).slice(0, 12);
+    const topStates = states.slice(0, 12);
 
     // Enhanced structured data for homepage
     const websiteSchema = {
@@ -136,8 +137,8 @@ export default async function Home() {
         {/* Browse-by-state Section */}
         {/*
           These twelve tiles all pointed at bare `/markets`, so they were twelve
-          copies of one link. They now point at the state directory pages, which
-          gives the homepage a real second level of crawlable navigation.
+          copies of one link. They now point at the state hubs, which gives the
+          homepage a real second level of crawlable navigation.
         */}
         <section className="w-full py-8 sm:py-12 md:py-16 bg-zinc-50 dark:bg-zinc-800">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
@@ -148,7 +149,7 @@ export default async function Home() {
               {topStates.map((state) => (
                 <Link
                   key={state.slug}
-                  href={`/markets/state/${state.slug}`}
+                  href={state.href}
                   className="block"
                 >
                   <div className="flex flex-col items-center p-3 sm:p-4 bg-white dark:bg-zinc-700 rounded-lg shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer">
@@ -157,7 +158,7 @@ export default async function Home() {
                     </div>
                     <span className="text-xs sm:text-sm font-medium text-center">{state.name}</span>
                     <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                      {state.count.toLocaleString()} markets
+                      {state.marketCount.toLocaleString()} markets
                     </span>
                   </div>
                 </Link>
