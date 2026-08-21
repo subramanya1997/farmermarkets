@@ -26,8 +26,13 @@ jobs:
 
       - run: npm ci
 
+      # The refresh submits the URLs it changed to IndexNow. A failed
+      # submission is only a warning, so it can never fail this step; set the
+      # repository variable INDEXNOW_DISABLE to 1 to switch submissions off.
       - id: update_data
         continue-on-error: true
+        env:
+          INDEXNOW_DISABLE: ${{ vars.INDEXNOW_DISABLE }}
         run: npm run data:update
 
       - run: npm test

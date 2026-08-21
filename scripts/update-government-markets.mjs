@@ -4,10 +4,12 @@ import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { SITE_URL, pingIndexNow } from './lib/indexnow.mjs';
 
 const DEFAULT_REGISTRY = 'data/government-market-sources.json';
 const DEFAULT_OUTPUT = 'public/data/government_markets.json';
 const DEFAULT_MANIFEST = 'public/data/government_markets.manifest.json';
+const DEFAULT_GEO_INDEX = 'public/data/geo_index.json';
 const REQUEST_TIMEOUT_MS = 45_000;
 const REQUEST_ATTEMPTS = 3;
 
@@ -646,11 +648,64 @@ async function atomicWrite(filePath, content) {
   await fs.rename(temporaryPath, filePath);
 }
 
+/**
+ * Slugs of the markets a refresh actually added or changed.
+ *
+ * The manifest already records which *sources* changed, but IndexNow wants
+ * URLs, so the two snapshots are compared record by record: a record whose id
+ * is new, or whose serialized content differs from the previous run, is a page
+ * whose HTML changed. Deletions are deliberately excluded — the page is gone,
+ * and asking an engine to recrawl a 404 buys nothing.
+ */
+export function changedMarketSlugs(previousRecords, currentRecords) {
+  const previousById = new Map();
+  for (const market of previousRecords ?? []) {
+    if (market?.id) previousById.set(market.id, JSON.stringify(market));
+  }
+
+  const slugs = [];
+  for (const market of currentRecords ?? []) {
+    if (!market?.slug) continue;
+    const previous = previousById.get(market.id);
+    if (previous === undefined || previous !== JSON.stringify(market)) slugs.push(market.slug);
+  }
+  return [...new Set(slugs)];
+}
+
+/**
+ * Every URL a set of changed market slugs affects: the market pages
+ * themselves, the city and state hubs that list them (looked up in the
+ * committed geo index, which is what the routes are generated from), and the
+ * sitemap index.
+ */
+export function refreshUrls(changedSlugs, geoIndex, siteUrl = SITE_URL) {
+  if (!changedSlugs.length) return [];
+  const changed = new Set(changedSlugs);
+  const paths = changedSlugs.map((slug) => `/markets/${slug}`);
+
+  for (const state of geoIndex?.states ?? []) {
+    let stateTouched = false;
+    for (const city of state.cities ?? []) {
+      if (!(city.market_slugs ?? []).some((slug) => changed.has(slug))) continue;
+      stateTouched = true;
+      paths.push(`/farmers-markets/${state.slug}/${city.slug}`);
+    }
+    if (!stateTouched) {
+      stateTouched = (state.uncategorized_slugs ?? []).some((slug) => changed.has(slug));
+    }
+    if (stateTouched) paths.push(`/farmers-markets/${state.slug}`);
+  }
+
+  paths.push('/sitemap.xml');
+  return [...new Set(paths)].map((value) => new URL(value, siteUrl).toString());
+}
+
 function parseArguments(argv) {
   const options = {
     registry: DEFAULT_REGISTRY,
     output: DEFAULT_OUTPUT,
     manifest: DEFAULT_MANIFEST,
+    geoIndex: DEFAULT_GEO_INDEX,
     fixturesDir: undefined,
     allowPartial: false
   };
@@ -658,6 +713,7 @@ function parseArguments(argv) {
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === '--registry') options.registry = argv[++index];
+    else if (argument === '--geo-index') options.geoIndex = argv[++index];
     else if (argument === '--output') options.output = argv[++index];
     else if (argument === '--manifest') options.manifest = argv[++index];
     else if (argument === '--fixtures-dir') options.fixturesDir = argv[++index];
@@ -766,7 +822,32 @@ export async function updateGovernmentMarkets(options) {
   await atomicWrite(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`wrote ${records.length} official markets to ${path.relative(root, outputPath)} (${manifest.status})`);
 
-  return { manifest, hasFailures: failures.length > 0 };
+  // Push the changed URLs to IndexNow (Bing/Yandex/Naver/Seznam/Yep). The
+  // snapshot is already on disk at this point: `pingIndexNow` swallows network
+  // and HTTP errors, and `INDEXNOW_DISABLE=1` turns the whole thing off, so a
+  // refresh can never fail because an engine was unreachable. Tests inject
+  // `options.ping` instead of reaching the network.
+  const changedSlugs = changedMarketSlugs(previousRecords, records);
+  let geoIndex = null;
+  try {
+    geoIndex = await readJsonIfPresent(path.resolve(root, options.geoIndex ?? DEFAULT_GEO_INDEX), null);
+  } catch (error) {
+    // A missing or unreadable geo index only costs us the hub URLs.
+    console.warn(`indexnow: could not read the geo index: ${error instanceof Error ? error.message : error}`);
+  }
+  const urls = refreshUrls(changedSlugs, geoIndex);
+  const ping = options.ping ?? pingIndexNow;
+  console.log(`indexnow: ${changedSlugs.length} changed market(s) → ${urls.length} URL(s)`);
+  let pingResult;
+  if (urls.length) {
+    try {
+      pingResult = await ping(urls);
+    } catch (error) {
+      console.warn(`indexnow: ping failed: ${error instanceof Error ? error.message : error}`);
+    }
+  }
+
+  return { manifest, hasFailures: failures.length > 0, changedSlugs, indexNowUrls: urls, indexNow: pingResult };
 }
 
 async function main() {

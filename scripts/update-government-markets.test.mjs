@@ -3,7 +3,13 @@ import { promises as fs } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
-import { parsers, parseCsv, updateGovernmentMarkets } from './update-government-markets.mjs';
+
+// Belt and braces: every test either injects a ping double or runs with the
+// pings switched off, so this suite never touches the network.
+process.env.INDEXNOW_DISABLE = '1';
+
+const { parsers, parseCsv, updateGovernmentMarkets, changedMarketSlugs, refreshUrls } =
+  await import('./update-government-markets.mjs');
 
 const retrievedAt = '2026-08-14T00:00:00.000Z';
 const source = (id, parser, overrides = {}) => ({
@@ -165,4 +171,89 @@ test('a failed source retains its previous records while healthy sources update'
   assert.equal(result.manifest.status, 'partial');
   assert.deepEqual(written.map((market) => market.provenance.source_id).sort(), ['failed', 'good']);
   assert.equal(result.manifest.sources.find((entry) => entry.id === 'failed').status, 'stale');
+});
+
+test('changed markets are the added and edited records, never the deleted ones', () => {
+  const previous = [
+    { id: 'gov:a', slug: 'a', name: 'A' },
+    { id: 'gov:b', slug: 'b', name: 'B' },
+    { id: 'gov:gone', slug: 'gone', name: 'Gone' }
+  ];
+  const current = [
+    { id: 'gov:a', slug: 'a', name: 'A' },
+    { id: 'gov:b', slug: 'b', name: 'B renamed' },
+    { id: 'gov:c', slug: 'c', name: 'C' }
+  ];
+  assert.deepEqual(changedMarketSlugs(previous, current), ['b', 'c']);
+  assert.deepEqual(changedMarketSlugs([], current), ['a', 'b', 'c']);
+  assert.deepEqual(changedMarketSlugs(previous, previous), []);
+});
+
+test('changed markets expand to their market, city, state, and sitemap URLs', () => {
+  const geoIndex = {
+    states: [
+      { slug: 'new-york', cities: [{ slug: 'albany', market_slugs: ['b'] }, { slug: 'buffalo', market_slugs: ['z'] }], uncategorized_slugs: [] },
+      { slug: 'ontario', cities: [{ slug: 'toronto', market_slugs: ['q'] }], uncategorized_slugs: ['c'] },
+      { slug: 'quiet', cities: [{ slug: 'nowhere', market_slugs: ['x'] }], uncategorized_slugs: [] }
+    ]
+  };
+  const urls = refreshUrls(['b', 'c'], geoIndex, 'https://www.farmermarkets.app');
+
+  assert.deepEqual(urls, [
+    'https://www.farmermarkets.app/markets/b',
+    'https://www.farmermarkets.app/markets/c',
+    'https://www.farmermarkets.app/farmers-markets/new-york/albany',
+    'https://www.farmermarkets.app/farmers-markets/new-york',
+    'https://www.farmermarkets.app/farmers-markets/ontario',
+    'https://www.farmermarkets.app/sitemap.xml'
+  ]);
+  assert.deepEqual(refreshUrls([], geoIndex), []);
+  assert.deepEqual(refreshUrls(['b'], null), [
+    'https://www.farmermarkets.app/markets/b',
+    'https://www.farmermarkets.app/sitemap.xml'
+  ]);
+});
+
+test('a refresh pings the injected IndexNow client and survives its failure', async () => {
+  const temporaryDirectory = await fs.mkdtemp(path.join(os.tmpdir(), 'government-markets-indexnow-'));
+  const fixturesDirectory = path.join(temporaryDirectory, 'fixtures');
+  await fs.mkdir(fixturesDirectory);
+
+  const goodSource = source('good', 'new_york_socrata', { fixture_file: 'good.json' });
+  const registryPath = path.join(temporaryDirectory, 'registry.json');
+  const outputPath = path.join(temporaryDirectory, 'markets.json');
+  const manifestPath = path.join(temporaryDirectory, 'manifest.json');
+
+  await Promise.all([
+    fs.writeFile(registryPath, JSON.stringify({ schema_version: 1, sources: [goodSource] })),
+    fs.writeFile(path.join(fixturesDirectory, 'good.json'), JSON.stringify([{ market_name: 'New Market', city: 'Albany', state: 'NY', zip: '12207' }]))
+  ]);
+
+  const pinged = [];
+  const run = (ping) => updateGovernmentMarkets({
+    registry: registryPath,
+    output: outputPath,
+    manifest: manifestPath,
+    geoIndex: path.join(temporaryDirectory, 'missing-geo-index.json'),
+    fixturesDir: fixturesDirectory,
+    allowPartial: true,
+    ping
+  });
+
+  const first = await run(async (urls) => { pinged.push(urls); });
+  assert.equal(first.changedSlugs.length, 1);
+  assert.equal(pinged.length, 1);
+  assert(pinged[0].some((url) => url.startsWith('https://www.farmermarkets.app/markets/new-market-albany-')));
+  assert(pinged[0].includes('https://www.farmermarkets.app/sitemap.xml'));
+
+  // An unchanged snapshot has nothing to submit, so no ping is attempted.
+  const second = await run(async (urls) => { pinged.push(urls); });
+  assert.deepEqual(second.changedSlugs, []);
+  assert.equal(pinged.length, 1);
+
+  // And a ping that rejects must not fail the refresh: the data is already
+  // written by the time IndexNow is contacted.
+  await fs.writeFile(outputPath, JSON.stringify([]));
+  const third = await run(async () => { throw new Error('network down'); });
+  assert.equal(third.manifest.status, 'ok');
 });
