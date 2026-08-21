@@ -1,10 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-const seo = await import(
-  // @ts-expect-error Node runs this fixture with --experimental-strip-types.
-  './seo.ts'
-);
+const seo = await import('./seo.ts');
 
 const {
   marketTitle,

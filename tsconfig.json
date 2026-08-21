@@ -3,6 +3,9 @@
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    // seo.ts imports ./geo.ts with its extension so Node can run the unit tests
+    // (--experimental-strip-types) against the same file the bundler compiles.
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,

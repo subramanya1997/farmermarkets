@@ -1,0 +1,49 @@
+Geo index build report
+generated_at            2026-08-21T07:08:34.688Z
+
+Records
+  total                 8807
+  indexed               8806
+  unresolved            1
+  without coordinates   356
+
+Resolution method (weakest source a record needed)
+  from fields           6434
+  from address          2044
+  from coordinates      288
+  corrupt combos fixed  1
+
+State resolution
+  from fields           6268
+  from address          2027
+  from coordinates      8
+  missing before        2539
+  missing after         504
+    of those, outside US/CA (grouped by country instead)  503
+
+City resolution
+  from fields           6424
+  from address          2044
+  from coordinates      286
+  missing before        2205
+  missing after         53
+
+Index
+  top-level entries     60 (53 US states/territories)
+  cities                4870
+  cities with 3+ markets 556
+
+Top 10 entries by market count
+   1. New York                  1066 markets   461 cities
+   2. California                 937 markets   396 cities
+   3. Minnesota                  437 markets   283 cities
+   4. Ontario                    388 markets   259 cities
+   5. Illinois                   349 markets   193 cities
+   6. Michigan                   333 markets   233 cities
+   7. Virginia                   292 markets   160 cities
+   8. Wisconsin                  231 markets   147 cities
+   9. Georgia                    228 markets   122 cities
+  10. Florida                    219 markets   124 cities
+
+Unresolved examples
+  cambridge-farmers-market — Cambridge Farmers' Market (US)
