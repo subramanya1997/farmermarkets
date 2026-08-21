@@ -19,12 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Node stays for the test scripts (`node --test --experimental-strip-types`);
+      # Bun is the package manager and script runner.
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
-      - run: npm ci
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install --frozen-lockfile
 
       # The refresh submits the URLs it changed to IndexNow. A failed
       # submission is only a warning, so it can never fail this step; set the
@@ -33,13 +36,13 @@ jobs:
         continue-on-error: true
         env:
           INDEXNOW_DISABLE: ${{ vars.INDEXNOW_DISABLE }}
-        run: npm run data:update
+        run: bun run data:update
 
-      - run: npm test
+      - run: bun run test
 
-      - run: npm run data:check
+      - run: bun run data:check
 
-      - run: npm run build
+      - run: bun run build
 
       - name: Commit a validated snapshot
         run: |

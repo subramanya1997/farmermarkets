@@ -1,7 +1,7 @@
 name: CI
 
 # The nightly data refresh (update-government-markets.yml) already runs
-# `npm test` and `npm run build`, but only once a day and only on the schedule
+# `bun run test` and `bun run build`, but only once a day and only on the schedule
 # — a push that broke the site sat undetected until the next 08:17 UTC run, and
 # nothing anywhere exercised the three checks that need a running server.
 # This workflow is the per-change gate: build the site, serve it, and run every
@@ -30,32 +30,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Node stays for the test scripts (`node --test --experimental-strip-types`);
+      # Bun is the package manager and script runner.
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
 
-      - run: npm ci
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: bun run lint
 
       - name: Type-check
-        run: npx tsc --noEmit
+        run: bunx tsc --noEmit
 
       # Offline unit suites plus the SEO smoke tests, which skip themselves at
       # this point because nothing is listening yet. They run for real below.
       - name: Unit tests
-        run: npm test
+        run: bun run test
 
       - name: Build
-        run: npm run build
+        run: bun run build
 
       - name: Start the server
         run: |
-          npm start &
+          bun run start &
           echo "$!" > "$RUNNER_TEMP/server.pid"
-          # `npm start` returns before Next is accepting connections, so poll
+          # `bun run start` returns before Next is accepting connections, so poll
           # rather than sleeping a guessed number of seconds.
           for attempt in $(seq 1 60); do
             if curl -sfo /dev/null http://localhost:3000/; then
@@ -70,17 +73,17 @@ jobs:
       # The three server-dependent checks. Each is a separate step so a failure
       # names itself in the job summary instead of hiding inside a shell chain.
       - name: SEO smoke tests
-        run: npm run test:seo
+        run: bun run test:seo
         env:
           MARKET_BASE_URL: http://localhost:3000
 
       - name: Market and sitemap route checks
-        run: npm run test:market-routes
+        run: bun run test:market-routes
         env:
           MARKET_BASE_URL: http://localhost:3000
 
       - name: Topic page checks
-        run: npm run test:topic-routes
+        run: bun run test:topic-routes
         env:
           MARKET_BASE_URL: http://localhost:3000
 
