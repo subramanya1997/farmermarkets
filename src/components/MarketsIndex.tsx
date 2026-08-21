@@ -1,11 +1,13 @@
 import { notFound } from 'next/navigation';
 import { BrowseByState } from '@/components/BrowseByState';
+import { BrowseByTopic } from '@/components/BrowseByTopic';
 import { DiscoverySurvey } from '@/components/DiscoverySurvey';
 import { MarketsExplorer } from '@/components/MarketsExplorer';
 import { MarketsPagination } from '@/components/MarketsPagination';
 import { MarketSummaryCard } from '@/components/MarketSummaryCard';
 import { MARKETS_PER_PAGE, getMarketsPage, marketsPagePath } from '@/lib/marketsIndex';
 import { getStateHubSummaries } from '@/lib/statePage';
+import { getTopicSummaries } from '@/lib/topicPage';
 import { absoluteUrl } from '@/lib/site';
 
 interface MarketsIndexProps {
@@ -26,7 +28,7 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
     notFound();
   }
 
-  const states = await getStateHubSummaries();
+  const [states, topics] = await Promise.all([getStateHubSummaries(), getTopicSummaries()]);
   const firstIndex = (result.page - 1) * MARKETS_PER_PAGE + 1;
   const lastIndex = firstIndex + result.markets.length - 1;
 
@@ -93,6 +95,8 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
             <MarketsPagination page={result.page} totalPages={result.totalPages} />
           </div>
         </section>
+
+        <BrowseByTopic topics={topics} />
 
         <BrowseByState states={states} />
 
