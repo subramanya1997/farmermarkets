@@ -2,8 +2,8 @@ import { getMarkets } from "@/lib/data";
 import { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
-export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
+// Generated at build time and revalidated daily rather than rebuilt per crawl.
+export const revalidate = 86400;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const markets = await getMarkets();

@@ -13,8 +13,10 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+// This page still hands the full dataset to a client component (that payload
+// is issue #14). ISR at least means the giant RSC payload is built once a day
+// instead of on every request.
+export const revalidate = 86400;
 
 export default async function MarketsPage() {
   // Fetch all markets

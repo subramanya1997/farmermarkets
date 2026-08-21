@@ -4,13 +4,34 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
 
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
+export const revalidate = 86400;
+// Every state present in the dataset is prerendered below; anything else is
+// rendered on demand so it can 404 (or pick up a state added by a data update).
+export const dynamicParams = true;
 
 interface StatePageProps {
   params: Promise<{
     state: string;
   }>;
+}
+
+// Slugify a state name the same way the filter below un-slugifies it.
+function toStateSlug(state: string): string {
+  return state.toLowerCase().replace(/\s+/g, '-');
+}
+
+// Prerender one page per state that actually has markets (~67 pages).
+export async function generateStaticParams() {
+  const markets = await getMarkets();
+  const states = new Set<string>();
+
+  for (const market of markets) {
+    if (market.state) {
+      states.add(toStateSlug(market.state));
+    }
+  }
+
+  return Array.from(states, (state) => ({ state }));
 }
 
 // Helper to format state name
