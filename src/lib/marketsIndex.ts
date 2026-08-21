@@ -10,7 +10,6 @@
 
 import 'server-only';
 import { getMarkets, type FarmerMarket } from '@/lib/data';
-import { stateFullName } from '@/lib/seo';
 
 /**
  * Markets per index page.
@@ -99,87 +98,12 @@ export async function getTotalMarketPages(): Promise<number> {
 }
 
 /**
- * State slug, matching `/markets/state/[state]` exactly — that route filters on
- * `market.state?.toLowerCase().replace(/\s+/g, '-')`, so any other slugification
- * here would produce links that 404.
+ * State slug the way the retired `/markets/state/[state]` route built it, from
+ * the raw `state` value on a record. Kept only so
+ * `src/lib/legacyStateRedirects.ts` can map those old URLs onto a state hub.
  */
 export function toStateSlug(state: string): string {
   return state.toLowerCase().replace(/\s+/g, '-');
-}
-
-export interface StateSummary {
-  /** Slug for the `/markets/state/[state]` URL. */
-  slug: string;
-  /** Display name — the state spelled out where we can recognise it. */
-  name: string;
-  /**
-   * Key for grouping the same state written two ways. The source data holds
-   * both `NY` and `New York` (and `CA`/`California`), and because
-   * `/markets/state/[state]` filters on the raw value, those really are two
-   * different pages holding two different sets of markets — so both stay in
-   * the directory. This only lets callers that want *one* tile per state, like
-   * the homepage, pick the larger of the pair.
-   */
-  canonical: string;
-  count: number;
-}
-
-/**
- * Every state/region present in the data, with its market count, ordered by
- * count descending then name. One `<a>` per entry on `/markets` is what makes
- * the (previously orphaned) state pages crawlable.
- */
-export async function getStateSummaries(): Promise<StateSummary[]> {
-  const markets = await getSortedMarkets();
-  const counts = new Map<string, number>();
-
-  for (const market of markets) {
-    const state = market.state?.trim();
-    if (!state) continue;
-    const slug = toStateSlug(state);
-    counts.set(slug, (counts.get(slug) ?? 0) + 1);
-  }
-
-  return [...counts.entries()]
-    .map(([slug, count]) => {
-      // "ny" → "New York" rather than the raw title-cased "Ny".
-      const fullName = stateFullName(slug.replace(/-/g, ' '));
-      const name = fullName ?? formatStateName(slug);
-      return { slug, name, canonical: name.toLowerCase(), count };
-    })
-    .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name));
-}
-
-/**
- * Slugs that are in the `state` column but are not a state. 166 records say
- * "USA". The page still exists and the full directory still links it — it just
- * has no business sitting in a "browse by state" tile between Texas and
- * Florida.
- */
-const NON_STATE_SLUGS = new Set(['usa', 'us', 'united-states', 'united-states-of-america']);
-
-/**
- * One entry per state for surfaces that want a short list (the homepage
- * tiles), keeping the larger of any pair that names the same state twice.
- */
-export function dedupeStates(states: StateSummary[]): StateSummary[] {
-  const best = new Map<string, StateSummary>();
-  for (const state of states) {
-    if (NON_STATE_SLUGS.has(state.slug)) continue;
-    const existing = best.get(state.canonical);
-    if (!existing || state.count > existing.count) best.set(state.canonical, state);
-  }
-  return [...best.values()].sort(
-    (left, right) => right.count - left.count || left.name.localeCompare(right.name)
-  );
-}
-
-/** Same transformation `/markets/state/[state]` uses for its own headings. */
-export function formatStateName(stateSlug: string): string {
-  return stateSlug
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
 }
 
 /**

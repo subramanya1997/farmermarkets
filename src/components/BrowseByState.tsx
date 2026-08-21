@@ -1,29 +1,23 @@
 import Link from 'next/link';
-import type { StateSummary } from '@/lib/marketsIndex';
+import type { StateHubSummary } from '@/lib/statePage';
 
 interface BrowseByStateProps {
-  states: StateSummary[];
+  states: StateHubSummary[];
 }
 
 /**
  * Server-rendered directory of every state/region in the data.
  *
- * The `/markets/state/[state]` pages were orphans — nothing linked to them, so
- * they were reachable only through the sitemap. Listing all of them here gives
- * every market a two-hop path from `/markets`, which is a much shorter crawl
- * route than paging 180+ times through the index.
+ * These link to the state hubs at `/farmers-markets/{state}`, which gives
+ * every market a three-hop path from `/markets` (state → city → market) — a
+ * much shorter crawl route than paging 180+ times through the index.
+ *
+ * The list comes from the geo index, so each state appears exactly once: the
+ * old raw-value directory listed "New York" and "NY" as two separate rows
+ * because they were, at the time, two separate pages.
  */
 export function BrowseByState({ states }: BrowseByStateProps) {
   if (states.length === 0) return null;
-
-  // `NY` and `New York` are two different state pages holding two different
-  // sets of records, so both need a link — but two entries both reading
-  // "New York" would look like a bug. Suffix the duplicates with the spelling
-  // that produced them.
-  const canonicalCounts = new Map<string, number>();
-  for (const state of states) {
-    canonicalCounts.set(state.canonical, (canonicalCounts.get(state.canonical) ?? 0) + 1);
-  }
 
   return (
     <section className="w-full border-t border-zinc-200 bg-zinc-50 py-12 dark:border-zinc-800 dark:bg-zinc-900/50">
@@ -36,21 +30,12 @@ export function BrowseByState({ states }: BrowseByStateProps) {
           {states.map((state) => (
             <li key={state.slug}>
               <Link
-                href={`/markets/state/${state.slug}`}
+                href={state.href}
                 className="flex items-baseline justify-between gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-white hover:underline dark:hover:bg-zinc-800"
               >
-                <span className="truncate">
-                  {state.name}
-                  {(canonicalCounts.get(state.canonical) ?? 0) > 1 &&
-                    state.slug.length <= 3 && (
-                      <span className="text-zinc-500 dark:text-zinc-400">
-                        {' '}
-                        ({state.slug.toUpperCase()})
-                      </span>
-                    )}
-                </span>
+                <span className="truncate">{state.name}</span>
                 <span className="shrink-0 text-xs text-zinc-500 dark:text-zinc-400">
-                  {state.count.toLocaleString()}
+                  {state.marketCount.toLocaleString()}
                 </span>
               </Link>
             </li>

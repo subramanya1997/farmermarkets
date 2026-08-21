@@ -144,7 +144,10 @@ function DayRow({ row }: { row: CityMarketRow }) {
   );
 }
 
-/** ItemList + BreadcrumbList + FAQPage, all on absolute canonical URLs. */
+/**
+ * ItemList + FAQPage, on absolute canonical URLs. The BreadcrumbList is
+ * emitted by the `Breadcrumbs` component itself, from the trail it renders.
+ */
 function structuredData(data: CityPageData) {
   const pageUrl = absoluteUrl(data.path);
 
@@ -162,24 +165,6 @@ function structuredData(data: CityPageData) {
     })),
   };
 
-  const breadcrumbs = [
-    { name: 'Home', item: absoluteUrl('/') },
-    { name: 'Markets', item: absoluteUrl('/markets') },
-    ...(data.stateHubPath ? [{ name: data.regionFull, item: absoluteUrl(data.stateHubPath) }] : []),
-    { name: data.city.name, item: pageUrl },
-  ];
-
-  const breadcrumbList = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: breadcrumbs.map((crumb, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: crumb.name,
-      item: crumb.item,
-    })),
-  };
-
   // Mirrors the rendered Q&A exactly — a FAQPage node that carries a question
   // the page does not show is a manual-action risk, not a rich result.
   const faqPage = {
@@ -192,7 +177,7 @@ function structuredData(data: CityPageData) {
     })),
   };
 
-  return [itemList, breadcrumbList, faqPage];
+  return [itemList, faqPage];
 }
 
 export default async function CityPage({ params }: CityPageProps) {
@@ -219,9 +204,7 @@ export default async function CityPage({ params }: CityPageProps) {
             <Breadcrumbs
               items={[
                 { label: 'Markets', href: '/markets' },
-                ...(data.stateHubPath
-                  ? [{ label: data.regionFull, href: data.stateHubPath }]
-                  : []),
+                { label: data.regionFull, href: data.stateHubPath },
                 { label: data.city.name, href: data.path },
               ]}
             />
@@ -309,17 +292,15 @@ export default async function CityPage({ params }: CityPageProps) {
                     </li>
                   ))}
                 </ul>
-                {data.stateHubPath && (
-                  <p className="mt-4 text-sm">
-                    <Link
-                      href={data.stateHubPath}
-                      className="text-green-700 hover:underline dark:text-green-500"
-                    >
-                      Browse all {data.state.market_count.toLocaleString()} farmers markets in{' '}
-                      {data.regionFull}
-                    </Link>
-                  </p>
-                )}
+                <p className="mt-4 text-sm">
+                  <Link
+                    href={data.stateHubPath}
+                    className="text-green-700 hover:underline dark:text-green-500"
+                  >
+                    Browse all {data.state.market_count.toLocaleString()} farmers markets in{' '}
+                    {data.regionFull}
+                  </Link>
+                </p>
               </div>
             )}
           </div>

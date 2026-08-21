@@ -12,7 +12,8 @@ import { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { getCityForMarketSlug } from "@/lib/geoIndex";
 import { cityPath } from "@/lib/cityPage";
-import { marketDescription, marketLocationLine, marketTitle } from "@/lib/seo";
+import { statePath } from "@/lib/statePage";
+import { displayName, marketDescription, marketLocationLine, marketTitle } from "@/lib/seo";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -152,6 +153,21 @@ export default async function MarketDetailPage({
     ? cityPath(placement.state.slug, placement.city.slug)
     : undefined;
 
+  // Home › Markets › {State} › {City} › {Market}. The two geographic tiers are
+  // dropped for the ~2,200 records the geo index could not place in a city,
+  // rather than linking a breadcrumb at a page that does not exist. The
+  // `Breadcrumbs` component emits the matching BreadcrumbList JSON-LD.
+  const breadcrumbItems = [
+    { label: 'Markets', href: '/markets' },
+    ...(placement
+      ? [
+          { label: placement.state.name, href: statePath(placement.state.slug) },
+          { label: placement.city.name, href: cityPath(placement.state.slug, placement.city.slug) },
+        ]
+      : []),
+    { label: displayName(market.name), href: `/markets/${market.slug}` },
+  ];
+
   // Get coordinates from location object
   const latitude = market.location?.lat;
   const longitude = market.location?.lon;
@@ -238,12 +254,7 @@ export default async function MarketDetailPage({
         <section className="w-full py-6 sm:py-8 md:py-12 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col gap-3 sm:gap-4">
-              <Breadcrumbs
-                items={[
-                  { label: 'Markets', href: '/markets' },
-                  { label: market.name, href: `/markets/${market.slug}` }
-                ]}
-              />
+              <Breadcrumbs items={breadcrumbItems} />
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {market.name}
               </h1>

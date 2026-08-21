@@ -4,12 +4,8 @@ import { DiscoverySurvey } from '@/components/DiscoverySurvey';
 import { MarketsExplorer } from '@/components/MarketsExplorer';
 import { MarketsPagination } from '@/components/MarketsPagination';
 import { MarketSummaryCard } from '@/components/MarketSummaryCard';
-import {
-  MARKETS_PER_PAGE,
-  getMarketsPage,
-  getStateSummaries,
-  marketsPagePath,
-} from '@/lib/marketsIndex';
+import { MARKETS_PER_PAGE, getMarketsPage, marketsPagePath } from '@/lib/marketsIndex';
+import { getStateHubSummaries } from '@/lib/statePage';
 import { absoluteUrl } from '@/lib/site';
 
 interface MarketsIndexProps {
@@ -30,7 +26,7 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
     notFound();
   }
 
-  const states = await getStateSummaries();
+  const states = await getStateHubSummaries();
   const firstIndex = (result.page - 1) * MARKETS_PER_PAGE + 1;
   const lastIndex = firstIndex + result.markets.length - 1;
 

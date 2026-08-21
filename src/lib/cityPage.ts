@@ -14,8 +14,8 @@
 
 import 'server-only';
 import { getCity, getStateByCode, type GeoCity, type GeoState } from './geoIndex';
+import { statePath } from './statePage';
 import { getMarketBySlug, type FarmerMarket } from './data';
-import { getStateSummaries } from './marketsIndex';
 import { resolveLocation } from './geo';
 import {
   WEEKDAY_NAMES,
@@ -86,8 +86,8 @@ export interface CityPageData {
   dayGroups: CityDayGroup[];
   faqs: CityFaq[];
   siblings: CitySibling[];
-  /** Existing state hub (`/markets/state/...`), when one resolves. */
-  stateHubPath?: string;
+  /** The state hub (`/farmers-markets/{state}`) this city sits under. */
+  stateHubPath: string;
   title: string;
   description: string;
   /** 40–75 words of plain factual prose, above the table. */
@@ -357,25 +357,6 @@ function buildFaqs(input: {
   return faqs;
 }
 
-/**
- * The `/markets/state/[state]` hub for this state, if one exists.
- *
- * That route filters on the raw `state` value, so a state written only as "NC"
- * in the data has no `/markets/state/north-carolina` page. The slug is checked
- * against the states that really are in the data before it is linked, rather
- * than pointing a breadcrumb at a 404. (Issue #17 replaces these hubs.)
- */
-async function resolveStateHubPath(state: GeoState): Promise<string | undefined> {
-  const slugs = new Set((await getStateSummaries()).map((summary) => summary.slug));
-  const candidates = [
-    state.slug,
-    state.code?.toLowerCase(),
-    state.name.toLowerCase().replace(/\s+/g, '-'),
-  ].filter((slug): slug is string => Boolean(slug));
-  const match = candidates.find((slug) => slugs.has(slug));
-  return match ? `/markets/state/${match}` : undefined;
-}
-
 /** Up to `limit` other cities in the same state, largest first. */
 function siblingCities(state: GeoState, city: GeoCity, limit = 15): CitySibling[] {
   return state.cities
@@ -464,7 +445,7 @@ export async function getCityPageData(
     dayGroups,
     faqs: buildFaqs({ city: cityName, regionFull, rows, snapRows, dayGroups, notable }),
     siblings: siblingCities(state, city),
-    stateHubPath: await resolveStateHubPath(state),
+    stateHubPath: statePath(state.slug),
     title: cityTitle({
       city: cityName,
       // A US state gets its 2-letter code; everywhere else the region or
