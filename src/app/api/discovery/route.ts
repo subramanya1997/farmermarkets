@@ -160,6 +160,36 @@ export async function POST(request: NextRequest) {
     return `<tr><th align="left" style="padding:8px;border-bottom:1px solid #e4e4e7;vertical-align:top">${escapeHtml(label)}</th><td style="padding:8px;border-bottom:1px solid #e4e4e7">${escapeHtml(value).replaceAll("\n", "<br>")}</td></tr>`;
   }).join("");
 
+  // Slack is additive: when DISCOVERY_SLACK_WEBHOOK_URL is set, the same
+  // submission is posted to that incoming webhook. A Slack failure never
+  // fails the request — the email above is the delivery of record.
+  const slackWebhookUrl = process.env.DISCOVERY_SLACK_WEBHOOK_URL;
+  const slackNotification = slackWebhookUrl
+    ? fetch(slackWebhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: `New discovery request: ${intent}`,
+          blocks: [
+            {
+              type: "header",
+              text: { type: "plain_text", text: "New discovery request", emoji: false }
+            },
+            {
+              type: "section",
+              text: { type: "mrkdwn", text: lines.map((line) => `*${line.slice(0, line.indexOf(":"))}*: ${line.slice(line.indexOf(":") + 1).trim()}`).join("\n") }
+            }
+          ]
+        })
+      })
+        .then((response) => {
+          if (!response.ok) console.error("Slack discovery notification failed", response.status);
+        })
+        .catch((slackError) => {
+          console.error("Slack discovery notification failed", slackError instanceof Error ? slackError.message : "unknown");
+        })
+    : Promise.resolve();
+
   const resend = new Resend(apiKey);
   const { data, error } = await resend.emails.send({
     from,
@@ -169,6 +199,10 @@ export async function POST(request: NextRequest) {
     text: lines.join("\n"),
     html: `<div style="font-family:Arial,sans-serif;color:#18181b"><h1 style="font-size:20px">New discovery request</h1><table style="border-collapse:collapse;width:100%;max-width:700px">${htmlRows}</table></div>`
   });
+
+  // Let the Slack post settle before the function freezes (serverless
+  // runtimes may kill in-flight work after the response returns).
+  await slackNotification;
 
   if (error) {
     console.error("Resend discovery submission failed", error.name);
