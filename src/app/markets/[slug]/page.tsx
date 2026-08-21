@@ -1,10 +1,9 @@
 import { getMarketBySlug, getMarkets, getSlugByLegacyId } from "@/lib/data";
 import { getMarketAddress } from "@/lib/api";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound, permanentRedirect } from "next/navigation";
-import ClientSingleMarketMap from "@/components/ClientSingleMarketMap";
+import GoogleMapEmbed from "@/components/GoogleMapEmbed";
 import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import Link from "next/link";
@@ -326,38 +325,35 @@ export default async function MarketDetailPage({
                 </div>
               </div>
 
-              {/* Location card. One instance, ordered first on a narrow screen
-                  and into the right-hand column on a wide one — rendering it
-                  twice put two <h2>Location</h2> headings in every page's
-                  HTML, which is one heading more than the page has sections. */}
+              {/* Location. One instance, ordered first on a narrow screen and
+                  into the right-hand column on a wide one — rendering it twice
+                  put two <h2>Location</h2> headings in every page's HTML. The
+                  card chrome is gone on purpose: a boxed box-in-a-column read
+                  as clutter, so the section sits flat like every other one. */}
               <div className="order-first lg:order-none">
-                <Card className="sticky top-24 bg-white dark:bg-zinc-800">
-                  <CardContent className="p-4 sm:p-6">
-                    <h2 className="text-xl font-semibold mb-4">Location</h2>
-                    {hasAddress && (
-                      <address className="mb-4 not-italic text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                        {address}
-                      </address>
-                    )}
-                    <div className="rounded-lg overflow-hidden">
-                      <ClientSingleMarketMap market={market} height="300px" />
+                <div className="sticky top-24">
+                  <h2 className="text-xl font-semibold mb-4">Location</h2>
+                  {hasAddress && (
+                    <address className="mb-4 not-italic text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
+                      {address}
+                    </address>
+                  )}
+                  <GoogleMapEmbed market={market} height="300px" />
+                  {latitude && longitude && (
+                    <div className="mt-4">
+                      <TrackedExternalLink
+                        href={`https://www.google.com/maps/dir/?api=1&destination=${latitude}%2C${longitude}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full block"
+                        eventName="Market Directions Opened"
+                        eventProperties={{ ...analyticsProperties, destination: 'google-maps' }}
+                      >
+                        <Button className="w-full bg-green-600 hover:bg-green-700">Get Directions</Button>
+                      </TrackedExternalLink>
                     </div>
-                    {latitude && longitude && (
-                      <div className="mt-4">
-                        <TrackedExternalLink
-                          href={`https://www.openstreetmap.org/directions?from=&to=${latitude}%2C${longitude}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full block"
-                          eventName="Market Directions Opened"
-                          eventProperties={{ ...analyticsProperties, destination: 'openstreetmap' }}
-                        >
-                          <Button className="w-full bg-green-600 hover:bg-green-700">Get Directions</Button>
-                        </TrackedExternalLink>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+                  )}
+                </div>
               </div>
             </div>
           </div>
