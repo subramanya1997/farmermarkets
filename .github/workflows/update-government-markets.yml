@@ -30,7 +30,7 @@ jobs:
         continue-on-error: true
         run: npm run data:update
 
-      - run: npm run test:data
+      - run: npm test
 
       - run: npm run data:check
 

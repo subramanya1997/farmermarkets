@@ -9,6 +9,7 @@ import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { marketDescription, marketLocationLine, marketTitle } from "@/lib/seo";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -59,26 +60,32 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
     };
   }
 
-  const products = getMarketProducts(market);
-  const productsList = products?.join(', ') || '';
-
-  // Avoid duplicate city/state like "California, California"
-  const cityStateDisplay = [market.city, market.state, market.country_code === 'US' ? undefined : market.country]
-    .filter((part, index, parts): part is string => (
-      Boolean(part) && parts.findIndex((candidate) => candidate?.toLowerCase() === part?.toLowerCase()) === index
-    ))
-    .join(', ');
+  // Both are built entirely from fields this record actually has (see
+  // src/lib/seo.ts) — an empty field drops its clause instead of rendering an
+  // empty slot, and the title is capped at 60 characters.
+  const title = marketTitle(market);
+  const description = marketDescription(market);
+  const path = `/markets/${resolvedParams.slug}`;
 
   return {
-    title: `${market.name} - Farmer Market in ${cityStateDisplay}`,
-    description: `Visit ${market.name} in ${cityStateDisplay}. Find fresh ${productsList}. ${market.location_description || ''}`,
+    // `absolute` bypasses the root layout's "%s | Farmer Markets" template:
+    // the suffix pushed every market title past the SERP truncation point and
+    // added nothing a searcher was looking for.
+    title: { absolute: title },
+    description,
     openGraph: {
-      title: `${market.name} - Farmer Market in ${cityStateDisplay}`,
-      description: `Visit ${market.name} in ${cityStateDisplay}. Find fresh ${productsList}. ${market.location_description || ''}`,
-      url: `/markets/${resolvedParams.slug}`,
+      title,
+      description,
+      url: path,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
     },
     alternates: {
-      canonical: `/markets/${resolvedParams.slug}`,
+      canonical: path,
     },
   };
 }
@@ -115,14 +122,10 @@ export default async function MarketDetailPage({
   const hours = getMarketHours(market);
   const address = getMarketAddress(market);
 
-  // Get city/state from market data (avoid duplicates like "California, California")
-  const city = market.city;
-  const state = market.state;
-  const cityStateDisplay = [city, state, market.country_code === 'US' ? undefined : market.country]
-    .filter((part, index, parts): part is string => (
-      Boolean(part) && parts.findIndex((candidate) => candidate?.toLowerCase() === part?.toLowerCase()) === index
-    ))
-    .join(', ');
+  // "Durham, North Carolina" — deduplicated, and undefined (rather than an
+  // empty string that rendered as a blank subtitle) when the record has no
+  // usable location at all.
+  const cityStateDisplay = marketLocationLine(market);
 
   // Get coordinates from location object
   const latitude = market.location?.lat;
@@ -158,7 +161,7 @@ export default async function MarketDetailPage({
     '@type': 'LocalBusiness',
     '@id': `${SITE_URL}/markets/${market.slug}`,
     name: market.name,
-    description: market.location_description || `${market.name} is a local farmer market${cityStateDisplay ? ` in ${cityStateDisplay}` : ''}.`,
+    description: market.location_description || marketDescription(market),
     url: `${SITE_URL}/markets/${market.slug}`,
     telephone: market.phone_numbers?.[0],
     email: market.emails?.[0],
@@ -219,9 +222,11 @@ export default async function MarketDetailPage({
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {market.name}
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
-                {cityStateDisplay}
-              </p>
+              {cityStateDisplay && (
+                <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
+                  {cityStateDisplay}
+                </p>
+              )}
             </div>
           </div>
         </section>
