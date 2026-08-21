@@ -20,6 +20,7 @@ export async function Footer() {
     main: [
       { name: 'Discover', href: '/markets' },
       { name: 'About', href: '/about' },
+      { name: 'About the data', href: '/about-the-data' },
     ],
     legal: [
       { name: 'Terms', href: '/terms' },
@@ -116,8 +117,14 @@ export async function Footer() {
                 Built by <a href="https://subramanya.ai/" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">Subramanya N</a>
               </p>
             </div>
+            {/* The credit line links to the page that documents it: sources,
+                refresh cadence, coverage numbers and licence terms. */}
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
-              Data sourced from official government portals and the legacy USDA Local Food Portal snapshot
+              Data from the USDA Local Food Portal directory and official government open-data
+              portals —{' '}
+              <Link href="/about-the-data" className="text-green-600 hover:underline">
+                about the data
+              </Link>
             </p>
           </div>
         </div>

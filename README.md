@@ -117,6 +117,7 @@ The app can run locally without required environment variables. Server-side API 
 | `DISCOVERY_NOTIFICATION_EMAIL` | Private inbox that receives discovery requests. |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console verification token. No meta tag is rendered when unset. |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools `msvalidate.01` token. No meta tag is rendered when unset. |
+| `NEXT_PUBLIC_ORG_SAMEAS` | Comma-separated absolute URLs added to `Organization.sameAs` (Wikidata item, social profiles). The public repository URL is always included; entries that are not absolute `http(s)` URLs are dropped. See [Entity presence](#entity-presence). |
 | `INDEXNOW_KEY` | Overrides the committed IndexNow key during a rotation. |
 | `INDEXNOW_DISABLE` | Set to `1` to skip all IndexNow submissions (CI, local runs). |
 
@@ -164,6 +165,14 @@ URLs are de-duplicated, resolved against the canonical origin, filtered to the c
 
 For an emergency rotation without a code change, set `INDEXNOW_KEY` in the environment and upload the matching `<key>.txt` to the site root; the environment value wins over the constant.
 
+## Entity presence
+
+`/about-the-data` is the page that documents the directory itself — every publisher with its record count, how records are normalized and validated, the refresh cadence, current coverage numbers, known limitations, how to report a correction, and the per-source licence terms. All of it is computed from the two snapshots at build/ISR time by `src/lib/datasetPage.ts`, so the page cannot drift from the data. It carries a `Dataset` node whose `creator` references the `Organization` `@id` declared in `src/app/layout.tsx`, and whose `distribution` names the two publicly served snapshot files. No `license` is emitted: the eight official sources carry eight different statements and the USDA records carry none, so there is no single licence to claim.
+
+`Organization.sameAs` is built by `organizationSameAs()` in `src/lib/site.ts`. It always contains the public repository URL and adds whatever `NEXT_PUBLIC_ORG_SAMEAS` names, comma-separated. Only absolute `http(s)` URLs survive, duplicates collapse, and the key is omitted entirely if the list ever comes out empty.
+
+`docs/entity-checklist.md` is the off-site companion: creating the Wikidata item (with the exact properties), OpenStreetMap and Overture/GERS engagement, USDA AMS options, what Bing Places does and does not do, social profiles, and honest guidance for community participation. Adding a Q-ID or profile URL to `NEXT_PUBLIC_ORG_SAMEAS` and redeploying is the only code-side step any of it needs.
+
 ## Analytics and discovery feedback
 
 The deployed app sends the same normalized events to Vercel Web Analytics and Google Analytics 4. The bundled GA4 stream is `G-S2P5DZTJC8`; `NEXT_PUBLIC_GA_MEASUREMENT_ID` can override it per deployment. Both analytics providers load automatically on every production visit. Event coverage includes:
@@ -191,6 +200,7 @@ src/
     api/discovery/            Validated server-only Resend contact submissions
     markets/                  Market listing, detail, and state pages
     about/                    Static about page
+    about-the-data/           Data provenance page and its Dataset JSON-LD
     privacy/                  Static privacy page
     terms/                    Static terms page
     layout.tsx                Root layout, metadata, analytics, and shared chrome
@@ -338,6 +348,7 @@ Each run writes `scripts/legacy-refresh-report.json` with per-record `updated` /
 | `/markets/[slug]` | Individual market detail page. |
 | `/markets/state/[state]` | State-specific market listing page. |
 | `/about` | About page. |
+| `/about-the-data` | Sources, processing, refresh cadence, coverage numbers, limitations, and licence terms, with `Dataset` JSON-LD. Every number is computed from the current data at build/ISR time. |
 | `/privacy` | Privacy policy. |
 | `/terms` | Terms page. |
 | `/robots.txt` | Generated robots rules. |
@@ -428,6 +439,7 @@ For production:
 
 - Run `npm run build` before publishing app changes.
 - Run `npm run test:data` and `npm run data:check` after changing the source registry or any parser.
-- Verify `/markets`, `/markets/[slug]`, `/api/markets`, `/sitemap.xml`, and `/robots.txt` after data or routing changes.
+- Verify `/markets`, `/markets/[slug]`, `/about-the-data`, `/api/markets`, `/sitemap.xml`, and `/robots.txt` after data or routing changes.
+- `/about-the-data` needs no editing when the data changes: its counts, source list, licence list, and date range are all recomputed from the snapshots. It does need editing if the refresh cadence or the processing rules change.
 - Keep the market dataset schema aligned with the normalization logic in `src/app/api/markets/data.ts`.
 - Update SEO copy and canonical URLs if the production domain changes from `farmermarkets.app`.
