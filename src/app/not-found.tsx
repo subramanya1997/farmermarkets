@@ -5,6 +5,11 @@ import { Home } from "lucide-react";
 export default function NotFound() {
   return (
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+      {/*
+        404s must never be indexable. `not-found.tsx` cannot export `metadata`,
+        so emit the tag directly — React hoists it into <head>.
+      */}
+      <meta name="robots" content="noindex, nofollow" />
       <section className="relative w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col items-center space-y-6 text-center">
