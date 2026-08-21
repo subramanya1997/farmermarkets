@@ -102,6 +102,19 @@ npm run indexnow:ping -- --dry-run https://www.farmermarkets.app/markets/some-ma
 
 Submits changed URLs to IndexNow. See [Search engine setup](#search-engine-setup).
 
+```bash
+npm run test:seo
+```
+
+Runs the SEO smoke tests (`scripts/seo-smoke.mjs`) against a running server. See [Measurement](#measurement).
+
+```bash
+npm run test:market-routes
+npm run test:topic-routes
+```
+
+The other two server-dependent checks: sitemap and API route coverage, and the four topic pages' counts recomputed from the snapshots.
+
 ## Environment Variables
 
 The app can run locally without required environment variables. Server-side API calls derive their base URL from the following optional variables:
@@ -164,6 +177,58 @@ URLs are de-duplicated, resolved against the canonical origin, filtered to the c
 4. Deploy before the next ping, so the key file is live when an engine verifies a submission.
 
 For an emergency rotation without a code change, set `INDEXNOW_KEY` in the environment and upload the matching `<key>.txt` to the site root; the environment value wins over the constant.
+
+## Measurement
+
+Two halves: a baseline to compare against, and a smoke test that catches the regressions a baseline is too slow to notice.
+
+### Baseline (August 2026 audit)
+
+The numbers every later month is read against. They are the whole-property totals over the audit's 28-day window, before the T9–T19 work landed:
+
+| Metric | August 2026 |
+| --- | --- |
+| Impressions | 7,023 |
+| Clicks | 20 |
+| CTR | 0.28% |
+| Impressions at positions 6–10 | 2,215 (0.54% CTR) |
+| Market-name queries | position 8–11 |
+| City queries ("farmers markets in {city}") | position 40–80 |
+
+Read as a diagnosis: the site already ranks for the market names it holds records for, and clicks are not following, so the near-term win is title and snippet quality on pages that already surface. City queries are a different problem — position 40–80 is not a CTR problem, it is a "these pages are barely in the index" problem, and the number to watch there is indexed-page count and impressions, not CTR.
+
+### What to check monthly
+
+**Google Search Console**
+
+- **Performance → Search results**, filtered into query clusters rather than read as one number. Three clusters matter and they move for different reasons:
+  - market-name queries (the query contains a market name) — average position and CTR; the baseline is position 8–11 with clicks not following;
+  - city queries (`farmers markets in …`, `farmers market near …`) — impressions and position; the baseline is 40–80, so movement into the 20s is the signal that city pages are being taken seriously;
+  - topic queries (SNAP/EBT, Saturday, hours, online ordering) — these have no baseline at all; the four topic pages are new, so any impressions are the whole result.
+- **Performance → Search results → Generative AI**, the separate search-appearance type. Track it as its own series: impressions there and impressions in ordinary results move independently, and a page can gain one while losing the other.
+- **Pages** (Indexing → Pages). The count that matters is *Indexed* against the ~14,000 URLs in the sitemap, and the reason breakdown underneath it. Two reasons are expected and fine — the deliberately unindexed thin city pages appear under "Excluded by 'noindex' tag", and the legacy redirects under "Page with redirect". Anything landing in "Crawled – currently not indexed" or "Discovered – currently not indexed" is the thing to investigate; that bucket growing month over month is the earliest warning that the city tier is being judged thin.
+
+**Bing Webmaster Tools**
+
+- **Performance → AI Performance**: citations and grounding queries. This is the only place either engine reports AI-answer inclusion directly — Google's Generative AI report gives you impressions, Bing gives you the queries and the pages actually cited. Note which page types get cited; the topic and city pages are the ones written to be extractable.
+- **Sitemaps**: submitted against discovered URLs, which is the fastest way to spot a sitemap chunk that stopped being fetched.
+
+### The smoke tests
+
+`scripts/seo-smoke.mjs` opens a fixed sample of about 25 URLs and asserts, per URL, the things that break silently and cost months: title length and specificity, description present and free of the fragments that mean a field interpolated empty, exactly one self-referential canonical on the canonical host, a minimum internal-link count, JSON-LD that parses with no empty values, response size, and the correct robots directive for that page type — including the *presence* of `noindex` on the deliberately thin city pages and on 404s. It also checks the legacy redirects (numeric market IDs, `/markets/state/*`, uppercase paths) and the sitemap index and its chunks.
+
+The sample is fixed and documented in the file, one entry per page shape the site serves — with-hours, no city placement, government provenance, freshness notice, unverified — so a failure names a real change rather than a different random draw.
+
+```bash
+npm run build
+npm start &
+npm run test:seo                                            # against localhost:3000
+MARKET_BASE_URL=https://www.farmermarkets.app npm run test:seo   # against production
+```
+
+It prints a per-check pass/fail table and exits non-zero on any failure. `npm test` includes it, and it skips itself with a notice when nothing is listening, so the offline unit suites still run without a build. Setting `MARKET_BASE_URL` explicitly means you meant to hit a server, so an unreachable one fails loudly instead of skipping.
+
+CI (`.github/workflows/ci.yml`) runs lint, `tsc --noEmit` and the offline tests, then builds, starts the server, and runs all three server-dependent checks — `test:seo`, `test:market-routes`, `test:topic-routes` — on every push to `main` and every pull request.
 
 ## Entity presence
 
@@ -440,6 +505,8 @@ For production:
 - Run `npm run build` before publishing app changes.
 - Run `npm run test:data` and `npm run data:check` after changing the source registry or any parser.
 - Verify `/markets`, `/markets/[slug]`, `/about-the-data`, `/api/markets`, `/sitemap.xml`, and `/robots.txt` after data or routing changes.
+- Run `npm run test:seo` against a build after any change to metadata, JSON-LD, routing, or redirects — CI does it too, but it is the fastest local check that a page is still fit to index.
+- Once a month, read GSC and Bing WMT against the August 2026 baseline. See [Measurement](#measurement).
 - `/about-the-data` needs no editing when the data changes: its counts, source list, licence list, and date range are all recomputed from the snapshots. It does need editing if the refresh cadence or the processing rules change.
 - Keep the market dataset schema aligned with the normalization logic in `src/app/api/markets/data.ts`.
 - Update SEO copy and canonical URLs if the production domain changes from `farmermarkets.app`.

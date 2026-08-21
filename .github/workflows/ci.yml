@@ -1,0 +1,89 @@
+name: CI
+
+# The nightly data refresh (update-government-markets.yml) already runs
+# `npm test` and `npm run build`, but only once a day and only on the schedule
+# — a push that broke the site sat undetected until the next 08:17 UTC run, and
+# nothing anywhere exercised the three checks that need a running server.
+# This workflow is the per-change gate: build the site, serve it, and run every
+# check against the real HTML.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # One run per branch or PR; a new push supersedes an in-flight run.
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # The build prerenders 9,132 market pages and 4,920 city pages; ~15 minutes
+    # of headroom over the observed wall time.
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      # Offline unit suites plus the SEO smoke tests, which skip themselves at
+      # this point because nothing is listening yet. They run for real below.
+      - name: Unit tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Start the server
+        run: |
+          npm start &
+          echo "$!" > "$RUNNER_TEMP/server.pid"
+          # `npm start` returns before Next is accepting connections, so poll
+          # rather than sleeping a guessed number of seconds.
+          for attempt in $(seq 1 60); do
+            if curl -sfo /dev/null http://localhost:3000/; then
+              echo "server up after ${attempt}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "server did not come up within 60s"
+          exit 1
+
+      # The three server-dependent checks. Each is a separate step so a failure
+      # names itself in the job summary instead of hiding inside a shell chain.
+      - name: SEO smoke tests
+        run: npm run test:seo
+        env:
+          MARKET_BASE_URL: http://localhost:3000
+
+      - name: Market and sitemap route checks
+        run: npm run test:market-routes
+        env:
+          MARKET_BASE_URL: http://localhost:3000
+
+      - name: Topic page checks
+        run: npm run test:topic-routes
+        env:
+          MARKET_BASE_URL: http://localhost:3000
+
+      - name: Stop the server
+        if: always()
+        run: kill "$(cat "$RUNNER_TEMP/server.pid")" || true
