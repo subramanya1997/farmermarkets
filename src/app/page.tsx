@@ -7,8 +7,9 @@ import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf, Apple, Carro
 import type { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 
-export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
+// Statically rendered and revalidated daily. The dataset is a versioned
+// snapshot in the repo, so a 24h window is well inside its update cadence.
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   alternates: {

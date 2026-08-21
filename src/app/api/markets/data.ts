@@ -217,7 +217,7 @@ function hasValidCoordinates(userLat?: number, userLon?: number): userLat is num
 }
 
 // Load the legacy snapshot and the independently generated official-government snapshot.
-async function loadMarketsData(): Promise<FarmerMarket[]> {
+async function readMarketsData(): Promise<FarmerMarket[]> {
   try {
     const dataSources = [
       {
@@ -420,6 +420,68 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
 }
 
 /**
+ * Memoized dataset.
+ *
+ * The two JSON snapshots are ~12.3 MB combined. Reading and parsing them on
+ * every request dominated TTFB, so the parse is hoisted into a module-level
+ * promise that is built once per server process (same pattern as
+ * `getLegacyIdSlugMap` below). A rejected — or empty, which is how
+ * `readMarketsData` reports a failed read — result is not cached, so the next
+ * caller retries instead of being stuck with a broken dataset for the life of
+ * the process.
+ */
+let marketsDataPromise: Promise<FarmerMarket[]> | null = null;
+
+function loadMarketsData(): Promise<FarmerMarket[]> {
+  if (!marketsDataPromise) {
+    marketsDataPromise = readMarketsData()
+      .then((markets) => {
+        if (markets.length === 0) {
+          marketsDataPromise = null;
+        }
+        return markets;
+      })
+      .catch((error) => {
+        marketsDataPromise = null;
+        throw error;
+      });
+  }
+
+  return marketsDataPromise;
+}
+
+/**
+ * Slug → record map, so `getMarketBySlug` is O(1) instead of a linear scan over
+ * 8,800+ records on every detail-page render. Built lazily from the memoized
+ * dataset and reset whenever the dataset itself has to be reloaded.
+ */
+let slugIndexPromise: Promise<Map<string, FarmerMarket>> | null = null;
+
+function getSlugIndex(): Promise<Map<string, FarmerMarket>> {
+  if (!slugIndexPromise) {
+    slugIndexPromise = loadMarketsData()
+      .then((markets) => {
+        if (markets.length === 0) {
+          slugIndexPromise = null;
+        }
+        const map = new Map<string, FarmerMarket>();
+        for (const market of markets) {
+          if (market.slug && !map.has(market.slug)) {
+            map.set(market.slug, market);
+          }
+        }
+        return map;
+      })
+      .catch((error) => {
+        slugIndexPromise = null;
+        throw error;
+      });
+  }
+
+  return slugIndexPromise;
+}
+
+/**
  * Legacy numeric-ID → slug map.
  *
  * The site used to serve `/markets/{numericId}` URLs and Google still has some
@@ -558,10 +620,9 @@ export const marketService = {
     return market || null;
   },
 
-  // Get a single market by slug
+  // Get a single market by slug (O(1) lookup through the memoized slug index)
   getMarketBySlug: async (slug: string) => {
-    const markets = await loadMarketsData();
-    const market = markets.find(m => m.slug === slug);
-    return market || null;
+    const index = await getSlugIndex();
+    return index.get(slug) ?? null;
   }
 };

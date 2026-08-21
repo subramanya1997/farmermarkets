@@ -1,4 +1,4 @@
-import { getMarketBySlug, getSlugByLegacyId } from "@/lib/data";
+import { getMarketBySlug, getMarkets, getSlugByLegacyId } from "@/lib/data";
 import { getMarketProducts, getMarketHours, getMarketAddress } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,8 +10,28 @@ import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 
-export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
+export const revalidate = 86400;
+// Slugs outside generateStaticParams (legacy numeric IDs, records added by a
+// data refresh) are still rendered on demand and then held in the ISR cache.
+export const dynamicParams = true;
+
+/**
+ * Prerender every market.
+ *
+ * Measured on this repo: the full 8,807-page prerender adds ~10s to
+ * `next build` (whole build ~15s wall) and peaks well under 1 GB, so there is
+ * no reason to prerender only a subset. If a much larger dataset ever makes
+ * that too slow or memory-hungry, narrow this to a deterministic subset (e.g.
+ * the ~2,000 markets with `operations.days` populated, or the first N by
+ * slug) — `dynamicParams = true` above means the rest keep working, they just
+ * pay one cold render before landing in the ISR cache.
+ */
+export async function generateStaticParams() {
+  const markets = await getMarkets();
+  return markets
+    .filter((market) => market.slug)
+    .map((market) => ({ slug: market.slug }));
+}
 
 const MARKET_IMAGE_URL = absoluteUrl('/og-image.jpg');
 
