@@ -53,7 +53,13 @@ export interface MarketSeoRecord extends GeoRecord {
  */
 const MARKET_WORD = /market|marché|marche|markt|mercado|mercato|mercat|marknad|piac/i;
 
-function nameSaysMarket(name: string): boolean {
+/**
+ * Whether a name already tells the reader this is a market, so a caller can
+ * skip the "is a farmers market" gloss instead of writing "Durham Farmers'
+ * Market is a farmers market". Exported for `src/lib/marketFacts.ts`, which
+ * builds the on-page summary from the same rule as the meta description.
+ */
+export function nameSaysMarket(name: string): boolean {
   return MARKET_WORD.test(name);
 }
 
