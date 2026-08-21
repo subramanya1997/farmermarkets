@@ -1,49 +1,57 @@
 Geo index build report
-generated_at            2026-08-21T07:08:34.688Z
+generated_at            2026-08-21T08:55:16.342Z
 
 Records
-  total                 8807
-  indexed               8806
-  unresolved            1
-  without coordinates   356
+  total                 9132
+  indexed               9123
+  unresolved            9
+  without coordinates   383
 
 Resolution method (weakest source a record needed)
-  from fields           6434
-  from address          2044
-  from coordinates      288
+  from fields           6450
+  from address          2319
+  from coordinates      315
   corrupt combos fixed  1
 
 State resolution
-  from fields           6268
-  from address          2027
+  from fields           6283
+  from address          2329
   from coordinates      8
-  missing before        2539
-  missing after         504
+  missing before        2849
+  missing after         512
     of those, outside US/CA (grouped by country instead)  503
 
 City resolution
-  from fields           6424
-  from address          2044
-  from coordinates      286
-  missing before        2205
-  missing after         53
+  from fields           6711
+  from address          2043
+  from coordinates      314
+  missing before        2215
+  missing after         64
 
 Index
   top-level entries     60 (53 US states/territories)
-  cities                4870
-  cities with 3+ markets 556
+  cities                4920
+  cities with 3+ markets 586
 
 Top 10 entries by market count
-   1. New York                  1066 markets   461 cities
-   2. California                 937 markets   396 cities
-   3. Minnesota                  437 markets   283 cities
+   1. New York                  1085 markets   462 cities
+   2. California                 965 markets   397 cities
+   3. Minnesota                  439 markets   284 cities
    4. Ontario                    388 markets   259 cities
-   5. Illinois                   349 markets   193 cities
-   6. Michigan                   333 markets   233 cities
-   7. Virginia                   292 markets   160 cities
-   8. Wisconsin                  231 markets   147 cities
-   9. Georgia                    228 markets   122 cities
-  10. Florida                    219 markets   124 cities
+   5. Illinois                   366 markets   194 cities
+   6. Michigan                   340 markets   234 cities
+   7. Virginia                   299 markets   161 cities
+   8. Georgia                    237 markets   122 cities
+   9. Wisconsin                  237 markets   149 cities
+  10. Texas                      236 markets   112 cities
 
 Unresolved examples
   cambridge-farmers-market — Cambridge Farmers' Market (US)
+  trinity-farmers-market-2 — Trinity Farmers Market (US)
+  newport-farmers-market — Newport Farmers Market (US)
+  mercer-island-farmers-market — Mercer Island Farmers Market (US)
+  port-huron-farmers-market — Port Huron Farmers Market (US)
+  haymaker-farmers-market-winter-season — Haymaker Farmers' Market - Winter Season (US)
+  chewelah-farmers-market — Chewelah Farmers Market (US)
+  kent-ct-farmers-market — Kent CT Farmers Market (US)
+  ventnor-city-farmers-market-ventnor-city — Ventnor City Farmers' Market (US)

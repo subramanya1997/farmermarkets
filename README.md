@@ -77,11 +77,24 @@ npm run data:update
 Downloads enabled official sources, validates record counts and coordinates, preserves the last good records for a failed source, and atomically regenerates the official snapshot and manifest.
 
 ```bash
-npm run data:check
-npm run test:data
+npm run data:update-legacy
 ```
 
-Validates the generated snapshot/checksum and runs the ingestion parser and failure-retention tests.
+Refreshes the legacy USDA snapshot (`public/data/farmers_markets.json`) against the live USDA AMS Local Food Directory, then pings the changed URLs to IndexNow. See [Legacy USDA refresh](#legacy-usda-refresh).
+
+Useful flags:
+
+- `--dry-run` — report what would change and write nothing.
+- `--limit N` — only consider the first `N` records. A testing affordance: it bounds every kind of work, delistings included, so a partial pass never applies a whole-dataset conclusion.
+- `--fixture <path>` — read a saved upstream payload instead of the network, for offline runs.
+
+```bash
+npm run data:check
+npm run test:data
+npm run test:data-legacy
+```
+
+Validates the generated snapshot/checksum and runs the ingestion parser, failure-retention, and legacy-refresh tests.
 
 ```bash
 npm run indexnow:ping -- --dry-run https://www.farmermarkets.app/markets/some-market
@@ -211,7 +224,7 @@ scripts/
 
 The API merges two independent files at read time:
 
-- `public/data/farmers_markets.json` is the unchanged legacy snapshot.
+- `public/data/farmers_markets.json` is the legacy USDA snapshot, refreshed by `npm run data:update-legacy` (see [Legacy USDA refresh](#legacy-usda-refresh)).
 - `public/data/government_markets.json` is generated only from enabled sources in `data/government-market-sources.json`.
 
 Every generated record identifies its official publisher, dataset, source record, catalog URL, data URL, and license in `provenance`. The companion manifest records each source's last retrieval result and record count, plus a SHA-256 checksum for the complete snapshot.
@@ -249,6 +262,72 @@ To test with pre-downloaded payloads instead of network requests, name the fixtu
 ```bash
 node scripts/update-government-markets.mjs --fixtures-dir /absolute/path/to/fixtures
 ```
+
+### Legacy USDA refresh
+
+#### Upstream availability
+
+The legacy snapshot was long treated as unrefreshable, on the assumption that the USDA Local Food Portal had been decommissioned. That assumption was wrong, and it is worth recording why it looked true: `https://www.usdalocalfoodportal.com/` sits behind a load balancer that answers **403** to any unrecognised user agent, so every scripted probe reported the site as dead.
+
+What is actually available today:
+
+| Source | Status | Usable? |
+| --- | --- | --- |
+| `usdalocalfoodportal.com` bulk export | Live, keyless, ~18 MB JSON | **Yes** — this is what the refresh uses |
+| `usdalocalfoodportal.com/api/farmersmarket/` | Live, returns `"apikey error"` | No — needs a key obtained by registration |
+| data.gov "National Farmers Market Directory" | Dataset not resolvable via the CKAN API | No |
+| ArcGIS `National_Farmers_Market_Directory` feature service | Live, but an Esri training copy snapshotted March 2020 | No — as stale as what we already had |
+
+The refresh therefore reads the same keyless endpoint the directory's own CSV export button calls:
+
+```
+https://www.usdalocalfoodportal.com/api/download_by_directory/?directory=farmersmarket
+```
+
+Two practical notes for whoever maintains this. A browser `User-Agent` is required or the balancer returns 403 — the endpoint is public and unauthenticated, so this is a compatibility workaround, not an access-control bypass. And the endpoint builds the export on demand and intermittently answers 504 for a run of consecutive requests before recovering; the script retries five times with escalating backoff and requests `Accept-Encoding: identity`, which is markedly more reliable than Node's default `gzip`.
+
+#### What the refresh does
+
+Records are matched on `listing_id`, which is exactly the `id` on our legacy records — 6,822 of the original 6,832 matched, so this is a true refresh rather than a re-import.
+
+The merge is deliberately conservative, because the bulk export is a *reduced* projection of the directory: it carries no contact details, no season or day schedules, no product item lists, and no parsed city/state/ZIP, all of which our snapshot does carry from the original richer export. Overwriting wholesale would destroy data. So the refresh writes only these fields and leaves everything else untouched:
+
+`last_updated`, `name`, `location.address`, `location.coordinates`, `location.description`, `location.site_type`, `location.indoor_outdoor`, `organization.description`, `products.production_methods`, `payment.food_assistance.snap_option`.
+
+`slug` is never regenerated for an existing record — the URL is a promise. A value is never cleared: an absent upstream field means "not exported", not "deleted".
+
+`last_updated` is always mirrored from the upstream `update_time` and is **never** set to "now". Freshness affects both search ranking and AI-engine citation, but engines detect and discount cosmetic timestamp bumps — so a corrected address on a record the USDA did not re-date fixes the address and leaves the date alone.
+
+Comparison is normalization-aware. The original export encoded CR as `_x000d_`, rounded coordinates, inserted a comma before the ZIP, and wrote `"Unknown"` where upstream had null. Comparing raw values marks 6,646 of 6,781 genuinely-unchanged records as changed; stripping that layer first is what makes **a second run a true no-op**, which is the property worth protecting if you modify this script.
+
+#### Closed and delisted markets
+
+A record the upstream no longer lists is **flagged, never deleted**: it gets `unverified: true`, and the market page renders an honest notice saying the listing is no longer published in the USDA directory and may be closed.
+
+This is the chosen policy, over excluding the record or returning 410. The directory is self-reported, so a listing can vanish because nobody renewed it rather than because the market closed; the page still carries real value for someone searching that market by name, and deleting it would throw away a working URL on weak evidence. Honest labelling beats both silent staleness and premature deletion. Nothing is `noindex`ed.
+
+The same notice logic (`src/lib/freshness.ts`) independently flags any record whose `last_updated` is more than four years old, whichever dataset it came from.
+
+If the upstream ever returns drastically fewer listings than the snapshot holds, that is a broken upstream rather than a mass extinction, and the script refuses to write at all instead of flagging thousands of records.
+
+#### Refresh cadence
+
+Run the refresh **in early spring, before the seasonal search-volume spike**, and again mid-season:
+
+1. **February–March** — the main pass. Markets update their listings ahead of opening day, so this is when upstream churn is highest and when the refreshed data has the longest runway before query volume peaks.
+2. **June–July** — a mid-season pass to catch markets that registered late.
+3. Ad hoc whenever the delisted count looks unusual.
+
+The recommended sequence:
+
+```bash
+npm run data:update-legacy -- --dry-run   # review the report first
+npm run data:update-legacy                # apply, and ping IndexNow
+npm run data:geo                          # rebuild the geo index for added records
+npm test && npm run build
+```
+
+Each run writes `scripts/legacy-refresh-report.json` with per-record `updated` / `added` / `delisted` / `relisted` detail and a per-field change tally. It is a per-run artifact and is gitignored, not a source of truth. Changed market, city, state, and sitemap URLs are pushed to IndexNow automatically; `INDEXNOW_DISABLE=1` turns that off, and a ping failure never fails the refresh.
 
 ## Routes
 

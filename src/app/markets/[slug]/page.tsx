@@ -21,6 +21,7 @@ import { getMarketProvenance } from "@/lib/provenance";
 import { marketFaqs, marketSchemaGraph } from "@/lib/schema";
 import { MarketFaq } from "@/components/MarketFaq";
 import { MarketFacts } from "@/components/MarketFacts";
+import { MarketFreshnessNotice } from "@/components/MarketFreshnessNotice";
 import { MarketSourceNote } from "@/components/MarketSourceNote";
 import { NearbyMarkets } from "@/components/NearbyMarkets";
 
@@ -256,6 +257,11 @@ export default async function MarketDetailPage({
                   )}
                 </p>
               )}
+              {/* "Last verified in 2020", or "no longer in the USDA
+                  directory" — high enough on the page to be honest, muted
+                  enough not to read as an alarm. Renders nothing for a record
+                  whose date does not support the claim. */}
+              <MarketFreshnessNotice market={market} />
             </div>
           </div>
         </section>

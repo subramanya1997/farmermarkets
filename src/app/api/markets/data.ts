@@ -10,6 +10,8 @@ export interface FarmerMarket {
   slug: string;
   name: string;
   last_updated?: string;
+  /** Set by the data refresh on records the upstream USDA directory dropped. */
+  unverified?: boolean;
   country?: string;
   country_code?: string;
   distance?: number;
@@ -95,6 +97,7 @@ interface RawMarketData {
   slug?: string;
   name: string;
   last_updated?: string;
+  unverified?: boolean;
   country?: string;
   country_code?: string;
   location?: {
@@ -344,6 +347,7 @@ async function readMarketsData(): Promise<FarmerMarket[]> {
           slug: slug,
           name: market.name,
           last_updated: market.last_updated,
+          unverified: market.unverified,
           country: market.country,
           country_code: market.country_code,
           address: market.location?.address,
