@@ -18,7 +18,7 @@ export function MarketFreshnessNotice({ market }: MarketFreshnessNoticeProps) {
   if (!freshness.notice) return null;
 
   return (
-    <p className="flex items-start gap-1.5 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
+    <p className="flex max-w-3xl items-start gap-1.5 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400">
       <Clock aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0" />
       <span>{freshness.notice}</span>
     </p>

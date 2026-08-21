@@ -56,7 +56,7 @@ export default async function SaturdayTopicPage() {
           <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
             Farmers markets on other days
           </h2>
-          <p className="mt-3 text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
+          <p className="mt-3 max-w-3xl text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
             Saturday is the busiest day, but not the only one:{' '}
             {data.otherDays
               .slice(0, 3)

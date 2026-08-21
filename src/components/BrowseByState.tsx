@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { StateHubSummary } from '@/lib/statePage';
+import { SITE_FRAME } from "@/lib/ui";
 
 interface BrowseByStateProps {
   states: StateHubSummary[];
@@ -21,12 +22,12 @@ export function BrowseByState({ states }: BrowseByStateProps) {
 
   return (
     <section className="w-full border-t border-zinc-200 bg-zinc-50 py-12 dark:border-zinc-800 dark:bg-zinc-900/50">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <div className={SITE_FRAME}>
         <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Browse markets by state</h2>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
           {states.length.toLocaleString()} states and regions with farmers markets in the directory.
         </p>
-        <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4">
+        <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
           {states.map((state) => (
             <li key={state.slug}>
               <Link

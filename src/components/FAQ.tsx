@@ -1,4 +1,5 @@
 import { FaqSection } from '@/components/FaqSection';
+import { SITE_FRAME } from '@/lib/ui';
 
 interface FAQItem {
   question: string;
@@ -62,7 +63,7 @@ export function FAQ() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="w-full py-12 md:py-16 lg:py-20 bg-zinc-50 dark:bg-zinc-800">
-        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           <FaqSection
             align="center"
             subtitle="Everything you need to know about finding and visiting farmers markets"

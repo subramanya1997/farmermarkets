@@ -34,7 +34,7 @@ export function NearbyMarkets({ markets, cityHref, cityName }: NearbyMarketsProp
         Farmers markets nearby
       </h2>
       {markets.length > 0 && (
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 2xl:grid-cols-3">
           {markets.map((market) => (
             <li key={market.slug}>
               <Link

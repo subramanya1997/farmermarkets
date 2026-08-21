@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/co
 import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
+import { SITE_FRAME } from "@/lib/ui";
 
 // Time with Timezone component
 function TimeDisplay() {
@@ -48,7 +49,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/60">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+      <div className={SITE_FRAME}>
         <div className="flex h-16 items-center justify-between">
           <Link
             href="/"

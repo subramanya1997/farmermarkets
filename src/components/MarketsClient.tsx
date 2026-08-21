@@ -7,6 +7,7 @@ import { MarketCard } from "@/components/MarketCard";
 import { MarketFilters } from "@/components/MarketFilters";
 import dynamic from "next/dynamic";
 import type { FarmerMarket } from "@/lib/api";
+import { SITE_FRAME } from "@/lib/ui";
 
 interface MarketsClientProps {
   markets: FarmerMarket[];
@@ -54,7 +55,7 @@ function MarketsClient({ markets }: MarketsClientProps) {
     <div className="min-h-[calc(100vh-4rem)]">
       {/* Hero Section */}
       <section className="w-full py-8 sm:py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
               Find Local Farmers Markets
@@ -68,7 +69,7 @@ function MarketsClient({ markets }: MarketsClientProps) {
 
       {/* Search and Filter Section */}
       <section className="sticky top-16 z-10 w-full py-4 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           <div className="flex flex-wrap gap-4 items-center justify-between">
             <Button
               variant={showFilters ? "default" : "outline"}
@@ -112,10 +113,10 @@ function MarketsClient({ markets }: MarketsClientProps) {
 
       {/* Markets Grid/Map Section */}
       <section className="w-full py-8">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           {view === 'grid' ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 sm:gap-6">
                 {currentMarkets.map((market) => (
                   <MarketCard key={market.id} market={market} />
                 ))}
@@ -141,7 +142,7 @@ function MarketsClient({ markets }: MarketsClientProps) {
       {/* Pagination Section */}
       {filteredMarkets.length > 0 && (
         <section className="w-full py-4 sm:py-6">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <div className="flex items-center justify-between">
               <Button
                 variant="outline"

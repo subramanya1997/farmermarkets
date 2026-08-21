@@ -10,6 +10,7 @@ import {
   type StatePageData,
 } from '@/lib/statePage';
 import { absoluteUrl } from '@/lib/site';
+import { SITE_FRAME } from "@/lib/ui";
 
 export const revalidate = 86400;
 // States added by a data refresh still render on demand and land in the ISR
@@ -130,7 +131,7 @@ export default async function StateHubPage({ params }: StatePageProps) {
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
-          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <Breadcrumbs
               items={[
                 { label: 'Markets', href: '/markets' },
@@ -149,16 +150,16 @@ export default async function StateHubPage({ params }: StatePageProps) {
         </section>
 
         <section className="w-full bg-white py-6 sm:py-8 md:py-10 dark:bg-zinc-900">
-          <div className="mx-auto w-full max-w-7xl space-y-10 px-4 sm:px-6">
+          <div className={`${SITE_FRAME} space-y-10`}>
             {data.notableMarkets.length > 0 && (
               <div>
                 <h2 className="mb-4 text-xl font-bold tracking-tight sm:text-2xl">
                   Notable farmers markets in {data.regionFull}
                 </h2>
-                <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="mb-4 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
                   The records with the most complete opening details.
                 </p>
-                <ul className="divide-y divide-zinc-200 dark:divide-zinc-800">
+                <ul className="max-w-4xl divide-y divide-zinc-200 dark:divide-zinc-800">
                   {data.notableMarkets.map((market) => (
                     <li key={market.slug} className="py-3">
                       <Link
@@ -197,11 +198,11 @@ export default async function StateHubPage({ params }: StatePageProps) {
                   ? `The city with farmers markets in ${data.regionFull}`
                   : `All ${data.cityCount.toLocaleString()} cities with farmers markets in ${data.regionFull}`}
               </h2>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
                 Ordered by number of markets. The number after each city is how many markets it
                 lists.
               </p>
-              <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4">
+              <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
                 {data.cities.map((city) => (
                   <li key={city.slug}>
                     <Link
@@ -217,7 +218,7 @@ export default async function StateHubPage({ params }: StatePageProps) {
                 ))}
               </ul>
               {data.uncategorizedCount > 0 && (
-                <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+                <p className="mt-4 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
                   {data.uncategorizedCount.toLocaleString()} more {data.regionFull} market
                   {data.uncategorizedCount === 1 ? '' : 's'} in the data name no city and are not
                   listed above.
@@ -227,7 +228,7 @@ export default async function StateHubPage({ params }: StatePageProps) {
             )}
 
             {data.cities.length === 0 && (
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
                 None of the {data.marketCount.toLocaleString()} {data.regionFull} market
                 {data.marketCount === 1 ? '' : 's'} in the data names a city, so there is no city
                 directory for this region yet.

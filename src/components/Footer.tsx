@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getStateHubSummaries } from "@/lib/statePage";
 import { TOPIC_LABELS, TOPIC_SLUGS, topicPath } from "@/lib/topicPage";
+import { SITE_FRAME } from "@/lib/ui";
 
 /** How many state hubs the footer links to, biggest first. */
 const FOOTER_STATE_LIMIT = 10;
@@ -30,7 +31,7 @@ export async function Footer() {
 
   return (
     <footer className="border-t bg-white dark:bg-zinc-950">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
+      <div className={`${SITE_FRAME} py-8 md:py-12`}>
         <div className="flex flex-col gap-8">
           {/* Main navigation */}
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:grid-cols-5">

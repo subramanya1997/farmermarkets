@@ -7,6 +7,7 @@ import { FAQ } from "@/components/FAQ";
 import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf } from "lucide-react";
 import type { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { SITE_FRAME } from "@/lib/ui";
 
 // Statically rendered and revalidated daily. The dataset is a versioned
 // snapshot in the repo, so a 24h window is well inside its update cadence.
@@ -65,7 +66,7 @@ export default async function Home() {
         <div className="flex flex-col min-h-[calc(100vh-4rem)]">
           {/* Hero Section */}
         <section className="relative w-full py-8 sm:py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
               <div className="space-y-2 sm:space-y-3">
                 {/*
@@ -97,7 +98,7 @@ export default async function Home() {
 
         {/* How It Works Section */}
         <section className="w-full py-8 sm:py-12 md:py-16 bg-white dark:bg-zinc-900">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-12">
               How to Find Your Local Farmers Market
             </h2>
@@ -140,11 +141,11 @@ export default async function Home() {
           homepage a real second level of crawlable navigation.
         */}
         <section className="w-full py-8 sm:py-12 md:py-16 bg-zinc-50 dark:bg-zinc-800">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-12">
               Browse Farmers Markets by State
             </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 sm:gap-4">
               {topStates.map((state) => (
                 <Link
                   key={state.slug}
@@ -179,8 +180,8 @@ export default async function Home() {
 
         {/* Benefits Section */}
         <section className="w-full py-8 sm:py-12 md:py-16 bg-green-50 dark:bg-green-900/20">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className={SITE_FRAME}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 2xl:gap-12">
               <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
                 <Leaf className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
                 <h3 className="font-semibold text-base sm:text-lg">Fresh & Local</h3>

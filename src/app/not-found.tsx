@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
+import { SITE_FRAME } from "@/lib/ui";
 
 export default function NotFound() {
   return (
@@ -11,7 +12,7 @@ export default function NotFound() {
       */}
       <meta name="robots" content="noindex, nofollow" />
       <section className="relative w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           <div className="flex flex-col items-center space-y-6 text-center">
             <div className="space-y-3">
               <h1 className="text-6xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">

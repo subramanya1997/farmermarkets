@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { TopicSummary } from '@/lib/topicPage';
+import { SITE_FRAME } from "@/lib/ui";
 
 interface BrowseByTopicProps {
   topics: TopicSummary[];
@@ -17,12 +18,12 @@ export function BrowseByTopic({ topics }: BrowseByTopicProps) {
 
   return (
     <section className="w-full border-t border-zinc-200 py-12 dark:border-zinc-800">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <div className={SITE_FRAME}>
         <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Browse markets by topic</h2>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
           Payment programs, ordering options and opening days, counted across the whole directory.
         </p>
-        <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 2xl:gap-6">
           {topics.map((topic) => (
             <li key={topic.slug}>
               <Link

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Metadata } from "next";
+import { SITE_FRAME } from "@/lib/ui";
 
 export const metadata: Metadata = {
   title: "About Farmer Markets - Our Mission and Values",
@@ -20,7 +21,7 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-[calc(100vh-4rem)]">
       {/* Header Section */}
       <section className="w-full py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           <div className="flex flex-col gap-4">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               About Farmer Markets

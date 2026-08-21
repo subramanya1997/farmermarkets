@@ -51,7 +51,7 @@ export function MarketFacts({ market, analyticsProperties }: MarketFactsProps) {
       >
         Market details
       </h2>
-      <dl className="grid grid-cols-1 gap-x-6 gap-y-4 rounded-lg border border-zinc-200 p-4 sm:grid-cols-2 sm:p-6 dark:border-zinc-700">
+      <dl className="grid grid-cols-1 gap-x-6 gap-y-4 rounded-lg border border-zinc-200 p-4 sm:grid-cols-2 sm:p-6 2xl:grid-cols-3 dark:border-zinc-700">
         {facts.map((fact) => (
           <div key={fact.term}>
             <dt className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
