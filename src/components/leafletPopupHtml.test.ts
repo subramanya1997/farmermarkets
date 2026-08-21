@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-// @ts-expect-error Node runs this fixture with --experimental-strip-types.
 const { buildMarketPopupHtml, buildSingleMarketPopupHtml } = await import('./leafletPopupHtml.ts');
 
 test('market popup escapes display text and keeps detail link routable', () => {
