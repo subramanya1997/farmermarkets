@@ -356,7 +356,7 @@ export async function getSnapTopicPage(): Promise<SnapTopicPageData> {
       answer: `${formatCount(count)} of the ${formatCount(
         all.length
       )} markets in this directory are recorded as accepting SNAP/EBT${
-        share ? ` — about ${share}% of every record` : ''
+        share ? `, about ${share}% of every record` : ''
       }. They are spread across ${states.length} states and regions.`,
     },
     states.length > 0
@@ -581,7 +581,7 @@ export async function getOnlineTopicPage(): Promise<OnlineTopicPageData> {
   const title = fitTitle([
     `${formatCount(count)} Farmers Markets With Online Ordering & Delivery`,
     `${formatCount(count)} Farmers Markets: Online Ordering & Delivery`,
-    `Online Farmers Markets — ${formatCount(count)} With Ordering`,
+    `Online Farmers Markets - ${formatCount(count)} With Ordering`,
   ]);
 
   return {
@@ -699,7 +699,7 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
           answer: `${busiest.day}. ${formatCount(busiest.count)} of the ${formatCount(
             entries.length
           )} markets that state an opening day trade on a ${busiest.day}${
-            busiest.share ? ` — ${busiest.share}% of them` : ''
+            busiest.share ? `, ${busiest.share}% of them` : ''
           }${runnerUp ? `, ahead of ${runnerUp.day} with ${formatCount(runnerUp.count)}` : ''}.`,
         }
       : undefined,
@@ -745,7 +745,7 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
 
   const title = fitTitle([
     `Farmers Market Hours: Opening Days for ${formatCount(entries.length)} Markets`,
-    `Farmers Market Hours — ${formatCount(entries.length)} Markets by Day`,
+    `Farmers Market Hours - ${formatCount(entries.length)} Markets by Day`,
     `Farmers Market Hours: ${formatCount(entries.length)} Markets`,
   ]);
 
@@ -843,7 +843,7 @@ export async function getSaturdayTopicPage(): Promise<SaturdayTopicPageData> {
   const faqs: TopicFaq[] = [
     {
       question: 'How many farmers markets are open on Saturday?',
-      answer: `${formatCount(count)} markets in this directory list Saturday as an opening day — ${
+      answer: `${formatCount(count)} markets in this directory list Saturday as an opening day, ${
         share ? `${share}% of ` : ''
       }the ${formatCount(
         withDays.length
@@ -883,7 +883,7 @@ export async function getSaturdayTopicPage(): Promise<SaturdayTopicPageData> {
 
   const title = fitTitle([
     `${formatCount(count)} Saturday Farmers Markets by State`,
-    `Saturday Farmers Markets — ${formatCount(count)} by State`,
+    `Saturday Farmers Markets - ${formatCount(count)} by State`,
     'Saturday Farmers Markets by State',
   ]);
 

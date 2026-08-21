@@ -24,7 +24,7 @@ export function MarketSourceNote({ provenance, lastUpdated }: MarketSourceNotePr
 
   const datasetLabel = [provenance?.publisher, provenance?.datasetName]
     .filter(Boolean)
-    .join(' — ');
+    .join(', ');
 
   return (
     <footer className="mt-6 space-y-1 border-t border-zinc-200 pt-4 text-xs text-zinc-500 sm:mt-8 dark:border-zinc-700 dark:text-zinc-400">

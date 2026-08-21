@@ -23,6 +23,13 @@ export function clean(value?: string | null): string {
     // Some source names are already truncated with "..."; keep that as a single
     // ellipsis so a sentence never ends in a run of dots.
     .replace(/\.{2,}/g, '…')
+    // En/em dashes read as machine-written; plain hyphens everywhere. Safe for
+    // the schedule parsers downstream: every dash alternation accepts "-".
+    .replace(/[–—]/g, '-')
+    // Upstream strings carry their own punctuation spacing ("4pm-7pm , Sat"),
+    // and a few names do too ("Agricenter International , Farmers Market").
+    // Only comma and period: French typography legitimately spaces ":;!?".
+    .replace(/ +([,.])/g, '$1')
     .trim();
 }
 

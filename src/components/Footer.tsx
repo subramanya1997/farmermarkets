@@ -121,7 +121,7 @@ export async function Footer() {
                 refresh cadence, coverage numbers and licence terms. */}
             <p className="text-xs text-zinc-600 dark:text-zinc-400">
               Data from the USDA Local Food Portal directory and official government open-data
-              portals —{' '}
+              portals:{' '}
               <Link href="/about-the-data" className="text-green-600 hover:underline">
                 about the data
               </Link>

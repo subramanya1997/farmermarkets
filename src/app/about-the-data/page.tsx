@@ -218,7 +218,7 @@ export default async function AboutTheDataPage() {
                 <strong className="font-semibold text-zinc-900 dark:text-zinc-100">
                   USDA Local Food Portal
                 </strong>{' '}
-                — {number(coverage.legacyMarkets)} records. The portal is live, and its farmers
+                : {number(coverage.legacyMarkets)} records. The portal is live, and its farmers
                 market directory publishes a keyless bulk export (
                 <a
                   href={USDA_EXPORT_URL}
@@ -244,7 +244,7 @@ export default async function AboutTheDataPage() {
                 <strong className="font-semibold text-zinc-900 dark:text-zinc-100">
                   Official government open-data portals
                 </strong>{' '}
-                — {number(coverage.officialMarkets)} records from {number(publishers.length)}{' '}
+                - {number(coverage.officialMarkets)} records from {number(publishers.length)}{' '}
                 publishers, refreshed nightly:
               </p>
               <ul className="space-y-3">
@@ -283,8 +283,8 @@ export default async function AboutTheDataPage() {
 
             <Section id="processing" heading="How the records are processed">
               <p>
-                Both files are normalized to one schema — name, address, coordinates, season, days,
-                products, payment methods, food-assistance programs, amenities, contact details —
+                Both files are normalized to one schema (name, address, coordinates, season, days,
+                products, payment methods, food-assistance programs, amenities, contact details)
                 so a Singapore hawker centre and a New York farmers market answer the same
                 questions in the same fields. Categories that are not producer-only farmers markets
                 keep their own label (public food market, food cooperative pickup, community
@@ -292,7 +292,7 @@ export default async function AboutTheDataPage() {
               </p>
               <p>
                 A separate geo index resolves every record to a state or country hub and, where the
-                address or coordinates allow it, to a city — collapsing the many spellings of the
+                address or coordinates allow it, to a city, collapsing the many spellings of the
                 same state, recovering cities that the source left blank, and rejecting coordinates
                 that fall outside the state the record claims. It currently places{' '}
                 {number(coverage.totalMarkets - coverage.unplacedMarkets)} of{' '}
@@ -302,7 +302,7 @@ export default async function AboutTheDataPage() {
               </p>
               <p>
                 Refreshes are conservative by design. Each government source is validated before it
-                is written — invalid coordinates, duplicate IDs and slugs, record counts below a
+                is written: invalid coordinates, duplicate IDs and slugs, record counts below a
                 configured floor, and suspicious drops against the previous snapshot all reject the
                 update, and a source that fails keeps its last good records while healthy sources
                 update around it. On the USDA side only the fields the bulk export unambiguously
@@ -324,7 +324,7 @@ export default async function AboutTheDataPage() {
               <p>
                 The government sources are re-fetched by a scheduled job every day at 08:17 UTC.
                 The run normalizes and validates each source, rebuilds the snapshot, runs the
-                parser tests and a production build, and only then commits — so a broken upstream
+                parser tests and a production build, and only then commits, so a broken upstream
                 cannot land on the site.
                 {data.lastRetrievedAt &&
                   ` Those sources were last retrieved on ${formatDate(data.lastRetrievedAt)}.`}
@@ -370,7 +370,7 @@ export default async function AboutTheDataPage() {
                         </th>
                         <td className="px-4 py-2.5 text-right tabular-nums">{row.value}</td>
                         <td className="px-4 py-2.5 text-right tabular-nums text-zinc-500 dark:text-zinc-500">
-                          {row.note ?? '—'}
+                          {row.note ?? '-'}
                         </td>
                       </tr>
                     ))}
@@ -401,7 +401,7 @@ export default async function AboutTheDataPage() {
                       {' '}
                       Another {number(coverage.unverifiedCount)} are no longer published in the
                       USDA directory at all; those pages say so plainly. Delisted records are
-                      flagged rather than deleted — a listing can vanish because nobody renewed it,
+                      flagged rather than deleted, because a listing can vanish because nobody renewed it,
                       not because the market shut, and a working URL is worth more than a guess.
                     </>
                   )}
@@ -410,7 +410,7 @@ export default async function AboutTheDataPage() {
                   <span className="font-medium text-zinc-900 dark:text-zinc-100">
                     Coverage is uneven.
                   </span>{' '}
-                  Several government sources are deliberately partial — a single county, a single
+                  Several government sources are deliberately partial: a single county, a single
                   city, or one program&rsquo;s authorized vendors rather than a complete national
                   directory. The scope note on each source above says which.
                 </li>
@@ -456,9 +456,9 @@ export default async function AboutTheDataPage() {
                   <span className="font-medium text-zinc-900 dark:text-zinc-100">
                     Fix it at the source.
                   </span>{' '}
-                  This is the durable fix. A correction made with the original publisher — the
+                  This is the durable fix. A correction made with the original publisher (the
                   market&rsquo;s own listing on the USDA portal, or the government dataset linked
-                  beside each publisher above — flows through on the next refresh and reaches every
+                  beside each publisher above) flows through on the next refresh and reaches every
                   other site that uses the same feed, not just this one.
                 </li>
               </ul>
@@ -468,7 +468,7 @@ export default async function AboutTheDataPage() {
               <p>
                 There is no single licence covering the whole directory, and none is claimed here.
                 Each official record carries its publisher&rsquo;s own terms in its{' '}
-                <code>provenance</code> block, and those terms travel with the record — currently{' '}
+                <code>provenance</code> block, and those terms travel with the record, currently{' '}
                 {licenses.length} distinct statements: {licenses.join('; ')}. The USDA Local Food
                 Portal records carry no licence statement of their own. If you intend to reuse this
                 data, read the terms of the specific source that produced the records you need, and
@@ -486,7 +486,7 @@ export default async function AboutTheDataPage() {
                     >
                       {file.path}
                     </a>{' '}
-                    — {file.name}
+                    : {file.name}
                     {file.size && ` · ${file.size} JSON`}
                   </li>
                 ))}

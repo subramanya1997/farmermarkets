@@ -34,8 +34,8 @@ export default async function SnapTopicPage() {
           SNAP benefits are paid with an EBT card. Markets that accept them usually work one of two
           ways: a single card terminal at an information booth, where you swipe for tokens or scrip
           to spend with any participating vendor, or individual vendors taking the card at their own
-          stalls. SNAP covers food to take home and eat — fruit, vegetables, meat, dairy, bread, and
-          seeds and plants that produce food — but not hot prepared meals, alcohol or non-food
+          stalls. SNAP covers food to take home and eat (fruit, vegetables, meat, dairy, bread, and
+          seeds and plants that produce food) but not hot prepared meals, alcohol or non-food
           goods. Many states also run programs that match SNAP spending on fruit and vegetables at
           participating markets; the amounts and rules are set locally, so ask at the market’s
           information booth what is available there.
@@ -65,7 +65,7 @@ export default async function SnapTopicPage() {
       {data.topMarkets.length > 0 && (
         <TopicSection
           heading="SNAP markets with the most complete listings"
-          intro="The SNAP-accepting records that publish the most detail — opening times first, then days."
+          intro="The SNAP-accepting records that publish the most detail: opening times first, then days."
         >
           <TopicMarketList markets={data.topMarkets} />
         </TopicSection>

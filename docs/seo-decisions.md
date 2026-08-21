@@ -23,6 +23,7 @@ first that a decision has been undone.
 | 7 | [Redirects are 308, not 301](#7-redirects-are-308-not-301) | `next/navigation` `permanentRedirect` |
 | 8 | [Stale records get a notice, not a delete](#8-stale-records-get-a-notice-not-a-delete) | `src/lib/freshness.ts` |
 | 9 | [Prerender everything, revalidate daily](#9-prerender-everything-revalidate-daily) | `generateStaticParams` + `revalidate` |
+| 10 | [Generated copy: plain hyphens, tight punctuation, one FAQ heading](#10-generated-copy-plain-hyphens-tight-punctuation-one-faq-heading) | `clean()` in `src/lib/geo.ts`, `scripts/seo-smoke.mjs` |
 
 ---
 
@@ -227,3 +228,26 @@ until the next deploy.
 The fix then is to narrow `generateStaticParams` to a deterministic subset (the
 markets with schedules, or the first N by slug) and let `dynamicParams` carry
 the rest, not to abandon static rendering.
+
+## 10. Generated copy: plain hyphens, tight punctuation, one FAQ heading
+
+**Decision.** User-facing generated copy never uses en (–) or em (—) dashes:
+titles join name and place with a plain hyphen ("Durham Farmers' Market -
+Durham, NC"), time and month ranges use "8am-1pm" / "May-Oct", prose reaches
+for a comma, colon or parentheses instead of a dash, and table empty-cells
+render "-". `clean()` in `src/lib/geo.ts` also normalizes upstream text: en/em
+dashes become hyphens and whitespace before "," or "." is removed (only those
+two marks, because French typography legitimately spaces ":;!?"). The FAQ
+section heading is "Frequently Asked Questions" (title case) on every page.
+The smoke suite bans "–", "—" and " , " in meta descriptions.
+
+**Why.** Dash-heavy copy reads as machine-written, and the owner asked for
+copy that reads the way a person would type it. The upstream data also carries
+its own punctuation flaws (" , " inside NY schedule strings, one market name
+with a space before its comma), so the normalization lives in the one entry
+point every raw field passes through rather than in each renderer. The heading
+standardization ends a homepage/city-page/topic-page inconsistency.
+
+**Revisit when.** A locale's own typography requires different rules — the
+French-spacing carve-out is already in place, and any further exception should
+land in `clean()` with a test, not in an individual page.

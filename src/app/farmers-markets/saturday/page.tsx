@@ -45,7 +45,7 @@ export default async function SaturdayTopicPage() {
       {data.topMarkets.length > 0 && (
         <TopicSection
           heading="Saturday markets with the most complete listings"
-          intro="The Saturday records that publish the most detail — opening times first, then address and season."
+          intro="The Saturday records that publish the most detail: opening times first, then address and season."
         >
           <TopicMarketList markets={data.topMarkets} />
         </TopicSection>

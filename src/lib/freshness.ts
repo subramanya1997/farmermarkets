@@ -79,7 +79,7 @@ export function marketFreshness(
       level: 'unverified',
       lastVerified,
       notice: lastVerified
-        ? `This listing is no longer published in the USDA directory and may be closed. It was last verified ${lastVerified} — please check before visiting.`
+        ? `This listing is no longer published in the USDA directory and may be closed. It was last verified ${lastVerified}, so please check before visiting.`
         : 'This listing is no longer published in the USDA directory and may be closed. Please check before visiting.',
     };
   }

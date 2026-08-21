@@ -44,9 +44,9 @@ export default async function HoursTopicPage() {
           {data.withDaysAndHours.toLocaleString('en-US')} of these records state their opening
           times as well as their days
           {data.commonHours
-            ? `, and ${data.commonHours.hours} is the single most common window — ${data.commonHours.count.toLocaleString(
+            ? `, and ${data.commonHours.hours} is the single most common window, used by ${data.commonHours.count.toLocaleString(
                 'en-US'
-              )} of the ${data.withHours.toLocaleString('en-US')} markets that state their times use it`
+              )} of the ${data.withHours.toLocaleString('en-US')} markets that state their times`
             : ''}
           . Even within one city the times differ, and many markets shorten their season or their
           hours outside summer, so the city pages are the place to check before you go: each lists

@@ -42,10 +42,10 @@ export async function generateMetadata({ params }: MarketsPageNProps): Promise<M
   const path = marketsPagePath(page);
 
   return {
-    title: `Farmers Markets Directory — Page ${page}`,
-    description: `Page ${page} of the farmers market directory: browse local-food markets, cooperatives, and public food markets A–Z.`,
+    title: `Farmers Markets Directory - Page ${page}`,
+    description: `Page ${page} of the farmers market directory: browse local-food markets, cooperatives, and public food markets A-Z.`,
     openGraph: {
-      title: `Farmers Markets Directory — Page ${page}`,
+      title: `Farmers Markets Directory - Page ${page}`,
       description: `Page ${page} of the farmers market directory.`,
       url: path,
     },

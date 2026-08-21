@@ -38,7 +38,7 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
     name:
       result.page === 1
         ? 'Farmers Markets Directory'
-        : `Farmers Markets Directory — Page ${result.page}`,
+        : `Farmers Markets Directory - Page ${result.page}`,
     url: absoluteUrl(marketsPagePath(result.page)),
     numberOfItems: result.total,
     mainEntity: {
@@ -67,11 +67,11 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
               <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl lg:text-5xl">
                 {result.page === 1
                   ? 'Find Local Food Markets'
-                  : `Local Food Markets — Page ${result.page}`}
+                  : `Local Food Markets - Page ${result.page}`}
               </h1>
               <p className="mx-auto max-w-[700px] text-sm text-zinc-600 dark:text-zinc-400 sm:text-base md:text-lg">
                 Browse {result.total.toLocaleString()} farmers markets, public food markets,
-                cooperatives, and other local-food places, listed A–Z.
+                cooperatives, and other local-food places, listed A-Z.
               </p>
             </div>
           </div>
@@ -82,7 +82,7 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
         <section className="w-full py-8">
           <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
             <p className="mb-5 text-sm text-zinc-600 dark:text-zinc-400">
-              Showing {firstIndex.toLocaleString()}–{lastIndex.toLocaleString()} of{' '}
+              Showing {firstIndex.toLocaleString()}-{lastIndex.toLocaleString()} of{' '}
               {result.total.toLocaleString()} markets
             </p>
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
