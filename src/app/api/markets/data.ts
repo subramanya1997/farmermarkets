@@ -236,7 +236,10 @@ async function readMarketsData(): Promise<FarmerMarket[]> {
     ];
     const datasets = await Promise.all(dataSources.map(async ({ filePath, defaultCountry, defaultCountryCode }) => {
       try {
-        const fileContents = await fs.readFile(filePath, 'utf8');
+        // The snapshots are runtime files (the nightly refresh rewrites
+        // government_markets.json in place), so Turbopack must not try to
+        // trace or bundle them.
+        const fileContents = await fs.readFile(/*turbopackIgnore: true*/ filePath, 'utf8');
         if (!fileContents.trim()) throw new Error('file is empty');
         const parsed = JSON.parse(fileContents);
         if (!Array.isArray(parsed)) throw new Error('top-level value is not an array');
