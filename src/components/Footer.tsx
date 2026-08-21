@@ -17,33 +17,19 @@ const FOOTER_STATE_LIMIT = 10;
 export async function Footer() {
   const states = (await getStateHubSummaries()).slice(0, FOOTER_STATE_LIMIT);
 
-  const navigation = {
-    main: [
-      { name: 'Discover', href: '/markets' },
-      { name: 'About', href: '/about' },
-      { name: 'About the data', href: '/about-the-data' },
-    ],
-    legal: [
-      { name: 'Terms', href: '/terms' },
-      { name: 'Privacy', href: '/privacy' },
-    ],
-  };
+  const navigation = [
+    { name: 'Discover', href: '/markets' },
+    { name: 'About', href: '/about' },
+    { name: 'About the data', href: '/about-the-data' },
+  ];
 
   return (
     <footer className="border-t bg-white dark:bg-zinc-950">
       <div className={`${SITE_FRAME} py-8 md:py-12`}>
         <div className="flex flex-col gap-8">
-          {/* Main navigation */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:grid-cols-5">
-            <div className="col-span-2">
-              <Link href="/" className="inline-block font-bold text-xl sm:text-2xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                Farmer Markets
-              </Link>
-              <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400 max-w-xs">
-                Connecting people with farmers markets and public local-food places around the world.
-              </p>
-            </div>
-            <div className="col-span-2 sm:col-span-1">
+          {/* Link columns */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            <div>
               <h3 className="text-sm font-semibold mb-3">Browse</h3>
               <ul className="space-y-2">
                 <li>
@@ -64,6 +50,11 @@ export async function Footer() {
                     </Link>
                   </li>
                 ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold mb-3">States</h3>
+              <ul className="space-y-2">
                 {states.map((state) => (
                   <li key={state.slug}>
                     <Link
@@ -77,26 +68,11 @@ export async function Footer() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold mb-3">Navigation</h3>
+              <h3 className="text-sm font-semibold mb-3">Site</h3>
               <ul className="space-y-2">
-                {navigation.main.map((item) => (
+                {navigation.map((item) => (
                   <li key={item.name}>
-                    <Link 
-                      href={item.href}
-                      className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-500"
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-sm font-semibold mb-3">Legal</h3>
-              <ul className="space-y-2">
-                {navigation.legal.map((item) => (
-                  <li key={item.name}>
-                    <Link 
+                    <Link
                       href={item.href}
                       className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-500"
                     >
@@ -108,19 +84,26 @@ export async function Footer() {
             </div>
           </div>
 
-          {/* Bottom section */}
-          <div className="pt-8 border-t flex flex-col sm:flex-row justify-between gap-4">
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                &copy; {new Date().getFullYear()} Farmer Markets. All rights reserved.
-              </p>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                Built by <a href="https://subramanya.ai/" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">Subramanya N</a>
-              </p>
+          {/* Bottom bar: legal links and credits on one slim line */}
+          <div className="pt-6 border-t flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs text-zinc-600 dark:text-zinc-400">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <Link href="/terms" className="hover:text-green-600 dark:hover:text-green-500">
+                Terms
+              </Link>
+              <Link href="/privacy" className="hover:text-green-600 dark:hover:text-green-500">
+                Privacy
+              </Link>
+              <span>&copy; {new Date().getFullYear()} Farmer Markets</span>
+              <span>
+                Built by{' '}
+                <a href="https://subramanya.ai/" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">
+                  Subramanya N
+                </a>
+              </span>
             </div>
             {/* The credit line links to the page that documents it: sources,
                 refresh cadence, coverage numbers and licence terms. */}
-            <p className="text-xs text-zinc-600 dark:text-zinc-400">
+            <p>
               Data from the USDA Local Food Portal directory and official government open-data
               portals:{' '}
               <Link href="/about-the-data" className="text-green-600 hover:underline">
