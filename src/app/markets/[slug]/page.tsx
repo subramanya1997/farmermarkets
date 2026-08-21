@@ -7,8 +7,11 @@ import { notFound, permanentRedirect } from "next/navigation";
 import ClientSingleMarketMap from "@/components/ClientSingleMarketMap";
 import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
+import Link from "next/link";
 import { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { getCityForMarketSlug } from "@/lib/geoIndex";
+import { cityPath } from "@/lib/cityPage";
 import { marketDescription, marketLocationLine, marketTitle } from "@/lib/seo";
 
 export const revalidate = 86400;
@@ -140,6 +143,15 @@ export default async function MarketDetailPage({
   // usable location at all.
   const cityStateDisplay = marketLocationLine(market);
 
+  // The city page this market is listed on, when the geo index placed it in a
+  // city. Linking the location line both gives the reader the obvious next
+  // step ("what else is open here?") and gives the city pages an inbound link
+  // from every market they list, which is how they get crawled at all.
+  const placement = await getCityForMarketSlug(market.slug);
+  const cityPageHref = placement
+    ? cityPath(placement.state.slug, placement.city.slug)
+    : undefined;
+
   // Get coordinates from location object
   const latitude = market.location?.lat;
   const longitude = market.location?.lon;
@@ -237,7 +249,16 @@ export default async function MarketDetailPage({
               </h1>
               {cityStateDisplay && (
                 <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
-                  {cityStateDisplay}
+                  {cityPageHref ? (
+                    <Link
+                      href={cityPageHref}
+                      className="hover:text-green-700 hover:underline dark:hover:text-green-500"
+                    >
+                      {cityStateDisplay}
+                    </Link>
+                  ) : (
+                    cityStateDisplay
+                  )}
                 </p>
               )}
             </div>

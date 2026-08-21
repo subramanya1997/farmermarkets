@@ -2,6 +2,7 @@ import { getMarkets } from "@/lib/data";
 import { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { getStateSummaries, getTotalMarketPages, marketsPagePath } from "@/lib/marketsIndex";
+import { getAllCityParams } from "@/lib/geoIndex";
 
 // Generated at build time and revalidated daily rather than rebuilt per crawl.
 export const revalidate = 86400;
@@ -66,5 +67,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...routes, ...indexPageUrls, ...stateUrls, ...marketUrls];
+  // One entry per city page (`/farmers-markets/{state}/{city}`). These are the
+  // pages that answer "farmers markets in {city}", so they sit above the
+  // paginated index and level with the state hubs in priority.
+  const cityUrls = (await getAllCityParams()).map(({ state, city }) => ({
+    url: `${baseUrl}/farmers-markets/${state}/${city}`,
+    lastModified: formatDate(new Date()),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
+  return [...routes, ...indexPageUrls, ...stateUrls, ...cityUrls, ...marketUrls];
 }
