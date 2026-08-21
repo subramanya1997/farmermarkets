@@ -68,11 +68,18 @@ export default async function Home() {
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
               <div className="space-y-2 sm:space-y-3">
+                {/*
+                  The H1 names the thing the site is about. It used to read
+                  "Fresh from Farm to Your Table" — a slogan that never says
+                  "farmers market", on the one heading every crawler and every
+                  extractive answer engine weighs most. Same gradient, same
+                  scale, same hero: only the words changed.
+                */}
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                  Fresh from Farm to Your Table
+                  Find Farmers Markets Near You
                 </h1>
                 <p className="mx-auto max-w-[700px] text-sm sm:text-base md:text-lg lg:text-xl text-zinc-600 dark:text-zinc-400">
-                  Discover and support local farmers markets in your area. Fresh produce, artisanal goods, and community connections.
+                  Fresh from farm to your table. Browse market days, opening times and SNAP/EBT acceptance for local markets across the directory.
                 </p>
               </div>
               
@@ -92,7 +99,7 @@ export default async function Home() {
         <section className="w-full py-8 sm:py-12 md:py-16 bg-white dark:bg-zinc-900">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-12">
-              How to Find Your Local Market
+              How to Find Your Local Farmers Market
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
               <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
@@ -135,7 +142,7 @@ export default async function Home() {
         <section className="w-full py-8 sm:py-12 md:py-16 bg-zinc-50 dark:bg-zinc-800">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-12">
-              Browse Markets by State
+              Browse Farmers Markets by State
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {topStates.map((state) => (

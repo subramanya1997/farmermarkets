@@ -71,12 +71,19 @@ export async function generateMetadata({ params }: StatePageProps): Promise<Meta
 function structuredData(data: StatePageData) {
   const pageUrl = absoluteUrl(data.path);
 
+  // `dateModified` is a CreativeWork property and CollectionPage is a WebPage,
+  // so it belongs on this node rather than on the AdministrativeArea — the
+  // same rule `schema.ts` follows for market pages. The value is the newest
+  // `last_updated` among the markets the hub covers, which is also the
+  // `lastmod` the sitemap publishes for this URL. Omitted, never invented,
+  // when no market here carries a date.
   const collectionPage = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: `Farmers Markets in ${data.regionFull}`,
     description: data.description,
     url: pageUrl,
+    ...(data.lastModified ? { dateModified: data.lastModified } : {}),
     about: { '@type': 'AdministrativeArea', name: data.regionFull },
   };
 

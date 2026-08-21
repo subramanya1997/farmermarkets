@@ -15,6 +15,7 @@ import 'server-only';
 import { getGeoIndex, getStateByCode, type GeoCity, type GeoState } from './geoIndex';
 import { getMarketBySlug, type FarmerMarket } from './data';
 import { resolveLocation } from './geo';
+import { newerInstant, toIsoInstant } from './dates';
 import {
   displayName,
   marketHours,
@@ -75,6 +76,15 @@ export interface StatePageData {
   description: string;
   /** 40–75 words of plain factual prose, above the city list. */
   opener: string;
+  /**
+   * Newest `last_updated` among the markets this hub covers, as an ISO
+   * instant, or undefined when none of them carries a usable date.
+   *
+   * Identical by construction to the `lastmod` `sitemapEntries.ts` publishes
+   * for the same URL: both walk `state.cities[].market_slugs`, so the page's
+   * JSON-LD `dateModified` and the sitemap can never disagree.
+   */
+  lastModified?: string;
 }
 
 /**
@@ -212,15 +222,17 @@ function cityLink(state: GeoState, city: GeoCity): StateCityLink {
  */
 async function collectNotable(
   state: GeoState
-): Promise<{ notable: StateNotableMarket[]; snapCount: number }> {
+): Promise<{ notable: StateNotableMarket[]; snapCount: number; lastModified?: string }> {
   const scored: { entry: StateNotableMarket; score: number }[] = [];
   let snapCount = 0;
+  let lastModified: string | undefined;
 
   for (const city of state.cities) {
     for (const slug of city.market_slugs) {
       const market = await getMarketBySlug(slug);
       if (!market) continue;
       if (market.snap === true) snapCount += 1;
+      lastModified = newerInstant(lastModified, toIsoInstant(market.last_updated));
 
       const days = marketWeekdays(market);
       const hours = marketHours(market);
@@ -257,7 +269,7 @@ async function collectNotable(
     if (notable.length === NOTABLE_LIMIT) break;
   }
 
-  return { notable, snapCount };
+  return { notable, snapCount, lastModified };
 }
 
 /**
@@ -273,7 +285,7 @@ export async function getStatePageData(stateSlug: string): Promise<StatePageData
   if (state.slug !== stateSlug.trim().toLowerCase()) return null;
 
   const cities = state.cities.map((city) => cityLink(state, city));
-  const { notable, snapCount } = await collectNotable(state);
+  const { notable, snapCount, lastModified } = await collectNotable(state);
 
   const regionFull = state.name;
 
@@ -308,6 +320,7 @@ export async function getStatePageData(stateSlug: string): Promise<StatePageData
       snapCount,
       notable: notable[0],
     }),
+    lastModified,
   };
 }
 

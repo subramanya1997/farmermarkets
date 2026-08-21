@@ -145,11 +145,29 @@ function DayRow({ row }: { row: CityMarketRow }) {
 }
 
 /**
- * ItemList + FAQPage, on absolute canonical URLs. The BreadcrumbList is
- * emitted by the `Breadcrumbs` component itself, from the trail it renders.
+ * CollectionPage + ItemList + FAQPage, on absolute canonical URLs. The
+ * BreadcrumbList is emitted by the `Breadcrumbs` component itself, from the
+ * trail it renders.
  */
 function structuredData(data: CityPageData) {
   const pageUrl = absoluteUrl(data.path);
+
+  // The state and topic hubs already described themselves with a
+  // CollectionPage; the city pages did not, which left them with no node that
+  // could legally carry `dateModified` (a CreativeWork property — it does not
+  // belong on an ItemList of places). The date is the newest `last_updated`
+  // among the markets listed below, the same value the sitemap publishes as
+  // this URL's `lastmod`, and is omitted rather than invented when no market
+  // in the city carries one.
+  const collectionPage = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `Farmers Markets in ${data.city.name}, ${data.regionFull}`,
+    description: data.description,
+    url: pageUrl,
+    ...(data.lastModified ? { dateModified: data.lastModified } : {}),
+    about: { '@type': 'City', name: data.city.name },
+  };
 
   const itemList = {
     '@context': 'https://schema.org',
@@ -177,7 +195,7 @@ function structuredData(data: CityPageData) {
     })),
   };
 
-  return [itemList, faqPage];
+  return [collectionPage, itemList, faqPage];
 }
 
 export default async function CityPage({ params }: CityPageProps) {

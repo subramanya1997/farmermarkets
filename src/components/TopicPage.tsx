@@ -29,12 +29,17 @@ import {
 function structuredData(data: TopicPageData) {
   const pageUrl = absoluteUrl(data.path);
 
+  // `dateModified` sits on the CollectionPage (a WebPage, so a CreativeWork)
+  // and carries the newest `last_updated` among the markets this topic lists —
+  // the same value the sitemap publishes as this URL's `lastmod`. Omitted
+  // rather than faked when the topic's markets carry no usable date.
   const collectionPage = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: data.heading,
     description: data.description,
     url: pageUrl,
+    ...(data.lastModified ? { dateModified: data.lastModified } : {}),
   };
 
   const itemList = {
