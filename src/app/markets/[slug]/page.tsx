@@ -34,7 +34,20 @@ export async function generateStaticParams() {
     .map((market) => ({ slug: market.slug }));
 }
 
-const MARKET_IMAGE_URL = absoluteUrl('/og-image.jpg');
+/**
+ * Absolute URL of this market's Open Graph card (`opengraph-image.tsx` in this
+ * folder), used as the LocalBusiness JSON-LD `image`. Google requires an
+ * `image` for LocalBusiness rich results, and the per-market card at least
+ * names the place — the old value pointed every one of the 8,807 pages at the
+ * same site-wide file.
+ *
+ * The `og:image` / `twitter:image` meta tags are NOT set here: Next wires the
+ * `opengraph-image` file convention into the page metadata itself, and a
+ * manual `openGraph.images` entry would override it.
+ */
+function marketImageUrl(slug: string): string {
+  return absoluteUrl(`/markets/${slug}/opengraph-image`);
+}
 
 interface MarketDetailPageProps {
   params: Promise<{
@@ -188,7 +201,7 @@ export default async function MarketDetailPage({
       ...(hasSfmnp ? ['SFMNP'] : [])
     ].join(', '),
     priceRange: '$$',
-    image: MARKET_IMAGE_URL,
+    image: marketImageUrl(market.slug),
     potentialAction: {
       '@type': 'ViewAction',
       target: `${SITE_URL}/markets/${market.slug}`

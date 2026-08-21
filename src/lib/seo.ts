@@ -148,8 +148,11 @@ const NAME_STOPWORDS = new Set(['and', 'the', 'of', 'de', 'du', 'la', 'le', 'at'
  * searchers costs clicks, so those are title-cased — but only a multi-word name
  * with a real word in it, because a single caps token is more likely an
  * acronym ("CFFMA") than shouting. Short tokens (LLC, CFM, NW) keep their case.
+ *
+ * Exported so the Open Graph image route can headline the same cleaned-up name
+ * the title tag uses, without the " — City, ST" suffix `marketTitle` adds.
  */
-function displayName(rawName: string): string {
+export function displayName(rawName: string): string {
   const name = clean(rawName);
   const isShouting = /[A-Z]/.test(name) && !/[a-z]/.test(name);
   const words = name.split(/\s+/);
