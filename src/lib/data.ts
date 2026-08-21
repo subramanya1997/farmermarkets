@@ -41,6 +41,12 @@ export async function getMarketById(id: string): Promise<FarmerMarket | undefine
   }
 }
 
+// Resolve a legacy numeric market ID (old `/markets/{id}` URLs) to its slug.
+// Returns null when the ID is unknown so the caller can 404 instead of guessing.
+export async function getSlugByLegacyId(id: string): Promise<string | null> {
+  return await marketService.getSlugByLegacyId(id);
+}
+
 // Get market by slug
 export async function getMarketBySlug(slug: string): Promise<FarmerMarket | undefined> {
   try {

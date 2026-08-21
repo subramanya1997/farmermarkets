@@ -419,8 +419,51 @@ async function loadMarketsData(): Promise<FarmerMarket[]> {
   }
 }
 
+/**
+ * Legacy numeric-ID → slug map.
+ *
+ * The site used to serve `/markets/{numericId}` URLs and Google still has some
+ * of them indexed. The map is built once per server process (module-level
+ * memoized promise) so redirect lookups never re-scan the dataset per request.
+ * Only all-digit IDs are included: official government records use opaque
+ * string IDs (`gov:...`) that were never part of a public URL.
+ */
+let legacyIdSlugMapPromise: Promise<Map<string, string>> | null = null;
+
+async function buildLegacyIdSlugMap(): Promise<Map<string, string>> {
+  const markets = await loadMarketsData();
+  const map = new Map<string, string>();
+
+  for (const market of markets) {
+    if (market.slug && /^\d+$/.test(market.id)) {
+      map.set(market.id, market.slug);
+    }
+  }
+
+  console.log(`Built legacy market ID map with ${map.size} numeric IDs`);
+  return map;
+}
+
+export function getLegacyIdSlugMap(): Promise<Map<string, string>> {
+  if (!legacyIdSlugMapPromise) {
+    legacyIdSlugMapPromise = buildLegacyIdSlugMap().catch((error) => {
+      // Don't cache a failed build; let the next request retry.
+      legacyIdSlugMapPromise = null;
+      throw error;
+    });
+  }
+
+  return legacyIdSlugMapPromise;
+}
+
 // Our API data service
 export const marketService = {
+  // Resolve a legacy numeric market ID to its current slug (for 301 redirects)
+  getSlugByLegacyId: async (id: string) => {
+    const map = await getLegacyIdSlugMap();
+    return map.get(id) ?? null;
+  },
+
   getAllMarkets: async () => {
     return await loadMarketsData();
   },

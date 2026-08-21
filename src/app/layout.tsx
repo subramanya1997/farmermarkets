@@ -47,12 +47,13 @@ export const metadata: Metadata = {
     images: ['/og-image.jpg'],
     creator: '@farmermarkets',
   },
+  // NOTE: deliberately no `index: true` / `follow: true` here. A root-level
+  // affirmative robots directive is inherited by every response — including
+  // 404s and error pages, where it emitted `index, follow` next to Next.js's
+  // own `noindex` and told crawlers to index soft 404s. Pages are indexable by
+  // default without the tag, so only the snippet/preview limits are declared.
   robots: {
-    index: true,
-    follow: true,
     googleBot: {
-      index: true,
-      follow: true,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
