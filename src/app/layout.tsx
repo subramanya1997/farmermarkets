@@ -4,7 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnalyticsProviders } from "@/components/AnalyticsProviders";
-import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { SITE_URL, absoluteUrl, organizationSameAs } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -117,8 +117,14 @@ export default function RootLayout({
   // The site's one Organization node. It lives here, not on a page, because
   // the homepage used to emit a second copy with a different description — two
   // publishers for one site. The `@id` gives future nodes something stable to
-  // point at. There is no `sameAs`: an empty array is not a fact, and we have
-  // no social profiles to name yet.
+  // point at — `/about-the-data` references it as the dataset's creator.
+  //
+  // `sameAs` comes from `organizationSameAs()`: the public source repository
+  // always, plus whatever `NEXT_PUBLIC_ORG_SAMEAS` names (a Wikidata item,
+  // social profiles) as those come into existence. It is spread rather than
+  // assigned, so a list that somehow came back empty emits no key at all — an
+  // empty array is not a fact.
+  const sameAs = organizationSameAs();
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -127,6 +133,7 @@ export default function RootLayout({
     url: SITE_URL,
     logo: absoluteUrl('/leaf-hq.png'),
     description: 'Discover farmers markets, public food markets, cooperatives, and local-food places around the world.',
+    ...(sameAs.length ? { sameAs } : {}),
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'Customer Service',

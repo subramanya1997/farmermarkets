@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Metadata } from "next";
 
@@ -78,10 +79,16 @@ export default function AboutPage() {
 
             <h2 className="text-2xl font-bold tracking-tight mt-12 mb-4">About Our Data</h2>
             <p className="text-zinc-600 dark:text-zinc-400">
-              Our platform combines a legacy USDA Local Food Portal snapshot with normalized records from official government portals. The data includes market locations, schedules, market types, contact details, and source provenance where available.
+              Our directory is built on farmers market directory data from the USDA Local Food Portal together with normalized records from official government open-data portals. The data includes market locations, schedules, market types, contact details, and source provenance where available.
             </p>
             <p className="text-zinc-600 dark:text-zinc-400 mt-4">
-              We regularly update our database to ensure accuracy and provide the most current information about local farmer markets, helping you find fresh, local produce and supporting local agriculture across the nation.
+              Government sources are refreshed nightly and the USDA records on a seasonal schedule, and every record keeps its own upstream date rather than a cosmetic one, so a listing that has not been touched in years says so.
+            </p>
+            <p className="text-zinc-600 dark:text-zinc-400 mt-4">
+              <Link href="/about-the-data" className="text-green-600 hover:underline">
+                About the data
+              </Link>{' '}
+              sets out every source and publisher, how records are processed, the refresh cadence, current coverage numbers, known limitations, and how to report a correction.
             </p>
           </div>
         </div>

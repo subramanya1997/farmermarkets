@@ -84,9 +84,14 @@ async function buildEntries(): Promise<SitemapEntry[]> {
   // Static pages carry no `lastmod`: nothing in the repo records when their
   // copy last changed, and inventing a date is exactly the pattern that costs
   // a domain its lastmod trust.
-  const staticEntries: SitemapEntry[] = ['/', '/markets', '/about', '/privacy', '/terms'].map(
-    (path) => ({ url: absolute(path) })
-  );
+  const staticEntries: SitemapEntry[] = [
+    '/',
+    '/markets',
+    '/about',
+    '/about-the-data',
+    '/privacy',
+    '/terms',
+  ].map((path) => ({ url: absolute(path) }));
 
   // `/markets` itself is already in `staticEntries`, so pages start at 2.
   const indexEntries: SitemapEntry[] = Array.from(
