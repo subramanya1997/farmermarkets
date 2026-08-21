@@ -53,7 +53,7 @@ export default async function HoursTopicPage() {
           every market in that city with its days, hours and season.
         </p>
         {data.topCities.length > 0 && (
-          <ul className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+          <ul className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
             {data.topCities.map((city) => (
               <li key={city.href}>
                 <Link

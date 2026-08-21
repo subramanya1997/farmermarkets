@@ -23,8 +23,10 @@ import { SITE_FRAME } from '@/lib/ui';
  * JSON-LD and the cross-links to the other topics — lives here once, so the
  * pages cannot drift into four slightly different templates.
  *
- * Styling mirrors the city and state pages deliberately: same hero gradient,
- * same max width, same table and list treatments.
+ * Styling shares the city and state pages' hero gradient and table and list
+ * treatments, but unlike those pages the content sits in one centered
+ * max-w-4xl document column: topic pages are prose, tables and FAQs with no
+ * wide grids, and left-anchoring that on the 1920px frame read as broken.
  */
 
 /** CollectionPage + ItemList + FAQPage, on absolute canonical URLs. */
@@ -111,7 +113,7 @@ export function TopicStateTable({
   if (states.length === 0) return null;
 
   return (
-    <div className="max-w-4xl overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="w-full overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
       <table className="w-full min-w-[20rem] border-collapse text-left text-sm">
         <caption className="sr-only">{caption}</caption>
         <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
@@ -160,7 +162,7 @@ export function TopicDayTable({
   if (days.length === 0) return null;
 
   return (
-    <div className="max-w-4xl overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="w-full overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
       <table className="w-full min-w-[24rem] border-collapse text-left text-sm">
         <caption className="sr-only">{caption}</caption>
         <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
@@ -210,7 +212,7 @@ export function TopicMarketList({ markets }: { markets: TopicMarketRow[] }) {
   if (markets.length === 0) return null;
 
   return (
-    <ul className="max-w-4xl divide-y divide-zinc-200 dark:divide-zinc-800">
+    <ul className="w-full divide-y divide-zinc-200 dark:divide-zinc-800">
       {markets.map((market) => {
         const details = [
           market.address,
@@ -308,28 +310,38 @@ export function TopicPageShell({
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
           <div className={SITE_FRAME}>
-            <Breadcrumbs
-              items={[
-                { label: 'Markets', href: '/markets' },
-                { label: TOPIC_LABELS[data.slug], href: data.path },
-              ]}
-            />
-            <h1 className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-2xl font-bold tracking-tighter text-transparent sm:text-3xl md:text-4xl">
-              {data.heading}
-            </h1>
-            {/* Answer-first: the counts are the first thing both a reader and
-                an extractive AI crawler see. */}
-            <p className="mt-4 max-w-3xl text-base text-zinc-700 sm:text-lg dark:text-zinc-300">
-              {data.opener}
-            </p>
+            {/*
+              Topic pages are documents: prose, tables and FAQs, nothing that
+              earns the full 1920px frame. Left-anchoring the capped content on
+              a frame this wide left two thirds of the screen empty, so the
+              whole page reads in one centered column instead.
+            */}
+            <div className="mx-auto w-full max-w-4xl">
+              <Breadcrumbs
+                items={[
+                  { label: 'Markets', href: '/markets' },
+                  { label: TOPIC_LABELS[data.slug], href: data.path },
+                ]}
+              />
+              <h1 className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-2xl font-bold tracking-tighter text-transparent sm:text-3xl md:text-4xl">
+                {data.heading}
+              </h1>
+              {/* Answer-first: the counts are the first thing both a reader and
+                  an extractive AI crawler see. */}
+              <p className="mt-4 max-w-3xl text-base text-zinc-700 sm:text-lg dark:text-zinc-300">
+                {data.opener}
+              </p>
+            </div>
           </div>
         </section>
 
         <section className="w-full bg-white py-6 sm:py-8 md:py-10 dark:bg-zinc-900">
-          <div className={`${SITE_FRAME} space-y-10`}>
-            {children}
-            <TopicFaqs data={data} />
-            <TopicCrossLinks current={data.slug} />
+          <div className={SITE_FRAME}>
+            <div className="mx-auto w-full max-w-4xl space-y-10">
+              {children}
+              <TopicFaqs data={data} />
+              <TopicCrossLinks current={data.slug} />
+            </div>
           </div>
         </section>
       </div>
