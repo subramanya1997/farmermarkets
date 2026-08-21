@@ -128,6 +128,7 @@ The app can run locally without required environment variables. Server-side API 
 | `RESEND_API_KEY` | Server-only Resend API key used to deliver discovery requests. |
 | `DISCOVERY_FROM_EMAIL` | Verified sender used for discovery request emails. |
 | `DISCOVERY_NOTIFICATION_EMAIL` | Private inbox that receives discovery requests. |
+| `DISCOVERY_SLACK_WEBHOOK_URL` | Optional Slack incoming-webhook URL; discovery form submissions are also posted there (email remains the delivery of record) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console verification token. No meta tag is rendered when unset. |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools `msvalidate.01` token. No meta tag is rendered when unset. |
 | `NEXT_PUBLIC_ORG_SAMEAS` | Comma-separated absolute URLs added to `Organization.sameAs` (Wikidata item, social profiles). The public repository URL is always included; entries that are not absolute `http(s)` URLs are dropped. See [Entity presence](#entity-presence). |
