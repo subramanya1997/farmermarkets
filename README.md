@@ -83,6 +83,12 @@ npm run test:data
 
 Validates the generated snapshot/checksum and runs the ingestion parser and failure-retention tests.
 
+```bash
+npm run indexnow:ping -- --dry-run https://www.farmermarkets.app/markets/some-market
+```
+
+Submits changed URLs to IndexNow. See [Search engine setup](#search-engine-setup).
+
 ## Environment Variables
 
 The app can run locally without required environment variables. Server-side API calls derive their base URL from the following optional variables:
@@ -96,8 +102,54 @@ The app can run locally without required environment variables. Server-side API 
 | `RESEND_API_KEY` | Server-only Resend API key used to deliver discovery requests. |
 | `DISCOVERY_FROM_EMAIL` | Verified sender used for discovery request emails. |
 | `DISCOVERY_NOTIFICATION_EMAIL` | Private inbox that receives discovery requests. |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console verification token. No meta tag is rendered when unset. |
+| `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools `msvalidate.01` token. No meta tag is rendered when unset. |
+| `INDEXNOW_KEY` | Overrides the committed IndexNow key during a rotation. |
+| `INDEXNOW_DISABLE` | Set to `1` to skip all IndexNow submissions (CI, local runs). |
 
 For local development, the app falls back to `http://localhost:3000`.
+
+## Search engine setup
+
+### Bing Webmaster Tools
+
+1. Sign in at [bing.com/webmasters](https://www.bing.com/webmasters) and add `https://www.farmermarkets.app`. The fastest path is **Import from Google Search Console** — it carries the property and the verification across, and you can skip to step 4.
+2. Otherwise choose the **HTML meta tag** verification method and copy the `content` value out of the `msvalidate.01` tag Bing shows.
+3. Set `NEXT_PUBLIC_BING_SITE_VERIFICATION` to that value in the Vercel project's environment variables and redeploy. The tag is rendered by `src/app/layout.tsx`; it is emitted **only** when the variable is set to a non-empty value, so nothing changes for local or preview builds that leave it unset. Then press **Verify** in Bing.
+4. Under **Sitemaps**, submit `https://www.farmermarkets.app/sitemap.xml` — the sitemap index, which points at the `/sitemap/{n}.xml` chunks.
+5. The **AI Performance** report (left nav, under *Performance*) is where Bing shows citations and grounding queries from AI answers — currently the only direct measurement of AI-answer inclusion available.
+
+### Google Search Console
+
+1. Add the `https://www.farmermarkets.app` property at [search.google.com/search-console](https://search.google.com/search-console) and pick the **HTML tag** method.
+2. Set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` to the `content` value of the `google-site-verification` tag, redeploy, then press **Verify**. Same rule as above: unset means no tag.
+3. Submit `https://www.farmermarkets.app/sitemap.xml` under **Sitemaps**.
+4. The **Generative AI** performance report lives in *Performance → Search results*, split out as its own search-appearance type.
+
+### IndexNow
+
+IndexNow is a push protocol: instead of waiting to be crawled, we tell participating engines which URLs changed. Bing, Yandex, Naver, Seznam and Yep consume it — **Google does not**. It is the only push channel that covers the thousands of generated city and market pages.
+
+The key file is served from the site root at `/f2a3b61ce1ab35eb413e148b37de3f80.txt` (the committed file `public/f2a3b61ce1ab35eb413e148b37de3f80.txt`, whose body is exactly the key). Engines fetch it to verify that a submission really came from the site owner.
+
+```bash
+npm run indexnow:ping -- https://www.farmermarkets.app/markets/some-market
+npm run indexnow:ping -- --dry-run https://www.farmermarkets.app/markets/some-market   # print the payload, send nothing
+cat urls.txt | npm run indexnow:ping                                                   # one URL per line on stdin
+```
+
+URLs are de-duplicated, resolved against the canonical origin, filtered to the canonical host, and POSTed to `https://api.indexnow.org/indexnow` in batches of at most 10,000. `200` means submitted and `202` means accepted with the key still pending validation; `400`, `403`, `422` and `429` are printed with the reason (bad payload, key not found at `keyLocation`, URLs off-host or key mismatch, rate limited).
+
+**Data refreshes ping automatically.** After `npm run data:update` writes a new snapshot, it compares it to the previous one, collects the markets that were added or edited, expands them into their market pages plus the city and state hubs that list them (via `public/data/geo_index.json`) plus `/sitemap.xml`, and submits that list. Deleted markets are excluded — recrawling a 404 buys nothing. The ping happens after the files are on disk and every network or HTTP failure is logged as a warning, so a refresh never fails because an engine was unreachable. Set `INDEXNOW_DISABLE=1` to switch pings off entirely (tests set it themselves).
+
+**Rotating the key** — the constant and the served file are two halves of one fact, so rotate them together (the procedure is also documented at the top of `scripts/lib/indexnow.mjs`):
+
+1. Generate a key: `node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"`.
+2. Rename `public/<old>.txt` to `public/<new>.txt` and write the new key into it, with no trailing newline.
+3. Update `DEFAULT_INDEXNOW_KEY` in `scripts/lib/indexnow.mjs` to match the filename.
+4. Deploy before the next ping, so the key file is live when an engine verifies a submission.
+
+For an emergency rotation without a code change, set `INDEXNOW_KEY` in the environment and upload the matching `<key>.txt` to the site root; the environment value wins over the constant.
 
 ## Analytics and discovery feedback
 

@@ -8,6 +8,28 @@ import { SITE_URL, absoluteUrl } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Search-engine ownership verification. Both values are supplied per
+// deployment: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` from Search Console and
+// `NEXT_PUBLIC_BING_SITE_VERIFICATION` from Bing Webmaster Tools. An unset —
+// or empty — variable must emit no tag at all: Next drops an `undefined`
+// value, but it would happily render `<meta name="google-site-verification"
+// content="">` for an empty string, which is a broken verification claim
+// rather than an absent one. The trim-to-undefined below is what prevents that.
+const verificationValue = (raw?: string): string | undefined => {
+  const value = raw?.trim();
+  return value ? value : undefined;
+};
+
+const googleVerification = verificationValue(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION);
+const bingVerification = verificationValue(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION);
+const verification: Metadata['verification'] | undefined =
+  googleVerification || bingVerification
+    ? {
+        ...(googleVerification ? { google: googleVerification } : {}),
+        ...(bingVerification ? { other: { 'msvalidate.01': bingVerification } } : {}),
+      }
+    : undefined;
+
 export const metadata: Metadata = {
   title: {
     default: "Farmer Markets - Find Local Fresh Produce Near You",
@@ -77,6 +99,10 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/manifest.json',
+  // Spread rather than assigned: `verification: undefined` is fine today, but
+  // keeping the key out entirely is what guarantees no empty meta tag is ever
+  // emitted for an unset variable.
+  ...(verification ? { verification } : {}),
   // NOTE: no root-level `alternates` here on purpose. A canonical set on the
   // root layout is inherited by every page that does not override it, which
   // made the whole site canonicalize to the homepage. Each page declares its
