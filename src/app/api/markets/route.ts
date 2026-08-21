@@ -1,9 +1,14 @@
-import { marketService } from './data';
+import { marketService, slimMarket } from './data';
 import { NextRequest, NextResponse } from 'next/server';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 50;
-const MAX_LIMIT = 500;
+/**
+ * Raised from 500 so the map/filter explorer can pull the dataset in ~9
+ * parallel requests instead of 18 sequential ones. Pair it with `fields=slim`
+ * (below) — a 1,000-record page of full records is still a multi-MB response.
+ */
+const MAX_LIMIT = 1000;
 
 type ParsedCoordinates =
   | { userLat?: number; userLon?: number; error?: undefined }
@@ -58,6 +63,10 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get('search') || '';
   const country = searchParams.get('country') || '';
   const state = searchParams.get('state') || '';
+  // `fields=slim` returns only what the client map/filter UI reads. Anything
+  // else (including no value) keeps the full record, so existing consumers of
+  // this endpoint are unaffected.
+  const slim = searchParams.get('fields') === 'slim';
 
   // Get user location for distance sorting
   const coordinates = parseCoordinates(searchParams.get('lat'), searchParams.get('lon'));
@@ -81,7 +90,9 @@ export async function GET(request: NextRequest) {
     });
 
     // Return response with pagination metadata
-    return NextResponse.json(result);
+    return NextResponse.json(
+      slim ? { ...result, data: result.data.map(slimMarket) } : result
+    );
   } catch (error) {
     console.error('Error fetching markets:', error);
     return NextResponse.json(

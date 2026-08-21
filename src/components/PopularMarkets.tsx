@@ -1,101 +1,59 @@
-'use client';
-
-import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
-import { MapPin, TrendingUp } from 'lucide-react';
-import { MarketCard } from './MarketCard';
-import { useGeolocation } from '@/hooks/useGeolocation';
-import { calculateDistance } from '@/lib/utils';
+import { TrendingUp } from 'lucide-react';
+import { MarketSummaryCard } from './MarketSummaryCard';
 import type { FarmerMarket } from '@/lib/api';
 
 interface PopularMarketsProps {
   markets: FarmerMarket[];
-  limit?: number;
 }
 
-export function PopularMarkets({ markets, limit = 6 }: PopularMarketsProps) {
-  const { location, loading } = useGeolocation();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Calculate distances and sort by proximity
-  const nearbyMarkets = useMemo(() => {
-    if (!location || !markets) return markets.slice(0, limit);
-
-    const marketsWithDistance = markets
-      .filter(market => market.location?.lat && market.location?.lon)
-      .map(market => {
-        const distance = calculateDistance(
-          location.lat,
-          location.lon,
-          market.location!.lat,
-          market.location!.lon
-        );
-        return { ...market, distance };
-      })
-      .sort((a, b) => a.distance - b.distance)
-      .slice(0, limit);
-
-    return marketsWithDistance;
-  }, [markets, location, limit]);
-
-  if (!mounted) {
-    return null;
-  }
+/**
+ * Featured markets on the homepage.
+ *
+ * This was a client component that returned `null` until it mounted, which
+ * meant the homepage's server-rendered HTML contained zero market links — a
+ * crawler saw an empty section. It is now a plain server component: the cards
+ * (and their `<a href="/markets/…">` links) are in the HTML.
+ *
+ * The geolocation-based "near you" ordering it used to do is gone with it.
+ * Personalizing a statically rendered, daily-revalidated page was never going
+ * to work anyway; nearby markets are what the search and map view in
+ * `/markets` are for, and that view still sorts by distance.
+ */
+export function PopularMarkets({ markets }: PopularMarketsProps) {
+  if (markets.length === 0) return null;
 
   return (
-    <section className="w-full py-12 md:py-16 lg:py-20 bg-white dark:bg-zinc-900">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+    <section className="w-full bg-white py-12 dark:bg-zinc-900 md:py-16 lg:py-20">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
         <div className="flex flex-col gap-6">
-          {/* Section Header */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-green-600" />
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-                Popular Markets Near You
+              <TrendingUp className="h-5 w-5 text-green-600" />
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+                Featured Farmers Markets
               </h2>
             </div>
-            {location && !loading && (
-              <p className="text-sm text-zinc-600 dark:text-zinc-400 flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                Showing highly-rated farmers markets near {location.city}, {location.state}
-              </p>
-            )}
-            {!location && !loading && (
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Discover highly-rated farmers markets across the country
-              </p>
-            )}
-            {loading && (
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                Finding markets near you...
-              </p>
-            )}
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              A few well-documented markets from around the directory.
+            </p>
           </div>
 
-          {/* Markets Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {nearbyMarkets.map((market) => (
-              <MarketCard key={market.id} market={market} />
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+            {markets.map((market) => (
+              <li key={market.id}>
+                <MarketSummaryCard market={market} />
+              </li>
             ))}
-          </div>
+          </ul>
 
-          {/* View All Link */}
           <div className="flex justify-center pt-4">
             <Link
               href="/markets"
               className="inline-flex items-center gap-2 text-sm font-medium text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400"
             >
               View all farmers markets
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -110,4 +68,3 @@ export function PopularMarkets({ markets, limit = 6 }: PopularMarketsProps) {
     </section>
   );
 }
-

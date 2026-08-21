@@ -1,26 +1,31 @@
-import { getMarkets } from "@/lib/data";
-import { Markets } from "@/components/Markets";
 import type { Metadata } from "next";
+import { MarketsIndex } from "@/components/MarketsIndex";
 
-// Canonical only. The title/description in ./metadata.ts is still orphaned and
-// gets wired up in issue #14; adding it here is out of scope for this change.
+/**
+ * Page 1 of the market index.
+ *
+ * This route reads no `searchParams`, so it stays fully static and is
+ * revalidated daily like the rest of the site. Pages 2+ live at
+ * `/markets/page/[n]` for exactly that reason: a `?page=` query would force
+ * every request through dynamic rendering.
+ */
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
+  title: "Browse Farmer Markets - Find Fresh Local Produce",
+  description:
+    "Browse farmers markets, public food markets, cooperatives, and other local-food places by country and region.",
+  openGraph: {
+    title: "Browse Farmer Markets - Find Fresh Local Produce",
+    description:
+      "Browse farmers markets, public food markets, cooperatives, and other local-food places by country and region.",
+    url: '/markets',
+  },
   alternates: {
     canonical: '/markets',
   },
-  openGraph: {
-    url: '/markets',
-  },
 };
 
-// This page still hands the full dataset to a client component (that payload
-// is issue #14). ISR at least means the giant RSC payload is built once a day
-// instead of on every request.
-export const revalidate = 86400;
-
 export default async function MarketsPage() {
-  // Fetch all markets
-  const markets = await getMarkets();
-  
-  return <Markets markets={markets} />;
-} 
+  return <MarketsIndex page={1} />;
+}

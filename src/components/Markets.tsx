@@ -10,15 +10,28 @@ import { DiscoverySurvey } from "@/components/DiscoverySurvey";
 import dynamic from "next/dynamic";
 import type { FarmerMarket } from "@/lib/api";
 import { useGeolocation } from "@/hooks/useGeolocation";
+import { useAllMarkets } from "@/hooks/useAllMarkets";
 import { calculateDistance } from "@/lib/utils";
 import { extractFilterOptions, applyFilters } from "@/lib/filters";
 import { analyticsSafeSearchTerm, trackEvent } from "@/lib/analytics";
 
 interface MarketsProps {
-  markets: FarmerMarket[];
+  /**
+   * Records to explore. Omit it on `/markets` — the component then pulls the
+   * dataset from `/api/markets` itself (see `useAllMarkets`), which is what
+   * keeps the 8,807 records out of the server-rendered payload. The state
+   * pages pass their own, much smaller, subset.
+   */
+  markets?: FarmerMarket[];
   title?: string;
   description?: string;
   hideHero?: boolean;
+  /**
+   * Set to false when the surrounding page already renders the discovery
+   * survey — on `/markets` the server-rendered index owns it, so the explorer
+   * must not open a second copy of the same dialog.
+   */
+  showDiscoverySurvey?: boolean;
 }
 
 const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
@@ -30,12 +43,14 @@ const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
   ),
 });
 
-export function Markets({ 
-  markets, 
+export function Markets({
+  markets: providedMarkets,
   title = "Find Local Food Markets",
   description = "Discover farmers markets, public food markets, cooperatives, and other local-food places around the world",
-  hideHero = false
+  hideHero = false,
+  showDiscoverySurvey = true
 }: MarketsProps) {
+  const { markets, loading: marketsLoading, error: marketsError } = useAllMarkets(providedMarkets);
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
   const [itemsPerPage] = useState(30);
@@ -275,8 +290,15 @@ export function Markets({
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              {filteredMarkets.length.toLocaleString()} places
-              {selectedCountry ? ` in ${selectedCountry}` : ` across ${countries.length} countries and territories`}
+              {marketsLoading && markets.length === 0 ? (
+                'Loading markets…'
+              ) : (
+                <>
+                  {filteredMarkets.length.toLocaleString()} places
+                  {selectedCountry ? ` in ${selectedCountry}` : ` across ${countries.length} countries and territories`}
+                  {marketsLoading ? ' (still loading…)' : ''}
+                </>
+              )}
             </p>
           </div>
           {view === 'grid' ? (
@@ -286,12 +308,21 @@ export function Markets({
                   <MarketCard key={market.id} market={market} />
                 ))}
               </div>
-              {filteredMarkets.length === 0 && (
+              {filteredMarkets.length === 0 && marketsLoading && (
+                <div className="flex items-center justify-center py-12">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-600" />
+                </div>
+              )}
+              {filteredMarkets.length === 0 && !marketsLoading && (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <Store className="w-12 h-12 text-zinc-400 mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No Markets Found</h3>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {marketsError ? 'Could Not Load Markets' : 'No Markets Found'}
+                  </h3>
                   <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-[500px]">
-                    Try adjusting your search, country, or filters to find local-food places.
+                    {marketsError
+                      ? 'The market data could not be loaded. Reload the page, or browse the full directory below.'
+                      : 'Try adjusting your search, country, or filters to find local-food places.'}
                   </p>
                 </div>
               )}
@@ -304,10 +335,12 @@ export function Markets({
         </div>
       </section>
 
-      <DiscoverySurvey
-        selectedCountry={selectedCountry || 'All countries'}
-        resultCount={filteredMarkets.length}
-      />
+      {showDiscoverySurvey && (
+        <DiscoverySurvey
+          selectedCountry={selectedCountry || 'All countries'}
+          resultCount={filteredMarkets.length}
+        />
+      )}
 
       {/* Pagination Section */}
       {filteredMarkets.length > 0 && (

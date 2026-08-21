@@ -193,7 +193,9 @@ interface RawMarketData {
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 50;
-const MAX_LIMIT = 500;
+// Kept in step with `MAX_LIMIT` in `route.ts`: the service clamps again, so a
+// lower value here would silently cap the route's larger limit.
+const MAX_LIMIT = 1000;
 
 function normalizePositiveInteger(
   value: number | undefined,
@@ -516,6 +518,61 @@ export function getLegacyIdSlugMap(): Promise<Map<string, string>> {
   }
 
   return legacyIdSlugMapPromise;
+}
+
+/**
+ * Fields the interactive map/filter UI actually reads.
+ *
+ * `/markets` no longer serializes the dataset into its HTML — the explorer
+ * fetches it from this API instead — so the wire size of a record is now the
+ * thing that matters. Dropping the long free-text fields (organization and
+ * location descriptions, amenity blurbs, CSA/delivery copy, contact lists,
+ * full provenance blocks) and every `false` boolean takes a record from
+ * ~1.4 KB to ~0.35 KB without changing a pixel of the UI, because the filter
+ * predicates all test `=== true` and treat a missing key as false.
+ */
+const SLIM_STRING_FIELDS = [
+  'id', 'slug', 'name', 'country', 'country_code', 'address', 'city', 'state', 'zip_code', 'season'
+] as const;
+
+const SLIM_ARRAY_FIELDS = [
+  'days', 'products', 'payment_methods', 'websites', 'organization_types'
+] as const;
+
+const SLIM_BOOLEAN_FIELDS = [
+  'wic', 'sfmnp', 'fmnp', 'snap',
+  'accepts_cash', 'accepts_credit_debit', 'accepts_checks',
+  'has_organic', 'has_naturally_grown', 'has_chemical_free', 'has_grass_fed',
+  'has_free_range', 'has_hormone_free', 'has_gmo_free',
+  'has_fresh_produce', 'has_meat', 'has_dairy', 'has_eggs', 'has_herbs',
+  'has_crafts', 'has_prepared_food', 'has_baked_goods', 'has_flowers',
+  'has_honey', 'has_jams', 'has_wine'
+] as const;
+
+/** Project one record down to the fields the client UI renders or filters on. */
+export function slimMarket(market: FarmerMarket): Partial<FarmerMarket> {
+  const slim: Record<string, unknown> = {};
+
+  for (const field of SLIM_STRING_FIELDS) {
+    if (market[field]) slim[field] = market[field];
+  }
+  for (const field of SLIM_ARRAY_FIELDS) {
+    const value = market[field];
+    if (value && value.length > 0) slim[field] = value;
+  }
+  for (const field of SLIM_BOOLEAN_FIELDS) {
+    if (market[field] === true) slim[field] = true;
+  }
+
+  if (market.location) slim.location = market.location;
+  if (market.distance !== undefined) slim.distance = market.distance;
+  // Only the source id is read (one analytics property); the rest of the
+  // provenance block is licence/catalog metadata the UI never shows.
+  if (market.provenance?.source_id) {
+    slim.provenance = { source_id: market.provenance.source_id };
+  }
+
+  return slim as Partial<FarmerMarket>;
 }
 
 // Our API data service

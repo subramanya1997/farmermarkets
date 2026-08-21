@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getMarkets } from "@/lib/data";
+import { dedupeStates, getFeaturedMarkets, getStateSummaries } from "@/lib/marketsIndex";
 import { PopularMarkets } from "@/components/PopularMarkets";
 import { FAQ } from "@/components/FAQ";
-import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf, Apple, Carrot, Beef, Fish, Milk, Cookie, Coffee, Flower, Sandwich } from "lucide-react";
+import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf } from "lucide-react";
 import type { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 
@@ -23,8 +23,15 @@ export const metadata: Metadata = {
 export default async function Home() {
   // Get markets data
   try {
-    const markets = (await getMarkets()).slice(0, 100);
-    
+    // Only the handful of records the page actually renders — the homepage
+    // used to hand 100 full records to a client component that showed none of
+    // them in the server HTML.
+    const [featuredMarkets, states] = await Promise.all([
+      getFeaturedMarkets(6),
+      getStateSummaries(),
+    ]);
+    const topStates = dedupeStates(states).slice(0, 12);
+
     // Enhanced structured data for homepage
     const websiteSchema = {
       '@context': 'https://schema.org',
@@ -126,82 +133,49 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* Categories Section */}
+        {/* Browse-by-state Section */}
+        {/*
+          These twelve tiles all pointed at bare `/markets`, so they were twelve
+          copies of one link. They now point at the state directory pages, which
+          gives the homepage a real second level of crawlable navigation.
+        */}
         <section className="w-full py-8 sm:py-12 md:py-16 bg-zinc-50 dark:bg-zinc-800">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-12">
-              What You&apos;ll Find at Our Markets
+              Browse Markets by State
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {[
-                { 
-                  icon: <Carrot className="w-6 h-6" />, 
-                  label: "Fresh Produce"
-                },
-                { 
-                  icon: <Apple className="w-6 h-6" />, 
-                  label: "Fruits & Vegetables"
-                },
-                { 
-                  icon: <Beef className="w-6 h-6" />, 
-                  label: "Meats & Poultry"
-                },
-                { 
-                  icon: <Fish className="w-6 h-6" />, 
-                  label: "Seafood"
-                },
-                { 
-                  icon: <Milk className="w-6 h-6" />, 
-                  label: "Dairy & Eggs"
-                },
-                { 
-                  icon: <Cookie className="w-6 h-6" />, 
-                  label: "Baked Goods"
-                },
-                { 
-                  icon: <Sandwich className="w-6 h-6" />, 
-                  label: "Prepared Foods"
-                },
-                { 
-                  icon: <Coffee className="w-6 h-6" />, 
-                  label: "Beverages"
-                },
-                { 
-                  icon: <Flower className="w-6 h-6" />, 
-                  label: "Flowers & Plants"
-                },
-                { 
-                  icon: <ShoppingBasket className="w-6 h-6" />, 
-                  label: "Specialty Items"
-                },
-                { 
-                  icon: <Leaf className="w-6 h-6" />, 
-                  label: "Organic & Natural"
-                },
-                { 
-                  icon: <CreditCard className="w-6 h-6" />, 
-                  label: "Payment Options"
-                }
-              ].map((category, index) => (
-                <Link 
-                  key={index} 
-                  href="/markets"
+              {topStates.map((state) => (
+                <Link
+                  key={state.slug}
+                  href={`/markets/state/${state.slug}`}
                   className="block"
                 >
                   <div className="flex flex-col items-center p-3 sm:p-4 bg-white dark:bg-zinc-700 rounded-lg shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-2 sm:mb-3">
-                      {category.icon}
+                      <MapPin className="w-6 h-6 text-green-600" />
                     </div>
-                    <span className="text-xs sm:text-sm font-medium text-center">{category.label}</span>
+                    <span className="text-xs sm:text-sm font-medium text-center">{state.name}</span>
+                    <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                      {state.count.toLocaleString()} markets
+                    </span>
                   </div>
                 </Link>
               ))}
             </div>
+            <div className="flex justify-center pt-8">
+              <Link
+                href="/markets"
+                className="text-sm font-medium text-green-600 hover:text-green-700 dark:text-green-500"
+              >
+                See every state in the directory
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* Popular Markets Section with Geolocation */}
-        <PopularMarkets markets={markets} limit={6} />
+        {/* Featured Markets (server-rendered, so the links are in the HTML) */}
+        <PopularMarkets markets={featuredMarkets} />
 
         {/* Benefits Section */}
         <section className="w-full py-8 sm:py-12 md:py-16 bg-green-50 dark:bg-green-900/20">
