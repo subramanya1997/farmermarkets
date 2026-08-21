@@ -50,25 +50,17 @@ export default async function Home() {
       }
     };
     
-    const organizationSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      name: 'Farmer Markets',
-      url: SITE_URL,
-      logo: absoluteUrl('/leaf-hq.png'),
-      description: 'Connecting people with farmers markets and local-food places around the world',
-      sameAs: []
-    };
+    // NOTE: no Organization node here. The root layout emits one on every
+    // page, and this second copy — with a different description and an empty
+    // `sameAs: []` — meant the homepage declared the publisher twice with two
+    // different sets of facts. The WebSite + SearchAction above stays: it is
+    // homepage-only by definition.
 
     return (
       <>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
         <div className="flex flex-col min-h-[calc(100vh-4rem)]">
           {/* Hero Section */}

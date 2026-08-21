@@ -10,12 +10,13 @@
     "data:update": "node scripts/update-government-markets.mjs",
     "data:check": "node scripts/check-government-markets.mjs",
     "data:geo": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/build-geo-index.mjs",
-    "test": "npm run test:data && npm run test:geo && npm run test:popup && npm run test:seo-meta",
+    "test": "npm run test:data && npm run test:geo && npm run test:popup && npm run test:seo-meta && npm run test:schema",
     "test:data": "node --test scripts/update-government-markets.test.mjs",
     "test:geo": "node --test --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/build-geo-index.test.mjs",
     "test:market-routes": "node scripts/check-market-routes.mjs",
     "test:popup": "node --test --experimental-strip-types src/components/leafletPopupHtml.test.ts",
-    "test:seo-meta": "node --test --experimental-strip-types src/lib/seo.test.ts"
+    "test:seo-meta": "node --test --experimental-strip-types src/lib/seo.test.ts",
+    "test:schema": "node --test --experimental-strip-types src/lib/schema.test.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

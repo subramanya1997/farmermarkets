@@ -88,17 +88,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Organization Schema for SEO
+  // The site's one Organization node. It lives here, not on a page, because
+  // the homepage used to emit a second copy with a different description — two
+  // publishers for one site. The `@id` gives future nodes something stable to
+  // point at. There is no `sameAs`: an empty array is not a fact, and we have
+  // no social profiles to name yet.
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${SITE_URL}#organization`,
     name: 'Farmer Markets',
     url: SITE_URL,
     logo: absoluteUrl('/leaf-hq.png'),
     description: 'Discover farmers markets, public food markets, cooperatives, and local-food places around the world.',
-    sameAs: [
-      // Add social media profiles here when available
-    ],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'Customer Service',

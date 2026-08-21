@@ -14,6 +14,8 @@ import { getCityForMarketSlug } from "@/lib/geoIndex";
 import { cityPath } from "@/lib/cityPage";
 import { statePath } from "@/lib/statePage";
 import { displayName, marketDescription, marketLocationLine, marketTitle } from "@/lib/seo";
+import { marketFaqs, marketSchemaGraph } from "@/lib/schema";
+import { MarketFaq } from "@/components/MarketFaq";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -197,44 +199,19 @@ export default async function MarketDetailPage({
   const hasSfmnp = market.sfmnp === true;
   const hasCredit = market.payment_methods?.includes("Credit/Debit");
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    '@id': `${SITE_URL}/markets/${market.slug}`,
-    name: market.name,
-    description: market.location_description || marketDescription(market),
-    url: `${SITE_URL}/markets/${market.slug}`,
-    telephone: market.phone_numbers?.[0],
-    email: market.emails?.[0],
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: address,
-      addressLocality: market.city,
-      addressRegion: market.state,
-      postalCode: market.zip_code,
-      addressCountry: market.country_code || market.country || 'US'
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: market.location?.lat,
-      longitude: market.location?.lon
-    },
-    openingHours: hours,
-    paymentAccepted: [
-      ...(hasCredit ? ['Credit Card'] : []),
-      'Cash',
-      ...(hasWic ? ['WIC'] : []),
-      ...(hasSnap ? ['SNAP'] : []),
-      ...(hasFmnp ? ['FMNP'] : []),
-      ...(hasSfmnp ? ['SFMNP'] : [])
-    ].join(', '),
-    priceRange: '$$',
-    image: marketImageUrl(market.slug),
-    potentialAction: {
-      '@type': 'ViewAction',
-      target: `${SITE_URL}/markets/${market.slug}`
-    }
-  };
+  // One `@graph` per page: GroceryStore/LocalBusiness, the recurring Event
+  // when a day *and* a time are known, and the FAQPage mirroring the visible
+  // block below. Every property is built from fields this record actually has
+  // (see src/lib/schema.ts) — the old node claimed "Cash", "$$" and free-text
+  // `openingHours` on all 8,807 pages, and emitted empty geo/address nodes.
+  // BreadcrumbList stays in `Breadcrumbs`, which renders the trail it declares.
+  const jsonLd = marketSchemaGraph(market, {
+    siteUrl: SITE_URL,
+    imageUrl: marketImageUrl(market.slug),
+  });
+
+  // The same list the FAQPage node quotes, so markup and page can never drift.
+  const faqs = marketFaqs(market);
 
   return (
     <>
@@ -415,6 +392,11 @@ export default async function MarketDetailPage({
                       <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">{market.location_description}</p>
                     </div>
                   )}
+
+                  {/* Answers in the words searchers type, in the HTML itself:
+                      AI answer engines extract visible text on a direct fetch
+                      and never run the JSON-LD. */}
+                  <MarketFaq faqs={faqs} />
 
                   <p className="mt-6 sm:mt-8 text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
                     Supporting local farmers and producers is vital for sustainable communities.
