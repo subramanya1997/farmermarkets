@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FaqSection } from '@/components/FaqSection';
 import { getCityPageData, type CityMarketRow, type CityPageData } from '@/lib/cityPage';
 import { getAllCityParams } from '@/lib/geoIndex';
 import { absoluteUrl } from '@/lib/site';
@@ -272,23 +273,7 @@ export default async function CityPage({ params }: CityPageProps) {
               </div>
             )}
 
-            <div>
-              <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
-                Frequently Asked Questions
-              </h2>
-              <dl className="mt-4 space-y-5">
-                {data.faqs.map((faq) => (
-                  <div key={faq.question}>
-                    <dt>
-                      <h3 className="text-base font-semibold sm:text-lg">{faq.question}</h3>
-                    </dt>
-                    <dd className="mt-1 text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
-                      {faq.answer}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+            <FaqSection items={data.faqs} />
 
             {data.siblings.length > 0 && (
               <div>

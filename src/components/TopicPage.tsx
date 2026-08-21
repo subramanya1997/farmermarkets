@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { FaqSection } from '@/components/FaqSection';
 import { absoluteUrl } from '@/lib/site';
 import {
   TOPIC_LABELS,
@@ -252,23 +253,7 @@ export function TopicMarketList({ markets }: { markets: TopicMarketRow[] }) {
 function TopicFaqs({ data }: { data: TopicPageData }) {
   if (data.faqs.length === 0) return null;
 
-  return (
-    <section>
-      <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Frequently Asked Questions</h2>
-      <dl className="mt-4 space-y-5">
-        {data.faqs.map((faq) => (
-          <div key={faq.question}>
-            <dt>
-              <h3 className="text-base font-semibold sm:text-lg">{faq.question}</h3>
-            </dt>
-            <dd className="mt-1 text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
-              {faq.answer}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-  );
+  return <FaqSection items={data.faqs} />;
 }
 
 /** Links to the other three topic pages and back to the directory. */
