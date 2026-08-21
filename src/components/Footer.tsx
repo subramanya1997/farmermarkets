@@ -3,7 +3,7 @@ import { getStateHubSummaries } from "@/lib/statePage";
 import { TOPIC_LABELS, TOPIC_SLUGS, topicPath } from "@/lib/topicPage";
 
 /** How many state hubs the footer links to, biggest first. */
-const FOOTER_STATE_LIMIT = 6;
+const FOOTER_STATE_LIMIT = 10;
 
 /**
  * The site-wide footer.
