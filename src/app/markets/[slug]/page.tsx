@@ -24,6 +24,7 @@ import { MarketFacts } from "@/components/MarketFacts";
 import { MarketFreshnessNotice } from "@/components/MarketFreshnessNotice";
 import { MarketSourceNote } from "@/components/MarketSourceNote";
 import { NearbyMarkets } from "@/components/NearbyMarkets";
+import { SITE_FRAME } from "@/lib/ui";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -237,7 +238,7 @@ export default async function MarketDetailPage({
       <div className="flex flex-col min-h-[calc(100vh-4rem)]">
         {/* Header Section */}
         <section className="w-full py-6 sm:py-8 md:py-12 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <div className="flex flex-col gap-3 sm:gap-4">
               <Breadcrumbs items={breadcrumbItems} />
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
@@ -268,8 +269,8 @@ export default async function MarketDetailPage({
 
         {/* Content Section */}
         <section className="w-full py-6 sm:py-8 md:py-12 bg-white dark:bg-zinc-900">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+          <div className={SITE_FRAME}>
+            <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr] 2xl:grid-cols-[minmax(0,1fr)_32rem] 2xl:gap-10">
               {/* Main content */}
               <div>
                 <div className="max-w-none">
@@ -283,7 +284,7 @@ export default async function MarketDetailPage({
                   {(prose.about.length ? prose.about : summary).map((paragraph) => (
                     <p
                       key={paragraph}
-                      className="mb-3 text-sm sm:text-base text-zinc-600 last:mb-0 dark:text-zinc-400"
+                      className="mb-3 max-w-[75ch] text-sm sm:text-base text-zinc-600 last:mb-0 dark:text-zinc-400"
                     >
                       {paragraph}
                     </p>
@@ -297,7 +298,7 @@ export default async function MarketDetailPage({
                       {prose.location.map((paragraph) => (
                         <p
                           key={paragraph}
-                          className="mb-3 text-sm sm:text-base text-zinc-600 last:mb-0 dark:text-zinc-400"
+                          className="mb-3 max-w-[75ch] text-sm sm:text-base text-zinc-600 last:mb-0 dark:text-zinc-400"
                         >
                           {paragraph}
                         </p>

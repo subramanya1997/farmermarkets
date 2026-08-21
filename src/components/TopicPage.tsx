@@ -12,6 +12,7 @@ import {
   type TopicPageData,
   type TopicStateRow,
 } from '@/lib/topicPage';
+import { SITE_FRAME } from '@/lib/ui';
 
 /**
  * The one layout the four topic pages share.
@@ -89,7 +90,9 @@ export function TopicSection({
   return (
     <section>
       <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{heading}</h2>
-      {intro && <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">{intro}</p>}
+      {intro && (
+        <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">{intro}</p>
+      )}
       <div className="mt-4">{children}</div>
     </section>
   );
@@ -108,7 +111,7 @@ export function TopicStateTable({
   if (states.length === 0) return null;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="max-w-4xl overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
       <table className="w-full min-w-[20rem] border-collapse text-left text-sm">
         <caption className="sr-only">{caption}</caption>
         <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
@@ -157,7 +160,7 @@ export function TopicDayTable({
   if (days.length === 0) return null;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="max-w-4xl overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
       <table className="w-full min-w-[24rem] border-collapse text-left text-sm">
         <caption className="sr-only">{caption}</caption>
         <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
@@ -207,7 +210,7 @@ export function TopicMarketList({ markets }: { markets: TopicMarketRow[] }) {
   if (markets.length === 0) return null;
 
   return (
-    <ul className="divide-y divide-zinc-200 dark:divide-zinc-800">
+    <ul className="max-w-4xl divide-y divide-zinc-200 dark:divide-zinc-800">
       {markets.map((market) => {
         const details = [
           market.address,
@@ -304,7 +307,7 @@ export function TopicPageShell({
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
-          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <Breadcrumbs
               items={[
                 { label: 'Markets', href: '/markets' },
@@ -323,7 +326,7 @@ export function TopicPageShell({
         </section>
 
         <section className="w-full bg-white py-6 sm:py-8 md:py-10 dark:bg-zinc-900">
-          <div className="mx-auto w-full max-w-7xl space-y-10 px-4 sm:px-6">
+          <div className={`${SITE_FRAME} space-y-10`}>
             {children}
             <TopicFaqs data={data} />
             <TopicCrossLinks current={data.slug} />

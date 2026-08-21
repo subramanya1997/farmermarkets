@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_FRAME } from "@/lib/ui";
 
 export const metadata: Metadata = {
   alternates: {
@@ -14,7 +15,7 @@ export default function PrivacyPage() {
     <div className="min-h-[calc(100vh-4rem)]">
       {/* Hero Section */}
       <section className="w-full py-8 sm:py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
               Privacy Policy

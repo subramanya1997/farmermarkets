@@ -30,7 +30,7 @@ export default async function SnapTopicPage() {
         <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
           How SNAP works at a farmers market
         </h2>
-        <p className="mt-3 text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
+        <p className="mt-3 max-w-3xl text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
           SNAP benefits are paid with an EBT card. Markets that accept them usually work one of two
           ways: a single card terminal at an information booth, where you swipe for tokens or scrip
           to spend with any participating vendor, or individual vendors taking the card at their own

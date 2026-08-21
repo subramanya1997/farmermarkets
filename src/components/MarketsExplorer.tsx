@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { Map as MapIcon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/lib/analytics';
+import { SITE_FRAME } from "@/lib/ui";
 
 /**
  * The interactive search / filter / map view, loaded on demand.
@@ -43,7 +44,7 @@ export function MarketsExplorer() {
 
   return (
     <section className="w-full border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6">
+      <div className={`${SITE_FRAME} py-4`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
             Prefer to search, filter, or see the markets on a map?

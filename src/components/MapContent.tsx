@@ -5,6 +5,7 @@ import type { FarmerMarket } from '@/lib/api';
 import { MapSearch } from '@/components/MapSearch';
 import ClientMarketMap from '@/components/ClientMarketMap';
 import { Card, CardContent } from "@/components/ui/card";
+import { SITE_FRAME } from "@/lib/ui";
 
 interface MapContentProps {
   markets: FarmerMarket[];
@@ -22,7 +23,7 @@ export function MapContent({ markets }: MapContentProps) {
   const visibleMarkets = filteredMarkets.slice(0, 500);
   
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12 space-y-6">
+    <div className={`${SITE_FRAME} py-6 sm:py-8 md:py-12 space-y-6`}>
       <div className="relative z-20">
         <MapSearch 
           markets={markets}

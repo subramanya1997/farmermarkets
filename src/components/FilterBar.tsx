@@ -7,6 +7,7 @@ import { ChevronDown } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import type { FilterCategory } from '@/lib/filters';
 import { trackEvent } from '@/lib/analytics';
+import { SITE_FRAME } from "@/lib/ui";
 
 interface FilterBarProps {
   categories: FilterCategory[];
@@ -44,7 +45,7 @@ export function FilterBar({ categories, activeFilters, onFilterChange }: FilterB
 
   return (
     <div className="w-full bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-3">
+      <div className={`${SITE_FRAME} py-3`}>
         {/* Mobile Filter Button */}
         <div className="md:hidden">
           <Sheet>

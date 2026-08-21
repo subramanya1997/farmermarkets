@@ -40,7 +40,7 @@ export default async function HoursTopicPage() {
         <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
           Opening times vary market to market
         </h2>
-        <p className="mt-3 text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
+        <p className="mt-3 max-w-3xl text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
           {data.withDaysAndHours.toLocaleString('en-US')} of these records state their opening
           times as well as their days
           {data.commonHours
@@ -53,7 +53,7 @@ export default async function HoursTopicPage() {
           every market in that city with its days, hours and season.
         </p>
         {data.topCities.length > 0 && (
-          <ul className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-4 grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {data.topCities.map((city) => (
               <li key={city.href}>
                 <Link

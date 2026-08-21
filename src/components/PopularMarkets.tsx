@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { TrendingUp } from 'lucide-react';
 import { MarketSummaryCard } from './MarketSummaryCard';
 import type { FarmerMarket } from '@/lib/api';
+import { SITE_FRAME } from "@/lib/ui";
 
 interface PopularMarketsProps {
   markets: FarmerMarket[];
@@ -25,7 +26,7 @@ export function PopularMarkets({ markets }: PopularMarketsProps) {
 
   return (
     <section className="w-full bg-white py-12 dark:bg-zinc-900 md:py-16 lg:py-20">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+      <div className={SITE_FRAME}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -34,12 +35,12 @@ export function PopularMarkets({ markets }: PopularMarketsProps) {
                 Featured Farmers Markets
               </h2>
             </div>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
               A few well-documented markets from around the directory.
             </p>
           </div>
 
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 2xl:grid-cols-6">
             {markets.map((market) => (
               <li key={market.id}>
                 <MarketSummaryCard market={market} />

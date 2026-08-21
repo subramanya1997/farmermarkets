@@ -9,6 +9,7 @@ import { MARKETS_PER_PAGE, getMarketsPage, marketsPagePath } from '@/lib/markets
 import { getStateHubSummaries } from '@/lib/statePage';
 import { getTopicSummaries } from '@/lib/topicPage';
 import { absoluteUrl } from '@/lib/site';
+import { SITE_FRAME } from "@/lib/ui";
 
 interface MarketsIndexProps {
   page: number;
@@ -62,7 +63,7 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
       />
       <div className="min-h-[calc(100vh-4rem)]">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-8 dark:from-green-900/20 dark:to-zinc-950 sm:py-12">
-          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <div className="flex flex-col items-center space-y-4 text-center">
               <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl lg:text-5xl">
                 {result.page === 1
@@ -80,12 +81,12 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
         <MarketsExplorer />
 
         <section className="w-full py-8">
-          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <p className="mb-5 text-sm text-zinc-600 dark:text-zinc-400">
               Showing {firstIndex.toLocaleString()}-{lastIndex.toLocaleString()} of{' '}
               {result.total.toLocaleString()} markets
             </p>
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
               {result.markets.map((market) => (
                 <li key={market.id}>
                   <MarketSummaryCard market={market} />

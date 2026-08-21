@@ -14,6 +14,7 @@ import { useAllMarkets } from "@/hooks/useAllMarkets";
 import { calculateDistance } from "@/lib/utils";
 import { extractFilterOptions, applyFilters } from "@/lib/filters";
 import { analyticsSafeSearchTerm, trackEvent } from "@/lib/analytics";
+import { SITE_FRAME } from "@/lib/ui";
 
 interface MarketsProps {
   /**
@@ -198,7 +199,7 @@ export function Markets({
       {/* Hero Section */}
       {!hideHero && (
         <section className="w-full py-8 sm:py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
                 {title}
@@ -287,7 +288,7 @@ export function Markets({
 
       {/* Markets Grid/Map Section */}
       <section className="w-full py-8">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+        <div className={SITE_FRAME}>
           <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
               {marketsLoading && markets.length === 0 ? (
@@ -303,7 +304,7 @@ export function Markets({
           </div>
           {view === 'grid' ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 sm:gap-6">
                 {currentMarkets.map((market) => (
                   <MarketCard key={market.id} market={market} />
                 ))}
@@ -345,7 +346,7 @@ export function Markets({
       {/* Pagination Section */}
       {filteredMarkets.length > 0 && (
         <section className="w-full py-4 sm:py-6">
-          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <div className="flex items-center justify-between">
               <Button
                 variant="outline"

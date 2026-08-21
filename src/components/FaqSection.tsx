@@ -66,7 +66,19 @@ export function FaqSection({
         )}
       </div>
 
-      <div className="mt-4 divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700">
+      <div
+        className={
+          /*
+            The frame is 1920px wide; a question and its answer are not. The
+            rows carry their own measure so a Q&A never runs the width of a
+            large display — centred under a centred heading, left-aligned
+            under a left-aligned one, and the same 4xl either way.
+          */
+          centered
+            ? "mx-auto mt-4 max-w-4xl divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700"
+            : "mt-4 max-w-4xl divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700"
+        }
+      >
         {items.map((item) => (
           <details key={item.question} className="group">
             <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-4 text-left text-zinc-900 outline-none marker:content-none hover:text-green-700 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 dark:text-zinc-100 dark:hover:text-green-400 dark:focus-visible:ring-offset-zinc-900 [&::-webkit-details-marker]:hidden">

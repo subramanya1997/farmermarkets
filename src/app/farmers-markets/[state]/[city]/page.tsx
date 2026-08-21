@@ -6,6 +6,7 @@ import { FaqSection } from '@/components/FaqSection';
 import { getCityPageData, type CityMarketRow, type CityPageData } from '@/lib/cityPage';
 import { getAllCityParams } from '@/lib/geoIndex';
 import { absoluteUrl } from '@/lib/site';
+import { SITE_FRAME } from "@/lib/ui";
 
 export const revalidate = 86400;
 // Cities added by a data refresh still render on demand and land in the ISR
@@ -79,7 +80,15 @@ function MarketTable({ data }: { data: CityPageData }) {
   const { columns, rows } = data;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    /*
+      The frame is 1920px wide; this table is not allowed to be. It renders
+      between one and six columns depending on which fields the city's records
+      actually fill, and a two- or three-column table stretched edge to edge is
+      mostly empty space between the headings. One cap for every city page —
+      wide enough that a six-column table is still comfortable, narrow enough
+      that a sparse one still reads as a table.
+    */
+    <div className="max-w-screen-2xl overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
       <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
         <caption className="sr-only">
           Farmers markets in {data.city.name}, {data.regionFull}
@@ -219,7 +228,7 @@ export default async function CityPage({ params }: CityPageProps) {
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
-          <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
+          <div className={SITE_FRAME}>
             <Breadcrumbs
               items={[
                 { label: 'Markets', href: '/markets' },
@@ -239,7 +248,7 @@ export default async function CityPage({ params }: CityPageProps) {
         </section>
 
         <section className="w-full bg-white py-6 sm:py-8 md:py-10 dark:bg-zinc-900">
-          <div className="mx-auto w-full max-w-7xl space-y-10 px-4 sm:px-6">
+          <div className={`${SITE_FRAME} space-y-10`}>
             <div>
               <h2 className="mb-4 text-xl font-bold tracking-tight sm:text-2xl">
                 {data.marketCount === 1
@@ -256,13 +265,13 @@ export default async function CityPage({ params }: CityPageProps) {
                     <h2 className="text-lg font-bold tracking-tight sm:text-xl">
                       {group.day} farmers markets in {data.city.name}
                     </h2>
-                    <ul className="mt-2 divide-y divide-zinc-200 text-sm dark:divide-zinc-800">
+                    <ul className="mt-2 max-w-4xl divide-y divide-zinc-200 text-sm dark:divide-zinc-800">
                       {group.rows.slice(0, DAY_SECTION_LIMIT).map((row) => (
                         <DayRow key={row.slug} row={row} />
                       ))}
                     </ul>
                     {group.rows.length > DAY_SECTION_LIMIT && (
-                      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                      <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
                         {group.rows.length - DAY_SECTION_LIMIT} more {group.day} market
                         {group.rows.length - DAY_SECTION_LIMIT === 1 ? ' is' : 's are'} in the table
                         above.
@@ -280,7 +289,7 @@ export default async function CityPage({ params }: CityPageProps) {
                 <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
                   Other cities in {data.regionFull}
                 </h2>
-                <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4">
+                <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
                   {data.siblings.map((sibling) => (
                     <li key={sibling.slug}>
                       <Link

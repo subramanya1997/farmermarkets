@@ -10,6 +10,7 @@ import {
   getDatasetPageData,
   type DatasetPageData,
 } from '@/lib/datasetPage';
+import { SITE_FRAME_GUTTER } from '@/lib/ui';
 
 export const revalidate = 86400;
 
@@ -175,7 +176,7 @@ export default async function AboutTheDataPage() {
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
-          <div className="mx-auto w-full max-w-4xl px-4 sm:px-6">
+          <div className={`w-full max-w-5xl ${SITE_FRAME_GUTTER}`}>
             <Breadcrumbs items={[{ label: 'About the data', href: PATH }]} />
             <h1 className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-2xl font-bold tracking-tighter text-transparent sm:text-3xl md:text-4xl">
               About the data
@@ -195,7 +196,7 @@ export default async function AboutTheDataPage() {
         </section>
 
         <section className="w-full bg-white py-6 sm:py-8 md:py-10 dark:bg-zinc-900">
-          <div className="mx-auto w-full max-w-4xl space-y-10 px-4 sm:px-6">
+          <div className={`w-full max-w-5xl space-y-10 ${SITE_FRAME_GUTTER}`}>
             <Section id="what-this-is" heading="What this directory is">
               <p>
                 One merged directory assembled from public sources. It is not an official
