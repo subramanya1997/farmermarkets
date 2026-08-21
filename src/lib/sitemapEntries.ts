@@ -25,6 +25,8 @@ import { getGeoIndex, getCityForMarketSlug } from './geoIndex';
 import { getTotalMarketPages, marketsPagePath } from './marketsIndex';
 import { cityPath } from './cityPage';
 import { statePath } from './statePage';
+import { getTopicSitemapEntries } from './topicPage';
+import { toIsoInstant } from './dates';
 import { SITE_URL } from './site';
 
 /**
@@ -41,24 +43,6 @@ export interface SitemapEntry {
   lastModified?: string;
 }
 
-/**
- * Parse a `last_updated` value into a stable ISO instant.
- *
- * The legacy USDA export writes local-looking timestamps with no zone
- * ("2020-08-03T13:44:04"). Reading those as UTC rather than as the server's
- * local time is what keeps the output identical on a developer's machine, in
- * CI, and on the deployment host.
- */
-function toIsoInstant(value?: string | null): string | undefined {
-  const raw = value?.trim();
-  if (!raw) return undefined;
-
-  const zoned = /(?:Z|[+-]\d{2}:?\d{2})$/.test(raw) ? raw : `${raw}Z`;
-  const parsed = new Date(zoned);
-  if (Number.isNaN(parsed.getTime())) return undefined;
-  return parsed.toISOString();
-}
-
 function newer(left: string | undefined, right: string | undefined): string | undefined {
   if (!left) return right;
   if (!right) return left;
@@ -68,10 +52,11 @@ function newer(left: string | undefined, right: string | undefined): string | un
 let entriesPromise: Promise<SitemapEntry[]> | null = null;
 
 async function buildEntries(): Promise<SitemapEntry[]> {
-  const [markets, geoIndex, totalPages] = await Promise.all([
+  const [markets, geoIndex, totalPages, topics] = await Promise.all([
     getMarkets(),
     getGeoIndex(),
     getTotalMarketPages(),
+    getTopicSitemapEntries(),
   ]);
 
   // One pass over the dataset fills in both derived date sets: `lastmod` for
@@ -109,6 +94,13 @@ async function buildEntries(): Promise<SitemapEntry[]> {
     (_unused, offset) => ({ url: absolute(marketsPagePath(offset + 2)) })
   );
 
+  // The topic pages carry a real `lastmod`: the newest `last_updated` among
+  // the markets each one lists, the same policy the city and state pages use.
+  const topicEntries: SitemapEntry[] = topics.map((topic) => ({
+    url: absolute(topic.path),
+    lastModified: topic.lastModified,
+  }));
+
   const stateEntries: SitemapEntry[] = geoIndex.states.map((state) => ({
     url: absolute(statePath(state.slug)),
     lastModified: stateDates.get(state.slug),
@@ -130,7 +122,14 @@ async function buildEntries(): Promise<SitemapEntry[]> {
 
   // Shallowest first, so chunk 0 holds the pages that matter most if a crawler
   // only ever reads one of them.
-  return [...staticEntries, ...indexEntries, ...stateEntries, ...cityEntries, ...marketEntries];
+  return [
+    ...staticEntries,
+    ...topicEntries,
+    ...indexEntries,
+    ...stateEntries,
+    ...cityEntries,
+    ...marketEntries,
+  ];
 }
 
 /** Every canonical URL on the site, in a stable order. Built once per process. */

@@ -1,6 +1,21 @@
 import Link from "next/link";
+import { getStateHubSummaries } from "@/lib/statePage";
+import { TOPIC_LABELS, TOPIC_SLUGS, topicPath } from "@/lib/topicPage";
 
-export function Footer() {
+/** How many state hubs the footer links to, biggest first. */
+const FOOTER_STATE_LIMIT = 6;
+
+/**
+ * The site-wide footer.
+ *
+ * The "Browse" column is server-rendered from the geo index, so the topic
+ * pages and the largest state hubs are in the HTML of every page — the
+ * internal links that make those pages crawlable from anywhere on the site
+ * rather than only from `/markets`.
+ */
+export async function Footer() {
+  const states = (await getStateHubSummaries()).slice(0, FOOTER_STATE_LIMIT);
+
   const navigation = {
     main: [
       { name: 'Discover', href: '/markets' },
@@ -17,7 +32,7 @@ export function Footer() {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-12">
         <div className="flex flex-col gap-8">
           {/* Main navigation */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:grid-cols-5">
             <div className="col-span-2">
               <Link href="/" className="inline-block font-bold text-xl sm:text-2xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 Farmer Markets
@@ -25,6 +40,39 @@ export function Footer() {
               <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400 max-w-xs">
                 Connecting people with farmers markets and public local-food places around the world.
               </p>
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <h3 className="text-sm font-semibold mb-3">Browse</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/markets"
+                    className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-500"
+                  >
+                    All markets
+                  </Link>
+                </li>
+                {TOPIC_SLUGS.map((slug) => (
+                  <li key={slug}>
+                    <Link
+                      href={topicPath(slug)}
+                      className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-500"
+                    >
+                      {TOPIC_LABELS[slug]}
+                    </Link>
+                  </li>
+                ))}
+                {states.map((state) => (
+                  <li key={state.slug}>
+                    <Link
+                      href={state.href}
+                      className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-500"
+                    >
+                      {state.name} markets
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div>
               <h3 className="text-sm font-semibold mb-3">Navigation</h3>
