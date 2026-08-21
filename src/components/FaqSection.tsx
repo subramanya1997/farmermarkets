@@ -69,8 +69,15 @@ export function FaqSection({
       <div className="mt-4 divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700">
         {items.map((item) => (
           <details key={item.question} className="group">
-            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-4 text-left text-base font-semibold text-zinc-900 outline-none marker:content-none hover:text-green-700 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 sm:text-lg dark:text-zinc-100 dark:hover:text-green-400 dark:focus-visible:ring-offset-zinc-900 [&::-webkit-details-marker]:hidden">
-              {item.question}
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-4 text-left text-zinc-900 outline-none marker:content-none hover:text-green-700 focus-visible:rounded-md focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 dark:text-zinc-100 dark:hover:text-green-400 dark:focus-visible:ring-offset-zinc-900 [&::-webkit-details-marker]:hidden">
+              {/*
+                The question is a real heading, not just summary text: question
+                headings are what extractive answer engines anchor citations to,
+                and <summary> permits heading content. The h3 sets only size and
+                weight and inherits color, so the summary hover state still
+                paints the whole question.
+              */}
+              <h3 className="text-base font-semibold sm:text-lg">{item.question}</h3>
               <svg
                 aria-hidden="true"
                 viewBox="0 0 20 20"
