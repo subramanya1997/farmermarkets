@@ -4,9 +4,20 @@ import { getMarkets } from "@/lib/data";
 import { PopularMarkets } from "@/components/PopularMarkets";
 import { FAQ } from "@/components/FAQ";
 import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf, Apple, Carrot, Beef, Fish, Milk, Cookie, Coffee, Flower, Sandwich } from "lucide-react";
+import type { Metadata } from "next";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    url: '/',
+  },
+};
 
 export default async function Home() {
   // Get markets data
@@ -19,12 +30,12 @@ export default async function Home() {
       '@type': 'WebSite',
       name: 'Farmer Markets',
       description: 'Discover farmers markets and local-food places around the world',
-      url: 'https://farmermarkets.app',
+      url: SITE_URL,
       potentialAction: {
         '@type': 'SearchAction',
         target: {
           '@type': 'EntryPoint',
-          urlTemplate: 'https://farmermarkets.app/markets?search={search_term_string}'
+          urlTemplate: `${absoluteUrl('/markets')}?search={search_term_string}`
         },
         'query-input': 'required name=search_term_string'
       }
@@ -34,8 +45,8 @@ export default async function Home() {
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'Farmer Markets',
-      url: 'https://farmermarkets.app',
-      logo: 'https://farmermarkets.app/leaf-hq.png',
+      url: SITE_URL,
+      logo: absoluteUrl('/leaf-hq.png'),
       description: 'Connecting people with farmers markets and local-food places around the world',
       sameAs: []
     };

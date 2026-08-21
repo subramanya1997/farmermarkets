@@ -9,12 +9,12 @@ import ClientSingleMarketMap from "@/components/ClientSingleMarketMap";
 import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { Metadata } from "next";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 
-const SITE_URL = 'https://farmermarkets.app';
-const MARKET_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
+const MARKET_IMAGE_URL = absoluteUrl('/og-image.jpg');
 
 interface MarketDetailPageProps {
   params: Promise<{
@@ -49,9 +49,10 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
     openGraph: {
       title: `${market.name} - Farmer Market in ${cityStateDisplay}`,
       description: `Visit ${market.name} in ${cityStateDisplay}. Find fresh ${productsList}. ${market.location_description || ''}`,
+      url: `/markets/${resolvedParams.slug}`,
     },
     alternates: {
-      canonical: `${SITE_URL}/markets/${resolvedParams.slug}`,
+      canonical: `/markets/${resolvedParams.slug}`,
     },
   };
 }

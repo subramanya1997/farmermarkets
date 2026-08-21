@@ -1,3 +1,14 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/terms',
+  },
+  openGraph: {
+    url: '/terms',
+  },
+};
+
 export default function TermsPage() {
   return (
     <div className="min-h-[calc(100vh-4rem)]">

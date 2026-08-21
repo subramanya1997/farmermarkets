@@ -53,9 +53,11 @@ assert(marketsPage.status === 200, `/markets returned ${marketsPage.status}`);
 const sitemap = await fetch(`${baseUrl}/sitemap.xml`);
 assert(sitemap.status === 200, `/sitemap.xml returned ${sitemap.status}`);
 const sitemapText = await sitemap.text();
-assert(!sitemapText.includes('<loc>https://farmermarkets.app/map</loc>'), 'sitemap still includes missing /map route');
+// Host-agnostic: the canonical origin lives in src/lib/site.ts and may be
+// overridden by NEXT_PUBLIC_SITE_URL, so match any host here.
+assert(!/<loc>https?:\/\/[^/]+\/map<\/loc>/.test(sitemapText), 'sitemap still includes missing /map route');
 
-const marketUrlCount = (sitemapText.match(/<loc>https:\/\/farmermarkets\.app\/markets\//g) || []).length;
+const marketUrlCount = (sitemapText.match(/<loc>https?:\/\/[^/]+\/markets\//g) || []).length;
 assert(marketUrlCount >= 6832, `sitemap contains ${marketUrlCount} market URLs, expected at least 6832`);
 
 console.log('Market route checks passed');

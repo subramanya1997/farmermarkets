@@ -4,9 +4,13 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Farmer Markets - Our Mission and Values",
   description: "Learn how Farmer Markets connects people with farmers markets and public local-food places around the world.",
+  alternates: {
+    canonical: '/about',
+  },
   openGraph: {
     title: "About Farmer Markets - Our Mission and Values",
     description: "Learn how Farmer Markets connects people with farmers markets and public local-food places around the world.",
+    url: '/about',
   },
 };
 

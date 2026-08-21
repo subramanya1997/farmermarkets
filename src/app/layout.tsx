@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { AnalyticsProviders } from "@/components/AnalyticsProviders";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,11 +23,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://farmermarkets.app'),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://farmermarkets.app',
+    url: SITE_URL,
     title: 'Farmer Markets - Find Local Fresh Produce Near You',
     description: 'Discover farmers markets, public food markets, cooperatives, and local-food places around the world.',
     siteName: 'Farmer Markets',
@@ -75,12 +76,10 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/manifest.json',
-  alternates: {
-    canonical: 'https://farmermarkets.app',
-    languages: {
-      'en-US': 'https://farmermarkets.app',
-    },
-  },
+  // NOTE: no root-level `alternates` here on purpose. A canonical set on the
+  // root layout is inherited by every page that does not override it, which
+  // made the whole site canonicalize to the homepage. Each page declares its
+  // own self-referential canonical instead.
 };
 
 export default function RootLayout({
@@ -93,8 +92,8 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Farmer Markets',
-    url: 'https://farmermarkets.app',
-    logo: 'https://farmermarkets.app/leaf-hq.png',
+    url: SITE_URL,
+    logo: absoluteUrl('/leaf-hq.png'),
     description: 'Discover farmers markets, public food markets, cooperatives, and local-food places around the world.',
     sameAs: [
       // Add social media profiles here when available

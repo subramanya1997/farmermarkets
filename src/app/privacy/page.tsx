@@ -1,3 +1,14 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/privacy',
+  },
+  openGraph: {
+    url: '/privacy',
+  },
+};
+
 export default function PrivacyPage() {
   return (
     <div className="min-h-[calc(100vh-4rem)]">
