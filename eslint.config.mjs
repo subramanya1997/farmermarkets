@@ -1,16 +1,30 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
-
-export default eslintConfig;
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  {
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "out/**",
+      // One-off asset-generation scripts, plain CommonJS by design.
+      "convert-svg.js",
+      "create-favicons.js",
+      "create-hq-favicons.js",
+    ],
+  },
+  {
+    // New react-hooks v6 rules (shipped with eslint-config-next 16) flag
+    // long-standing patterns in this codebase; kept as warnings until the
+    // components are refactored.
+    rules: {
+      "react-hooks/error-boundaries": "warn",
+      "react-hooks/set-state-in-effect": "warn",
+      "react-hooks/refs": "warn",
+      "react-hooks/immutability": "warn",
+    },
+  },
+]);
