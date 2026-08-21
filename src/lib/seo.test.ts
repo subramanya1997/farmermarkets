@@ -276,3 +276,146 @@ test('on-page location line spells the state out and never duplicates it', () =>
     'Singapore'
   );
 });
+
+/* ---------------------------------------------------------------- *
+ * City pages: schedule column readers and title/description copy.
+ * ---------------------------------------------------------------- */
+
+const {
+  cityTitle,
+  cityDescription,
+  marketWeekdays,
+  marketHours,
+  marketSeasonLabel,
+  weekdaysFromText,
+} = seo;
+
+test('weekdays are read from every spelling the source feeds use', () => {
+  assert.deepEqual(weekdaysFromText('saturday'), ['Saturday']);
+  assert.deepEqual(weekdaysFromText('Saturdays 8am to 1pm'), ['Saturday']);
+  assert.deepEqual(weekdaysFromText('Sat, Sun'), ['Saturday', 'Sunday']);
+  // Localized government feeds (Brussels ships the same slot in FR and NL).
+  assert.deepEqual(weekdaysFromText('Samedi 08:30:00 - 12:00:00'), ['Saturday']);
+  assert.deepEqual(weekdaysFromText('Zaterdag 08:30:00 - 12:00:00'), ['Saturday']);
+  // Ranges expand inclusively, wrapping the week if they have to.
+  assert.deepEqual(weekdaysFromText('Mon-Fri'), [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+  ]);
+  assert.deepEqual(weekdaysFromText('Saturday to Sunday'), ['Saturday', 'Sunday']);
+  assert.equal(weekdaysFromText('Daily 9:00 - 17:00').length, 7);
+  // A month name must never be mistaken for a weekday.
+  assert.deepEqual(weekdaysFromText('May 2-October 31'), []);
+  assert.deepEqual(weekdaysFromText(''), []);
+  assert.deepEqual(weekdaysFromText(null), []);
+});
+
+test('a market reports its weekdays from days and from season, in week order', () => {
+  assert.deepEqual(marketWeekdays({ name: 'x', days: ['saturday'] }), ['Saturday']);
+  assert.deepEqual(marketWeekdays({ name: 'x', season: 'Sundays 9am to 2pm' }), ['Sunday']);
+  assert.deepEqual(
+    marketWeekdays({ name: 'x', days: ['sunday', 'wednesday'], season: 'Saturdays 8am to 1pm' }),
+    ['Wednesday', 'Saturday', 'Sunday']
+  );
+  assert.deepEqual(marketWeekdays({ name: 'x', season: 'year-round' }), []);
+  assert.deepEqual(marketWeekdays({ name: 'x' }), []);
+});
+
+test('hours are only reported when the record states clock times', () => {
+  assert.equal(marketHours({ name: 'x', season: 'Saturdays 8am to 1pm' }), '8am–1pm');
+  assert.equal(marketHours({ name: 'x', days: ['Samedi 08:30:00 - 12:00:00'] }), '8:30–12:00');
+  assert.equal(marketHours({ name: 'x', days: ['Friday 11:00 AM - 03:30 PM'] }), '11am–3:30pm');
+  // Date ranges and bare weekdays are not hours.
+  assert.equal(marketHours({ name: 'x', season: 'June 1-October 31' }), undefined);
+  assert.equal(marketHours({ name: 'x', days: ['saturday'] }), undefined);
+  assert.equal(marketHours({ name: 'x' }), undefined);
+});
+
+test('the season column carries seasons, not the weekly schedule', () => {
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'Year Round' }), 'Year-round');
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'year-round' }), 'Year-round');
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'summer, fall' }), 'Summer, Fall');
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'May-Oct' }), 'May–Oct');
+  // Already rendered in the Days/Hours columns, so it is not repeated here.
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'Saturdays 8am to 1pm' }), undefined);
+  assert.equal(marketSeasonLabel({ name: 'x' }), undefined);
+});
+
+test('city title carries the count and degrades one clause at a time', () => {
+  const title = cityTitle({ city: 'Colorado Springs', region: 'CO', marketCount: 10 });
+  assertWellFormedTitle(title);
+  assert.equal(title, 'Farmers Markets in Colorado Springs, CO — 10 Local Markets');
+
+  assert.equal(
+    cityTitle({ city: 'Durham', region: 'NC', marketCount: 1 }),
+    'Farmers Markets in Durham, NC — 1 Local Market'
+  );
+
+  // A long city/region pair drops the count, then the region, rather than
+  // truncating mid-phrase.
+  const long = cityTitle({
+    city: 'Woluwe-Saint-Lambert',
+    region: 'Brussels-Capital Region',
+    marketCount: 3,
+  });
+  assertWellFormedTitle(long);
+  assert.equal(long, 'Farmers Markets in Woluwe-Saint-Lambert — 3 Local Markets');
+
+  const veryLong = cityTitle({
+    city: 'Sault Sainte Marie Charter Township',
+    region: 'MI',
+    marketCount: 2,
+  });
+  assertWellFormedTitle(veryLong);
+  assert.equal(veryLong, 'Farmers Markets in Sault Sainte Marie Charter Township, MI');
+
+  // Past the budget even without the region, the city name itself is cut on a
+  // word boundary rather than mid-word.
+  const overflowing = cityTitle({
+    city: 'Chatham-Kent Municipality of the County of Kent',
+    region: 'ON',
+    marketCount: 2,
+  });
+  assertWellFormedTitle(overflowing);
+  assert.match(overflowing, /^Farmers Markets in Chatham-Kent Municipality/);
+  assert.match(overflowing, /…$/);
+
+  assert.equal(cityTitle({ city: '', marketCount: 0 }), 'Farmers Markets');
+});
+
+test('city description answers the count question first and only adds true clauses', () => {
+  const full = cityDescription({
+    city: 'Colorado Springs',
+    region: 'CO',
+    marketCount: 10,
+    notableMarket: 'Backyard Market in Black Forest',
+    notableSchedule: 'Saturdays',
+    snapCount: 2,
+  });
+  assertWellFormedDescription(full);
+  assert.match(full, /^There are 10 farmers markets in Colorado Springs, CO\./);
+  assert.match(full, /Backyard Market in Black Forest is open Saturdays\./);
+  assert.match(full, /2 accept SNAP\/EBT\./);
+
+  const sparse = cityDescription({ city: 'Durham', region: 'NC', marketCount: 1 });
+  assertWellFormedDescription(sparse);
+  assert.equal(
+    sparse,
+    'There is 1 farmers market in Durham, NC. See addresses, days, hours and seasons.'
+  );
+
+  // A market with no known schedule is never claimed to be "open" anything.
+  const noSchedule = cityDescription({
+    city: 'Durham',
+    region: 'NC',
+    marketCount: 2,
+    notableMarket: "Durham Farmers' Market",
+    snapCount: 1,
+  });
+  assertWellFormedDescription(noSchedule);
+  assert.doesNotMatch(noSchedule, /is open/);
+  assert.match(noSchedule, /1 accepts SNAP\/EBT\./);
+});

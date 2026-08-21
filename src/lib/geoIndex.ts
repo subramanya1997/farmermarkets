@@ -126,3 +126,62 @@ export async function getCity(stateCode: string, citySlug: string): Promise<GeoC
   const key = citySlug?.trim().toLowerCase();
   return state.cities.find((city) => city.slug === key) ?? null;
 }
+
+/** A market's place in the index: the state entry and the city inside it. */
+export interface MarketPlacement {
+  state: GeoState;
+  city: GeoCity;
+}
+
+let placementLookupPromise: Promise<Map<string, MarketPlacement>> | null = null;
+
+/**
+ * Reverse index: market slug → the city that holds it.
+ *
+ * The forward index lists market slugs per city, so answering "which city page
+ * does this market belong on?" from it would mean scanning 4,870 cities on
+ * every one of the 8,807 market pages. Inverting it once per server process
+ * (8,807 entries) turns that into a map lookup.
+ */
+function getPlacementLookup(): Promise<Map<string, MarketPlacement>> {
+  if (!placementLookupPromise) {
+    placementLookupPromise = getGeoIndex()
+      .then((index) => {
+        const lookup = new Map<string, MarketPlacement>();
+        for (const state of index.states) {
+          for (const city of state.cities) {
+            for (const slug of city.market_slugs) {
+              // A slug is placed exactly once by the builder; first write wins
+              // if a data refresh ever breaks that invariant.
+              if (!lookup.has(slug)) lookup.set(slug, { state, city });
+            }
+          }
+        }
+        return lookup;
+      })
+      .catch((error) => {
+        placementLookupPromise = null;
+        throw error;
+      });
+  }
+
+  return placementLookupPromise;
+}
+
+/**
+ * The city page a market belongs on, or null for the ~2,200 records whose city
+ * never resolved (`uncategorized_slugs`) and the ones with no location at all.
+ */
+export async function getCityForMarketSlug(slug: string): Promise<MarketPlacement | null> {
+  const key = slug?.trim();
+  if (!key) return null;
+  return (await getPlacementLookup()).get(key) ?? null;
+}
+
+/** Every `{ state, city }` slug pair in the index — one per city page. */
+export async function getAllCityParams(): Promise<{ state: string; city: string }[]> {
+  const index = await getGeoIndex();
+  return index.states.flatMap((state) =>
+    state.cities.map((city) => ({ state: state.slug, city: city.slug }))
+  );
+}

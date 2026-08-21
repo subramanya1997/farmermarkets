@@ -323,6 +323,288 @@ export function marketDescription(market: MarketSeoRecord): string {
     .trim();
 }
 
+/* ------------------------------------------------------------------ *
+ * City pages (`/farmers-markets/{state}/{city}`)
+ *
+ * The city page renders one row per market with Days / Hours / Season as
+ * separate columns, which the source data does not provide separately: the
+ * schedule is smeared across `operations.days` (bare weekday names in the USDA
+ * export, "Samedi 08:30:00 - 12:00:00" in the European government feeds) and
+ * `operations.season` (season words, "Year Round", date ranges like
+ * "May-Oct", *and* weekly schedules like "Saturdays 8am to 1pm"). The three
+ * readers below split that mess into the three columns, each returning
+ * `undefined`/`[]` rather than a placeholder so the page can drop a column that
+ * is empty for every market in the city.
+ * ------------------------------------------------------------------ */
+
+export const WEEKDAY_NAMES = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+] as const;
+
+export type Weekday = (typeof WEEKDAY_NAMES)[number];
+
+/**
+ * Weekday spellings that appear in the data: English (full, plural, 3-letter)
+ * plus French and Dutch, which the Brussels and French market feeds ship, and
+ * German/Spanish/Italian for the smaller European sources.
+ */
+const WEEKDAY_ALIASES: Record<Weekday, string[]> = {
+  Monday: ['monday', 'mondays', 'mon', 'lundi', 'lundis', 'maandag', 'montag', 'lunes', 'lunedi'],
+  Tuesday: ['tuesday', 'tuesdays', 'tue', 'tues', 'mardi', 'mardis', 'dinsdag', 'dienstag', 'martes', 'martedi'],
+  Wednesday: [
+    'wednesday',
+    'wednesdays',
+    'wed',
+    'weds',
+    'mercredi',
+    'mercredis',
+    'woensdag',
+    'mittwoch',
+    'miercoles',
+    'mercoledi',
+  ],
+  Thursday: [
+    'thursday',
+    'thursdays',
+    'thu',
+    'thur',
+    'thurs',
+    'jeudi',
+    'jeudis',
+    'donderdag',
+    'donnerstag',
+    'jueves',
+    'giovedi',
+  ],
+  Friday: ['friday', 'fridays', 'fri', 'vendredi', 'vendredis', 'vrijdag', 'freitag', 'viernes', 'venerdi'],
+  Saturday: [
+    'saturday',
+    'saturdays',
+    'sat',
+    'samedi',
+    'samedis',
+    'zaterdag',
+    'samstag',
+    'sonnabend',
+    'sabado',
+    'sabato',
+  ],
+  Sunday: ['sunday', 'sundays', 'sun', 'dimanche', 'dimanches', 'zondag', 'sonntag', 'domingo', 'domenica'],
+};
+
+const WEEKDAY_BY_ALIAS = new Map<string, number>();
+for (const [index, day] of WEEKDAY_NAMES.entries()) {
+  for (const alias of WEEKDAY_ALIASES[day]) WEEKDAY_BY_ALIAS.set(alias, index);
+}
+
+// Longest alias first so "saturdays" never matches as "sat" + leftovers.
+const WEEKDAY_ALTERNATION = [...WEEKDAY_BY_ALIAS.keys()]
+  .sort((left, right) => right.length - left.length)
+  .join('|');
+const WEEKDAY_RE = new RegExp(`\\b(${WEEKDAY_ALTERNATION})\\b`, 'g');
+const WEEKDAY_RANGE_RE = new RegExp(
+  `\\b(${WEEKDAY_ALTERNATION})\\b\\s*(?:-|–|—|to|through|thru|t\\/m|au)\\s*\\b(${WEEKDAY_ALTERNATION})\\b`,
+  'g'
+);
+const EVERY_DAY_RE = /\b(daily|every ?day|7 days a week|tous les jours|elke dag)\b/;
+
+/** Lower-case and strip accents so "Mercredi" and "mercredi" are one token. */
+function foldForMatching(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
+/**
+ * Every weekday named anywhere in a free-text schedule string, in week order.
+ *
+ * Handles the three shapes the data uses: single names ("saturday"), inclusive
+ * ranges that wrap the week ("Mon-Sat", "Friday to Sunday"), and "Daily".
+ */
+export function weekdaysFromText(value?: string | null): Weekday[] {
+  const text = foldForMatching(clean(value));
+  if (!text) return [];
+
+  const found = new Set<number>();
+  if (EVERY_DAY_RE.test(text)) {
+    return [...WEEKDAY_NAMES];
+  }
+
+  for (const match of text.matchAll(WEEKDAY_RANGE_RE)) {
+    const start = WEEKDAY_BY_ALIAS.get(match[1]);
+    const end = WEEKDAY_BY_ALIAS.get(match[2]);
+    if (start === undefined || end === undefined) continue;
+    const span = (end - start + 7) % 7;
+    for (let step = 0; step <= span; step += 1) found.add((start + step) % 7);
+  }
+
+  for (const match of text.matchAll(WEEKDAY_RE)) {
+    const index = WEEKDAY_BY_ALIAS.get(match[1]);
+    if (index !== undefined) found.add(index);
+  }
+
+  return WEEKDAY_NAMES.filter((_day, index) => found.has(index));
+}
+
+/** The weekdays a market trades on, read from `days` and from `season`. */
+export function marketWeekdays(market: MarketSeoRecord): Weekday[] {
+  const found = new Set<Weekday>();
+  for (const source of [...(market.days ?? []), market.season]) {
+    for (const day of weekdaysFromText(source)) found.add(day);
+  }
+  return WEEKDAY_NAMES.filter((day) => found.has(day));
+}
+
+const TIME = String.raw`\d{1,2}(?::\d{2})?(?::\d{2})?\s*(?:[ap]\.?m\.?)?`;
+const TIME_RANGE_RE = new RegExp(`(${TIME})\\s*(?:-|–|—|to|until|till|tot|tp)\\s*(${TIME})`, 'i');
+
+/** A bare "31" is a date; a clock time carries a colon or a meridiem. */
+function isClockTime(value: string): boolean {
+  return /:/.test(value) || /[ap]\.?m\.?/i.test(value);
+}
+
+/**
+ * "8am–1pm" — the opening times, when the record states any. Returns
+ * `undefined` for the ~80% of records that only say which day they open, so
+ * the Hours column disappears instead of filling with dashes.
+ */
+export function marketHours(market: MarketSeoRecord): string | undefined {
+  for (const source of [...(market.days ?? []), market.season]) {
+    const text = clean(source);
+    if (!text) continue;
+    const match = TIME_RANGE_RE.exec(text);
+    if (!match || !isClockTime(match[1]) || !isClockTime(match[2])) continue;
+    return formatSchedule(`${match[1].trim()}–${match[2].trim()}`);
+  }
+  return undefined;
+}
+
+function capitalize(value: string): string {
+  return value ? value[0].toUpperCase() + value.slice(1) : value;
+}
+
+/**
+ * "Year-round" / "Summer, Fall" / "May–Oct" — the part of `season` that is
+ * genuinely about the season. A `season` that is really a weekly schedule
+ * ("Saturdays 8am to 1pm") returns `undefined`, because that record's day and
+ * hours are already rendered in their own columns.
+ */
+export function marketSeasonLabel(market: MarketSeoRecord): string | undefined {
+  const season = clean(market.season);
+  if (!season) return undefined;
+  if (isYearRound(season)) return 'Year-round';
+  if (isSeasonList(season)) {
+    return season
+      .toLowerCase()
+      .split(/[,/]| and /)
+      .map((token) => capitalize(token.trim()))
+      .filter(Boolean)
+      .join(', ');
+  }
+  if (weekdaysFromText(season).length > 0) return undefined;
+
+  // "May-Oct" / "June 1-October 31" — an en dash reads better between months.
+  return formatSchedule(season).replace(/([A-Za-z0-9])\s*-\s*([A-Za-z])/g, '$1–$2');
+}
+
+/** Inputs for the city page's title tag. */
+export interface CityTitleInput {
+  city: string;
+  /** "NC" for a US state, "Ontario"/"France" where there is no 2-letter code. */
+  region?: string | null;
+  marketCount: number;
+}
+
+/**
+ * SERP title for a city page: `Farmers Markets in Durham, NC — 2 Local Markets`.
+ *
+ * The count is the click driver (every competitor that outranks us carries
+ * one), so it is the last clause dropped: past `TITLE_MAX_LENGTH` we drop the
+ * count, then the region, rather than truncating mid-phrase.
+ */
+export function cityTitle({ city, region, marketCount }: CityTitleInput): string {
+  const name = clean(city);
+  if (!name) return 'Farmers Markets';
+
+  const regionLabel = clean(region);
+  const place = regionLabel ? `${name}, ${regionLabel}` : name;
+  const count = `${marketCount} Local Market${marketCount === 1 ? '' : 's'}`;
+
+  const candidates = [
+    `Farmers Markets in ${place} — ${count}`,
+    `Farmers Markets in ${place}`,
+    `Farmers Markets in ${name} — ${count}`,
+    `Farmers Markets in ${name}`,
+  ];
+
+  const fitting = candidates.find((candidate) => candidate.length <= TITLE_MAX_LENGTH);
+  return fitting ?? truncateOnWordBoundary(`Farmers Markets in ${name}`, TITLE_MAX_LENGTH);
+}
+
+/** Inputs for the city page's meta description. */
+export interface CityDescriptionInput {
+  city: string;
+  region?: string | null;
+  marketCount: number;
+  /** The most data-complete market in the city, if any. */
+  notableMarket?: string | null;
+  /** "Saturdays", "Saturdays 8am–1pm" — only when the record states it. */
+  notableSchedule?: string | null;
+  /** How many of the city's markets accept SNAP/EBT. */
+  snapCount?: number;
+}
+
+/**
+ * Answer-first meta description, assembled only from clauses the city's data
+ * supports: count first (the question searchers actually ask), then the
+ * notable market and its schedule, then SNAP, then a closing line naming what
+ * the page lists. Never exceeds `DESCRIPTION_MAX_LENGTH`.
+ */
+export function cityDescription({
+  city,
+  region,
+  marketCount,
+  notableMarket,
+  notableSchedule,
+  snapCount = 0,
+}: CityDescriptionInput): string {
+  const name = clean(city) || 'this city';
+  const regionLabel = clean(region);
+  const place = regionLabel ? `${name}, ${regionLabel}` : name;
+
+  const opening =
+    marketCount === 1
+      ? `There is 1 farmers market in ${place}.`
+      : `There are ${marketCount} farmers markets in ${place}.`;
+
+  const notable = clean(notableMarket);
+  const schedule = clean(notableSchedule);
+  const optional = [
+    notable && schedule ? `${notable} is open ${schedule}.` : undefined,
+    snapCount === 1
+      ? '1 accepts SNAP/EBT.'
+      : snapCount > 1
+        ? `${snapCount} accept SNAP/EBT.`
+        : undefined,
+    'See addresses, days, hours and seasons.',
+  ].filter((sentence): sentence is string => Boolean(sentence));
+
+  let description = opening;
+  for (const sentence of optional) {
+    if (`${description} ${sentence}`.length > DESCRIPTION_MAX_LENGTH) continue;
+    description = `${description} ${sentence}`;
+  }
+
+  return description.replace(/\s+/g, ' ').trim();
+}
+
 /** Human-readable "Durham, North Carolina" line for on-page display. */
 export function marketLocationLine(market: MarketSeoRecord): string | undefined {
   const location = resolveLocation(market);
