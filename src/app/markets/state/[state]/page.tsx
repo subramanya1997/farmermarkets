@@ -2,6 +2,7 @@ import { getMarkets } from "@/lib/data";
 import { Markets } from "@/components/Markets";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -30,9 +31,10 @@ export async function generateMetadata({ params }: StatePageProps): Promise<Meta
     openGraph: {
       title: `Farmers Markets in ${stateName}`,
       description: `Discover farmers markets in ${stateName}. Find fresh, local produce and support local farmers.`,
+      url: `/markets/state/${resolvedParams.state}`,
     },
     alternates: {
-      canonical: `https://farmermarkets.app/markets/state/${resolvedParams.state}`,
+      canonical: `/markets/state/${resolvedParams.state}`,
     },
   };
 }
@@ -60,7 +62,7 @@ export default async function StatePage({ params }: StatePageProps) {
     '@type': 'CollectionPage',
     name: `Farmers Markets in ${stateName}`,
     description: `Directory of farmers markets in ${stateName}`,
-    url: `https://farmermarkets.app/markets/state/${stateSlug}`,
+    url: absoluteUrl(`/markets/state/${stateSlug}`),
     about: {
       '@type': 'Place',
       name: stateName,

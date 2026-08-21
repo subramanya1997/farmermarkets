@@ -1,12 +1,13 @@
 import { getMarkets } from "@/lib/data";
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const markets = await getMarkets();
-  const baseUrl = 'https://farmermarkets.app';
+  const baseUrl = SITE_URL;
 
   // Function to format dates properly for sitemap
   const formatDate = (date: Date | string | null | undefined): string => {
