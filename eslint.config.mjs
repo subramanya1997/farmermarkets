@@ -10,10 +10,6 @@ export default defineConfig([
       ".next/**",
       "node_modules/**",
       "out/**",
-      // One-off asset-generation scripts, plain CommonJS by design.
-      "convert-svg.js",
-      "create-favicons.js",
-      "create-hq-favicons.js",
     ],
   },
   {

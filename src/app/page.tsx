@@ -23,19 +23,36 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // Get markets data
+  let homeData;
   try {
     // Only the handful of records the page actually renders — the homepage
     // used to hand 100 full records to a client component that showed none of
     // them in the server HTML.
-    const [featuredMarkets, states] = await Promise.all([
+    homeData = await Promise.all([
       getFeaturedMarkets(6),
       getStateHubSummaries(),
     ]);
-    const topStates = states.slice(0, 12);
+  } catch (error) {
+    console.error('Error fetching markets for homepage:', error);
+    return (
+      <div className="flex flex-col min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+        <h1 className="text-2xl font-bold text-red-600 mb-4">Temporarily Unavailable</h1>
+        <p className="text-center max-w-md mb-6">
+          We&apos;re experiencing some technical difficulties fetching market data.
+          Please try again in a few moments.
+        </p>
+        <Link href="/">
+          <Button>Refresh Page</Button>
+        </Link>
+      </div>
+    );
+  }
 
-    // Enhanced structured data for homepage
-    const websiteSchema = {
+  const [featuredMarkets, states] = homeData;
+  const topStates = states.slice(0, 12);
+
+  // Enhanced structured data for homepage
+  const websiteSchema = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Farmer Markets',
@@ -49,7 +66,7 @@ export default async function Home() {
         },
         'query-input': 'required name=search_term_string'
       }
-    };
+  };
     
     // NOTE: no Organization node here. The root layout emits one on every
     // page, and this second copy — with a different description and an empty
@@ -57,7 +74,7 @@ export default async function Home() {
     // different sets of facts. The WebSite + SearchAction above stays: it is
     // homepage-only by definition.
 
-    return (
+  return (
       <>
         <script
           type="application/ld+json"
@@ -218,22 +235,5 @@ export default async function Home() {
         <FAQ />
         </div>
       </>
-    );
-  } catch (error) {
-    console.error('Error fetching markets for homepage:', error);
-    
-    // Return a more graceful error state
-    return (
-      <div className="flex flex-col min-h-[calc(100vh-4rem)] items-center justify-center p-4">
-        <h1 className="text-2xl font-bold text-red-600 mb-4">Temporarily Unavailable</h1>
-        <p className="text-center max-w-md mb-6">
-          We&apos;re experiencing some technical difficulties fetching market data. 
-          Please try again in a few moments.
-        </p>
-        <Link href="/">
-          <Button>Refresh Page</Button>
-        </Link>
-      </div>
-    );
-  }
+  );
 }

@@ -9,8 +9,8 @@
  * Run with: `node scripts/generate-og-image.mjs`
  *
  * The artwork is defined as an SVG below and rasterised with sharp (already a
- * devDependency, and the same converter `convert-svg.js` / `create-hq-favicons.js`
- * use). Text is drawn as vector paths rather than <text> so the output does not
+ * devDependency used by `generate-favicons.mjs`). Text is drawn as vector paths
+ * rather than <text> so the output does not
  * depend on which fonts happen to be installed on the machine running this.
  */
 import sharp from 'sharp';

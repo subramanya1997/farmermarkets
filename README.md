@@ -6,7 +6,7 @@ The app is built as a public consumer directory for people who want to find near
 
 ## Features
 
-- Use the 6,832-record legacy dataset plus a provenance-aware 1,975-record snapshot generated from 14 official government feeds across eight countries and territories.
+- Use the 7,157-record legacy dataset plus a provenance-aware 1,975-record snapshot generated from official government feeds.
 - Search markets by name, city, state, or address.
 - Filter markets by products, payment options, production methods, and amenities.
 - Sort nearby markets using browser geolocation when the user grants permission.
@@ -19,7 +19,7 @@ The app is built as a public consumer directory for people who want to find near
 
 ## Tech Stack
 
-- Next.js 15 App Router
+- Next.js 16 App Router
 - React 19
 - TypeScript
 - Tailwind CSS 4
@@ -80,7 +80,7 @@ Downloads enabled official sources, validates record counts and coordinates, pre
 npm run data:update-legacy
 ```
 
-Refreshes the legacy USDA snapshot (`public/data/farmers_markets.json`) against the live USDA AMS Local Food Directory, then pings the changed URLs to IndexNow. See [Legacy USDA refresh](#legacy-usda-refresh).
+Refreshes the legacy USDA source snapshot (`data/sources/legacy_markets.json`) against the live USDA AMS Local Food Directory, rebuilds the canonical market file, then pings the changed URLs to IndexNow. See [Legacy USDA refresh](#legacy-usda-refresh).
 
 Useful flags:
 
@@ -95,6 +95,45 @@ npm run test:data-legacy
 ```
 
 Validates the generated snapshot/checksum and runs the ingestion parser, failure-retention, and legacy-refresh tests.
+
+```bash
+npm run data:enrichment
+npm run data:enrichment:check
+npm run data:archives:check
+npm run data:archives:restore
+npm run data:enrichment:audit:prepare
+npm run data:enrichment:audit:progress
+npm run data:enrichment:audit:check
+npm run data:enrichment:audit:compile
+npm run data:website-audit:prepare
+npm run data:website-audit:progress
+npm run data:website-detail:progress
+npm run data:website-audit:promote -- --verified-at=YYYY-MM-DD
+```
+
+Validates the independently researched batches in `data/enrichment/` and builds
+one canonical runtime file at `public/data/farmers_markets.json`. Every market
+record carries its official websites, social profiles, exact schedules, Google
+Maps link, visitor details, rich first-party facts, audit status, verification
+dates, and field-level source citations. Refreshable upstream snapshots remain
+under `data/sources/` as lossless rebuild inputs; the application never joins
+multiple market files at runtime.
+
+The audit commands split the entire current corpus into three stable shards and
+track one disposition per market. `audit:progress` reports checkpoint coverage
+while research is running; `audit:check` fails until every current market ID has
+exactly one valid result. A checked-no-update or ambiguous result remains in the
+ledger so it can be retried instead of being mistaken for verified absence.
+`audit:compile` turns only the source-backed `verified_update` rows into normal
+research batches; ambiguous and no-result rows never leak into visitor-facing
+facts.
+
+The website audit inventories every trusted site candidate separately from the
+market-ID audit. It renders each unique page, follows a bounded set of
+same-site visitor/FAQ pages for exact identity matches, and conservatively
+promotes source-backed schedules, seasons, payments and food benefits,
+accessibility and transport, amenities, policies, products/vendors, programs,
+events, languages, newsletters, canonical socials, and FAQ-ready answers.
 
 ```bash
 npm run indexnow:ping -- --dry-run https://www.farmermarkets.app/markets/some-market
@@ -233,7 +272,7 @@ CI (`.github/workflows/ci.yml`) runs lint, `tsc --noEmit` and the offline tests,
 
 ## Entity presence
 
-`/about-the-data` is the page that documents the directory itself — every publisher with its record count, how records are normalized and validated, the refresh cadence, current coverage numbers, known limitations, how to report a correction, and the per-source licence terms. All of it is computed from the two snapshots at build/ISR time by `src/lib/datasetPage.ts`, so the page cannot drift from the data. It carries a `Dataset` node whose `creator` references the `Organization` `@id` declared in `src/app/layout.tsx`, and whose `distribution` names the two publicly served snapshot files. No `license` is emitted: the eight official sources carry eight different statements and the USDA records carry none, so there is no single licence to claim.
+`/about-the-data` is the page that documents the directory itself — every publisher with its record count, how records are normalized and validated, the refresh cadence, current coverage numbers, known limitations, how to report a correction, and the per-source licence terms. All of it is computed from the canonical dataset at build/ISR time by `src/lib/datasetPage.ts`, so the page cannot drift from the data. It carries a `Dataset` node whose `creator` references the `Organization` `@id` declared in `src/app/layout.tsx`, and whose `distribution` names the one publicly served market file. No `license` is emitted: the official sources carry different statements and the USDA records carry none, so there is no single licence to claim.
 
 `Organization.sameAs` is built by `organizationSameAs()` in `src/lib/site.ts`. It always contains the public repository URL and adds whatever `NEXT_PUBLIC_ORG_SAMEAS` names, comma-separated. Only absolute `http(s)` URLs survive, duplicates collapse, and the key is omitted entirely if the list ever comes out empty.
 
@@ -277,20 +316,23 @@ src/
   hooks/                      Client hooks such as geolocation
   lib/                        Data access, API client, filters, and utility helpers
 public/
-  data/farmers_markets.json   Source market dataset
+  data/farmers_markets.json   Canonical consolidated market dataset
+  data/geo_index.json         Derived geographic navigation index
   *.png, *.svg, *.ico         Icons, map markers, and social assets
-  data/government_markets.json
-                              Generated official-government snapshot
-  data/government_markets.manifest.json
-                              Source status, counts, retrieval times, and checksum
 data/
   government-market-sources.json
                               Official source registry and safety thresholds
+  sources/                    Lossless upstream snapshots and source manifest
+  enrichment/                 Reviewable per-market research batches
+    archive/                  Checksummed full-market and website audit archives
 scripts/
   update-government-markets.mjs
                               Fetch, normalize, validate, and atomically write data
   check-government-markets.mjs
                               Validate snapshot provenance, counts, and checksum
+  build-market-enrichment.mjs Validate and compile research batches in memory
+  build-consolidated-markets.mjs
+                              Build and loss-check the canonical market file
 .github/workflows/
   update-government-markets.yml
                               Nightly data refresh
@@ -298,10 +340,20 @@ scripts/
 
 ## Data Source
 
-The API merges two independent files at read time:
+The API reads one canonical market file:
 
-- `public/data/farmers_markets.json` is the legacy USDA snapshot, refreshed by `npm run data:update-legacy` (see [Legacy USDA refresh](#legacy-usda-refresh)).
-- `public/data/government_markets.json` is generated only from enabled sources in `data/government-market-sources.json`.
+- `public/data/farmers_markets.json` contains all legacy USDA and official-government records with every verified enrichment, citation, rich fact, provenance block, and audit disposition embedded.
+- `data/sources/legacy_markets.json` is the refreshable USDA input.
+- `data/sources/government_markets.json` and its manifest are the refreshable official-government inputs.
+- `data/enrichment/` retains reviewable research and audit evidence used to rebuild the canonical file.
+
+Run `npm run data:consolidate` after changing a source or research batch. The
+builder verifies that all 9,132 source rows remain present and that every
+enrichment source, rich fact, and audit record survives the consolidation.
+The large completed audit workspaces are stored as checked tar+gzip archives;
+the canonical builder reads the audit ledger directly from the archive. Run
+`npm run data:archives:restore` before continuing either audit, then
+`npm run data:archives:refresh` to validate and rearchive the updated folders.
 
 Every generated record identifies its official publisher, dataset, source record, catalog URL, data URL, and license in `provenance`. The companion manifest records each source's last retrieval result and record count, plus a SHA-256 checksum for the complete snapshot.
 
@@ -508,6 +560,6 @@ For production:
 - Verify `/markets`, `/markets/[slug]`, `/about-the-data`, `/api/markets`, `/sitemap.xml`, and `/robots.txt` after data or routing changes.
 - Run `npm run test:seo` against a build after any change to metadata, JSON-LD, routing, or redirects — CI does it too, but it is the fastest local check that a page is still fit to index.
 - Once a month, read GSC and Bing WMT against the August 2026 baseline. See [Measurement](#measurement).
-- `/about-the-data` needs no editing when the data changes: its counts, source list, licence list, and date range are all recomputed from the snapshots. It does need editing if the refresh cadence or the processing rules change.
+- `/about-the-data` needs no editing when the data changes: its counts, source list, licence list, and date range are all recomputed from the canonical file. It does need editing if the refresh cadence or the processing rules change.
 - Keep the market dataset schema aligned with the normalization logic in `src/app/api/markets/data.ts`.
 - Update SEO copy and canonical URLs if the production domain changes from `farmermarkets.app`.

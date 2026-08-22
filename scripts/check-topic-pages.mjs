@@ -25,13 +25,12 @@ async function readSnapshot(file) {
   return JSON.parse(contents);
 }
 
-const [legacy, government, geoIndex] = await Promise.all([
+const [markets, geoIndex] = await Promise.all([
   readSnapshot('farmers_markets.json'),
-  readSnapshot('government_markets.json'),
   readSnapshot('geo_index.json'),
 ]);
 
-const records = [...legacy, ...government].map((market) => {
+const records = markets.map((market) => {
   const assistance = market.payment?.food_assistance ?? {};
   const channels = market.sales_channels ?? {};
   const record = {
@@ -225,7 +224,7 @@ function topStateSlugs(predicate, limit = 3) {
   }
 
   const counts = new Map();
-  for (const market of [...legacy, ...government]) {
+  for (const market of markets) {
     if (!market.slug || !predicate(market)) continue;
     const stateSlug = placement.get(market.slug);
     if (!stateSlug) continue;

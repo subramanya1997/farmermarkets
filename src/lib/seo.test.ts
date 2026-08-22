@@ -4,6 +4,7 @@ import test from 'node:test';
 const seo = await import('./seo.ts');
 
 const {
+  marketAddressParts,
   marketTitle,
   marketDescription,
   marketLocationLine,
@@ -508,4 +509,46 @@ test('upstream punctuation is normalized: no space before commas, no en/em dashe
   });
   assert.doesNotMatch(dashed, /[–—]/, `en/em dash in copy: ${dashed}`);
   assert.doesNotMatch(marketTitle({ name: 'Riverside Market — Main Stand', city: 'Dayton', state: 'OH' }), /[–—]/);
+});
+
+test('marketAddressParts composes street, linkable place and postal code', () => {
+  // The 613 Flea shape: street glued to city/province, Canadian postal code.
+  const flea = marketAddressParts({
+    name: '613 Flea',
+    address: '1015 Bank St, Ottawa, ON',
+    city: 'Ottawa',
+    state: 'Ontario',
+    zip_code: 'K1S 3W7',
+  });
+  assert.equal(flea.street, '1015 Bank St');
+  assert.equal(flea.cityLabel, 'Ottawa, Ontario');
+  assert.equal(flea.postalCode, 'K1S 3W7');
+
+  // US record: state abbreviated, 5-digit zip.
+  const us = marketAddressParts({
+    name: 'x',
+    address: '4401 Xylon Ave N, Minneapolis, MN 55428',
+    city: 'Minneapolis',
+    state: 'MN',
+    zip_code: '55428',
+  });
+  assert.equal(us.street, '4401 Xylon Ave N');
+  assert.equal(us.cityLabel, 'Minneapolis, MN');
+  assert.equal(us.postalCode, '55428');
+
+  // Compact Canadian postal gains its space; junk postal is dropped.
+  assert.equal(
+    marketAddressParts({ name: 'x', city: 'Ottawa', state: 'ON', zip_code: 'k1s3w7' }).postalCode,
+    'K1S 3W7'
+  );
+  assert.equal(
+    marketAddressParts({ name: 'x', city: 'Ottawa', state: 'ON', zip_code: 'unknown' }).postalCode,
+    undefined
+  );
+
+  // Nothing structured: no invented parts.
+  const bare = marketAddressParts({ name: 'x' });
+  assert.equal(bare.street, undefined);
+  assert.equal(bare.cityLabel, undefined);
+  assert.equal(bare.postalCode, undefined);
 });

@@ -215,6 +215,40 @@ test('omits opening hours entirely when nothing parses', () => {
   );
 });
 
+test('v2 dated seasons and weekly schedules remain exact in opening-hours data', () => {
+  const evidence = { source_ids: ['kenton-market-page'], verified_at: '2026-08-21' };
+  const spec = marketOpeningHoursSpec(market({
+    first_party: {
+      operations: {
+        season: {
+          value: { kind: 'dated_range', start_date: '2026-06-03', end_date: '2026-09-30' },
+          ...evidence,
+        },
+        schedules: [{
+          id: 'wednesday-season',
+          value: {
+            recurrence: { kind: 'weekly', weekdays: ['wednesday'] },
+            opens: '15:00',
+            closes: '19:00',
+            start_date: '2026-06-03',
+            end_date: '2026-09-30',
+          },
+          ...evidence,
+        }],
+      },
+    },
+  }), OPTIONS.now);
+
+  assert.deepEqual(spec, [{
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Wednesday'],
+    opens: '15:00',
+    closes: '19:00',
+    validFrom: '2026-06-03',
+    validThrough: '2026-09-30',
+  }]);
+});
+
 /* ------------------------------------------------------------------ *
  * Payment, address, contact
  * ------------------------------------------------------------------ */
@@ -234,8 +268,37 @@ test('paymentAccepted comes from the flags, never from a default', () => {
         fmnp: true,
       })
     ),
-    ['Cash', 'Credit Card', 'Debit Card', 'Check', 'SNAP/EBT', 'WIC', 'SFMNP', 'FMNP']
+    [
+      'Cash',
+      'Credit Card',
+      'Debit Card',
+      'Check',
+      'SNAP/EBT',
+      'WIC',
+      'Farmers Market Nutrition Program (FMNP)',
+      'Senior Farmers Market Nutrition Program (SFMNP)',
+    ]
   );
+});
+
+test('v2 exact payment methods override a lossy combined card flag', () => {
+  const evidence = { source_ids: ['ferry-plaza-visitor-info'], verified_at: '2026-08-21' };
+  assert.deepEqual(marketPaymentAccepted(market({
+    accepts_credit_debit: true,
+    payment_methods: ['Credit Card', 'Contactless payments such as Apple Pay', 'Credit/Debit'],
+    first_party: {
+      payments: {
+        methods: [
+          { id: 'credit-card', value: { code: 'credit_card' }, ...evidence },
+          {
+            id: 'contactless',
+            value: { code: 'contactless', label: 'Contactless payments such as Apple Pay' },
+            ...evidence,
+          },
+        ],
+      },
+    },
+  })), ['Credit Card', 'Contactless payments such as Apple Pay']);
 });
 
 test('streetAddress is the street only, with the packed tail removed', () => {
@@ -283,6 +346,15 @@ test('sameAs keeps absolute URLs and drops bare social handles', () => {
 
 test('dateModified is an ISO date, or nothing', () => {
   assert.equal(marketDateModified(market({ last_updated: '2020-08-03T13:44:04' })), '2020-08-03');
+  assert.equal(
+    marketDateModified(
+      market({
+        last_updated: '2020-08-03T13:44:04',
+        enrichment: { verified_at: '2026-08-21', verification_scope: 'partial' },
+      })
+    ),
+    '2020-08-03'
+  );
   assert.equal(marketDateModified(market({ last_updated: 'not a date' })), undefined);
   assert.equal(marketDateModified(market()), undefined);
 });
@@ -350,6 +422,133 @@ test('a market with no payment data at all is not asked about SNAP', () => {
   assert.equal(faqs.some((faq) => faq.question.includes('SNAP')), false);
 });
 
+test('a source-backed regional SNAP name still produces an affirmative SNAP FAQ', () => {
+  const evidence = { source_ids: ['official-page'], verified_at: '2026-08-21' };
+  const faqs = marketFaqs(market({
+    address: '1 Main St',
+    city: 'Ames',
+    state: 'IA',
+    first_party: {
+      payments: {
+        assistance: [{
+          id: 'regional-ebt',
+          value: { code: 'snap_ebt', name: 'Regional benefit card' },
+          ...evidence,
+        }],
+      },
+    },
+  }));
+  const snap = faqs.find((faq) => faq.question.includes('SNAP'));
+  assert.equal(snap?.answer, 'Yes. Test Farmers Market accepts SNAP/EBT benefits.');
+});
+
+test('source-backed rich facts create visitor FAQs without invented negatives', () => {
+  const evidence = { source_ids: ['official-market-page'], verified_at: '2026-08-21' };
+  const faqs = marketFaqs(market({
+    slug: 'visitor-ready-market',
+    name: 'Visitor Ready Market',
+    first_party: {
+      access: {
+        parking: {
+          availability: { value: 'yes', ...evidence },
+          cost: { value: 'free', ...evidence },
+        },
+      },
+      policies: [{
+        id: 'pet-policy',
+        value: { code: 'pets', rule: 'service_animals_only' },
+        ...evidence,
+      }],
+      contact: {
+        newsletter: {
+          value: { signup_url: 'https://example.org/newsletter', name: 'Weekly market newsletter' },
+          ...evidence,
+        },
+      },
+    },
+  }));
+
+  assert.ok(faqs.some((faq) => faq.question === 'Is parking available at Visitor Ready Market?'));
+  assert.ok(faqs.some((faq) => faq.answer.includes('Only service animals are allowed')));
+  assert.ok(faqs.some((faq) => faq.question === 'How can I get updates from Visitor Ready Market?'));
+});
+
+test('Ferry Plaza v2 windows stay distinct in FAQ and Event JSON-LD', () => {
+  const evidence = { source_ids: ['ferry-plaza-visitor-info'], verified_at: '2026-08-21' };
+  const ferry = market({
+    slug: 'ferry-plaza-farmers-market',
+    name: 'Ferry Plaza Farmers Market',
+    address: '1 Ferry Building, San Francisco, California, 94111',
+    city: 'San Francisco',
+    state: 'California',
+    zip_code: '94111',
+    days: ['Saturday 08:00-14:00', 'Tuesday, Thursday 10:00-14:00'],
+    season: 'Year-round',
+    first_party: {
+      operations: {
+        season: { value: { kind: 'year_round' }, ...evidence },
+        schedules: [
+          {
+            id: 'saturday',
+            value: {
+              recurrence: { kind: 'weekly', weekdays: ['saturday'] },
+              opens: '08:00',
+              closes: '14:00',
+            },
+            ...evidence,
+          },
+          {
+            id: 'tuesday-thursday',
+            value: {
+              recurrence: { kind: 'weekly', weekdays: ['tuesday', 'thursday'] },
+              opens: '10:00',
+              closes: '14:00',
+            },
+            ...evidence,
+          },
+        ],
+      },
+    },
+  });
+
+  const hoursFaq = marketFaqs(ferry).find((faq) => faq.question.includes("hours"));
+  assert.equal(
+    hoursFaq?.answer,
+    "Ferry Plaza Farmers Market's schedule is Saturdays, 8am–2pm; Tuesdays and Thursdays, 10am–2pm."
+  );
+  assert.doesNotMatch(hoursFaq?.answer ?? '', /8am–2pm on Tuesdays/);
+
+  const graph = marketSchemaGraph(ferry, OPTIONS) as Record<string, unknown>;
+  const nodes = graph['@graph'] as Record<string, unknown>[];
+  const event = nodes.find((node) => node['@type'] === 'Event');
+  assert.ok(event);
+  assert.deepEqual(event.eventSchedule, [
+    {
+      '@type': 'Schedule',
+      byDay: ['Saturday'],
+      startTime: '08:00',
+      endTime: '14:00',
+      repeatFrequency: 'P1W',
+    },
+    {
+      '@type': 'Schedule',
+      byDay: ['Tuesday', 'Thursday'],
+      startTime: '10:00',
+      endTime: '14:00',
+      repeatFrequency: 'P1W',
+    },
+  ]);
+
+  const faqNode = nodes.find((node) => node['@type'] === 'FAQPage');
+  assert.ok(faqNode);
+  const jsonLdHours = (faqNode.mainEntity as Array<Record<string, unknown>>)
+    .find((item) => item.name === "What are Ferry Plaza Farmers Market's hours?");
+  assert.equal(
+    (jsonLdHours?.acceptedAnswer as { text?: string } | undefined)?.text,
+    hoursFaq?.answer
+  );
+});
+
 /* ------------------------------------------------------------------ *
  * The graph
  * ------------------------------------------------------------------ */
@@ -394,6 +593,18 @@ test('a full record emits every node, with no empty values anywhere', () => {
     startDate: '2026-05-01',
     endDate: '2026-10-31',
   });
+});
+
+test('an independently verified Google Maps place URL takes precedence over coordinates', () => {
+  const graph = marketSchemaGraph(
+    market({
+      ...RICH,
+      google_maps_url: 'https://www.google.com/maps/place/Example+Market',
+    }),
+    OPTIONS
+  ) as Record<string, unknown>;
+  const business = (graph['@graph'] as Record<string, unknown>[])[0];
+  assert.equal(business.hasMap, 'https://www.google.com/maps/place/Example+Market');
 });
 
 test('the FAQPage node quotes the visible FAQ list exactly', () => {

@@ -1,6 +1,12 @@
 // Client-side API for accessing market data
 // This file should be used by client components to get data
 
+import type {
+  MarketAuditMetadata,
+  MarketEnrichmentMetadata,
+  MarketFirstPartyFacts,
+} from './enrichment';
+
 // FarmerMarket type definition
 export interface FarmerMarket {
   id: string;
@@ -27,6 +33,13 @@ export interface FarmerMarket {
   emails?: string[];
   websites?: string[];
   social_media?: string[];
+  google_maps_url?: string;
+  suppress_map?: boolean;
+  visitor_note?: string;
+  schema_version?: 2;
+  first_party?: MarketFirstPartyFacts;
+  enrichment?: MarketEnrichmentMetadata;
+  audit?: MarketAuditMetadata;
   season?: string;
   days?: string[];
   vendor_count?: number;

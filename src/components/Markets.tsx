@@ -8,7 +8,6 @@ import { MarketCard } from "@/components/MarketCard";
 import { FilterBar } from "@/components/FilterBar";
 import { DiscoverySurvey } from "@/components/DiscoverySurvey";
 import dynamic from "next/dynamic";
-import type { FarmerMarket } from "@/lib/api";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useAllMarkets } from "@/hooks/useAllMarkets";
 import { calculateDistance } from "@/lib/utils";
@@ -17,13 +16,6 @@ import { analyticsSafeSearchTerm, trackEvent } from "@/lib/analytics";
 import { SITE_FRAME } from "@/lib/ui";
 
 interface MarketsProps {
-  /**
-   * Records to explore. Omit it on `/markets` — the component then pulls the
-   * dataset from `/api/markets` itself (see `useAllMarkets`), which is what
-   * keeps the 8,807 records out of the server-rendered payload. The state
-   * pages pass their own, much smaller, subset.
-   */
-  markets?: FarmerMarket[];
   title?: string;
   description?: string;
   hideHero?: boolean;
@@ -35,7 +27,9 @@ interface MarketsProps {
   showDiscoverySurvey?: boolean;
 }
 
-const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
+const ITEMS_PER_PAGE = 30;
+
+const MarketsMap = dynamic(() => import("@/components/MarketMap"), {
   ssr: false,
   loading: () => (
     <div className="w-full h-full flex items-center justify-center">
@@ -45,20 +39,16 @@ const MarketsMap = dynamic(() => import("@/components/ClientMarketMap"), {
 });
 
 export function Markets({
-  markets: providedMarkets,
   title = "Find Local Food Markets",
   description = "Discover farmers markets, public food markets, cooperatives, and other local-food places around the world",
   hideHero = false,
   showDiscoverySurvey = true
 }: MarketsProps) {
-  const { markets, loading: marketsLoading, error: marketsError } = useAllMarkets(providedMarkets);
+  const { markets, loading: marketsLoading, error: marketsError } = useAllMarkets();
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
-  const [itemsPerPage] = useState(30);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
-  const [filteredMarkets, setFilteredMarkets] = useState<FarmerMarket[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   const lastTrackedSearch = useRef('');
   const lastTrackedLocation = useRef('');
@@ -89,7 +79,7 @@ export function Markets({
   
   // Add distance to markets and sort by proximity
   const marketsWithDistance = useMemo(() => {
-    if (!location || !markets) return markets;
+    if (!location) return markets;
     
     return markets.map(market => {
       if (market.location?.lat && market.location?.lon) {
@@ -105,9 +95,7 @@ export function Markets({
     }).sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
   }, [markets, location]);
   
-  // Apply search and filters
-  useEffect(() => {
-    // First apply search
+  const filteredMarkets = useMemo(() => {
     let filtered = marketsWithDistance;
     
     if (searchTerm) {
@@ -122,13 +110,10 @@ export function Markets({
       filtered = filtered.filter((market) => market.country === selectedCountry);
     }
     
-    // Then apply category filters
-    filtered = applyFilters(filtered, activeFilters, filterCategories);
-    
-    setFilteredMarkets(filtered);
-    setPage(1); // Reset to first page when filters change
-    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-  }, [marketsWithDistance, searchTerm, selectedCountry, activeFilters, filterCategories, itemsPerPage]);
+    return applyFilters(filtered, activeFilters, filterCategories);
+  }, [marketsWithDistance, searchTerm, selectedCountry, activeFilters, filterCategories]);
+
+  const totalPages = Math.ceil(filteredMarkets.length / ITEMS_PER_PAGE);
 
   useEffect(() => {
     const safeQuery = analyticsSafeSearchTerm(searchTerm);
@@ -168,7 +153,13 @@ export function Markets({
   const handleCountryChange = (country: string) => {
     setSelectedCountry(country);
     setActiveFilters(new Set());
+    setPage(1);
     trackEvent('Country Filter Changed', { country: country || 'All countries' });
+  };
+
+  const handleFilterChange = (filters: Set<string>) => {
+    setActiveFilters(filters);
+    setPage(1);
   };
 
   const toggleView = () => {
@@ -189,10 +180,10 @@ export function Markets({
 
   // Memoize the current page items calculation to prevent unnecessary recalculation
   const currentMarkets = useMemo(() => {
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
     return filteredMarkets.slice(startIndex, endIndex);
-  }, [filteredMarkets, page, itemsPerPage]);
+  }, [filteredMarkets, page]);
 
   return (
     <div className="min-h-[calc(100vh-4rem)]">
@@ -235,7 +226,10 @@ export function Markets({
                   type="text"
                   placeholder="Search markets by name, location..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(event) => {
+                    setSearchTerm(event.target.value);
+                    setPage(1);
+                  }}
                   className="pl-10 pr-4 py-2 w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
               </div>
@@ -283,7 +277,7 @@ export function Markets({
       <FilterBar 
         categories={filterCategories} 
         activeFilters={activeFilters}
-        onFilterChange={setActiveFilters}
+        onFilterChange={handleFilterChange}
       />
 
       {/* Markets Grid/Map Section */}

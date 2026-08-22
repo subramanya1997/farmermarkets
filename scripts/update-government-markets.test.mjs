@@ -37,11 +37,13 @@ test('CSV parser handles commas, escaped quotes, and CRLF', () => {
 
 test('Ontario parser preserves official provenance and coordinates', () => {
   const records = parsers.ontario_arcgis(source('ontario', 'ontario_arcgis', { country: 'Canada', country_code: 'CA', region: 'Ontario' }), JSON.stringify({
-    features: [{ id: 1, geometry: { coordinates: [-79.4, 43.7] }, properties: { OBJECTID: 1, BusinessName: 'Test Market', Address: '1 Main St', City: 'Toronto', PostalCode: 'M1M 1M1', Hours: 'Saturday' } }]
+    features: [{ id: 1, geometry: { coordinates: [-79.4, 43.7] }, properties: { OBJECTID: 1, BusinessName: 'Test Market', Address: '1 Main St', City: 'Toronto', PostalCode: 'M1M 1M1', Hours: 'Saturday', Website: 'https://example.ca/market', GoogleMaps: 'https://www.google.com/maps/place/Test+Market' } }]
   }), retrievedAt);
   assert.equal(records[0].country, 'Canada');
   assert.equal(records[0].country_code, 'CA');
   assert.deepEqual(records[0].location.coordinates, { longitude: -79.4, latitude: 43.7 });
+  assert.deepEqual(records[0].contact.websites, ['https://example.ca/market']);
+  assert.equal(records[0].google_maps_url, 'https://www.google.com/maps/place/Test+Market');
   assert.equal(records[0].provenance.official, true);
 });
 

@@ -1,9 +1,9 @@
 import { marketService } from '../data';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 // GET /api/markets/[slug] - Get a specific market
 export async function GET(
-  request: NextRequest,
+  _request: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const resolvedParams = await params;
@@ -33,4 +33,4 @@ export async function GET(
       { status: 500 }
     );
   }
-} 
+}

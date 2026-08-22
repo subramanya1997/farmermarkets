@@ -39,8 +39,11 @@ export function useGeolocation() {
       if (age < oneHour) {
         try {
           const location = JSON.parse(cachedLocation);
-          setState({ location, loading: false, error: null });
-          return;
+          const timer = window.setTimeout(
+            () => setState({ location, loading: false, error: null }),
+            0
+          );
+          return () => window.clearTimeout(timer);
         } catch {
           // Invalid cache, continue to fetch
         }
@@ -90,4 +93,3 @@ export function useGeolocation() {
 
   return state;
 }
-

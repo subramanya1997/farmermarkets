@@ -29,7 +29,7 @@ export function NearbyMarkets({ markets, cityHref, cityName }: NearbyMarketsProp
     <section className="mt-6 sm:mt-8" aria-labelledby="nearby-markets-heading">
       <h2
         id="nearby-markets-heading"
-        className="text-xl sm:text-2xl font-bold tracking-tight mb-3 sm:mb-4"
+        className="text-lg sm:text-xl font-semibold tracking-tight mb-3"
       >
         Farmers markets nearby
       </h2>

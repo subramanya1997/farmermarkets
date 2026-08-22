@@ -1,0 +1,270 @@
+[
+  {
+    "id": "gov:ca_on_farmers_markets:131",
+    "market_name": "St. Lawrence Farmers' Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.ca/maps/place/St.+Lawrence+Market/@43.6486173,-79.3723866,311m/data=!3m1!1e3!4m6!3m5!1s0x89d4cb31b4dd275b:0xca0ab5acf1a5b6fd!8m2!3d43.6486879!4d-79.3715454!16zL20vMDZqOTNf",
+    "contact": {
+      "websites": [
+        "https://www.stlawrencemarket.com/"
+      ],
+      "social_media": [
+        "https://twitter.com/StLawrenceMkt"
+      ],
+      "phone_numbers": [
+        "416-392-7219",
+        "416-392-7120"
+      ],
+      "emails": [
+        "stlawrencemarket@toronto.ca"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 5:00 AM-3:00 PM"
+      ]
+    },
+    "payment": {
+      "methods": [
+        "Cash (all vendors)",
+        "Interac (many vendors)",
+        "Major credit cards (many vendors)"
+      ]
+    },
+    "amenities": {
+      "features": [
+        "Free public Wi-Fi (TOPublic)",
+        "ATMs",
+        "Elevator to the Market Gallery, Market Kitchen and lower level"
+      ],
+      "parking": true,
+      "wheelchair_accessible": true,
+      "pet_friendly": false
+    },
+    "visitor_note": "The Saturday Farmers' Market is in St. Lawrence Market North; the South Market has a separate schedule. A nearby City of Toronto Green P garage offers a Saturday market-shopper rate.",
+    "sources": [
+      {
+        "url": "https://www.stlawrencemarket.com/",
+        "title": "St. Lawrence Market - Official Website",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "contact.phone_numbers",
+          "contact.emails",
+          "operations.days",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.stlawrencemarket.com/pages/hours_parking/",
+        "title": "St. Lawrence Market - Hours of Operation and Parking",
+        "fields": [
+          "operations.days",
+          "amenities.parking",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.stlawrencemarket.com/faqs",
+        "title": "St. Lawrence Market - Frequently Asked Questions",
+        "fields": [
+          "contact.phone_numbers",
+          "payment.methods",
+          "amenities.features",
+          "amenities.wheelchair_accessible",
+          "amenities.pet_friendly"
+        ]
+      },
+      {
+        "url": "https://www.google.ca/maps/place/St.+Lawrence+Market/@43.6486173,-79.3723866,311m/data=!3m1!1e3!4m6!3m5!1s0x89d4cb31b4dd275b:0xca0ab5acf1a5b6fd!8m2!3d43.6486879!4d-79.3715454!16zL20vMDZqOTNf",
+        "title": "Google Maps - St. Lawrence Market",
+        "fields": [
+          "google_maps_url"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:ca_on_farmers_markets:6",
+    "market_name": "Dufferin Grove Organic Farmers' Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/Dufferin+Grove+Organic+Farmer's+Market/@43.6569279,-79.433563,15z/data=!4m6!3m5!1s0x882b345bb23b32c5:0x13f4684c0cfdb6f2!8m2!3d43.6569279!4d-79.433563!16s%2Fg%2F1yghbvmlr",
+    "contact": {
+      "websites": [
+        "https://www.dufferingrovemarket.ca/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/dufferingrovemarket/",
+        "https://www.facebook.com/DufferinGroveFarmersMarket"
+      ],
+      "emails": [
+        "info@dufferingrovemarket.ca"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Thursday 3:00 PM-7:00 PM"
+      ],
+      "season": "Year-round"
+    },
+    "visitor_note": "The in-person market is at the New Dufferin Grove Clubhouse at the northwest corner of Dufferin Grove Park.",
+    "sources": [
+      {
+        "url": "https://www.dufferingrovemarket.ca/",
+        "title": "Dufferin Grove Organic Farmers' Market - Official Website",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.google.com/maps/place/Dufferin+Grove+Organic+Farmer's+Market/@43.6569279,-79.433563,15z/data=!4m6!3m5!1s0x882b345bb23b32c5:0x13f4684c0cfdb6f2!8m2!3d43.6569279!4d-79.433563!16s%2Fg%2F1yghbvmlr",
+        "title": "Google Maps - Dufferin Grove Organic Farmer's Market",
+        "fields": [
+          "google_maps_url"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:be_brussels_food_markets:5b6d8a7d0996de8b",
+    "market_name": "Marché Saint-Servais / Markt Sint-Servaas",
+    "verified_at": "2026-08-21",
+    "contact": {
+      "websites": [
+        "https://www.1030.be/fr/lieu-commerce/marche-saint-servais-place-lehon-et-eglise-saint-servais",
+        "https://www.1030.be/nl/lieu-commerce/markt-sint-servaas-lehonplein-sint-servaaskerk"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Friday 8:00 AM-1:00 PM"
+      ]
+    },
+    "visitor_note": "Marché Saint-Servais / Markt Sint-Servaas meets around Place Lehon and Saint-Servais Church. The municipality describes about 40 vendors selling fruit and vegetables, food, textiles and accessories.",
+    "sources": [
+      {
+        "url": "https://www.1030.be/fr/lieu-commerce/marche-saint-servais-place-lehon-et-eglise-saint-servais",
+        "title": "Commune de Schaerbeek - Marché Saint-Servais",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.1030.be/nl/lieu-commerce/markt-sint-servaas-lehonplein-sint-servaaskerk",
+        "title": "Gemeente Schaarbeek - Markt Sint-Servaas",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://opendata.brussels.be/api/explore/v2.1/catalog/datasets/marches-alimentaires-region-bruxelloise/records?where=name_fr%3D%22March%C3%A9%20Saint-Servais%22&limit=10",
+        "title": "Brussels-Capital Region Open Data - Marché Saint-Servais Record",
+        "fields": [
+          "operations.days",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:hk_fehd_public_markets_hong_kong:626",
+    "market_name": "WAN CHAI MARKET",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/Wan+Chai+Market/@22.2750716,114.1737073,17z/data=!3m1!4b1!4m6!3m5!1s0x3404005b550bac63:0x76aead9979513bdb!8m2!3d22.2750716!4d114.1737073!16zL20vMGdxcnRn",
+    "contact": {
+      "websites": [
+        "https://www.fehd.gov.hk/english/pleasant_environment/tidy_market/Markets_CFC_list.html"
+      ],
+      "phone_numbers": [
+        "+852 2575 0192",
+        "+852 2507 3364"
+      ]
+    },
+    "operations": {
+      "days": [
+        "6:00 AM-8:00 PM (days not specified by FEHD)"
+      ]
+    },
+    "visitor_note": "Wan Chai Market (灣仔街市 / 湾仔街市) is on the ground floor at 258 Queen's Road East. FEHD's record does not list a cooked-food centre for this market.",
+    "sources": [
+      {
+        "url": "https://www.fehd.gov.hk/english/map/getMapData.php?type=market&area=hk",
+        "title": "Hong Kong FEHD Public Market Map Data - Wan Chai Market (Map ID 626)",
+        "fields": [
+          "contact.phone_numbers",
+          "operations.days",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.fehd.gov.hk/english/pleasant_environment/tidy_market/Markets_CFC_list.html",
+        "title": "Hong Kong FEHD - List of Public Markets and Cooked Food Markets",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "url": "https://www.google.com/maps/place/Wan+Chai+Market/@22.2750716,114.1737073,17z/data=!3m1!4b1!4m6!3m5!1s0x3404005b550bac63:0x76aead9979513bdb!8m2!3d22.2750716!4d114.1737073!16zL20vMGdxcnRn",
+        "title": "Google Maps - Wan Chai Market",
+        "fields": [
+          "google_maps_url"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:sg_nea_hawker_centres:119408",
+    "market_name": "Buffalo Road Blk 665 (Tekka Centre/Zhu Jiao Market)",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/Tekka+Centre/@1.3063839,103.8507014,17z/data=!3m1!5s0x31da17bbf357d8d1:0x78a106db2d7933a7!4m15!1m8!3m7!1s0x31da184a9a552e93:0x3b1c9b9d8a26d69d!2s665+Buffalo+Rd,+Singapore+210665!3b1!8m2!3d1.3063839!4d103.8507014!16s%2Fg%2F11bw3g5td2!3m5!1s0x31da19f1dd1e4843:0xe759a7414a9bcedc!8m2!3d1.3063839!4d103.8507014!16s%2Fm%2F0261l5y",
+    "visitor_note": "NEA records Tekka Centre / Zhu Jiao Market as an existing centre at Block 665 Buffalo Road, Singapore 210665, with 119 cooked-food stalls.",
+    "sources": [
+      {
+        "url": "https://data.gov.sg/datasets/d_4a086da0a5553be1d89383cd90d07ecd/view",
+        "title": "Singapore NEA - Hawker Centres (GEOJSON)",
+        "fields": [
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.google.com/maps/place/Tekka+Centre/@1.3063839,103.8507014,17z/data=!3m1!5s0x31da17bbf357d8d1:0x78a106db2d7933a7!4m15!1m8!3m7!1s0x31da184a9a552e93:0x3b1c9b9d8a26d69d!2s665+Buffalo+Rd,+Singapore+210665!3b1!8m2!3d1.3063839!4d103.8507014!16s%2Fg%2F11bw3g5td2!3m5!1s0x31da19f1dd1e4843:0xe759a7414a9bcedc!8m2!3d1.3063839!4d103.8507014!16s%2Fm%2F0261l5y",
+        "title": "Google Maps - Tekka Centre",
+        "fields": [
+          "google_maps_url"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:sg_nea_hawker_centres:119478",
+    "market_name": "Tiong Bahru Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/Tiong+Bahru+Market/@1.2850771,103.8328072,17z/data=!3m1!4b1!4m6!3m5!1s0x31da1979f8b24e39:0x4197238808881372!8m2!3d1.2850771!4d103.8328072!16s%2Fg%2F11b7w6kgbv",
+    "visitor_note": "NEA records Tiong Bahru Market as an existing centre at 30 Seng Poh Road, Singapore 168898, with 83 cooked-food stalls.",
+    "sources": [
+      {
+        "url": "https://data.gov.sg/datasets/d_4a086da0a5553be1d89383cd90d07ecd/view",
+        "title": "Singapore NEA - Hawker Centres (GEOJSON)",
+        "fields": [
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.google.com/maps/place/Tiong+Bahru+Market/@1.2850771,103.8328072,17z/data=!3m1!4b1!4m6!3m5!1s0x31da1979f8b24e39:0x4197238808881372!8m2!3d1.2850771!4d103.8328072!16s%2Fg%2F11b7w6kgbv",
+        "title": "Google Maps - Tiong Bahru Market",
+        "fields": [
+          "google_maps_url"
+        ]
+      }
+    ]
+  }
+]

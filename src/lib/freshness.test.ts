@@ -22,6 +22,19 @@ test('a fresh record carries no notice for the page to print', () => {
   assert.equal(marketFreshness({ last_updated: '2025-06-01' }, NOW).notice, undefined);
 });
 
+test('a partial detail check does not make an old or dropped source listing fresh', () => {
+  const result = marketFreshness(
+    {
+      last_updated: '2020-08-03',
+      unverified: true,
+      enrichment: { verified_at: '2026-08-21', verification_scope: 'partial' },
+    },
+    NOW
+  );
+  assert.equal(result.level, 'unverified');
+  assert.equal(result.lastVerified, 'August 3, 2020');
+});
+
 test('a record just under the staleness threshold is still fresh', () => {
   // One day short of four years old.
   const result = marketFreshness({ last_updated: '2022-08-21' }, NOW);

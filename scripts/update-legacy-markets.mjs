@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Refresh the legacy USDA snapshot (`public/data/farmers_markets.json`) against
+ * Refresh the legacy USDA source snapshot (`data/sources/legacy_markets.json`) against
  * the live USDA AMS Local Food Directory.
  *
  * ## Why this script exists
@@ -67,8 +67,8 @@ import { pathToFileURL } from 'node:url';
 import { SITE_URL, pingIndexNow } from './lib/indexnow.mjs';
 import { refreshUrls } from './update-government-markets.mjs';
 
-const DEFAULT_SNAPSHOT = 'public/data/farmers_markets.json';
-const DEFAULT_GOV_SNAPSHOT = 'public/data/government_markets.json';
+const DEFAULT_SNAPSHOT = 'data/sources/legacy_markets.json';
+const DEFAULT_GOV_SNAPSHOT = 'data/sources/government_markets.json';
 const DEFAULT_GEO_INDEX = 'public/data/geo_index.json';
 const DEFAULT_REPORT = 'scripts/legacy-refresh-report.json';
 

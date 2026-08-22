@@ -720,3 +720,43 @@ export function marketLocationLine(market: MarketSeoRecord): string | undefined 
 
   return parts.join(', ') || undefined;
 }
+
+/* ------------------------------------------------------------------ *
+ * Display address
+ * ------------------------------------------------------------------ */
+
+export interface MarketAddressParts {
+  /** Street line only — "1015 Bank St". */
+  street?: string;
+  /** The linkable place segment — "Ottawa, ON" or "Durham, NC". */
+  cityLabel?: string;
+  /** "97201" or "K1S 3W7"; only when the record states one. */
+  postalCode?: string;
+}
+
+/** US "97201"/"97201-1234" or Canadian "K1S 3W7" (with or without the space). */
+const POSTAL_RE = /^(\d{5}(-\d{4})?|[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d)$/;
+
+/**
+ * The one address the header shows, split so the city segment can be a link.
+ *
+ * Rendering the raw `address` field next to a separate city line stacked two
+ * near-duplicates on most pages ("1015 Bank St, Ottawa, ON" over
+ * "Ottawa, Ontario, Canada"). This composes a single line from the structured
+ * fields instead: tidied street, city + short state, and the postal code the
+ * raw string usually drops.
+ */
+export function marketAddressParts(market: MarketSeoRecord): MarketAddressParts {
+  const location = resolveLocation(market);
+
+  const cityLabel = location.city
+    ? `${location.city}${location.state ? `, ${location.state}` : ''}`
+    : location.state || undefined;
+
+  const rawPostal = clean((market as { zip_code?: string | null }).zip_code).toUpperCase();
+  const postalCode = POSTAL_RE.test(rawPostal)
+    ? rawPostal.replace(/^([A-Z]\d[A-Z])(\d[A-Z]\d)$/, '$1 $2')
+    : undefined;
+
+  return { street: location.street, cityLabel, postalCode };
+}

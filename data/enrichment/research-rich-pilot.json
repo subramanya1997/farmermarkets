@@ -1,0 +1,407 @@
+[
+  {
+    "id": "300540",
+    "market_name": "Portland Farmers Market - Kenton",
+    "verified_at": "2026-08-21",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-06-03",
+            "end_date": "2026-09-30"
+          },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        },
+        "schedules": [
+          {
+            "id": "wednesday-2026-season",
+            "value": {
+              "recurrence": { "kind": "weekly", "weekdays": ["wednesday"] },
+              "opens": "15:00",
+              "closes": "19:00",
+              "start_date": "2026-06-03",
+              "end_date": "2026-09-30",
+              "location_note": "N McClellan Street and Denver Avenue"
+            },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          }
+        ]
+      },
+      "payments": {
+        "methods": [
+          {
+            "id": "cash",
+            "value": { "code": "cash" },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          },
+          {
+            "id": "credit-card",
+            "value": { "code": "credit_card" },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          },
+          {
+            "id": "debit-card",
+            "value": { "code": "debit_card" },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          },
+          {
+            "id": "market-token",
+            "value": { "code": "market_token" },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          }
+        ],
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": { "code": "snap_ebt" },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          },
+          {
+            "id": "oregon-farm-direct-nutrition-program",
+            "value": { "code": "fmnp", "name": "Oregon Farm Direct Nutrition Program" },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          }
+        ],
+        "incentives": [
+          {
+            "id": "double-up-food-bucks",
+            "value": {
+              "name": "Double Up Food Bucks",
+              "kind": "match",
+              "maximum_amount": 20,
+              "currency": "USD",
+              "applies_to": ["SNAP/EBT"],
+              "note": "The market lists an available SNAP match of up to $20."
+            },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          }
+        ]
+      },
+      "access": {
+        "transit": [
+          {
+            "id": "interstate-max",
+            "value": {
+              "mode": "rail",
+              "stop_name": "Interstate MAX stop",
+              "note": "The stop is one or two blocks from the market."
+            },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          },
+          {
+            "id": "nearby-bus-routes",
+            "value": {
+              "mode": "bus",
+              "note": "Several TriMet bus routes serve stops one or two blocks from the market."
+            },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          }
+        ],
+        "parking": {
+          "availability": {
+            "value": "yes",
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          },
+          "cost": {
+            "value": "free",
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          },
+          "location_note": {
+            "value": "Plenty of free on-street parking is available.",
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          }
+        },
+        "bicycle_parking": {
+          "value": "yes",
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        }
+      },
+      "amenities": [
+        {
+          "id": "information-booth",
+          "value": { "code": "information_booth", "availability": "yes" },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        },
+        {
+          "id": "purchase-holding",
+          "value": {
+            "code": "purchase_holding",
+            "availability": "yes",
+            "note": "Bulky purchases can be left at the Market Info booth."
+          },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        },
+        {
+          "id": "kids-activities",
+          "value": { "code": "kids_activities", "availability": "yes" },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        },
+        {
+          "id": "live-music",
+          "value": { "code": "live_music", "availability": "yes" },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        }
+      ],
+      "policies": [
+        {
+          "id": "pet-policy",
+          "value": {
+            "code": "pets",
+            "rule": "conditional",
+            "note": "Keep pets away from market vendors and shopper walkways."
+          },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        }
+      ],
+      "vendors": {
+        "weekly_roster_url": {
+          "value": "https://www.portlandfarmersmarket.org/our-markets/kenton-farmers-market/",
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        },
+        "attendance_is_dynamic": {
+          "value": true,
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        }
+      },
+      "products": {
+        "categories": [
+          {
+            "id": "fresh-produce",
+            "value": { "code": "fresh_produce" },
+            "source_ids": ["kenton-market-page"],
+            "verified_at": "2026-08-21"
+          }
+        ]
+      },
+      "programs": [
+        {
+          "id": "weekly-kids-activities",
+          "value": { "name": "Weekly kids' activities", "kind": "kids_club" },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        },
+        {
+          "id": "local-live-music",
+          "value": { "name": "Live performances by local musicians", "kind": "community" },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        }
+      ],
+      "languages": {
+        "materials": [
+          { "id": "chinese", "value": { "tag": "zh", "label": "Chinese" }, "source_ids": ["kenton-market-page"], "verified_at": "2026-08-21" },
+          { "id": "japanese", "value": { "tag": "ja", "label": "Japanese" }, "source_ids": ["kenton-market-page"], "verified_at": "2026-08-21" },
+          { "id": "russian", "value": { "tag": "ru", "label": "Russian" }, "source_ids": ["kenton-market-page"], "verified_at": "2026-08-21" },
+          { "id": "spanish", "value": { "tag": "es", "label": "Spanish" }, "source_ids": ["kenton-market-page"], "verified_at": "2026-08-21" },
+          { "id": "vietnamese", "value": { "tag": "vi", "label": "Vietnamese" }, "source_ids": ["kenton-market-page"], "verified_at": "2026-08-21" }
+        ]
+      },
+      "contact": {
+        "newsletter": {
+          "value": {
+            "signup_url": "https://mailchi.mp/portlandfarmersmarket/jijgfcll7c",
+            "name": "Kenton weekly email reminder",
+            "frequency": "Weekly during the market season"
+          },
+          "source_ids": ["kenton-market-page"],
+          "verified_at": "2026-08-21"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "kenton-market-page",
+        "title": "Kenton Farmers Market | Portland Farmers Market",
+        "url": "https://www.portlandfarmersmarket.org/our-markets/kenton-farmers-market/",
+        "fields": [
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.access",
+          "first_party.amenities",
+          "first_party.policies",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.programs",
+          "first_party.languages",
+          "first_party.contact.newsletter"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-08-21"
+      }
+    ]
+  },
+  {
+    "id": "301318",
+    "market_name": "Ferry Plaza Farmers Market",
+    "verified_at": "2026-08-21",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Foodwise",
+          "source_ids": ["ferry-plaza-visitor-info"],
+          "verified_at": "2026-08-21"
+        },
+        "certification": {
+          "value": "California Certified Farmers Market",
+          "source_ids": ["ferry-plaza-visitor-info"],
+          "verified_at": "2026-08-21"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": ["ferry-plaza-visitor-info"],
+          "verified_at": "2026-08-21"
+        },
+        "season": {
+          "value": { "kind": "year_round" },
+          "source_ids": ["ferry-plaza-visitor-info"],
+          "verified_at": "2026-08-21"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": { "recurrence": { "kind": "weekly", "weekdays": ["saturday"] }, "opens": "08:00", "closes": "14:00" },
+            "source_ids": ["ferry-plaza-visitor-info"],
+            "verified_at": "2026-08-21"
+          },
+          {
+            "id": "tuesday-thursday",
+            "value": { "recurrence": { "kind": "weekly", "weekdays": ["tuesday", "thursday"] }, "opens": "10:00", "closes": "14:00" },
+            "source_ids": ["ferry-plaza-visitor-info"],
+            "verified_at": "2026-08-21"
+          }
+        ],
+        "weather_policy": {
+          "value": "The market operates year-round, rain or shine.",
+          "source_ids": ["ferry-plaza-visitor-info"],
+          "verified_at": "2026-08-21"
+        }
+      },
+      "payments": {
+        "methods": [
+          { "id": "credit-card", "value": { "code": "credit_card" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          { "id": "contactless", "value": { "code": "contactless", "label": "Contactless payments such as Apple Pay" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          { "id": "market-coins", "value": { "code": "market_token", "label": "Wooden market coins" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+        ],
+        "assistance": [
+          { "id": "calfresh-ebt", "value": { "code": "snap_ebt", "name": "CalFresh EBT", "redemption_instructions": "Swipe an EBT card at the green Foodwise Info Booth to receive market coins." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          { "id": "wic", "value": { "code": "wic", "redemption_instructions": "Redeem WIC vouchers directly at participating seller stalls." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          { "id": "fmnp", "value": { "code": "fmnp", "redemption_instructions": "Redeem FMNP vouchers directly at participating seller stalls." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+        ],
+        "incentives": [
+          {
+            "id": "market-match",
+            "value": { "name": "Market Match", "kind": "match", "applies_to": ["CalFresh EBT"], "note": "The page states that CalFresh shoppers can double benefits up to a set maximum per market day." },
+            "source_ids": ["ferry-plaza-visitor-info"],
+            "verified_at": "2026-08-21"
+          }
+        ]
+      },
+      "access": {
+        "transit": [
+          { "id": "bart", "value": { "mode": "rail", "routes": ["BART red", "BART yellow", "BART green", "BART blue"], "stop_name": "Embarcadero BART Station", "note": "The station is one block away." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          { "id": "muni", "value": { "mode": "bus", "routes": ["1", "2", "6", "9", "14", "14R", "F", "N"], "note": "Nearby Muni bus, train and streetcar lines stop at or near the Ferry Building." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          { "id": "ferry", "value": { "mode": "ferry", "routes": ["Sausalito", "Oakland", "Alameda", "Larkspur"], "note": "Ferry terminals are behind the Ferry Building." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+        ],
+        "parking": {
+          "availability": { "value": "yes", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          "cost": { "value": "paid", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          "accessible_spaces": { "value": "yes", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          "location_note": { "value": "Several nearby garages and lots offer market-day parking; rates and validation vary by day.", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+        },
+        "bicycle_parking": { "value": "yes", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        "accessibility_note": { "value": "The market is wheelchair accessible on a flat, paved surface; ADA-accessible restrooms are inside the Ferry Building.", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        "drop_off_note": { "value": "The northbound Embarcadero loading zone just south of the clocktower is recommended for passenger drop-off.", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        "market_map_url": { "value": "https://maps.app.goo.gl/dKydjd6s1Kt448r4A", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+      },
+      "amenities": [
+        { "id": "restrooms", "value": { "code": "restrooms", "availability": "yes", "note": "ADA-accessible public restrooms are inside the Ferry Building Marketplace." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        { "id": "atm", "value": { "code": "atm", "availability": "yes", "note": "ATMs are inside the Ferry Building on the north and south sides." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        { "id": "information-booth", "value": { "code": "information_booth", "availability": "yes" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        { "id": "veggie-valet", "value": { "code": "purchase_holding", "availability": "yes", "note": "The free Veggie Valet holds purchases for later or curbside pickup." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+      ],
+      "policies": [
+        { "id": "pet-policy", "value": { "code": "pets", "rule": "service_animals_only", "note": "Dogs and other live animals are not allowed in the certified market except service animals." }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        { "id": "weather-policy", "value": { "code": "weather", "rule": "rain_or_shine" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+      ],
+      "vendors": {
+        "directory_url": { "value": "https://foodwise.org/markets/sellers/", "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        "attendance_is_dynamic": { "value": true, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+      },
+      "products": {
+        "categories": [
+          { "id": "fresh-produce", "value": { "code": "fresh_produce" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+          { "id": "prepared-food", "value": { "code": "prepared_food" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+        ]
+      },
+      "programs": [
+        { "id": "foodwise-education", "value": { "name": "Foodwise public education programs", "kind": "education" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        { "id": "seasonal-spotlight", "value": { "name": "Seasonal Spotlight tastings and recipes", "kind": "education" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" },
+        { "id": "cooking-demos", "value": { "name": "Saturday cooking demonstrations", "kind": "education" }, "source_ids": ["ferry-plaza-visitor-info"], "verified_at": "2026-08-21" }
+      ],
+      "contact": {
+        "newsletter": {
+          "value": { "signup_url": "https://foodwise.org/subscribe/", "name": "Foodwise Weekly E-letter", "frequency": "Weekly" },
+          "source_ids": ["ferry-plaza-visitor-info"],
+          "verified_at": "2026-08-21"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "ferry-plaza-visitor-info",
+        "title": "Ferry Plaza Farmers Market Visitor Info & Services | Foodwise",
+        "url": "https://foodwise.org/markets/ferry-plaza-farmers-market/visitor-info/",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.access",
+          "first_party.amenities",
+          "first_party.policies",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.programs",
+          "first_party.contact.newsletter"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-08-21"
+      }
+    ]
+  }
+]

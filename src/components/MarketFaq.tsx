@@ -27,7 +27,8 @@ export function MarketFaq({ faqs }: MarketFaqProps) {
 
   return (
     <div className="mt-6 sm:mt-8">
-      <FaqSection headingId="market-faq-heading" items={faqs} />
+      <FaqSection headingId="market-faq-heading"
+      headingClassName="text-lg sm:text-xl font-semibold tracking-tight" items={faqs} />
     </div>
   );
 }

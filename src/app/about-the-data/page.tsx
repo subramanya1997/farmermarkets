@@ -54,7 +54,7 @@ const share = (part: number, total: number) =>
  *  - **`creativeWorkStatus`, `measurementTechnique`, and friends.** Nothing to
  *    say that the page does not already say.
  *
- * `distribution` names the two snapshot files, which are genuinely served from
+ * `distribution` names the canonical dataset, which is genuinely served from
  * the site root (`public/data/`) and are not disallowed in `robots.txt`.
  */
 function datasetSchema(data: DatasetPageData) {
@@ -205,12 +205,12 @@ export default async function AboutTheDataPage() {
                 data, kept current against those same sources.
               </p>
               <p>
-                Two files hold the whole thing. One carries the{' '}
-                {number(coverage.legacyMarkets)} listings that originate in the USDA Local Food
-                Portal directory. The other holds the {number(coverage.officialMarkets)} records from
-                government open-data portals, and each one carries its publisher, dataset,
-                catalogue URL and licence in its own <code>provenance</code> block, which is what
-                the source line at the bottom of every market page prints.
+                One consolidated file holds the whole directory: {number(coverage.legacyMarkets)}{' '}
+                listings originating in the USDA Local Food Portal and{' '}
+                {number(coverage.officialMarkets)} records from government open-data portals.
+                Official records carry their publisher, dataset, catalogue URL and licence in a{' '}
+                <code>provenance</code> block, while independently checked visitor details retain
+                their field-level source citations in the same market record.
               </p>
             </Section>
 
@@ -284,7 +284,7 @@ export default async function AboutTheDataPage() {
 
             <Section id="processing" heading="How the records are processed">
               <p>
-                Both files are normalized to one schema (name, address, coordinates, season, days,
+                All records are normalized to one schema (name, address, coordinates, season, days,
                 products, payment methods, food-assistance programs, amenities, contact details)
                 so a Singapore hawker centre and a New York farmers market answer the same
                 questions in the same fields. Categories that are not producer-only farmers markets
@@ -476,7 +476,7 @@ export default async function AboutTheDataPage() {
                 credit that publisher.
               </p>
               <p>
-                The two snapshots are served as-is, in the same shape the site reads them:
+                The consolidated dataset is served in the same shape the site reads it:
               </p>
               <ul className="list-disc space-y-1 pl-5">
                 {files.map((file) => (

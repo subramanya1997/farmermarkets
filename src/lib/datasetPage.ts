@@ -10,8 +10,8 @@
  * "we list 9,000 markets" sentence does.
  *
  * The source list is derived the same way: it is a grouping of the `provenance`
- * blocks the official records actually carry, joined to
- * `government_markets.manifest.json` for the retrieval date and catalogue URL.
+ * blocks the official records actually carry, joined to the source manifest
+ * for the retrieval date and catalogue URL.
  * A publisher appears on the page because records from it are in the file, not
  * because someone remembered to add it.
  */
@@ -25,17 +25,13 @@ import { marketFreshness } from './freshness';
 import { marketHours, marketWeekdays } from './seo';
 import { toIsoInstant } from './dates';
 
-const MANIFEST_PATH = 'public/data/government_markets.manifest.json';
+const MANIFEST_PATH = 'data/sources/government_markets.manifest.json';
 
-/** The two snapshots, as they are served to the public. */
+/** The one canonical market file served to the public. */
 export const DATA_FILES = [
   {
     path: '/data/farmers_markets.json',
-    name: 'Legacy USDA Local Food Portal snapshot',
-  },
-  {
-    path: '/data/government_markets.json',
-    name: 'Official government portal records',
+    name: 'Consolidated farmers market dataset',
   },
 ] as const;
 

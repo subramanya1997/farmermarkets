@@ -37,28 +37,17 @@ export interface UseAllMarketsResult {
  * *interactive* view needs over the network instead — slim records, in parallel
  * pages, and only once the reader opens the explorer.
  *
- * Pass `provided` to skip fetching entirely: the state pages already have their
- * (much smaller) subset server-side and hand it straight in.
  */
-export function useAllMarkets(provided?: FarmerMarket[]): UseAllMarketsResult {
-  const [markets, setMarkets] = useState<FarmerMarket[]>(provided ?? []);
-  const [loading, setLoading] = useState(!provided);
+export function useAllMarkets(): UseAllMarketsResult {
+  const [markets, setMarkets] = useState<FarmerMarket[]>([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (provided) {
-      setMarkets(provided);
-      setLoading(false);
-      setError(null);
-      return;
-    }
-
     const controller = new AbortController();
     let cancelled = false;
 
     (async () => {
-      setLoading(true);
-      setError(null);
       try {
         const first = await fetchMarketsPage(1, controller.signal);
         if (cancelled) return;
@@ -87,7 +76,7 @@ export function useAllMarkets(provided?: FarmerMarket[]): UseAllMarketsResult {
       cancelled = true;
       controller.abort();
     };
-  }, [provided]);
+  }, []);
 
   return { markets, loading, error };
 }

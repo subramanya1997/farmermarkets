@@ -7,8 +7,8 @@ import { pathToFileURL } from 'node:url';
 import { SITE_URL, pingIndexNow } from './lib/indexnow.mjs';
 
 const DEFAULT_REGISTRY = 'data/government-market-sources.json';
-const DEFAULT_OUTPUT = 'public/data/government_markets.json';
-const DEFAULT_MANIFEST = 'public/data/government_markets.manifest.json';
+const DEFAULT_OUTPUT = 'data/sources/government_markets.json';
+const DEFAULT_MANIFEST = 'data/sources/government_markets.manifest.json';
 const DEFAULT_GEO_INDEX = 'public/data/geo_index.json';
 const REQUEST_TIMEOUT_MS = 45_000;
 const REQUEST_ATTEMPTS = 3;
@@ -156,6 +156,7 @@ function makeMarket(source, sourceRecordId, _retrievedAt, fields) {
       description: source.scope_note
     },
     contact: fields.contact,
+    google_maps_url: fields.google_maps_url,
     operations: fields.operations,
     products: fields.products,
     payment: fields.payment,
@@ -182,7 +183,8 @@ function parseOntario(source, payload, retrievedAt) {
         coordinates: Array.isArray(coordinates) ? { longitude: coordinates[0], latitude: coordinates[1] } : undefined,
         description: compact(properties.Facilitytype)
       },
-      contact: { websites: unique([properties.Website, properties.GoogleMaps]) },
+      contact: { websites: unique([properties.Website]) },
+      google_maps_url: compact(properties.GoogleMaps),
       operations: { days: unique([properties.Hours]), season: compact(properties.Hours) },
       products: { categories: { wine: truthyFlag(properties.Sells_liquor) } }
     });

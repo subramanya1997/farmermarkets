@@ -40,14 +40,32 @@ export function MarketFacts({ market, analyticsProperties }: MarketFactsProps) {
     .filter((phone) => phone.text);
   const websites = (market.websites ?? []).filter((url) => /^https?:\/\//i.test(url)).slice(0, 2);
   const socials = socialLinks(market.social_media);
+  const richLinks = [
+    market.first_party?.vendors?.directory_url
+      ? { label: 'Vendor directory', url: market.first_party.vendors.directory_url.value, event: 'Vendor Directory Opened' }
+      : undefined,
+    market.first_party?.vendors?.weekly_roster_url
+      ? { label: 'Weekly vendor roster', url: market.first_party.vendors.weekly_roster_url.value, event: 'Vendor Roster Opened' }
+      : undefined,
+    market.first_party?.access?.market_map_url
+      ? { label: 'Market map', url: market.first_party.access.market_map_url.value, event: 'Market Map Opened' }
+      : undefined,
+    market.first_party?.contact?.newsletter
+      ? {
+          label: market.first_party.contact.newsletter.value.name || 'Get market updates',
+          url: market.first_party.contact.newsletter.value.signup_url,
+          event: 'Market Newsletter Opened',
+        }
+      : undefined,
+  ].filter((link): link is { label: string; url: string; event: string } => Boolean(link));
 
-  if (!facts.length && !phones.length && !websites.length && !socials.length) return null;
+  if (!facts.length && !phones.length && !websites.length && !socials.length && !richLinks.length) return null;
 
   return (
     <section className="mt-6 sm:mt-8" aria-labelledby="market-facts-heading">
       <h2
         id="market-facts-heading"
-        className="text-xl sm:text-2xl font-bold tracking-tight mb-3 sm:mb-4"
+        className="text-lg sm:text-xl font-semibold tracking-tight mb-3"
       >
         Market details
       </h2>
@@ -142,6 +160,34 @@ export function MarketFacts({ market, analyticsProperties }: MarketFactsProps) {
                     }}
                   >
                     {social.label}
+                  </TrackedExternalLink>
+                </span>
+              ))}
+            </dd>
+          </div>
+        )}
+
+        {richLinks.length > 0 && (
+          <div>
+            <dt className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+              Plan your visit
+            </dt>
+            <dd className="mt-1 text-sm sm:text-base">
+              {richLinks.map((link, index) => (
+                <span key={`${link.label}:${link.url}`}>
+                  {index > 0 && ', '}
+                  <TrackedExternalLink
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-green-700 hover:underline dark:text-green-500"
+                    eventName={link.event}
+                    eventProperties={{
+                      ...analyticsProperties,
+                      destination_host: hostOf(link.url),
+                    }}
+                  >
+                    {link.label}
                   </TrackedExternalLink>
                 </span>
               ))}

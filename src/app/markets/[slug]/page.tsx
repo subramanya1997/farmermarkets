@@ -12,7 +12,8 @@ import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { getCityForMarketSlug } from "@/lib/geoIndex";
 import { cityPath } from "@/lib/cityPage";
 import { statePath } from "@/lib/statePage";
-import { displayName, marketDescription, marketLocationLine, marketTitle } from "@/lib/seo";
+import { displayName, marketAddressParts, marketDescription, marketTitle } from "@/lib/seo";
+import { clean } from "@/lib/geo";
 import { composedSummary } from "@/lib/marketFacts";
 import { getMarketProse } from "@/lib/marketProse";
 import { getNearbyMarkets } from "@/lib/nearby";
@@ -146,7 +147,8 @@ export default async function MarketDetailPage({
   }
 
   const rawAddress = getMarketAddress(market);
-  const address = rawAddress.replace(/^[,\s]+/, '').trim();
+  // clean() also strips upstream punctuation flaws ('Portland , Oregon').
+  const address = clean(rawAddress.replace(/^[,\s]+/, ''));
   const hasAddress = Boolean(address) && address !== ',';
 
   // The record's own words where they are its own — `getMarketProse` drops the
@@ -156,10 +158,7 @@ export default async function MarketDetailPage({
   const prose = await getMarketProse(market);
   const summary = prose.about.length ? [] : composedSummary(market);
 
-  // "Durham, North Carolina" — deduplicated, and undefined (rather than an
-  // empty string that rendered as a blank subtitle) when the record has no
-  // usable location at all.
-  const cityStateDisplay = marketLocationLine(market);
+  const addressParts = marketAddressParts(market);
 
   // The city page this market is listed on, when the geo index placed it in a
   // city. Linking the location line both gives the reader the obvious next
@@ -220,6 +219,14 @@ export default async function MarketDetailPage({
 
   // The same list the FAQPage node quotes, so markup and page can never drift.
   const faqs = marketFaqs(market);
+  const firstPartyStatus = market.first_party?.operations?.status?.value;
+  const firstPartyStatusLabel = firstPartyStatus?.value === 'seasonal_break'
+    ? 'This market is currently between seasons.'
+    : firstPartyStatus?.value === 'temporarily_closed'
+      ? 'This market is temporarily closed.'
+      : firstPartyStatus?.value === 'permanently_closed'
+        ? 'This market is reported permanently closed.'
+        : undefined;
 
   return (
     <>
@@ -243,25 +250,46 @@ export default async function MarketDetailPage({
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {displayName(market.name)}
               </h1>
-              {cityStateDisplay && (
-                <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400">
-                  {cityPageHref ? (
-                    <Link
-                      href={cityPageHref}
-                      className="hover:text-green-700 hover:underline dark:hover:text-green-500"
-                    >
-                      {cityStateDisplay}
-                    </Link>
+              {/* One composed address line under the name: tidied street, a
+                  clearly-clickable city segment (its page lists every market
+                  there), and the postal code the raw string usually drops.
+                  This replaces the old raw-address + city lines, which
+                  stacked two near-duplicates ("1015 Bank St, Ottawa, ON" over
+                  "Ottawa, Ontario, Canada"). */}
+              {(addressParts.street || addressParts.cityLabel || hasAddress) && (
+                <address className="text-base sm:text-lg not-italic text-zinc-600 dark:text-zinc-400">
+                  {addressParts.street || addressParts.cityLabel ? (
+                    <>
+                      {addressParts.street && `${addressParts.street}, `}
+                      {addressParts.cityLabel &&
+                        (cityPageHref ? (
+                          <Link
+                            href={cityPageHref}
+                            className="hover:text-green-700 hover:underline dark:hover:text-green-500"
+                          >
+                            {addressParts.cityLabel}
+                          </Link>
+                        ) : (
+                          addressParts.cityLabel
+                        ))}
+                      {addressParts.postalCode && ` ${addressParts.postalCode}`}
+                    </>
                   ) : (
-                    cityStateDisplay
+                    address
                   )}
-                </p>
+                </address>
               )}
               {/* "Last verified in 2020", or "no longer in the USDA
                   directory" — high enough on the page to be honest, muted
                   enough not to read as an alarm. Renders nothing for a record
                   whose date does not support the claim. */}
               <MarketFreshnessNotice market={market} />
+              {firstPartyStatusLabel && (
+                <p className="max-w-[75ch] rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm font-medium text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+                  {firstPartyStatusLabel}
+                  {firstPartyStatus?.note ? ` ${clean(firstPartyStatus.note)}` : ''}
+                </p>
+              )}
             </div>
           </div>
         </section>
@@ -273,9 +301,8 @@ export default async function MarketDetailPage({
               {/* Main content */}
               <div>
                 <div className="max-w-none">
-                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-3 sm:mb-4">
-                    About {displayName(market.name)}
-                  </h2>
+                  {/* No "About {name}" heading — the name is the H1 directly
+                      above, so the description just begins. */}
                   {/* The market's own description where the record has one,
                       otherwise a summary composed from its schedule, size,
                       setting and programs — every clause backed by a field
@@ -291,9 +318,9 @@ export default async function MarketDetailPage({
 
                   {prose.location.length > 0 && (
                     <div className="mt-6 sm:mt-8">
-                      <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-3 sm:mb-4">
+                      <h2 className="text-lg sm:text-xl font-semibold tracking-tight mb-3">
                         Finding the market
-                      </h3>
+                      </h2>
                       {prose.location.map((paragraph) => (
                         <p
                           key={paragraph}
@@ -321,7 +348,12 @@ export default async function MarketDetailPage({
                     cityName={placement?.city.name}
                   />
 
-                  <MarketSourceNote provenance={provenance} lastUpdated={market.last_updated} />
+                  <MarketSourceNote
+                    provenance={provenance}
+                    lastUpdated={market.last_updated}
+                    enrichment={market.enrichment}
+                    audit={market.audit}
+                  />
                 </div>
               </div>
 
@@ -331,25 +363,28 @@ export default async function MarketDetailPage({
                   card chrome is gone on purpose: a boxed box-in-a-column read
                   as clutter, so the section sits flat like every other one. */}
               <div className="order-first lg:order-none">
+                {/* Just the map — the address sits under the market name in
+                    the header, so the column carries no heading or text. */}
                 <div className="sticky top-24">
-                  <h2 className="text-xl font-semibold mb-4">Location</h2>
-                  {hasAddress && (
-                    <address className="mb-4 not-italic text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                      {address}
-                    </address>
+                  {!market.suppress_map && (
+                    <GoogleMapEmbed market={market} height="480px" />
                   )}
-                  <GoogleMapEmbed market={market} height="300px" />
-                  {latitude && longitude && (
+                  {!market.suppress_map && (market.google_maps_url || (latitude && longitude)) && (
                     <div className="mt-4">
                       <TrackedExternalLink
-                        href={`https://www.google.com/maps/dir/?api=1&destination=${latitude}%2C${longitude}`}
+                        href={
+                          market.google_maps_url ??
+                          `https://www.google.com/maps/dir/?api=1&destination=${latitude}%2C${longitude}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full block"
                         eventName="Market Directions Opened"
                         eventProperties={{ ...analyticsProperties, destination: 'google-maps' }}
                       >
-                        <Button className="w-full bg-green-600 hover:bg-green-700">Get Directions</Button>
+                        <Button className="w-full bg-green-600 hover:bg-green-700">
+                          {market.google_maps_url ? 'View on Google Maps' : 'Get Directions'}
+                        </Button>
                       </TrackedExternalLink>
                     </div>
                   )}

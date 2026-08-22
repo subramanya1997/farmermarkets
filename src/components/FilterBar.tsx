@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { ChevronDown } from 'lucide-react';
@@ -16,12 +15,6 @@ interface FilterBarProps {
 }
 
 export function FilterBar({ categories, activeFilters, onFilterChange }: FilterBarProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const toggleFilter = (filterId: string) => {
     const newFilters = new Set(activeFilters);
     const enabled = !newFilters.has(filterId);
@@ -38,10 +31,6 @@ export function FilterBar({ categories, activeFilters, onFilterChange }: FilterB
     onFilterChange(new Set());
     trackEvent('Market Filters Cleared', { previous_filter_count: activeFilters.size });
   };
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <div className="w-full bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">

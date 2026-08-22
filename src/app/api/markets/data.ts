@@ -3,6 +3,13 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { generateSlug, calculateDistance } from '@/lib/utils';
+import type {
+  MarketAuditMetadata,
+  MarketEnrichmentMetadata,
+  MarketFirstPartyFacts,
+} from '@/lib/enrichment';
+import { mergeEnrichment } from '@/lib/enrichment';
+export { mergeEnrichment };
 
 // FarmerMarket interface for TypeScript typing
 export interface FarmerMarket {
@@ -32,6 +39,13 @@ export interface FarmerMarket {
   emails?: string[];
   websites?: string[];
   social_media?: string[];
+  google_maps_url?: string;
+  suppress_map?: boolean;
+  visitor_note?: string;
+  schema_version?: 2;
+  first_party?: MarketFirstPartyFacts;
+  enrichment?: MarketEnrichmentMetadata;
+  audit?: MarketAuditMetadata;
   season?: string;
   days?: string[];
   vendor_count?: number;
@@ -123,6 +137,13 @@ interface RawMarketData {
     websites?: string[];
     social_media?: string[];
   };
+  google_maps_url?: string;
+  suppress_map?: boolean;
+  visitor_note?: string;
+  schema_version?: 2;
+  first_party?: MarketFirstPartyFacts;
+  enrichment?: MarketEnrichmentMetadata;
+  audit?: MarketAuditMetadata;
   operations?: {
     season?: string;
     days?: string[];
@@ -200,6 +221,27 @@ const DEFAULT_LIMIT = 50;
 // lower value here would silently cap the route's larger limit.
 const MAX_LIMIT = 1000;
 
+function isGoogleMapsUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return (
+      url.hostname === 'maps.app.goo.gl' ||
+      (/(^|\.)google\.[a-z.]+$/i.test(url.hostname) && url.pathname.toLowerCase().includes('/maps'))
+    );
+  } catch {
+    return false;
+  }
+}
+
+function googleMapsSearchUrl(market: RawMarketData): string {
+  const coordinates = market.location?.coordinates;
+  const query =
+    coordinates && Number.isFinite(coordinates.latitude) && Number.isFinite(coordinates.longitude)
+      ? `${coordinates.latitude},${coordinates.longitude}`
+      : [market.name, market.location?.address].filter(Boolean).join(', ');
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
 function normalizePositiveInteger(
   value: number | undefined,
   fallback: number,
@@ -221,49 +263,22 @@ function hasValidCoordinates(userLat?: number, userLon?: number): userLat is num
   );
 }
 
-// Load the legacy snapshot and the independently generated official-government snapshot.
+// Load the one canonical, already consolidated market dataset.
 async function readMarketsData(): Promise<FarmerMarket[]> {
   try {
-    const dataSources = [
-      {
-        filePath: path.join(process.cwd(), 'public/data/farmers_markets.json'),
-        defaultCountry: 'United States',
-        defaultCountryCode: 'US'
-      },
-      {
-        filePath: path.join(process.cwd(), 'public/data/government_markets.json')
-      }
-    ];
-    const datasets = await Promise.all(dataSources.map(async ({ filePath, defaultCountry, defaultCountryCode }) => {
-      try {
-        // The snapshots are runtime files (the nightly refresh rewrites
-        // government_markets.json in place), so Turbopack must not try to
-        // trace or bundle them.
-        const fileContents = await fs.readFile(/*turbopackIgnore: true*/ filePath, 'utf8');
-        if (!fileContents.trim()) throw new Error('file is empty');
-        const parsed = JSON.parse(fileContents);
-        if (!Array.isArray(parsed)) throw new Error('top-level value is not an array');
-        console.log(`Loaded ${parsed.length} markets from ${path.basename(filePath)}`);
-        return (parsed as RawMarketData[]).map((market) => ({
-          ...market,
-          country: market.country || defaultCountry,
-          country_code: market.country_code || defaultCountryCode
-        }));
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-          console.warn(`Optional market data file is not present: ${filePath}`);
-          return [];
-        }
-        throw new Error(`Unable to load ${filePath}: ${error instanceof Error ? error.message : String(error)}`);
-      }
-    }));
-    const data = datasets.flat();
+    const dataPath = path.join(process.cwd(), 'public/data/farmers_markets.json');
+    const fileContents = await fs.readFile(/*turbopackIgnore: true*/ dataPath, 'utf8');
+    if (!fileContents.trim()) throw new Error('canonical market file is empty');
+    const data = JSON.parse(fileContents) as RawMarketData[];
+    if (!Array.isArray(data)) throw new Error('canonical market file must contain a top-level array');
 
     try {
-      console.log(`Successfully loaded ${data.length} total markets`);
+      console.log(`Loaded ${data.length} consolidated markets from ${path.basename(dataPath)}`);
 
       // Transform the data to match our schema
       return data.map((market: RawMarketData, index: number) => {
+        const sourceMapsUrl = market.contact?.websites?.find(isGoogleMapsUrl);
+        const marketWebsites = (market.contact?.websites ?? []).filter((url) => !isGoogleMapsUrl(url));
         // Extract payment methods and check for specific payment types
         const paymentMethods = market.payment?.methods || [];
         const acceptsCash = paymentMethods.some((method: string) =>
@@ -368,8 +383,17 @@ async function readMarketsData(): Promise<FarmerMarket[]> {
           organization_description: market.organization?.description,
           phone_numbers: market.contact?.phone_numbers || [],
           emails: market.contact?.emails || [],
-          websites: market.contact?.websites || [],
+          websites: marketWebsites,
           social_media: market.contact?.social_media || [],
+          google_maps_url: market.suppress_map
+            ? undefined
+            : market.google_maps_url || sourceMapsUrl || googleMapsSearchUrl(market),
+          suppress_map: market.suppress_map,
+          visitor_note: market.visitor_note,
+          schema_version: market.schema_version,
+          first_party: market.first_party,
+          enrichment: market.enrichment,
+          audit: market.audit,
           season: market.operations?.season,
           days: market.operations?.days || [],
           vendor_count: market.operations?.vendor_count,

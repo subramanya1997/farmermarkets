@@ -25,6 +25,8 @@
  */
 
 import { clean, resolveLocation } from './geo.ts';
+import type { MarketFirstPartyFacts, MarketWeekday } from './enrichment.ts';
+import { paymentLabels, structuredScheduleLabels } from './marketFacts.ts';
 import {
   displayName,
   marketDescription,
@@ -44,10 +46,18 @@ export interface MarketSchemaRecord extends MarketSeoRecord {
   emails?: string[] | null;
   websites?: string[] | null;
   social_media?: string[] | null;
+  google_maps_url?: string | null;
+  suppress_map?: boolean;
+  enrichment?: {
+    verified_at?: string | null;
+    verification_scope?: 'partial' | null;
+  } | null;
   last_updated?: string | null;
   accepts_cash?: boolean;
   accepts_credit_debit?: boolean;
   accepts_checks?: boolean;
+  payment_methods?: string[] | null;
+  first_party?: MarketFirstPartyFacts;
 }
 
 export interface MarketSchemaOptions {
@@ -249,6 +259,26 @@ export function marketSeasonRange(
   market: MarketSchemaRecord,
   now?: Date
 ): SeasonRange | undefined {
+  const structured = market.first_party?.operations?.season?.value;
+  if (structured?.kind === 'dated_range') {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(structured.start_date) && /^\d{4}-\d{2}-\d{2}$/.test(structured.end_date)) {
+      return { validFrom: structured.start_date, validThrough: structured.end_date };
+    }
+  }
+  if (structured?.kind === 'annual_range') {
+    const monthNames = [
+      '', 'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
+    ];
+    const startMonth = monthNames[structured.start.month];
+    const endMonth = monthNames[structured.end.month];
+    if (startMonth && endMonth) {
+      return parseSeasonRange(
+        `${startMonth}${structured.start.day ? ` ${structured.start.day}` : ''}-${endMonth}${structured.end.day ? ` ${structured.end.day}` : ''}`,
+        now
+      );
+    }
+  }
   return parseSeasonRange(market.season, now);
 }
 
@@ -280,6 +310,38 @@ export function marketOpeningHoursSpec(
   market: MarketSchemaRecord,
   now?: Date
 ): OpeningHoursSpecification[] | undefined {
+  const richSchedules = market.first_party?.operations?.schedules;
+  if (richSchedules?.length) {
+    const dayLabels: Record<MarketWeekday, Weekday> = {
+      monday: 'Monday',
+      tuesday: 'Tuesday',
+      wednesday: 'Wednesday',
+      thursday: 'Thursday',
+      friday: 'Friday',
+      saturday: 'Saturday',
+      sunday: 'Sunday',
+    };
+    const season = marketSeasonRange(market, now);
+    const specs = richSchedules.flatMap((item): OpeningHoursSpecification[] => {
+      const schedule = item.value;
+      // OpeningHoursSpecification has no safe way to express alternating,
+      // monthly, or one-off schedules. Falling back to the projected text
+      // would incorrectly turn those into weekly opening hours.
+      if (schedule.recurrence.kind !== 'weekly' || schedule.recurrence.interval_weeks === 2) return [];
+      const hours = parseHourRange(`${schedule.opens}-${schedule.closes}`);
+      if (!hours || !schedule.recurrence.weekdays.length) return [];
+      return [{
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: schedule.recurrence.weekdays.map((day) => dayLabels[day]),
+        opens: hours.opens,
+        closes: hours.closes,
+        ...(schedule.start_date || season?.validFrom ? { validFrom: schedule.start_date || season?.validFrom } : {}),
+        ...(schedule.end_date || season?.validThrough ? { validThrough: schedule.end_date || season?.validThrough } : {}),
+      }];
+    });
+    return specs.length ? specs : undefined;
+  }
+
   const sources = [...(market.days ?? []), market.season]
     .map((source) => clean(source))
     .filter(Boolean);
@@ -332,35 +394,18 @@ export function marketOpeningHoursSpec(
  * ------------------------------------------------------------------ */
 
 /**
- * What a market takes, from its own flags only — the old node claimed `Cash`
- * on all 8,807 pages. `undefined` when the record states nothing.
+ * What a market takes, from exact source strings and its own flags — never a
+ * default. This intentionally shares the visible details formatter so the
+ * page and JSON-LD cannot disagree about v2 methods such as contactless pay.
  */
 export function marketPaymentAccepted(market: MarketSchemaRecord): string[] | undefined {
-  const accepted = [
-    market.accepts_cash ? 'Cash' : undefined,
-    market.accepts_credit_debit ? 'Credit Card' : undefined,
-    market.accepts_credit_debit ? 'Debit Card' : undefined,
-    market.accepts_checks ? 'Check' : undefined,
-    market.snap ? 'SNAP/EBT' : undefined,
-    market.wic ? 'WIC' : undefined,
-    market.sfmnp ? 'SFMNP' : undefined,
-    market.fmnp ? 'FMNP' : undefined,
-  ].filter((method): method is string => Boolean(method));
-
+  const accepted = paymentLabels(market);
   return accepted.length ? accepted : undefined;
 }
 
 /** True when the record says anything at all about how it takes payment. */
 function hasPaymentData(market: MarketSchemaRecord): boolean {
-  return Boolean(
-    market.accepts_cash ||
-      market.accepts_credit_debit ||
-      market.accepts_checks ||
-      market.snap ||
-      market.wic ||
-      market.sfmnp ||
-      market.fmnp
-  );
+  return Boolean(marketPaymentAccepted(market)?.length);
 }
 
 /** Absolute http(s) URLs only: `social_media` also holds handles ("@abc"). */
@@ -470,6 +515,21 @@ function addressLine(market: MarketSchemaRecord): string | undefined {
   return line || undefined;
 }
 
+const FAQ_TOPIC_QUESTIONS: Record<NonNullable<MarketFirstPartyFacts['faq_facts']>[number]['value']['topic'], (name: string) => string> = {
+  arrival: (name) => `What should I know before arriving at ${name}?`,
+  weather: (name) => `What is ${name}'s weather policy?`,
+  accessibility: (name) => `What accessibility information is available for ${name}?`,
+  pets: (name) => `Are pets allowed at ${name}?`,
+  parking: (name) => `Is parking available at ${name}?`,
+  payments: (name) => `What should I know about paying at ${name}?`,
+  products: (name) => `What can I buy at ${name}?`,
+  updates: (name) => `How can I get updates from ${name}?`,
+};
+
+function titleWords(value: string): string {
+  return value.replaceAll('_', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
 /**
  * The questions this record can answer, in the order they are rendered.
  *
@@ -481,9 +541,15 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
   const name = displayName(market.name) || 'This market';
   const days = marketWeekdays(market);
   const hours = marketHours(market);
+  const richSchedule = structuredScheduleLabels(market.first_party);
   const seasonLabel = marketSeasonLabel(market);
   const address = addressLine(market);
   const payments = marketPaymentAccepted(market);
+  const acceptsSnap = Boolean(
+    market.snap ||
+      market.first_party?.payments?.assistance?.some((item) => item.value.code === 'snap_ebt') ||
+      payments?.includes('SNAP/EBT')
+  );
 
   const faqs: MarketFaq[] = [];
 
@@ -499,7 +565,12 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
     });
   }
 
-  if (hours) {
+  if (richSchedule.length) {
+    faqs.push({
+      question: `What are ${name}'s hours?`,
+      answer: `${name}'s schedule is ${richSchedule.join('; ')}.`,
+    });
+  } else if (hours) {
     faqs.push({
       question: `What are ${name}'s hours?`,
       answer: days.length
@@ -515,7 +586,7 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
     });
   }
 
-  if (market.snap) {
+  if (acceptsSnap) {
     faqs.push({
       question: `Does ${name} accept SNAP/EBT?`,
       answer: `Yes. ${name} accepts SNAP/EBT benefits.`,
@@ -532,6 +603,87 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
       question: `What payment methods does ${name} accept?`,
       answer: `${name} accepts ${joinWithAnd(payments)}.`,
     });
+  }
+
+  const firstParty = market.first_party;
+  const status = firstParty?.operations?.status?.value;
+  if (status && status.value !== 'active') {
+    const statusText = status.value === 'seasonal_break'
+      ? 'closed for the season'
+      : status.value === 'temporarily_closed'
+        ? 'temporarily closed'
+        : 'permanently closed';
+    faqs.unshift({
+      question: `Is ${name} currently open?`,
+      answer: `${name} is ${statusText}.${status.note ? ` ${clean(status.note)}` : ''}`,
+    });
+  }
+
+  const parking = firstParty?.access?.parking;
+  if (parking?.availability) {
+    const cost = parking.cost ? ` Parking is listed as ${parking.cost.value}.` : '';
+    const note = parking.location_note ? ` ${clean(parking.location_note.value)}` : '';
+    faqs.push({
+      question: `Is parking available at ${name}?`,
+      answer: `Parking availability at ${name} is ${parking.availability.value}.${cost}${note}`,
+    });
+  }
+
+  const transit = firstParty?.access?.transit ?? [];
+  if (transit.length) {
+    const options = transit.map((item) => {
+      const value = item.value;
+      return [titleWords(value.mode), value.routes?.join('/'), value.stop_name, value.note]
+        .filter(Boolean)
+        .join(' - ');
+    });
+    faqs.push({
+      question: `How can I reach ${name} by public transit?`,
+      answer: `${name} lists these transit options: ${joinWithAnd(options)}.`,
+    });
+  }
+
+  const petPolicy = firstParty?.policies?.find((item) => item.value.code === 'pets')?.value;
+  if (petPolicy) {
+    const rule = petPolicy.rule === 'allowed'
+      ? 'Pets are allowed'
+      : petPolicy.rule === 'not_allowed'
+        ? 'Pets are not allowed'
+        : petPolicy.rule === 'service_animals_only'
+          ? 'Only service animals are allowed'
+          : petPolicy.rule === 'discouraged'
+            ? 'Visitors are asked not to bring pets'
+            : 'Pets are allowed only under the stated conditions';
+    faqs.push({
+      question: `Are pets allowed at ${name}?`,
+      answer: `${rule} at ${name}.${petPolicy.note ? ` ${clean(petPolicy.note)}` : ''}`,
+    });
+  }
+
+  const incentives = firstParty?.payments?.incentives ?? [];
+  if (incentives.length) {
+    faqs.push({
+      question: `Does ${name} offer food benefit incentives?`,
+      answer: `${name} lists ${joinWithAnd(incentives.map((item) => item.value.name))}.`,
+    });
+  }
+
+  const newsletter = firstParty?.contact?.newsletter?.value;
+  if (newsletter) {
+    faqs.push({
+      question: `How can I get updates from ${name}?`,
+      answer: `${name} offers${newsletter.name ? ` the ${clean(newsletter.name)}` : ' a'} newsletter signup on its official website.`,
+    });
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const existingQuestions = new Set(faqs.map((faq) => faq.question));
+  for (const item of firstParty?.faq_facts ?? []) {
+    if (item.value.expires_on && item.value.expires_on < today) continue;
+    const question = FAQ_TOPIC_QUESTIONS[item.value.topic](name);
+    if (existingQuestions.has(question)) continue;
+    faqs.push({ question, answer: clean(item.value.answer) });
+    existingQuestions.add(question);
   }
 
   return faqs.length >= MIN_FAQ_COUNT ? faqs : [];
@@ -612,9 +764,12 @@ export function marketSchemaGraph(
     geo: coordinates
       ? { '@type': 'GeoCoordinates', latitude: coordinates.latitude, longitude: coordinates.longitude }
       : undefined,
-    hasMap: coordinates
-      ? `https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}`
-      : undefined,
+    hasMap: market.suppress_map
+      ? undefined
+      : clean(market.google_maps_url) ||
+        (coordinates
+          ? `https://www.google.com/maps/search/?api=1&query=${coordinates.latitude},${coordinates.longitude}`
+          : undefined),
     telephone: clean(market.phone_numbers?.[0]) || undefined,
     email: clean(market.emails?.[0]) || undefined,
     sameAs: marketSameAs(market),
@@ -644,8 +799,17 @@ export function marketSchemaGraph(
   // Event node is what answers "what markets are open this Saturday". It is
   // only true when we know both the day and the time, so it is only emitted
   // then.
-  const timed = openingHours?.find((spec) => spec.opens && spec.closes);
-  if (timed) {
+  const timed = openingHours?.filter((spec) => spec.opens && spec.closes) ?? [];
+  if (timed.length) {
+    const schedules = timed.map((spec) => ({
+      '@type': 'Schedule',
+      byDay: spec.dayOfWeek,
+      startTime: spec.opens,
+      endTime: spec.closes,
+      repeatFrequency: 'P1W',
+      ...(spec.validFrom ? { startDate: spec.validFrom } : season ? { startDate: season.validFrom } : {}),
+      ...(spec.validThrough ? { endDate: spec.validThrough } : season ? { endDate: season.validThrough } : {}),
+    }));
     nodes.push({
       '@type': 'Event',
       '@id': `${url}#event`,
@@ -656,14 +820,7 @@ export function marketSchemaGraph(
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       eventStatus: 'https://schema.org/EventScheduled',
       location: { '@id': businessId },
-      eventSchedule: {
-        '@type': 'Schedule',
-        byDay: timed.dayOfWeek,
-        startTime: timed.opens,
-        endTime: timed.closes,
-        repeatFrequency: 'P1W',
-        ...(season ? { startDate: season.validFrom, endDate: season.validThrough } : {}),
-      },
+      eventSchedule: schedules.length === 1 ? schedules[0] : schedules,
     });
   }
 

@@ -21,6 +21,11 @@
  */
 
 import { clean } from './geo.ts';
+import type {
+  MarketFirstPartyFacts,
+  MarketWeekday,
+  StructuredMarketSchedule,
+} from './enrichment.ts';
 import {
   displayName,
   marketHours,
@@ -68,6 +73,8 @@ export interface MarketFactsRecord extends MarketSeoRecord {
   has_jams?: boolean;
   has_wine?: boolean;
   last_updated?: string | null;
+  visitor_note?: string | null;
+  first_party?: MarketFirstPartyFacts;
 }
 
 /* ------------------------------------------------------------------ *
@@ -215,17 +222,21 @@ export function orderingLabels(market: MarketFactsRecord): string[] {
  * SFMNP is tested before FMNP, since it contains it.
  */
 const ASSISTANCE_PROGRAMS: { key: string; label: string; pattern: RegExp }[] = [
-  { key: 'snap', label: 'SNAP/EBT', pattern: /^(snap|ebt|snapebt|snap\/ebt|foodstamps?)$/i },
-  { key: 'wic', label: 'WIC', pattern: /^wic$/i },
+  {
+    key: 'snap',
+    label: 'SNAP/EBT',
+    pattern: /^(snap|ebt|snapebt|snap\/ebt(?: tokens?)?|calfresh ebt|bridge card\/ebt|food\s*stamps?)$/i,
+  },
+  { key: 'wic', label: 'WIC', pattern: /^wic(?: (checks?|vouchers?))?$/i },
   {
     key: 'sfmnp',
     label: 'Senior Farmers Market Nutrition Program (SFMNP)',
-    pattern: /^(sfmnp|senior farmers'? market nutrition program)$/i,
+    pattern: /^(sfmnp|senior fmnp(?: checks?)?|senior farmers'? market nutrition program)$/i,
   },
   {
     key: 'fmnp',
     label: 'Farmers Market Nutrition Program (FMNP)',
-    pattern: /^(fmnp|farmers'? market nutrition program)$/i,
+    pattern: /^(fmnp|fmnp vouchers?|farmers'? market nutrition program)$/i,
   },
 ];
 
@@ -241,18 +252,82 @@ const ASSISTANCE_PROGRAMS: { key: string; label: string; pattern: RegExp }[] = [
 export function paymentLabels(market: MarketFactsRecord): string[] {
   const seen = new Set<string>();
   const labels: string[] = [];
-  const push = (value: string) => {
+  const push = (value: string, explicitKey?: string) => {
     const cleaned = clean(value);
     if (!cleaned || /^(other|n\/?a|unknown)$/i.test(cleaned)) return;
+    if (/\bwic\b.*\bfmnp\b|\bfmnp\b.*\bwic\b/i.test(cleaned)) {
+      push('WIC');
+      push('FMNP');
+      return;
+    }
 
     const program = ASSISTANCE_PROGRAMS.find(({ pattern }) => pattern.test(cleaned));
-    const key = program ? program.key : cleaned.toLowerCase().replace(/[^a-z]/g, '');
+    const normalized = cleaned.toLowerCase().replace(/[^a-z]/g, '');
+    const methodKey = /^(?:creditcard|creditcards)$/.test(normalized)
+      ? 'credit_card'
+      : /^(?:debitcard|debitcards)$/.test(normalized)
+        ? 'debit_card'
+        : /^contactlesspayments?/.test(normalized)
+          ? 'contactless'
+          : /^(?:marketcoins?|markettokens?|woodenmarketcoins?)$/.test(normalized)
+            ? 'market_token'
+            : normalized;
+    const key = explicitKey ?? (program ? program.key : methodKey);
     if (seen.has(key)) return;
     seen.add(key);
     labels.push(program ? program.label : cleaned);
   };
 
-  for (const method of market.payment_methods ?? []) push(method);
+  const richMethods = market.first_party?.payments?.methods ?? [];
+  const methodLabels: Record<
+    NonNullable<NonNullable<MarketFirstPartyFacts['payments']>['methods']>[number]['value']['code'],
+    string
+  > = {
+    cash: 'Cash',
+    credit_card: 'Credit Card',
+    debit_card: 'Debit Card',
+    check: 'Check',
+    mobile_wallet: 'Mobile Wallet',
+    contactless: 'Contactless Payment',
+    market_token: 'Market Tokens',
+    other: 'Other',
+  };
+  for (const method of richMethods) {
+    push(method.value.label || methodLabels[method.value.code], method.value.code);
+  }
+
+  // A rich first-party method list is more precise than an older combined
+  // "Credit/Debit" value. Keep independently stated legacy methods, but do
+  // not let that lossy umbrella label broaden the verified list again.
+  for (const method of market.payment_methods ?? []) {
+    if (richMethods.length && /^credit\s*[/&+-]\s*debit(?: cards?)?$/i.test(clean(method))) continue;
+    push(method);
+  }
+
+  // These flags are useful on legacy records. The combined card flag is not
+  // used when v2 provides an exact method list because it cannot distinguish
+  // credit from debit and would invent one of them.
+  if (market.accepts_cash) push('Cash');
+  if (market.accepts_credit_debit && !richMethods.length) {
+    push('Credit Card');
+    push('Debit Card');
+  }
+  if (market.accepts_checks) push('Check');
+
+  const assistanceLabels = {
+    snap_ebt: 'SNAP/EBT',
+    wic: 'WIC',
+    fmnp: 'FMNP',
+    sfmnp: 'SFMNP',
+    p_ebt: 'P-EBT',
+    other: 'Other',
+  } as const;
+  for (const assistance of market.first_party?.payments?.assistance ?? []) {
+    push(
+      assistance.value.name || assistanceLabels[assistance.value.code],
+      assistance.value.code === 'snap_ebt' ? 'snap' : assistance.value.code
+    );
+  }
   if (market.snap) push('SNAP/EBT');
   if (market.wic) push('WIC');
   if (market.fmnp) push('FMNP');
@@ -286,6 +361,166 @@ export interface MarketFact {
   note?: string;
 }
 
+const STATUS_LABELS = {
+  active: 'Active',
+  seasonal_break: 'Closed for the season',
+  temporarily_closed: 'Temporarily closed',
+  permanently_closed: 'Permanently closed',
+} as const;
+
+function titleWords(value: string): string {
+  return value
+    .replaceAll('_', ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+const RICH_WEEKDAY_LABELS: Record<MarketWeekday, string> = {
+  monday: 'Monday',
+  tuesday: 'Tuesday',
+  wednesday: 'Wednesday',
+  thursday: 'Thursday',
+  friday: 'Friday',
+  saturday: 'Saturday',
+  sunday: 'Sunday',
+};
+
+function pluralWeekdays(days: MarketWeekday[]): string {
+  return joinWithAnd(days.map((day) => `${RICH_WEEKDAY_LABELS[day]}s`));
+}
+
+function humanClock(value: string): string | undefined {
+  const match = /^(\d{2}):(\d{2})$/.exec(value);
+  if (!match) return undefined;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  if (hour > 23 || minute > 59) return undefined;
+  const clockHour = hour % 12 || 12;
+  return `${clockHour}${minute ? `:${String(minute).padStart(2, '0')}` : ''}${hour < 12 ? 'am' : 'pm'}`;
+}
+
+function scheduleRecurrenceLabel(schedule: StructuredMarketSchedule): string | undefined {
+  const recurrence = schedule.recurrence;
+  if (recurrence.kind === 'dates') {
+    const dates = recurrence.dates.map((date) => formatDate(date)).filter((date): date is string => Boolean(date));
+    return dates.length ? joinWithAnd(dates) : undefined;
+  }
+
+  if (!recurrence.weekdays.length) return undefined;
+  const days = pluralWeekdays(recurrence.weekdays);
+  if (recurrence.kind === 'weekly') {
+    return recurrence.interval_weeks === 2 ? `Every other ${days.replace(/s\b/g, '')}` : days;
+  }
+
+  const ordinals: Record<number, string> = {
+    1: 'first',
+    2: 'second',
+    3: 'third',
+    4: 'fourth',
+    5: 'fifth',
+    [-1]: 'last',
+  };
+  const weeks = joinWithAnd(recurrence.week_numbers.map((week) => ordinals[week]));
+  return weeks ? `${weeks} ${days}` : undefined;
+}
+
+/** Human-readable, non-lossy labels for source-backed v2 schedule windows. */
+export function structuredScheduleLabels(firstParty?: MarketFirstPartyFacts): string[] {
+  const labels: string[] = [];
+  for (const item of firstParty?.operations?.schedules ?? []) {
+    const recurrence = scheduleRecurrenceLabel(item.value);
+    const opens = humanClock(item.value.opens);
+    const closes = humanClock(item.value.closes);
+    if (!recurrence || !opens || !closes) continue;
+    const label = `${recurrence}, ${opens}\u2013${closes}`;
+    if (!labels.includes(label)) labels.push(label);
+  }
+  return labels;
+}
+
+function richFactRows(firstParty?: MarketFirstPartyFacts): MarketFact[] {
+  if (!firstParty) return [];
+  const rows: MarketFact[] = [];
+  const push = (term: string, values: string[], note?: string) => {
+    const cleaned = [...new Set(values.map((value) => clean(value)).filter(Boolean))];
+    if (cleaned.length) rows.push(note ? { term, values: cleaned, note: clean(note) } : { term, values: cleaned });
+  };
+
+  const status = firstParty.operations?.status?.value;
+  if (status) push('Current status', [STATUS_LABELS[status.value]], status.note);
+
+  const incentives = firstParty.payments?.incentives?.map((item) => {
+    const value = item.value;
+    const amounts = value.input_amount !== undefined && value.benefit_amount !== undefined
+      ? ` (${value.input_amount}:${value.benefit_amount}${value.maximum_amount !== undefined ? `, up to ${value.maximum_amount}` : ''})`
+      : '';
+    return `${value.name}${amounts}`;
+  }) ?? [];
+  push('Save with', incentives);
+
+  const transit = firstParty.access?.transit?.map((item) => {
+    const value = item.value;
+    return [titleWords(value.mode), value.routes?.join('/'), value.stop_name, value.note]
+      .filter(Boolean)
+      .join(' - ');
+  }) ?? [];
+  push('Transit', transit);
+
+  const parking = firstParty.access?.parking;
+  if (parking?.availability) {
+    const values = [
+      titleWords(parking.availability.value),
+      parking.cost ? titleWords(parking.cost.value) : undefined,
+    ].filter((value): value is string => Boolean(value));
+    push('Parking', values, parking.location_note?.value);
+  }
+  if (firstParty.access?.bicycle_parking) {
+    push('Bike parking', [titleWords(firstParty.access.bicycle_parking.value)]);
+  }
+  if (firstParty.access?.accessibility_note) {
+    push('Accessibility', [firstParty.access.accessibility_note.value]);
+  }
+
+  const amenityNames: Partial<Record<NonNullable<MarketFirstPartyFacts['amenities']>[number]['value']['code'], string>> = {
+    atm: 'ATM',
+    wifi: 'Wi-Fi',
+    restrooms: 'Restrooms',
+    picnic_area: 'Picnic area',
+    drinking_water: 'Drinking water',
+    live_music: 'Live music',
+    kids_activities: 'Kids activities',
+    information_booth: 'Information booth',
+    purchase_holding: 'Purchase holding',
+  };
+  const amenities = firstParty.amenities?.map((item) => {
+    const value = item.value;
+    const label = amenityNames[value.code] || titleWords(value.code);
+    const availability = value.availability === 'yes'
+      ? ''
+      : value.availability === 'limited'
+        ? ': Limited'
+        : ': Not available';
+    return `${label}${availability}${value.note ? ` - ${value.note}` : ''}`;
+  }) ?? [];
+  push('Amenities', amenities);
+
+  const policies = firstParty.policies?.map((item) => {
+    const value = item.value;
+    return `${titleWords(value.code)}: ${titleWords(value.rule)}${value.note ? ` - ${value.note}` : ''}`;
+  }) ?? [];
+  push('Visitor policies', policies);
+
+  push('Programs', firstParty.programs?.map((item) => item.value.name) ?? []);
+  push('Events', firstParty.events?.map((item) => item.value.name) ?? []);
+
+  const languages = [
+    ...(firstParty.languages?.spoken?.map((item) => item.value.label || item.value.tag) ?? []),
+    ...(firstParty.languages?.materials?.map((item) => item.value.label || item.value.tag) ?? []),
+  ];
+  push('Languages', languages);
+
+  return rows;
+}
+
 /**
  * Every fact row this record can fill, in reading order.
  *
@@ -299,12 +534,22 @@ export function marketFacts(market: MarketFactsRecord): MarketFact[] {
     if (values.length) facts.push(note ? { term, values, note } : { term, values });
   };
 
+  const richSchedule = structuredScheduleLabels(market.first_party);
+  const exactSchedule = (market.days ?? [])
+    .map((value) => clean(value))
+    .filter((value) => value && marketHours({ name: market.name, days: [value] }));
   const days = marketWeekdays(market);
   const hours = marketHours(market);
   const season = marketSeasonLabel(market);
 
-  push('Days', days.length ? [days.join(', ')] : []);
-  push('Hours', hours ? [hours] : []);
+  if (richSchedule.length) {
+    push('Schedule', richSchedule);
+  } else if (exactSchedule.length) {
+    push('Schedule', [...new Set(exactSchedule)]);
+  } else {
+    push('Days', days.length ? [days.join(', ')] : []);
+    push('Hours', hours ? [hours] : []);
+  }
   push('Season', season ? [season] : []);
 
   const vendorCount = market.vendor_count;
@@ -330,6 +575,20 @@ export function marketFacts(market: MarketFactsRecord): MarketFact[] {
     .filter(Boolean)
     .join('. ');
   push('Ordering', orderingLabels(market), note || undefined);
+  push('Before you go', market.visitor_note ? [clean(market.visitor_note)] : []);
+
+  for (const richFact of richFactRows(market.first_party)) {
+    const existing = facts.find((fact) => fact.term === richFact.term);
+    if (existing) {
+      const combined = [...new Set([...existing.values, ...richFact.values])];
+      existing.values = richFact.term === 'Amenities'
+        ? combined.filter((value) => !combined.some((other) => other !== value && other.startsWith(`${value} -`)))
+        : combined;
+      existing.note ||= richFact.note;
+    } else {
+      facts.push(richFact);
+    }
+  }
 
   return facts;
 }
@@ -507,6 +766,7 @@ export function composedSummary(market: MarketFactsRecord): string[] {
     sentences.push(`${name} is a farmers market.`);
   }
 
+  const richSchedule = structuredScheduleLabels(market.first_party);
   const days = marketWeekdays(market);
   const hours = marketHours(market);
   const season = marketSeasonLabel(market);
@@ -514,9 +774,13 @@ export function composedSummary(market: MarketFactsRecord): string[] {
     ? ''
     : /^year[\s-]?round$/i.test(season)
       ? ', year-round'
-      : `, ${lowerFirst(season)}`;
+      : `, ${/^(?:January|February|March|April|May|June|July|August|September|October|November|December|\d)/.test(season) ? season : lowerFirst(season)}`;
 
-  if (days.length && hours) {
+  if (richSchedule.length === 1) {
+    sentences.push(`It is open ${richSchedule[0]}${seasonTail}.`);
+  } else if (richSchedule.length > 1) {
+    sentences.push(`Its schedule is ${richSchedule.join('; ')}${seasonTail}.`);
+  } else if (days.length && hours) {
     sentences.push(`It is open ${weekdayPhrase(days)} from ${hours}${seasonTail}.`);
   } else if (days.length) {
     sentences.push(`It is open ${weekdayPhrase(days)}${seasonTail}.`);

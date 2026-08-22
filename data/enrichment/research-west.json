@@ -1,0 +1,655 @@
+[
+  {
+    "id": 301318,
+    "market_name": "Ferry Plaza Farmers Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://maps.app.goo.gl/dKydjd6s1Kt448r4A",
+    "contact": {
+      "websites": [
+        "https://foodwise.org/markets/ferry-plaza-farmers-market/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/foodwise/",
+        "https://www.facebook.com/foodwiseorg",
+        "https://twitter.com/foodwiseorg"
+      ],
+      "phone_numbers": [
+        "(415) 291-3276"
+      ],
+      "emails": [
+        "info@foodwise.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Tuesday 10:00 AM-2:00 PM",
+        "Thursday 10:00 AM-2:00 PM",
+        "Saturday 8:00 AM-2:00 PM"
+      ],
+      "season": "Year-round, rain or shine"
+    },
+    "payment": {
+      "methods": [
+        "Credit cards",
+        "Contactless payments",
+        "Market coins",
+        "CalFresh EBT",
+        "Market Match",
+        "VeggieRx",
+        "Vouchers 4 Veggies",
+        "WIC and FMNP vouchers"
+      ],
+      "food_assistance": {
+        "wic": true,
+        "fmnp": true,
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Bike racks",
+        "ATMs inside the Ferry Building",
+        "Free Veggie Valet purchase holding",
+        "Public transit one block away"
+      ],
+      "parking": true,
+      "restrooms": true,
+      "wheelchair_accessible": true,
+      "pet_friendly": false
+    },
+    "visitor_note": "The market is outdoors at the Ferry Building; public transit is encouraged, and only service animals are allowed.",
+    "sources": [
+      {
+        "url": "https://foodwise.org/markets/ferry-plaza-farmers-market/visitor-info/",
+        "title": "Ferry Plaza Farmers Market Visitor Info & Services - Foodwise",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "contact.phone_numbers",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.fmnp",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "amenities.restrooms",
+          "amenities.wheelchair_accessible",
+          "amenities.pet_friendly",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 301346,
+    "market_name": "Hollywood Farmers' Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Hollywood%20Farmers%27%20Market%2C%201600%20Ivar%20Ave%2C%20Los%20Angeles%2C%20CA%2090028",
+    "contact": {
+      "websites": [
+        "https://foodaccessla.org/hollywood"
+      ],
+      "social_media": [
+        "https://www.instagram.com/thehfm/"
+      ],
+      "phone_numbers": [
+        "(323) 463-3171"
+      ],
+      "emails": [
+        "hello@foodaccessla.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sunday 8:00 AM-1:00 PM"
+      ]
+    },
+    "payment": {
+      "methods": [
+        "EBT",
+        "Market Match",
+        "WIC",
+        "Senior FMNP checks"
+      ],
+      "food_assistance": {
+        "wic": true,
+        "sfmnp": true,
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Live music",
+        "Children's activities",
+        "Compost drop-off",
+        "Free reusable bag exchange"
+      ],
+      "parking": true
+    },
+    "visitor_note": "The market is at Ivar and Selma; the Hollywood/Vine Metro B Line station is two blocks away, and several nearby garages offer market validation.",
+    "sources": [
+      {
+        "url": "https://foodaccessla.org/hollywood",
+        "title": "Hollywood Farmers' Market - Food Access LA",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "operations.days",
+          "payment.methods",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://foodaccessla.org/contact",
+        "title": "Contact Us - Food Access LA",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.emails"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 308919,
+    "market_name": "Santa Monica Farmers' Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=34.016509%2C-118.498176",
+    "contact": {
+      "websites": [
+        "https://www.santamonica.gov/places/farmers-markets/downtown-farmers-market"
+      ],
+      "social_media": [
+        "https://www.instagram.com/smfms/"
+      ],
+      "phone_numbers": [
+        "(310) 458-8712"
+      ],
+      "emails": [
+        "farmersmarket@santamonica.gov"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesday 8:00 AM-1:00 PM",
+        "Saturday 8:00 AM-1:00 PM"
+      ],
+      "season": "Year-round, rain or shine; subject to holiday or extreme-condition closures"
+    },
+    "payment": {
+      "methods": [
+        "CalFresh EBT"
+      ],
+      "food_assistance": {
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Bus, bicycle, walking and driving route guidance"
+      ],
+      "parking": true,
+      "restrooms": true
+    },
+    "visitor_note": "This legacy record matches the city's Downtown Farmers Market listing on Arizona Avenue; both Wednesday and Saturday markets run 8:00 AM-1:00 PM.",
+    "sources": [
+      {
+        "url": "https://www.santamonica.gov/places/farmers-markets/downtown-farmers-market",
+        "title": "Downtown Farmers Market - City of Santa Monica",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "amenities.restrooms",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.instagram.com/smfms/",
+        "title": "City of Santa Monica Farmers Markets on Instagram",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 301424,
+    "market_name": "Ballard Farmers Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Ballard%20Farmers%20Market%2C%205300%20Ballard%20Ave%20NW%2C%20Seattle%2C%20WA%2098107",
+    "contact": {
+      "websites": [
+        "https://www.sfmamarkets.com/visit-ballard-farmers-market"
+      ],
+      "social_media": [
+        "https://www.instagram.com/sfmamarkets/",
+        "https://www.facebook.com/BallardFarmersMarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sunday 9:00 AM-2:00 PM"
+      ],
+      "season": "Year-round, rain or shine"
+    },
+    "payment": {
+      "methods": [
+        "Credit cards",
+        "Debit cards",
+        "EBT/SNAP",
+        "WIC",
+        "Senior FMNP",
+        "Fresh Bucks",
+        "SNAP Market Match"
+      ],
+      "food_assistance": {
+        "wic": true,
+        "sfmnp": true,
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "ADA customer parking on NW Vernon Place",
+        "Nearby bus, bicycle and walking access",
+        "Interactive vendor map updated Fridays"
+      ],
+      "parking": true
+    },
+    "visitor_note": "The market runs along Ballard Avenue NW from 22nd Avenue/NW Market Street toward 20th Avenue NW; surrounding street meters are free on Sundays.",
+    "sources": [
+      {
+        "url": "https://www.sfmamarkets.com/visit-ballard-farmers-market",
+        "title": "Ballard Farmers Market - Seattle Farmers Market Association",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 300544,
+    "market_name": "Portland Farmers Market - Portland State University",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=PSU%20Farmers%20Market%2C%201803%20SW%20Park%20Ave%2C%20Portland%2C%20OR",
+    "contact": {
+      "websites": [
+        "https://www.portlandfarmersmarket.org/our-markets/psu/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/portlandfarmers/"
+      ],
+      "phone_numbers": [
+        "(503) 241-0032"
+      ],
+      "emails": [
+        "contact@portlandfarmersmarket.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 8:30 AM-2:00 PM (through October 30, 2026)",
+        "Saturday 9:00 AM-2:00 PM (November 7, 2026-March 2027)"
+      ],
+      "season": "Year-round January-December; closed December 26, 2026"
+    },
+    "payment": {
+      "methods": [
+        "Cash",
+        "Credit cards",
+        "Debit cards",
+        "Market tokens",
+        "SNAP",
+        "Double Up Food Bucks",
+        "Produce Match",
+        "Oregon Farm Direct Nutrition Program"
+      ],
+      "food_assistance": {
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Market staff can direct visitors to bathrooms",
+        "Market information booth holds bulky purchases",
+        "TriMet, MAX and Portland Streetcar stops nearby",
+        "Street-level ADA-accessible parking nearby"
+      ],
+      "parking": true,
+      "restrooms": true
+    },
+    "visitor_note": "The market is in PSU's pedestrian-only South Park Blocks between SW College and Montgomery; the closest address is 1803 SW Park Avenue.",
+    "sources": [
+      {
+        "url": "https://www.portlandfarmersmarket.org/our-markets/psu/",
+        "title": "PSU Farmers Market - Portland Farmers Market",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "contact.phone_numbers",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "amenities.restrooms",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 309023,
+    "market_name": "Boulder County Farmers' Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/Boulder+Farmers+Market/@40.0156017,-105.2796098,17z/data=!3m1!4b1!4m5!3m4!1s0x876bec261f601c13:0x7135627d5b190ae7!8m2!3d40.0155976!4d-105.2774211",
+    "contact": {
+      "websites": [
+        "https://bcfm.org/markets/boulder-farmers-market/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/boulderfarmersmarket/",
+        "https://www.instagram.com/bcfm/",
+        "https://www.facebook.com/BoulderCountyFarmersMarkets"
+      ],
+      "emails": [
+        "hello@bcfm.org",
+        "boulder@bcfm.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 8:00 AM-2:00 PM",
+        "Wednesday 3:30 PM-7:30 PM"
+      ],
+      "season": "Saturdays April 4-November 21, 2026; Wednesdays May 6-October 7, 2026"
+    },
+    "payment": {
+      "methods": [
+        "Cash",
+        "Credit cards",
+        "Debit cards",
+        "Onsite ATM",
+        "Market Bucks",
+        "SNAP/EBT",
+        "WIC"
+      ],
+      "food_assistance": {
+        "wic": true,
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Live music on Saturday and Wednesday",
+        "Bike rack at Arapahoe and 13th Street",
+        "Free Saturday bike valet"
+      ],
+      "parking": true,
+      "pet_friendly": false
+    },
+    "visitor_note": "Two lots behind the market off 14th Street are free during market hours, and City of Boulder garages are free on Saturdays; only service animals are permitted.",
+    "sources": [
+      {
+        "url": "https://bcfm.org/markets/boulder-farmers-market/",
+        "title": "Boulder Farmers Market - Boulder County Farmers Markets",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "amenities.pet_friendly",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 301665,
+    "market_name": "Downtown Phoenix Farmers Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Downtown%20Phoenix%20Farmers%20Market%2C%20455%20N%203rd%20Street%2C%20Phoenix%2C%20AZ%2085004",
+    "contact": {
+      "websites": [
+        "https://downtownphoenixfarmersmarket.org/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/dtphxfarmersmarket/",
+        "https://www.facebook.com/dtphxfarmersmarket",
+        "https://twitter.com/dtphxfarmersmkt"
+      ],
+      "phone_numbers": [
+        "(602) 625-6736"
+      ],
+      "emails": [
+        "lisabcommunityfoodconnections@gmail.com",
+        "info@downtownphoenixfarmersmarket.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 8:00 AM-1:00 PM (third Saturday in October-second Saturday in May)",
+        "Saturday 7:30 AM-11:30 AM (third Saturday in May-second Saturday in October)"
+      ],
+      "season": "Year-round; main and summer hours vary by season"
+    },
+    "payment": {
+      "methods": [
+        "Cash",
+        "Credit cards",
+        "Debit cards",
+        "EBT",
+        "WIC",
+        "Senior FMNP coupons",
+        "Double Up Food Bucks",
+        "Vendor-dependent contactless payments"
+      ],
+      "food_assistance": {
+        "wic": true,
+        "sfmnp": true,
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Shaded dining areas",
+        "Warm-season hydration station; bring a bottle",
+        "Recycling and compost options"
+      ],
+      "parking": true,
+      "pet_friendly": true
+    },
+    "visitor_note": "The official site says the market is now inside the Arizona Center at 455 N 3rd Street, replacing this legacy record's 720 N 5th Street location; one linked parking page still shows the former address.",
+    "sources": [
+      {
+        "url": "https://downtownphoenixfarmersmarket.org/",
+        "title": "Downtown Phoenix Farmers Market",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "contact.phone_numbers",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "payment.food_assistance.snap",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://downtownphoenixfarmersmarket.org/shop-the-market/shopping-tips-and-faq/",
+        "title": "Shopping Tips and FAQ - Downtown Phoenix Farmers Market",
+        "fields": [
+          "contact.emails",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "amenities.pet_friendly"
+        ]
+      },
+      {
+        "url": "https://downtownphoenixfarmersmarket.org/contact/",
+        "title": "Contact - Downtown Phoenix Farmers Market",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.emails"
+        ]
+      },
+      {
+        "url": "https://downtownphoenixfarmersmarket.org/shop-the-market/parking-and-transportation/",
+        "title": "Parking and Transportation - Downtown Phoenix Farmers Market",
+        "fields": [
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 314070,
+    "market_name": "Dane County Farmers' Market - Saturday on the Square",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/Wisconsin+State+Capitol/@43.0747165,-89.3865672,17z/data=!3m1!4b1!4m5!3m4!1s0x880656a97df881e5:0x503974506f6ebae4!8m2!3d43.0747126!4d-89.3843732",
+    "contact": {
+      "websites": [
+        "https://dcfm.org/markets/saturday-on-the-square"
+      ],
+      "social_media": [
+        "https://www.facebook.com/DaneCoFM/",
+        "https://x.com/danecofm",
+        "https://www.instagram.com/danecofm/"
+      ],
+      "phone_numbers": [
+        "(608) 455-1999"
+      ],
+      "emails": [
+        "info@dcfm.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 6:15 AM-1:45 PM"
+      ],
+      "season": "April 11-November 14, 2026"
+    },
+    "payment": {
+      "methods": [
+        "Cash",
+        "Vendor-dependent credit cards",
+        "Vendor-dependent PayPal or Venmo",
+        "FoodShare/SNAP EBT",
+        "Market Dollars",
+        "Double Dollars",
+        "WIC FMNP checks",
+        "Senior FMNP checks"
+      ],
+      "food_assistance": {
+        "wic": true,
+        "sfmnp": true,
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Bike parking around Capitol Square",
+        "Madison Metro bus service",
+        "Information booth and lost-and-found"
+      ],
+      "parking": true,
+      "restrooms": true,
+      "wheelchair_accessible": true,
+      "pet_friendly": false
+    },
+    "visitor_note": "Vendors may sell out before closing, so the market recommends arriving early; only service animals are permitted.",
+    "sources": [
+      {
+        "url": "https://dcfm.org/markets/saturday-on-the-square",
+        "title": "Saturday on the Square - Dane County Farmers' Market",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "operations.days",
+          "operations.season",
+          "amenities.features",
+          "amenities.parking",
+          "amenities.restrooms",
+          "amenities.wheelchair_accessible",
+          "amenities.pet_friendly",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://dcfm.org/foodshare-ebt",
+        "title": "SNAP, EBT and FoodShare - Dane County Farmers' Market",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.emails",
+          "payment.methods",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "payment.food_assistance.snap"
+        ]
+      },
+      {
+        "url": "https://dcfm.org/faqs",
+        "title": "FAQs - Dane County Farmers' Market",
+        "fields": [
+          "payment.methods",
+          "amenities.pet_friendly"
+        ]
+      },
+      {
+        "url": "https://dcfm.org/contact",
+        "title": "Contact - Dane County Farmers' Market",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.emails"
+        ]
+      }
+    ]
+  }
+]

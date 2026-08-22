@@ -48,7 +48,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/government_markets.json public/data/government_markets.manifest.json
+          git add data/sources/government_markets.json data/sources/government_markets.manifest.json public/data/farmers_markets.json public/data/geo_index.json
           if git diff --cached --quiet; then
             echo "No generated data changes"
           else

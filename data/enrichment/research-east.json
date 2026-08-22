@@ -1,0 +1,595 @@
+[
+  {
+    "id": 301699,
+    "market_name": "FRESHFARM Dupont Circle (Sunday)",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.9112925,-77.045201&query_place_id=ChIJ2d6foci3t4kRHxkdu6dAcj8",
+    "contact": {
+      "websites": [
+        "https://www.freshfarm.org/markets/dupont-circle"
+      ],
+      "social_media": [
+        "https://www.instagram.com/freshfarmdc/",
+        "https://www.facebook.com/freshfarmdc/",
+        "https://twitter.com/FRESHFARMDC",
+        "https://www.youtube.com/@freshfarmdc",
+        "https://www.linkedin.com/company/freshfarm"
+      ],
+      "phone_numbers": [
+        "202-391-7353"
+      ],
+      "emails": [
+        "markets@freshfarm.org",
+        "hello@freshfarm.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sunday 8:30 AM-1:30 PM"
+      ],
+      "season": "Year-round; January 4-December 27, 2026"
+    },
+    "payment": {
+      "methods": [
+        "SNAP/EBT",
+        "WIC FMNP checks",
+        "Senior FMNP checks",
+        "FreshMatch dollar-for-dollar federal-benefit match"
+      ],
+      "food_assistance": {
+        "snap": true,
+        "wic": true,
+        "sfmnp": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Outdoor market",
+        "More than 80 farmers and producers during peak season"
+      ],
+      "pet_friendly": false
+    },
+    "visitor_note": "The market is on 20th Street NW between Massachusetts and Connecticut avenues. Dogs and other pets are strongly discouraged.",
+    "sources": [
+      {
+        "url": "https://www.freshfarm.org/markets/dupont-circle",
+        "title": "FRESHFARM Dupont Circle",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "amenities.features",
+          "amenities.pet_friendly",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.freshfarm.org/contact-us",
+        "title": "Contact FRESHFARM",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.emails"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 301726,
+    "market_name": "Union Square Farmers Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/66+Union+Square,+Somerville,+MA+02143/@42.3795431,-71.0945542,101m/data=!3m1!1e3!4m5!3m4!1s0x89e370cafd48943f:0xf267029de159002d!8m2!3d42.3798617!4d-71.0951016",
+    "contact": {
+      "websites": [
+        "https://www.unionsquaremain.org/2026-season"
+      ],
+      "social_media": [
+        "https://www.instagram.com/unionsqmarket/"
+      ],
+      "phone_numbers": [],
+      "emails": [
+        "usms@unionsquaremain.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 9:00 AM-1:00 PM"
+      ],
+      "season": "May 9-October 31, 2026; closed July 4 and September 19; rain or shine"
+    },
+    "payment": {
+      "methods": [
+        "SNAP/EBT card",
+        "SUN Bucks card",
+        "SNAP market tokens",
+        "HIP",
+        "Senior FMNP coupons",
+        "WIC FMNP coupons"
+      ],
+      "food_assistance": {
+        "snap": true,
+        "wic": true,
+        "sfmnp": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Green Line and bus access",
+        "Bike access",
+        "Multilingual SNAP facilitators"
+      ]
+    },
+    "visitor_note": "The market is on Union Square Plaza at 66-70 Union Square. Walking, biking, and public transit are recommended; bicycles must be walked through the market. The SNAP tent is beside the Old Firehouse at 90 Union Square.",
+    "sources": [
+      {
+        "url": "https://www.unionsquaremain.org/2026-season",
+        "title": "Union Square Farmers Market 2026 Season",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "amenities.features",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.unionsquaremain.org/food-access",
+        "title": "Food Access at Union Square Farmers Market",
+        "fields": [
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "amenities.features",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 301393,
+    "market_name": "Rittenhouse Tuesday Market",
+    "verified_at": "2026-08-21",
+    "contact": {
+      "websites": [
+        "https://www.farmtocitymarkets.com/markets/rittenhouse-tuesday"
+      ],
+      "social_media": [],
+      "phone_numbers": [],
+      "emails": []
+    },
+    "operations": {
+      "days": [
+        "Tuesday 10:00 AM-2:00 PM"
+      ],
+      "season": "Year-round"
+    },
+    "amenities": {
+      "features": [
+        "Producer-only farmers market"
+      ]
+    },
+    "visitor_note": "The Tuesday market is at 18th and Walnut streets. The official listing was last updated July 7, 2025 and does not publish a 2026 exception calendar, payment policy, phone, email, social profile, or direct Google Maps place link.",
+    "sources": [
+      {
+        "url": "https://www.farmtocitymarkets.com/markets/rittenhouse-tuesday",
+        "title": "Rittenhouse Tuesday Farmers' Market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.farmtocitymarkets.com/markets2",
+        "title": "Farm to City Markets",
+        "fields": [
+          "amenities.features"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 310534,
+    "market_name": "Crescent City Farmers Market",
+    "verified_at": "2026-08-21",
+    "suppress_map": true,
+    "contact": {
+      "websites": [
+        "https://www.crescentcityfarmersmarket.org/",
+        "https://www.crescentcityfarmersmarket.org/our-markets"
+      ],
+      "social_media": [
+        "http://www.facebook.com/pages/Crescent-City-Farmers-Market/12780011170",
+        "http://instagram.com/crescentcityfarmersmkt"
+      ],
+      "phone_numbers": [
+        "504-861-4485",
+        "504-861-4488",
+        "504-495-1459"
+      ],
+      "emails": [
+        "markets@marketumbrella.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Tuesday 8:00 AM-12:00 PM (Uptown at The Batture, 25 Walnut Street)",
+        "Thursday 3:00 PM-7:00 PM (Mid-City at Lafitte Greenway Plaza)",
+        "Sunday 8:00 AM-12:00 PM (City Park at 33 Dreyfous Drive)"
+      ],
+      "season": "Weekly, year-round"
+    },
+    "payment": {
+      "methods": [
+        "Cash",
+        "Apple Pay",
+        "Personal check",
+        "Visa",
+        "Mastercard",
+        "Debit card",
+        "Crescent market tokens",
+        "SNAP/EBT tokens"
+      ],
+      "food_assistance": {
+        "snap": true,
+        "wic": true,
+        "sfmnp": true,
+        "fmnp": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Welcome Tent token service",
+        "On-site parking at the current Uptown location",
+        "RTA bus access at the current Uptown location"
+      ]
+    },
+    "visitor_note": "The legacy 200 Broadway Street address is Market Umbrella's office and is also described by the organizer as the Uptown market's old location. Do not use it as the current market destination. Crescent City Farmers Market currently operates three New Orleans sites; check the official market page for the intended day and location.",
+    "sources": [
+      {
+        "url": "https://www.crescentcityfarmersmarket.org/",
+        "title": "Crescent City Farmers Market",
+        "fields": [
+          "suppress_map",
+          "contact.websites",
+          "contact.social_media",
+          "contact.phone_numbers",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.crescentcityfarmersmarket.org/what-to-expect-at-market",
+        "title": "What to Expect at Crescent City Farmers Market",
+        "fields": [
+          "payment.methods",
+          "payment.food_assistance.snap"
+        ]
+      },
+      {
+        "url": "https://www.crescentcityfarmersmarket.org/our-markets/uptown-tuesday-market",
+        "title": "Uptown Tuesday Farmers Market",
+        "fields": [
+          "operations.days",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "payment.food_assistance.fmnp",
+          "amenities.features",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 310950,
+    "market_name": "Detroit Eastern Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://maps.app.goo.gl/NdC9r4vca2QzGSRW9",
+    "contact": {
+      "websites": [
+        "https://easternmarket.org/explore-the-market/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/easternmarket",
+        "https://www.facebook.com/easternmarketdetroit",
+        "https://x.com/easternmarket",
+        "https://www.youtube.com/channel/UCIugCpEtk6S70ccmLhru7Yw"
+      ],
+      "phone_numbers": [
+        "313-833-9300"
+      ],
+      "emails": [
+        "admin@easternmarket.org",
+        "marketmanager@easternmarket.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 6:00 AM-4:00 PM (weekly market)",
+        "Sunday 10:00 AM-4:00 PM (summer street market)",
+        "Tuesday 9:00 AM-3:00 PM (May flower market and summer health and wellness market)",
+        "Monday-Friday 12:00 AM-6:00 AM (wholesale market; bulk purchases only)"
+      ],
+      "season": "Saturday market weekly year-round; Flower Tuesday every Tuesday in May; summer Sunday and Tuesday markets June-September; wholesale market April-November; holiday markets November-December"
+    },
+    "payment": {
+      "methods": [
+        "Bridge Card/EBT",
+        "SNAP"
+      ],
+      "food_assistance": {
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Free parking throughout most of the district",
+        "Welcome Center and information booth",
+        "Outdoor and covered market areas"
+      ],
+      "parking": true,
+      "wheelchair_accessible": true,
+      "pet_friendly": false
+    },
+    "visitor_note": "Use the official address 2934 Russell Street. The legacy record says 2943 Russell Street, which does not match the market's current official website. Pets are not allowed in sheds, covered structures, or near vendor stalls except trained service animals.",
+    "sources": [
+      {
+        "url": "https://easternmarket.org/explore-the-market/",
+        "title": "Explore Detroit Eastern Market",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.social_media",
+          "contact.phone_numbers",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "amenities.wheelchair_accessible",
+          "amenities.pet_friendly",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 301408,
+    "market_name": "Green City Market Lincoln Park",
+    "verified_at": "2026-08-21",
+    "contact": {
+      "websites": [
+        "https://www.greencitymarket.org/market/details/lincoln"
+      ],
+      "social_media": [
+        "https://www.facebook.com/greencitymarket",
+        "https://twitter.com/greencitymarket",
+        "https://www.instagram.com/greencitymarket",
+        "https://www.linkedin.com/company/chicago's-green-city-market/"
+      ],
+      "phone_numbers": [],
+      "emails": [
+        "admin@greencitymarket.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesday 7:00 AM-1:00 PM (core season)",
+        "Saturday 7:00 AM-1:00 PM (core season)",
+        "Saturday 8:00 AM-1:00 PM (late season through November 21)"
+      ],
+      "season": "Outdoor market April-November 2026; core season begins May 2; Saturday late season runs through November 21"
+    },
+    "payment": {
+      "methods": [
+        "Link/SNAP/EBT",
+        "Link triple match up to $25"
+      ],
+      "food_assistance": {
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "CTA bus access",
+        "Nearby CTA rail access",
+        "Discounted two-hour parking with market validation"
+      ],
+      "parking": true
+    },
+    "visitor_note": "The market is at 1817 N Clark Street in Lincoln Park. Discounted parking is $14 for two hours with validation at the Chicago History Museum lot. The official page publishes different core- and late-season Saturday hours, so check the market calendar before visiting near a season transition.",
+    "sources": [
+      {
+        "url": "https://www.greencitymarket.org/market/details/lincoln",
+        "title": "Green City Market Lincoln Park",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "amenities.parking",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.greencitymarket.org/contact-us",
+        "title": "Contact Green City Market",
+        "fields": [
+          "contact.emails"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 312809,
+    "market_name": "Nashville Farmers' Market",
+    "verified_at": "2026-08-21",
+    "google_maps_url": "https://www.google.com/maps/place/900+Rosa+L+Parks+Blvd,+Nashville,+TN+37208/@36.1708245,-86.7911707,17z/data=!3m1!4b1!4m5!3m4!1s0x886466fbc7d8ee7d:0xd5611f46c6d649e9!8m2!3d36.1708245!4d-86.788982",
+    "contact": {
+      "websites": [
+        "https://www.nashvillefarmersmarket.org/",
+        "https://www.nashvillefarmersmarket.org/hours-and-directions"
+      ],
+      "social_media": [],
+      "phone_numbers": [
+        "615-880-2001",
+        "615-339-8148 (text)"
+      ],
+      "emails": [
+        "farmersmarket@nashville.gov"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Daily 8:00 AM-8:00 PM (Market House; individual business hours vary)",
+        "Friday-Sunday 9:00 AM-2:00 PM (outdoor farm sheds, March 1-October 31)",
+        "Friday-Sunday 10:00 AM-2:00 PM (outdoor farm sheds, November 1-February 28)",
+        "Monday-Thursday hours vary by vendor (outdoor farm sheds)"
+      ],
+      "season": "Year-round; Market House open daily with published holiday closures; outdoor farm-shed hours change March 1 and November 1"
+    },
+    "payment": {
+      "methods": [
+        "SNAP/EBT",
+        "Fresh Bucks tokens",
+        "Fresh Bucks dollar-for-dollar match up to $100"
+      ],
+      "food_assistance": {
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Free on-site customer parking",
+        "Bike racks",
+        "WeGo bus stop at the market",
+        "Free guest Wi-Fi",
+        "Indoor Market House",
+        "Outdoor farm sheds"
+      ],
+      "parking": true,
+      "pet_friendly": true
+    },
+    "visitor_note": "Individual merchant hours vary. Well-behaved leashed pets are allowed only in outdoor market areas and patios; only service animals are allowed inside the Market House. Fresh Bucks receipt exchange is available at the farm-shed information booth on Saturdays and Sundays from 10:00 AM to 2:00 PM.",
+    "sources": [
+      {
+        "url": "https://www.nashvillefarmersmarket.org/",
+        "title": "Nashville Farmers' Market",
+        "fields": [
+          "google_maps_url",
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.emails"
+        ]
+      },
+      {
+        "url": "https://www.nashvillefarmersmarket.org/hours-and-directions",
+        "title": "Nashville Farmers' Market Hours and Directions",
+        "fields": [
+          "operations.days",
+          "operations.season",
+          "amenities.features",
+          "amenities.parking",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.nashvillefarmersmarket.org/fresh-bucks-double-snap",
+        "title": "Fresh Bucks at Nashville Farmers' Market",
+        "fields": [
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "visitor_note"
+        ]
+      },
+      {
+        "url": "https://www.nashvillefarmersmarket.org/faq",
+        "title": "Nashville Farmers' Market FAQ",
+        "fields": [
+          "amenities.features",
+          "amenities.parking",
+          "amenities.pet_friendly",
+          "visitor_note"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 314212,
+    "market_name": "Charleston Farmers Market - Marion Square",
+    "verified_at": "2026-08-21",
+    "contact": {
+      "websites": [
+        "https://www.charleston-sc.gov/3305/Farmers-Market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/CharlestonFarmersMarket"
+      ],
+      "phone_numbers": [],
+      "emails": [
+        "culturalaffairs@charleston-sc.gov"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 8:00 AM-2:00 PM",
+        "Additional 2026 markets 9:00 AM-3:00 PM on May 31, December 5, 6, 12, 13, and 19"
+      ],
+      "season": "April 4-November 21, 2026; closed July 4; additional markets May 31 and December 5, 6, 12, 13, and 19"
+    },
+    "payment": {
+      "methods": [
+        "SNAP/EBT",
+        "Healthy Bucks"
+      ],
+      "food_assistance": {
+        "snap": true
+      }
+    },
+    "amenities": {
+      "features": [
+        "Outdoor market in Marion Square",
+        "Breakfast and lunch vendors",
+        "Live entertainment",
+        "Juried arts and crafts"
+      ]
+    },
+    "visitor_note": "The downtown market is at Marion Square, 329 Meeting Street. The 2026 regular season ends November 21; the city page also lists November 28 as closed, outside that regular-season range.",
+    "sources": [
+      {
+        "url": "https://www.charleston-sc.gov/3305/Farmers-Market",
+        "title": "City of Charleston Farmers Markets",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "contact.phone_numbers",
+          "contact.emails",
+          "operations.days",
+          "operations.season",
+          "payment.methods",
+          "payment.food_assistance.snap",
+          "amenities.features",
+          "visitor_note"
+        ]
+      }
+    ]
+  }
+]

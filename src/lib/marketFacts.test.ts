@@ -17,6 +17,7 @@ const {
   settingLabel,
   siteTypeLabel,
   socialLinks,
+  structuredScheduleLabels,
   telHref,
 } = facts;
 
@@ -107,6 +108,25 @@ test('fact rows carry only the fields the record fills', () => {
   for (const row of rows) assert.ok(row.values.length > 0, row.term);
 });
 
+test('day-specific time windows stay visible instead of collapsing to the first one', () => {
+  const rows = marketFacts(
+    market({
+      days: ['Wednesday 8:00 AM-2:00 PM', 'Saturday 8:00 AM-1:00 PM'],
+      season: 'Year-round',
+      visitor_note: 'Holiday schedules can differ.',
+    })
+  );
+  const byTerm = new Map(rows.map((row) => [row.term, row.values]));
+  assert.deepEqual(byTerm.get('Schedule'), [
+    'Wednesday 8:00 AM-2:00 PM',
+    'Saturday 8:00 AM-1:00 PM',
+  ]);
+  assert.equal(byTerm.has('Days'), false);
+  assert.equal(byTerm.has('Hours'), false);
+  assert.deepEqual(byTerm.get('Season'), ['Year-round']);
+  assert.deepEqual(byTerm.get('Before you go'), ['Holiday schedules can differ.']);
+});
+
 test('a zero vendor count is not a vendor count', () => {
   assert.equal(
     marketFacts(market({ vendor_count: 0 })).some((row) => row.term === 'Vendors'),
@@ -121,6 +141,20 @@ test('a program named twice, two ways, is printed once', () => {
       market({ payment_methods: ['Cash', 'SNAP/EBT', 'SFMNP'], snap: true, sfmnp: true })
     ),
     ['Cash', 'SNAP/EBT', 'Senior Farmers Market Nutrition Program (SFMNP)']
+  );
+});
+
+test('regional benefit names and combined vouchers normalize without duplicates', () => {
+  assert.deepEqual(
+    paymentLabels(
+      market({
+        payment_methods: ['CalFresh EBT', 'WIC and FMNP vouchers', 'Market Match'],
+        snap: true,
+        wic: true,
+        fmnp: true,
+      })
+    ),
+    ['SNAP/EBT', 'WIC', 'Farmers Market Nutrition Program (FMNP)', 'Market Match']
   );
 });
 
@@ -165,6 +199,152 @@ test('amenity and ordering labels report only what is true', () => {
     'Delivery',
   ]);
   assert.deepEqual(orderingLabels(market()), []);
+});
+
+test('rich visitor facts add logistics, policy, program and incentive rows', () => {
+  const evidence = { source_ids: ['official-market-page'], verified_at: '2026-08-21' };
+  const rows = marketFacts(market({
+    first_party: {
+      operations: {
+        status: { value: { value: 'seasonal_break', note: 'Returns in June.' }, ...evidence },
+      },
+      payments: {
+        incentives: [{
+          id: 'double-up-food-bucks',
+          value: { name: 'Double Up Food Bucks', kind: 'match' },
+          ...evidence,
+        }],
+      },
+      access: {
+        transit: [{
+          id: 'max-yellow-line',
+          value: { mode: 'rail', routes: ['MAX Yellow Line'], stop_name: 'Kenton/N Denver' },
+          ...evidence,
+        }],
+        parking: {
+          availability: { value: 'yes', ...evidence },
+          cost: { value: 'free', ...evidence },
+        },
+      },
+      policies: [{
+        id: 'pet-policy',
+        value: { code: 'pets', rule: 'conditional', note: 'Keep pets away from food.' },
+        ...evidence,
+      }],
+      programs: [{
+        id: 'kids-activities',
+        value: { name: 'Seasonal kids activities', kind: 'kids_club' },
+        ...evidence,
+      }],
+    },
+  }));
+
+  const byTerm = new Map(rows.map((row) => [row.term, row]));
+  assert.deepEqual(byTerm.get('Current status')?.values, ['Closed for the season']);
+  assert.deepEqual(byTerm.get('Save with')?.values, ['Double Up Food Bucks']);
+  assert.deepEqual(byTerm.get('Parking')?.values, ['Yes', 'Free']);
+  assert.match(byTerm.get('Transit')?.values[0] ?? '', /MAX Yellow Line/);
+  assert.match(byTerm.get('Visitor policies')?.values[0] ?? '', /Pets: Conditional/);
+  assert.deepEqual(byTerm.get('Programs')?.values, ['Seasonal kids activities']);
+});
+
+test('representative v2 schedules and amenities render without collapsing or disappearing', () => {
+  const evidence = { source_ids: ['ferry-plaza-visitor-info'], verified_at: '2026-08-21' };
+  const first_party: NonNullable<Market['first_party']> = {
+    operations: {
+      season: { value: { kind: 'year_round' }, ...evidence },
+      schedules: [
+        {
+          id: 'saturday',
+          value: {
+            recurrence: { kind: 'weekly', weekdays: ['saturday'] },
+            opens: '08:00',
+            closes: '14:00',
+          },
+          ...evidence,
+        },
+        {
+          id: 'tuesday-thursday',
+          value: {
+            recurrence: { kind: 'weekly', weekdays: ['tuesday', 'thursday'] },
+            opens: '10:00',
+            closes: '14:00',
+          },
+          ...evidence,
+        },
+      ],
+    },
+    amenities: [
+      {
+        id: 'atm',
+        value: { code: 'atm', availability: 'yes', note: 'ATMs are inside the Ferry Building.' },
+        ...evidence,
+      },
+      {
+        id: 'veggie-valet',
+        value: { code: 'purchase_holding', availability: 'yes', note: 'The free Veggie Valet holds purchases.' },
+        ...evidence,
+      },
+    ],
+  };
+  const record = market({
+    name: 'Ferry Plaza Farmers Market',
+    days: ['Saturday 08:00-14:00', 'Tuesday, Thursday 10:00-14:00'],
+    season: 'Year-round',
+    first_party,
+  });
+
+  assert.deepEqual(structuredScheduleLabels(first_party), [
+    'Saturdays, 8am–2pm',
+    'Tuesdays and Thursdays, 10am–2pm',
+  ]);
+  const byTerm = new Map(marketFacts(record).map((row) => [row.term, row.values]));
+  assert.deepEqual(byTerm.get('Schedule'), [
+    'Saturdays, 8am–2pm',
+    'Tuesdays and Thursdays, 10am–2pm',
+  ]);
+  assert.deepEqual(byTerm.get('Amenities'), [
+    'ATM - ATMs are inside the Ferry Building.',
+    'Purchase holding - The free Veggie Valet holds purchases.',
+  ]);
+  assert.ok(
+    composedSummary(record).includes(
+      'Its schedule is Saturdays, 8am–2pm; Tuesdays and Thursdays, 10am–2pm, year-round.'
+    )
+  );
+});
+
+test('exact v2 payment methods take precedence and deduplicate legacy synonyms', () => {
+  const evidence = { source_ids: ['official-page'], verified_at: '2026-08-21' };
+  assert.deepEqual(paymentLabels(market({
+    payment_methods: ['Credit cards', 'Contactless payments', 'Market coins', 'Credit/Debit'],
+    accepts_credit_debit: true,
+    first_party: {
+      payments: {
+        methods: [
+          { id: 'credit', value: { code: 'credit_card' }, ...evidence },
+          {
+            id: 'contactless',
+            value: { code: 'contactless', label: 'Contactless payments such as Apple Pay' },
+            ...evidence,
+          },
+          {
+            id: 'market-token',
+            value: { code: 'market_token', label: 'Wooden market coins' },
+            ...evidence,
+          },
+        ],
+      },
+    },
+  })), ['Credit Card', 'Contactless payments such as Apple Pay', 'Wooden market coins']);
+});
+
+test('dated seasons keep the month capitalized in visit summaries', () => {
+  const summary = composedSummary(market({
+    days: ['Wednesday 15:00-19:00'],
+    season: 'June 3-September 30, 2026',
+  })).join(' ');
+  assert.ok(summary.includes(', June 3-September 30, 2026.'));
 });
 
 /* ------------------------------------------------------------------ *

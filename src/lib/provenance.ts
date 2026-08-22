@@ -3,7 +3,7 @@
  *
  * `provenance` on the 1,975 official records names the publisher, the dataset
  * and its catalogue page, but not the fetch date — that lives once per source
- * in `public/data/government_markets.manifest.json`, written by
+ * in `data/sources/government_markets.manifest.json`, written by
  * `npm run data:update`. Joining the two here is what lets a market page say
  * "retrieved 20 August 2026" and mean it.
  */
@@ -12,7 +12,7 @@ import 'server-only';
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const MANIFEST_PATH = 'public/data/government_markets.manifest.json';
+const MANIFEST_PATH = 'data/sources/government_markets.manifest.json';
 
 interface ManifestSource {
   id: string;

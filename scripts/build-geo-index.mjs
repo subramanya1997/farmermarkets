@@ -3,13 +3,8 @@
  * Build `public/data/geo_index.json` — the normalized state → city → market
  * index the city and state pages are generated from.
  *
- * Why a derived file instead of a rewrite of the two snapshots: the snapshots
- * under `public/data/` are refreshed from upstream feeds (see
- * `scripts/update-government-markets.mjs`), so any normalization written back
- * into them would be overwritten on the next refresh and would make the diff of
- * a data update unreadable. Everything here is therefore a pure function of the
- * two source files, re-runnable at any time with `npm run data:geo`, and the
- * sources are never mutated.
+ * The geo index is a derived navigation accelerator. Market records themselves
+ * live in one canonical file and are never rewritten by this script.
  *
  * What it fixes, in order of preference per record:
  *  1. `field`   — the record's own `city`/`state`, with "NY" and "New York"
@@ -51,9 +46,7 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, '..');
 
 export const DATA_FILES = [
-  // The legacy USDA export carries no country columns at all; it is US-only.
-  { file: 'public/data/farmers_markets.json', defaultCountry: 'United States', defaultCountryCode: 'US' },
-  { file: 'public/data/government_markets.json' }
+  { file: 'public/data/farmers_markets.json' }
 ];
 
 export const OUTPUT_FILE = 'public/data/geo_index.json';

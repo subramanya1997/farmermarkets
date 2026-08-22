@@ -49,6 +49,7 @@ export interface MarketFreshness {
 export interface MarketFreshnessRecord {
   last_updated?: string | null;
   unverified?: boolean;
+  enrichment?: { verified_at?: string | null; verification_scope?: 'partial' | null } | null;
 }
 
 /**
@@ -72,9 +73,14 @@ export function marketFreshness(
   input: MarketFreshnessRecord,
   now: Date = new Date()
 ): MarketFreshness {
-  const lastVerified = formatDate(input.last_updated);
+  // Enrichment batches verify only their cited fields. They never make the
+  // source listing's location or schedule newly current as a whole.
+  const independentDate = undefined;
+  const sourceDate = parseDate(input.last_updated);
+  const effectiveValue = independentDate ? input.enrichment?.verified_at : input.last_updated;
+  const lastVerified = formatDate(effectiveValue);
 
-  if (input.unverified === true) {
+  if (input.unverified === true && !independentDate) {
     return {
       level: 'unverified',
       lastVerified,
@@ -84,7 +90,7 @@ export function marketFreshness(
     };
   }
 
-  const parsed = parseDate(input.last_updated);
+  const parsed = independentDate ?? sourceDate;
   if (parsed && lastVerified) {
     const threshold = new Date(now.getTime());
     threshold.setUTCFullYear(threshold.getUTCFullYear() - STALE_AFTER_YEARS);

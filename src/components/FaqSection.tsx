@@ -14,6 +14,8 @@ interface FaqSectionProps {
   align?: 'left' | 'center';
   /** Anchor id on the heading, for pages that link to or label the section. */
   headingId?: string;
+  /** Heading size override — market pages run smaller section headings. */
+  headingClassName?: string;
   items: FaqSectionItem[];
 }
 
@@ -38,6 +40,7 @@ export function FaqSection({
   subtitle,
   align = 'left',
   headingId,
+  headingClassName = 'text-xl font-bold tracking-tight sm:text-2xl',
   items,
 }: FaqSectionProps) {
   if (items.length === 0) return null;
@@ -47,10 +50,7 @@ export function FaqSection({
   return (
     <section aria-labelledby={headingId}>
       <div className={centered ? 'text-center' : undefined}>
-        <h2
-          id={headingId}
-          className="text-xl font-bold tracking-tight sm:text-2xl"
-        >
+        <h2 id={headingId} className={headingClassName}>
           {title}
         </h2>
         {subtitle && (
@@ -89,7 +89,9 @@ export function FaqSection({
                 weight and inherits color, so the summary hover state still
                 paints the whole question.
               */}
-              <h3 className="text-base font-semibold sm:text-lg">{item.question}</h3>
+              {/* Same size as the answer text below — weight alone marks the
+                  question. */}
+              <h3 className="text-sm font-semibold sm:text-base">{item.question}</h3>
               <svg
                 aria-hidden="true"
                 viewBox="0 0 20 20"

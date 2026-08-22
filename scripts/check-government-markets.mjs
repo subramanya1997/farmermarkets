@@ -6,8 +6,8 @@ import path from 'node:path';
 import { validateGlobalRecords } from './update-government-markets.mjs';
 
 const root = process.cwd();
-const outputPath = path.join(root, 'public/data/government_markets.json');
-const manifestPath = path.join(root, 'public/data/government_markets.manifest.json');
+const outputPath = path.join(root, 'data/sources/government_markets.json');
+const manifestPath = path.join(root, 'data/sources/government_markets.manifest.json');
 const registryPath = path.join(root, 'data/government-market-sources.json');
 const failOnStale = process.argv.includes('--fail-on-stale');
 
