@@ -2,7 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Map as MapIcon, Grid, Store, MapPin, Globe2 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import type { FarmerMarket } from "@/lib/api";
+import { Search, Map as MapIcon, Grid, Store, MapPin, Globe2, ArrowUpDown, SlidersHorizontal } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { MarketCard } from "@/components/MarketCard";
 import { FilterBar } from "@/components/FilterBar";
@@ -12,6 +23,7 @@ import { useGeolocation } from "@/hooks/useGeolocation";
 import { useAllMarkets } from "@/hooks/useAllMarkets";
 import { calculateDistance } from "@/lib/utils";
 import { extractFilterOptions, applyFilters } from "@/lib/filters";
+import { searchMarkets, listingSortKey } from "@/lib/marketSearch";
 import { analyticsSafeSearchTerm, trackEvent } from "@/lib/analytics";
 import { SITE_FRAME } from "@/lib/ui";
 
@@ -28,6 +40,12 @@ interface MarketsProps {
 }
 
 const ITEMS_PER_PAGE = 30;
+
+/** Radix Select forbids `""` as an item value, so "all countries" needs a sentinel. */
+const ALL_COUNTRIES_VALUE = 'all';
+
+/** Cards shown beside the map, mirroring what the current view displays. */
+const MAP_LIST_SIZE = 20;
 
 const MarketsMap = dynamic(() => import("@/components/MarketMap"), {
   ssr: false,
@@ -50,11 +68,21 @@ export function Markets({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
+  const [sortOrder, setSortOrder] = useState<'nearest' | 'name'>('nearest');
+  // Markets inside the map's current viewport, closest first (fed by the map).
+  const [mapVisibleMarkets, setMapVisibleMarkets] = useState<FarmerMarket[]>([]);
   const lastTrackedSearch = useRef('');
   const lastTrackedLocation = useRef('');
   
   // Get user's approximate location
   const { location, loading: locationLoading, error: locationError } = useGeolocation();
+
+  // Stable reference: a fresh array literal per render would re-trigger the
+  // map's recenter effect (and its moveend events) in a loop.
+  const mapCenter = useMemo<[number, number] | undefined>(
+    () => (location ? [location.lat, location.lon] : undefined),
+    [location]
+  );
   
   const marketsInSelectedCountry = useMemo(() => (
     selectedCountry ? markets.filter((market) => market.country === selectedCountry) : markets
@@ -66,17 +94,6 @@ export function Markets({
     [marketsInSelectedCountry]
   );
 
-  const countries = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const market of markets) {
-      if (!market.country) continue;
-      counts.set(market.country, (counts.get(market.country) ?? 0) + 1);
-    }
-    return [...counts.entries()]
-      .map(([name, count]) => ({ name, count }))
-      .sort((left, right) => left.name.localeCompare(right.name));
-  }, [markets]);
-  
   // Add distance to markets and sort by proximity
   const marketsWithDistance = useMemo(() => {
     if (!location) return markets;
@@ -94,24 +111,62 @@ export function Markets({
       return { ...market, distance: Infinity };
     }).sort((a, b) => (a.distance || Infinity) - (b.distance || Infinity));
   }, [markets, location]);
+
+  const countries = useMemo(() => {
+    // Rank countries by how close their nearest market is to the reader, so
+    // the dropdown leads with where they are. With no location every
+    // distance is Infinity and the list falls back to alphabetical.
+    const stats = new Map<string, { count: number; nearest: number }>();
+    for (const market of marketsWithDistance) {
+      if (!market.country) continue;
+      const distance = market.distance ?? Infinity;
+      const entry = stats.get(market.country);
+      if (entry) {
+        entry.count += 1;
+        if (distance < entry.nearest) entry.nearest = distance;
+      } else {
+        stats.set(market.country, { count: 1, nearest: distance });
+      }
+    }
+    return [...stats.entries()]
+      .map(([name, { count, nearest }]) => ({ name, count, nearest }))
+      .sort((left, right) =>
+        left.nearest !== right.nearest
+          ? left.nearest - right.nearest
+          : left.name.localeCompare(right.name)
+      );
+  }, [marketsWithDistance]);
   
   const filteredMarkets = useMemo(() => {
     let filtered = marketsWithDistance;
-    
+
+    // Relevance-ranked search: field-weighted text match, plus verification
+    // and proximity boosts (`src/lib/marketSearch.ts`).
     if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
-      filtered = filtered.filter(market => 
-        [market.name, market.city, market.state, market.country, market.country_code, market.address]
-          .some(field => field?.toLowerCase().includes(searchLower))
-      );
+      filtered = searchMarkets(filtered, searchTerm);
     }
 
     if (selectedCountry) {
       filtered = filtered.filter((market) => market.country === selectedCountry);
     }
-    
-    return applyFilters(filtered, activeFilters, filterCategories);
-  }, [marketsWithDistance, searchTerm, selectedCountry, activeFilters, filterCategories]);
+
+    filtered = applyFilters(filtered, activeFilters, filterCategories);
+
+    if (sortOrder === 'name') {
+      // A-Z is an explicit browse order; keep it purely alphabetical.
+      filtered = [...filtered].sort((left, right) =>
+        left.name.localeCompare(right.name, 'en', { sensitivity: 'base' })
+      );
+    } else if (!searchTerm) {
+      // Browse listing: nearest first, with recently supported records
+      // ranked ahead of unconfirmed ones and dropped records last.
+      filtered = [...filtered].sort((left, right) => listingSortKey(left) - listingSortKey(right));
+    }
+    // With a search term under "nearest first", the relevance order already
+    // folds distance and verification in, so it stands as-is.
+
+    return filtered;
+  }, [marketsWithDistance, searchTerm, selectedCountry, activeFilters, filterCategories, sortOrder]);
 
   const totalPages = Math.ceil(filteredMarkets.length / ITEMS_PER_PAGE);
 
@@ -162,6 +217,20 @@ export function Markets({
     setPage(1);
   };
 
+  // Filter toggle for the phone options sheet (the desktop FilterBar has its
+  // own copy of this, with the same analytics event).
+  const toggleSheetFilter = (filterId: string) => {
+    const next = new Set(activeFilters);
+    const enabled = !next.has(filterId);
+    if (enabled) {
+      next.add(filterId);
+    } else {
+      next.delete(filterId);
+    }
+    handleFilterChange(next);
+    trackEvent('Market Filter Changed', { filter: filterId, enabled });
+  };
+
   const toggleView = () => {
     const nextView = view === 'grid' ? 'map' : 'grid';
     setView(nextView);
@@ -205,20 +274,13 @@ export function Markets({
 
       {/* Google-style Search Bar */}
       <section className="sticky top-16 z-10 w-full py-4 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="w-full max-w-2xl mx-auto px-4 sm:px-6">
-          {/* Location Indicator */}
-          {location && !locationLoading && (
-            <div className="mb-3 flex items-center justify-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-              <MapPin className="w-3 h-3" />
-              <span>
-                Showing markets near {location.city}, {location.state}
-              </span>
-            </div>
-          )}
-          
+        <div className={SITE_FRAME}>
           <div className="flex flex-col gap-3">
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-              <div className="relative flex-1">
+            {/* One row on every size. Phones: search takes ~75% and the other
+                controls collapse into one options sheet. Mid-size screens:
+                icon-only controls. Large screens: full labels. */}
+            <div className="flex flex-row items-center gap-2">
+              <div className="relative min-w-0 flex-1">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <Search className="h-4 w-4 text-gray-400" />
                 </div>
@@ -233,41 +295,212 @@ export function Markets({
                   className="pl-10 pr-4 py-2 w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
               </div>
-              <div className="relative sm:w-56">
-                <Globe2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400 pointer-events-none" />
-                <label htmlFor="country-filter" className="sr-only">Country</label>
-                <select
-                  id="country-filter"
-                  value={selectedCountry}
-                  onChange={(event) => handleCountryChange(event.target.value)}
-                  className="h-10 w-full appearance-none rounded-full border border-zinc-300 bg-white pl-9 pr-8 text-sm text-zinc-800 focus:outline-none focus:ring-2 focus:ring-green-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+              <Select
+                value={selectedCountry || ALL_COUNTRIES_VALUE}
+                onValueChange={(value) =>
+                  handleCountryChange(value === ALL_COUNTRIES_VALUE ? '' : value)
+                }
+              >
+                <SelectTrigger
+                  aria-label="Country"
+                  className="hidden h-10 w-auto shrink-0 rounded-full border-zinc-300 bg-white pl-3 data-[size=default]:h-10 dark:border-zinc-700 dark:bg-zinc-800 md:flex lg:w-56"
                 >
-                  <option value="">All countries ({markets.length})</option>
+                  <Globe2 className="h-4 w-4 shrink-0 text-zinc-400" />
+                  <span className="hidden flex-1 truncate text-left lg:block">
+                    <SelectValue />
+                  </span>
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value={ALL_COUNTRIES_VALUE}>
+                    All countries ({markets.length})
+                  </SelectItem>
                   {countries.map((country) => (
-                    <option key={country.name} value={country.name}>
+                    <SelectItem key={country.name} value={country.name}>
                       {country.name} ({country.count})
-                    </option>
+                    </SelectItem>
                   ))}
-                </select>
-              </div>
+                </SelectContent>
+              </Select>
+              <Select
+                value={sortOrder}
+                onValueChange={(value) => {
+                  setSortOrder(value as 'nearest' | 'name');
+                  setPage(1);
+                  trackEvent('Market Sort Changed', { sort: value });
+                }}
+              >
+                <SelectTrigger
+                  aria-label="Sort markets"
+                  className="hidden h-10 w-auto shrink-0 rounded-full border-zinc-300 bg-white pl-3 data-[size=default]:h-10 dark:border-zinc-700 dark:bg-zinc-800 md:flex lg:w-44"
+                >
+                  <ArrowUpDown className="h-4 w-4 shrink-0 text-zinc-400" />
+                  <span className="hidden flex-1 truncate text-left lg:block">
+                    <SelectValue />
+                  </span>
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="nearest">Nearest first</SelectItem>
+                  <SelectItem value="name">Name A-Z</SelectItem>
+                </SelectContent>
+              </Select>
               <Button
                 variant="outline"
-                size="sm"
-                className="text-xs whitespace-nowrap"
+                aria-label={view === 'grid' ? 'Map view' : 'Grid view'}
+                className="hidden h-10 shrink-0 whitespace-nowrap rounded-full border-zinc-300 bg-white px-3 text-sm font-normal dark:border-zinc-700 dark:bg-zinc-800 md:flex lg:px-4"
                 onClick={toggleView}
               >
                 {view === 'grid' ? (
                   <>
-                    <MapIcon className="w-4 h-4 mr-2" />
-                    Map View
+                    <MapIcon className="h-4 w-4 lg:mr-2" />
+                    <span className="hidden lg:inline">Map View</span>
                   </>
                 ) : (
                   <>
-                    <Grid className="w-4 h-4 mr-2" />
-                    Grid View
+                    <Grid className="h-4 w-4 lg:mr-2" />
+                    <span className="hidden lg:inline">Grid View</span>
                   </>
                 )}
               </Button>
+
+              {/* Phone: view, sort, country, and filters fold into one sheet. */}
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    aria-label="View, sort, country, and filter options"
+                    className="relative h-10 w-10 shrink-0 rounded-full border-zinc-300 bg-white p-0 dark:border-zinc-700 dark:bg-zinc-800 md:hidden"
+                  >
+                    <SlidersHorizontal className="h-4 w-4" />
+                    {activeFilters.size > 0 && (
+                      <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-green-600 px-1 text-[10px] font-semibold text-white">
+                        {activeFilters.size}
+                      </span>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="max-h-[85vh] rounded-t-2xl">
+                  <SheetHeader className="pb-0">
+                    <SheetTitle>Options</SheetTitle>
+                  </SheetHeader>
+                  <div className="overflow-y-auto px-4 pb-8">
+                    <div className="space-y-6">
+                      <div>
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                          View
+                        </p>
+                        <Tabs
+                          value={view}
+                          onValueChange={(value) => value !== view && toggleView()}
+                        >
+                          <TabsList className="h-11 w-full rounded-full p-1">
+                            <TabsTrigger value="grid" className="rounded-full">
+                              <Grid className="mr-2 h-4 w-4" />
+                              Grid
+                            </TabsTrigger>
+                            <TabsTrigger value="map" className="rounded-full">
+                              <MapIcon className="mr-2 h-4 w-4" />
+                              Map
+                            </TabsTrigger>
+                          </TabsList>
+                        </Tabs>
+                      </div>
+                      <div>
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                          Sort
+                        </p>
+                        <Tabs
+                          value={sortOrder}
+                          onValueChange={(value) => {
+                            setSortOrder(value as 'nearest' | 'name');
+                            setPage(1);
+                            trackEvent('Market Sort Changed', { sort: value });
+                          }}
+                        >
+                          <TabsList className="h-11 w-full rounded-full p-1">
+                            <TabsTrigger value="nearest" className="rounded-full">
+                              Nearest first
+                            </TabsTrigger>
+                            <TabsTrigger value="name" className="rounded-full">
+                              Name A-Z
+                            </TabsTrigger>
+                          </TabsList>
+                        </Tabs>
+                      </div>
+                      <div>
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                          Country
+                        </p>
+                        <Select
+                          value={selectedCountry || ALL_COUNTRIES_VALUE}
+                          onValueChange={(value) =>
+                            handleCountryChange(value === ALL_COUNTRIES_VALUE ? '' : value)
+                          }
+                        >
+                          <SelectTrigger className="w-full rounded-full">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent position="popper">
+                            <SelectItem value={ALL_COUNTRIES_VALUE}>
+                              All countries ({markets.length})
+                            </SelectItem>
+                            {countries.map((country) => (
+                              <SelectItem key={country.name} value={country.name}>
+                                {country.name} ({country.count})
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      {filterCategories.map((category) => (
+                        <div key={category.id}>
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                            {category.label}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {category.options.map((option) => {
+                              const Icon = option.icon;
+                              const isActive = activeFilters.has(option.id);
+                              return (
+                                <button
+                                  key={option.id}
+                                  onClick={() => toggleSheetFilter(option.id)}
+                                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                                    isActive
+                                      ? 'border-green-500 bg-green-50 text-green-700 dark:border-green-600 dark:bg-green-900/20 dark:text-green-500'
+                                      : 'border-zinc-200 bg-white text-zinc-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
+                                  }`}
+                                >
+                                  <Icon className="h-4 w-4" />
+                                  {option.label}
+                                  {option.count !== undefined && (
+                                    <span className={`text-xs ${isActive ? 'text-green-600 dark:text-green-400' : 'text-zinc-500'}`}>
+                                      ({option.count})
+                                    </span>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                      {activeFilters.size > 0 && (
+                        <Button
+                          variant="outline"
+                          className="w-full rounded-full"
+                          onClick={() => {
+                            handleFilterChange(new Set());
+                            trackEvent('Market Filters Cleared', {
+                              previous_filter_count: activeFilters.size,
+                            });
+                          }}
+                        >
+                          Clear all filters ({activeFilters.size})
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
@@ -323,12 +556,47 @@ export function Markets({
               )}
             </>
           ) : (
-            <div className="w-full h-[calc(100vh-16rem)] rounded-lg overflow-hidden">
-              <MarketsMap markets={filteredMarkets} />
+            <div className="flex h-[calc(100vh-16rem)] gap-4">
+              {/* What the map shows, as cards: closest first, desktop only. */}
+              <div className="hidden w-1/2 flex-col lg:flex">
+                <p className="mb-2 text-xs text-zinc-500 dark:text-zinc-400">
+                  {mapVisibleMarkets.length === 0
+                    ? 'No markets in this map view. Pan or zoom out to find some.'
+                    : `Closest ${Math.min(mapVisibleMarkets.length, MAP_LIST_SIZE)} of ${mapVisibleMarkets.length.toLocaleString()} markets in view`}
+                </p>
+                <ScrollArea className="min-h-0 flex-1">
+                  <div className="grid grid-cols-1 gap-3 pr-3 xl:grid-cols-2">
+                    {mapVisibleMarkets.slice(0, MAP_LIST_SIZE).map((market) => (
+                      <MarketCard key={market.id} market={market} />
+                    ))}
+                  </div>
+                </ScrollArea>
+              </div>
+              {/* Zoom 9 shows roughly a 50 mile radius around the reader; the
+                  map itself only renders markers inside the current view. */}
+              <div className="h-full w-full overflow-hidden rounded-lg lg:w-1/2">
+                <MarketsMap
+                  markets={filteredMarkets}
+                  height="100%"
+                  center={mapCenter}
+                  zoom={location ? 9 : undefined}
+                  onVisibleMarketsChange={setMapVisibleMarkets}
+                />
+              </div>
             </div>
           )}
         </div>
       </section>
+
+      {/* Location note lives down here so the search bar keeps the space. */}
+      {location && !locationLoading && (
+        <div className="flex items-center justify-center gap-1.5 pb-4 text-xs text-zinc-500 dark:text-zinc-400">
+          <MapPin className="h-3 w-3" />
+          <span>
+            Showing markets near {location.city}, {location.state}
+          </span>
+        </div>
+      )}
 
       {showDiscoverySurvey && (
         <DiscoverySurvey
@@ -337,8 +605,8 @@ export function Markets({
         />
       )}
 
-      {/* Pagination Section */}
-      {filteredMarkets.length > 0 && (
+      {/* Pagination Section (grid only: the map paginates by panning) */}
+      {view === 'grid' && filteredMarkets.length > 0 && (
         <section className="w-full py-4 sm:py-6">
           <div className={SITE_FRAME}>
             <div className="flex items-center justify-between">

@@ -19,9 +19,11 @@ interface MarketsIndexProps {
  * The crawlable market index, shared by `/markets` (page 1) and
  * `/markets/page/[n]`.
  *
- * Everything a crawler needs is plain server-rendered HTML: 48 market links,
- * link-based pagination, and a full state directory. The interactive
- * search/filter/map view sits above it as an opt-in client island.
+ * Page 1 leads with the interactive search/filter/map explorer and shows no
+ * hero copy or A-Z card grid: readers land straight on markets. Its crawl
+ * paths are the server-rendered state and topic directories below the
+ * explorer, plus the sitemap. Pages 2+ stay pure link-based index pages (48
+ * market links and pagination) for crawlers and no-JS readers.
  */
 export async function MarketsIndex({ page }: MarketsIndexProps) {
   const result = await getMarketsPage(page);
@@ -62,40 +64,36 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
       <div className="min-h-[calc(100vh-4rem)]">
-        <section className="w-full bg-gradient-to-b from-green-50 to-white py-8 dark:from-green-900/20 dark:to-zinc-950 sm:py-12">
-          <div className={SITE_FRAME}>
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl lg:text-5xl">
-                {result.page === 1
-                  ? 'Find Local Food Markets'
-                  : `Local Food Markets - Page ${result.page}`}
-              </h1>
-              <p className="mx-auto max-w-[700px] text-sm text-zinc-600 dark:text-zinc-400 sm:text-base md:text-lg">
-                Browse {result.total.toLocaleString()} farmers markets, public food markets,
-                cooperatives, and other local-food places, listed A-Z.
-              </p>
+        {result.page === 1 ? (
+          <>
+            {/* Readers land straight on markets; the h1 stays for crawlers
+                and screen readers. */}
+            <h1 className="sr-only">Find Local Food Markets</h1>
+            <MarketsExplorer />
+          </>
+        ) : (
+          <section className="w-full py-8">
+            <div className={SITE_FRAME}>
+              <div className="mb-5">
+                <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
+                  Local Food Markets - Page {result.page}
+                </h1>
+                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                  Showing {firstIndex.toLocaleString()}-{lastIndex.toLocaleString()} of{' '}
+                  {result.total.toLocaleString()} markets, listed A-Z
+                </p>
+              </div>
+              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+                {result.markets.map((market) => (
+                  <li key={market.id}>
+                    <MarketSummaryCard market={market} />
+                  </li>
+                ))}
+              </ul>
+              <MarketsPagination page={result.page} totalPages={result.totalPages} />
             </div>
-          </div>
-        </section>
-
-        <MarketsExplorer />
-
-        <section className="w-full py-8">
-          <div className={SITE_FRAME}>
-            <p className="mb-5 text-sm text-zinc-600 dark:text-zinc-400">
-              Showing {firstIndex.toLocaleString()}-{lastIndex.toLocaleString()} of{' '}
-              {result.total.toLocaleString()} markets
-            </p>
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
-              {result.markets.map((market) => (
-                <li key={market.id}>
-                  <MarketSummaryCard market={market} />
-                </li>
-              ))}
-            </ul>
-            <MarketsPagination page={result.page} totalPages={result.totalPages} />
-          </div>
-        </section>
+          </section>
+        )}
 
         <BrowseByTopic topics={topics} />
 

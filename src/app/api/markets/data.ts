@@ -19,6 +19,12 @@ export interface FarmerMarket {
   last_updated?: string;
   /** Set by the data refresh on records the upstream USDA directory dropped. */
   unverified?: boolean;
+  /**
+   * Recently supported by verified research or a current official source:
+   * the audit statuses `verified_update`, `official_source_reviewed`, and
+   * `already_enriched`. Derived here so ranking never ships audit blobs.
+   */
+  verified?: boolean;
   country?: string;
   country_code?: string;
   distance?: number;
@@ -215,6 +221,13 @@ interface RawMarketData {
   };
 }
 
+/** Audit statuses that count as recent positive confirmation of a market. */
+const VERIFIED_AUDIT_STATUSES = new Set([
+  'verified_update',
+  'official_source_reviewed',
+  'already_enriched',
+]);
+
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 50;
 // Kept in step with `MAX_LIMIT` in `route.ts`: the service clamps again, so a
@@ -366,6 +379,7 @@ async function readMarketsData(): Promise<FarmerMarket[]> {
           name: market.name,
           last_updated: market.last_updated,
           unverified: market.unverified,
+          verified: market.audit ? VERIFIED_AUDIT_STATUSES.has(market.audit.status) : false,
           country: market.country,
           country_code: market.country_code,
           address: market.location?.address,
@@ -557,7 +571,7 @@ export function getLegacyIdSlugMap(): Promise<Map<string, string>> {
  * `/markets` no longer serializes the dataset into its HTML — the explorer
  * fetches it from this API instead — so the wire size of a record is now the
  * thing that matters. Dropping the long free-text fields (organization and
- * location descriptions, amenity blurbs, CSA/delivery copy, contact lists,
+ * location descriptions, amenity blurbs, CSA/delivery copy, phone/email lists,
  * full provenance blocks) and every `false` boolean takes a record from
  * ~1.4 KB to ~0.35 KB without changing a pixel of the UI, because the filter
  * predicates all test `=== true` and treat a missing key as false.
@@ -567,10 +581,11 @@ const SLIM_STRING_FIELDS = [
 ] as const;
 
 const SLIM_ARRAY_FIELDS = [
-  'days', 'products', 'payment_methods', 'websites', 'organization_types'
+  'days', 'products', 'payment_methods', 'websites', 'social_media', 'organization_types'
 ] as const;
 
 const SLIM_BOOLEAN_FIELDS = [
+  'verified', 'unverified',
   'wic', 'sfmnp', 'fmnp', 'snap',
   'accepts_cash', 'accepts_credit_debit', 'accepts_checks',
   'has_organic', 'has_naturally_grown', 'has_chemical_free', 'has_grass_fed',

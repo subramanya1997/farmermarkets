@@ -13,6 +13,10 @@ export interface FarmerMarket {
   slug: string;
   name: string;
   last_updated?: string;
+  /** Set by the data refresh on records the upstream USDA directory dropped. */
+  unverified?: boolean;
+  /** Recently supported by verified research or a current official source. */
+  verified?: boolean;
   country?: string;
   country_code?: string;
   distance?: number;

@@ -27,17 +27,52 @@ interface MarketMapProps {
   center?: [number, number];
   zoom?: number;
   height?: string;
+  /**
+   * Called with the markets currently in view (closest to the map center
+   * first, uncapped) after every render of the marker layer, so a caller can
+   * mirror the map in a list.
+   */
+  onVisibleMarketsChange?: (visible: FarmerMarket[]) => void;
 }
+
+/**
+ * Markers rendered at once. Only markets inside the current viewport are
+ * added, closest to the map center first, so a worldwide dataset never puts
+ * thousands of DOM markers on the map. Panning or zooming re-renders for the
+ * new view.
+ */
+const MAX_VISIBLE_MARKERS = 250;
+
+/** Padding around the viewport so markers exist just past the edges while panning. */
+const VIEWPORT_PAD = 0.25;
+
+/**
+ * Default view: center of the US. A module constant, not a default parameter,
+ * because a fresh `[lat, lon]` literal per render would re-fire the recenter
+ * effect forever.
+ */
+const DEFAULT_CENTER: [number, number] = [39.8283, -98.5795];
 
 export default function MarketMap({
   markets,
-  center = [39.8283, -98.5795], // Default center of US
+  center = DEFAULT_CENTER,
   zoom = 4,
-  height = '500px'
+  height = '500px',
+  onVisibleMarketsChange
 }: MarketMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<L.Map | null>(null);
   const [mapInitialized, setMapInitialized] = useState(false);
+  /** True once the reader pans or zooms by hand; blocks programmatic recentering. */
+  const userMovedRef = useRef(false);
+  /** True while a `setView` this component issued is firing move/zoom events. */
+  const programmaticMoveRef = useRef(false);
+  // Kept in a ref so an inline callback prop doesn't re-run the marker effect
+  // (and re-render every marker) on each parent render.
+  const onVisibleMarketsChangeRef = useRef(onVisibleMarketsChange);
+  useEffect(() => {
+    onVisibleMarketsChangeRef.current = onVisibleMarketsChange;
+  }, [onVisibleMarketsChange]);
 
   // Create map instance with proper error handling
   useEffect(() => {
@@ -133,38 +168,57 @@ export default function MarketMap({
     };
   }, [mapInitialized]);
 
-  // Add markers when map is initialized or markets change
+  // Recenter when the caller resolves a better starting point (e.g. the
+  // reader's approximate location arrives after mount), but never fight a
+  // reader who has already panned or zoomed by hand.
   useEffect(() => {
-    // Only proceed if map is initialized
+    if (!mapInitialized || !leafletMapRef.current || userMovedRef.current) return;
+    try {
+      programmaticMoveRef.current = true;
+      // No animation, so the move/zoom events fire inside this call and the
+      // flag reliably covers them.
+      leafletMapRef.current.setView(center, zoom, { animate: false });
+    } catch (error) {
+      console.error('Error recentering map:', error);
+    } finally {
+      programmaticMoveRef.current = false;
+    }
+  }, [center, zoom, mapInitialized]);
+
+  // Render only the markers inside the current viewport, closest to the map
+  // center first, and refresh them whenever the reader pans or zooms.
+  useEffect(() => {
     if (!mapInitialized || !leafletMapRef.current) return;
 
     const map = leafletMapRef.current;
+    const markerLayer = L.layerGroup().addTo(map);
 
-    try {
-      // Create a bounds object to track marker positions
-      const bounds = L.latLngBounds([]);
-      let hasValidMarkers = false;
+    const renderVisibleMarkers = () => {
+      try {
+        markerLayer.clearLayers();
+        const viewport = map.getBounds().pad(VIEWPORT_PAD);
+        const mapCenter = map.getCenter();
 
-      // Clear any existing markers
-      map.eachLayer((layer) => {
-        if (layer instanceof L.Marker) {
-          map.removeLayer(layer);
+        const visible: Array<{ market: FarmerMarket; lat: number; lon: number; distance: number }> = [];
+        for (const market of markets) {
+          const lat = market.location?.lat;
+          const lon = market.location?.lon;
+          if (!lat || !lon || !viewport.contains([lat, lon])) continue;
+          visible.push({ market, lat, lon, distance: mapCenter.distanceTo([lat, lon]) });
         }
-      });
+        visible.sort((a, b) => a.distance - b.distance);
+        onVisibleMarketsChangeRef.current?.(visible.map((entry) => entry.market));
 
-      // Add markers for each market
-      markets.forEach(market => {
-        // Get coordinates from location object
-        const latitude = market.location?.lat;
-        const longitude = market.location?.lon;
-        const name = market.name;
-        const city = market.city;
-        const state = market.state;
-
-        // Check if market has valid coordinates
-        if (latitude && longitude) {
-          const marker = L.marker([latitude, longitude]).addTo(map);
-          marker.bindPopup(buildMarketPopupHtml({ name, city, state, slug: market.slug }));
+        for (const { market, lat, lon } of visible.slice(0, MAX_VISIBLE_MARKERS)) {
+          const marker = L.marker([lat, lon]).addTo(markerLayer);
+          marker.bindPopup(
+            buildMarketPopupHtml({
+              name: market.name,
+              city: market.city,
+              state: market.state,
+              slug: market.slug,
+            })
+          );
           marker.on('click', () => {
             trackEvent('Map Marker Selected', {
               market_id: market.id,
@@ -173,27 +227,34 @@ export default function MarketMap({
               source_id: market.provenance?.source_id
             });
           });
-
-          // Extend bounds to include this marker
-          bounds.extend([latitude, longitude]);
-          hasValidMarkers = true;
         }
-      });
-
-      // If we have valid markers, fit the map to show all of them
-      if (hasValidMarkers) {
-        map.fitBounds(bounds, {
-          padding: [50, 50], // Add some padding around the bounds
-          maxZoom: 12 // Don't zoom in too far
-        });
-      } else {
-        // If no markers, show default view of US
-        map.setView(center, zoom);
+      } catch (error) {
+        console.error('Error adding markers to map:', error);
       }
-    } catch (error) {
-      console.error('Error adding markers to map:', error);
-    }
-  }, [markets, center, zoom, mapInitialized]);
+    };
+
+    const markUserMoved = () => {
+      if (!programmaticMoveRef.current) {
+        userMovedRef.current = true;
+      }
+    };
+
+    renderVisibleMarkers();
+    map.on('moveend', renderVisibleMarkers);
+    map.on('zoomend', renderVisibleMarkers);
+    // Only reader-initiated gestures count as "moved"; a programmatic
+    // `setView` also fires moveend but must not lock the recenter effect out.
+    map.on('dragstart', markUserMoved);
+    map.on('zoomstart', markUserMoved);
+
+    return () => {
+      map.off('moveend', renderVisibleMarkers);
+      map.off('zoomend', renderVisibleMarkers);
+      map.off('dragstart', markUserMoved);
+      map.off('zoomstart', markUserMoved);
+      markerLayer.remove();
+    };
+  }, [markets, mapInitialized]);
 
   return (
     <div ref={mapRef} style={{ height, width: '100%' }} className="rounded-md overflow-hidden" />
