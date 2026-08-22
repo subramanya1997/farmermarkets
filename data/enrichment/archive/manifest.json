@@ -1,22 +1,22 @@
 {
   "schema_version": 1,
-  "created_at": "2026-08-22T00:48:47.332Z",
+  "created_at": "2026-08-22T04:24:22.829Z",
   "format": "tar+gzip",
   "archives": [
     {
       "id": "full-market-audit",
       "file": "audit-2026-08-21.tar.gz",
       "source": "data/enrichment/audit",
-      "bytes": 1904630,
-      "sha256": "aea8739e708ff51c08e0c223460ad2a6d430ea58679022d5403fe19e12c5647c",
+      "bytes": 1903991,
+      "sha256": "1057701628e94a77c7cbd06ad6316aa84b34915ad5b1e2499e057b0b71263421",
       "file_count": 8
     },
     {
       "id": "website-audit-v1",
       "file": "site-audit-v1-2026-08-21.tar.gz",
       "source": "data/enrichment/site-audit",
-      "bytes": 4877494,
-      "sha256": "4209d6eb21fa742f4e666d41c98190a9cd38a23bcbd8d61e38d048eb0798bcc3",
+      "bytes": 4871325,
+      "sha256": "ccccf2d034f9d4cc9b7f47a5f4b3daef785360288c505c9418b90ced2f7a74bc",
       "file_count": 54
     }
   ]

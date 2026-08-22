@@ -1,7 +1,7 @@
 [
   {
     "id": "gov:ca_on_farmers_markets:131",
-    "market_name": "St. Lawrence Farmers' Market",
+    "market_name": "St. Lawrence Farmers’ Market",
     "verified_at": "2026-08-21",
     "google_maps_url": "https://www.google.ca/maps/place/St.+Lawrence+Market/@43.6486173,-79.3723866,311m/data=!3m1!1e3!4m6!3m5!1s0x89d4cb31b4dd275b:0xca0ab5acf1a5b6fd!8m2!3d43.6486879!4d-79.3715454!16zL20vMDZqOTNf",
     "contact": {
@@ -86,7 +86,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:6",
-    "market_name": "Dufferin Grove Organic Farmers' Market",
+    "market_name": "Dufferin Grove Organic Farmers’ Market",
     "verified_at": "2026-08-21",
     "google_maps_url": "https://www.google.com/maps/place/Dufferin+Grove+Organic+Farmer's+Market/@43.6569279,-79.433563,15z/data=!4m6!3m5!1s0x882b345bb23b32c5:0x13f4684c0cfdb6f2!8m2!3d43.6569279!4d-79.433563!16s%2Fg%2F1yghbvmlr",
     "contact": {
@@ -177,7 +177,7 @@
   },
   {
     "id": "gov:hk_fehd_public_markets_hong_kong:626",
-    "market_name": "WAN CHAI MARKET",
+    "market_name": "Wan Chai Market",
     "verified_at": "2026-08-21",
     "google_maps_url": "https://www.google.com/maps/place/Wan+Chai+Market/@22.2750716,114.1737073,17z/data=!3m1!4b1!4m6!3m5!1s0x3404005b550bac63:0x76aead9979513bdb!8m2!3d22.2750716!4d114.1737073!16zL20vMGdxcnRn",
     "contact": {

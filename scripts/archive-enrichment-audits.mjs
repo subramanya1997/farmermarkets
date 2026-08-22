@@ -95,7 +95,11 @@ export async function createArchives({ replace = false } = {}) {
       const finalPath = path.join(archiveDirectory, definition.archive);
       if (await exists(finalPath) && !replace) fail(`${definition.archive} already exists`);
       const temporaryPath = `${finalPath}.tmp-${process.pid}`;
-      await execFile('tar', ['-czf', temporaryPath, '-C', root, definition.source]);
+      // COPYFILE_DISABLE keeps macOS bsdtar from embedding hidden AppleDouble
+      // (._*) entries, which GNU tar on CI lists as extra files.
+      await execFile('tar', ['-czf', temporaryPath, '-C', root, definition.source], {
+        env: { ...process.env, COPYFILE_DISABLE: '1' },
+      });
       const entries = await archiveEntries(temporaryPath);
       const expectedCount = await sourceFileCount(sourcePath);
       if (archivedFileCount(entries) !== expectedCount) {

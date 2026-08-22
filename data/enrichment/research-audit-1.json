@@ -1,7 +1,7 @@
 [
   {
     "id": "300001",
-    "market_name": "Riverside Farmers' Market",
+    "market_name": "Riverside Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -31,7 +31,7 @@
   },
   {
     "id": "300008",
-    "market_name": "Webster's Joe Obbie Farmers' Market, Inc.",
+    "market_name": "Webster’s Joe Obbie Farmers’ Market, Inc.",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=Webster's%20Joe%20Obbie%20Farmers'%20Market%2C%20Inc.%2C%201028%20Ridge%20Road%2C%20Webster%20Towne%20Center%2C%20Webster%2C%20New%20York%2C%2014580%2C%20Webster%20Towne%20Center%2C%20Webster%2C%20New%20York%2C%2014580",
@@ -66,7 +66,7 @@
   },
   {
     "id": "300024",
-    "market_name": "Forest farmers market",
+    "market_name": "Forest Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -151,7 +151,7 @@
   },
   {
     "id": "300086",
-    "market_name": "Menlo Park Farmers' Market",
+    "market_name": "Menlo Park Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "operations": {
@@ -334,7 +334,7 @@
   },
   {
     "id": "300184",
-    "market_name": "Los Ranchos Growers' Market",
+    "market_name": "Los Ranchos Growers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -412,7 +412,7 @@
   },
   {
     "id": "300214",
-    "market_name": "Idaho Falls Farmers' Market",
+    "market_name": "Idaho Falls Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=Idaho%20Falls%20Farmers'%20Market%2C%20A%20-%20D%20St.%20Memorial%20Drive%2C%20Idaho%20Falls%2C%20Idaho%2083402%2C%20Idaho%20Falls%2C%20Idaho%2C%2083402",
@@ -611,7 +611,7 @@
   },
   {
     "id": "300317",
-    "market_name": "King Farmers' Market",
+    "market_name": "King Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1290,7 +1290,7 @@
   },
   {
     "id": "301312",
-    "market_name": "Sunnyvale Farmers' Market",
+    "market_name": "Sunnyvale Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1401,7 +1401,7 @@
   },
   {
     "id": "301342",
-    "market_name": "Atwater Village Farmers' Market",
+    "market_name": "Atwater Village Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1440,7 +1440,7 @@
   },
   {
     "id": "301345",
-    "market_name": "Echo Park Farmers' Market",
+    "market_name": "Echo Park Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1473,7 +1473,7 @@
   },
   {
     "id": "301400",
-    "market_name": "Ambler Farmers' Market",
+    "market_name": "Ambler Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1824,7 +1824,7 @@
   },
   {
     "id": "301646",
-    "market_name": "Albany Farmers' Market",
+    "market_name": "Albany Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1858,7 +1858,7 @@
   },
   {
     "id": "301652",
-    "market_name": "Easthampton Farmers' Market",
+    "market_name": "Easthampton Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1935,7 +1935,7 @@
   },
   {
     "id": "307655",
-    "market_name": "Shoreview Farmers' Market",
+    "market_name": "Shoreview Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1966,7 +1966,7 @@
   },
   {
     "id": "307661",
-    "market_name": "St. Paul Farmers' Market",
+    "market_name": "St. Paul Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -1998,7 +1998,7 @@
   },
   {
     "id": "307710",
-    "market_name": "Farmer's Market at Uptown Willmar",
+    "market_name": "Farmer’s Market at Uptown Willmar",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2025,7 +2025,7 @@
   },
   {
     "id": "307751",
-    "market_name": "Kenyon Farmers' Market",
+    "market_name": "Kenyon Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2055,7 +2055,7 @@
   },
   {
     "id": "307919",
-    "market_name": "St. Cloud Area Farmers' Market",
+    "market_name": "St. Cloud Area Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2081,7 +2081,7 @@
   },
   {
     "id": "307945",
-    "market_name": "Brooklyn Park Farmers' Market",
+    "market_name": "Brooklyn Park Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2114,7 +2114,7 @@
   },
   {
     "id": "308001",
-    "market_name": "Kingfield Farmers' Market",
+    "market_name": "Kingfield Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2144,7 +2144,7 @@
   },
   {
     "id": "308010",
-    "market_name": "Little Canada Farmers' Market",
+    "market_name": "Little Canada Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2170,7 +2170,7 @@
   },
   {
     "id": "308016",
-    "market_name": "Midtown Farmers' Market",
+    "market_name": "Midtown Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2200,7 +2200,7 @@
   },
   {
     "id": "308167",
-    "market_name": "Mankato Farmers' Market",
+    "market_name": "Mankato Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2232,7 +2232,7 @@
   },
   {
     "id": "308308",
-    "market_name": "Enterprise Farmers' Market",
+    "market_name": "Enterprise Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2328,7 +2328,7 @@
   },
   {
     "id": "308452",
-    "market_name": "Downtown Chandler Farmers' Market",
+    "market_name": "Downtown Chandler Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2454,7 +2454,7 @@
   },
   {
     "id": "308510",
-    "market_name": "Scottsdale Old Town Farmers' Market",
+    "market_name": "Scottsdale Old Town Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2525,7 +2525,7 @@
   },
   {
     "id": "308646",
-    "market_name": "Elk Grove/Laguna Certified Farmers' Market",
+    "market_name": "Elk Grove/Laguna Certified Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2561,7 +2561,7 @@
   },
   {
     "id": "308724",
-    "market_name": "La Cañada Flintridge Farmers' Market",
+    "market_name": "LA Cañada Flintridge Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=La%20Ca%C3%B1ada%20Flintridge%20Farmers'%20Market%2C%201346%20Foothill%20Blvd.%2C%20La%20Canada%20Flintridge%2C%20CA%2C%2091011%2C%2091011",
@@ -2577,7 +2577,7 @@
   },
   {
     "id": "308727",
-    "market_name": "La Quinta Certified Farmers' Market",
+    "market_name": "LA Quinta Certified Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2597,7 +2597,7 @@
   },
   {
     "id": "308763",
-    "market_name": "Millbrae Farmers' Market",
+    "market_name": "Millbrae Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=Millbrae%20Farmers'%20Market%2C%20200%20Block%20Broadway%20%2C%20Between%20Victoria%20and%20La%20Cruz%2C%20Millbrae%2C%20CA%2C%2094030%2C%2094030",
@@ -2613,7 +2613,7 @@
   },
   {
     "id": "308787",
-    "market_name": "Old Monterey Farmers' Market",
+    "market_name": "Old Monterey Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2646,7 +2646,7 @@
   },
   {
     "id": "308850",
-    "market_name": "Concord Farmers' Market",
+    "market_name": "Concord Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2671,7 +2671,7 @@
   },
   {
     "id": "308853",
-    "market_name": "Diablo Valley Farmers' Market",
+    "market_name": "Diablo Valley Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2705,7 +2705,7 @@
   },
   {
     "id": "308892",
-    "market_name": "Pomona Valley Farmers' Market",
+    "market_name": "Pomona Valley Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2742,7 +2742,7 @@
   },
   {
     "id": "308943",
-    "market_name": "State Street Farmers' Market",
+    "market_name": "State Street Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2897,7 +2897,7 @@
   },
   {
     "id": "309204",
-    "market_name": "Middletown Farmers' Market",
+    "market_name": "Middletown Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2962,7 +2962,7 @@
   },
   {
     "id": "309324",
-    "market_name": "Farmers' Market Oceanside",
+    "market_name": "Farmers’ Market Oceanside",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -2982,7 +2982,7 @@
   },
   {
     "id": "309336",
-    "market_name": "Fort Pierce Farmers' Market",
+    "market_name": "Fort Pierce Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3076,7 +3076,7 @@
   },
   {
     "id": "309483",
-    "market_name": "Blue Ridge Farmers' Market",
+    "market_name": "Blue Ridge Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3196,7 +3196,7 @@
   },
   {
     "id": "309702",
-    "market_name": "Teton Valley Farmers' Market",
+    "market_name": "Teton Valley Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3347,7 +3347,7 @@
   },
   {
     "id": "309909",
-    "market_name": "Oak Park Farmers' Market",
+    "market_name": "Oak Park Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3404,7 +3404,7 @@
   },
   {
     "id": "309960",
-    "market_name": "Stade's Farm & Market",
+    "market_name": "Stade’s Farm & Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3506,7 +3506,7 @@
   },
   {
     "id": "310020",
-    "market_name": "Bloomington Community Farmers' Market",
+    "market_name": "Bloomington Community Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3614,7 +3614,7 @@
   },
   {
     "id": "310092",
-    "market_name": "Morgan County Farmers' Market Association, Indiana",
+    "market_name": "Morgan County Farmers’ Market Association, Indiana",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3731,7 +3731,7 @@
   },
   {
     "id": "310389",
-    "market_name": "Salina Farmers' Market",
+    "market_name": "Salina Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -3911,7 +3911,7 @@
   },
   {
     "id": "310611",
-    "market_name": "Church Green Farmers' Market",
+    "market_name": "Church Green Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -4420,7 +4420,7 @@
   },
   {
     "id": "311298",
-    "market_name": "Ferguson Farmers' Market",
+    "market_name": "Ferguson Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -4471,7 +4471,7 @@
   },
   {
     "id": "311340",
-    "market_name": "Soulard Farmers' Market",
+    "market_name": "Soulard Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -4506,7 +4506,7 @@
   },
   {
     "id": "311358",
-    "market_name": "Willow Springs Farmers' Market",
+    "market_name": "Willow Springs Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -4526,7 +4526,7 @@
   },
   {
     "id": "311433",
-    "market_name": "Target Range Farmers' Market",
+    "market_name": "Target Range Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -4761,7 +4761,7 @@
   },
   {
     "id": "311697",
-    "market_name": "Cowtown Farmers' Market",
+    "market_name": "Cowtown Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -4817,7 +4817,7 @@
   },
   {
     "id": "311748",
-    "market_name": "Dixon Farmers' Market",
+    "market_name": "Dixon Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -4997,7 +4997,7 @@
   },
   {
     "id": "311856",
-    "market_name": "Clinton-Bailey Farmers' Market",
+    "market_name": "Clinton-Bailey Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5023,7 +5023,7 @@
   },
   {
     "id": "311877",
-    "market_name": "Delmar Farmers' Market",
+    "market_name": "Delmar Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5296,7 +5296,7 @@
   },
   {
     "id": "312144",
-    "market_name": "West Point/Town of Highlands Farmers' Market",
+    "market_name": "West Point/Town of Highlands Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5360,7 +5360,7 @@
   },
   {
     "id": "312429",
-    "market_name": "CROP Farmers Market",
+    "market_name": "Crop Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5380,7 +5380,7 @@
   },
   {
     "id": "312492",
-    "market_name": "Village Gardens Farmers' Market",
+    "market_name": "Village Gardens Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5400,7 +5400,7 @@
   },
   {
     "id": "312495",
-    "market_name": "Wednesdays In Willamette Summer Street Market",
+    "market_name": "Wednesdays IN Willamette Summer Street Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5555,7 +5555,7 @@
   },
   {
     "id": "312570",
-    "market_name": "Lancaster County Farmers' Market",
+    "market_name": "Lancaster County Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5611,7 +5611,7 @@
   },
   {
     "id": "312609",
-    "market_name": "Oxford Circle Farmers' Market",
+    "market_name": "Oxford Circle Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5637,7 +5637,7 @@
   },
   {
     "id": "312621",
-    "market_name": "Quakertown Farmers' Market",
+    "market_name": "Quakertown Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5722,7 +5722,7 @@
   },
   {
     "id": "312705",
-    "market_name": "MUSC Farmers' Market",
+    "market_name": "Musc Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5802,7 +5802,7 @@
   },
   {
     "id": "312930",
-    "market_name": "Nacogdoches Farmers' Market",
+    "market_name": "Nacogdoches Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -5889,7 +5889,7 @@
   },
   {
     "id": "313062",
-    "market_name": "Chilhowie Farmers' Market",
+    "market_name": "Chilhowie Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6053,7 +6053,7 @@
   },
   {
     "id": "313185",
-    "market_name": "Prince George Farmers' Market",
+    "market_name": "Prince George Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6287,7 +6287,7 @@
   },
   {
     "id": "313290",
-    "market_name": "Brattleboro Area Farmers' Market",
+    "market_name": "Brattleboro Area Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6373,7 +6373,7 @@
   },
   {
     "id": "313413",
-    "market_name": "Proctor Farmers' Market",
+    "market_name": "Proctor Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6448,7 +6448,7 @@
   },
   {
     "id": "313443",
-    "market_name": "West Olympia Farmers' Market",
+    "market_name": "West Olympia Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=West%20Olympia%20Farmers'%20Market%2C%201919%20Harrison%20Ave.%20NW%2C%20Olympia%2C%20WA%2C%2098502%2C%2098502",
@@ -6476,7 +6476,7 @@
   },
   {
     "id": "313476",
-    "market_name": "Delafield Farmers' Market",
+    "market_name": "Delafield Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6496,7 +6496,7 @@
   },
   {
     "id": "313503",
-    "market_name": "Festival Foods Oshkosh Farmers' Market",
+    "market_name": "Festival Foods Oshkosh Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6691,7 +6691,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:11",
-    "market_name": "Hamilton Farmers' Market",
+    "market_name": "Hamilton Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=Hamilton%20Farmers'%20Market%2C%2035%20York%20Blvd%2C%20Hamilton%2C%20ON%2C%20Hamilton%2C%20Ontario%2C%20L8R%203K1%2C%20Canada",
@@ -6707,7 +6707,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:1272",
-    "market_name": "Ottawa Farmers' Market (Orleans)",
+    "market_name": "Ottawa Farmers’ Market (Orleans)",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6731,7 +6731,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:14",
-    "market_name": "Masonville Farmers' Market",
+    "market_name": "Masonville Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6751,7 +6751,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:1430",
-    "market_name": "Peterborough Farmers' Market",
+    "market_name": "Peterborough Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6783,7 +6783,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:146",
-    "market_name": "Barrie Farmers' Market",
+    "market_name": "Barrie Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6809,7 +6809,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:1491",
-    "market_name": "Chatham Farmers' Market",
+    "market_name": "Chatham Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6849,7 +6849,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:15",
-    "market_name": "Ottawa Street Farmers' Market",
+    "market_name": "Ottawa Street Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6921,7 +6921,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:152",
-    "market_name": "Clarksburg Farmers' Market",
+    "market_name": "Clarksburg Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6941,7 +6941,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:1523",
-    "market_name": "Stevensville Farmers' Market",
+    "market_name": "Stevensville Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6961,7 +6961,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:153",
-    "market_name": "Cloverbelt Country Farmers' Market - Dryden",
+    "market_name": "Cloverbelt Country Farmers’ Market - Dryden",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -6981,7 +6981,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:154",
-    "market_name": "Cobden Farmers' Market",
+    "market_name": "Cobden Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7001,7 +7001,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:1550",
-    "market_name": "Trails End Farmers' Market",
+    "market_name": "Trails End Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7053,7 +7053,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:159",
-    "market_name": "Downtown Woodstock Farmers' Market",
+    "market_name": "Downtown Woodstock Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7073,7 +7073,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:160",
-    "market_name": "East York Civic Centre Farmers' Market",
+    "market_name": "East York Civic Centre Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7119,7 +7119,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:168",
-    "market_name": "Leamington Farmers' Market",
+    "market_name": "Leamington Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7237,7 +7237,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:241",
-    "market_name": "Pelee Island Farmers' Market",
+    "market_name": "Pelee Island Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7257,7 +7257,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:247",
-    "market_name": "North Gower Farmers' Market",
+    "market_name": "North Gower Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7283,7 +7283,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:257",
-    "market_name": "Metcalfe Farmers' Market",
+    "market_name": "Metcalfe Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7307,7 +7307,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:263",
-    "market_name": "Vankleek Hill Farmers' Market",
+    "market_name": "Vankleek Hill Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7333,7 +7333,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:27",
-    "market_name": "Petrolia Farmers' Market",
+    "market_name": "Petrolia Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7372,7 +7372,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:289",
-    "market_name": "Port Elgin Farmers' Market",
+    "market_name": "Port Elgin Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7398,7 +7398,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:312",
-    "market_name": "Port Hope Farmers' Market",
+    "market_name": "Port Hope Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7418,7 +7418,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:325",
-    "market_name": "Goderich Farmers' Market",
+    "market_name": "Goderich Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7445,7 +7445,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:34",
-    "market_name": "Wingham Farmers' Market",
+    "market_name": "Wingham Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7465,7 +7465,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:52",
-    "market_name": "Moonlight Farmers' Market",
+    "market_name": "Moonlight Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7491,7 +7491,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:55",
-    "market_name": "Manotick Farmers' Market",
+    "market_name": "Manotick Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7511,7 +7511,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:62",
-    "market_name": "Orillia Fairgrounds Farmers' Market",
+    "market_name": "Orillia Fairgrounds Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7544,7 +7544,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:68",
-    "market_name": "Tillsonburg Famers' Market",
+    "market_name": "Tillsonburg Famers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7564,7 +7564,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:77",
-    "market_name": "Almonte Farmers' Market",
+    "market_name": "Almonte Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7595,7 +7595,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:8",
-    "market_name": "Square One Lions Club Farmers' Market",
+    "market_name": "Square One Lions Club Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7615,7 +7615,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:82",
-    "market_name": "Newmarket Farmers' Market",
+    "market_name": "Newmarket Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7648,7 +7648,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:85",
-    "market_name": "Stratford Farmers' Market",
+    "market_name": "Stratford Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7675,7 +7675,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:899",
-    "market_name": "Renfrew Farmers' Market",
+    "market_name": "Renfrew Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7715,7 +7715,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:92",
-    "market_name": "Georgetown Farmers' Market",
+    "market_name": "Georgetown Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7741,7 +7741,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:930",
-    "market_name": "Perth Farmers' Market",
+    "market_name": "Perth Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7773,7 +7773,7 @@
   },
   {
     "id": "gov:ca_on_farmers_markets:99",
-    "market_name": "Bancroft Farmers' Market",
+    "market_name": "Bancroft Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7793,7 +7793,7 @@
   },
   {
     "id": "gov:hk_fehd_public_markets_hong_kong:519",
-    "market_name": "SHEK TONG TSUI MARKET",
+    "market_name": "Shek Tong Tsui Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=SHEK%20TONG%20TSUI%20MARKET%2C%20SHEK%20TONG%20TSUI%20MUNICIPAL%20SERVICES%20BUILDING%2C%20470%20QUEEN%26%23039%3BS%20ROAD%20WEST%2C%20SHEK%20TONG%20TSUI%2C%20HK%2C%20Hong%20Kong%20Island%2C%20Hong%20Kong%2C%20Hong%20Kong",
@@ -7839,7 +7839,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:163c0c5948de6acb",
-    "market_name": "Clement Street FM",
+    "market_name": "Clement Street Fm",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7879,7 +7879,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:186844cc1c7e916f",
-    "market_name": "Rossmoor FM",
+    "market_name": "Rossmoor Fm",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7919,7 +7919,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:5ac11b2295bd0a57",
-    "market_name": "Castro FM",
+    "market_name": "Castro Fm",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7944,7 +7944,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:626d32638a25633d",
-    "market_name": "Burbank FM",
+    "market_name": "Burbank Fm",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8006,7 +8006,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:898202760315dfe6",
-    "market_name": "Santana Row FM",
+    "market_name": "Santana Row Fm",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8247,7 +8247,7 @@
   },
   {
     "id": "gov:us_dc_farmers_markets:{7D37C9B1-2D41-4D13-978E-5686F6B5472B}",
-    "market_name": "FRESHFARM Columbia Heights (WED/SAT)",
+    "market_name": "FRESHFARM Columbia Heights (Wed/Sat)",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8409,7 +8409,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:02b05922efce75e7",
-    "market_name": "Curbside Market-The Hub at Elite",
+    "market_name": "Curbside Market-the Hub at Elite",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8429,7 +8429,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:04082a4097e28be4",
-    "market_name": "Ithaca WINTER Farmers' Market",
+    "market_name": "Ithaca Winter Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8453,7 +8453,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:0843b080c1ef2b7f",
-    "market_name": "Kennedy Plaza Long Beach Farmers' Market - Wed",
+    "market_name": "Kennedy Plaza Long Beach Farmers’ Market - Wed",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8473,7 +8473,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:0955ed6f05674b5b",
-    "market_name": "Port Washington Organic Farmers' Market",
+    "market_name": "Port Washington Organic Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8519,7 +8519,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:0f7f01fec033d689",
-    "market_name": "East Aurora Wednesday Farmers' Market",
+    "market_name": "East Aurora Wednesday Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8569,7 +8569,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:126c3f6387190728",
-    "market_name": "Mrs. Nash's Farmers' Market",
+    "market_name": "Mrs. Nash’s Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8605,7 +8605,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:12be6aca71ff7f14",
-    "market_name": "MAP Mobile Market-MAP Farm Stand",
+    "market_name": "Map Mobile Market-Map Farm Stand",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8785,7 +8785,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:2425962039f040eb",
-    "market_name": "Seeds in the Middle Sunset Park Farm Stand",
+    "market_name": "Seeds IN the Middle Sunset Park Farm Stand",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8838,7 +8838,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:2c4888f9055d44fd",
-    "market_name": "Liberty Farmers' Market",
+    "market_name": "Liberty Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8897,7 +8897,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:343f4a2b29f38b44",
-    "market_name": "Newburgh Farmers' Market",
+    "market_name": "Newburgh Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8924,7 +8924,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:39ba1d143a400477",
-    "market_name": "Dizzy Lizzie's Farm Farm Stand",
+    "market_name": "Dizzy Lizzie’s Farm Farm Stand",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8944,7 +8944,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:3abd40706a92e107",
-    "market_name": "Clinton Bailey Sun Farmers' Market",
+    "market_name": "Clinton Bailey Sun Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8970,7 +8970,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:434a40c9b983b135",
-    "market_name": "Saratoga WINTER Farmers' Market",
+    "market_name": "Saratoga Winter Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9028,7 +9028,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:4c43718a667bfbe9",
-    "market_name": "MAP Mobile Market-Buffalo Adult Education",
+    "market_name": "Map Mobile Market-Buffalo Adult Education",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9048,7 +9048,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:53eac43e139584f6",
-    "market_name": "Freeville Farmers' Market",
+    "market_name": "Freeville Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9092,7 +9092,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:557b368d5f9185f9",
-    "market_name": "Village of Palmyra Farmers' Market",
+    "market_name": "Village of Palmyra Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9140,7 +9140,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:58e9e11b7e5e3f3b",
-    "market_name": "MAP Mobile Market-Broadway Pediatrics",
+    "market_name": "Map Mobile Market-Broadway Pediatrics",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9160,7 +9160,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:5ec7a003a75dc8da",
-    "market_name": "Broome Co Regional Sat Farmers' Market",
+    "market_name": "Broome CO Regional Sat Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9206,7 +9206,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:656f1c0351023e7e",
-    "market_name": "Syracuse Eastside Farmers' Market",
+    "market_name": "Syracuse Eastside Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9252,7 +9252,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:74e80272bd8e879b",
-    "market_name": "Clifton Park Farmers' Market",
+    "market_name": "Clifton Park Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9294,7 +9294,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:7ce7f8a7b4ca6a54",
-    "market_name": "Hastings WINTER Farmers' Market",
+    "market_name": "Hastings Winter Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9371,7 +9371,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:821808c33f2a347d",
-    "market_name": "Providence Farm Collective Farmers' Market",
+    "market_name": "Providence Farm Collective Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9410,7 +9410,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:82afb7ef920c0923",
-    "market_name": "Canton Tuesday Farmers' Market",
+    "market_name": "Canton Tuesday Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9456,7 +9456,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:83f79a4a97ac40d2",
-    "market_name": "Ithaca Farmers' Market (Steamboat Sat)",
+    "market_name": "Ithaca Farmers’ Market (Steamboat Sat)",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9492,7 +9492,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:8b1ddeb2d8e369f1",
-    "market_name": "Ft Edward Canal St. Mktplace Farmers' Market",
+    "market_name": "Ft Edward Canal St. Mktplace Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9538,7 +9538,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:94e98dd924bfec14",
-    "market_name": "Narrowsburg Farmers' Market",
+    "market_name": "Narrowsburg Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9558,7 +9558,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:96970ee7b341256f",
-    "market_name": "Ticonderoga Area Farmers' Market",
+    "market_name": "Ticonderoga Area Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9582,7 +9582,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:986761bb7e3f6af4",
-    "market_name": "Belmont Farmers' Market",
+    "market_name": "Belmont Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=Belmont%20Farmers'%20Market%2C%205429%20NYS%20Route%2019%20N%2C%20Belmont%2C%20NY%2C%2014813%2C%20United%20States",
@@ -9634,7 +9634,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:a0f92987bda6c7b6",
-    "market_name": "Wilson Community Farmers' Market",
+    "market_name": "Wilson Community Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9726,7 +9726,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:bce03567fc5d0d3f",
-    "market_name": "Ithaca Farmers' Market (East Hill Wed)",
+    "market_name": "Ithaca Farmers’ Market (East Hill Wed)",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9764,7 +9764,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:c08dd071b9192c39",
-    "market_name": "Canton Friday Farmers' Market",
+    "market_name": "Canton Friday Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9810,7 +9810,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:c5b791e033191a18",
-    "market_name": "Village of Monroe Farmers' Market",
+    "market_name": "Village of Monroe Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9846,7 +9846,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:caf2777cfd1a4ef2",
-    "market_name": "Slate Valley Farmers' Market",
+    "market_name": "Slate Valley Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9892,7 +9892,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:d1f21e76902ad96b",
-    "market_name": "Montour Falls Farmers' Market",
+    "market_name": "Montour Falls Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9929,7 +9929,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:d2e0fa83f7a37441",
-    "market_name": "North Tonawanda City Thu Farmers' Market",
+    "market_name": "North Tonawanda City Thu Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=North%20Tonawanda%20City%20Thu%20Farmers'%20Market%2C%20310%20Robinson%20Road%2C%20North%20Tonawanda%2C%20NY%2C%2014120%2C%20United%20States",
@@ -9957,7 +9957,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:d4955e3c78656ec3",
-    "market_name": "Pawling Farmers' Market",
+    "market_name": "Pawling Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -9982,7 +9982,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:d551683e48f0e487",
-    "market_name": "Niagara Falls City Friday Farmers' Market",
+    "market_name": "Niagara Falls City Friday Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10002,7 +10002,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:d721ef72b18bb724",
-    "market_name": "Watertown Farm & Craft Farmers' Market",
+    "market_name": "Watertown Farm & Craft Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10022,7 +10022,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:dbcc6bca9b2d9140",
-    "market_name": "Westside Farmers' Market",
+    "market_name": "Westside Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10064,7 +10064,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:dc6cb119e169359a",
-    "market_name": "Webster's Joe Obbie Farmers' Market",
+    "market_name": "Webster’s Joe Obbie Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10091,7 +10091,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:df3a2a1f016ec6ce",
-    "market_name": "Hamburg Farmers' Market",
+    "market_name": "Hamburg Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10133,7 +10133,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:dff3fe8ce89ff733",
-    "market_name": "Saratoga Farmers' Market-Wednesday",
+    "market_name": "Saratoga Farmers’ Market-Wednesday",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10207,7 +10207,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:ecc879eae6495a54",
-    "market_name": "Millerton Farmers' Market",
+    "market_name": "Millerton Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10227,7 +10227,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:ee09ea710abe9f38",
-    "market_name": "Germantown Farmers' Market",
+    "market_name": "Germantown Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10278,7 +10278,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:f12cc3b68bf46be7",
-    "market_name": "The Windmill Farmers' Market",
+    "market_name": "The Windmill Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -10347,7 +10347,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:fc647b49aa6306ac",
-    "market_name": "Kinderhook Farmers' Market",
+    "market_name": "Kinderhook Farmers’ Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=Kinderhook%20Farmers'%20Market%2C%20US%20Route%209%20and%20Hudson%20St%2C%20Kinderhook%2C%20NY%2C%2012106%2C%20United%20States",
@@ -10363,7 +10363,7 @@
   },
   {
     "id": "gov:us_ny_farmers_markets:fe90797468de306f",
-    "market_name": "Ithaca Farmers' Market (Steamboat Sun)",
+    "market_name": "Ithaca Farmers’ Market (Steamboat Sun)",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {

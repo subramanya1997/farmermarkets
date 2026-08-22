@@ -15,6 +15,7 @@ const governmentPath = path.join(root, 'data/sources/government_markets.json');
 const auditDirectory = path.join(root, 'data/enrichment/audit');
 const auditArchivePath = path.join(root, 'data/enrichment/archive/audit-2026-08-21.tar.gz');
 const outputPath = path.join(root, 'public/data/farmers_markets.json');
+const overridesPath = path.join(root, 'data/overrides/editorial-overrides.json');
 
 function fail(message) {
   throw new Error(message);
@@ -147,6 +148,33 @@ function validateConsolidation({ sources, enrichmentById, auditById, markets }) 
   }
 }
 
+// Editorial fixes to enrichment-derived values (typography, time and season
+// formatting) that cannot live in the source files because the underlying
+// values come from the archived audits. Applied after validation so the
+// enrichment integrity checks still compare against the raw audit data.
+async function applyEditorialOverrides(markets) {
+  if (!await pathExists(overridesPath)) return;
+  const { schema_version: schemaVersion, overrides } = JSON.parse(await fs.readFile(overridesPath, 'utf8'));
+  if (schemaVersion !== 1 || !Array.isArray(overrides)) {
+    fail('editorial overrides file has an unsupported shape');
+  }
+  for (const override of overrides) {
+    const market = markets[override.index];
+    if (!market || String(market.id) !== String(override.id)) {
+      fail(`editorial override at index ${override.index} does not match market ${override.id}`);
+    }
+    const keys = override.path.split('.');
+    let target = market;
+    for (const key of keys.slice(0, -1)) {
+      target = target?.[key];
+      if (target === null || typeof target !== 'object') {
+        fail(`editorial override path ${override.path} is missing on market ${override.id}`);
+      }
+    }
+    target[keys.at(-1)] = override.value;
+  }
+}
+
 export async function buildConsolidatedMarkets({ check = false } = {}) {
   const [legacy, government, enrichments, auditById] = await Promise.all([
     readJson(legacyPath),
@@ -175,6 +203,7 @@ export async function buildConsolidatedMarkets({ check = false } = {}) {
   });
 
   validateConsolidation({ sources, enrichmentById, auditById, markets });
+  await applyEditorialOverrides(markets);
   const serialized = `${JSON.stringify(markets, null, 2)}\n`;
   if (check) {
     const current = await fs.readFile(outputPath, 'utf8');
