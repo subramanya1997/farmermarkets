@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 interface AnalyticsProvidersProps {
@@ -10,6 +11,7 @@ export function AnalyticsProviders({ googleMeasurementId, enableVercelAnalytics 
   return (
     <>
       {enableVercelAnalytics ? <Analytics /> : null}
+      {enableVercelAnalytics ? <SpeedInsights /> : null}
       <GoogleAnalytics measurementId={googleMeasurementId} />
     </>
   );
