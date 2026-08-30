@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getFeaturedMarkets } from "@/lib/marketsIndex";
+import { getMarketsPage } from "@/lib/marketsIndex";
 import { getStateHubSummaries } from "@/lib/statePage";
-import { PopularMarkets } from "@/components/PopularMarkets";
+import { getTopicSummaries } from "@/lib/topicPage";
+import { MarketsExplorer } from "@/components/MarketsExplorer";
 import { FAQ } from "@/components/FAQ";
-import { ShoppingBasket, Truck, Calendar, MapPin, CreditCard, Leaf } from "lucide-react";
+import { MapPin, CalendarDays, CreditCard, Clock, Laptop } from "lucide-react";
 import type { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { SITE_FRAME } from "@/lib/ui";
@@ -22,15 +23,24 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Quick links to the four topic hubs; icons are picked here because the topic
+ * summaries carry no icon.
+ */
+const TOPIC_ICONS = {
+  saturday: CalendarDays,
+  'snap-ebt': CreditCard,
+  hours: Clock,
+  online: Laptop,
+} as const;
+
 export default async function Home() {
   let homeData;
   try {
-    // Only the handful of records the page actually renders — the homepage
-    // used to hand 100 full records to a client component that showed none of
-    // them in the server HTML.
     homeData = await Promise.all([
-      getFeaturedMarkets(6),
       getStateHubSummaries(),
+      getTopicSummaries(),
+      getMarketsPage(1),
     ]);
   } catch (error) {
     console.error('Error fetching markets for homepage:', error);
@@ -48,10 +58,10 @@ export default async function Home() {
     );
   }
 
-  const [featuredMarkets, states] = homeData;
-  const topStates = states.slice(0, 12);
+  const [states, topics, indexPage] = homeData;
+  const totalMarkets = indexPage?.total ?? 0;
+  const stateCount = states.length;
 
-  // Enhanced structured data for homepage
   const websiteSchema = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
@@ -67,12 +77,6 @@ export default async function Home() {
         'query-input': 'required name=search_term_string'
       }
   };
-    
-    // NOTE: no Organization node here. The root layout emits one on every
-    // page, and this second copy — with a different description and an empty
-    // `sameAs: []` — meant the homepage declared the publisher twice with two
-    // different sets of facts. The WebSite + SearchAction above stays: it is
-    // homepage-only by definition.
 
   return (
       <>
@@ -81,158 +85,78 @@ export default async function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
         <div className="flex flex-col min-h-[calc(100vh-4rem)]">
-          {/* Hero Section */}
-        <section className="relative w-full py-8 sm:py-12 md:py-24 lg:py-32 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-          <div className={SITE_FRAME}>
-            <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
-              <div className="space-y-2 sm:space-y-3">
-                {/*
-                  The H1 names the thing the site is about. It used to read
-                  "Fresh from Farm to Your Table" — a slogan that never says
-                  "farmers market", on the one heading every crawler and every
-                  extractive answer engine weighs most. Same gradient, same
-                  scale, same hero: only the words changed.
-                */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+          {/* Compact hero: name the site and what it holds, then hand over to
+              the explorer. No search form here — the explorer's own search
+              bar sits directly below, and two search boxes read as clutter. */}
+          <section className="relative w-full bg-gradient-to-b from-green-50 to-white py-6 dark:from-green-900/20 dark:to-zinc-950 sm:py-8">
+            <div className={SITE_FRAME}>
+              <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center">
+                {/* The H1 keeps naming the thing the site is about; the
+                    tagline under it states what the site is. */}
+                <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl">
                   Find Farmers Markets Near You
                 </h1>
-                <p className="mx-auto max-w-[700px] text-sm sm:text-base md:text-lg lg:text-xl text-zinc-600 dark:text-zinc-400">
-                  Fresh from farm to your table. Browse market days, opening times and SNAP/EBT acceptance for local markets across the directory.
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 sm:text-base">
+                  Every farmers market, in one place. Hours, market days, and SNAP/EBT acceptance
+                  {totalMarkets > 0 && stateCount > 0
+                    ? ` for ${totalMarkets.toLocaleString()} markets across ${stateCount} states and regions.`
+                    : ' for thousands of markets across the directory.'}
                 </p>
-              </div>
-              
-
-              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
-                <Link href="/markets" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto px-4 sm:px-8 bg-green-600 hover:bg-green-700">
-                    Find Markets Near Me
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works Section */}
-        <section className="w-full py-8 sm:py-12 md:py-16 bg-white dark:bg-zinc-900">
-          <div className={SITE_FRAME}>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-12">
-              How to Find Your Local Farmers Market
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
-              <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
-                <div className="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-green-100 flex items-center justify-center">
-                  <MapPin className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {topics.map((topic) => {
+                    const Icon = TOPIC_ICONS[topic.slug as keyof typeof TOPIC_ICONS] ?? MapPin;
+                    return (
+                      <Link
+                        key={topic.slug}
+                        href={topic.href}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-xs font-medium text-zinc-700 shadow-sm transition-colors hover:border-green-600/40 hover:bg-green-50 hover:text-green-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-green-500/40 dark:hover:bg-green-900/20 dark:hover:text-green-400 sm:text-sm"
+                      >
+                        <Icon className="h-3.5 w-3.5 text-green-600 dark:text-green-500" />
+                        {topic.label}
+                      </Link>
+                    );
+                  })}
                 </div>
-                <h3 className="font-semibold text-lg sm:text-xl">Choose Your Location</h3>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Enter your location to find markets near you
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
-                <div className="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-green-100 flex items-center justify-center">
-                  <Calendar className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
-                </div>
-                <h3 className="font-semibold text-lg sm:text-xl">Pick Your Time</h3>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  View market schedules and plan your visit
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center space-y-3 sm:space-y-4">
-                <div className="w-12 sm:w-16 h-12 sm:h-16 rounded-full bg-green-100 flex items-center justify-center">
-                  <ShoppingBasket className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
-                </div>
-                <h3 className="font-semibold text-lg sm:text-xl">Shop Fresh & Local</h3>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Support local farmers and artisans
-                </p>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Browse-by-state Section */}
-        {/*
-          These twelve tiles all pointed at bare `/markets`, so they were twelve
-          copies of one link. They now point at the state hubs, which gives the
-          homepage a real second level of crawlable navigation.
-        */}
-        <section className="w-full py-8 sm:py-12 md:py-16 bg-zinc-50 dark:bg-zinc-800">
-          <div className={SITE_FRAME}>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-8 sm:mb-12">
-              Browse Farmers Markets by State
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 sm:gap-4">
-              {topStates.map((state) => (
-                <Link
-                  key={state.slug}
-                  href={state.href}
-                  className="block"
-                >
-                  <div className="flex flex-col items-center p-3 sm:p-4 bg-white dark:bg-zinc-700 rounded-lg shadow-sm hover:shadow-md transition-all hover:scale-105 cursor-pointer">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-2 sm:mb-3">
-                      <MapPin className="w-6 h-6 text-green-600" />
-                    </div>
-                    <span className="text-xs sm:text-sm font-medium text-center">{state.name}</span>
-                    <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                      {state.marketCount.toLocaleString()} markets
-                    </span>
-                  </div>
-                </Link>
-              ))}
+          {/* The discovery experience, front and center: the same explorer as
+              /markets — search, filters, nearest-first results from the
+              reader's approximate location, and the grid/map toggle. */}
+          <MarketsExplorer />
+
+          {/* Browse-by-state: a compact link directory rather than tiles, so
+              every state hub is one crawlable hop from the homepage. Together
+              with the topic chips above, these are the homepage's crawl
+              paths; the explorer itself is client-rendered. */}
+          <section className="w-full border-t border-zinc-200 bg-zinc-50 py-8 dark:border-zinc-800 dark:bg-zinc-800/50 sm:py-12">
+            <div className={SITE_FRAME}>
+              <h2 className="mb-5 text-xl font-bold tracking-tight sm:text-2xl">
+                Browse Farmers Markets by State
+              </h2>
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+                {states.map((state) => (
+                  <li key={state.slug}>
+                    <Link
+                      href={state.href}
+                      className="group flex items-baseline justify-between gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-white dark:hover:bg-zinc-800"
+                    >
+                      <span className="truncate font-medium text-zinc-700 group-hover:text-green-700 dark:text-zinc-300 dark:group-hover:text-green-400">
+                        {state.name}
+                      </span>
+                      <span className="shrink-0 text-xs text-zinc-400 dark:text-zinc-500">
+                        {state.marketCount.toLocaleString()}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="flex justify-center pt-8">
-              <Link
-                href="/markets"
-                className="text-sm font-medium text-green-600 hover:text-green-700 dark:text-green-500"
-              >
-                See every state in the directory
-              </Link>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Featured Markets (server-rendered, so the links are in the HTML) */}
-        <PopularMarkets markets={featuredMarkets} />
-
-        {/* Benefits Section */}
-        <section className="w-full py-8 sm:py-12 md:py-16 bg-green-50 dark:bg-green-900/20">
-          <div className={SITE_FRAME}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 2xl:gap-12">
-              <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
-                <Leaf className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
-                <h3 className="font-semibold text-base sm:text-lg">Fresh & Local</h3>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Support local farmers and get the freshest produce
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
-                <Truck className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
-                <h3 className="font-semibold text-base sm:text-lg">Farm to Table</h3>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Reduce food miles and support sustainable practices
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
-                <CreditCard className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
-                <h3 className="font-semibold text-base sm:text-lg">Easy Payments</h3>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  Most markets accept cards, cash, and mobile payments
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
-                <ShoppingBasket className="w-6 sm:w-8 h-6 sm:h-8 text-green-600" />
-                <h3 className="font-semibold text-base sm:text-lg">Variety</h3>
-                <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400">
-                  From produce to crafts, find everything you&apos;ll need
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <FAQ />
+          {/* FAQ Section */}
+          <FAQ />
         </div>
       </>
   );

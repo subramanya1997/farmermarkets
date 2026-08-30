@@ -1,0 +1,57 @@
+{
+  "groupId": "tgrp_3d57fb13c4aa414eb46f18f9cee87c3b",
+  "processor": "base",
+  "submitted_at": "2026-08-30T02:49:18.458Z",
+  "runMap": {
+    "srun_3d57fb13c4aa414e5b7f10047b623434": {
+      "id": 321,
+      "name": "New Hope Community Farmers Market",
+      "slug": "new-hope-community-farmers-market-minneapolis"
+    },
+    "srun_3d57fb13c4aa414e6c63cc8a767b9add": {
+      "id": 5819,
+      "name": "The Chapel Hill Farmers’ Market",
+      "slug": "the-chapel-hill-farmers-market"
+    },
+    "srun_3d57fb13c4aa414e7d488910847361fe": {
+      "id": 5820,
+      "name": "Richfield Farmers Market",
+      "slug": "richfield-farmers-market"
+    },
+    "srun_3d57fb13c4aa414e8e2d459aadac1c2f": {
+      "id": 300003,
+      "name": "Market IN the Park",
+      "slug": "market-in-the-park-mobile"
+    },
+    "srun_3d57fb13c4aa414e9f120224a89fb898": {
+      "id": 300004,
+      "name": "The Territory Farmers’ Market",
+      "slug": "the-territory-farmers-market-galena"
+    },
+    "srun_3d57fb13c4aa414eaff6bea26d78d051": {
+      "id": 300005,
+      "name": "City of Plymouth Farmers Market",
+      "slug": "city-of-plymouth-farmers-market-plymouth"
+    },
+    "srun_3d57fb13c4aa414ec0db7b286877f572": {
+      "id": 300009,
+      "name": "Appleton Downtown Farm Market",
+      "slug": "appleton-downtown-farm-market-appleton"
+    },
+    "srun_3d57fb13c4aa414ed1c037b2b58a0a23": {
+      "id": 300013,
+      "name": "Alexandria Bay Farmers Market",
+      "slug": "alexandria-bay-farmers-market-alexandria-bay"
+    },
+    "srun_3d57fb13c4aa414ee2a4f4344361c02c": {
+      "id": 300018,
+      "name": "Market IN the Park - Lavretta Park",
+      "slug": "market-in-the-park-lavretta-park-mobile"
+    },
+    "srun_3d57fb13c4aa414ef389b0ca9cbd4285": {
+      "id": 300019,
+      "name": "26th Annual Highlands Business Partnership’s Farmers Market",
+      "slug": "26th-annual-highlands-business-partnerships-farmers-market-highlands"
+    }
+  }
+}

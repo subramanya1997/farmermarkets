@@ -11,8 +11,10 @@ import { SITE_FRAME } from "@/lib/ui";
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
+  // Discover lives in the footer's Site column now: the homepage IS the
+  // discovery experience, so a header link to /markets was a duplicate.
   const navigation = [
-    { name: 'Discover', href: '/markets' },
+    { name: 'Blog', href: '/blog' },
     { name: 'About', href: '/about' },
   ];
 

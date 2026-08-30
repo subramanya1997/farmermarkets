@@ -106,44 +106,6 @@ export function toStateSlug(state: string): string {
   return state.toLowerCase().replace(/\s+/g, '-');
 }
 
-/**
- * A small, deterministic set of well-documented markets for the homepage.
- *
- * The homepage used to hand 100 full records to a client component that
- * rendered `null` until it mounted, so the HTML contained no market links at
- * all. It now server-renders this handful instead — picked for records that
- * actually have coordinates, opening times and a website (so the cards are not
- * mostly empty), and spread across distinct states so the section links into
- * different parts of the directory.
- */
-export async function getFeaturedMarkets(limit = 6): Promise<FarmerMarket[]> {
-  const markets = await getSortedMarkets();
-  const seenStates = new Set<string>();
-  const featured: FarmerMarket[] = [];
-  const fallback: FarmerMarket[] = [];
-
-  for (const market of markets) {
-    const state = market.state?.trim();
-    const wellDocumented =
-      Boolean(market.location?.lat) &&
-      Boolean(market.websites?.length) &&
-      Boolean(market.season || market.days?.length) &&
-      Boolean(market.city && state);
-    if (!wellDocumented || !state) continue;
-
-    if (seenStates.has(state)) {
-      if (fallback.length < limit) fallback.push(market);
-      continue;
-    }
-    seenStates.add(state);
-    featured.push(market);
-    if (featured.length === limit) return featured;
-  }
-
-  // Only reachable if fewer than `limit` states have a qualifying record.
-  return [...featured, ...fallback].slice(0, limit);
-}
-
 /** Canonical path for an index page (`/markets` for page 1). */
 export function marketsPagePath(page: number): string {
   return page <= 1 ? '/markets' : `/markets/page/${page}`;

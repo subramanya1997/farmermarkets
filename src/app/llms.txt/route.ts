@@ -1,3 +1,4 @@
+import { getAllPosts, blogPath } from '@/lib/blog';
 import { getMarkets } from '@/lib/data';
 import { getGeoIndex } from '@/lib/geoIndex';
 import { statePath } from '@/lib/statePage';
@@ -59,6 +60,15 @@ export async function GET(): Promise<Response> {
     `- [Markets with online ordering](${absoluteUrl('/farmers-markets/online')}): markets offering online ordering, delivery or CSA shares`,
     `- [Market hours](${absoluteUrl('/farmers-markets/hours')}): opening days and hours across the directory`,
     `- [Saturday markets](${absoluteUrl('/farmers-markets/saturday')}): markets open on Saturday, by state`,
+    '',
+    '## Guides',
+    '',
+    'Practical articles for market shoppers, written in markdown in the site repo.',
+    '',
+    `- [Blog index](${absoluteUrl('/blog')})`,
+    ...getAllPosts().map(
+      (post) => `- [${post.title}](${absoluteUrl(blogPath(post.slug))}): ${post.description}`
+    ),
     '',
     '## States and provinces',
     '',

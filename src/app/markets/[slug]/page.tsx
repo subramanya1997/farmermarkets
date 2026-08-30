@@ -354,6 +354,19 @@ export default async function MarketDetailPage({
                     enrichment={market.enrichment}
                     audit={market.audit}
                   />
+
+                  {/* The claim premise: operators land on their own listing
+                      long before they find a "for operators" page. */}
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    Do you run this market?{' '}
+                    <Link
+                      href={`/for-market-operators?market=${market.slug}`}
+                      className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
+                    >
+                      Claim and update this listing
+                    </Link>
+                    . Listing is free for market operators.
+                  </p>
                 </div>
               </div>
 

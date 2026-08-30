@@ -1,0 +1,414 @@
+[
+  {
+    "id": "321",
+    "market_name": "New Hope Community Farmers Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.newhopemn.gov/city_hall/parks_and_recreation/farmers_market"
+      ],
+      "phone_numbers": [
+        "763-531-5159"
+      ],
+      "social_media": [
+        "https://www.instagram.com/newhopemn/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Thursdays, June 4 - October 1, 3-7 p.m.",
+        "closes 6 p.m. on October 1"
+      ],
+      "season": "June 4 through October 1, 2026"
+    },
+    "sources": [
+      {
+        "title": "Farmers Market - City of New Hope",
+        "url": "https://www.newhopemn.gov/city_hall/parks_and_recreation/farmers_market",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "5819",
+    "market_name": "The Chapel Hill Farmers’ Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.thechapelhillfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "(919) 968-2788"
+      ],
+      "social_media": [
+        "https://www.facebook.com/TheChapelHillFarmersMarket",
+        "https://www.instagram.com/chfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 8am-12pm",
+        "Tuesdays 3pm-6pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "The Chapel Hill Farmers' Market - Home",
+        "url": "https://www.thechapelhillfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Chapel Hill Farmers' Market Facebook · Chapel Hill Farmers' Market 6.3K+ followers",
+        "url": "https://www.facebook.com/TheChapelHillFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Chapel Hill Farmers Market (@chfarmersmarket) - Instagram",
+        "url": "https://www.instagram.com/chfarmersmarket?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "5820",
+    "market_name": "Richfield Farmers Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.richfieldmn.gov/farmersmarket"
+      ],
+      "phone_numbers": [
+        "612-861-9362"
+      ],
+      "social_media": [
+        "https://www.facebook.com/RichfieldFarmersMarket",
+        "https://www.instagram.com/richfieldfarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday mornings",
+        "May through August, 7 am to 12 pm",
+        "September through October, 8 am to 12 pm"
+      ],
+      "season": "May 2 through October 31, 2026"
+    },
+    "sources": [
+      {
+        "title": "Farmers Market | Richfield, MN",
+        "url": "https://www.richfieldmn.gov/farmersmarket",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Richfield MN - Farmers Market Facebook · Richfield Farmers Market 5.5K+ followers",
+        "url": "https://www.facebook.com/RichfieldFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "300003",
+    "market_name": "Market IN the Park",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.cityofmobile.gov/parks-rec/market-in-the-park/"
+      ],
+      "phone_numbers": [
+        "251-208-1550"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MarketInTheParkMobile/",
+        "https://www.instagram.com/marketintheparkmobile/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 7:30 a.m. to noon, October 10 through November 14, 2026",
+        "Saturdays 7:30 a.m. to noon, April 25 through June 27, 2026"
+      ],
+      "season": "Spring/Summer: April 25 through June 27, 2026; Fall: October 10 through November 14, 2026"
+    },
+    "sources": [
+      {
+        "title": "Market In The Park",
+        "url": "https://www.cityofmobile.gov/parks-rec/market-in-the-park/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Market In The Park",
+        "url": "https://www.cityofmobile.gov/events/events/market-in-the-park/",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Market in the Park | Mobile AL | Facebook",
+        "url": "https://www.facebook.com/MarketInTheParkMobile/",
+        "fields": [
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Market in the Park (@marketintheparkmobile) - Instagram",
+        "url": "https://www.instagram.com/marketintheparkmobile/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "SPRING/SUMMER MARKET IN THE PARK - mobilecountyal.gov",
+        "url": "https://www.mobilecountyal.gov/community_events/events/springsummer-market-in-the-park-2026-04-25/",
+        "fields": [
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "300004",
+    "market_name": "The Territory Farmers’ Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://thegalenaterritory.com/"
+      ],
+      "phone_numbers": [
+        "(815) 777-2000"
+      ],
+      "social_media": [
+        "https://www.facebook.com/TheTerritoryFarmersMarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sunday morning (8-noon) from Memorial Day weekend to Columbus Day weekend"
+      ],
+      "season": "Memorial Day weekend to Columbus Day weekend"
+    },
+    "sources": [
+      {
+        "title": "thegalenaterritory.com",
+        "url": "https://thegalenaterritory.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "The Territory Farmers Market | Galena IL | Facebook",
+        "url": "https://www.facebook.com/TheTerritoryFarmersMarket",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "300005",
+    "market_name": "City of Plymouth Farmers Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.plymouthmn.gov/departments/parks-recreation-/events/farmers-market"
+      ],
+      "phone_numbers": [
+        "763-509-5214"
+      ],
+      "social_media": [
+        "https://facebook.com/plymouthmn",
+        "https://instagram.com/plymouthmn_gov"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesdays, June 17 to Sept. 30, 2-6 p.m."
+      ],
+      "season": "June 17 to September 30"
+    },
+    "sources": [
+      {
+        "title": "Plymouth Farmers Market - Minnesota Grown",
+        "url": "https://minnesotagrown.com/member/plymouth-farmers-market",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Plymouth Farmers Market | City of Plymouth, MN",
+        "url": "https://www.plymouthmn.gov/departments/parks-recreation-/events/farmers-market",
+        "fields": [
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "300009",
+    "market_name": "Appleton Downtown Farm Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://appletondowntown.org/events/downtown-appleton-farm-market"
+      ],
+      "phone_numbers": [
+        "920-954-9112"
+      ],
+      "social_media": [
+        "https://www.facebook.com/downtownappletonfarmmarket",
+        "https://www.instagram.com/appletondowntown/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 8:00 am–12:30 pm"
+      ],
+      "season": "June 6–October 17"
+    },
+    "sources": [
+      {
+        "title": "Downtown Appleton Farm Market - Appleton Downtown Inc.",
+        "url": "https://appletondowntown.org/events/downtown-appleton-farm-market",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Downtown Appleton Farm Market | Appleton WI | Facebook",
+        "url": "https://www.facebook.com/downtownappletonfarmmarket",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Contact | Appleton Downtown Inc.",
+        "url": "http://appletondowntown.org/contact",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "300013",
+    "market_name": "Alexandria Bay Farmers Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.swanbayresort.com/the-farmers-market"
+      ],
+      "phone_numbers": [
+        "315-482-7926"
+      ],
+      "social_media": [
+        "https://www.facebook.com/visitalexbay.org"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Fridays 10:00 AM to 4:00 PM",
+        "Saturdays 8:00 AM to Noon"
+      ],
+      "season": "June 12 to Sept 12, 2026"
+    },
+    "sources": [
+      {
+        "title": "Alexandria Bay Farmers' Market at Swan Bay  | Adirondack Harvest",
+        "url": "http://adirondackharvest.com/user/alexbay",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "300019",
+    "market_name": "26th Annual Highlands Business Partnership’s Farmers Market",
+    "verified_at": "2026-08-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.highlandsnj.com/Special_Events/Farmers_Market/Farmers_Market.shtml"
+      ],
+      "phone_numbers": [
+        "732-291-4713"
+      ],
+      "social_media": [
+        "https://www.facebook.com/HighlandsNJ/",
+        "https://www.instagram.com/visithighlandsnj/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Saturday morning, 8:30 AM to 2 PM"
+      ],
+      "season": "June 20th through November 21st, 2026"
+    },
+    "sources": [
+      {
+        "title": "Annual Highlands Farmers Market",
+        "url": "https://visitnj.org/nj-events/annual-highlands-farmers-market",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Highlands Farmers Market",
+        "url": "https://www.highlandsnj.com/Special_Events/Farmers_Market/Farmers_Market.shtml",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  }
+]

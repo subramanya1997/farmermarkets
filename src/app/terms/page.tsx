@@ -114,9 +114,7 @@ export default function TermsPage() {
                 <div className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-4 sm:p-6">
                   <p className="text-sm sm:text-base font-medium">Farmer Markets</p>
                   <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 mt-2">
-                    Email: legal@farmermarkets.app<br />
-                    Address: 123 Market Street, Suite 100<br />
-                    San Francisco, CA 94105
+                    Email: legal@farmermarkets.app
                   </p>
                 </div>
               </div>

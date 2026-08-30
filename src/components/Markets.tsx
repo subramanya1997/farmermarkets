@@ -39,7 +39,12 @@ interface MarketsProps {
   showDiscoverySurvey?: boolean;
 }
 
-const ITEMS_PER_PAGE = 30;
+/**
+ * Must stay a multiple of 12: the results grid renders 2, 3, 4, or 6 columns
+ * depending on viewport, and 12 is the smallest count they all divide, so a
+ * full page never ends on a ragged row (30 left a 2-card row at 4 columns).
+ */
+const ITEMS_PER_PAGE = 36;
 
 /** Radix Select forbids `""` as an item value, so "all countries" needs a sentinel. */
 const ALL_COUNTRIES_VALUE = 'all';
@@ -65,7 +70,14 @@ export function Markets({
   const { markets, loading: marketsLoading, error: marketsError } = useAllMarkets();
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
+  // Seeded from `?search=` so the homepage search bar (and the WebSite
+  // SearchAction schema) land here with the query applied. Safe to read
+  // `window` directly: this component is loaded with `ssr: false`.
+  const [searchTerm, setSearchTerm] = useState(() =>
+    typeof window === 'undefined'
+      ? ''
+      : new URLSearchParams(window.location.search).get('search') ?? ''
+  );
   const [selectedCountry, setSelectedCountry] = useState('');
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   const [sortOrder, setSortOrder] = useState<'nearest' | 'name'>('nearest');

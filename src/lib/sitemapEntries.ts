@@ -20,6 +20,7 @@
  */
 
 import 'server-only';
+import { getAllPosts, blogPath } from './blog';
 import { getMarkets } from './data';
 import { getGeoIndex, getCityForMarketSlug } from './geoIndex';
 import { getTotalMarketPages, marketsPagePath } from './marketsIndex';
@@ -89,9 +90,26 @@ async function buildEntries(): Promise<SitemapEntry[]> {
     '/markets',
     '/about',
     '/about-the-data',
+    '/for-market-operators',
     '/privacy',
     '/terms',
   ].map((path) => ({ url: absolute(path) }));
+
+  // Blog posts carry a truthful `lastmod`: their dates live in the post
+  // definitions themselves, so they only change when the copy does. The index
+  // takes the newest of them, the same policy the topic pages use.
+  const posts = getAllPosts();
+  const postEntries: SitemapEntry[] = posts.map((post) => ({
+    url: absolute(blogPath(post.slug)),
+    lastModified: toIsoInstant(post.updatedAt ?? post.publishedAt),
+  }));
+  const blogIndexEntry: SitemapEntry = {
+    url: absolute('/blog'),
+    lastModified: postEntries.reduce<string | undefined>(
+      (newest, entry) => newer(newest, entry.lastModified),
+      undefined
+    ),
+  };
 
   // `/markets` itself is already in `staticEntries`, so pages start at 2.
   const indexEntries: SitemapEntry[] = Array.from(
@@ -129,6 +147,8 @@ async function buildEntries(): Promise<SitemapEntry[]> {
   // only ever reads one of them.
   return [
     ...staticEntries,
+    blogIndexEntry,
+    ...postEntries,
     ...topicEntries,
     ...indexEntries,
     ...stateEntries,
