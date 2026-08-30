@@ -43,16 +43,49 @@ function renderInline(escaped: string): string {
     .replace(/\*([^*]+)\*/g, '<em>$1</em>');
 }
 
+/** Anchor id for a heading: lowercase, alphanumerics, hyphens. */
+export function headingId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/[\s-]+/g, '-');
+}
+
+export interface MarkdownHeading {
+  /** 2 for `##`, 3 for `###`. */
+  depth: 2 | 3;
+  text: string;
+  /** Matches the id the renderer stamps on the heading element. */
+  id: string;
+}
+
+/** The `##`/`###` headings of a markdown body, for a table of contents. */
+export function extractHeadings(markdown: string): MarkdownHeading[] {
+  const headings: MarkdownHeading[] = [];
+  for (const line of markdown.replace(/\r\n/g, '\n').split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('### ')) {
+      headings.push({ depth: 3, text: trimmed.slice(4), id: headingId(trimmed.slice(4)) });
+    } else if (trimmed.startsWith('## ')) {
+      headings.push({ depth: 2, text: trimmed.slice(3), id: headingId(trimmed.slice(3)) });
+    }
+  }
+  return headings;
+}
+
 /** One markdown block: a heading, a list, or a paragraph. */
 function renderBlock(block: string): string {
   const lines = block.split('\n').map((line) => line.trim()).filter(Boolean);
   if (lines.length === 0) return '';
 
   if (lines.length === 1 && lines[0].startsWith('### ')) {
-    return `<h3>${renderInline(escapeHtml(lines[0].slice(4)))}</h3>`;
+    const text = lines[0].slice(4);
+    return `<h3 id="${headingId(text)}">${renderInline(escapeHtml(text))}</h3>`;
   }
   if (lines.length === 1 && lines[0].startsWith('## ')) {
-    return `<h2>${renderInline(escapeHtml(lines[0].slice(3)))}</h2>`;
+    const text = lines[0].slice(3);
+    return `<h2 id="${headingId(text)}">${renderInline(escapeHtml(text))}</h2>`;
   }
   if (lines.every((line) => line.startsWith('- '))) {
     const items = lines.map((line) => `<li>${renderInline(escapeHtml(line.slice(2)))}</li>`);

@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
-import { countWords, parseFrontmatter, renderMarkdown } from './markdown.ts';
+import { countWords, extractHeadings, parseFrontmatter, renderMarkdown } from './markdown.ts';
 
 test('headings, paragraphs and lists', () => {
   const html = renderMarkdown(
@@ -8,8 +8,19 @@ test('headings, paragraphs and lists', () => {
   );
   assert.equal(
     html,
-    '<h2>Hours</h2>\n<p>Most markets run weekly.</p>\n<ul><li>One</li><li>Two</li></ul>\n<ol><li>First</li><li>Second</li></ol>\n<h3>Winter</h3>'
+    '<h2 id="hours">Hours</h2>\n<p>Most markets run weekly.</p>\n<ul><li>One</li><li>Two</li></ul>\n<ol><li>First</li><li>Second</li></ol>\n<h3 id="winter">Winter</h3>'
   );
+});
+
+test('heading ids and extraction agree', () => {
+  const markdown = "## What's Open? Days & Hours\n\ntext\n\n### Winter, Indoors";
+  assert.deepEqual(extractHeadings(markdown), [
+    { depth: 2, text: "What's Open? Days & Hours", id: 'whats-open-days-hours' },
+    { depth: 3, text: 'Winter, Indoors', id: 'winter-indoors' },
+  ]);
+  const html = renderMarkdown(markdown);
+  assert.ok(html.includes('<h2 id="whats-open-days-hours">'));
+  assert.ok(html.includes('<h3 id="winter-indoors">'));
 });
 
 test('multi-line paragraphs join with a space', () => {

@@ -2,6 +2,7 @@
 title: When Are Farmers Markets Open? Seasons, Days, and Hours Explained
 description: Most farmers markets run one or two set days a week, usually morning to early afternoon, and many close for the winter. Here is how to read a market schedule.
 publishedAt: 2026-08-29
+cover: seasons
 ---
 
 A farmers market does not keep store hours. It exists for a few hours a week, on days chosen by the people who organize it, and the whole thing can pack up in November and reappear in May. That is why the question of when a market is open rarely has a tidy answer, and why the answer you find once may not hold six months later.

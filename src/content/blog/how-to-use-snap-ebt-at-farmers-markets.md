@@ -2,6 +2,7 @@
 title: How to Use SNAP and EBT at Farmers Markets
 description: Your EBT card works at thousands of farmers markets. Here is how paying at the booth works, what SNAP covers, and how matching programs stretch it further.
 publishedAt: 2026-08-29
+cover: payment
 ---
 
 SNAP is the federal food assistance program, and the benefits land each month on an EBT card you swipe like a debit card. Plenty of people assume that card is for grocery stores only. It isn't. Thousands of the markets in our [farmers market directory](/) take SNAP, and the produce you buy with it was usually picked a day or two before you got there.

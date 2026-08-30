@@ -14,7 +14,14 @@
 import 'server-only';
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { countWords, parseFrontmatter, renderMarkdown } from './markdown';
+import {
+  countWords,
+  extractHeadings,
+  parseFrontmatter,
+  renderMarkdown,
+  type MarkdownHeading,
+} from './markdown';
+import { BLOG_COVER_THEMES, type BlogCoverTheme } from '@/components/BlogCover';
 
 export interface BlogPost {
   /** URL segment under `/blog/`, from the filename. */
@@ -26,8 +33,14 @@ export interface BlogPost {
   publishedAt: string;
   /** ISO date (YYYY-MM-DD); set only when a post is meaningfully revised. */
   updatedAt?: string;
+  /** Byline category chip, from frontmatter `tag`; defaults to "Guide". */
+  tag: string;
+  /** Cover art scene, from frontmatter `cover`; defaults to "fields". */
+  cover: BlogCoverTheme;
   /** Rendered body HTML for the post page's prose wrapper. */
   html: string;
+  /** The body's `##`/`###` headings, for the contents sidebar. */
+  headings: MarkdownHeading[];
   /** Whole minutes at a reading pace of roughly 220 words per minute. */
   readingMinutes: number;
 }
@@ -40,7 +53,7 @@ function loadPost(filename: string): BlogPost {
   const raw = readFileSync(path.join(CONTENT_DIR, filename), 'utf8');
   const { frontmatter, body } = parseFrontmatter(raw);
 
-  const { title, description, publishedAt, updatedAt } = frontmatter;
+  const { title, description, publishedAt, updatedAt, tag, cover } = frontmatter;
   if (!title || !description) {
     throw new Error(`Blog post ${filename} is missing a title or description`);
   }
@@ -50,6 +63,11 @@ function loadPost(filename: string): BlogPost {
   if (updatedAt && !ISO_DATE.test(updatedAt)) {
     throw new Error(`Blog post ${filename} has a malformed updatedAt date`);
   }
+  if (cover && !BLOG_COVER_THEMES.includes(cover as BlogCoverTheme)) {
+    throw new Error(
+      `Blog post ${filename} has unknown cover "${cover}" (valid: ${BLOG_COVER_THEMES.join(', ')})`
+    );
+  }
 
   return {
     slug,
@@ -57,7 +75,10 @@ function loadPost(filename: string): BlogPost {
     description,
     publishedAt,
     ...(updatedAt ? { updatedAt } : {}),
+    tag: tag || 'Guide',
+    cover: (cover as BlogCoverTheme) || 'fields',
     html: renderMarkdown(body),
+    headings: extractHeadings(body),
     readingMinutes: Math.max(1, Math.round(countWords(body) / 220)),
   };
 }
