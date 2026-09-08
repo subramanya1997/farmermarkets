@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
-import { db, dbSchema } from "@/db";
+import { DatabaseUnavailableError, dbSchema, getDb } from "@/db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -36,6 +36,19 @@ export async function POST(request: Request) {
 
   if (JSON.stringify(payload).length > 20_000) {
     return NextResponse.json({ error: "Submission too large" }, { status: 413 });
+  }
+
+  let db;
+  try {
+    db = getDb();
+  } catch (error) {
+    if (error instanceof DatabaseUnavailableError) {
+      return NextResponse.json(
+        { error: "Submissions are not accepting entries right now" },
+        { status: 503 },
+      );
+    }
+    throw error;
   }
 
   let resolvedMarketId: string | null = null;
