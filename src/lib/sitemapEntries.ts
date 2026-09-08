@@ -124,10 +124,16 @@ async function buildEntries(): Promise<SitemapEntry[]> {
     lastModified: topic.lastModified,
   }));
 
-  const stateEntries: SitemapEntry[] = geoIndex.states.map((state) => ({
-    url: absolute(statePath(state.slug)),
-    lastModified: stateDates.get(state.slug),
-  }));
+  // A state hub where no market resolved to a city is `noindex`
+  // (`src/lib/statePage.ts`); submitting it here would only earn an "Excluded
+  // by noindex" report in Search Console. Every other URL the sitemap lists is
+  // indexable, and it must stay that way.
+  const stateEntries: SitemapEntry[] = geoIndex.states
+    .filter((state) => state.city_count > 0)
+    .map((state) => ({
+      url: absolute(statePath(state.slug)),
+      lastModified: stateDates.get(state.slug),
+    }));
 
   const cityEntries: SitemapEntry[] = geoIndex.states.flatMap((state) =>
     state.cities.map((city) => ({

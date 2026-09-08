@@ -7,6 +7,10 @@ interface NearbyMarketsProps {
   /** The city page this market is listed on, when the geo index placed it. */
   cityHref?: string;
   cityName?: string;
+  /** Section heading; the default suits a market page. */
+  heading?: string;
+  /** Overrides the heading's type scale where the host page runs larger. */
+  headingClassName?: string;
 }
 
 /**
@@ -22,16 +26,19 @@ interface NearbyMarketsProps {
  * (`src/lib/nearby.ts`), so a market with no coordinates gets no block rather
  * than a made-up one.
  */
-export function NearbyMarkets({ markets, cityHref, cityName }: NearbyMarketsProps) {
+export function NearbyMarkets({
+  markets,
+  cityHref,
+  cityName,
+  heading = 'Farmers markets nearby',
+  headingClassName = 'text-lg sm:text-xl font-semibold tracking-tight',
+}: NearbyMarketsProps) {
   if (!markets.length && !cityHref) return null;
 
   return (
     <section className="mt-6 sm:mt-8" aria-labelledby="nearby-markets-heading">
-      <h2
-        id="nearby-markets-heading"
-        className="text-lg sm:text-xl font-semibold tracking-tight mb-3"
-      >
-        Farmers markets nearby
+      <h2 id="nearby-markets-heading" className={`${headingClassName} mb-3`}>
+        {heading}
       </h2>
       {markets.length > 0 && (
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 2xl:grid-cols-3">

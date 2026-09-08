@@ -3,9 +3,9 @@
  *
  * The page component renders this and nothing else: every decision that needs
  * to look at the data — which table columns have any content, which weekday
- * sections exist, which questions the data can actually answer, whether the
- * page is thin enough to keep out of the index — is made here, once, so the
- * component stays a template and the rules are reviewable in one place.
+ * sections exist, which questions the data can actually answer, which
+ * neighbouring markets a small city should point at — is made here, once, so
+ * the component stays a template and the rules are reviewable in one place.
  *
  * Everything is composed from fields the records really have. No sentence in
  * this file invents a claim about a market: a clause whose input is missing is
@@ -18,6 +18,8 @@ import { statePath } from './statePage';
 import { getMarketBySlug, type FarmerMarket } from './data';
 import { resolveLocation } from './geo';
 import { newerInstant, toIsoInstant } from './dates';
+import { getNearbyMarkets, type NearbyMarket } from './nearby';
+import { formatMiles } from './marketFacts';
 import {
   WEEKDAY_NAMES,
   cityDescription,
@@ -93,8 +95,12 @@ export interface CityPageData {
   description: string;
   /** 40–75 words of plain factual prose, above the table. */
   opener: string;
-  /** True when the city is too thin to be worth indexing (see `isThin`). */
-  noindex: boolean;
+  /**
+   * The nearest markets outside this city, closest first, for cities with at
+   * most `NEARBY_CITY_LIMIT` markets of their own (see `nearbyMarkets`). Empty
+   * for larger cities, and for the rare record with no coordinates.
+   */
+  nearby: NearbyMarket[];
   /**
    * Newest `last_updated` among the markets this page lists, as an ISO
    * instant, or undefined when not one of them carries a usable date.
@@ -151,19 +157,46 @@ function toRow(market: FarmerMarket): CityMarketRow {
   return { ...base, completeness: scoreMarket(base, market) };
 }
 
+/** Cities with this many markets or fewer get a "markets nearby" block. */
+const NEARBY_CITY_LIMIT = 3;
+/** How many neighbouring markets that block lists. */
+const NEARBY_LIMIT = 6;
+
 /**
- * A city is "thin" when it holds a single market that states no schedule and
- * carries no description of its own — there is nothing on such a page a
- * searcher could not read in the SERP snippet, so it is rendered (the URL
- * stays valid and internally linked) but marked `noindex`.
+ * The nearest markets outside a small city.
  *
- * Deliberately narrow: a city with two sparse markets is still a genuine
- * comparison, which is the job this page does.
+ * Roughly a quarter of all city pages hold a single market whose record states
+ * no schedule, season or description — a page a searcher could read in full
+ * from the SERP snippet. Those pages used to be `noindex`; Search Console then
+ * reported every one of them as "Excluded by noindex" because the sitemap
+ * still submitted them. The honest answer to "farmers markets in Calais" when
+ * Calais has one market with no hours is that market plus the ones a short
+ * drive away, so that is what small cities now render, and every city page is
+ * indexable.
+ *
+ * Distances come from the records' own coordinates (`src/lib/nearby.ts`), so
+ * a market with none gets no block rather than an invented one. Markets already
+ * in the city's own table are excluded — the block is about what lies beyond it.
  */
-function isThin(rows: CityMarketRow[], markets: FarmerMarket[]): boolean {
-  if (rows.length !== 1) return false;
-  const [row] = rows;
-  return !row.hours && row.days.length === 0 && !row.season && !marketBlurb(markets[0]);
+async function nearbyMarkets(
+  rows: CityMarketRow[],
+  markets: FarmerMarket[]
+): Promise<NearbyMarket[]> {
+  if (rows.length === 0 || rows.length > NEARBY_CITY_LIMIT) return [];
+  // Search from the market the opener names, which is the best-documented one
+  // and therefore the one a reader is most likely to be planning around.
+  const origin = markets.find((market) => market.slug === rows[0].slug) ?? markets[0];
+  const own = new Set(rows.map((row) => row.slug));
+  // Over-fetch so that filtering out the city's own markets still leaves a
+  // full block.
+  const candidates = await getNearbyMarkets(origin, NEARBY_LIMIT + rows.length);
+  return candidates.filter((candidate) => !own.has(candidate.slug)).slice(0, NEARBY_LIMIT);
+}
+
+/** "Eastport Farmers’ Market in Eastport, Maine (24 mi)" */
+function nearbyPhrase(market: NearbyMarket): string {
+  const where = market.locationLine ? ` in ${market.locationLine}` : '';
+  return `${market.name}${where} (${formatMiles(market.distanceKm)})`;
 }
 
 function pluralMarkets(count: number): string {
@@ -222,8 +255,9 @@ function buildOpener(input: {
   notable?: CityMarketRow;
   snapCount: number;
   dayGroups: CityDayGroup[];
+  nearby: NearbyMarket[];
 }): string {
-  const { city, regionFull, rows, notable, snapCount, dayGroups } = input;
+  const { city, regionFull, rows, notable, snapCount, dayGroups, nearby } = input;
   const place = regionFull ? `${city}, ${regionFull}` : city;
 
   const sentences: string[] = [
@@ -280,6 +314,17 @@ function buildOpener(input: {
     );
   }
 
+  // A one-market city is a short list; the nearest market beyond it is the
+  // most useful extra fact the data holds, and it is different for every city.
+  if (rows.length === 1 && nearby.length > 0) {
+    const [nearest] = nearby;
+    sentences.push(
+      `The nearest other farmers market is ${nearest.name}${
+        nearest.locationLine ? ` in ${nearest.locationLine}` : ''
+      }, about ${formatMiles(nearest.distanceKm)} away.`
+    );
+  }
+
   // Closing lines that are true of every city page, used only to reach the
   // 40-word floor on records that carry little else.
   const closers = [
@@ -313,8 +358,9 @@ function buildFaqs(input: {
   snapRows: CityMarketRow[];
   dayGroups: CityDayGroup[];
   notable?: CityMarketRow;
+  nearby: NearbyMarket[];
 }): CityFaq[] {
-  const { city, rows, snapRows, dayGroups, notable } = input;
+  const { city, rows, snapRows, dayGroups, notable, nearby } = input;
   const faqs: CityFaq[] = [];
 
   faqs.push({
@@ -362,6 +408,14 @@ function buildFaqs(input: {
       answer: yearRound
         ? `Yes. ${notable.name} is listed as open year-round.`
         : `No. ${notable.name} is listed for ${seasonInSentence(notable.season)} rather than the whole year.`,
+    });
+  }
+
+  if (nearby.length > 0) {
+    const named = nearby.slice(0, 3).map(nearbyPhrase);
+    faqs.push({
+      question: `Are there other farmers markets near ${city}?`,
+      answer: `Yes. The nearest ${named.length === 1 ? 'is' : 'are'} ${joinWithAnd(named)}.`,
     });
   }
 
@@ -426,6 +480,7 @@ export async function getCityPageData(
 
   const snapRows = rows.filter((row) => row.snap);
   const notable = rows[0]?.completeness > 0 ? rows[0] : undefined;
+  const nearby = await nearbyMarkets(rows, markets);
 
   let lastModified: string | undefined;
   for (const market of markets) {
@@ -459,7 +514,7 @@ export async function getCityPageData(
     rows,
     columns,
     dayGroups,
-    faqs: buildFaqs({ city: cityName, regionFull, rows, snapRows, dayGroups, notable }),
+    faqs: buildFaqs({ city: cityName, regionFull, rows, snapRows, dayGroups, notable, nearby }),
     siblings: siblingCities(state, city),
     stateHubPath: statePath(state.slug),
     title: cityTitle({
@@ -484,8 +539,9 @@ export async function getCityPageData(
       notable,
       snapCount: snapRows.length,
       dayGroups,
+      nearby,
     }),
-    noindex: isThin(rows, markets),
+    nearby,
     lastModified,
   };
 }

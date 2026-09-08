@@ -19,7 +19,7 @@ first that a decision has been undone.
 | 3 | [robots.txt allows every crawler](#3-robotstxt-allows-every-crawler) | `src/app/robots.ts` |
 | 4 | [`lastmod` is a real date or absent](#4-lastmod-is-a-real-date-or-absent) | `src/lib/sitemapEntries.ts` |
 | 5 | [`dateModified` mirrors `lastmod`](#5-datemodified-mirrors-lastmod) | city/state/topic page schema |
-| 6 | [`noindex` only for thin hubs and errors](#6-noindex-only-for-thin-hubs-and-errors) | `src/lib/cityPage.ts`, `src/lib/statePage.ts` |
+| 6 | [`noindex` only for empty hubs and errors](#6-noindex-only-for-empty-hubs-and-errors) | `src/lib/cityPage.ts`, `src/lib/statePage.ts`, `src/lib/sitemapEntries.ts` |
 | 7 | [Redirects are 308, not 301](#7-redirects-are-308-not-301) | `next/navigation` `permanentRedirect` |
 | 8 | [Stale records get a notice, not a delete](#8-stale-records-get-a-notice-not-a-delete) | `src/lib/freshness.ts` |
 | 9 | [Prerender everything, revalidate daily](#9-prerender-everything-revalidate-daily) | `generateStaticParams` + `revalidate` |
@@ -144,28 +144,34 @@ rather than trusting the two code paths to stay in step.
 genuinely independent of the records it lists — hand-written editorial copy with
 its own edit date, say. Then the date is a max of the two, not a swap.
 
-## 6. `noindex` only for thin hubs and errors
+## 6. `noindex` only for empty hubs and errors
 
-**Decision.** Four things are `noindex`: a city page holding exactly one market
-that states no schedule, no season and no description of its own; a state hub
-where not one market resolved to a city; 404s; and out-of-range pagination.
-Everything else is indexable — **every market page, always**, including the
-stale ones and the ones flagged `unverified`.
+**Decision.** Three things are `noindex`: a state hub where not one market
+resolved to a city; 404s; and out-of-range pagination. Everything else is
+indexable — **every city page and every market page, always**, including the
+stale ones and the ones flagged `unverified`. The sitemap lists only indexable
+URLs, so the one `noindex` state hub is filtered out of it.
 
-**Why.** The thin-city rule is narrow on purpose: it fires only where the page
-holds nothing a searcher could not read in the SERP snippet, and a city with two
-sparse markets is still a genuine comparison, which is the job the page does.
-Those pages stay rendered and internally linked — the URL works, it is crawled,
-it passes equity to the market page; it just does not ask to be indexed. Market
-pages are never hidden: a market whose data is old is still the best available
-answer to "when is the market in X open", and the honest response is the
-freshness notice (rule 8), not deletion. A soft 404 — an error page returning
-200, or a real 404 without a `noindex` — is the failure mode that actually
-costs rankings, so the smoke suite asserts both the status and the meta tag.
+**History.** Until September 2026 a fourth thing was `noindex`: a city page
+holding exactly one market that states no schedule, no season and no
+description of its own (~1,200 pages, a quarter of all cities). The rule was
+narrow and well-meant, but the sitemap kept submitting those URLs, and Search
+Console duly reported every one of them under "Excluded by noindex". Rather
+than hide them better, the pages were made worth indexing: a city with three
+markets or fewer now renders the nearest markets beyond the city, with
+distances from the records' own coordinates, plus a matching FAQ and a sentence
+in the opener. The content is different for every city and true.
 
-**Revisit when.** The thin-city definition should be re-measured after any
-dataset refresh that materially changes how many records carry schedules; it
-currently covers ~2,500 pages.
+**Why.** A page that is submitted and `noindex` is a contradiction the crawler
+has to resolve, and it resolves it by reporting an error. Market pages are never
+hidden: a market whose data is old is still the best available answer to "when
+is the market in X open", and the honest response is the freshness notice
+(rule 8), not deletion. A soft 404 — an error page returning 200, or a real 404
+without a `noindex` — is the failure mode that actually costs rankings, so the
+smoke suite asserts both the status and the meta tag.
+
+**Revisit when.** A page is ever made `noindex` again: the sitemap must drop it
+in the same change, or Search Console will report it.
 
 ## 7. Redirects are 308, not 301
 

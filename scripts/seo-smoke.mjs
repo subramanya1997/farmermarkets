@@ -205,14 +205,16 @@ const SAMPLE = [
     expectDateModified: true,
   },
   {
-    // One market, no schedule, no description of its own: `isThin` in
-    // `src/lib/cityPage.ts` marks it `noindex, follow` on purpose. Asserting
-    // the noindex is the point — losing it would push 2,473 near-duplicate
-    // pages at the index.
+    // One market, no schedule, no description of its own. These pages were
+    // `noindex` until September 2026, when Search Console reported ~1,600 of
+    // them as "Excluded by noindex" (the sitemap submitted them all). They are
+    // indexable now and earn it with a "markets nearby" block, so this case
+    // asserts both the indexability and that block's links.
     path: '/farmers-markets/alabama/abbeville',
-    kind: 'city (thin, intentionally noindex)',
-    minInternalLinks: 25, // renders 46
-    robots: 'noindex,follow',
+    kind: 'city (one market, nearby block)',
+    minInternalLinks: 30, // renders 46 before the nearby block's 6
+    robots: 'indexable',
+    mustContain: ['Farmers markets near Abbeville', 'Are there other farmers markets near Abbeville?'],
   },
 
   /* --- Two state hubs ----------------------------------------------- */

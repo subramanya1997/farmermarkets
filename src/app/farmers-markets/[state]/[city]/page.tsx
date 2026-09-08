@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FaqSection } from '@/components/FaqSection';
+import { NearbyMarkets } from '@/components/NearbyMarkets';
 import { getCityPageData, type CityMarketRow, type CityPageData } from '@/lib/cityPage';
 import { getAllCityParams } from '@/lib/geoIndex';
 import { absoluteUrl } from '@/lib/site';
@@ -65,10 +66,10 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
       type: 'website',
     },
     twitter: { card: 'summary_large_image', title: data.title, description: data.description },
-    // A single market with no schedule and no description has nothing a SERP
-    // snippet does not already say. The page stays linked and crawlable; it
-    // just does not ask to be indexed.
-    ...(data.noindex ? { robots: { index: false, follow: true } } : {}),
+    // Every resolved city page is indexable. The one-market cities that used to
+    // be `noindex` now render the nearest markets beyond the city instead
+    // (`nearbyMarkets` in `src/lib/cityPage.ts`); Search Console reported the
+    // old noindex on every one of them because the sitemap submitted them all.
   };
 }
 
@@ -283,6 +284,14 @@ export default async function CityPage({ params }: CityPageProps) {
             )}
 
             <FaqSection items={data.faqs} />
+
+            {data.nearby.length > 0 && (
+              <NearbyMarkets
+                markets={data.nearby}
+                heading={`Farmers markets near ${data.city.name}`}
+                headingClassName="text-xl font-bold tracking-tight sm:text-2xl"
+              />
+            )}
 
             {data.siblings.length > 0 && (
               <div>
