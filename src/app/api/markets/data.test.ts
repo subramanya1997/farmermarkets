@@ -1,7 +1,22 @@
 // @ts-expect-error Bun's test module is available to the configured test runner,
 // but this project intentionally does not add Bun's globals to production types.
 import { describe, expect, test } from 'bun:test';
-import { mergeEnrichment } from './data';
+import { mergeEnrichment, slimMarket } from './data';
+
+test('a disputed location never reaches the explorer as a map pin or distance claim', () => {
+  const market = {
+    id: 'moved-market', slug: 'moved-market', name: 'Moved Market',
+    location: { lat: 40, lon: -75 }, distance: 0.2,
+    suppress_map: true,
+  };
+  const slim = slimMarket(market);
+  expect(slim.suppress_map).toBe(true);
+  expect(slim.location).toBeUndefined();
+  expect(slim.distance).toBeUndefined();
+  const supported = slimMarket({ ...market, suppress_map: false });
+  expect(supported.location).toEqual(market.location);
+  expect(supported.distance).toBe(0.2);
+});
 
 describe('mergeEnrichment', () => {
   test('partial facts preserve source maps and merge payment methods', () => {

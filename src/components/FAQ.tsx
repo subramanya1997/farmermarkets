@@ -13,7 +13,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'How do I find farmers markets near me?',
-    answer: 'Use our location-based search on the Markets page. We automatically detect your location and show the closest farmers markets. You can also search by city, state, or market name.',
+    answer: 'Browse markets near your approximate location. Recommended results consider distance and listing verification. You can also search by city, state, postal code, or market name.',
   },
   {
     question: 'What payment methods do farmers markets accept?',
@@ -29,11 +29,11 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'Can I bring my dog to farmers markets?',
-    answer: 'Pet policies vary by market. Use our filters to find pet-friendly markets. Always check individual market rules and keep pets on leash.',
+    answer: 'Pet policies vary by market. Check the market’s official website or ask the organizer before bringing your dog, and follow the market’s leash rules.',
   },
   {
     question: 'Do farmers markets have parking?',
-    answer: 'Many farmers markets offer parking facilities. Use our amenities filter to find markets with parking, restrooms, and wheelchair accessibility.',
+    answer: 'Parking, restrooms, and accessibility vary by location. Check the market listing and official website, or contact the organizer to confirm the facilities you need.',
   },
   {
     question: 'What products can I find at farmers markets?',
@@ -74,4 +74,3 @@ export function FAQ() {
     </>
   );
 }
-

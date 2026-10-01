@@ -25,6 +25,16 @@
  */
 
 import { clean, resolveLocation } from './geo.ts';
+import {
+  parseHourRange,
+  legacyScheduleWindows,
+  hasScheduleExceptions,
+  hasNonWeeklyRecurrence,
+  hasSeasonContext,
+  type HourRange,
+} from './schedule.ts';
+export { parseHourRange };
+export type { HourRange };
 import type { MarketFirstPartyFacts, MarketWeekday } from './enrichment.ts';
 import { paymentLabels, structuredScheduleLabels } from './marketFacts.ts';
 import {
@@ -32,6 +42,7 @@ import {
   marketDescription,
   marketHours,
   marketSeasonLabel,
+  marketScheduleLabels,
   marketWeekdays,
   weekdaysFromText,
   type MarketSeoRecord,
@@ -70,102 +81,6 @@ export interface MarketSchemaOptions {
 }
 
 /* ------------------------------------------------------------------ *
- * Times
- * ------------------------------------------------------------------ */
-
-/**
- * One clock time: `9`, `9:30`, `09:00:00`, `07h30`, `9am`, `6:00 a.m.`.
- * Captures hour, minutes and the meridiem letter; the seconds the European
- * feeds ship are matched but discarded.
- */
-const TIME_TOKEN = String.raw`(\d{1,2})(?:\s*[:h.]\s*(\d{2}))?(?::\d{2})?\s*(?:([ap])\.?\s*m\.?)?`;
-const TIME_RANGE_RE = new RegExp(
-  `${TIME_TOKEN}\\s*(?:-|–|—|to|until|till|tot|tp)\\s*${TIME_TOKEN}`,
-  'i'
-);
-
-interface ParsedTime {
-  hour: number;
-  minute: number;
-  meridiem?: 'a' | 'p';
-}
-
-function readTime(hour: string, minute?: string, meridiem?: string): ParsedTime | undefined {
-  const hours = Number(hour);
-  const minutes = minute === undefined ? 0 : Number(minute);
-  if (!Number.isFinite(hours) || hours > 24 || minutes > 59) return undefined;
-  return {
-    hour: hours,
-    minute: minutes,
-    meridiem: meridiem ? (meridiem.toLowerCase() as 'a' | 'p') : undefined,
-  };
-}
-
-function toMinutes({ hour, minute, meridiem }: ParsedTime, override?: 'a' | 'p'): number {
-  const mark = meridiem ?? override;
-  let hours = hour;
-  if (mark === 'p' && hours < 12) hours += 12;
-  if (mark === 'a' && hours === 12) hours = 0;
-  return hours * 60 + minute;
-}
-
-function formatClock(totalMinutes: number): string {
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-}
-
-export interface HourRange {
-  /** 24-hour `HH:MM`. */
-  opens: string;
-  closes: string;
-}
-
-/**
- * The opening times stated in one free-text schedule string, as 24h `HH:MM`.
- *
- * Returns `undefined` — never a guess — when the string states no times
- * ("saturday"), when what looks like a range is really a date span
- * ("June 1-October 31"), or when the two times do not make a forward-running
- * window ("6:00 a.m. to 2:00 a.m." wraps midnight and cannot be expressed as
- * one `OpeningHoursSpecification`).
- */
-export function parseHourRange(value?: string | null): HourRange | undefined {
-  const text = clean(value);
-  if (!text) return undefined;
-
-  const match = TIME_RANGE_RE.exec(text);
-  if (!match) return undefined;
-
-  const start = readTime(match[1], match[2], match[3]);
-  const end = readTime(match[4], match[5], match[6]);
-  if (!start || !end) return undefined;
-
-  // With no meridiem on either side, only a pair that both carry minutes is
-  // safe to read as 24h ("06:00-13:30"). This is the rule that stops
-  // "May 2-October 31" and "June 1-5" being read as 02:00–31:00.
-  if (!start.meridiem && !end.meridiem && (match[2] === undefined || match[5] === undefined)) {
-    return undefined;
-  }
-
-  // "1-5pm" and "9am-1" each state the meridiem once. Borrow it from the other
-  // side, and fall back to the opposite half of the day when borrowing would
-  // run the window backwards ("9-1pm" is 09:00–13:00, not 21:00–13:00).
-  let opens = toMinutes(start);
-  let closes = toMinutes(end);
-  if (!start.meridiem && end.meridiem) {
-    const borrowed = toMinutes(start, end.meridiem);
-    opens = borrowed < closes ? borrowed : toMinutes(start, end.meridiem === 'p' ? 'a' : 'p');
-  } else if (start.meridiem && !end.meridiem) {
-    const borrowed = toMinutes(end, start.meridiem);
-    closes = borrowed > opens ? borrowed : toMinutes(end, start.meridiem === 'p' ? 'a' : 'p');
-  }
-
-  if (closes <= opens || closes > 24 * 60) return undefined;
-  return { opens: formatClock(opens), closes: formatClock(closes) };
-}
-
-/* ------------------------------------------------------------------ *
  * Seasons
  * ------------------------------------------------------------------ */
 
@@ -189,7 +104,13 @@ const MONTH_ALTERNATION = Object.keys(MONTH_ALIASES)
   .sort((left, right) => right.length - left.length)
   .join('|');
 const MONTH_RANGE_RE = new RegExp(
-  `\\b(${MONTH_ALTERNATION})\\.?\\s*(\\d{1,2})?(?:st|nd|rd|th)?\\s*(?:-|–|—|to|through|thru)\\s*(${MONTH_ALTERNATION})\\.?\\s*(\\d{1,2})?(?:st|nd|rd|th)?`,
+  `\\b(${MONTH_ALTERNATION})\\.?\\s*(?:(\\d{1,2})(?!\\d))?(?:st|nd|rd|th)?(?:\\s*,?\\s*(20\\d{2}))?\\s*(?:-|–|—|to|through|thru)\\s*(${MONTH_ALTERNATION})\\.?\\s*(?:(\\d{1,2})(?!\\d))?(?:st|nd|rd|th)?(?:\\s*,?\\s*(20\\d{2}))?`,
+  'i'
+);
+
+// A shared month is unambiguous when the source also states its year.
+const SAME_MONTH_RANGE_RE = new RegExp(
+  `\\b(${MONTH_ALTERNATION})\\.?\\s*(\\d{1,2})(?!\\d)(?:st|nd|rd|th)?\\s*(?:-|–|—|to|through|thru)\\s*(\\d{1,2})(?!\\d)(?:st|nd|rd|th)?\\s*,?\\s*(20\\d{2})\\b`,
   'i'
 );
 
@@ -216,42 +137,59 @@ export interface SeasonRange {
  * that month, and anything unparseable ("Year Round", "summer, fall",
  * "Saturdays 8am to 1pm") returns `undefined` rather than an invented span.
  *
- * The year is the current season or, once this year's season has finished, the
- * next one — a `validThrough` in the past would tell Google the market is shut.
+ * Explicit source years are preserved, including past seasons. Undated month
+ * ranges follow the current/next annual season.
  * A span that runs backwards through the calendar ("November-April") crosses
  * into the following year.
  */
 export function parseSeasonRange(value?: string | null, now = new Date()): SeasonRange | undefined {
   const text = clean(value);
-  if (!text) return undefined;
-
-  const match = MONTH_RANGE_RE.exec(text);
-  if (!match) return undefined;
-
-  const startMonth = MONTH_ALIASES[match[1].toLowerCase()];
-  const endMonth = MONTH_ALIASES[match[3].toLowerCase()];
-  if (!startMonth || !endMonth) return undefined;
-
-  const startDay = match[2] ? Number(match[2]) : 1;
-  const endDayGiven = match[4] ? Number(match[4]) : undefined;
-
-  let year = now.getUTCFullYear();
-  const today = isoDate(now.getUTCFullYear(), now.getUTCMonth() + 1, now.getUTCDate());
-
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    const endYear = endMonth < startMonth ? year + 1 : year;
-    if (startDay > lastDayOfMonth(year, startMonth)) return undefined;
-    const endDay = endDayGiven ?? lastDayOfMonth(endYear, endMonth);
-    if (endDay > lastDayOfMonth(endYear, endMonth)) return undefined;
-
-    const validFrom = isoDate(year, startMonth, startDay);
-    const validThrough = isoDate(endYear, endMonth, endDay);
-    // A season that already ended this year belongs to next year's calendar.
-    if (validThrough >= today) return { validFrom, validThrough };
-    year += 1;
+  if (!text || hasScheduleExceptions(text)) return undefined;
+  const matches = [...text.matchAll(new RegExp(MONTH_RANGE_RE.source, 'gi'))];
+  if (!matches.length) {
+    const abbreviated = [...text.matchAll(new RegExp(SAME_MONTH_RANGE_RE.source, 'gi'))];
+    if (abbreviated.length !== 1) return undefined;
+    const shared = abbreviated[0];
+    const expanded = `${text.slice(0, shared.index)}${shared[1]} ${shared[2]}-${shared[1]} ${shared[3]}, ${shared[4]}${text.slice(shared.index! + shared[0].length)}`;
+    return parseSeasonRange(expanded, now);
   }
-
-  return undefined;
+  // Several windows cannot become one season for every weekday.
+  if (matches.length !== 1) return undefined;
+  const match = matches[0];
+  const remainder = `${text.slice(0, match.index)} ${text.slice(match.index! + match[0].length)}`;
+  if (new RegExp(`\\b(?:${MONTH_ALTERNATION}|spring|summer|fall|autumn|winter)\\b`, 'i').test(remainder)) return undefined;
+  const startMonth = MONTH_ALIASES[match[1].toLowerCase()];
+  const endMonth = MONTH_ALIASES[match[4].toLowerCase()];
+  const startDay = match[2] ? Number(match[2]) : 1;
+  const endDayGiven = match[5] ? Number(match[5]) : undefined;
+  const startYearGiven = match[3] ? Number(match[3]) : undefined;
+  const endYearGiven = match[6] ? Number(match[6]) : undefined;
+  const explicitYears = [...text.matchAll(/\b20\d{2}\b/g)].map((item) => Number(item[0]));
+  const crossesYear = endMonth < startMonth;
+  const makeRange = (startYear: number, endYear: number): SeasonRange | undefined => {
+    const endDay = endDayGiven ?? lastDayOfMonth(endYear, endMonth);
+    if (startDay < 1 || endDay < 1 || startDay > lastDayOfMonth(startYear, startMonth) || endDay > lastDayOfMonth(endYear, endMonth)) return undefined;
+    const validFrom = isoDate(startYear, startMonth, startDay);
+    const validThrough = isoDate(endYear, endMonth, endDay);
+    return validFrom <= validThrough ? { validFrom, validThrough } : undefined;
+  };
+  if (explicitYears.length) {
+    // An explicitly dated source stays dated even after it has ended. Never
+    // infer a new season that the operator has not announced.
+    if (explicitYears.some((year) => year !== startYearGiven && year !== endYearGiven)) return undefined;
+    if (crossesYear && (!startYearGiven || !endYearGiven)) return undefined;
+    const startYear = startYearGiven ?? endYearGiven;
+    if (!startYear) return undefined;
+    const endYear = endYearGiven && startYearGiven ? endYearGiven : startYear + (crossesYear ? 1 : 0);
+    return makeRange(startYear, endYear);
+  }
+  const year = now.getUTCFullYear();
+  const today = isoDate(year, now.getUTCMonth() + 1, now.getUTCDate());
+  // During winter, November-April refers to the season already in progress.
+  const current = makeRange(crossesYear && now.getUTCMonth() + 1 <= endMonth ? year - 1 : year,
+    crossesYear && now.getUTCMonth() + 1 <= endMonth ? year : year + (crossesYear ? 1 : 0));
+  if (current && current.validThrough >= today) return current;
+  return makeRange(year + 1, year + 1 + (crossesYear ? 1 : 0));
 }
 
 /** The season dates for a record, read from `season`. */
@@ -260,6 +198,7 @@ export function marketSeasonRange(
   now?: Date
 ): SeasonRange | undefined {
   const structured = market.first_party?.operations?.season?.value;
+  if (structured?.kind === 'year_round') return undefined;
   if (structured?.kind === 'dated_range') {
     if (/^\d{4}-\d{2}-\d{2}$/.test(structured.start_date) && /^\d{4}-\d{2}-\d{2}$/.test(structured.end_date)) {
       return { validFrom: structured.start_date, validThrough: structured.end_date };
@@ -310,6 +249,8 @@ export function marketOpeningHoursSpec(
   market: MarketSchemaRecord,
   now?: Date
 ): OpeningHoursSpecification[] | undefined {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return undefined;
   const richSchedules = market.first_party?.operations?.schedules;
   if (richSchedules?.length) {
     const dayLabels: Record<MarketWeekday, Weekday> = {
@@ -342,51 +283,29 @@ export function marketOpeningHoursSpec(
     return specs.length ? specs : undefined;
   }
 
-  const sources = [...(market.days ?? []), market.season]
-    .map((source) => clean(source))
-    .filter(Boolean);
-
-  // Same window on several lines (a feed repeating the slot per language) is
-  // one spec with several days.
-  const byWindow = new Map<string, { days: Set<Weekday>; hours: HourRange }>();
-  for (const source of sources) {
-    const days = weekdaysFromText(source);
-    const hours = parseHourRange(source);
-    if (!days.length || !hours) continue;
-    const key = `${hours.opens}-${hours.closes}`;
-    const entry = byWindow.get(key) ?? { days: new Set<Weekday>(), hours };
-    for (const day of days) entry.days.add(day);
-    byWindow.set(key, entry);
-  }
-
+  const sources = [...(market.days ?? []), market.season].map(clean).filter(Boolean);
+  if (sources.some((source) => hasNonWeeklyRecurrence(source) || hasScheduleExceptions(source) && !weekdaysFromText(source).length)) return undefined;
   const season = marketSeasonRange(market, now);
-  const withSeason = (spec: OpeningHoursSpecification): OpeningHoursSpecification =>
-    season ? { ...spec, validFrom: season.validFrom, validThrough: season.validThrough } : spec;
-
-  if (byWindow.size > 0) {
-    return [...byWindow.values()].map((entry) =>
-      withSeason({
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: [...entry.days],
-        opens: entry.hours.opens,
-        closes: entry.hours.closes,
-      })
-    );
+  const seasonText = clean(market.season);
+  // A global season we cannot express must not become year-round hours.
+  if (hasScheduleExceptions(seasonText) || (hasSeasonContext(seasonText) && !season && !weekdaysFromText(seasonText).length)) return undefined;
+  const byWindow = new Map<string, OpeningHoursSpecification>();
+  for (const window of legacyScheduleWindows(sources)) {
+    if (window.unsafe || hasScheduleExceptions(window.text)) continue;
+    const windowSeason = parseSeasonRange(window.text, now);
+    if (hasSeasonContext(window.text) && !windowSeason) continue;
+    const range = windowSeason ?? season;
+    const key = `${window.hours?.opens}-${window.hours?.closes}-${range?.validFrom}-${range?.validThrough}`;
+    const spec = byWindow.get(key) ?? {
+      '@type': 'OpeningHoursSpecification' as const,
+      dayOfWeek: [],
+      ...(window.hours ?? {}),
+      ...(range ?? {}),
+    };
+    for (const day of window.days) if (!spec.dayOfWeek.includes(day)) spec.dayOfWeek.push(day);
+    byWindow.set(key, spec);
   }
-
-  // No single line carried both, so fall back to the record as a whole: the
-  // days may be listed in one field and the times in another.
-  const days = marketWeekdays(market);
-  if (!days.length) return undefined;
-
-  const hours = sources.map((source) => parseHourRange(source)).find(Boolean);
-  return [
-    withSeason({
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: days,
-      ...(hours ? { opens: hours.opens, closes: hours.closes } : {}),
-    }),
-  ];
+  return byWindow.size ? [...byWindow.values()] : undefined;
 }
 
 /* ------------------------------------------------------------------ *
@@ -476,6 +395,7 @@ interface Coordinates {
 }
 
 function marketCoordinates(market: MarketSchemaRecord): Coordinates | undefined {
+  if (market.suppress_map) return undefined;
   const latitude = market.location?.lat;
   const longitude = market.location?.lon;
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return undefined;
@@ -542,6 +462,12 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
   const days = marketWeekdays(market);
   const hours = marketHours(market);
   const richSchedule = structuredScheduleLabels(market.first_party);
+  const legacySchedule = !hours ? marketScheduleLabels(market) : [];
+  const datedSchedule = richSchedule.length
+    ? market.first_party?.operations?.schedules?.some((item) => item.value.start_date || item.value.end_date)
+      ? richSchedule
+      : []
+    : legacySchedule.some(hasSeasonContext) ? legacySchedule : [];
   const seasonLabel = marketSeasonLabel(market);
   const address = addressLine(market);
   const payments = marketPaymentAccepted(market);
@@ -561,7 +487,9 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
         : ` The season runs ${seasonLabel}.`;
     faqs.push({
       question: `What days is ${name} open?`,
-      answer: `${name} is open on ${weekdayPhrase(days)}.${season}`,
+      answer: datedSchedule.length
+        ? `${name}'s reported schedule is ${datedSchedule.join('; ').replace(/\.+$/, '')}.`
+        : `${name} is open on ${weekdayPhrase(days)}.${season}`,
     });
   }
 
@@ -569,6 +497,11 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
     faqs.push({
       question: `What are ${name}'s hours?`,
       answer: `${name}'s schedule is ${richSchedule.join('; ')}.`,
+    });
+  } else if (legacySchedule.length) {
+    faqs.push({
+      question: `What are ${name}'s hours?`,
+      answer: `${name}'s reported schedule is ${legacySchedule.join('; ').replace(/\.+$/, '')}.`,
     });
   } else if (hours) {
     faqs.push({
@@ -760,7 +693,7 @@ export function marketSchemaGraph(
     url,
     image: imageUrl,
     description: marketDescription(market),
-    address: marketAddress(market),
+    address: market.suppress_map ? undefined : marketAddress(market),
     geo: coordinates
       ? { '@type': 'GeoCoordinates', latitude: coordinates.latitude, longitude: coordinates.longitude }
       : undefined,

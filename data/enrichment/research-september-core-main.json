@@ -1,0 +1,3645 @@
+[
+  {
+    "id": "5818",
+    "market_name": "Kenosha Public Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.kenoshapublicmarket.com/"
+      ],
+      "phone_numbers": [
+        "262-705-5722"
+      ],
+      "social_media": [
+        "https://www.instagram.com/kenoshapublicmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Kenosha Public Market | A New Way To Market",
+        "url": "https://www.kenoshapublicmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "visitor_note",
+          "suppress_map"
+        ]
+      }
+    ],
+    "visitor_note": "The market publishes its 2026 location as the historic Kemper Center, 6501 Third Avenue, Kenosha, WI 53143. The imported address is an older location; check the official website before visiting.",
+    "suppress_map": true
+  },
+  {
+    "id": "300670",
+    "market_name": "Hunterdon Land Trust Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.hunterdonfarmersmarket.org/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/hunterdoncommunitymarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Hunterdon Community Farmers Market | Farmers Market | Hunterdon Land Trust, Mine Street, Flemington, NJ, USA",
+        "url": "https://www.hunterdonfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "301051",
+    "market_name": "Columbia Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://columbiafarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "573-823-6889 (Executive Director)",
+        "573-823-3190 (Assistant Manager)"
+      ],
+      "social_media": [
+        "https://www.facebook.com/ColumbiaFarmersMarket/",
+        "https://www.instagram.com/columbiafarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Contact Us – Columbia Farmers Market",
+        "url": "https://columbiafarmersmarket.org/about/contact-us",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Location Details – Columbia Farmers Market",
+        "url": "https://columbiafarmersmarket.org/markets/location-details",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "301286",
+    "market_name": "Certified Farmers’ Market Palm Springs - Outdoor",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://certifiedfarmersmarkets.org/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Certified Farmers Market of the Coachella Valley",
+        "url": "https://certifiedfarmersmarkets.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "301446",
+    "market_name": "Tiverton Farmer's Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.tivertonfarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/TivertonFarmersMarket",
+        "https://www.instagram.com/tivertonfarmersmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Tiverton Farmer's Market",
+        "url": "https://www.tivertonfarmersmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Tiverton Farmers Market | Tiverton RI | Facebook",
+        "url": "https://www.facebook.com/TivertonFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Tiverton Farmers Market (@tivertonfarmersmarket) • Instagram photos and videos",
+        "url": "https://www.instagram.com/tivertonfarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "301627",
+    "market_name": "Cape Riverfront Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://downtowncapegirardeau.com/events/cape-riverfront-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/CapeRiverfrontMarket",
+        "https://www.instagram.com/cape.riverfront.market"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Cape Riverfront Market | Fresh & Local Downtown",
+        "url": "https://downtowncapegirardeau.com/events/cape-riverfront-market",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Cape Riverfront Market | Cape Girardeau MO",
+        "url": "https://www.facebook.com/CapeRiverfrontMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Cape Riverfront Market",
+        "url": "https://www.instagram.com/cape.riverfront.market?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "301744",
+    "market_name": "Matthews Community Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.matthewsfarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MatthewsFarmersMarket",
+        "https://www.instagram.com/matthewsfarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Home | Matthews Community Farmers' Market",
+        "url": "https://www.matthewsfarmersmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Matthews Community Farmers' Market - Facebook",
+        "url": "https://www.facebook.com/MatthewsFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "matthewsfarmersmarket",
+        "url": "https://www.instagram.com/matthewsfarmersmarket?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "308712",
+    "market_name": "Kaiser Permanente Ontario Certified Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.sfma.net/kaiser-permanente-ontario"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Wednesday 9am to 2pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Kaiser Permanente Ontario — Southland Farmers' Market Assn.",
+        "url": "https://www.sfma.net/kaiser-permanente-ontario",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313256",
+    "market_name": "Uptown Martinsville Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://martinsvilleuptown.net/farmers-market.cfm"
+      ],
+      "social_media": [
+        "https://www.facebook.com/martinsvillefarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays - 8:00AM-12:00PM (May 2-November 21)",
+        "Wednesdays & Saturdays - 8:00AM-12:00PM (July 8-September 30)"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Welcome to Uptown Martinsville Virginia",
+        "url": "https://martinsvilleuptown.net/farmers-market.cfm",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "visitor_note"
+        ]
+      },
+      {
+        "title": "Uptown Martinsville Farmers' Market | Martinsville VA | Facebook",
+        "url": "https://www.facebook.com/martinsvillefarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ],
+    "visitor_note": "The market publishes 65 W. Main Street, Martinsville, VA 24112. The imported postal code differs; confirm the address on the official market page before visiting."
+  },
+  {
+    "id": "313272",
+    "market_name": "West Point Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://west-point.va.us/community/visitors/farmers_market.php"
+      ],
+      "phone_numbers": [
+        "804-843-3330"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 8 AM–noon, May 16–September 5, 2026, except July 4, 2026: closed"
+      ],
+      "season": "May 16–September 5, 2026"
+    },
+    "sources": [
+      {
+        "title": "Welcome to West Point, VA",
+        "url": "https://west-point.va.us/community/visitors/farmers_market.php",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313453",
+    "market_name": "Ashland Area Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.ashlandareafarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "530-562-7887"
+      ],
+      "social_media": [
+        "https://www.facebook.com/Ashlandareafarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 8:30 AM–12:30 PM"
+      ],
+      "season": "May 16–October 10, 2026"
+    },
+    "sources": [
+      {
+        "title": "ASHLAND AREA FARMER'S MARKET - Home",
+        "url": "https://www.ashlandareafarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "operations.days",
+          "operations.season",
+          "visitor_note",
+          "suppress_map"
+        ]
+      },
+      {
+        "title": "Ashland Area Farmer's Market | Ashland WI | Facebook",
+        "url": "https://www.facebook.com/Ashlandareafarmersmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ],
+    "visitor_note": "The market publishes its 2026 location as the 600 block of Main Street West, across from Ashland City Hall. The imported Chapple Avenue address differs; check the official website before visiting.",
+    "suppress_map": true
+  },
+  {
+    "id": "313480",
+    "market_name": "Downtown Appleton Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://appletondowntown.org/downtown-appleton-farm-market/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/downtownappletonfarmmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Downtown Appleton Farm Market - Appleton Downtown Inc.",
+        "url": "https://appletondowntown.org/downtown-appleton-farm-market/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Downtown Appleton Farm Market | Appleton WI | Facebook",
+        "url": "https://www.facebook.com/downtownappletonfarmmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313488",
+    "market_name": "Eastside Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "http://www.eastsidefarmersmarket.org/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/madisoneastsidemarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Madison Eastside Farmers' Market",
+        "url": "http://www.eastsidefarmersmarket.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Our Mission — Madison Eastside Farmers' Market",
+        "url": "http://www.eastsidefarmersmarket.org/our-mission",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313516",
+    "market_name": "Green Bay Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://downtowngreenbay.com/explore/downtown-events/saturday-farmers-market"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 7 a.m. - Noon"
+      ],
+      "season": "May 23 - October 31, 2026"
+    },
+    "sources": [
+      {
+        "title": "Saturday Farmers Market | Downtown & Olde Main District Events | Things To Do | Downtown Green Bay",
+        "url": "https://downtowngreenbay.com/explore/downtown-events/saturday-farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313784",
+    "market_name": "Hendersonville Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.hendersonvillenc.gov/events/hendersonville-farmers-market"
+      ],
+      "phone_numbers": [
+        "828-233-3216"
+      ],
+      "social_media": [
+        "https://www.facebook.com/HendoFarmersMarket",
+        "https://www.instagram.com/hendersonvillefarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 8:00 a.m. until 1:00 p.m."
+      ],
+      "season": "May through October"
+    },
+    "sources": [
+      {
+        "title": "Hendersonville Farmers Market | City of Hendersonville, NC",
+        "url": "https://www.hendersonvillenc.gov/events/hendersonville-farmers-market",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Hendersonville Farmers Market | Hendersonville NC | Facebook",
+        "url": "https://www.facebook.com/HendoFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Hendersonville Farmers Market (@hendersonvillefarmersmarket) • Instagram photos and videos",
+        "url": "https://www.instagram.com/hendersonvillefarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313790",
+    "market_name": "Dallas Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://dallasfarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "(214) 664-9110"
+      ],
+      "social_media": [
+        "https://www.facebook.com/DFMDallasFarmersMarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 9 AM–5 PM",
+        "Sundays 10 AM–5 PM"
+      ]
+    },
+    "sources": [
+      {
+        "title": "The Shed | Open-Air Market at Dallas Farmers Market",
+        "url": "https://dallasfarmersmarket.org/the-shed",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Contact Dallas Farmers Market | Get in Touch",
+        "url": "https://dallasfarmersmarket.org/contact-us/",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Dallas Farmers Market | Fresh Produce, Local Vendors & Events",
+        "url": "https://dallasfarmersmarket.org/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313884",
+    "market_name": "Meadows Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.meadowsfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "(941) 315-7773"
+      ],
+      "social_media": [
+        "https://www.facebook.com/meadowsfarmersmarket",
+        "https://www.instagram.com/meadowsfarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Home | Meadows Farmers Market",
+        "url": "https://www.meadowsfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Visit | Meadows Farmers Market",
+        "url": "https://www.meadowsfarmersmarket.com/visit",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313886",
+    "market_name": "Edmond Farmer’s Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.edmondok.gov/365/Farmers-Market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/edmondfarmersmarket",
+        "https://www.instagram.com/edmond_farmers_market/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmer's Market | Edmond, OK - Official Website",
+        "url": "https://www.edmondok.gov/365/Farmers-Market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313898",
+    "market_name": "Lexington Farmers’ Market - Southland Dr",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.lexingtonfarmersmarket.com/sunday/"
+      ],
+      "phone_numbers": [
+        "859-608-2655"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Lexington Farmers Market – Your Market",
+        "url": "https://www.lexingtonfarmersmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "About – Lexington Farmers Market",
+        "url": "https://www.lexingtonfarmersmarket.com/about",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Contact Us – Lexington Farmers Market",
+        "url": "https://www.lexingtonfarmersmarket.com/contact",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313917",
+    "market_name": "Highland Park Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.mainstreethp.org/hpfmabout"
+      ],
+      "social_media": [
+        "https://www.facebook.com/HighlandParkFarmersMarket",
+        "https://www.instagram.com/highlandparknjfarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Highland Park Farmers Market — Main Street Highland Park",
+        "url": "https://www.mainstreethp.org/hpfmabout",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313962",
+    "market_name": "Brunswick-Topsham Land Trust Farmers Market at Crystal Spring Farm",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.btlt.org/farmers-market"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 8:30 – 12:30"
+      ],
+      "season": "May 2-October 31"
+    },
+    "sources": [
+      {
+        "title": "Farmers Market - Brunswick-Topsham Land Trust",
+        "url": "https://www.btlt.org/farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313964",
+    "market_name": "Down to Earth Scarsdale Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://scarsdale.gov/1075/Scarsdale-Farmers-Market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/scarsdalenyfarmersmarket/",
+        "https://www.instagram.com/scarsdalenyfarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Scarsdale Farmers Market | Scarsdale, NY",
+        "url": "https://scarsdale.gov/1075/Scarsdale-Farmers-Market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313996",
+    "market_name": "Oneida County Public Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://oneidacountypublicmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/oneidacountypublicmarket/",
+        "https://www.instagram.com/oneidacountymarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Oneida County Public Market – The Taste of Place.",
+        "url": "https://oneidacountypublicmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Oneida County Public Market | Utica NY | Facebook",
+        "url": "https://www.facebook.com/oneidacountypublicmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Oneida County Public Market (@oneidacountymarket) - Instagram",
+        "url": "https://www.instagram.com/oneidacountymarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314009",
+    "market_name": "Clarksville Commons Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://clarksvillecommons.com/farmers-market"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 9:00 AM–1:00 PM"
+      ],
+      "season": "Early May through mid-November"
+    },
+    "sources": [
+      {
+        "title": "Clarksville Common Farmers Market - Clarksville Commons",
+        "url": "https://clarksvillecommons.com/farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314010",
+    "market_name": "Murray Park Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.murrayfarmersmarketut.com/"
+      ],
+      "social_media": [
+        "https://instagram.com/murrayparkfarmersmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Murray Park Farmers Market | market | Murray Park, East Murray Park Avenue, Murray, UT, USA",
+        "url": "https://www.murrayfarmersmarketut.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "About | Murray Farmersmarket",
+        "url": "https://www.murrayfarmersmarketut.com/about-4",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314037",
+    "market_name": "Breadbasket Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://breadbasketfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "785-438-8850"
+      ],
+      "social_media": [
+        "https://www.facebook.com/Breadbasket-Farmers-Market-111941761398858"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Saturday 7:30 AM - 1 PM"
+      ],
+      "season": "April 4 thru November 21, 2026"
+    },
+    "sources": [
+      {
+        "title": "Breadbasket Farmers Market: Home",
+        "url": "https://breadbasketfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "About - Breadbasket Farmers Market",
+        "url": "https://breadbasketfarmersmarket.com/about",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314039",
+    "market_name": "Alpharetta Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.alpharettafarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/DowntownAlpharettaFarmersMarket",
+        "https://www.instagram.com/alpharettafarmersmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Home | Alpharetta Farmers Market is sponsored\nby the Alpharetta Business Association",
+        "url": "https://www.alpharettafarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314054",
+    "market_name": "Monroe Street Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.monroestreetfarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "(608) 709-9071"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MonroeStreetFarmersMarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sundays 9 A.M. to 1 P.M."
+      ]
+    },
+    "sources": [
+      {
+        "title": "Monroe Street Farmers' Market",
+        "url": "https://www.monroestreetfarmersmarket.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Vendor Online Application — Monroe Street Farmers' Market",
+        "url": "https://www.monroestreetfarmersmarket.org/vendor-online-application",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "News — Monroe Street Farmers' Market",
+        "url": "https://www.monroestreetfarmersmarket.org/news",
+        "fields": [
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314061",
+    "market_name": "Uptown Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.uptownfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "(704) 369.2143"
+      ],
+      "social_media": [
+        "https://www.facebook.com/uptownfarmersmarketclt/",
+        "https://www.instagram.com/uptownfarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Uptown Farmers Market",
+        "url": "https://www.uptownfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314071",
+    "market_name": "Mount Carroll Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.mtcarrollil.org/explore_mount_carrol/farmers_market.php"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MountCarrollFarmersMarket/",
+        "https://www.instagram.com/mcfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 8am to 12pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Welcome to Mount Carroll, IL",
+        "url": "https://www.mtcarrollil.org/explore_mount_carrol/farmers_market.php",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Mt Carroll IL Farmers Market (@mcfarmersmarket) • Instagram photos and videos",
+        "url": "https://www.instagram.com/mcfarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314117",
+    "market_name": "Findlay Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.findlaymarket.org/"
+      ],
+      "phone_numbers": [
+        "513-665-4839"
+      ],
+      "social_media": [
+        "https://www.facebook.com/findlaymarket/",
+        "https://www.instagram.com/findlaymarket/"
+      ]
+    },
+    "operations": {
+      "season": "Year-round"
+    },
+    "sources": [
+      {
+        "title": "findlaymarket.org",
+        "url": "https://www.findlaymarket.org/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Contact Us",
+        "url": "https://www.findlaymarket.org/contact-us",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Farmers Market — Findlay Market",
+        "url": "https://www.findlaymarket.org/farmers-market",
+        "fields": [
+          "visitor_note"
+        ]
+      },
+      {
+        "title": "findlaymarket.org",
+        "url": "https://www.findlaymarket.org/hours",
+        "fields": [
+          "operations.season"
+        ]
+      }
+    ],
+    "visitor_note": "The Farm Shed farmers market operates Saturdays 8am–2pm and Sundays 10am–2pm. General Findlay Market hours are Tuesday–Friday 9am–6pm, Saturday 8am–6pm and Sunday 10am–4pm; Monday is closed. Check individual businesses for their hours."
+  },
+  {
+    "id": "314128",
+    "market_name": "Tallahassee Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.tallahasseefarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/tallahasseefarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Saturday from 8am-noon"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Home | Tallahassee Farmers Market",
+        "url": "https://www.tallahasseefarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314144",
+    "market_name": "The Artisan Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://theartisanfarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/people/The-Artisan-Farmers-Market/61568393443670/",
+        "https://www.instagram.com/theartisanfarmermarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Our Story - The Artisan Farmers Market",
+        "url": "https://theartisanfarmersmarket.com/our-story",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314155",
+    "market_name": "Green Dragon",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.greendragonmarket.com/"
+      ],
+      "phone_numbers": [
+        "717-738-1117"
+      ],
+      "social_media": [
+        "https://www.facebook.com/GDFarmersMarket/",
+        "https://www.instagram.com/greendragonmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Friday from 8AM to 8PM"
+      ],
+      "season": "Year-round"
+    },
+    "sources": [
+      {
+        "title": "Amish Farmers Market Lancaster PA-PA Flea Market Near Me",
+        "url": "https://www.greendragonmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Information for Vendors - Green Dragon Farmers Market in PA",
+        "url": "https://www.greendragonmarket.com/information-for-vendors",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Ephrata Farmer's Market FAQ's - Learn More Today!",
+        "url": "https://www.greendragonmarket.com/faq",
+        "fields": [
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314206",
+    "market_name": "Sandy City Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.sandy.utah.gov/farmers-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/p/Sandy-City-Farmers-Market-100090241234638/",
+        "https://www.instagram.com/sandycityfarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmers' Market | Sandy City, UT - Official Website",
+        "url": "https://www.sandy.utah.gov/farmers-market",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Sandy City Farmers Market | Sandy UT - Facebook",
+        "url": "https://www.facebook.com/p/Sandy-City-Farmers-Market-100090241234638/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Sandy City Farmers Market (@sandycityfarmersmarket)",
+        "url": "https://www.instagram.com/sandycityfarmersmarket?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314253",
+    "market_name": "Old Town Orcutt Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.oldtownorcutt.org/otora-farmers-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/otofarmersmarket"
+      ]
+    },
+    "operations": {
+      "season": "May to October"
+    },
+    "sources": [
+      {
+        "title": "General  2 - Old Town Orcutt",
+        "url": "https://www.oldtownorcutt.org/otora-farmers-market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Old Town Orcutt Farmers Market (@otofarmersmarket) Facebook · Old Town Orcutt Farmers Market 180+ followers",
+        "url": "https://www.facebook.com/otofarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:7ec62f06bb2e27c4",
+    "market_name": "Palm Springs CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://certifiedfarmersmarkets.org/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Certified Farmers Market of the Coachella Valley",
+        "url": "https://certifiedfarmersmarkets.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314213",
+    "market_name": "West Ashley Farmers Market - Charleston, SC",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.charleston-sc.gov/1494/West-Ashley-Farmers-Market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/westashleyfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesdays, 3:00 PM – 7:00 PM",
+        "Sunday, November 22, 2026, 12:00 – 4:00 PM (Thanksgiving Market)"
+      ]
+    },
+    "sources": [
+      {
+        "title": "West Ashley Farmers Market | Charleston, SC - Official Website",
+        "url": "https://www.charleston-sc.gov/1494/West-Ashley-Farmers-Market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Farmers Market  | Charleston, SC - Official Website",
+        "url": "https://www.charleston-sc.gov/3305/Farmers-Market",
+        "fields": [
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:8d43be7f16dc7ec1",
+    "market_name": "The Farmer’s Wagon Farm Stand",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.bowmanorchards.com/activities/off-site-produce-stands/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Produce Farm Stand in Clifton Park NY | Bowman Orchards",
+        "url": "https://www.bowmanorchards.com/activities/off-site-produce-stands/",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314076",
+    "market_name": "Charlottesville City Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.charlottesville.gov/619/Charlottesville-Farmers-Markets"
+      ],
+      "phone_numbers": [
+        "434-970-3371"
+      ],
+      "social_media": [
+        "https://www.facebook.com/CharlottesvilleCityMarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 9:00 AM–1:00 PM"
+      ],
+      "season": "April–November"
+    },
+    "sources": [
+      {
+        "title": "Charlottesville Markets | Charlottesville, VA",
+        "url": "https://www.charlottesville.gov/619/Charlottesville-Farmers-Markets",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "News Flash Archive - City Market Opens Saturday, April 4",
+        "url": "https://www.charlottesville.gov/CivicAlerts.aspx?aid=2501",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Charlottesville City Market | Charlottesville VA | Facebook",
+        "url": "https://www.facebook.com/CharlottesvilleCityMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314198",
+    "market_name": "Scio Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.sheboygancountyinterfaith.org/farmers-market/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesdays 8am-1pm",
+        "Saturdays 8am-1pm"
+      ],
+      "season": "June 3–October 31, 2026"
+    },
+    "sources": [
+      {
+        "title": "Summer Farmers Market",
+        "url": "http://www.sheboygancountyinterfaith.org/farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Scio Farmers Market — official published information",
+        "url": "https://www.sheboygancountyinterfaith.org/farmers-market/",
+        "fields": [
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314254",
+    "market_name": "Savage Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.savagefarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/SavageFarmersMarket",
+        "https://www.instagram.com/savagefarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesdays, 4-7 pm"
+      ],
+      "season": "May 27–October 28, 2026"
+    },
+    "sources": [
+      {
+        "title": "Savage Farmers Market | Farmers Market in Savage, MD | Foundry Street & Washington Street, Savage, MD 20763, USA",
+        "url": "https://www.savagefarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days",
+          "operations.season",
+          "visitor_note",
+          "suppress_map"
+        ]
+      }
+    ],
+    "visitor_note": "The market publishes its location as Baldwin Common, 8515 Foundry Street, Savage, MD 20763. The imported address differs; check the official website before visiting.",
+    "suppress_map": true
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:17c2c3e23f699f2e",
+    "market_name": "Downtown Ventura CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.vccfm.org/downtown-ventura"
+      ],
+      "phone_numbers": [
+        "(805) 529-6266"
+      ],
+      "social_media": [
+        "https://www.facebook.com/DowntownVenturaCertifiedFarmersMarket",
+        "https://www.instagram.com/downtownventurafarmersmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Downtown Ventura — VCCFM",
+        "url": "https://www.vccfm.org/downtown-ventura",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "visitor_note"
+        ]
+      },
+      {
+        "title": "Downtown Ventura Certified Farmers' Market | Ventura CA | Facebook",
+        "url": "https://www.facebook.com/DowntownVenturaCertifiedFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "DowntownVenturaFarmersMarket (@downtownventurafarmersmarket) • Instagram photos and videos",
+        "url": "https://www.instagram.com/downtownventurafarmersmarket?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ],
+    "visitor_note": "The published phone is the Ventura County Certified Farmers Market Association contact, which operates this market."
+  },
+  {
+    "id": "314080",
+    "market_name": "Athens Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.athensfarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "740-593-6763"
+      ],
+      "social_media": [
+        "https://www.facebook.com/afm.ohio/",
+        "https://www.instagram.com/athensfarmersmarket.ohio/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 9:00am–noon, year-round",
+        "Wednesdays 9:00am–noon, April 22 through November"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Athens Farmers Market",
+        "url": "https://www.athensfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Location and Map — Athens Farmers Market",
+        "url": "https://www.athensfarmersmarket.org/location-map",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Athens Farmers Market | Athens OH - Facebook",
+        "url": "https://www.facebook.com/afm.ohio/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Athens Farmers Market (@athensfarmersmarket.ohio) - Instagram",
+        "url": "https://www.instagram.com/athensfarmersmarket.ohio/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314257",
+    "market_name": "Josh’s Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://joshsfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "(980) 635-8140"
+      ],
+      "social_media": [
+        "https://www.facebook.com/joshsfarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Monday–Thursday 9:00am–6:30pm",
+        "Friday & Saturday 9:00am–6:00pm",
+        "Sunday 9:00am–5:00pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Joshs Farmers Market",
+        "url": "https://joshsfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "visitor_note",
+          "suppress_map"
+        ]
+      }
+    ],
+    "visitor_note": "The market publishes its current location as 142 Joe V Knox Avenue, Mooresville, NC 28117. Its history identifies 558 River Highway as a former location; check the official website before visiting.",
+    "suppress_map": true
+  },
+  {
+    "id": "314277",
+    "market_name": "Boca Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.bocafarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/boca.farmers.market/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Sunday, 9:00 AM to 1:00 PM"
+      ],
+      "season": "Year-round"
+    },
+    "sources": [
+      {
+        "title": "Boca Farmers Market | Sundays 9AM to 1PM in Boca Raton",
+        "url": "https://www.bocafarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Boca Farmers Market | Year-Round Sundays (@boca.farmers.market) • Instagram photos and videos",
+        "url": "https://www.instagram.com/boca.farmers.market/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:2d0f4f5bb618a1ea",
+    "market_name": "Modesto CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://modestocfm.com/"
+      ],
+      "phone_numbers": [
+        "(209) 390-9098"
+      ],
+      "social_media": [
+        "https://www.facebook.com/modestofarmersmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Modesto Certified Farmers Market – Central Valleys Premiere Public Market",
+        "url": "https://modestocfm.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Calendar – Modesto Certified Farmers Market",
+        "url": "https://modestocfm.com/calendar",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "301140",
+    "market_name": "the Farm Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://sierracountynewmexico.info/local-events/hillsboros-farm-market/"
+      ],
+      "phone_numbers": [
+        "575-743-0224"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Hillsboro’s Farm Market - Visit Sierra County",
+        "url": "https://sierracountynewmexico.info/local-events/hillsboros-farm-market/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313221",
+    "market_name": "Southwest Virginia Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://swvafarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "276-728-2433"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Southwest VA Farmers' Market – 497 Farmers Market Dr ~ Hillsville VA~ I-77 Exit 14",
+        "url": "https://swvafarmersmarket.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Contact Information – Southwest VA Farmers' Market",
+        "url": "https://swvafarmersmarket.org/contact-information",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313246",
+    "market_name": "The South of the James Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.growrva.com/sojmarket"
+      ],
+      "social_media": [
+        "https://www.facebook.com/SOJmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sundays, 10am-1pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "South of the James Market | GrowRVA",
+        "url": "https://www.growrva.com/sojmarket",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "South of the James Farmers Market | Richmond VA | Facebook",
+        "url": "https://www.facebook.com/SOJmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313296",
+    "market_name": "Champlain Islands Farmers Market (Winter)",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://champlainislandsfarmersmarket.org/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/ChamplainIslandsFarmersMarket/",
+        "https://www.instagram.com/cifmvt"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Champlain Islands Farmers' Market",
+        "url": "https://champlainislandsfarmersmarket.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Visit Us — Champlain Islands Farmers' Market",
+        "url": "https://champlainislandsfarmersmarket.org/visit",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313337",
+    "market_name": "Richmond Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://richmond-farmers-market.square.site/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/richmondfarmersmarketvt",
+        "https://www.instagram.com/richmond_farmers_market"
+      ]
+    },
+    "operations": {
+      "season": "May 29 to October 9, 2026"
+    },
+    "sources": [
+      {
+        "title": "Home | Richmond Farmers Market",
+        "url": "https://richmond-farmers-market.square.site/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313392",
+    "market_name": "Liberty Lake Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.libertylakefarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/LibertyLakeFarmersMarket",
+        "https://www.instagram.com/liberty_lake_farmers_market"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 9:00am-1:00pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "libertylakefarmersmarket.com",
+        "url": "https://www.libertylakefarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Liberty Lake Farmers' Market | Liberty Lake WA | Facebook",
+        "url": "https://www.facebook.com/LibertyLakeFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Liberty Lake Farmers Market (@liberty_lake_farmers_market) • Instagram photos and videos",
+        "url": "https://www.instagram.com/liberty_lake_farmers_market",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313553",
+    "market_name": "Milwaukee Public Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://milwaukeepublicmarket.org/"
+      ],
+      "phone_numbers": [
+        "414-336-1111"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MilwaukeePublicMarket/",
+        "https://www.instagram.com/milwaukeepublicmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Monday - Saturday: 10:00am - 8:00pm",
+        "Sunday: 10:00am - 6:00pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Milwaukee Public Market - Fresh Food. Local Vendors.",
+        "url": "https://milwaukeepublicmarket.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "About Us",
+        "url": "https://milwaukeepublicmarket.org/about-us/about-us",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313590",
+    "market_name": "Sheboygan Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.sheboygancountyinterfaith.org/farmers-market/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesdays and Saturdays, 8:00 AM–1:00 PM"
+      ],
+      "season": "June 3–October 31, 2026"
+    },
+    "sources": [
+      {
+        "title": "Summer Farmers Market",
+        "url": "http://www.sheboygancountyinterfaith.org/farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Sheboygan Farmers’ Market — official published information",
+        "url": "https://www.sheboygancountyinterfaith.org/farmers-market/",
+        "fields": [
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313596",
+    "market_name": "South Shore Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://southshorefarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/southshorefarmersmarket/",
+        "https://www.instagram.com/southshorefarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays from 8 am to Noon"
+      ]
+    },
+    "sources": [
+      {
+        "title": "South Shore Farmers' Market – South Shore Park  Every Saturday – June – October – 8AM to Noon – South Shore Park – 2900 South Shore Dr",
+        "url": "https://southshorefarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313604",
+    "market_name": "Stoughton Community Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://stoughtoncommunityfarmersmarket.org/"
+      ]
+    },
+    "operations": {
+      "season": "May 23rd-October 10th, 2026"
+    },
+    "sources": [
+      {
+        "title": "Stoughton Community Farmers Market - Home",
+        "url": "https://stoughtoncommunityfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313630",
+    "market_name": "Watertown Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.watertownmainstreet.org/farmers-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/watertownfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Tuesdays, 7 a.m.-12:00 p.m."
+      ],
+      "season": "May through October"
+    },
+    "sources": [
+      {
+        "title": "FARMERS' MARKET | watertownmainstreet",
+        "url": "https://www.watertownmainstreet.org/farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Watertown Farmers' Market | Watertown WI | Facebook",
+        "url": "https://www.facebook.com/watertownfarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313632",
+    "market_name": "Waukesha Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.waukeshadba.com/farmers-market"
+      ],
+      "phone_numbers": [
+        "(262) 899-8186"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 8am–noon"
+      ],
+      "season": "May–October"
+    },
+    "sources": [
+      {
+        "title": "Farmers' Market | WaukeshaDBA",
+        "url": "https://www.waukeshadba.com/farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Farmers' Market Team | WaukeshaDBA",
+        "url": "https://www.waukeshadba.com/farmersmarketteam",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313699",
+    "market_name": "Cheyenne Winter Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.cheyennewinterfarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "307-222-9542"
+      ]
+    },
+    "operations": {
+      "days": [
+        "1st and 3rd Saturdays, 9 AM - 1 PM"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Cheyenne Winter Farmers' Market",
+        "url": "https://www.cheyennewinterfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Cheyenne Winter Farmers' Market | Contact Us",
+        "url": "https://www.cheyennewinterfarmersmarket.org/contact",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313808",
+    "market_name": "Port Henry Waterfront Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.porthenrymarket.org/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/PortHenryMarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Home | Port Henry Waterfront Farmers' Market on Lake Champlain",
+        "url": "https://www.porthenrymarket.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "About The Market | Port Henry Farmers Market on Lake Champlain",
+        "url": "https://www.porthenrymarket.org/about",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313872",
+    "market_name": "Stewartstown Night Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.aviatorpa.com/nightmarket"
+      ],
+      "social_media": [
+        "https://www.instagram.com/stewartstownnightmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Night Market | Aviator Brew Hub",
+        "url": "https://www.aviatorpa.com/nightmarket",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Night Market in Stewartstown (@stewartstownnightmarket ...",
+        "url": "https://www.instagram.com/stewartstownnightmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313897",
+    "market_name": "Lexington Farmers’ Market - Main St",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.lexingtonfarmersmarket.com/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Lexington Farmers Market – Your Market",
+        "url": "https://www.lexingtonfarmersmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "About – Lexington Farmers Market",
+        "url": "https://www.lexingtonfarmersmarket.com/about",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313931",
+    "market_name": "RI Grown Farmers Market at Goddard Memorial State Park",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://dem.ri.gov/rigrown"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Weekly RI Grown Farmers Market at Goddard Memorial State Park | Rhode Island Department of Environmental Management",
+        "url": "https://dem.ri.gov/events/weekly-ri-grown-farmers-market-goddard-memorial-state-park-21",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "313942",
+    "market_name": "Jamestown Farmers Market - Summer",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.jfmny.org/"
+      ],
+      "phone_numbers": [
+        "(716) 640-2173"
+      ],
+      "social_media": [
+        "https://www.facebook.com/JamestownFarmersMarket1",
+        "https://www.instagram.com/jamestownfarmersmarketny/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Saturday, 9 a.m. to 1 p.m."
+      ],
+      "season": "June through November"
+    },
+    "sources": [
+      {
+        "title": "Jamestown Farmers Market",
+        "url": "https://www.jfmny.org/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Contact — Jamestown Farmers Market",
+        "url": "https://www.jfmny.org/contact",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Farmers Market — Jamestown Farmers Market",
+        "url": "https://www.jfmny.org/farmers",
+        "fields": [
+          "operations.days",
+          "operations.season",
+          "visitor_note",
+          "suppress_map"
+        ]
+      }
+    ],
+    "visitor_note": "The summer market is near the intersection of Third Street and Pine Street in downtown Jamestown, New York. The imported address identifies a different part of Third Street; check the official website before visiting.",
+    "suppress_map": true
+  },
+  {
+    "id": "314004",
+    "market_name": "Sebastopol Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.sebastopolfarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "(707) 861-1147"
+      ],
+      "social_media": [
+        "https://www.facebook.com/sebastopolfarmersmarket/",
+        "https://instagram.com/sebastopolfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Sunday, rain or shine — 9:00am-1:30pm"
+      ],
+      "season": "All year round"
+    },
+    "sources": [
+      {
+        "title": "Home | Sebastopol Farmers Market",
+        "url": "https://www.sebastopolfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "FAQ | Sebastopol Farmers Market",
+        "url": "https://www.sebastopolfarmersmarket.org/faq",
+        "fields": [
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314016",
+    "market_name": "Main Street Portsmouth IN Bloom Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.mspohio.org/events/farmers-market"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 9am to 1pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmers Market | MSPIB",
+        "url": "https://www.mspohio.org/events/farmers-market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "visitor_note",
+          "suppress_map"
+        ]
+      }
+    ],
+    "visitor_note": "The market publishes its location as the Roy Rogers Esplanade, northeast corner of Chillicothe and Gallia streets in downtown Portsmouth, Ohio. Confirm the entrance directly on the official market page before visiting.",
+    "suppress_map": true
+  },
+  {
+    "id": "314028",
+    "market_name": "Modesto Certified Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://modestocfm.com/"
+      ],
+      "phone_numbers": [
+        "(209) 390-9098"
+      ],
+      "social_media": [
+        "https://www.facebook.com/modestofarmersmarket",
+        "https://instagram.com/modestofarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Thursdays & Saturdays: 8 AM to 1 PM"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Calendar – Modesto Certified Farmers Market",
+        "url": "https://modestocfm.com/calendar",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Modesto Certified Farmers Market – Central Valleys Premiere Public Market",
+        "url": "https://modestocfm.com/",
+        "fields": [
+          "contact.phone_numbers",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314045",
+    "market_name": "Arden-Arcade Certified Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://alchemistcdc.org/arden"
+      ],
+      "phone_numbers": [
+        "(916) 245-0316"
+      ],
+      "social_media": [
+        "https://www.instagram.com/ardenfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 8am – Noon"
+      ],
+      "season": "Year-Round"
+    },
+    "sources": [
+      {
+        "title": "Arden-Arcade Certified Farmers’ Market - Alchemist CDC",
+        "url": "https://alchemistcdc.org/arden",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314047",
+    "market_name": "Midtown Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://exploremidtown.org/midtown-markets"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MidtownFarmersMarketSacramento",
+        "https://www.instagram.com/midtownfarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Saturday from 8 a.m. - 1 p.m."
+      ],
+      "season": "Year-round"
+    },
+    "sources": [
+      {
+        "title": "Midtown Markets - Midtown Association",
+        "url": "https://exploremidtown.org/midtown-markets",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Midtown Farmers Market Sacramento | Sacramento CA - Facebook",
+        "url": "https://www.facebook.com/MidtownFarmersMarketSacramento",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Midtown Farmers Market Sacramento (@midtownfarmersmarket ...",
+        "url": "https://www.instagram.com/midtownfarmersmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314060",
+    "market_name": "Chula Vista Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://sandiegomarkets.com/"
+      ],
+      "phone_numbers": [
+        "(619) 233-0582"
+      ],
+      "social_media": [
+        "https://www.facebook.com/ChulaVistaMarket/",
+        "https://www.instagram.com/chulavistafarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sundays, 10:00 am to 2:00 pm"
+      ],
+      "season": "Open year-round, rain or shine."
+    },
+    "sources": [
+      {
+        "title": "San Diego Markets",
+        "url": "https://sandiegomarkets.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Chula Vista Farmers Market | Chula Vista CA - Facebook",
+        "url": "https://www.facebook.com/ChulaVistaMarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Chula Vista Farmers Market (@chulavistafarmersmarket)",
+        "url": "https://www.instagram.com/chulavistafarmersmarket?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314064",
+    "market_name": "New Baltimore Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.newbaltimorefarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "586-242-7341 (Carl Weinreich, President)",
+        "586-842-8029 (market)"
+      ],
+      "social_media": [
+        "https://www.facebook.com/newbaltimorefarmersmarket",
+        "https://www.instagram.com/newbaltimorefarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Sundays, 9:00 am–2:00 pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "New Baltimore Farmers Market - Macomb County, Michigan",
+        "url": "https://www.newbaltimorefarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "New Baltimore Farmers Market | New Baltimore MI | Facebook",
+        "url": "https://www.facebook.com/newbaltimorefarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "New Baltimore Farmers Market (@newbaltimorefarmersmarket ...",
+        "url": "https://www.instagram.com/newbaltimorefarmersmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314079",
+    "market_name": "Coopersburg Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://coopersburgfarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.instagram.com/coopersburg_farmers_market"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Sunday, 10:00 AM - 1:00 PM"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Coopersburg Farmers Market - Sunday Market",
+        "url": "https://coopersburgfarmersmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Connect With Us",
+        "url": "https://coopersburgfarmersmarket.com/connect-with-us",
+        "fields": [
+          "contact.social_media",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314096",
+    "market_name": "Pontotoc Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://pontotocfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "662-760-6703"
+      ],
+      "social_media": [
+        "https://www.facebook.com/pontotocfarmersmarket/",
+        "https://www.instagram.com/pontotocfarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "PontotocFarmersMarket",
+        "url": "https://pontotocfarmersmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Contact Info – PontotocFarmersMarket",
+        "url": "http://pontotocfarmersmarket.com/Contact-info",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "About Us – PontotocFarmersMarket",
+        "url": "https://pontotocfarmersmarket.com/about/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314098",
+    "market_name": "Mount Clemens Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.mountclemensfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "586-493-7600"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MountClemensFarmersMarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Growing For YOU Since 1979 Mount Clemens Farmers Market",
+        "url": "https://www.mountclemensfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "visitor_note",
+          "suppress_map"
+        ]
+      },
+      {
+        "title": "Mount Clemens Farmers Market | Mount Clemens MI | Facebook",
+        "url": "https://www.facebook.com/MountClemensFarmersMarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ],
+    "visitor_note": "The market publishes its location as 68 southbound Gratiot Avenue, Mount Clemens, MI 48043. The imported North River Road address differs; check the official website before visiting.",
+    "suppress_map": true
+  },
+  {
+    "id": "314112",
+    "market_name": "Black Mountain Tailgate Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://blackmountainmarket.org/"
+      ],
+      "phone_numbers": [
+        "828.419.4613"
+      ],
+      "social_media": [
+        "https://www.facebook.com/BMTMarket",
+        "https://www.instagram.com/blackmountainmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Black Mountain Tailgate Market",
+        "url": "https://blackmountainmarket.org/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:8e55c0f44f62e9d0",
+    "market_name": "Irvington Fm",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.pcfma.org/market/irvington-farmers-market"
+      ],
+      "social_media": [
+        "https://facebook.com/IrvingtonMarket",
+        "https://instagram.com/IrvingtonMarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Irvington Farmers' Market | PCFMA",
+        "url": "https://www.pcfma.org/market/irvington-farmers-market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314101",
+    "market_name": "Paragould Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.downtownparagould.com/paragould-farmers-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/paragouldmarket/",
+        "https://www.instagram.com/pgldfarmersmkt/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmers Market - Main Street Paragould",
+        "url": "https://www.downtownparagould.com/paragould-farmers-market",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Paragould Farmers' Market | Paragould AR | Facebook",
+        "url": "https://www.facebook.com/paragouldmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Paragould Farmers' Market (@pgldfarmersmkt) - Instagram",
+        "url": "https://www.instagram.com/pgldfarmersmkt/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314134",
+    "market_name": "Belpre Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://belprefarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "(740) 541-4342"
+      ],
+      "social_media": [
+        "https://www.facebook.com/people/Belpre-Farmers-Market/61555806393137/",
+        "https://www.instagram.com/belpre_farmers_market/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Every Sunday, noon–3 p.m."
+      ],
+      "season": "Mother’s Day until the last Sunday of October"
+    },
+    "sources": [
+      {
+        "title": "Home - Belpre Farmer's Market",
+        "url": "https://belprefarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Belpre Farmersâ Market  | Belpre OH | Facebook",
+        "url": "https://www.facebook.com/people/Belpre-Farmers-Market/61555806393137/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Belpre Farmers’ Market (@belpre_farmers_market) - Instagram",
+        "url": "https://www.instagram.com/belpre_farmers_market/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Belpre Farmers' Market 515 Blennerhassett Ave Belpre, OH 45714",
+        "url": "https://belprefarmersmarket.org/wp-content/uploads/2026/07/Market-Rules.pdf",
+        "fields": [
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314148",
+    "market_name": "Dixie Lee Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://dixieleefarmersmarket.com/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 9:00 am – 12:00 pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Dixie Lee Farmers' Market",
+        "url": "https://dixieleefarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314174",
+    "market_name": "Minot Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://minotfarmersmarket.com/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MinotFarmersMarket",
+        "https://www.instagram.com/minotfarmers/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Minot Farmer's Market in Oak Park",
+        "url": "https://minotfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314175",
+    "market_name": "Norman Farm Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://clevelandcountyok.com/413/Norman-Farm-Market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/NormanFarmMarketOK",
+        "https://www.instagram.com/normanfarmmarket_ok/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Norman Farm Market | Cleveland County, OK - Official Website",
+        "url": "https://clevelandcountyok.com/413/Norman-Farm-Market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314199",
+    "market_name": "Hudson Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.hudsonfarmersmarketny.org/"
+      ],
+      "phone_numbers": [
+        "518-300-3496"
+      ],
+      "social_media": [
+        "https://www.facebook.com/hudsonny.market",
+        "https://www.instagram.com/hudsonfarmersmarketny"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Hudson Farmers' Market",
+        "url": "https://www.hudsonfarmersmarketny.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Contact Us — Hudson Farmers' Market",
+        "url": "https://www.hudsonfarmersmarketny.org/contact",
+        "fields": [
+          "contact.phone_numbers",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314200",
+    "market_name": "Daybreak Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.mydaybreak.com/daybreak_farmers_market"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Daybreak Farmers Market | LiveDAYBREAK",
+        "url": "https://www.mydaybreak.com/daybreak_farmers_market",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314265",
+    "market_name": "Bethel Park Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.bethelparkpa.gov/bethel-market"
+      ],
+      "phone_numbers": [
+        "412-831-1328"
+      ],
+      "social_media": [
+        "https://www.facebook.com/bethelparkfarmersmarket/",
+        "https://www.instagram.com/BethelParkFarmersMarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmers' Market | Bethel Park PS | Bethel Park, PA",
+        "url": "https://www.bethelparkpa.gov/bethel-market",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Contact Bethel Park Farmers Market | Bethel Park PS | Bethel Park, PA",
+        "url": "https://www.bethelparkpa.gov/bethel-market-contact-us",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Bethel Park Farmers' Market | Bethel Park PA | Facebook",
+        "url": "https://www.facebook.com/bethelparkfarmersmarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Bethel Park Farmers Market (@bethelparkfarmersmarket ...",
+        "url": "https://www.instagram.com/BethelParkFarmersMarket/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314296",
+    "market_name": "Slate Valley Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.slatevalleyfarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "(860) 248-0336"
+      ],
+      "social_media": [
+        "http://instagram.com/slatevalleyfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesdays 3-6pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Slate Valley Farmer's Market - Granville, NY",
+        "url": "https://www.slatevalleyfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Stay Connected — Slate Valley Farmer's Market Wednesdays 3-6pm",
+        "url": "https://www.slatevalleyfarmersmarket.org/connect",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314297",
+    "market_name": "Seymour Area Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://seymourmainstreet.org/farmers-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/seymourareafarmersmarket"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmers Market l Seymour Main Street Indiana",
+        "url": "https://seymourmainstreet.org/farmers-market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314298",
+    "market_name": "Stevensville Harvest Valley Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://stevihvfm.square.site/"
+      ],
+      "phone_numbers": [
+        "(406) 207-9425 (Jess Bundren)",
+        "(406) 381-6145 (Stacie Barker)"
+      ]
+    },
+    "operations": {
+      "season": "First Saturday in May through the first Saturday of October"
+    },
+    "sources": [
+      {
+        "title": "Home | Stevensville Harvest Valley Farmers Market",
+        "url": "https://stevihvfm.square.site/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314317",
+    "market_name": "Justin Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.thefarmerswifemarkets.com/justin"
+      ],
+      "social_media": [
+        "https://www.instagram.com/justin_farmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "About — The Farmer's Wife Markets",
+        "url": "https://www.thefarmerswifemarkets.com/justin",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314340",
+    "market_name": "Farmers Market at the Grove School",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.thegroveschool.org/the-grove-school-farmer-s-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/FarmersMarketAtGrove/",
+        "https://www.instagram.com/grovefarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays, 8:00 a.m.–12:00 p.m. (rain or shine)"
+      ]
+    },
+    "sources": [
+      {
+        "title": "The Grove School Farmer's Market | The Grove School",
+        "url": "https://www.thegroveschool.org/the-grove-school-farmer-s-market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314356",
+    "market_name": "West Little Rock Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.westlittlerockfarmersmarket.org/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/westlittlerockfarmersmarket/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturday 8:00 am - 12:00 pm",
+        "Sunday–Friday closed"
+      ],
+      "season": "April 18 through October 31, 2026"
+    },
+    "sources": [
+      {
+        "title": "Farmers Market | West Little Rock",
+        "url": "https://www.westlittlerockfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "West Little Rock Farmers Market | Little Rock, AR",
+        "url": "https://www.littlerock.com/events/west-little-rock-farmers-market",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314358",
+    "market_name": "Salida Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.foodshedalliance.com/"
+      ],
+      "phone_numbers": [
+        "(719) 207-5787"
+      ],
+      "social_media": [
+        "https://www.instagram.com/salida_farmers_market/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Foodshed Alliance",
+        "url": "https://www.foodshedalliance.com/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "General 1 — Foodshed Alliance",
+        "url": "https://www.foodshedalliance.com/contact",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Foodshed Alliance (@salida_farmers_market) · Salida, CO",
+        "url": "https://www.instagram.com/salida_farmers_market?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314360",
+    "market_name": "Medford Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://medfordfarmersmarket.org/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/MedfordFarmerMkt",
+        "https://www.instagram.com/medfordfarmersmarket"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Thursdays 3-7pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "- MEDFORD FARMERS MARKET",
+        "url": "https://medfordfarmersmarket.org/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days"
+        ]
+      },
+      {
+        "title": "Medford, MA Farmers Market (@medfordfarmersmarket) • Instagram photos and videos",
+        "url": "https://www.instagram.com/medfordfarmersmarket?hl=en",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:61416bd4cc24a32e",
+    "market_name": "Halfmoon Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.townofhalfmoon-ny.gov/recreation/pages/halfmoon-farmers-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/p/Halfmoon-Farmers-Market-100064865137497"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Halfmoon Farmers' Market | Halfmoon NY",
+        "url": "https://www.townofhalfmoon-ny.gov/recreation/pages/halfmoon-farmers-market",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Halfmoon Farmer's Market",
+        "url": "https://www.facebook.com/p/Halfmoon-Farmers-Market-100064865137497",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:836a0b33ccf21c05",
+    "market_name": "Morro Bay Thursday Afternoons CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.slocountyfarmers.org/locations"
+      ],
+      "phone_numbers": [
+        "(805) 503-3909"
+      ]
+    },
+    "sources": [
+      {
+        "title": "SLO County Farmers' Markets - Locations",
+        "url": "https://www.slocountyfarmers.org/locations",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314154",
+    "market_name": "Palos Heights Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://palosheights.org/273/Farmers-Market"
+      ],
+      "phone_numbers": [
+        "708-361-1807"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Wednesdays: 8:00am-1:00pm"
+      ],
+      "season": "May 13 through October 14"
+    },
+    "sources": [
+      {
+        "title": "Farmers Market | Palos Heights, IL",
+        "url": "https://palosheights.org/273/Farmers-Market",
+        "fields": [
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ]
+      },
+      {
+        "title": "Calendar • Palos Heights Farmers Market",
+        "url": "https://www.palosheights.org/calendar.aspx?EID=1920",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "314365",
+    "market_name": "Lightfoot Farm Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://lightfootfarmmarket.com/"
+      ],
+      "phone_numbers": [
+        "901-876-2125"
+      ],
+      "social_media": [
+        "https://www.instagram.com/lightfootfarmtn/"
+      ]
+    },
+    "operations": {
+      "days": [
+        "First Saturdays April-December, 9:00 AM – 2:00 PM"
+      ],
+      "season": "April-December"
+    },
+    "sources": [
+      {
+        "title": "Local Farm Market - Fresh Produce &amp; Artisan Goods",
+        "url": "https://lightfootfarmmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Contact Lightfoot Farm Market - Get in Touch!",
+        "url": "https://lightfootfarmmarket.com/contact",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "FAQ's",
+        "url": "https://lightfootfarmmarket.com/faqs",
+        "fields": [
+          "operations.days",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:786dcca113bcb480",
+    "market_name": "Poway CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://poway.org/456/Farmers-Market"
+      ],
+      "phone_numbers": [
+        "619-249-9395"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmers Market | Poway, CA - Official Website",
+        "url": "https://poway.org/456/Farmers-Market",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:b53d5ef375472eda",
+    "market_name": "Baywood/Los Osos CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.northcountyfarmersmarkets.com/our-markets"
+      ],
+      "phone_numbers": [
+        "(805) 748-1109"
+      ]
+    },
+    "sources": [
+      {
+        "title": "North County Farmers Markets - Our Markets",
+        "url": "https://www.northcountyfarmersmarkets.com/our-markets",
+        "fields": [
+          "contact.websites",
+          "visitor_note"
+        ]
+      },
+      {
+        "title": "North County Farmers Markets - Contact Us",
+        "url": "https://www.northcountyfarmersmarkets.com/contact-us",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ],
+    "visitor_note": "The published phone is the North County Farmers Market Association contact, which operates the Baywood/Los Osos market."
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:d66bbdc62b520192",
+    "market_name": "Adventist Health White Memorial Fm",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.adventisthealth.org/white-memorial/patients-and-visitors/amenities"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Amenities - White Memorial - Adventist Health",
+        "url": "https://www.adventisthealth.org/white-memorial/patients-and-visitors/amenities",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:7866e6ad4cddf74f",
+    "market_name": "Vallejo CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.pcfma.org/market/vallejo-farmers-market"
+      ],
+      "social_media": [
+        "https://www.facebook.com/VallejoFarmersMarket",
+        "https://www.instagram.com/vallejofarmersmarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Vallejo Farmers' Market | PCFMA",
+        "url": "https://www.pcfma.org/market/vallejo-farmers-market",
+        "fields": [
+          "contact.websites",
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Vallejo Farmers' Market | Vallejo CA | Facebook",
+        "url": "https://www.facebook.com/VallejoFarmersMarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Vallejo Farmers' Market (@vallejofarmersmarket) • Instagram photos and videos",
+        "url": "https://www.instagram.com/vallejofarmersmarket",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:cf4bb7ae725f0472",
+    "market_name": "Encino Fm",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://encinofarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "(818) 708-6611"
+      ],
+      "social_media": [
+        "https://www.facebook.com/EncinoFarmersMarket/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Home",
+        "url": "https://encinofarmersmarket.org/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Contact",
+        "url": "https://encinofarmersmarket.org/contact",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Encino Farmers Market – ONEgeneration",
+        "url": "https://www.onegeneration.org/farmers-market",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:f34656e9e286d767",
+    "market_name": "Santee CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://santeefarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "760-533-5305"
+      ],
+      "social_media": [
+        "https://www.facebook.com/SanteeCFM/",
+        "https://www.instagram.com/santee_cfm/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Santee Farmers Market",
+        "url": "https://santeefarmersmarket.com/",
+        "fields": [
+          "contact.websites"
+        ]
+      },
+      {
+        "title": "Vender Rules – Santee Farmers Market",
+        "url": "https://santeefarmersmarket.com/vender-rules/",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Santee Certified Farmer's Market | Santee CA | Facebook",
+        "url": "https://www.facebook.com/SanteeCFM/",
+        "fields": [
+          "contact.social_media"
+        ]
+      },
+      {
+        "title": "Santee Certified Farmers Mkt (@santee_cfm) - Instagram",
+        "url": "https://www.instagram.com/santee_cfm/",
+        "fields": [
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:23a9663bc7bb77a5",
+    "market_name": "Downtown Crescent City Fm",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.dnatlfoodcouncil.org/farmers-markets"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Farmers Market — dnatlfoodcouncil.org",
+        "url": "https://www.dnatlfoodcouncil.org/farmers-markets",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:9efb0d458d3e5331",
+    "market_name": "Goleta CFM",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.sbfarmersmarket.org/services-1"
+      ],
+      "phone_numbers": [
+        "805-962-5354"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Our Markets | Sbcfma",
+        "url": "https://www.sbfarmersmarket.org/services-1",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers"
+        ]
+      },
+      {
+        "title": "Contact Us | Sbcfma",
+        "url": "https://www.sbfarmersmarket.org/contact-us",
+        "fields": [
+          "contact.phone_numbers"
+        ]
+      }
+    ]
+  }
+]

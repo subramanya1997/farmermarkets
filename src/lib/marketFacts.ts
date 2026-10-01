@@ -30,6 +30,7 @@ import {
   displayName,
   marketHours,
   marketSeasonLabel,
+  marketScheduleLabels,
   marketWeekdays,
   nameSaysMarket,
   resolveLocation,
@@ -425,13 +426,18 @@ function scheduleRecurrenceLabel(schedule: StructuredMarketSchedule): string | u
 
 /** Human-readable, non-lossy labels for source-backed v2 schedule windows. */
 export function structuredScheduleLabels(firstParty?: MarketFirstPartyFacts): string[] {
+  const status = firstParty?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return [];
   const labels: string[] = [];
   for (const item of firstParty?.operations?.schedules ?? []) {
     const recurrence = scheduleRecurrenceLabel(item.value);
     const opens = humanClock(item.value.opens);
     const closes = humanClock(item.value.closes);
     if (!recurrence || !opens || !closes) continue;
-    const label = `${recurrence}, ${opens}\u2013${closes}`;
+    const start = item.value.start_date ? formatDate(item.value.start_date) : undefined;
+    const end = item.value.end_date ? formatDate(item.value.end_date) : undefined;
+    const dates = start && end ? ` (${start} - ${end})` : start ? ` (from ${start})` : end ? ` (through ${end})` : '';
+    const label = `${recurrence}, ${opens}\u2013${closes}${dates}`;
     if (!labels.includes(label)) labels.push(label);
   }
   return labels;
@@ -535,9 +541,7 @@ export function marketFacts(market: MarketFactsRecord): MarketFact[] {
   };
 
   const richSchedule = structuredScheduleLabels(market.first_party);
-  const exactSchedule = (market.days ?? [])
-    .map((value) => clean(value))
-    .filter((value) => value && marketHours({ name: market.name, days: [value] }));
+  const exactSchedule = marketScheduleLabels({ ...market, season: undefined });
   const days = marketWeekdays(market);
   const hours = marketHours(market);
   const season = marketSeasonLabel(market);
@@ -767,6 +771,7 @@ export function composedSummary(market: MarketFactsRecord): string[] {
   }
 
   const richSchedule = structuredScheduleLabels(market.first_party);
+  const legacySchedule = marketScheduleLabels(market);
   const days = marketWeekdays(market);
   const hours = marketHours(market);
   const season = marketSeasonLabel(market);
@@ -780,6 +785,8 @@ export function composedSummary(market: MarketFactsRecord): string[] {
     sentences.push(`It is open ${richSchedule[0]}${seasonTail}.`);
   } else if (richSchedule.length > 1) {
     sentences.push(`Its schedule is ${richSchedule.join('; ')}${seasonTail}.`);
+  } else if (legacySchedule.length && !hours) {
+    sentences.push(`Its reported schedule is ${legacySchedule.join('; ').replace(/\.+$/, '')}.`);
   } else if (days.length && hours) {
     sentences.push(`It is open ${weekdayPhrase(days)} from ${hours}${seasonTail}.`);
   } else if (days.length) {

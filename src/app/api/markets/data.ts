@@ -386,7 +386,7 @@ async function readMarketsData(): Promise<FarmerMarket[]> {
           city: market.location?.city,
           state: market.location?.state,
           zip_code: market.location?.zip_code,
-          location: market.location?.coordinates ? {
+          location: !market.suppress_map && market.location?.coordinates ? {
             lat: market.location.coordinates.latitude,
             lon: market.location.coordinates.longitude
           } : undefined,
@@ -585,7 +585,7 @@ const SLIM_ARRAY_FIELDS = [
 ] as const;
 
 const SLIM_BOOLEAN_FIELDS = [
-  'verified', 'unverified',
+  'verified', 'unverified', 'suppress_map',
   'wic', 'sfmnp', 'fmnp', 'snap',
   'accepts_cash', 'accepts_credit_debit', 'accepts_checks',
   'has_organic', 'has_naturally_grown', 'has_chemical_free', 'has_grass_fed',
@@ -610,8 +610,8 @@ export function slimMarket(market: FarmerMarket): Partial<FarmerMarket> {
     if (market[field] === true) slim[field] = true;
   }
 
-  if (market.location) slim.location = market.location;
-  if (market.distance !== undefined) slim.distance = market.distance;
+  if (!market.suppress_map && market.location) slim.location = market.location;
+  if (!market.suppress_map && market.distance !== undefined) slim.distance = market.distance;
   // Only the source id is read (one analytics property); the rest of the
   // provenance block is licence/catalog metadata the UI never shows.
   if (market.provenance?.source_id) {

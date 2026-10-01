@@ -12,6 +12,23 @@
  *    ("Find fresh ." was rendering on ~99% of pages before this).
  */
 
+import type { MarketFirstPartyFacts } from './enrichment.ts';
+import {
+  WEEKDAY_NAMES,
+  weekdaysFromText,
+  legacyScheduleWindows,
+  legacyScheduleLabels,
+  parseHourRange,
+  hourRangeTexts,
+  hasScheduleExceptions,
+  hasSeasonContext,
+  hasNonWeeklyRecurrence,
+  hasSingleCalendarDate,
+  type Weekday,
+} from './schedule.ts';
+export { WEEKDAY_NAMES, weekdaysFromText };
+export type { Weekday };
+
 import {
   clean,
   resolveLocation,
@@ -37,6 +54,8 @@ const DESCRIPTION_PAD_THRESHOLD = 110;
  * `src/lib/geo.ts` parses, plus the copy fields only the snippet needs.
  */
 export interface MarketSeoRecord extends GeoRecord {
+  first_party?: MarketFirstPartyFacts;
+  suppress_map?: boolean;
   name: string;
   county?: string | null;
   season?: string | null;
@@ -194,8 +213,21 @@ const WEEKDAYS = new Set([
  * and localized schedule lines ("Samedi 08:30:00 - 12:00:00").
  */
 export function scheduleClause(market: MarketSeoRecord): string | undefined {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return undefined;
+  // Rich recurrence/dates are shown losslessly in body copy. Do not reconstruct
+  // an SEO claim from their lossy legacy projection.
+  if (market.first_party?.operations?.schedules?.length) return undefined;
+  const labels = marketScheduleLabels(market);
+  if (labels.length && (!marketHours(market) || (market.days ?? []).some((value) => hasScheduleExceptions(value)))) {
+    return `Schedule: ${labels.map(formatSchedule).join(', ')}`;
+  }
   const days = (market.days ?? []).map(clean).filter(Boolean);
   const season = clean(market.season);
+  if ([...days, season].some(hasScheduleExceptions)) {
+    const openDays = marketWeekdays(market);
+    return openDays.length ? `Open ${joinWithAnd(openDays.map((day) => `${day}s`))}` : undefined;
+  }
 
   const weekdayNames = days.filter((day) => WEEKDAYS.has(day.toLowerCase()));
   if (weekdayNames.length === days.length && weekdayNames.length > 0) {
@@ -224,6 +256,13 @@ export function scheduleClause(market: MarketSeoRecord): string | undefined {
 
 /** "Open year-round" / "Open in spring and summer" when `season` is a season. */
 function seasonClause(market: MarketSeoRecord): string | undefined {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return undefined;
+  const structured = market.first_party?.operations?.season?.value;
+  if (structured) {
+    const label = marketSeasonLabel(market);
+    return label ? structured.kind === 'year_round' ? 'Open year-round' : `Season: ${label}` : undefined;
+  }
   const season = clean(market.season);
   if (!season) return undefined;
 
@@ -271,7 +310,7 @@ export function marketDescription(market: MarketSeoRecord): string {
 
   // A handful of records carry a paragraph in the address field. Anything that
   // long is dropped rather than allowed to eat the whole snippet.
-  const street = location.street && location.street.length <= 60 ? location.street : undefined;
+  const street = !market.suppress_map && location.street && location.street.length <= 60 ? location.street : undefined;
   const at = isMarketNamed ? `${name} at` : `${name} is a farmers market at`;
   const inLabel = isMarketNamed ? `${name} in` : `${name} is a farmers market in`;
 
@@ -343,153 +382,60 @@ export function marketDescription(market: MarketSeoRecord): string {
  * is empty for every market in the city.
  * ------------------------------------------------------------------ */
 
-export const WEEKDAY_NAMES = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday',
-] as const;
-
-export type Weekday = (typeof WEEKDAY_NAMES)[number];
-
-/**
- * Weekday spellings that appear in the data: English (full, plural, 3-letter)
- * plus French and Dutch, which the Brussels and French market feeds ship, and
- * German/Spanish/Italian for the smaller European sources.
- */
-const WEEKDAY_ALIASES: Record<Weekday, string[]> = {
-  Monday: ['monday', 'mondays', 'mon', 'lundi', 'lundis', 'maandag', 'montag', 'lunes', 'lunedi'],
-  Tuesday: ['tuesday', 'tuesdays', 'tue', 'tues', 'mardi', 'mardis', 'dinsdag', 'dienstag', 'martes', 'martedi'],
-  Wednesday: [
-    'wednesday',
-    'wednesdays',
-    'wed',
-    'weds',
-    'mercredi',
-    'mercredis',
-    'woensdag',
-    'mittwoch',
-    'miercoles',
-    'mercoledi',
-  ],
-  Thursday: [
-    'thursday',
-    'thursdays',
-    'thu',
-    'thur',
-    'thurs',
-    'jeudi',
-    'jeudis',
-    'donderdag',
-    'donnerstag',
-    'jueves',
-    'giovedi',
-  ],
-  Friday: ['friday', 'fridays', 'fri', 'vendredi', 'vendredis', 'vrijdag', 'freitag', 'viernes', 'venerdi'],
-  Saturday: [
-    'saturday',
-    'saturdays',
-    'sat',
-    'samedi',
-    'samedis',
-    'zaterdag',
-    'samstag',
-    'sonnabend',
-    'sabado',
-    'sabato',
-  ],
-  Sunday: ['sunday', 'sundays', 'sun', 'dimanche', 'dimanches', 'zondag', 'sonntag', 'domingo', 'domenica'],
-};
-
-const WEEKDAY_BY_ALIAS = new Map<string, number>();
-for (const [index, day] of WEEKDAY_NAMES.entries()) {
-  for (const alias of WEEKDAY_ALIASES[day]) WEEKDAY_BY_ALIAS.set(alias, index);
-}
-
-// Longest alias first so "saturdays" never matches as "sat" + leftovers.
-const WEEKDAY_ALTERNATION = [...WEEKDAY_BY_ALIAS.keys()]
-  .sort((left, right) => right.length - left.length)
-  .join('|');
-const WEEKDAY_RE = new RegExp(`\\b(${WEEKDAY_ALTERNATION})\\b`, 'g');
-const WEEKDAY_RANGE_RE = new RegExp(
-  `\\b(${WEEKDAY_ALTERNATION})\\b\\s*(?:-|–|—|to|through|thru|t\\/m|au)\\s*\\b(${WEEKDAY_ALTERNATION})\\b`,
-  'g'
-);
-const EVERY_DAY_RE = /\b(daily|every ?day|7 days a week|tous les jours|elke dag)\b/;
-
-/** Lower-case and strip accents so "Mercredi" and "mercredi" are one token. */
-function foldForMatching(value: string): string {
-  return value
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
-}
-
-/**
- * Every weekday named anywhere in a free-text schedule string, in week order.
- *
- * Handles the three shapes the data uses: single names ("saturday"), inclusive
- * ranges that wrap the week ("Mon-Sat", "Friday to Sunday"), and "Daily".
- */
-export function weekdaysFromText(value?: string | null): Weekday[] {
-  const text = foldForMatching(clean(value));
-  if (!text) return [];
-
-  const found = new Set<number>();
-  if (EVERY_DAY_RE.test(text)) {
-    return [...WEEKDAY_NAMES];
-  }
-
-  for (const match of text.matchAll(WEEKDAY_RANGE_RE)) {
-    const start = WEEKDAY_BY_ALIAS.get(match[1]);
-    const end = WEEKDAY_BY_ALIAS.get(match[2]);
-    if (start === undefined || end === undefined) continue;
-    const span = (end - start + 7) % 7;
-    for (let step = 0; step <= span; step += 1) found.add((start + step) % 7);
-  }
-
-  for (const match of text.matchAll(WEEKDAY_RE)) {
-    const index = WEEKDAY_BY_ALIAS.get(match[1]);
-    if (index !== undefined) found.add(index);
-  }
-
-  return WEEKDAY_NAMES.filter((_day, index) => found.has(index));
-}
-
 /** The weekdays a market trades on, read from `days` and from `season`. */
 export function marketWeekdays(market: MarketSeoRecord): Weekday[] {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return [];
+  const rich = market.first_party?.operations?.schedules;
   const found = new Set<Weekday>();
-  for (const source of [...(market.days ?? []), market.season]) {
-    for (const day of weekdaysFromText(source)) found.add(day);
+  if (rich?.length) {
+    for (const item of rich) {
+      if (item.value.recurrence.kind !== 'weekly' || item.value.recurrence.interval_weeks === 2) continue;
+      for (const day of item.value.recurrence.weekdays) {
+        const label = WEEKDAY_NAMES.find((name) => name.toLowerCase() === day);
+        if (label) found.add(label);
+      }
+    }
+  } else {
+    const sources = [...(market.days ?? []), market.season].map(clean);
+    if (sources.some(hasNonWeeklyRecurrence)) return [];
+    for (const window of legacyScheduleWindows(sources)) {
+      if (window.unsafe || hasScheduleExceptions(window.text) && window.hours) continue;
+      for (const day of window.days) found.add(day);
+    }
   }
   return WEEKDAY_NAMES.filter((day) => found.has(day));
 }
 
-const TIME = String.raw`\d{1,2}(?::\d{2})?(?::\d{2})?\s*(?:[ap]\.?m\.?)?`;
-const TIME_RANGE_RE = new RegExp(`(${TIME})\\s*(?:-|–|—|to|until|till|tot|tp)\\s*(${TIME})`, 'i');
-
-/** A bare "31" is a date; a clock time carries a colon or a meridiem. */
-function isClockTime(value: string): boolean {
-  return /:/.test(value) || /[ap]\.?m\.?/i.test(value);
+/** A single common time only; differing windows must retain their day context. */
+export function marketHours(market: MarketSeoRecord): string | undefined {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return undefined;
+  const rich = market.first_party?.operations?.schedules;
+  if (rich?.length) {
+    if (rich.some((item) => item.value.recurrence.kind !== 'weekly' || item.value.recurrence.interval_weeks === 2)) return undefined;
+    const ranges = [...new Set(rich.map((item) => `${item.value.opens}-${item.value.closes}`))];
+    return ranges.length === 1 && parseHourRange(ranges[0]) ? formatSchedule(ranges[0]) : undefined;
+  }
+  const sources = [...(market.days ?? []), market.season].map(clean).filter(Boolean);
+  if (sources.some((source) => hasNonWeeklyRecurrence(source) || hasSingleCalendarDate(source))) return undefined;
+  const windows = legacyScheduleWindows(sources);
+  const actual = new Set(windows.filter((window) => window.hours).map((window) => `${window.hours!.opens}-${window.hours!.closes}`));
+  if (actual.size > 1 || windows.some((window) => window.unsafe || window.hours && (hasScheduleExceptions(window.text) || hasSeasonContext(window.text)))) return undefined;
+  if (windows.some((window) => !window.hours) && actual.size) return undefined;
+  const common = windows.find((window) => window.hourText)?.hourText;
+  if (common) return formatSchedule(common);
+  // Time-only sources still answer Hours, although they cannot supply weekdays.
+  const timeOnly = sources.filter((source) => !hasScheduleExceptions(source)).flatMap(hourRangeTexts);
+  const unique = new Set(timeOnly.map((text) => JSON.stringify(parseHourRange(text))));
+  return unique.size === 1 ? formatSchedule(timeOnly[0]) : undefined;
 }
 
-/**
- * "8am–1pm" — the opening times, when the record states any. Returns
- * `undefined` for the ~80% of records that only say which day they open, so
- * the Hours column disappears instead of filling with dashes.
- */
-export function marketHours(market: MarketSeoRecord): string | undefined {
-  for (const source of [...(market.days ?? []), market.season]) {
-    const text = clean(source);
-    if (!text) continue;
-    const match = TIME_RANGE_RE.exec(text);
-    if (!match || !isClockTime(match[1]) || !isClockTime(match[2])) continue;
-    return formatSchedule(`${match[1].trim()}-${match[2].trim()}`);
-  }
-  return undefined;
+/** Preserve precise source wording when a schedule cannot be flattened. */
+export function marketScheduleLabels(market: MarketSeoRecord): string[] {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return [];
+  return legacyScheduleLabels([...(market.days ?? []), market.season]);
 }
 
 function capitalize(value: string): string {
@@ -503,6 +449,17 @@ function capitalize(value: string): string {
  * hours are already rendered in their own columns.
  */
 export function marketSeasonLabel(market: MarketSeoRecord): string | undefined {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return undefined;
+  const structured = market.first_party?.operations?.season?.value;
+  if (structured?.kind === 'year_round') return 'Year-round';
+  if (structured?.kind === 'dated_range') return `${structured.start_date} - ${structured.end_date}`;
+  if (structured?.kind === 'annual_range') {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const start = months[structured.start.month - 1];
+    const end = months[structured.end.month - 1];
+    return start && end ? `${start}${structured.start.day ? ` ${structured.start.day}` : ''} - ${end}${structured.end.day ? ` ${structured.end.day}` : ''}` : undefined;
+  }
   const season = clean(market.season);
   if (!season) return undefined;
   if (isYearRound(season)) return 'Year-round';

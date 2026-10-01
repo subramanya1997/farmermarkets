@@ -6,6 +6,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 import { mergeEnrichment } from '../src/lib/enrichment.ts';
+import { normalizeSourcePostalCode } from '../src/lib/postal.ts';
 import { buildMarketEnrichment } from './build-market-enrichment.mjs';
 
 const root = process.cwd();
@@ -188,11 +189,11 @@ export async function buildConsolidatedMarkets({ check = false } = {}) {
     const market = index < legacy.length
       ? { ...source, country: source.country || 'United States', country_code: source.country_code || 'US' }
       : source;
-    const merged = mergeEnrichment(
+    const merged = normalizeSourcePostalCode(mergeEnrichment(
       market,
       enrichmentById.get(String(market.id)),
       auditById.get(String(market.id)),
-    );
+    ));
     if (merged.suppress_map) return merged;
     return {
       ...merged,

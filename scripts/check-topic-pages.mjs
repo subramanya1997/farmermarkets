@@ -37,6 +37,7 @@ const records = markets.map((market) => {
     name: market.name,
     days: market.operations?.days,
     season: market.operations?.season,
+    first_party: market.first_party,
     snap: assistance.snap === true,
     wic: assistance.wic === true,
     sfmnp: assistance.sfmnp === true,
@@ -297,6 +298,7 @@ await checkTopicPage({
       name: market.name,
       days: market.operations?.days,
       season: market.operations?.season,
+      first_party: market.first_party,
     }).includes('Saturday')
   ),
 });

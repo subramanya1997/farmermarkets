@@ -4,6 +4,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateRichEnrichment } from './lib/rich-enrichment-validation.mjs';
+import { marketNamesEquivalent } from './lib/market-name-equivalence.mjs';
 import {
   hasConflictingUnqualifiedSeasonalHours,
   isCanonicalSocialProfileUrl,
@@ -166,7 +167,7 @@ function validateRecord(record, label, marketsById) {
   const id = String(record.id);
   const market = marketsById.get(id);
   if (!market) fail(`${label}.id does not exist in a market snapshot: ${id}`);
-  if (record.market_name !== market.name) {
+  if (!marketNamesEquivalent(record.market_name, market.name)) {
     fail(`${label}.market_name does not match ${id}: expected ${JSON.stringify(market.name)}`);
   }
   if (!DATE.test(record.verified_at)) fail(`${label}.verified_at must be YYYY-MM-DD`);

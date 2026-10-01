@@ -22,9 +22,8 @@ import {
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const enrichmentDir = path.join(root, 'data/enrichment');
-const datasetPath = path.join(root, 'public/data/farmers_markets.json');
 
-const CONF_RANK = { low: 0, medium: 1, high: 2 };
+import { confidenceRank as CONF_RANK, authorityContext, qualifiedCitations, fieldSupported } from './lib/parallel-evidence.mjs';
 
 function arg(name, fallback) {
   const i = process.argv.indexOf(`--${name}`);
@@ -33,12 +32,25 @@ function arg(name, fallback) {
 
 const label = arg('label');
 const outName = arg('out');
-const minConf = arg('min-confidence', 'medium');
+const minConf = arg('min-confidence', 'high');
 const verifiedAt = arg('verified-at', new Date().toISOString().slice(0, 10));
 const dryRun = process.argv.includes('--dry-run');
+if (!Object.hasOwn(CONF_RANK, minConf)) throw new Error('Unknown --min-confidence');
+if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,100}$/.test(label || '') || !/^research-[a-zA-Z0-9_-]+\.json$/.test(outName || '')) throw new Error('Invalid label or output name');
+if (!/^\d{4}-\d{2}-\d{2}$/.test(verifiedAt) || Number.isNaN(Date.parse(verifiedAt))) throw new Error('Invalid verified-at date');
 if (!label || !outName) {
   console.error('usage: parallel-promote.mjs --label <label> --out <research-*.json>');
   process.exit(1);
+}
+
+// Reviewed batches contain source corrections beyond automatic promotion.
+// A rerun must not silently replace those decisions with the raw model output.
+if (!dryRun) {
+  const reviewPath = path.join(enrichmentDir, 'parallel', label, 'review.json');
+  let reviewed = false;
+  try { await fs.access(reviewPath); reviewed = true; }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  if (reviewed) throw new Error('This batch has a saved manual review. Use --dry-run for comparison and preserve the reviewed research file.');
 }
 
 const isHttp = (u) => /^https?:\/\//i.test(u || '');
@@ -117,6 +129,7 @@ const stats = {
   not_completed: 0,
   closed: 0,
   unverified: 0,
+  unsupported_identity_or_status: 0,
   already_in_batch: 0,
   no_fields: 0,
   promoted: 0,
@@ -143,9 +156,10 @@ for (const row of raw) {
     stats.already_in_batch += 1;
     continue;
   }
-  existingIds.add(id);
   const market = byId.get(id);
   const basisByField = new Map((row.basis || []).map((b) => [b.field, b]));
+  const authority = authorityContext(market, out, basisByField, minConf);
+  if (!authority) { stats.unsupported_identity_or_status += 1; continue; }
   // Aggregator directories often rescrape the same USDA data this dataset
   // started from; schedules and seasons need a fresher source than that.
   const AGGREGATOR_HOSTS = [
@@ -168,11 +182,12 @@ for (const row of raw) {
     const b = basisByField.get(field);
     if (!b) return null;
     if ((CONF_RANK[b.confidence] ?? 0) < CONF_RANK[minConf]) return null;
-    let cites = (b.citations || []).filter((c) => isHttp(c.url));
-    if (requireNonAggregator) {
-      if (!cites.some((c) => !isAggregator(c.url))) return null;
-      cites = cites.filter((c) => !isAggregator(c.url));
+    let cites = qualifiedCitations(b, minConf);
+    if (['official_website', 'phone', 'schedule', 'season'].includes(field)) {
+      cites = cites.filter(c => host(c.url) === authority.host && !isAggregator(c.url));
     }
+    if (requireNonAggregator) cites = cites.filter(c => !isAggregator(c.url));
+    if (!fieldSupported(field, String(out[field] || '').trim(), cites)) return null;
     return cites.length ? cites : null;
   };
 
@@ -207,6 +222,7 @@ for (const row of raw) {
   const site = (out.official_website || '').trim();
   if (
     site &&
+    !(market?.contact?.websites || []).length &&
     isHttp(site) &&
     !/\s/.test(site) &&
     host(site) &&
@@ -266,6 +282,7 @@ for (const row of raw) {
     continue;
   }
   record.sources = sources;
+  existingIds.add(id);
   for (const key of ['contact.websites', 'contact.phone_numbers', 'contact.social_media', 'operations.days', 'operations.season']) {
     const present =
       (key === 'contact.websites' && record.contact?.websites) ||
@@ -281,6 +298,7 @@ for (const row of raw) {
 
 records.sort((a, b) => Number(a.id) - Number(b.id));
 console.log(JSON.stringify(stats, null, 2));
+if (dryRun && process.argv.includes('--print-ids')) console.log(JSON.stringify({ promoted_ids: records.map(record => record.id) }));
 if (!dryRun) {
   const outPath = path.join(enrichmentDir, outName);
   await fs.writeFile(outPath, JSON.stringify(records, null, 2) + '\n');

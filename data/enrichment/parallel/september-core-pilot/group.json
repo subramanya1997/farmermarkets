@@ -1,0 +1,160 @@
+{
+  "groupId": "tgrp_344c9bb66724498587b3672e0dd50b2a",
+  "processor": "core",
+  "campaign": "september-2026",
+  "reserved_cost": 0.5,
+  "submitted_at": "2026-10-01T02:50:42.205Z",
+  "runMap": {
+    "srun_344c9bb667244985799c3d0677c2d1c9": {
+      "id": "gov:us_ny_farmers_markets:0c65466507b4c666",
+      "name": "Market 1892 Farm Stand",
+      "slug": "market-1892-farm-stand-spencerport-2d916f8f"
+    },
+    "srun_344c9bb667244985341fabbfd3cd0d1b": {
+      "id": 307954,
+      "name": "Centerville Main St Market",
+      "slug": "centerville-main-st-market-centerville"
+    },
+    "srun_344c9bb667244985eea31a7454193b05": {
+      "id": "gov:us_ny_farmers_markets:dc1ee79f269ba9cd",
+      "name": "Amato Farm Stand",
+      "slug": "amato-farm-stand-katonah-66fd61bb"
+    },
+    "srun_344c9bb667244985a926892df50aba9f": {
+      "id": "gov:us_ny_farmers_markets:48d678b01cd0f149",
+      "name": "Genecco’s Farm Market Farm Stand",
+      "slug": "genecco-s-farm-market-farm-stand-canandaigua-3b2e0d59"
+    },
+    "srun_344c9bb66724498563a9f7e2abfc82d1": {
+      "id": 313502,
+      "name": "Festival Foods Northland Farmers’ Market",
+      "slug": "festival-foods-northland-farmers-market"
+    },
+    "srun_344c9bb6672449851e2d669b37a2d0d3": {
+      "id": 313191,
+      "name": "Remington Farmers’ Market",
+      "slug": "remington-farmers-market-remington"
+    },
+    "srun_344c9bb667244985d8b0d550fdc01d9d": {
+      "id": 313467,
+      "name": "Butler Farmers’ Market",
+      "slug": "butler-farmers-market"
+    },
+    "srun_344c9bb66724498593344409645ed607": {
+      "id": "gov:us_ny_farmers_markets:9e9b850e81a71c19",
+      "name": "Roberto Fred Farm Stand",
+      "slug": "roberto-fred-farm-stand-dunkirk-27762faa"
+    },
+    "srun_344c9bb6672449854db7b2ce09e8c439": {
+      "id": "gov:us_ny_farmers_markets:c13bdd2fc1b0606e",
+      "name": "Perez Farm Stand-Jamaica Hospital",
+      "slug": "perez-farm-stand-jamaica-hospital-queens-f06b0cb2"
+    },
+    "srun_344c9bb667244985083b21774078a7cb": {
+      "id": 309800,
+      "name": "Federal Plaza (Chicago) Farmers’ Market",
+      "slug": "federal-plaza-chicago-farmers-market-chicago"
+    },
+    "srun_344c9bb667244985c2be903cbbf4fa35": {
+      "id": "gov:us_ny_farmers_markets:a12ec655165d149d",
+      "name": "Aasha Laya Farm of Hope Farm Stand",
+      "slug": "aasha-laya-farm-of-hope-farm-stand-kirkville-2f4c1d79"
+    },
+    "srun_344c9bb6672449857d41fee53c6c06af": {
+      "id": "gov:us_ny_farmers_markets:0e6734944f363b8f",
+      "name": "Huntington Farm Stand I",
+      "slug": "huntington-farm-stand-i-middleport-a60495c3"
+    },
+    "srun_344c9bb66724498537c56daaf00330a1": {
+      "id": 314311,
+      "name": "Syosset Farmers Market",
+      "slug": "syosset-farmers-market-ny"
+    },
+    "srun_344c9bb667244985f248dc538f539923": {
+      "id": 308856,
+      "name": "Downtown Lincoln Farmers’ Market",
+      "slug": "downtown-lincoln-farmers-market"
+    },
+    "srun_344c9bb667244985accc4b181fbe99ad": {
+      "id": "gov:us_ny_farmers_markets:efceabd98403b3c2",
+      "name": "Petuskes Produce Farm Stand",
+      "slug": "petuskes-produce-farm-stand-waterford-d69f56d6"
+    },
+    "srun_344c9bb667244985674fb9c1dd05d337": {
+      "id": 313584,
+      "name": "Rice Lake Farmers’ Market",
+      "slug": "rice-lake-farmers-market"
+    },
+    "srun_344c9bb66724498521d3289603156969": {
+      "id": 301767,
+      "name": "Davidson Farmers Market",
+      "slug": "davidson-farmers-market"
+    },
+    "srun_344c9bb667244985dc56972f32dffdbb": {
+      "id": 312760,
+      "name": "Arlington Open Air Market",
+      "slug": "arlington-open-air-market"
+    },
+    "srun_344c9bb66724498596da05e4e944b6a5": {
+      "id": "gov:us_ca_wic_farmers_markets:49d5282986ed3e4e",
+      "name": "Sherman Oaks Tuesday CFM",
+      "slug": "sherman-oaks-tuesday-cfm-sherman-oaks-52d19367"
+    },
+    "srun_344c9bb667244985515d74bd424bb0ff": {
+      "id": 309006,
+      "name": "Woodside Farmers’ Market",
+      "slug": "woodside-farmers-market"
+    }
+  },
+  "batches": [
+    {
+      "market_ids": [
+        "gov:us_ny_farmers_markets:0c65466507b4c666",
+        "307954",
+        "gov:us_ny_farmers_markets:dc1ee79f269ba9cd",
+        "gov:us_ny_farmers_markets:48d678b01cd0f149",
+        "313502",
+        "313191",
+        "313467",
+        "gov:us_ny_farmers_markets:9e9b850e81a71c19",
+        "gov:us_ny_farmers_markets:c13bdd2fc1b0606e",
+        "309800",
+        "gov:us_ny_farmers_markets:a12ec655165d149d",
+        "gov:us_ny_farmers_markets:0e6734944f363b8f",
+        "314311",
+        "308856",
+        "gov:us_ny_farmers_markets:efceabd98403b3c2",
+        "313584",
+        "301767",
+        "312760",
+        "gov:us_ca_wic_farmers_markets:49d5282986ed3e4e",
+        "309006"
+      ],
+      "state": "submitted",
+      "started_at": "2026-10-01T02:50:42.490Z",
+      "run_ids": [
+        "srun_344c9bb667244985799c3d0677c2d1c9",
+        "srun_344c9bb667244985341fabbfd3cd0d1b",
+        "srun_344c9bb667244985eea31a7454193b05",
+        "srun_344c9bb667244985a926892df50aba9f",
+        "srun_344c9bb66724498563a9f7e2abfc82d1",
+        "srun_344c9bb6672449851e2d669b37a2d0d3",
+        "srun_344c9bb667244985d8b0d550fdc01d9d",
+        "srun_344c9bb66724498593344409645ed607",
+        "srun_344c9bb6672449854db7b2ce09e8c439",
+        "srun_344c9bb667244985083b21774078a7cb",
+        "srun_344c9bb667244985c2be903cbbf4fa35",
+        "srun_344c9bb6672449857d41fee53c6c06af",
+        "srun_344c9bb66724498537c56daaf00330a1",
+        "srun_344c9bb667244985f248dc538f539923",
+        "srun_344c9bb667244985accc4b181fbe99ad",
+        "srun_344c9bb667244985674fb9c1dd05d337",
+        "srun_344c9bb66724498521d3289603156969",
+        "srun_344c9bb667244985dc56972f32dffdbb",
+        "srun_344c9bb66724498596da05e4e944b6a5",
+        "srun_344c9bb667244985515d74bd424bb0ff"
+      ]
+    }
+  ],
+  "state": "submitted"
+}

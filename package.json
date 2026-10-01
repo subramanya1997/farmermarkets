@@ -34,10 +34,10 @@
     "data:website-audit:promote": "node scripts/promote-website-audit.mjs",
     "data:geo": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types scripts/build-geo-index.mjs",
     "indexnow:ping": "node scripts/indexnow-ping.mjs",
-    "test": "bun run test:data && bun run test:data-legacy && bun run test:enrichment && bun run test:enrichment-merge && bun run test:website-audit && bun run test:geo && bun run test:popup && bun run test:seo-meta && bun run test:topic-copy && bun run test:schema && bun run test:market-facts && bun run test:markdown && bun run test:indexnow && bun run test:freshness && bun run test:site && bun run test:seo",
+    "test": "bun run test:data && bun run test:data-legacy && bun run test:enrichment && bun run test:enrichment-merge && bun run test:website-audit && bun run test:geo && bun run test:popup && bun run test:seo-meta && bun run test:topic-copy && bun run test:schema && bun run test:market-facts && bun run test:markdown && bun run test:indexnow && bun run test:freshness && bun run test:site && bun run test:seo && bun run test:analytics && bun run test:postal && bun run test:parallel",
     "test:data": "node --test scripts/update-government-markets.test.mjs",
     "test:data-legacy": "node --test scripts/update-legacy-markets.test.mjs",
-    "test:enrichment": "node --test scripts/lib/enrichment-audit-quality.test.mjs && npm run data:archives:check && npm run data:consolidate:check",
+    "test:enrichment": "node --test scripts/lib/enrichment-audit-quality.test.mjs scripts/lib/market-name-equivalence.test.mjs && npm run data:archives:check && npm run data:consolidate:check",
     "test:enrichment-merge": "bun test src/app/api/markets/data.test.ts",
     "test:website-audit": "node --test scripts/lib/website-audit.test.mjs scripts/lib/website-detail-audit.test.mjs scripts/lib/rich-enrichment-validation.test.mjs scripts/promote-website-audit.test.mjs",
     "test:indexnow": "node --test scripts/indexnow-ping.test.mjs",
@@ -56,7 +56,10 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "db:sync": "node --env-file=.env.local scripts/db-sync.mjs"
+    "db:sync": "node --env-file=.env.local scripts/db-sync.mjs",
+    "test:analytics": "node --test --experimental-strip-types src/lib/googleAnalyticsQueue.test.ts src/lib/searchAnalytics.test.ts",
+    "test:postal": "node --test --experimental-strip-types src/lib/postal.test.ts",
+    "test:parallel": "node --test scripts/lib/parallel-campaign.test.mjs scripts/lib/parallel-evidence.test.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

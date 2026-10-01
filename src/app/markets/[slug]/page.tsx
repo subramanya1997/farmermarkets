@@ -187,6 +187,11 @@ export default async function MarketDetailPage({
   // Get coordinates from location object
   const latitude = market.location?.lat;
   const longitude = market.location?.lon;
+  const hasCoordinates = typeof latitude === 'number' && typeof longitude === 'number' &&
+    Number.isFinite(latitude) && Number.isFinite(longitude);
+  const mapActionUrl = market.suppress_map ? undefined : market.google_maps_url ??
+    (hasCoordinates ? `https://www.google.com/maps/dir/?api=1&destination=${latitude}%2C${longitude}` : undefined);
+  const websiteActionUrl = market.websites?.find((url) => /^https?:\/\//i.test(url) && !/google\.[^/]+\/maps|maps\.app\.goo\.gl/i.test(url));
 
   const marketType = market.organization_types?.find((type) => type !== 'Official government dataset');
   const analyticsProperties = {
@@ -283,7 +288,28 @@ export default async function MarketDetailPage({
                   directory" — high enough on the page to be honest, muted
                   enough not to read as an alarm. Renders nothing for a record
                   whose date does not support the claim. */}
+              {market.suppress_map && (
+                <p className="text-sm font-medium text-amber-800 dark:text-amber-200">Imported address; check the location note below before visiting.</p>
+              )}
               <MarketFreshnessNotice market={market} />
+              {(mapActionUrl || websiteActionUrl) && (
+                <div className="flex flex-wrap gap-3 lg:hidden">
+                  {mapActionUrl && (
+                    <TrackedExternalLink href={mapActionUrl} target="_blank" rel="noopener noreferrer"
+                      className="rounded-full bg-green-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-green-700"
+                      eventName="Market Directions Opened" eventProperties={{ ...analyticsProperties, destination: 'google-maps', placement: 'mobile-header' }}>
+                      {market.google_maps_url ? 'View on Google Maps' : 'Get directions'}
+                    </TrackedExternalLink>
+                  )}
+                  {websiteActionUrl && (
+                    <TrackedExternalLink href={websiteActionUrl} target="_blank" rel="noopener noreferrer"
+                      className="rounded-full border border-green-600 px-4 py-2.5 text-sm font-medium text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-950"
+                      eventName="Official Market Website Opened" eventProperties={{ ...analyticsProperties, placement: 'mobile-header' }}>
+                      Official website
+                    </TrackedExternalLink>
+                  )}
+                </div>
+              )}
               {firstPartyStatusLabel && (
                 <p className="max-w-[75ch] rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm font-medium text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
                   {firstPartyStatusLabel}
@@ -370,25 +396,19 @@ export default async function MarketDetailPage({
                 </div>
               </div>
 
-              {/* Location. One instance, ordered first on a narrow screen and
-                  into the right-hand column on a wide one — rendering it twice
-                  put two <h2>Location</h2> headings in every page's HTML. The
-                  card chrome is gone on purpose: a boxed box-in-a-column read
-                  as clutter, so the section sits flat like every other one. */}
-              <div className="order-first lg:order-none">
+              {/* Details precede the map on mobile; the map occupies the
+                  right-hand column on wide screens. */}
+              <div>
                 {/* Just the map — the address sits under the market name in
                     the header, so the column carries no heading or text. */}
-                <div className="sticky top-24">
+                <div className="lg:sticky lg:top-24">
                   {!market.suppress_map && (
                     <GoogleMapEmbed market={market} height="480px" />
                   )}
-                  {!market.suppress_map && (market.google_maps_url || (latitude && longitude)) && (
+                  {mapActionUrl && (
                     <div className="mt-4">
                       <TrackedExternalLink
-                        href={
-                          market.google_maps_url ??
-                          `https://www.google.com/maps/dir/?api=1&destination=${latitude}%2C${longitude}`
-                        }
+                        href={mapActionUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full block"

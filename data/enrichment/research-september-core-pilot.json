@@ -1,0 +1,66 @@
+[
+  {
+    "id": "301767",
+    "market_name": "Davidson Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.davidsonfarmersmarket.org/"
+      ],
+      "phone_numbers": [
+        "704-325-2037"
+      ],
+      "social_media": [
+        "https://www.facebook.com/DavidsonFarmersMarket",
+        "https://www.instagram.com/davidsonfarmersmkt"
+      ]
+    },
+    "sources": [
+      {
+        "title": "ABOUT | FarmersMarket",
+        "url": "https://www.davidsonfarmersmarket.org/about",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.social_media"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "308856",
+    "market_name": "Downtown Lincoln Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://getplacergrown.com/places/historic-downtown-lincoln-cfm/"
+      ],
+      "social_media": [
+        "https://www.facebook.com/lincolnhistoricfarmersmarket",
+        "https://www.instagram.com/lincolnhistoricfarmersmarket/"
+      ],
+      "emails": [
+        "info@placerfarmersmarket.com"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Thursdays 5:00-9:00pm"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Historic Downtown Lincoln CFM - PlacerGROWN",
+        "url": "https://getplacergrown.com/places/historic-downtown-lincoln-cfm/",
+        "fields": [
+          "contact.websites",
+          "contact.social_media",
+          "operations.days",
+          "contact.emails"
+        ]
+      }
+    ]
+  }
+]

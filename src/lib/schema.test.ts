@@ -119,8 +119,8 @@ test('maps month ranges to ISO dates in the current or next season year', () => 
 
 test('a season that runs backwards through the calendar crosses the year', () => {
   assert.deepEqual(parseSeasonRange('November-April', new Date('2026-03-01T00:00:00Z')), {
-    validFrom: '2026-11-01',
-    validThrough: '2027-04-30',
+    validFrom: '2025-11-01',
+    validThrough: '2026-04-30',
   });
 });
 
@@ -607,6 +607,16 @@ test('an independently verified Google Maps place URL takes precedence over coor
   assert.equal(business.hasMap, 'https://www.google.com/maps/place/Example+Market');
 });
 
+test('a disputed imported location is omitted from precise business location claims', () => {
+  const graph = marketSchemaGraph(market({ ...RICH, suppress_map: true }), OPTIONS) as Record<string, unknown>;
+  const business = (graph['@graph'] as Record<string, unknown>[])[0];
+  assert.equal('geo' in business, false);
+  assert.equal('hasMap' in business, false);
+  assert.equal('address' in business, false);
+  assert.equal(business.name, RICH.name);
+  assert.ok(!(business.description as string).includes('1150 Winton'));
+});
+
 test('the FAQPage node quotes the visible FAQ list exactly', () => {
   const graph = marketSchemaGraph(market(RICH), OPTIONS) as Record<string, unknown>;
   const nodes = graph['@graph'] as Record<string, unknown>[];
@@ -674,4 +684,118 @@ test('prune drops every shape of emptiness', () => {
   assert.deepEqual(prune({ a: 1, b: '', c: [], d: { e: null } }), { a: 1 });
   assert.equal(prune(0), 0);
   assert.equal(prune(false), false);
+});
+
+test('explicit past season years do not become an unannounced future season', () => {
+  const now = new Date('2026-09-30T00:00:00Z');
+  assert.deepEqual(parseSeasonRange('May 7 - August 27, 2026', now), {
+    validFrom: '2026-05-07', validThrough: '2026-08-27',
+  });
+  assert.deepEqual(parseSeasonRange('November 2026-April 2027', now), {
+    validFrom: '2026-11-01', validThrough: '2027-04-30',
+  });
+  assert.equal(parseSeasonRange('November-April 2026', now), undefined);
+  assert.equal(parseSeasonRange('May 0-August 27, 2026', now), undefined);
+  assert.equal(parseSeasonRange('May-August 2026; September-October 2026', now), undefined);
+  const graph = marketSchemaGraph(market({ days: ['Thursday 3pm-7pm'], season: 'May 7-August 27, 2026' }), { ...OPTIONS, now });
+  assert.match(JSON.stringify(graph), /2026-08-27/);
+  assert.doesNotMatch(JSON.stringify(graph), /2027/);
+});
+
+test('Market 1892 keeps different weekday and weekend windows in structured data', () => {
+  assert.deepEqual(marketOpeningHoursSpec(market({
+    days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'], season: 'Year Round',
+  }), OPTIONS.now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday', 'Sunday'], opens: '08:00', closes: '17:00' },
+  ]);
+});
+
+test('closed weekday lines never become opening days', () => {
+  assert.deepEqual(marketOpeningHoursSpec(market({
+    days: ['Mon - Fri: Closed', 'Sat: 8 am - 1 pm', 'Sun: Closed'],
+  }), OPTIONS.now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '08:00', closes: '13:00' },
+  ]);
+});
+
+test('season-specific windows keep their bounds and unknown qualifiers omit precision', () => {
+  assert.deepEqual(marketOpeningHoursSpec(market({
+    days: ['Sat 9am-1pm May-Nov, Sat 10am-1pm December-April'],
+  }), OPTIONS.now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '09:00', closes: '13:00', validFrom: '2026-05-01', validThrough: '2026-11-30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '10:00', closes: '13:00', validFrom: '2026-12-01', validThrough: '2027-04-30' },
+  ]);
+  assert.equal(marketOpeningHoursSpec(market({ days: ['Sat 9am-1pm summer; 10am-1pm winter'] }), OPTIONS.now), undefined);
+  assert.equal(marketOpeningHoursSpec(market({ days: ['Saturday'], season: 'First Saturday 9am-1pm' }), OPTIONS.now), undefined);
+  assert.equal(marketOpeningHoursSpec(market({ days: ['Saturday 9am-1pm', 'Closed July 4'] }), OPTIONS.now), undefined);
+  assert.equal(marketOpeningHoursSpec(market({ days: ['Mon-Fri 9am-6pm Sat/Sun 8am-5pm'] }), OPTIONS.now), undefined);
+});
+
+test('FAQ quotes distinct windows instead of giving every day the first clock', () => {
+  const faqs = marketFaqs(market({ days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'] }));
+  assert.match(faqs.find((item) => item.question.endsWith("hours?"))!.answer, /Mon-Fri 9am-6pm; Sat\/Sun 8am-5pm/);
+  const closed = marketFaqs(market({ days: ['Mon-Fri Closed', 'Sat 8am-1pm', 'Sun Closed'] }));
+  assert.match(closed.find((item) => item.question.includes('What days'))!.answer, /Saturdays/);
+  assert.doesNotMatch(closed.find((item) => item.question.includes('What days'))!.answer, /every day|Monday|Sunday/);
+});
+
+test('weekday lists and multiple daily sessions retain the correct day context', () => {
+  assert.deepEqual(marketOpeningHoursSpec(market({ days: ['Tuesday, Thursday 10am-2pm'] }), OPTIONS.now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Thursday'], opens: '10:00', closes: '14:00' },
+  ]);
+  assert.deepEqual(marketOpeningHoursSpec(market({ days: ['Saturday 9am-12pm and 2pm-5pm'] }), OPTIONS.now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '09:00', closes: '12:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '14:00', closes: '17:00' },
+  ]);
+  assert.deepEqual(marketOpeningHoursSpec(market({ days: ['The market will be held from 7 am. to 1 pm. every Saturday from May 23 through Nov. 14, 2026.'] }), OPTIONS.now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '07:00', closes: '13:00', validFrom: '2026-05-23', validThrough: '2026-11-14' },
+  ]);
+  assert.equal(parseSeasonRange('April and December through March', OPTIONS.now), undefined);
+});
+
+test('Ham Lake preserves both explicitly dated seasons including a shared September month', () => {
+  const hamLake = market({
+    name: 'Ham Lake Farmers’ & Artisan Market',
+    season: 'June 17-September 26, 2026',
+    days: [
+      'Wednesdays, 3:00PM-7:00PM, June 17-August 26, 2026',
+      'Saturdays, 9AM-12PM, September 5-26, 2026',
+    ],
+  });
+  const now = new Date('2026-09-30T00:00:00Z');
+  assert.deepEqual(parseSeasonRange('September 5-26, 2026', now), {
+    validFrom: '2026-09-05', validThrough: '2026-09-26',
+  });
+  assert.equal(parseSeasonRange('September 26-5, 2026', now), undefined);
+  assert.equal(parseSeasonRange('September 5-31, 2026', now), undefined);
+  assert.equal(parseSeasonRange('September 5-26', now), undefined, 'no automatic year for an abbreviated source');
+  assert.deepEqual(marketOpeningHoursSpec(hamLake, now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday'], opens: '15:00', closes: '19:00', validFrom: '2026-06-17', validThrough: '2026-08-26' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '09:00', closes: '12:00', validFrom: '2026-09-05', validThrough: '2026-09-26' },
+  ]);
+  const daysFaq = marketFaqs(hamLake).find((item) => item.question.includes('What days'))!;
+  assert.match(daysFaq.answer, /Wednesdays, 3:00PM-7:00PM, June 17-August 26, 2026/);
+  assert.match(daysFaq.answer, /Saturdays, 9AM-12PM, September 5-26, 2026/);
+  assert.doesNotMatch(daysFaq.answer, /open on Wednesdays and Saturdays|2027/);
+});
+
+test('West Ashley special dated Sunday remains visible without becoming a weekly Sunday', async () => {
+  const { marketWeekdays, marketHours } = await import('./seo.ts');
+  const westAshley = market({
+    name: 'West Ashley Farmers Market',
+    days: ['Wednesdays 3-7pm', 'Sunday, November 22, 2026, 12-4pm (Thanksgiving Market)'],
+  });
+  assert.deepEqual(marketWeekdays(westAshley), ['Wednesday']);
+  assert.equal(marketHours(westAshley), undefined, 'preserve the special dated window in prose instead of one common clock');
+  assert.deepEqual(marketOpeningHoursSpec(westAshley, OPTIONS.now), [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday'], opens: '15:00', closes: '19:00' },
+  ]);
+  const faqs = marketFaqs(westAshley);
+  const daysFaq = faqs.find((item) => item.question.includes('What days'))!;
+  assert.match(daysFaq.answer, /Sunday, November 22, 2026, 12-4pm \(Thanksgiving Market\)/);
+  assert.doesNotMatch(daysFaq.answer, /open on Wednesdays and Sundays|weekly Sunday/);
+  assert.equal(marketOpeningHoursSpec(market({ days: ['Sunday, November 22, 2026, 12-4pm'] }), OPTIONS.now), undefined);
+  assert.deepEqual(marketWeekdays(market({ days: ['Sunday, November22,2026,12-4pm'] })), []);
+  assert.equal(marketOpeningHoursSpec(market({ days: ['Saturdays 10am-2pm, except October 31, 2026: 10am-4pm'] }), OPTIONS.now), undefined);
 });

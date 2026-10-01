@@ -1,0 +1,132 @@
+[
+  {
+    "id": "314311",
+    "market_name": "Syosset Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.syossetfarmersmarket.com/"
+      ],
+      "phone_numbers": [
+        "347-743-0162"
+      ],
+      "emails": [
+        "Lina@syossetfarmersmarket.com"
+      ]
+    },
+    "operations": {
+      "days": [
+        "Saturdays 10:00am–2:00pm, except October 31, 2026: 10am–4pm"
+      ],
+      "season": "May 9–October 31, 2026"
+    },
+    "visitor_note": "The organizer's 2026 application lists special event hours of 10am–4pm on October 31. Confirm date exceptions directly before visiting.",
+    "sources": [
+      {
+        "title": "Syosset Farmers Market — official vendor contact",
+        "url": "https://www.syossetfarmersmarket.com/",
+        "fields": [
+          "contact.websites",
+          "contact.phone_numbers",
+          "contact.emails"
+        ]
+      },
+      {
+        "title": "Syosset Farmers Market — published vendor application",
+        "url": "https://www.syossetfarmersmarket.com/s/Revised-219.pdf",
+        "fields": [
+          "operations.days",
+          "visitor_note",
+          "operations.season"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:0c65466507b4c666",
+    "market_name": "Market 1892 Farm Stand",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://market1892.cloveronline.com/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Market1892 — official Clover storefront",
+        "url": "https://market1892.cloveronline.com/",
+        "fields": [
+          "contact.websites",
+          "visitor_note"
+        ]
+      }
+    ],
+    "visitor_note": "The official storefront lists different weekend hours and a different contact number from the imported directory. Check the official storefront before visiting."
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:48d678b01cd0f149",
+    "market_name": "Genecco’s Farm Market Farm Stand",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.geneccoproduce.com/"
+      ]
+    },
+    "visitor_note": "The farm market publishes its location as 1830 Rochester Road, Canandaigua, NY 14424, with entry through Ace Hardware. The imported street number differs; use the official website to confirm the entrance before visiting. Published hours also differ from the imported directory; check the official website before visiting.",
+    "suppress_map": true,
+    "sources": [
+      {
+        "title": "Genecco’s Farm Market — official location",
+        "url": "https://www.geneccoproduce.com/",
+        "fields": [
+          "contact.websites",
+          "visitor_note",
+          "suppress_map"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:a12ec655165d149d",
+    "market_name": "Aasha Laya Farm of Hope Farm Stand",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://www.deafnewamerican.org/asha-laaya-1"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Deaf New American — Asha Laaya Farm",
+        "url": "https://www.deafnewamerican.org/asha-laaya-1",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:c13bdd2fc1b0606e",
+    "market_name": "Perez Farm Stand-Jamaica Hospital",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "contact": {
+      "websites": [
+        "https://jamaicahospital.org/community/weekly-farmers-market/"
+      ]
+    },
+    "sources": [
+      {
+        "title": "Jamaica Hospital — Weekly Farmers Market, Perez Farms",
+        "url": "https://jamaicahospital.org/community/weekly-farmers-market/",
+        "fields": [
+          "contact.websites"
+        ]
+      }
+    ]
+  }
+]

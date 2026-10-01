@@ -449,3 +449,24 @@ test('the summary varies with the data rather than repeating a template', () => 
   ).join(' ');
   assert.notEqual(one, two);
 });
+
+test('summary and fact rows preserve Market 1892 windows and closure-only weekdays', () => {
+  const record = market({ name: 'Market 1892', days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'] });
+  const summary = composedSummary(record).join(' ');
+  assert.match(summary, /Mon-Fri 9am-6pm; Sat\/Sun 8am-5pm/);
+  assert.doesNotMatch(summary, /every day.*9am-6pm/);
+  assert.deepEqual(marketFacts(record).find((row) => row.term === 'Schedule')?.values, ['Mon-Fri 9am-6pm', 'Sat/Sun 8am-5pm']);
+  const closed = market({ days: ['Mon-Fri Closed', 'Sat 8am-1pm', 'Sun Closed'] });
+  assert.match(composedSummary(closed).join(' '), /Saturdays from 8am-1pm/);
+  assert.doesNotMatch(composedSummary(closed).join(' '), /every day|Mondays|Sundays/);
+});
+
+test('rich dated schedules keep their bounds in visible labels', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-09-30' };
+  assert.deepEqual(structuredScheduleLabels({
+    operations: { schedules: [{
+      id: 'summer', ...evidence,
+      value: { recurrence: { kind: 'weekly', weekdays: ['thursday'] }, opens: '15:00', closes: '19:00', start_date: '2026-05-07', end_date: '2026-08-27' },
+    }] },
+  }), ['Thursdays, 3pm–7pm (May 7, 2026 - August 27, 2026)']);
+});

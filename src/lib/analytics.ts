@@ -1,6 +1,9 @@
 "use client";
 
 import { track as trackVercelEvent } from "@vercel/analytics/react";
+import { createGoogleAnalyticsQueue } from './googleAnalyticsQueue';
+
+export { analyticsSafeSearchTerm } from './searchAnalytics';
 
 export type AnalyticsProperties = Record<string, string | number | boolean | null | undefined>;
 
@@ -11,11 +14,12 @@ declare global {
   }
 }
 
-export function analyticsSafeSearchTerm(value: string) {
-  const normalized = value.trim().replace(/\s+/g, " ").slice(0, 80);
-  const containsEmail = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(normalized);
-  const containsPhoneNumber = normalized.replace(/\D/g, "").length >= 7;
-  return containsEmail || containsPhoneNumber ? "[redacted]" : normalized;
+const googleEvents = createGoogleAnalyticsQueue();
+
+/** Call immediately after the first GA config, so early events have a destination. */
+export function flushGoogleAnalyticsEvents() {
+  if (typeof window === 'undefined' || !window.gtag) return;
+  googleEvents.ready((name, properties) => window.gtag?.('event', name, properties));
 }
 
 function compactProperties(properties: AnalyticsProperties) {
@@ -37,6 +41,6 @@ export function trackEvent(name: string, properties: AnalyticsProperties = {}) {
   if (typeof window === "undefined") return;
 
   const compacted = compactProperties(properties);
+  googleEvents.track(googleEventName(name), compacted);
   trackVercelEvent(name, compacted);
-  window.gtag?.("event", googleEventName(name), compacted);
 }

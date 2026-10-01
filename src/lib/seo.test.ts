@@ -552,3 +552,12 @@ test('marketAddressParts composes street, linkable place and postal code', () =>
   assert.equal(bare.cityLabel, undefined);
   assert.equal(bare.postalCode, undefined);
 });
+
+test('closed lines and differing clocks cannot flatten into every-day opening claims', () => {
+  const closed = { name: 'Kiwanis', days: ['Mon-Fri Closed', 'Sat 8am-1pm', 'Sun Closed'] };
+  assert.deepEqual(marketWeekdays(closed), ['Saturday']);
+  assert.doesNotMatch(scheduleClause(closed) ?? '', /Mon|Sun|Closed/);
+  assert.equal(marketHours({ name: '1892', days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'] }), undefined);
+  assert.equal(marketHours({ name: 'x', days: ['Saturday'], season: 'First Saturday 9am-1pm' }), undefined);
+  assert.deepEqual(marketWeekdays({ name: 'x', days: ['Saturday'], season: 'First Saturday 9am-1pm' }), []);
+});

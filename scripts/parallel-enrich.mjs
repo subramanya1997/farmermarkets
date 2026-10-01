@@ -6,7 +6,9 @@
 // that scripts/parallel-promote.mjs converts into a research batch.
 //
 //   PARALLEL_API_KEY=... node scripts/parallel-enrich.mjs submit --limit 10 --processor base
-//   PARALLEL_API_KEY=... node scripts/parallel-enrich.mjs collect --group <dir-or-id>
+//   PARALLEL_API_KEY=... node scripts/parallel-enrich.mjs collect --label <label>
+//   submit supports --ids-file <JSON array> --campaign <id> --campaign-budget 50
+//   Campaign reservations include ambiguous charges and are never auto-released.
 //   node scripts/parallel-enrich.mjs select   # just print candidate counts
 //
 // Raw output and run-id mappings live under data/enrichment/parallel/<label>/.
@@ -20,7 +22,7 @@ const datasetPath = path.join(root, 'public/data/farmers_markets.json');
 const workDir = path.join(root, 'data/enrichment/parallel');
 const API = 'https://api.parallel.ai';
 
-const COST_PER_RUN = { lite: 0.005, base: 0.01, core: 0.025, pro: 0.1 };
+import { validateSubmitOptions, reserveCampaign, atomicJson, orderedCandidates } from './lib/parallel-campaign.mjs';
 
 const OUTPUT_SCHEMA = {
   type: 'json',
@@ -32,7 +34,7 @@ const OUTPUT_SCHEMA = {
         type: 'string',
         enum: ['operating', 'permanently_closed', 'could_not_verify'],
         description:
-          'Whether this exact farmers market (matching name and city/locality) still operates. Use could_not_verify when you cannot confidently match the market identity.',
+          'Cite authoritative published evidence with excerpts naming this market AND its city/locality. Never infer operating status from a stale directory alone. Whether this exact farmers market (matching name and city/locality) still operates. Use could_not_verify when you cannot confidently match the market identity.',
       },
       official_website: {
         type: 'string',
@@ -42,7 +44,7 @@ const OUTPUT_SCHEMA = {
       phone: {
         type: 'string',
         description:
-          'Public contact phone number for the market or its manager, as published. Empty string if none found.',
+          'Public contact phone number for the market or its manager, as published. Include the number itself in a citation excerpt from the official website. Empty string if none found.',
       },
       facebook_url: {
         type: 'string',
@@ -57,12 +59,12 @@ const OUTPUT_SCHEMA = {
       schedule: {
         type: 'string',
         description:
-          'Current published operating days and hours, verbatim where possible, e.g. "Saturdays 8:00 AM - 1:00 PM". Include distinct entries separated by semicolons. Empty string if not found.',
+          'Citations MUST include verbatim excerpts showing the specific day and hours, not just a homepage heading. Current published operating days and hours, verbatim where possible, e.g. "Saturdays 8:00 AM - 1:00 PM". Include distinct entries separated by semicolons. Empty string if not found.',
       },
       season: {
         type: 'string',
         description:
-          'Operating season as published, e.g. "June through October" or "Year-round". Empty string if not found.',
+          'Include the published season in citation excerpts from the official website. Operating season as published, e.g. "June through October" or "Year-round". Empty string if not found.',
       },
     },
     required: [
@@ -123,26 +125,18 @@ function arg(name, fallback) {
 
 async function loadCandidates() {
   const markets = JSON.parse(await fs.readFile(datasetPath, 'utf8'));
-  const missing = (m) => ({
-    website: !(m.contact?.websites || []).length,
-    phone: !(m.contact?.phone_numbers || []).length,
-    social: !(m.contact?.social_media || []).length,
-    days: !(m.operations?.days || []).length,
-  });
-  const candidates = markets
-    .filter((m) => missing(m).website && m.name && m.location?.city)
-    .map((m) => {
-      const gaps = missing(m);
-      const gapCount = Object.values(gaps).filter(Boolean).length;
-      return { m, gapCount };
-    })
-    // US first (best web coverage), then the most information-starved records.
-    .sort(
-      (a, b) =>
-        (b.m.country_code === 'US') - (a.m.country_code === 'US') || b.gapCount - a.gapCount,
-    )
-    .map(({ m }) => m);
-  return candidates;
+  const excluded = new Set();
+  for (const name of (await fs.readdir(path.join(root, 'data/enrichment'))).filter(n => /^research-.+\.json$/.test(n))) {
+    for (const record of JSON.parse(await fs.readFile(path.join(root, 'data/enrichment', name), 'utf8'))) excluded.add(String(record.id));
+  }
+  const idsFile = arg('ids-file');
+  let ids;
+  if (idsFile) {
+    const manifest = JSON.parse(await fs.readFile(path.resolve(idsFile), 'utf8'));
+    ids = Array.isArray(manifest) ? manifest : manifest.ids;
+    if (ids === undefined) throw new Error('IDs file must contain an array or { ids: [...] }');
+  }
+  return orderedCandidates(markets, excluded, ids);
 }
 
 function toInput(m) {
@@ -161,40 +155,73 @@ async function submit() {
   const limit = Number(arg('limit', '0'));
   const offset = Number(arg('offset', '0'));
   const maxCost = Number(arg('max-cost', '50'));
+  const budget = Number(arg('campaign-budget', '50'));
   const label = arg('label', `${processor}-${limit}`);
-  if (!limit) throw new Error('--limit is required for submit');
-
+  const campaign = arg('campaign', '2026-09-30');
+  validateSubmitOptions({ processor, limit, offset, maxCost, budget, label, campaign });
+  apiKey(); // Fail before creating a reservation when credentials are unavailable.
   const candidates = (await loadCandidates()).slice(offset, offset + limit);
-  const cost = candidates.length * (COST_PER_RUN[processor] ?? 0.1);
-  if (cost > maxCost) {
-    throw new Error(`Estimated cost $${cost.toFixed(2)} exceeds --max-cost ${maxCost}`);
-  }
-  console.log(`Submitting ${candidates.length} markets on "${processor}" (~$${cost.toFixed(2)})`);
-
-  const group = await api('POST', '/v1/tasks/groups', {});
-  const groupId = group.taskgroup_id;
-  const runMap = {};
-  for (let i = 0; i < candidates.length; i += 500) {
-    const batch = candidates.slice(i, i + 500);
-    const res = await api('POST', `/v1/tasks/groups/${groupId}/runs`, {
-      default_task_spec: TASK_SPEC,
-      inputs: batch.map((m) => ({ input: toInput(m), processor })),
-      refresh_status: false,
-    });
-    res.run_ids.forEach((runId, j) => {
-      runMap[runId] = { id: batch[j].id, name: batch[j].name, slug: batch[j].slug };
-    });
-    console.log(`  queued ${i + batch.length}/${candidates.length}`);
-  }
-
+  if (!candidates.length) throw new Error('No eligible markets selected');
   const dir = path.join(workDir, label);
-  await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(
-    path.join(dir, 'group.json'),
-    JSON.stringify({ groupId, processor, submitted_at: new Date().toISOString(), runMap }, null, 2),
-  );
-  console.log(`Group ${groupId} saved to ${path.relative(root, dir)}/group.json`);
-  console.log(`Collect with: node scripts/parallel-enrich.mjs collect --label ${label}`);
+  await fs.mkdir(workDir, { recursive: true });
+  const ledgerPath = path.join(workDir, `campaign-${campaign}.json`);
+  const lock = `${ledgerPath}.lock`;
+  try { await fs.mkdir(lock); } catch (e) {
+    if (e.code === 'EEXIST') throw new Error('Campaign locked by another submit or interrupted request; reconcile it before any retry');
+    throw e;
+  }
+  let ledger, reservation;
+  try {
+    try { await fs.access(dir); throw new Error('Label directory already exists; never resubmit it'); }
+    catch (e) { if (e.code !== 'ENOENT') throw e; }
+    try { ledger = JSON.parse(await fs.readFile(ledgerPath, 'utf8')); }
+    catch (e) { if (e.code !== 'ENOENT') throw e; ledger = { version: 1, campaign, budget_mills: Math.floor(budget * 1000), reservations: [] }; }
+    if (ledger.version !== 1 || ledger.campaign !== campaign || !Number.isSafeInteger(ledger.budget_mills) || ledger.budget_mills <= 0 || ledger.budget_mills > 50000 || !Array.isArray(ledger.reservations)) throw new Error('Invalid campaign ledger');
+    reservation = reserveCampaign(ledger, { label, processor, ids: candidates.map(m => m.id), budget, maxCost, now: new Date().toISOString() });
+    await atomicJson(ledgerPath, ledger); // Reserve ALL potential spend before the first API request.
+    await fs.mkdir(dir);
+    const meta = { groupId: null, processor, campaign, reserved_cost: reservation.cost_mills / 1000, submitted_at: reservation.reserved_at, runMap: {}, batches: [], state: 'creating_group' };
+    await atomicJson(path.join(dir, 'group.json'), meta);
+    console.log(`Reserved ${candidates.length} markets on "${processor}" ($${(reservation.cost_mills / 1000).toFixed(3)})`);
+    const group = await api('POST', '/v1/tasks/groups', {});
+    if (typeof group.taskgroup_id !== 'string' || !group.taskgroup_id) throw new Error('Ambiguous group response');
+    meta.groupId = group.taskgroup_id;
+    reservation.group_id = meta.groupId;
+    await atomicJson(path.join(dir, 'group.json'), meta);
+    await atomicJson(ledgerPath, ledger);
+    for (let i = 0; i < candidates.length; i += 500) {
+      const batch = candidates.slice(i, i + 500);
+      const attempt = { market_ids: batch.map(m => String(m.id)), state: 'request_pending', started_at: new Date().toISOString() };
+      meta.batches.push(attempt);
+      meta.state = 'submitting';
+      reservation.state = 'submitting';
+      await atomicJson(path.join(dir, 'group.json'), meta);
+      await atomicJson(ledgerPath, ledger);
+      const res = await api('POST', `/v1/tasks/groups/${meta.groupId}/runs`, {
+        default_task_spec: TASK_SPEC,
+        inputs: batch.map(m => ({ input: toInput(m), processor })), refresh_status: false,
+      });
+      if (!Array.isArray(res.run_ids) || res.run_ids.length !== batch.length || res.run_ids.some(id => typeof id !== 'string' || !id) || new Set(res.run_ids).size !== res.run_ids.length) throw new Error('Ambiguous run IDs response; reservation retained, do not retry');
+      res.run_ids.forEach((runId, j) => { meta.runMap[runId] = { id: batch[j].id, name: batch[j].name, slug: batch[j].slug }; });
+      attempt.state = 'submitted'; attempt.run_ids = res.run_ids;
+      reservation.run_ids.push(...res.run_ids);
+      await atomicJson(path.join(dir, 'group.json'), meta);
+      await atomicJson(ledgerPath, ledger);
+      console.log(`  queued ${i + batch.length}/${candidates.length}`);
+    }
+    meta.state = 'submitted'; reservation.state = 'submitted';
+    await atomicJson(path.join(dir, 'group.json'), meta);
+    await atomicJson(ledgerPath, ledger);
+    console.log(`Group ${meta.groupId} saved to ${path.relative(root, dir)}/group.json`);
+    console.log(`Collect with: node scripts/parallel-enrich.mjs collect --label ${label}`);
+  } catch (e) {
+    if (reservation) {
+      reservation.state = 'needs_reconciliation';
+      await atomicJson(ledgerPath, ledger);
+      console.error('Reservation retained. A request may have been charged; inspect group.json and Parallel before any retry.');
+    }
+    throw e;
+  } finally { await fs.rmdir(lock); }
 }
 
 async function collect() {
@@ -203,6 +230,7 @@ async function collect() {
   const dir = path.join(workDir, label);
   const meta = JSON.parse(await fs.readFile(path.join(dir, 'group.json'), 'utf8'));
   const { groupId, runMap } = meta;
+  if (!groupId || (meta.state && meta.state !== 'submitted')) throw new Error('Group submission is incomplete or ambiguous; reconcile paid requests before collecting a purported complete batch');
 
   for (;;) {
     const group = await api('GET', `/v1/tasks/groups/${groupId}`);

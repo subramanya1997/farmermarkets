@@ -24,7 +24,8 @@ import { useAllMarkets } from "@/hooks/useAllMarkets";
 import { calculateDistance } from "@/lib/utils";
 import { extractFilterOptions, applyFilters } from "@/lib/filters";
 import { searchMarkets, listingSortKey } from "@/lib/marketSearch";
-import { analyticsSafeSearchTerm, trackEvent } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
+import { settledMarketSearchEvent } from '@/lib/searchAnalytics';
 import { SITE_FRAME } from "@/lib/ui";
 
 interface MarketsProps {
@@ -170,36 +171,38 @@ export function Markets({
         left.name.localeCompare(right.name, 'en', { sensitivity: 'base' })
       );
     } else if (!searchTerm) {
-      // Browse listing: nearest first, with recently supported records
+      // Recommended browse order: nearby, with recently supported records
       // ranked ahead of unconfirmed ones and dropped records last.
       filtered = [...filtered].sort((left, right) => listingSortKey(left) - listingSortKey(right));
     }
-    // With a search term under "nearest first", the relevance order already
+    // With a search term under the recommended order, the relevance order already
     // folds distance and verification in, so it stands as-is.
 
     return filtered;
   }, [marketsWithDistance, searchTerm, selectedCountry, activeFilters, filterCategories, sortOrder]);
 
   const totalPages = Math.ceil(filteredMarkets.length / ITEMS_PER_PAGE);
+  const resultCountryCount = new Set(filteredMarkets.map((market) => market.country).filter(Boolean)).size;
 
   useEffect(() => {
-    const safeQuery = analyticsSafeSearchTerm(searchTerm);
-    if (safeQuery.length < 2) return;
+    const event = settledMarketSearchEvent({
+      query: searchTerm,
+      country: selectedCountry,
+      resultCount: filteredMarkets.length,
+      loading: marketsLoading,
+      error: marketsError,
+    });
+    if (!event) return;
 
-    const eventKey = [safeQuery, selectedCountry || 'All countries', filteredMarkets.length].join('|');
+    const eventKey = JSON.stringify(event);
     const timer = window.setTimeout(() => {
       if (lastTrackedSearch.current === eventKey) return;
       lastTrackedSearch.current = eventKey;
-      trackEvent('Market Search', {
-        query: safeQuery,
-        result_count: filteredMarkets.length,
-        country: selectedCountry || 'All countries',
-        sensitive_value_redacted: safeQuery === '[redacted]'
-      });
+      trackEvent('Market Search', event);
     }, 1200);
 
     return () => window.clearTimeout(timer);
-  }, [searchTerm, selectedCountry, filteredMarkets.length]);
+  }, [searchTerm, selectedCountry, filteredMarkets.length, marketsLoading, marketsError]);
 
   useEffect(() => {
     if (locationLoading) return;
@@ -351,7 +354,7 @@ export function Markets({
                   </span>
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="nearest">Nearest first</SelectItem>
+                  <SelectItem value="nearest">{searchTerm ? 'Best match' : 'Recommended'}</SelectItem>
                   <SelectItem value="name">Name A-Z</SelectItem>
                 </SelectContent>
               </Select>
@@ -430,7 +433,7 @@ export function Markets({
                         >
                           <TabsList className="h-11 w-full rounded-full p-1">
                             <TabsTrigger value="nearest" className="rounded-full">
-                              Nearest first
+                              {searchTerm ? 'Best match' : 'Recommended'}
                             </TabsTrigger>
                             <TabsTrigger value="name" className="rounded-full">
                               Name A-Z
@@ -534,9 +537,10 @@ export function Markets({
                 'Loading markets…'
               ) : (
                 <>
-                  {filteredMarkets.length.toLocaleString()} places
-                  {selectedCountry ? ` in ${selectedCountry}` : ` across ${countries.length} countries and territories`}
+                  {filteredMarkets.length.toLocaleString()} {filteredMarkets.length === 1 ? 'place' : 'places'}
+                  {selectedCountry ? ` in ${selectedCountry}` : resultCountryCount > 0 ? ` across ${resultCountryCount} ${resultCountryCount === 1 ? 'country or territory' : 'countries and territories'}` : ''}
                   {marketsLoading ? ' (still loading…)' : ''}
+                  {marketsError ? ' (some data could not be loaded)' : ''}
                 </>
               )}
             </p>

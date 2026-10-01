@@ -1,0 +1,971 @@
+{
+  "version": 1,
+  "label": "september-core-main",
+  "reviewed_at": "2026-09-30",
+  "scope": "All 106 automatic promotions were screened offline against raw citation excerpts and original source identity. Selected ambiguous primary pages were independently read live. The other 894 raw results were not manually reviewed.",
+  "original_sha256": "922397b6479ee54a6a56ae097e76b715f10ba5261f8695719033f2491dd280c6",
+  "reviewed_sha256": "6840bff2034e5a6e2f3dd2ec5d4b43583b068478a9fbc417d4c915c2d7991cc4",
+  "original_records": 106,
+  "reviewed_records": 105,
+  "before_fields": {
+    "contact.websites": 106,
+    "contact.phone_numbers": 51,
+    "contact.social_media": 80,
+    "operations.days": 48,
+    "operations.season": 25,
+    "visitor_note": 0,
+    "suppress_map": 0
+  },
+  "after_fields": {
+    "contact.websites": 105,
+    "contact.phone_numbers": 46,
+    "contact.social_media": 76,
+    "visitor_note": 11,
+    "suppress_map": 7,
+    "operations.days": 46,
+    "operations.season": 29
+  },
+  "changes": [
+    {
+      "id": "313432",
+      "action": "reject_record",
+      "reason": "The authoritative source names Granger Farmers Market; Sunnyside appears only in 121 Sunnyside Avenue. No primary evidence establishes continuity with a market named Sunnyside Farmers Market.",
+      "source_urls": [
+        "https://grangerfarmersmarket.org/",
+        "https://grangerfarmersmarket.org/contact-us/"
+      ]
+    },
+    {
+      "id": "301051",
+      "action": "set_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "573-823-6889 (Executive Director); 573-823-3190 (Assistant Manager)"
+      ],
+      "new_value": [
+        "573-823-6889 (Executive Director)",
+        "573-823-3190 (Assistant Manager)"
+      ],
+      "reason": "Split separately published manager numbers into individual entries. Role and name labels match the cited excerpts.",
+      "source_url": "https://columbiafarmersmarket.org/about/contact-us"
+    },
+    {
+      "id": "314064",
+      "action": "set_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "586-242-7341 (Carl Weinreich, President); 586-842-8029 (market)"
+      ],
+      "new_value": [
+        "586-242-7341 (Carl Weinreich, President)",
+        "586-842-8029 (market)"
+      ],
+      "reason": "Split separately published manager numbers into individual entries. Role and name labels match the cited excerpts.",
+      "source_url": "https://www.newbaltimorefarmersmarket.com/"
+    },
+    {
+      "id": "314298",
+      "action": "set_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "(406) 207-9425 (Jess Bundren); (406) 381-6145 (Stacie Barker)"
+      ],
+      "new_value": [
+        "(406) 207-9425 (Jess Bundren)",
+        "(406) 381-6145 (Stacie Barker)"
+      ],
+      "reason": "Split separately published manager numbers into individual entries. Role and name labels match the cited excerpts.",
+      "source_url": "https://stevihvfm.square.site/"
+    },
+    {
+      "id": "313256",
+      "action": "remove_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "(276) 632-5688"
+      ],
+      "reason": "Only a generic district or municipal organization footer number is cited; contact scope for this specific market is not established."
+    },
+    {
+      "id": "313480",
+      "action": "remove_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "920-954-9112"
+      ],
+      "reason": "Only a generic district or municipal organization footer number is cited; contact scope for this specific market is not established."
+    },
+    {
+      "id": "313917",
+      "action": "remove_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "(732) 828-8444"
+      ],
+      "reason": "Only a generic district or municipal organization footer number is cited; contact scope for this specific market is not established."
+    },
+    {
+      "id": "314016",
+      "action": "remove_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "740.464.0203"
+      ],
+      "reason": "Only a generic district or municipal organization footer number is cited; contact scope for this specific market is not established."
+    },
+    {
+      "id": "314200",
+      "action": "remove_field",
+      "field": "contact.phone_numbers",
+      "previous_value": [
+        "(801) 806-4677"
+      ],
+      "reason": "Only a generic district or municipal organization footer number is cited; contact scope for this specific market is not established."
+    },
+    {
+      "id": "301286",
+      "action": "remove_field",
+      "field": "contact.social_media",
+      "previous_value": [
+        "https://www.facebook.com/CertifiedFarmersMarket"
+      ],
+      "reason": "This is a shared operating organization or multiple-market social profile, rather than the specific market profile."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:7ec62f06bb2e27c4",
+      "action": "remove_field",
+      "field": "contact.social_media",
+      "previous_value": [
+        "https://www.facebook.com/CertifiedFarmersMarket"
+      ],
+      "reason": "This is a shared operating organization or multiple-market social profile, rather than the specific market profile."
+    },
+    {
+      "id": "314016",
+      "action": "remove_field",
+      "field": "contact.social_media",
+      "previous_value": [
+        "https://www.facebook.com/mspib",
+        "https://www.instagram.com/mainstreetportsmouth/"
+      ],
+      "reason": "This is a shared operating organization or multiple-market social profile, rather than the specific market profile."
+    },
+    {
+      "id": "314200",
+      "action": "remove_field",
+      "field": "contact.social_media",
+      "previous_value": [
+        "https://www.instagram.com/daybreakmarkets"
+      ],
+      "reason": "This is a shared operating organization or multiple-market social profile, rather than the specific market profile."
+    },
+    {
+      "id": "313272",
+      "action": "set_field",
+      "field": "operations.days",
+      "previous_value": [
+        "Saturdays, 8 AM to noon"
+      ],
+      "new_value": [
+        "Saturdays 8 AM–noon, May 16–September 5, 2026, except July 4, 2026: closed"
+      ],
+      "reason": "Preserve the exact published seasonal bounds and July 4 closure.",
+      "source_url": "https://west-point.va.us/community/visitors/farmers_market.php"
+    },
+    {
+      "id": "313272",
+      "action": "set_field",
+      "field": "operations.season",
+      "new_value": "May 16–September 5, 2026",
+      "reason": "Retain the explicit published 2026 season bounds from the official market page.",
+      "source_url": "https://west-point.va.us/community/visitors/farmers_market.php"
+    },
+    {
+      "id": "313453",
+      "action": "set_field",
+      "field": "operations.season",
+      "new_value": "May 16–October 10, 2026",
+      "reason": "Retain the explicit published 2026 season bounds from the official market page.",
+      "source_url": "https://www.ashlandareafarmersmarket.com/"
+    },
+    {
+      "id": "314198",
+      "action": "set_field",
+      "field": "operations.season",
+      "new_value": "June 3–October 31, 2026",
+      "reason": "Retain the explicit published 2026 season bounds from the official market page.",
+      "source_url": "https://www.sheboygancountyinterfaith.org/farmers-market/"
+    },
+    {
+      "id": "313590",
+      "action": "set_field",
+      "field": "operations.season",
+      "new_value": "June 3–October 31, 2026",
+      "reason": "Retain the explicit published 2026 season bounds from the official market page.",
+      "source_url": "https://www.sheboygancountyinterfaith.org/farmers-market/"
+    },
+    {
+      "id": "314080",
+      "action": "set_field",
+      "field": "operations.days",
+      "previous_value": [
+        "Saturdays 9:00am - Noon",
+        "Wednesdays 9:00am - Noon"
+      ],
+      "new_value": [
+        "Saturdays 9:00am–noon, year-round",
+        "Wednesdays 9:00am–noon, April 22 through November"
+      ],
+      "reason": "Preserve the published Wednesday seasonal qualifier that was omitted from the model summary.",
+      "source_url": "https://www.athensfarmersmarket.org/"
+    },
+    {
+      "id": "314117",
+      "action": "remove_field",
+      "field": "operations.days",
+      "previous_value": [
+        "Saturday: 8 AM - 2 PM",
+        "Sunday: 10 AM - 2 PM"
+      ],
+      "reason": "These hours apply only to the Farm Shed farmers market, rather than the full Findlay public market. Preserve their scope in a visitor note instead of emitting misleading weekly hours for the whole venue."
+    },
+    {
+      "id": "314117",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The Farm Shed farmers market operates Saturdays 8am–2pm and Sundays 10am–2pm. General Findlay Market hours are Tuesday–Friday 9am–6pm, Saturday 8am–6pm and Sunday 10am–4pm; Monday is closed. Check individual businesses for their hours.",
+      "reason": "The official source distinguishes general public market hours from Farm Shed farmers market hours.",
+      "source_url": "https://www.findlaymarket.org/farmers-market"
+    },
+    {
+      "id": "313256",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The market publishes 65 W. Main Street, Martinsville, VA 24112. The imported postal code differs; confirm the address on the official market page before visiting.",
+      "reason": "The official market postal code is 24112, which differs from the imported 24114. Preserve the source snapshot and explain the discrepancy.",
+      "source_url": "https://martinsvilleuptown.net/farmers-market.cfm"
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:b53d5ef375472eda",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The published phone is the North County Farmers Market Association contact, which operates the Baywood/Los Osos market.",
+      "reason": "Clarify that the published number is an official market association contact.",
+      "source_url": "https://www.northcountyfarmersmarkets.com/our-markets"
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:17c2c3e23f699f2e",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The published phone is the Ventura County Certified Farmers Market Association contact, which operates this market.",
+      "reason": "Clarify that the published number is an official market association contact.",
+      "source_url": "https://www.vccfm.org/downtown-ventura"
+    },
+    {
+      "id": "5818",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The market publishes its 2026 location as the historic Kemper Center, 6501 Third Avenue, Kenosha, WI 53143. The imported address is an older location; check the official website before visiting.",
+      "reason": "Exact market identity is supported, but the current published location differs from the imported street address. Preserve the source snapshot and warn visitors.",
+      "source_url": "https://www.kenoshapublicmarket.com/"
+    },
+    {
+      "id": "5818",
+      "action": "set_field",
+      "field": "suppress_map",
+      "new_value": true,
+      "reason": "Suppress the unresolved imported map coordinates when the current published street location conflicts with the snapshot. Preserve the original source address.",
+      "source_url": "https://www.kenoshapublicmarket.com/"
+    },
+    {
+      "id": "314254",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The market publishes its location as Baldwin Common, 8515 Foundry Street, Savage, MD 20763. The imported address differs; check the official website before visiting.",
+      "reason": "Exact market identity is supported, but the current published location differs from the imported street address. Preserve the source snapshot and warn visitors.",
+      "source_url": "https://www.savagefarmersmarket.com/"
+    },
+    {
+      "id": "314254",
+      "action": "set_field",
+      "field": "suppress_map",
+      "new_value": true,
+      "reason": "Suppress the unresolved imported map coordinates when the current published street location conflicts with the snapshot. Preserve the original source address.",
+      "source_url": "https://www.savagefarmersmarket.com/"
+    },
+    {
+      "id": "314257",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The market publishes its current location as 142 Joe V Knox Avenue, Mooresville, NC 28117. Its history identifies 558 River Highway as a former location; check the official website before visiting.",
+      "reason": "Exact market identity is supported, but the current published location differs from the imported street address. Preserve the source snapshot and warn visitors.",
+      "source_url": "https://joshsfarmersmarket.com/"
+    },
+    {
+      "id": "314257",
+      "action": "set_field",
+      "field": "suppress_map",
+      "new_value": true,
+      "reason": "Suppress the unresolved imported map coordinates when the current published street location conflicts with the snapshot. Preserve the original source address.",
+      "source_url": "https://joshsfarmersmarket.com/"
+    },
+    {
+      "id": "313942",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The summer market is near the intersection of Third Street and Pine Street in downtown Jamestown, New York. The imported address identifies a different part of Third Street; check the official website before visiting.",
+      "reason": "Exact market identity is supported, but the current published location differs from the imported street address. Preserve the source snapshot and warn visitors.",
+      "source_url": "https://www.jfmny.org/farmers"
+    },
+    {
+      "id": "313942",
+      "action": "set_field",
+      "field": "suppress_map",
+      "new_value": true,
+      "reason": "Suppress the unresolved imported map coordinates when the current published street location conflicts with the snapshot. Preserve the original source address.",
+      "source_url": "https://www.jfmny.org/farmers"
+    },
+    {
+      "id": "313453",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The market publishes its 2026 location as the 600 block of Main Street West, across from Ashland City Hall. The imported Chapple Avenue address differs; check the official website before visiting.",
+      "reason": "Exact market identity is supported, but the current published location differs from the imported street address. Preserve the source snapshot and warn visitors.",
+      "source_url": "https://www.ashlandareafarmersmarket.com/"
+    },
+    {
+      "id": "313453",
+      "action": "set_field",
+      "field": "suppress_map",
+      "new_value": true,
+      "reason": "Suppress the unresolved imported map coordinates when the current published street location conflicts with the snapshot. Preserve the original source address.",
+      "source_url": "https://www.ashlandareafarmersmarket.com/"
+    },
+    {
+      "id": "314098",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The market publishes its location as 68 southbound Gratiot Avenue, Mount Clemens, MI 48043. The imported North River Road address differs; check the official website before visiting.",
+      "reason": "Exact market identity is supported, but the current published location differs from the imported street address. Preserve the source snapshot and warn visitors.",
+      "source_url": "https://www.mountclemensfarmersmarket.com/"
+    },
+    {
+      "id": "314098",
+      "action": "set_field",
+      "field": "suppress_map",
+      "new_value": true,
+      "reason": "Suppress the unresolved imported map coordinates when the current published street location conflicts with the snapshot. Preserve the original source address.",
+      "source_url": "https://www.mountclemensfarmersmarket.com/"
+    },
+    {
+      "id": "314016",
+      "action": "set_field",
+      "field": "visitor_note",
+      "new_value": "The market publishes its location as the Roy Rogers Esplanade, northeast corner of Chillicothe and Gallia streets in downtown Portsmouth, Ohio. Confirm the entrance directly on the official market page before visiting.",
+      "reason": "Exact market identity is supported, but the current published location differs from the imported street address. Preserve the source snapshot and warn visitors.",
+      "source_url": "https://www.mspohio.org/events/farmers-market"
+    },
+    {
+      "id": "314016",
+      "action": "set_field",
+      "field": "suppress_map",
+      "new_value": true,
+      "reason": "Suppress the unresolved imported map coordinates when the current published street location conflicts with the snapshot. Preserve the original source address.",
+      "source_url": "https://www.mspohio.org/events/farmers-market"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "5818",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "visitor_note",
+        "suppress_map"
+      ]
+    },
+    {
+      "id": "300670",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "301051",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers"
+      ]
+    },
+    {
+      "id": "301286",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.social_media"
+      ]
+    },
+    {
+      "id": "301446",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "301627",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "301744",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "308712",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313256",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers",
+        "visitor_note"
+      ]
+    },
+    {
+      "id": "313272",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "operations.days",
+        "operations.season"
+      ]
+    },
+    {
+      "id": "313453",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "operations.season",
+        "visitor_note",
+        "suppress_map"
+      ]
+    },
+    {
+      "id": "313480",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers"
+      ]
+    },
+    {
+      "id": "313488",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313516",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313784",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313790",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313884",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313886",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313898",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313917",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers"
+      ]
+    },
+    {
+      "id": "313962",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313964",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313996",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314009",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314010",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314037",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314039",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314054",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314061",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314071",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314117",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "operations.days",
+        "visitor_note"
+      ]
+    },
+    {
+      "id": "314128",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314144",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314155",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314206",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314253",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:7ec62f06bb2e27c4",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.social_media"
+      ]
+    },
+    {
+      "id": "314213",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ny_farmers_markets:8d43be7f16dc7ec1",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314076",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314198",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "operations.season"
+      ]
+    },
+    {
+      "id": "314254",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "visitor_note",
+        "suppress_map"
+      ]
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:17c2c3e23f699f2e",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "visitor_note"
+      ]
+    },
+    {
+      "id": "314080",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "operations.days"
+      ]
+    },
+    {
+      "id": "314257",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "visitor_note",
+        "suppress_map"
+      ]
+    },
+    {
+      "id": "314277",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:2d0f4f5bb618a1ea",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "301140",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313221",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313246",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313296",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313337",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313392",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313432",
+      "decision": "reject",
+      "changed_fields": [
+        "record"
+      ]
+    },
+    {
+      "id": "313553",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313590",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "operations.season"
+      ]
+    },
+    {
+      "id": "313596",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313604",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313630",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313632",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313699",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313808",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313872",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313897",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313931",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "313942",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "visitor_note",
+        "suppress_map"
+      ]
+    },
+    {
+      "id": "314004",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314016",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers",
+        "contact.social_media",
+        "visitor_note",
+        "suppress_map"
+      ]
+    },
+    {
+      "id": "314028",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314045",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314047",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314060",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314064",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers"
+      ]
+    },
+    {
+      "id": "314079",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314096",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314098",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "visitor_note",
+        "suppress_map"
+      ]
+    },
+    {
+      "id": "314112",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:8e55c0f44f62e9d0",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314101",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314134",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314148",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314174",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314175",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314199",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314200",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers",
+        "contact.social_media"
+      ]
+    },
+    {
+      "id": "314265",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314296",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314297",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314298",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "contact.phone_numbers"
+      ]
+    },
+    {
+      "id": "314317",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314340",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314356",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314358",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314360",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ny_farmers_markets:61416bd4cc24a32e",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:836a0b33ccf21c05",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314154",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "314365",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:786dcca113bcb480",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:b53d5ef375472eda",
+      "decision": "retain_partial",
+      "changed_fields": [
+        "visitor_note"
+      ]
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:d66bbdc62b520192",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:7866e6ad4cddf74f",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:cf4bb7ae725f0472",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:f34656e9e286d767",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:23a9663bc7bb77a5",
+      "decision": "retain_partial",
+      "changed_fields": []
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:9efb0d458d3e5331",
+      "decision": "retain_partial",
+      "changed_fields": []
+    }
+  ]
+}
