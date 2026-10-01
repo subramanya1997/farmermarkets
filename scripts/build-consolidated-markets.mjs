@@ -8,6 +8,7 @@ import { promisify } from 'node:util';
 import { mergeEnrichment } from '../src/lib/enrichment.ts';
 import { normalizeSourcePostalCode } from '../src/lib/postal.ts';
 import { buildMarketEnrichment } from './build-market-enrichment.mjs';
+import { applySourceCorrections } from './lib/editorial-sources.mjs';
 
 const root = process.cwd();
 const execFile = promisify(execFileCallback);
@@ -172,7 +173,9 @@ async function applyEditorialOverrides(markets) {
         fail(`editorial override path ${override.path} is missing on market ${override.id}`);
       }
     }
-    target[keys.at(-1)] = override.value;
+    target[keys.at(-1)] = override.path === 'enrichment.sources'
+      ? applySourceCorrections(target.sources, override.value)
+      : override.value;
   }
 }
 
@@ -205,6 +208,17 @@ export async function buildConsolidatedMarkets({ check = false } = {}) {
 
   validateConsolidation({ sources, enrichmentById, auditById, markets });
   await applyEditorialOverrides(markets);
+  for (const market of markets) {
+    const sourceIds = new Set((market.enrichment?.sources ?? []).map(source => source.id));
+    const checkReferences = value => {
+      if (!value || typeof value !== 'object') return;
+      if (Array.isArray(value.source_ids) && value.source_ids.some(id => !sourceIds.has(id))) {
+        fail(`editorial overrides removed a referenced source on market ${market.id}`);
+      }
+      Object.values(value).forEach(checkReferences);
+    };
+    checkReferences(market.first_party);
+  }
   const serialized = `${JSON.stringify(markets, null, 2)}\n`;
   if (check) {
     const current = await fs.readFile(outputPath, 'utf8');

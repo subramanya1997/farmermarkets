@@ -20,6 +20,50 @@ export interface PublishedEventDate {
   label: string;
 }
 
+type MarketEvent = NonNullable<MarketFirstPartyFacts['events']>[number]['value'];
+type RosterContext = NonNullable<NonNullable<MarketFirstPartyFacts['vendors']>['roster_context']>['value'];
+
+/** Leave a calendar-day grace period when the publisher did not specify a zone. */
+function calendarPeriodHasEnded(value?: string, now = new Date()): boolean {
+  if (!publishedEventDate(value)) return false;
+  const cutoff = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  return value!.slice(0, 10) < cutoff;
+}
+
+export function eventDisplayState(event: MarketEvent, now = new Date()): 'Cancelled' | 'Postponed' | 'Past event' | undefined {
+  if (event.status === 'cancelled') return 'Cancelled';
+  if (event.status === 'postponed') return 'Postponed';
+  if (calendarPeriodHasEnded(event.end ?? event.start, now)) return 'Past event';
+  return undefined;
+}
+
+/** Dates and the publisher's edition label qualify the roster, not attendance. */
+export function rosterContextLabels(context?: RosterContext): string[] {
+  if (!context) return [];
+  const labels = clean(context.label) ? [clean(context.label)] : [];
+  const start = publishedEventDate(context.start_date)?.label;
+  const end = publishedEventDate(context.end_date)?.label;
+  const asOf = publishedEventDate(context.as_of)?.label;
+  if (start && end) labels.push(`Published period: ${start} - ${end}`);
+  else if (start) labels.push(`Published period starts ${start}`);
+  else if (end) labels.push(`Published period ends ${end}`);
+  if (asOf) labels.push(`Snapshot as of ${asOf}`);
+  return labels;
+}
+
+export function rosterPeriodHasEnded(context?: RosterContext, now = new Date()): boolean {
+  return calendarPeriodHasEnded(context?.end_date, now);
+}
+
+export function publishedLocalHours(hours?: MarketEvent['local_hours']): string | undefined {
+  if (!hours || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hours.opens) || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hours.closes) || hours.closes <= hours.opens) return undefined;
+  const clock = (value: string) => {
+    const [hour, minute] = value.split(':').map(Number);
+    return `${hour % 12 || 12}:${String(minute).padStart(2, '0')}${hour < 12 ? 'am' : 'pm'}`;
+  };
+  return `${clock(hours.opens)} - ${clock(hours.closes)} (local time)`;
+}
+
 /** Format the written calendar date and clock, never the server's local zone. */
 export function publishedEventDate(value?: string | null): PublishedEventDate | undefined {
   const text = clean(value);

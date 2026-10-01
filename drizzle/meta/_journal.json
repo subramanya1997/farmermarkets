@@ -8,6 +8,13 @@
       "when": 1788060638457,
       "tag": "0000_condemned_rockslide",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790827433557,
+      "tag": "0001_market_highlights",
+      "breakpoints": true
     }
   ]
 }

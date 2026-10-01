@@ -1,0 +1,1294 @@
+[
+  {
+    "id": "301497",
+    "market_name": "Pleasantville Farmers Market - Outdoor",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "programs": [
+        {
+          "id": "parallel-program-0970fa43a1343d",
+          "value": {
+            "name": "Pleasantville Farmers Market Music Series",
+            "kind": "other",
+            "description": "Live music every Saturday, 10:30 AM – 12:30 PM"
+          },
+          "source_ids": [
+            "rich-parallel-0c8a6047969e13"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-0c8a6047969e13",
+        "title": "Music Schedule – Pleasantville Farmers Market",
+        "url": "https://www.pleasantvillefarmersmarket.org/visit/farmers-market-music-series-schedule-2022/",
+        "fields": [
+          "first_party.programs"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "312574",
+    "market_name": "Leesport Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-4174b3f72aa5d3",
+          "value": {
+            "name": "Toy Show",
+            "kind": "special_market",
+            "start": "2026-10-04",
+            "url": "https://www.leesportmarket.com/toy-shows",
+            "published_hours": "7AM to 1PM",
+            "venue": "Banquet Hall"
+          },
+          "source_ids": [
+            "rich-parallel-37ffe33c214d7e"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-37ffe33c214d7e",
+        "title": "Toy Show — Leesport Farmers Market",
+        "url": "https://www.leesportmarket.com/toy-shows",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:df3a2a1f016ec6ce",
+    "market_name": "Hamburg Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-47efe2945f12a7",
+          "value": {
+            "name": "Trick-or-Treat at the Market",
+            "kind": "kids",
+            "start": "2026-10-31",
+            "url": "https://southtownsregionalchamber.org/event/hamburg-farmers-market-3/2026-10-31",
+            "venue": "Hamburg Moose Lodge"
+          },
+          "source_ids": [
+            "rich-parallel-029bde090fd51e"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-029bde090fd51e",
+        "title": "Events for October 2026 – Southtowns Regional Chamber of Commerce",
+        "url": "https://southtownsregionalchamber.org/event/hamburg-farmers-market-3/2026-10-31",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "300742",
+    "market_name": "Market Square Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "programs": [
+        {
+          "id": "parallel-program-bed1fb68802a63",
+          "value": {
+            "name": "Nourish Moves",
+            "kind": "other",
+            "description": "A FREE program designed to build community while incentivizing overall health and a more active lifestyle."
+          },
+          "source_ids": [
+            "rich-parallel-837a3e5c0f2676"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-837a3e5c0f2676",
+        "title": "Market Square Farmers Market – Nourish Knoxville",
+        "url": "https://www.nourishknoxville.org/venue/market-square-farmers-market",
+        "fields": [
+          "first_party.programs"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:3a0104e43cfa9c28",
+    "market_name": "Downtown Syracuse Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "programs": [
+        {
+          "id": "parallel-program-2599e63dd5a839",
+          "value": {
+            "name": "Lunchtime Live Music Series",
+            "kind": "other",
+            "description": "Visitors can enjoy entertaiment from 11:30 am - 1:30 pm each week."
+          },
+          "source_ids": [
+            "rich-parallel-d0044c4132a8fc"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-d0044c4132a8fc",
+        "title": "2026 Farmers Market Live Music | Downtown Committee of Syracuse",
+        "url": "https://downtownsyracuse.com/signature-events/downtown-farmers-market/2026-farmers-market-live-music",
+        "fields": [
+          "first_party.programs"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:2074fe49d33b8716",
+    "market_name": "Lockport Community Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-aec6b61afaa461",
+          "value": {
+            "name": "Locktoberfest 2026",
+            "kind": "festival",
+            "start": "2026-10-03",
+            "url": "https://www.discoverlockport.com/locktoberfest",
+            "end": "2026-10-03",
+            "published_hours": "10am to 5pm",
+            "venue": "Canal Street in Lockport, NY"
+          },
+          "source_ids": [
+            "rich-parallel-4a2c0d07f340cf"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-4a2c0d07f340cf",
+        "title": "Locktoberfest — Discover Lockport",
+        "url": "https://www.discoverlockport.com/locktoberfest",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "314010",
+    "market_name": "Murray Park Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-d519dcb11b11d6",
+          "value": {
+            "name": "Harvest Market",
+            "kind": "special_market",
+            "start": "2026-10-31",
+            "url": "https://www.murrayfarmersmarketut.com/",
+            "end": "2026-10-31"
+          },
+          "source_ids": [
+            "rich-parallel-96b131643c8abc"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-96b131643c8abc",
+        "title": "Murray Park Farmers Market | market | Murray Park, East Murray Park Avenue, Murray, UT, USA",
+        "url": "https://www.murrayfarmersmarketut.com/",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "307955",
+    "market_name": "Cgucc Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "vendors": {
+        "directory_url": {
+          "value": "https://www.cgucc.org/cottage-grove-ucc-farmers-market",
+          "source_ids": [
+            "rich-parallel-f9ae90b0be700a"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-f9ae90b0be700a",
+        "title": "CGUCC Farmers Market - Cottage Grove United Church Of Christ",
+        "url": "https://www.cgucc.org/cottage-grove-ucc-farmers-market",
+        "fields": [
+          "first_party.vendors.directory_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "310923",
+    "market_name": "Canton Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-d36d90a9cf4629",
+          "value": {
+            "name": "Annual Holiday Artisan Market",
+            "kind": "special_market",
+            "start": "2026-11-14",
+            "url": "https://www.cantonmi.gov/496/Canton-Farmers-Market",
+            "published_hours": "9 a.m. - 3 p.m.",
+            "venue": "Canton Preparatory High School, 46610 Cherry Hill Road"
+          },
+          "source_ids": [
+            "rich-parallel-0520396e487049"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-0520396e487049",
+        "title": "Canton Farmers Market | Canton Township, MI - Official Website",
+        "url": "https://www.cantonmi.gov/496/Canton-Farmers-Market",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "312123",
+    "market_name": "Victor Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "vendors": {
+        "weekly_roster_url": {
+          "value": "https://victorfarmersmarket.com/at-the-market-9/",
+          "source_ids": [
+            "rich-parallel-ab43b269c4bd68"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-ab43b269c4bd68",
+        "title": "At The Market – Victor Farmers' Market",
+        "url": "https://victorfarmersmarket.com/at-the-market-9/",
+        "fields": [
+          "first_party.vendors.weekly_roster_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "307435",
+    "market_name": "Hibbing Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "vendors": {
+        "directory_url": {
+          "value": "http://hibbingfarmersmarket.org/",
+          "source_ids": [
+            "rich-parallel-ec110bf400ff35"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-ec110bf400ff35",
+        "title": "Hibbing Farmer's Market",
+        "url": "http://hibbingfarmersmarket.org/",
+        "fields": [
+          "first_party.vendors.directory_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "313463",
+    "market_name": "Brown Deer Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "vendors": {
+        "directory_url": {
+          "value": "https://www.browndeerwi.org/482/Brown-Deer-Farmers-Market",
+          "source_ids": [
+            "rich-parallel-4019b6863bbce0"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-4019b6863bbce0",
+        "title": "Brown Deer Farmers Market | Brown Deer, WI",
+        "url": "https://www.browndeerwi.org/482/Brown-Deer-Farmers-Market",
+        "fields": [
+          "first_party.vendors.directory_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "308016",
+    "market_name": "Midtown Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-a319e60c098c08",
+          "value": {
+            "name": "Last day of MFM & Care Fair Celebration!",
+            "kind": "special_market",
+            "start": "2026-10-31",
+            "url": "https://www.corcoranmpls.org/event-details/carefair2026",
+            "published_hours": "9:00 AM – 1:00 PM",
+            "venue": "Midtown Farmers Market, 2225 E Lake St, Minneapolis, MN 55407, USA"
+          },
+          "source_ids": [
+            "rich-parallel-f28470fb63bc30"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-f28470fb63bc30",
+        "title": "Last Day of MFM & Care Fair Celebration | Corcoran Neighborhood Event MN",
+        "url": "https://www.corcoranmpls.org/event-details/carefair2026",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "314117",
+    "market_name": "Findlay Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-52b38a2109f1c5",
+          "value": {
+            "name": "October Community Night: Create, Connect, Community",
+            "kind": "other",
+            "start": "2026-10-28",
+            "url": "https://www.findlaymarket.org/marketevents/octobercommunitynight",
+            "published_hours": "4:00 PM–6:00 PM",
+            "venue": "Jane's Findlay Market"
+          },
+          "source_ids": [
+            "rich-parallel-71b1e6fc6778cf"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-71c4e3365b28bd",
+          "value": {
+            "name": "Trick-or-Treat",
+            "kind": "kids",
+            "start": "2026-10-31",
+            "url": "https://www.findlaymarket.org/marketevents/trickortreat2026",
+            "published_hours": "4:00 PM–6:00 PM",
+            "venue": "Findlay Market"
+          },
+          "source_ids": [
+            "rich-parallel-3e5f3c9470240c"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-4db67f9c60f514",
+          "value": {
+            "name": "Holiday Market",
+            "kind": "special_market",
+            "start": "2026-12-05",
+            "url": "https://www.findlaymarket.org/marketevents/holidaymarket2026",
+            "end": "2026-12-06",
+            "venue": "Findlay Market"
+          },
+          "source_ids": [
+            "rich-parallel-126b1931f5dc72"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ],
+      "vendors": {
+        "directory_url": {
+          "value": "https://www.findlaymarket.org/merchants",
+          "source_ids": [
+            "rich-parallel-e053eb7c6b8c84"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-71b1e6fc6778cf",
+        "title": "October Community Night: Create, Connect, Community — Findlay Market",
+        "url": "https://www.findlaymarket.org/marketevents/octobercommunitynight",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-3e5f3c9470240c",
+        "title": "Trick-or-Treat — Findlay Market",
+        "url": "https://www.findlaymarket.org/marketevents/trickortreat2026",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-126b1931f5dc72",
+        "title": "Holiday Market — Findlay Market",
+        "url": "https://www.findlaymarket.org/marketevents/holidaymarket2026",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-e053eb7c6b8c84",
+        "title": "findlaymarket.org",
+        "url": "https://www.findlaymarket.org/merchants",
+        "fields": [
+          "first_party.vendors.directory_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "311980",
+    "market_name": "Lockport Community Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-aec6b61afaa461",
+          "value": {
+            "name": "Locktoberfest 2026!",
+            "kind": "festival",
+            "start": "2026-10-03",
+            "url": "https://www.discoverlockport.com/locktoberfest",
+            "end": "2026-10-03",
+            "published_hours": "10am to 5pm",
+            "venue": "Canal Street in Lockport, NY"
+          },
+          "source_ids": [
+            "rich-parallel-4a2c0d07f340cf"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-4a2c0d07f340cf",
+        "title": "Locktoberfest — Discover Lockport",
+        "url": "https://www.discoverlockport.com/locktoberfest",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "309955",
+    "market_name": "Skokie Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "vendors": {
+        "directory_url": {
+          "value": "https://www.skokie.org/506/Vendors",
+          "source_ids": [
+            "rich-parallel-5f86b6d0f20b82"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-5f86b6d0f20b82",
+        "title": "Vendors | Skokie, IL",
+        "url": "https://www.skokie.org/506/Vendors",
+        "fields": [
+          "first_party.vendors.directory_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "301051",
+    "market_name": "Columbia Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-fa89e56f941f5b",
+          "value": {
+            "name": "Music at Columbia Farmers Market-Group 1",
+            "kind": "music",
+            "start": "2026-10-03",
+            "url": "https://columbiafarmersmarket.org/programs-events/calendar",
+            "end": "2026-10-03",
+            "published_hours": "8:00 am - 10:00 am",
+            "venue": "Columbia Farmers Market"
+          },
+          "source_ids": [
+            "rich-parallel-582c1850bbade1"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-338d416e297c52",
+          "value": {
+            "name": "Music at Columbia Farmers Market-Group 1",
+            "kind": "music",
+            "start": "2026-10-10",
+            "url": "https://columbiafarmersmarket.org/programs-events/calendar",
+            "end": "2026-10-10",
+            "published_hours": "8:00 am - 10:00 am",
+            "venue": "Columbia Farmers Market"
+          },
+          "source_ids": [
+            "rich-parallel-582c1850bbade1"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-4796648dd43aa7",
+          "value": {
+            "name": "Music at Columbia Farmers Market-Group 2",
+            "kind": "music",
+            "start": "2026-10-10",
+            "url": "https://columbiafarmersmarket.org/programs-events/calendar",
+            "end": "2026-10-10",
+            "published_hours": "10:00 am - 12:00 pm",
+            "venue": "Columbia Farmers Market"
+          },
+          "source_ids": [
+            "rich-parallel-582c1850bbade1"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-582c1850bbade1",
+        "title": "Calendar – Columbia Farmers Market",
+        "url": "https://columbiafarmersmarket.org/programs-events/calendar",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "311928",
+    "market_name": "Hamburg Farmers Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-47efe2945f12a7",
+          "value": {
+            "name": "Trick-or-Treat at the Market",
+            "kind": "kids",
+            "start": "2026-10-31",
+            "url": "https://southtownsregionalchamber.org/event/hamburg-farmers-market-3/2026-10-31",
+            "published_hours": "7:30 am - 1:00 pm",
+            "venue": "Hamburg Moose Lodge"
+          },
+          "source_ids": [
+            "rich-parallel-029bde090fd51e"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-029bde090fd51e",
+        "title": "Events for October 2026 – Southtowns Regional Chamber of Commerce",
+        "url": "https://southtownsregionalchamber.org/event/hamburg-farmers-market-3/2026-10-31",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "308019",
+    "market_name": "Minneapolis Farmers’ Market - Lyndale Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-32c295d4dbe117",
+          "value": {
+            "name": "Kids' Corner",
+            "kind": "kids",
+            "start": "2026-10-17",
+            "url": "https://www.mplsfarmersmarket.com/event-details/kids-corner-2026-10-17-09-00",
+            "end": "2026-10-17",
+            "published_hours": "9:00 AM – 12:00 PM",
+            "venue": "Minneapolis Farmers Market, 312 East Lyndale Ave N, Minneapolis, MN 55405, USA"
+          },
+          "source_ids": [
+            "rich-parallel-79b2566cce4bc9"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ],
+      "programs": [
+        {
+          "id": "parallel-program-46b4b293e10cec",
+          "value": {
+            "name": "Kids' Corner",
+            "kind": "kids_club",
+            "description": "Monthly market kids' activity."
+          },
+          "source_ids": [
+            "rich-parallel-79b2566cce4bc9"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-79b2566cce4bc9",
+        "title": "Kids' Corner | MPLS Farmers Market",
+        "url": "https://www.mplsfarmersmarket.com/event-details/kids-corner-2026-10-17-09-00",
+        "fields": [
+          "first_party.events",
+          "first_party.programs"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "310950",
+    "market_name": "Detroit Eastern Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-eb27443d4d7206",
+          "value": {
+            "name": "ProsperUs Detroit Family Block Party",
+            "kind": "other",
+            "start": "2026-10-14",
+            "url": "https://easternmarket.org/events/prosperus-detroit-family-block-party/",
+            "published_hours": "5 PM – 8 PM",
+            "venue": "Eastern Market, Shed 5"
+          },
+          "source_ids": [
+            "rich-parallel-2f3ef33340a11f"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-2f3ef33340a11f",
+        "title": "ProsperUs Detroit Family Block Party | Eastern Market",
+        "url": "https://easternmarket.org/events/prosperus-detroit-family-block-party/",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "310956",
+    "market_name": "Downtown Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-8ec0ef1532343d",
+          "value": {
+            "name": "ArtPrize at the Market",
+            "kind": "festival",
+            "start": "2026-10-01",
+            "url": "https://www.downtownmarketgr.com/public-events/artprize-at-the-market-1",
+            "end": "2026-10-01",
+            "published_hours": "11:00 AM – 8:00 PM",
+            "venue": "Grand Rapids Downtown Market, 435 Ionia Ave SW"
+          },
+          "source_ids": [
+            "rich-parallel-52f6370950c82f"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-aa8e72aec0fde5",
+          "value": {
+            "name": "Merchants of the Macabre Oddities Market",
+            "kind": "special_market",
+            "start": "2026-10-24",
+            "url": "https://www.downtownmarketgr.com/public-events/merchants-of-the-macabre-2026",
+            "end": "2026-10-24",
+            "published_hours": "10:00 AM – 6:00 PM",
+            "venue": "Grand Rapids Downtown Market, 435 Ionia Ave SW"
+          },
+          "source_ids": [
+            "rich-parallel-ca370efdf6922e"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-1e8c937d2ffcd3",
+          "value": {
+            "name": "Christkindl Markt",
+            "kind": "special_market",
+            "start": "2026-11-18",
+            "url": "https://www.downtownmarketgr.com/christkindl-markt",
+            "end": "2026-12-24",
+            "published_hours": "WED: 11AM-8PM THU-FRI: 11AM-9PM SAT: 10AM-9PM SUN: 10AM-8PM",
+            "venue": "Grand Rapids Downtown Market",
+            "description": "Check the official website for special dates and hours."
+          },
+          "source_ids": [
+            "rich-parallel-d20038f9079d07"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-52f6370950c82f",
+        "title": "ArtPrize at the Market — Grand Rapids Downtown Market",
+        "url": "https://www.downtownmarketgr.com/public-events/artprize-at-the-market-1",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-ca370efdf6922e",
+        "title": "Merchants of the Macabre Oddities Market — Grand Rapids Downtown Market",
+        "url": "https://www.downtownmarketgr.com/public-events/merchants-of-the-macabre-2026",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-d20038f9079d07",
+        "title": "Christkindl Markt — Grand Rapids Downtown Market",
+        "url": "https://www.downtownmarketgr.com/christkindl-markt",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "312424",
+    "market_name": "Cave Junction Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "vendors": {
+        "directory_url": {
+          "value": "https://www.cjfarmersmarket.org/vendors",
+          "source_ids": [
+            "rich-parallel-0c8b7a035ae1f8"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-0c8b7a035ae1f8",
+        "title": "Meet Our Vendors — Where Community Grows!",
+        "url": "https://www.cjfarmersmarket.org/vendors",
+        "fields": [
+          "first_party.vendors.directory_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "309151",
+    "market_name": "Bristol Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-20def481dddd0a",
+          "value": {
+            "name": "Fall Festival",
+            "kind": "festival",
+            "start": "2026-11-14",
+            "url": "https://bristolfarmersmarket.com/vendors/",
+            "published_hours": "10:00 am-1:00 pm"
+          },
+          "source_ids": [
+            "rich-parallel-a89619e12961d6"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ],
+      "vendors": {
+        "roster_context": {
+          "value": {
+            "as_of": "2026-09-30",
+            "label": "2026 season",
+            "non_exhaustive": true,
+            "start_date": "2026-06-20",
+            "end_date": "2026-10-10"
+          },
+          "source_ids": [
+            "rich-parallel-a89619e12961d6"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        "roster": [
+          {
+            "id": "parallel-vendor-9c045458604702",
+            "value": {
+              "name": "Black Sheep Garlic",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-8aa3ab1a83e15b",
+            "value": {
+              "name": "Better Baking By Beth",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-12fa799f5a9530",
+            "value": {
+              "name": "Gresczyk Farms",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-22e77dc1de1fd4",
+            "value": {
+              "name": "Hathor Hill Farm",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-50f0be9202307d",
+            "value": {
+              "name": "Perkins Pure Maple Sugar House",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-f22cb28afce867",
+            "value": {
+              "name": "Ridge Runner Soaps",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-42607c0832b77c",
+            "value": {
+              "name": "Lollipops K.I.S.S. LLC",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-cf8d1edc486d8c",
+            "value": {
+              "name": "Connecticut Soap and Candles",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-de80f950b44505",
+            "value": {
+              "name": "Litchfield Distillery",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-6aaa77d7a3188a",
+            "value": {
+              "name": "La Famiglia Tedesco",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-c0865d59f2f639",
+            "value": {
+              "name": "Tonn’s Marketplace",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          },
+          {
+            "id": "parallel-vendor-7c728804bf06c8",
+            "value": {
+              "name": "Twin Pines Farm",
+              "attendance_note": "Published roster: 2026 season. Attendance on a particular date is not confirmed."
+            },
+            "source_ids": [
+              "rich-parallel-a89619e12961d6"
+            ],
+            "verified_at": "2026-09-30"
+          }
+        ],
+        "directory_url": {
+          "value": "https://bristolfarmersmarket.com/vendors/",
+          "source_ids": [
+            "rich-parallel-a89619e12961d6"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-a89619e12961d6",
+        "title": "Vendors – The Bristol Farmers Market, Inc.",
+        "url": "https://bristolfarmersmarket.com/vendors/",
+        "fields": [
+          "first_party.events",
+          "first_party.vendors.roster_context",
+          "first_party.vendors.roster",
+          "first_party.vendors.directory_url"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "308774",
+    "market_name": "Mountain View Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "parallel-event-bb022d9c5ac695",
+          "value": {
+            "name": "Market Relocates 10/4 to Hope St. Lots",
+            "kind": "special_market",
+            "start": "2026-10-04",
+            "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r",
+            "published_hours": "9:00 AM–1:00 PM",
+            "venue": "Hope Street (between W. Evelyn Ave & Villa Ave), Mountain View, CA, 94041"
+          },
+          "source_ids": [
+            "rich-parallel-c5240c14bfa544"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-100f4536cdc34a",
+          "value": {
+            "name": "Market Relocates 11/8 to Hope St. Lots",
+            "kind": "special_market",
+            "start": "2026-11-08",
+            "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r-frzld",
+            "published_hours": "9:00 AM–1:00 PM",
+            "venue": "Hope Street (between W. Evelyn Ave & Villa Ave), Mountain View, CA, 94041"
+          },
+          "source_ids": [
+            "rich-parallel-ad6e14a50f1482"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-186c31c54618a9",
+          "value": {
+            "name": "Market Relocates 11/29 to Hope St. Lots",
+            "kind": "special_market",
+            "start": "2026-11-29",
+            "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r-frzld-3zhbe",
+            "published_hours": "9:00 AM–1:00 PM",
+            "venue": "Hope Street (between W. Evelyn Ave & Villa Ave), Mountain View, CA, 94041"
+          },
+          "source_ids": [
+            "rich-parallel-ada7ca1448b041"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "parallel-event-1889e3e292fd7b",
+          "value": {
+            "name": "Market Relocates 12/13 to Hope St. Lots",
+            "kind": "special_market",
+            "start": "2026-12-13",
+            "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r-frzld-3zhbe-esdas",
+            "published_hours": "9:00 AM–1:00 PM",
+            "venue": "Hope Street (between W. Evelyn Ave & Villa Ave), Mountain View, CA, 94041"
+          },
+          "source_ids": [
+            "rich-parallel-fe1efad9bfd588"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rich-parallel-c5240c14bfa544",
+        "title": "Market Relocates 10/4 to Hope St. Lots — California Farmers' Markets Association",
+        "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-ad6e14a50f1482",
+        "title": "Market Relocates 11/8 to Hope St. Lots — California Farmers' Markets Association",
+        "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r-frzld",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-ada7ca1448b041",
+        "title": "Market Relocates 11/29 to Hope St. Lots — California Farmers' Markets Association",
+        "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r-frzld-3zhbe",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "rich-parallel-fe1efad9bfd588",
+        "title": "Market Relocates 12/13 to Hope St. Lots  — California Farmers' Markets Association",
+        "url": "https://www.cafarmersmkts.com/events/market-relocates-on-sunday-49er-home-game-days-tm2t8-xawdk-sbaac-fg7pa-pxrm7-7sdda-p9s6x-6h96r-frzld-3zhbe-esdas",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  }
+]

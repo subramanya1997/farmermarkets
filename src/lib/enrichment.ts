@@ -185,12 +185,22 @@ export interface MarketFirstPartyFacts {
     directory_url?: SourcedValue<string>;
     weekly_roster_url?: SourcedValue<string>;
     attendance_is_dynamic?: SourcedValue<boolean>;
+    /** Published period/snapshot and whether the named list contains examples. */
+    roster_context?: SourcedValue<{
+      label?: string;
+      as_of?: string;
+      start_date?: string;
+      end_date?: string;
+      non_exhaustive?: boolean;
+    }>;
     roster?: SourcedItem<{
       name: string;
       categories?: string[];
       website?: string;
       social_url?: string;
       seasonal?: boolean;
+      /** Only the market's published attendance qualifier, never a prediction. */
+      attendance_note?: string;
     }>[];
   };
   products?: {
@@ -222,6 +232,12 @@ export interface MarketFirstPartyFacts {
     end?: string;
     description?: string;
     url?: string;
+    /** Published local wall clocks, without inferring a timezone or UTC instant. */
+    local_hours?: { opens: string; closes: string };
+    /** Verbatim local opening hours when a normalized clock is not supported. */
+    published_hours?: string;
+    venue?: string;
+    status?: 'scheduled' | 'cancelled' | 'postponed';
   }>[];
   programs?: SourcedItem<{
     name: string;

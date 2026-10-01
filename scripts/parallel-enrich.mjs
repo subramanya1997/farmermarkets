@@ -23,6 +23,9 @@ const workDir = path.join(root, 'data/enrichment/parallel');
 const API = 'https://api.parallel.ai';
 
 import { validateSubmitOptions, reserveCampaign, atomicJson, orderedCandidates } from './lib/parallel-campaign.mjs';
+import { RICH_TASK_SPEC } from './lib/parallel-rich-spec.mjs';
+import { validateTaskSpec } from './lib/parallel-spec-validation.mjs';
+import { authoritative } from './lib/parallel-evidence.mjs';
 
 const OUTPUT_SCHEMA = {
   type: 'json',
@@ -125,9 +128,10 @@ function arg(name, fallback) {
 
 async function loadCandidates() {
   const markets = JSON.parse(await fs.readFile(datasetPath, 'utf8'));
+  const rich = arg('purpose', 'identity') === 'richshowcase';
   const excluded = new Set();
   for (const name of (await fs.readdir(path.join(root, 'data/enrichment'))).filter(n => /^research-.+\.json$/.test(n))) {
-    for (const record of JSON.parse(await fs.readFile(path.join(root, 'data/enrichment', name), 'utf8'))) excluded.add(String(record.id));
+    if (!rich) for (const record of JSON.parse(await fs.readFile(path.join(root, 'data/enrichment', name), 'utf8'))) excluded.add(String(record.id));
   }
   const idsFile = arg('ids-file');
   let ids;
@@ -136,7 +140,9 @@ async function loadCandidates() {
     ids = Array.isArray(manifest) ? manifest : manifest.ids;
     if (ids === undefined) throw new Error('IDs file must contain an array or { ids: [...] }');
   }
-  return orderedCandidates(markets, excluded, ids);
+  const eligible = rich ? markets.filter(m => ['US','CA'].includes(m.country_code) && m.contact?.websites?.some(authoritative)) : markets;
+  if (rich && ids === undefined) return eligible.filter(m=>m.name && m.location?.city);
+  return orderedCandidates(eligible, excluded, ids);
 }
 
 function toInput(m) {
@@ -147,6 +153,7 @@ function toInput(m) {
     state: m.location?.state || '',
     zip_code: m.location?.zip_code || '',
     country: m.country || 'United States',
+    ...(arg('purpose','identity') === 'richshowcase' ? {official_website:m.contact.websites.find(authoritative),research_date:arg('research-date','2026-09-30')} : {}),
   };
 }
 
@@ -158,7 +165,11 @@ async function submit() {
   const budget = Number(arg('campaign-budget', '50'));
   const label = arg('label', `${processor}-${limit}`);
   const campaign = arg('campaign', '2026-09-30');
-  validateSubmitOptions({ processor, limit, offset, maxCost, budget, label, campaign });
+  const purpose = arg('purpose', 'identity');
+  validateSubmitOptions({ processor, limit, offset, maxCost, budget, label, campaign, purpose });
+  validateTaskSpec(purpose === 'richshowcase' ? RICH_TASK_SPEC : TASK_SPEC);
+  const researchDate = arg('research-date', '2026-09-30');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(researchDate) || new Date(researchDate).toISOString().slice(0,10) !== researchDate) throw new Error('Invalid research date');
   apiKey(); // Fail before creating a reservation when credentials are unavailable.
   const candidates = (await loadCandidates()).slice(offset, offset + limit);
   if (!candidates.length) throw new Error('No eligible markets selected');
@@ -177,10 +188,10 @@ async function submit() {
     try { ledger = JSON.parse(await fs.readFile(ledgerPath, 'utf8')); }
     catch (e) { if (e.code !== 'ENOENT') throw e; ledger = { version: 1, campaign, budget_mills: Math.floor(budget * 1000), reservations: [] }; }
     if (ledger.version !== 1 || ledger.campaign !== campaign || !Number.isSafeInteger(ledger.budget_mills) || ledger.budget_mills <= 0 || ledger.budget_mills > 50000 || !Array.isArray(ledger.reservations)) throw new Error('Invalid campaign ledger');
-    reservation = reserveCampaign(ledger, { label, processor, ids: candidates.map(m => m.id), budget, maxCost, now: new Date().toISOString() });
+    reservation = reserveCampaign(ledger, { label, purpose, processor, ids: candidates.map(m => m.id), budget, maxCost, now: new Date().toISOString() });
     await atomicJson(ledgerPath, ledger); // Reserve ALL potential spend before the first API request.
     await fs.mkdir(dir);
-    const meta = { groupId: null, processor, campaign, reserved_cost: reservation.cost_mills / 1000, submitted_at: reservation.reserved_at, runMap: {}, batches: [], state: 'creating_group' };
+    const meta = { groupId: null, processor, purpose, research_date: researchDate, campaign, reserved_cost: reservation.cost_mills / 1000, submitted_at: reservation.reserved_at, runMap: {}, batches: [], state: 'creating_group' };
     await atomicJson(path.join(dir, 'group.json'), meta);
     console.log(`Reserved ${candidates.length} markets on "${processor}" ($${(reservation.cost_mills / 1000).toFixed(3)})`);
     const group = await api('POST', '/v1/tasks/groups', {});
@@ -198,11 +209,11 @@ async function submit() {
       await atomicJson(path.join(dir, 'group.json'), meta);
       await atomicJson(ledgerPath, ledger);
       const res = await api('POST', `/v1/tasks/groups/${meta.groupId}/runs`, {
-        default_task_spec: TASK_SPEC,
+        default_task_spec: purpose === 'richshowcase' ? RICH_TASK_SPEC : TASK_SPEC,
         inputs: batch.map(m => ({ input: toInput(m), processor })), refresh_status: false,
       });
       if (!Array.isArray(res.run_ids) || res.run_ids.length !== batch.length || res.run_ids.some(id => typeof id !== 'string' || !id) || new Set(res.run_ids).size !== res.run_ids.length) throw new Error('Ambiguous run IDs response; reservation retained, do not retry');
-      res.run_ids.forEach((runId, j) => { meta.runMap[runId] = { id: batch[j].id, name: batch[j].name, slug: batch[j].slug }; });
+      res.run_ids.forEach((runId, j) => { meta.runMap[runId] = { id: batch[j].id, name: batch[j].name, slug: batch[j].slug, ...(purpose === 'richshowcase' ? {official_website:toInput(batch[j]).official_website} : {}) }; });
       attempt.state = 'submitted'; attempt.run_ids = res.run_ids;
       reservation.run_ids.push(...res.run_ids);
       await atomicJson(path.join(dir, 'group.json'), meta);

@@ -2,7 +2,9 @@ import fs from 'node:fs/promises';
 
 export const COST_PER_RUN = Object.freeze({ lite: 0.005, base: 0.01, core: 0.025, pro: 0.1 });
 export const MAX_CAMPAIGN_BUDGET = 50;
-export function validateSubmitOptions({ processor, limit, offset, maxCost, budget, label, campaign }) {
+export const PURPOSES = Object.freeze(['identity', 'richshowcase']);
+export function validateSubmitOptions({ processor, limit, offset, maxCost, budget, label, campaign, purpose = 'identity' }) {
+  if (!PURPOSES.includes(purpose)) throw new Error('Unknown research purpose');
   if (!Object.hasOwn(COST_PER_RUN, processor)) throw new Error('Unknown processor');
   if (!Number.isSafeInteger(limit) || limit <= 0) throw new Error('--limit must be a positive safe integer');
   if (!Number.isSafeInteger(offset) || offset < 0) throw new Error('--offset must be a nonnegative safe integer');
@@ -13,21 +15,39 @@ export function validateSubmitOptions({ processor, limit, offset, maxCost, budge
     if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,100}$/.test(value || '')) throw new Error('Label and campaign must be simple identifiers');
   }
 }
-export function reserveCampaign(ledger, { label, processor, ids, budget, maxCost, now }) {
+export function reserveCampaign(ledger, { label, processor, ids, budget, maxCost, now, purpose = 'identity' }) {
+  if (!PURPOSES.includes(purpose)) throw new Error('Unknown research purpose');
   if (!Object.hasOwn(COST_PER_RUN, processor) || !Array.isArray(ids) || ids.some(id => !['string', 'number'].includes(typeof id) || !String(id)) || new Set(ids.map(String)).size !== ids.length) throw new Error('Invalid reservation processor or IDs');
   if (![budget, maxCost].every(value => Number.isFinite(value) && value > 0 && value <= MAX_CAMPAIGN_BUDGET)) throw new Error('Invalid reservation cost caps');
   const costMills = ids.length * Math.round(COST_PER_RUN[processor] * 1000);
   if (!ids.length || costMills > Math.floor(maxCost * 1000)) throw new Error('Empty selection or submission exceeds --max-cost');
   const usedMills = ledger.reservations.reduce((sum, r) => {
     if (!Number.isSafeInteger(r.cost_mills) || r.cost_mills < 0 || !Array.isArray(r.market_ids)) throw new Error('Invalid ledger reservation');
+    if (r.state === 'confirmed_unbilled_schema_failure' && (r.cost_mills !== 0 || !Number.isSafeInteger(r.reserved_cost_mills) || r.reserved_cost_mills <= 0 || r.reconciliation?.failed_count !== r.market_ids.length || r.reconciliation?.zero_successes !== true || !/^[a-f0-9]{64}$/.test(r.reconciliation?.sha256 || ''))) throw new Error('Unbilled exemption requires explicit exhaustive reconciliation evidence');
     return sum + r.cost_mills;
   }, 0);
   if (ledger.reservations.some(r => r.label === label)) throw new Error('Label already reserved; collect or investigate it instead of resubmitting');
-  const priorIds = new Set(ledger.reservations.flatMap(r => r.market_ids));
+  // Legacy reservations had no purpose and researched identity/contact only.
+  // New purposes can research the same market, but never pay twice for a purpose.
+  if (ledger.reservations.some(r => !PURPOSES.includes(r.purpose ?? 'identity'))) throw new Error('Invalid ledger purpose');
+  const priorIds = new Set(ledger.reservations.filter(r => (r.purpose ?? 'identity') === purpose && r.state !== 'confirmed_unbilled_schema_failure').flatMap(r => r.market_ids.map(String)));
   if (ids.some(id => priorIds.has(String(id)))) throw new Error('Market already reserved in this campaign');
   if (usedMills + costMills > Math.min(ledger.budget_mills, Math.floor(budget * 1000))) throw new Error('Campaign cumulative budget exceeded');
-  const reservation = { label, processor, cost_mills: costMills, market_ids: ids.map(String), reserved_at: now, state: 'reserved', group_id: null, run_ids: [] };
+  const reservation = { label, purpose, processor, cost_mills: costMills, market_ids: ids.map(String), reserved_at: now, state: 'reserved', group_id: null, run_ids: [] };
   ledger.reservations.push(reservation);
+  return reservation;
+}
+export function reconcileSchemaFailure(ledger, label, group, runs, evidence) {
+  const reservation = ledger.reservations.find(r=>r.label===label);
+  if (!reservation || reservation.state !== 'submitted' || !reservation.run_ids?.length) throw new Error('Only fully submitted reservations can be reconciled');
+  const ids = new Set(reservation.run_ids);
+  if(group.status?.is_active !== false || group.status?.num_task_runs !== ids.size || group.status?.task_run_status_counts?.failed !== ids.size || Object.entries(group.status.task_run_status_counts).some(([k,n])=>k!=='failed'&&n>0)) throw new Error('Group is not completely and definitively failed');
+  if(runs.length!==ids.size || new Set(runs.map(r=>r.run_id)).size!==ids.size || runs.some(r=>!ids.has(r.run_id)||r.status!=='failed'||r.is_active!==false||!r.errors?.length||r.errors.some(e=>!/^Unsupported keyword 'maxItems' at path: properties\.(events|vendor_directory|vendor_roster|programs)$/.test(e.error)))) throw new Error('Every run must independently confirm the same unbilled schema validation failure');
+  if(!/^[a-f0-9]{64}$/.test(evidence.sha256||'') || !evidence.path || evidence.pricing_url !== 'https://docs.parallel.ai/getting-started/pricing') throw new Error('Reconciliation requires durable evidence and official failed-run pricing');
+  reservation.reserved_cost_mills=reservation.cost_mills;
+  reservation.cost_mills=0;
+  reservation.state='confirmed_unbilled_schema_failure';
+  reservation.reconciliation={...evidence,failed_count:runs.length,zero_successes:true,reason:'All runs rejected unsupported schema before research; official pricing bills only successful runs.'};
   return reservation;
 }
 export async function atomicJson(file, value) {

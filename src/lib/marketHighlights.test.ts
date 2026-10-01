@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { marketHighlights, publishedEventDate, safeHighlightUrl } from './marketHighlights.ts';
+import { eventDisplayState, marketHighlights, publishedEventDate, publishedLocalHours, rosterContextLabels, rosterPeriodHasEnded, safeHighlightUrl } from './marketHighlights.ts';
 
 test('published date-only events stay on the stated day across server time zones', () => {
   const original = process.env.TZ;
@@ -65,4 +65,34 @@ test('counts alone do not create vendor sections, and supported named details re
   assert.equal(rich.roster[0].value.name, 'Example Farm');
   assert.equal(rich.vendorLinks[0].href, 'https://official.example/vendors');
   assert.equal(rich.attendanceIsDynamic, true);
+});
+
+test('expired calendar events are labeled past without an inferred future recurrence', () => {
+  const now = new Date('2026-09-30T12:00:00Z');
+  const event = { name: 'Published festival', kind: 'festival' as const, start: '2026-09-20' };
+  assert.equal(eventDisplayState(event, now), 'Past event');
+  assert.equal(eventDisplayState({ ...event, start: '2026-09-30' }, now), undefined);
+  assert.equal(eventDisplayState({ ...event, start: '2026-09-29' }, now), undefined, 'calendar-day grace avoids assumptions about an unstated zone');
+  assert.equal(eventDisplayState({ ...event, start: '2026-11-22' }, now), undefined, 'published future date is not a guarantee');
+  assert.equal(eventDisplayState({ ...event, status: 'cancelled' }, now), 'Cancelled');
+  assert.equal(eventDisplayState({ ...event, status: 'postponed' }, now), 'Postponed');
+  assert.equal(eventDisplayState({ ...event, start: 'not a date' }, now), undefined);
+});
+
+test('roster periods and partial snapshots stay qualified and an ended period is detected', () => {
+  const context = { label: '2026 outdoor season', as_of: '2026-09-30', start_date: '2026-05-01', end_date: '2026-09-20', non_exhaustive: true };
+  assert.deepEqual(rosterContextLabels(context), [
+    '2026 outdoor season',
+    'Published period: May 1, 2026 - September 20, 2026',
+    'Snapshot as of September 30, 2026',
+  ]);
+  assert.equal(rosterPeriodHasEnded(context, new Date('2026-09-30T12:00:00Z')), true);
+  assert.equal(rosterPeriodHasEnded({ label: 'Unspecified edition' }, new Date('2026-09-30T12:00:00Z')), false);
+  assert.equal(rosterPeriodHasEnded({ end_date: '2026-02-30' }, new Date('2026-09-30T12:00:00Z')), false);
+});
+
+test('structured local event clocks are displayed without inventing a timezone', () => {
+  assert.equal(publishedLocalHours({ opens: '12:00', closes: '16:30' }), '12:00pm - 4:30pm (local time)');
+  assert.equal(publishedLocalHours({ opens: '25:00', closes: '26:00' }), undefined);
+  assert.equal(publishedLocalHours({ opens: '16:00', closes: '12:00' }), undefined);
 });

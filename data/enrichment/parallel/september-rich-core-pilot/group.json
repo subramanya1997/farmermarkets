@@ -1,0 +1,102 @@
+{
+  "groupId": "tgrp_93645f63cd1740c09a13652ab29e7e59",
+  "processor": "core",
+  "purpose": "richshowcase",
+  "research_date": "2026-09-30",
+  "campaign": "september-2026",
+  "reserved_cost": 0.25,
+  "submitted_at": "2026-10-01T04:09:11.453Z",
+  "runMap": {
+    "srun_93645f63cd1740c0939f1a7becf1585c": {
+      "id": "gov:us_ny_farmers_markets:4fb37cc5b851e135",
+      "name": "Saratoga Farm Stand",
+      "slug": "saratoga-farm-stand-brooklyn-d4aecbf9",
+      "official_website": "http://tcahnyc.org"
+    },
+    "srun_93645f63cd1740c0601c3c6f6dbea673": {
+      "id": "gov:us_dc_farmers_markets:{CA9CBA0D-DFAA-4D6F-94C4-863F25C08BF9}",
+      "name": "Bethesda United Church of Christ Farmers Market",
+      "slug": "bethesda-united-church-of-christ-farmers-market-bethesda-4ab7c82c",
+      "official_website": "https://www.Twinspringsfruitfarm.com"
+    },
+    "srun_93645f63cd1740c02c995e63b24cad4a": {
+      "id": "gov:ca_on_farmers_markets:305",
+      "name": "Greely Good Market",
+      "slug": "greely-good-market-ottawa-5dfd5671",
+      "official_website": "https://www.greelygoodmarket.ca/"
+    },
+    "srun_93645f63cd1740c0f916805783275cc1": {
+      "id": 301356,
+      "name": "Westland Farmers & Artisan Market",
+      "slug": "westland-farmers-artisan-market-westland",
+      "official_website": "https://www.cityofwestland.com/1835/Farmers-Artisans-Market"
+    },
+    "srun_93645f63cd1740c0c593a2436cf47068": {
+      "id": 301556,
+      "name": "Harrison City Market",
+      "slug": "harrison-city-market-harrison",
+      "official_website": "https://www.harrisoncitymarket.com/"
+    },
+    "srun_93645f63cd1740c09210c43fe34f60df": {
+      "id": 309823,
+      "name": "Heritage Farmers’ Market",
+      "slug": "heritage-farmers-market",
+      "official_website": "https://www.heritagefarmersmark.com/"
+    },
+    "srun_93645f63cd1740c05e8de62bcf815f16": {
+      "id": 308935,
+      "name": "Soledad Certified Farmers’ Market",
+      "slug": "soledad-certified-farmers-market",
+      "official_website": "https://www.cdfa.ca.gov/is/docs/CurrentMrktsCounty.pdf"
+    },
+    "srun_93645f63cd1740c02b0b08274586856d": {
+      "id": "gov:us_ny_farmers_markets:ac2c0f3f70cbdf4a",
+      "name": "Al’s Farm Stand",
+      "slug": "al-s-farm-stand-oakdale-249d848c",
+      "official_website": "http://www.familyres.org"
+    },
+    "srun_93645f63cd1740c0f7882a1bf4adb494": {
+      "id": "gov:us_ny_farmers_markets:48d678b01cd0f149",
+      "name": "Genecco’s Farm Market Farm Stand",
+      "slug": "genecco-s-farm-market-farm-stand-canandaigua-3b2e0d59",
+      "official_website": "https://www.geneccoproduce.com/"
+    },
+    "srun_93645f63cd1740c0c4054c0f645dde3b": {
+      "id": 309501,
+      "name": "Columbus State Farmers Market",
+      "slug": "columbus-state-farmers-market-columbus",
+      "official_website": "https://www.internationalmarketplace.us/"
+    }
+  },
+  "batches": [
+    {
+      "market_ids": [
+        "gov:us_ny_farmers_markets:4fb37cc5b851e135",
+        "gov:us_dc_farmers_markets:{CA9CBA0D-DFAA-4D6F-94C4-863F25C08BF9}",
+        "gov:ca_on_farmers_markets:305",
+        "301356",
+        "301556",
+        "309823",
+        "308935",
+        "gov:us_ny_farmers_markets:ac2c0f3f70cbdf4a",
+        "gov:us_ny_farmers_markets:48d678b01cd0f149",
+        "309501"
+      ],
+      "state": "submitted",
+      "started_at": "2026-10-01T04:09:11.779Z",
+      "run_ids": [
+        "srun_93645f63cd1740c0939f1a7becf1585c",
+        "srun_93645f63cd1740c0601c3c6f6dbea673",
+        "srun_93645f63cd1740c02c995e63b24cad4a",
+        "srun_93645f63cd1740c0f916805783275cc1",
+        "srun_93645f63cd1740c0c593a2436cf47068",
+        "srun_93645f63cd1740c09210c43fe34f60df",
+        "srun_93645f63cd1740c05e8de62bcf815f16",
+        "srun_93645f63cd1740c02b0b08274586856d",
+        "srun_93645f63cd1740c0f7882a1bf4adb494",
+        "srun_93645f63cd1740c0c4054c0f645dde3b"
+      ]
+    }
+  ],
+  "state": "submitted"
+}

@@ -5,6 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateRichEnrichment } from './lib/rich-enrichment-validation.mjs';
 import { marketNamesEquivalent } from './lib/market-name-equivalence.mjs';
+import { mergeRichRecords } from './lib/rich-enrichment-merge.mjs';
 import {
   hasConflictingUnqualifiedSeasonalHours,
   isCanonicalSocialProfileUrl,
@@ -59,6 +60,11 @@ const ALLOWED_FIELDS = new Set([
   'first_party.amenities',
   'first_party.policies',
   'first_party.vendors',
+  'first_party.vendors.directory_url',
+  'first_party.vendors.weekly_roster_url',
+  'first_party.vendors.roster_context',
+  'first_party.vendors.roster',
+  'first_party.vendors.attendance_is_dynamic',
   'first_party.products',
   'first_party.events',
   'first_party.programs',
@@ -302,10 +308,15 @@ export async function buildMarketEnrichment() {
         continue;
       }
 
+      if (normalized.first_party && existing.first_party) {
+        recordsById.set(id, mergeRichRecords(existing, normalized));
+        continue;
+      }
+
       // Rich website research is an additive namespace that can augment one
       // existing v1 contact/schedule record for the same market. Two v1
-      // records or two rich records remain an error, so file order can never
-      // silently decide which facts win.
+      // records remain an error. Rich namespaces merge above only when
+      // disjoint or identical, so file order cannot select conflicting facts.
       const rich = normalized.first_party && !existing.first_party
         ? normalized
         : existing.first_party && !normalized.first_party

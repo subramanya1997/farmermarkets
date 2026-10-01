@@ -1,0 +1,167 @@
+{
+  "run": {
+    "run_id": "srun_93645f63cd1740c0939f1a7becf1585c",
+    "interaction_id": "srun_93645f63cd1740c0939f1a7becf1585c",
+    "status": "completed",
+    "is_active": false,
+    "warnings": [
+      {
+        "type": "spec_validation_warning",
+        "message": "This task may be too complex for core processor. Consider using https://platform.parallel.ai/play to optimize your task schema.",
+        "detail": {
+          "documentation_url": "https://docs.parallel.ai/task-api/guides/specify-a-task",
+          "recommended_max_properties": 10,
+          "total_properties": 30
+        }
+      }
+    ],
+    "processor": "core",
+    "metadata": {},
+    "taskgroup_id": "tgrp_93645f63cd1740c09a13652ab29e7e59",
+    "created_at": "2026-10-01T04:09:11.915570Z",
+    "modified_at": "2026-10-01T04:10:44.680996Z"
+  },
+  "output": {
+    "basis": [
+      {
+        "field": "vendor_roster",
+        "citations": [
+          {
+            "title": "TCAH Farmer’s Market – The Campaign Against Hunger",
+            "url": "https://www.tcahnyc.org/farmers-market",
+            "excerpts": [
+              "Farmer's Market The Campaign Against Hunger boasts a variety of farmer’s markets around the city providing fresh, locally grown produce to the community. Find a market near you below! Fresh Locally Grown Produce Floyd Bennett Field 3159 Flatbush Ave, Brooklyn, NY 11234 Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233 Far Rockaway Farm 45-55 Beach Channel Drive Far Rockaway, NY 11691 Eastern Parkway Farm 1426 Eastern Parkway Brooklyn NY 11233 Canarsie Pier Canarsie Veterans Cir Brooklyn, NY 11236 **HOURS OF OPERATION** Benefits Access: Mon-Friday, 9:00am-5:00pm Pantry: Mon-Fri, 9:30am-5:30pm **Main Office** 2010 Fulton Street Brooklyn, NY 11233 Phone: 718.773.3551 Fax: 347.420.9736 [](https://www.guidestar.org/profile/20-0934854) TCAH 0011 Join TCAH to help New Yorkers facing Hunger."
+            ]
+          }
+        ],
+        "reasoning": "The official farmers-market page identifies Saratoga Farms and its Brooklyn location but does not name sellers or provide a dated current vendor roster.",
+        "confidence": "medium"
+      },
+      {
+        "field": "events",
+        "citations": [
+          {
+            "title": "The Campaign Against Hunger – A Community’s Approach to Caring",
+            "url": "https://www.tcahnyc.org/",
+            "excerpts": [
+              "Join us to build a better future for New York City Planting Systems, Nourishing Generations PURCHASE TICKETS HERE TCAH's Children's Harvest Festivals returns this fall! Bring the family for farm tours, pumpkin decorating, live entertainment, and so much more. REGISTER HERE Children's harvest festival **Saratoga Farm** October 3, 2026 1pm - 5pm **Far Rock Farm** October 10, 2026 1pm - 5pm REGISTER HERE Youth Leadership Conference [LEARN MORE](https://www.tcahnyc.org/ylc/) Youth 14 -24 Be Part of the Impact TCAH welcomed Mayor Zohran Mamdani, Deputy Mayor Julie Su, NYCEDC, and city leaders to our East New York Community Food Hub for the announcement of New York City’s Request for Proposals (RFP) for the City’s municipal grocery store initiative."
+            ]
+          },
+          {
+            "title": "TCAH Farmer’s Market – The Campaign Against Hunger",
+            "url": "https://www.tcahnyc.org/farmers-market",
+            "excerpts": [
+              "Farmer's Market The Campaign Against Hunger boasts a variety of farmer’s markets around the city providing fresh, locally grown produce to the community. Find a market near you below! Fresh Locally Grown Produce Floyd Bennett Field 3159 Flatbush Ave, Brooklyn, NY 11234 Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233 Far Rockaway Farm 45-55 Beach Channel Drive Far Rockaway, NY 11691 Eastern Parkway Farm 1426 Eastern Parkway Brooklyn NY 11233 Canarsie Pier Canarsie Veterans Cir Brooklyn, NY 11236 **HOURS OF OPERATION** Benefits Access: Mon-Friday, 9:00am-5:00pm Pantry: Mon-Fri, 9:30am-5:30pm **Main Office** 2010 Fulton Street Brooklyn, NY 11233 Phone: 718.773.3551 Fax: 347.420.9736 [](https://www.guidestar.org/profile/20-0934854) TCAH 0011 Join TCAH to help New Yorkers facing Hunger."
+            ]
+          }
+        ],
+        "reasoning": "The official homepage names the Children's Harvest Festival at Saratoga Farm, gives October 3, 2026 and hours of 1pm–5pm. The official farmers-market page identifies Saratoga Farms at 1965–1971 Fulton Street in Brooklyn, connecting the named farm to the target market location.",
+        "confidence": "medium"
+      },
+      {
+        "field": "identity_match",
+        "citations": [
+          {
+            "title": "TCAH Farmer’s Market – The Campaign Against Hunger",
+            "url": "https://www.tcahnyc.org/farmers-market",
+            "excerpts": [
+              "Farmer's Market The Campaign Against Hunger boasts a variety of farmer’s markets around the city providing fresh, locally grown produce to the community. Find a market near you below! Fresh Locally Grown Produce Floyd Bennett Field 3159 Flatbush Ave, Brooklyn, NY 11234 Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233 Far Rockaway Farm 45-55 Beach Channel Drive Far Rockaway, NY 11691 Eastern Parkway Farm 1426 Eastern Parkway Brooklyn NY 11233 Canarsie Pier Canarsie Veterans Cir Brooklyn, NY 11236 **HOURS OF OPERATION** Benefits Access: Mon-Friday, 9:00am-5:00pm Pantry: Mon-Fri, 9:30am-5:30pm **Main Office** 2010 Fulton Street Brooklyn, NY 11233 Phone: 718.773.3551 Fax: 347.420.9736 [](https://www.guidestar.org/profile/20-0934854) TCAH 0011 Join TCAH to help New Yorkers facing Hunger."
+            ]
+          }
+        ],
+        "reasoning": "The official page lists Saratoga Farms at 1965–1971 Fulton Street, Brooklyn, NY 11233, matching the supplied locality and street address for the Saratoga market.",
+        "confidence": "medium"
+      },
+      {
+        "field": "programs",
+        "citations": [
+          {
+            "title": "TCAH Farmer’s Market – The Campaign Against Hunger",
+            "url": "https://www.tcahnyc.org/farmers-market",
+            "excerpts": [
+              "Farmer's Market The Campaign Against Hunger boasts a variety of farmer’s markets around the city providing fresh, locally grown produce to the community. Find a market near you below! Fresh Locally Grown Produce Floyd Bennett Field 3159 Flatbush Ave, Brooklyn, NY 11234 Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233 Far Rockaway Farm 45-55 Beach Channel Drive Far Rockaway, NY 11691 Eastern Parkway Farm 1426 Eastern Parkway Brooklyn NY 11233 Canarsie Pier Canarsie Veterans Cir Brooklyn, NY 11236 **HOURS OF OPERATION** Benefits Access: Mon-Friday, 9:00am-5:00pm Pantry: Mon-Fri, 9:30am-5:30pm **Main Office** 2010 Fulton Street Brooklyn, NY 11233 Phone: 718.773.3551 Fax: 347.420.9736 [](https://www.guidestar.org/profile/20-0934854) TCAH 0011 Join TCAH to help New Yorkers facing Hunger."
+            ]
+          },
+          {
+            "title": "The Campaign Against Hunger – A Community’s Approach to Caring",
+            "url": "https://www.tcahnyc.org/",
+            "excerpts": [
+              "Join us to build a better future for New York City Planting Systems, Nourishing Generations PURCHASE TICKETS HERE TCAH's Children's Harvest Festivals returns this fall! Bring the family for farm tours, pumpkin decorating, live entertainment, and so much more. REGISTER HERE Children's harvest festival **Saratoga Farm** October 3, 2026 1pm - 5pm **Far Rock Farm** October 10, 2026 1pm - 5pm REGISTER HERE Youth Leadership Conference [LEARN MORE](https://www.tcahnyc.org/ylc/) Youth 14 -24 Be Part of the Impact TCAH welcomed Mayor Zohran Mamdani, Deputy Mayor Julie Su, NYCEDC, and city leaders to our East New York Community Food Hub for the announcement of New York City’s Request for Proposals (RFP) for the City’s municipal grocery store initiative."
+            ]
+          }
+        ],
+        "reasoning": "The official market listing gives the Saratoga Farms location but no named recurring visitor program with current-year evidence. The homepage identifies a dated one-off festival, not a recurring market program.",
+        "confidence": "medium"
+      },
+      {
+        "field": "identity_evidence",
+        "citations": [
+          {
+            "title": "TCAH Farmer’s Market – The Campaign Against Hunger",
+            "url": "https://www.tcahnyc.org/farmers-market",
+            "excerpts": [
+              "Farmer's Market The Campaign Against Hunger boasts a variety of farmer’s markets around the city providing fresh, locally grown produce to the community. Find a market near you below! Fresh Locally Grown Produce Floyd Bennett Field 3159 Flatbush Ave, Brooklyn, NY 11234 Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233 Far Rockaway Farm 45-55 Beach Channel Drive Far Rockaway, NY 11691 Eastern Parkway Farm 1426 Eastern Parkway Brooklyn NY 11233 Canarsie Pier Canarsie Veterans Cir Brooklyn, NY 11236 **HOURS OF OPERATION** Benefits Access: Mon-Friday, 9:00am-5:00pm Pantry: Mon-Fri, 9:30am-5:30pm **Main Office** 2010 Fulton Street Brooklyn, NY 11233 Phone: 718.773.3551 Fax: 347.420.9736 [](https://www.guidestar.org/profile/20-0934854) TCAH 0011 Join TCAH to help New Yorkers facing Hunger."
+            ]
+          }
+        ],
+        "reasoning": "The official farmers-market page explicitly names Saratoga Farms and gives its address in Brooklyn, NY 11233.",
+        "confidence": "high"
+      },
+      {
+        "field": "vendor_directory",
+        "citations": [
+          {
+            "title": "TCAH Farmer’s Market – The Campaign Against Hunger",
+            "url": "https://www.tcahnyc.org/farmers-market",
+            "excerpts": [
+              "Farmer's Market The Campaign Against Hunger boasts a variety of farmer’s markets around the city providing fresh, locally grown produce to the community. Find a market near you below! Fresh Locally Grown Produce Floyd Bennett Field 3159 Flatbush Ave, Brooklyn, NY 11234 Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233 Far Rockaway Farm 45-55 Beach Channel Drive Far Rockaway, NY 11691 Eastern Parkway Farm 1426 Eastern Parkway Brooklyn NY 11233 Canarsie Pier Canarsie Veterans Cir Brooklyn, NY 11236 **HOURS OF OPERATION** Benefits Access: Mon-Friday, 9:00am-5:00pm Pantry: Mon-Fri, 9:30am-5:30pm **Main Office** 2010 Fulton Street Brooklyn, NY 11233 Phone: 718.773.3551 Fax: 347.420.9736 [](https://www.guidestar.org/profile/20-0934854) TCAH 0011 Join TCAH to help New Yorkers facing Hunger."
+            ]
+          }
+        ],
+        "reasoning": "The official page lists market locations, including Saratoga Farms, but does not link a market-specific seller directory or weekly roster.",
+        "confidence": "medium"
+      },
+      {
+        "field": "events.0",
+        "citations": [
+          {
+            "title": "The Campaign Against Hunger – A Community’s Approach to Caring",
+            "url": "https://www.tcahnyc.org/",
+            "excerpts": [
+              "Join us to build a better future for New York City Planting Systems, Nourishing Generations PURCHASE TICKETS HERE TCAH's Children's Harvest Festivals returns this fall! Bring the family for farm tours, pumpkin decorating, live entertainment, and so much more. REGISTER HERE Children's harvest festival **Saratoga Farm** October 3, 2026 1pm - 5pm **Far Rock Farm** October 10, 2026 1pm - 5pm REGISTER HERE Youth Leadership Conference [LEARN MORE](https://www.tcahnyc.org/ylc/) Youth 14 -24 Be Part of the Impact TCAH welcomed Mayor Zohran Mamdani, Deputy Mayor Julie Su, NYCEDC, and city leaders to our East New York Community Food Hub for the announcement of New York City’s Request for Proposals (RFP) for the City’s municipal grocery store initiative."
+            ]
+          },
+          {
+            "title": "TCAH Farmer’s Market – The Campaign Against Hunger",
+            "url": "https://www.tcahnyc.org/farmers-market",
+            "excerpts": [
+              "Farmer's Market The Campaign Against Hunger boasts a variety of farmer’s markets around the city providing fresh, locally grown produce to the community. Find a market near you below! Fresh Locally Grown Produce Floyd Bennett Field 3159 Flatbush Ave, Brooklyn, NY 11234 Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233 Far Rockaway Farm 45-55 Beach Channel Drive Far Rockaway, NY 11691 Eastern Parkway Farm 1426 Eastern Parkway Brooklyn NY 11233 Canarsie Pier Canarsie Veterans Cir Brooklyn, NY 11236 **HOURS OF OPERATION** Benefits Access: Mon-Friday, 9:00am-5:00pm Pantry: Mon-Fri, 9:30am-5:30pm **Main Office** 2010 Fulton Street Brooklyn, NY 11233 Phone: 718.773.3551 Fax: 347.420.9736 [](https://www.guidestar.org/profile/20-0934854) TCAH 0011 Join TCAH to help New Yorkers facing Hunger."
+            ]
+          }
+        ],
+        "reasoning": "The homepage publishes the festival name, Saratoga Farm location, date, and hours; the market page identifies Saratoga Farms at the supplied Fulton Street location in Brooklyn.",
+        "confidence": "medium"
+      }
+    ],
+    "type": "json",
+    "content": {
+      "vendor_roster": [],
+      "events": [
+        {
+          "end_date": "",
+          "published_hours": "1pm - 5pm",
+          "kind": "festival",
+          "source_url": "https://www.tcahnyc.org/",
+          "evidence_excerpt": "TCAH's Children's Harvest Festivals returns this fall! Bring the family for farm tours, pumpkin decorating, live entertainment, and so much more. REGISTER HERE Children's harvest festival Saratoga Farm October 3, 2026 1pm - 5pm",
+          "start_date": "2026-10-03",
+          "venue": "Saratoga Farm",
+          "name": "Children's Harvest Festival"
+        }
+      ],
+      "identity_match": "exact_market",
+      "programs": [],
+      "identity_evidence": "Saratoga Farms 1965-1971 Fulton St Brooklyn, NY 11233",
+      "vendor_directory": []
+    }
+  }
+}

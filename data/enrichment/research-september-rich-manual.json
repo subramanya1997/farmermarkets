@@ -1,0 +1,72 @@
+[
+  {
+    "id": "301356",
+    "market_name": "Westland Farmers & Artisan Market",
+    "schema_version": 2,
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "first_party": {
+      "events": [
+        {
+          "id": "spooktober-2026-10-15",
+          "value": {
+            "name": "Spooktober",
+            "kind": "special_market",
+            "start": "2026-10-15",
+            "local_hours": {
+              "opens": "15:00",
+              "closes": "19:00"
+            },
+            "venue": "Farmers Market and Lions Pavilion, 1901 N. Carlson Street, Westland, MI 48185",
+            "description": "The published 2026 market calendar labels October 15 as Spooktober and the last market day of the season.",
+            "url": "https://www.cityofwestland.com/DocumentCenter/View/4810"
+          },
+          "source_ids": [
+            "westland-calendar-2026"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ],
+      "programs": [
+        {
+          "id": "power-of-produce-club",
+          "value": {
+            "name": "Power of Produce Club (POP)",
+            "kind": "kids_club",
+            "eligibility": "Children ages 4–12",
+            "description": "Children receive $2 in tokens each week to spend on fresh fruits and vegetables from local growers. Visit the Market Master table inside the Farmers Market pavilion to participate.",
+            "url": "https://www.cityofwestland.com/1835/Farmers-Artisans-Market"
+          },
+          "source_ids": [
+            "westland-visitor-programs"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "westland-calendar-2026",
+        "url": "https://www.cityofwestland.com/DocumentCenter/View/4810",
+        "title": "Westland Farmers & Artisan Market — 2026 vendor application and market calendar",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      },
+      {
+        "id": "westland-visitor-programs",
+        "url": "https://www.cityofwestland.com/1835/Farmers-Artisans-Market",
+        "title": "Westland Farmers & Artisans Market — Power of Produce Club",
+        "fields": [
+          "first_party.programs"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  }
+]

@@ -7,6 +7,9 @@ import {
   uuid,
   index,
   pgEnum,
+  primaryKey,
+  date,
+  boolean,
 } from 'drizzle-orm/pg-core';
 
 // Mirror of the canonical dataset (public/data/farmers_markets.json), synced
@@ -49,6 +52,60 @@ export const marketFacts = pgTable(
   },
   (t) => [index('market_facts_market_idx').on(t.marketId), index('market_facts_field_idx').on(t.field)],
 );
+
+// Queryable projections of canonical first_party collections. Stable item IDs
+// are scoped to a market; complete values and provenance stay available in JSON.
+const sourcedItemColumns = () => ({
+  marketId: text('market_id').notNull().references(() => markets.id, { onDelete: 'cascade' }),
+  itemId: text('item_id').notNull(),
+  name: text('name').notNull(),
+  payload: jsonb('payload').notNull(),
+  provenance: jsonb('provenance').notNull(),
+  verifiedAt: date('verified_at', { mode: 'string' }).notNull(),
+  syncedAt: timestamp('synced_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const marketEvents = pgTable('market_events', {
+  ...sourcedItemColumns(),
+  kind: text('kind').notNull(),
+  // A date is never converted to a midnight UTC timestamp. Unknown-offset
+  // local datetimes remain in sourceStart/sourceEnd and the original payload.
+  sourceStart: text('source_start'),
+  sourceEnd: text('source_end'),
+  startPrecision: text('start_precision').notNull(),
+  endPrecision: text('end_precision').notNull(),
+  startDate: date('start_date', { mode: 'string' }),
+  endDate: date('end_date', { mode: 'string' }),
+  startsAt: timestamp('starts_at', { withTimezone: true }),
+  endsAt: timestamp('ends_at', { withTimezone: true }),
+  url: text('url'),
+}, (t) => [
+  primaryKey({ columns: [t.marketId, t.itemId] }),
+  index('market_events_date_idx').on(t.startDate),
+  index('market_events_timestamp_idx').on(t.startsAt),
+  index('market_events_kind_idx').on(t.kind),
+]);
+
+export const marketVendors = pgTable('market_vendors', {
+  ...sourcedItemColumns(),
+  website: text('website'),
+  socialUrl: text('social_url'),
+  categories: jsonb('categories').notNull(),
+  seasonal: boolean('seasonal'),
+}, (t) => [
+  primaryKey({ columns: [t.marketId, t.itemId] }),
+  index('market_vendors_name_idx').on(t.name),
+]);
+
+export const marketPrograms = pgTable('market_programs', {
+  ...sourcedItemColumns(),
+  kind: text('kind').notNull(),
+  eligibility: text('eligibility'),
+  url: text('url'),
+}, (t) => [
+  primaryKey({ columns: [t.marketId, t.itemId] }),
+  index('market_programs_kind_idx').on(t.kind),
+]);
 
 export const submissionType = pgEnum('submission_type', [
   'correction',
