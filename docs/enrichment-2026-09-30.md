@@ -43,6 +43,18 @@ Final validation passed: 274 offline/unit tests, lint, TypeScript, a production 
 
 Browser evidence from the local session confirms a queued cold-entry market view, an additional view after internal navigation, correct Ham Lake 2026 JSON-LD, Saturday-only Kiwanis schema, and a 94301 search with one result/one represented country and a settled `market_search` event. Local development observations establish application behavior, not a provider-side conversion or downstream business outcome.
 
+Commit `17fc589` passed GitHub CI and Vercel deployment. Canonical public-site checks confirmed Market 1892's separate weekday/weekend hours and official storefront link, plus Genecco's imported-address notice and suppressed map.
+
+## Events, activities and vendors
+
+The follow-up adds four source-backed dated events to two existing listings: Bethel Park's indoor markets on October 20, November 17 and December 5, 2026, and West Ashley's Thanksgiving Market & Pumpkin Smash on November 22, 2026. Published local hours and event-specific venues appear with each event. Date-only values avoid inventing timezones or replacing the indoor event venue with the regular summer-market address.
+
+Dedicated detail-page sections expose those events, five existing programs across two listings, and the existing Ferry Plaza vendor directory and Kenton weekly roster. Sources and verification dates accompany the entries. Named vendor cards are supported when a sourced roster is available; the current dataset has no named rosters. Vendor counts remain available on 28 rich listings. Bethel's expired summer roster is not presented as its unconfirmed fall lineup.
+
+This follow-up uses no additional paid tasks and adds no directory venues. The directory remains at 9,132 records with 5,200 independently enriched IDs.
+
+Follow-up verification passed five highlight/date tests, 31 market-fact tests, consolidation checks, full lint, TypeScript, a production build and 25 server-dependent SEO assertions. Mobile browser checks confirmed all four event cards, both vendor links, all five programs, no horizontal overflow, no console errors in the inspected session, and a queued vendor-directory click. This confirms application instrumentation, not provider receipt or a business conversion.
+
 ## Remaining priorities
 
 The wider GA4/Search Console audit is saved locally at `.gstack/audits/2026-09-30/REPORT.md`. Outstanding priorities include defining useful actions/key events and custom dimensions, reviewing duplicate identities, resolving remaining address/schedule conflicts against operators, investigating high-impression low-click pages and blog indexing, preserving explorer state, and measuring operator-request delivery. No broad duplicate deletion, inferred amenities/timezones, or unverified closure publication is included here.

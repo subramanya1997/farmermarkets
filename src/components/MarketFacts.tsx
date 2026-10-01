@@ -1,6 +1,7 @@
 import type { FarmerMarket } from '@/lib/api';
 import type { AnalyticsProperties } from '@/lib/analytics';
 import { marketFacts, socialLinks, telHref } from '@/lib/marketFacts';
+import { marketHighlights, safeHighlightUrl } from '@/lib/marketHighlights';
 import { TrackedExternalLink } from '@/components/TrackedExternalLink';
 
 interface MarketFactsProps {
@@ -33,7 +34,11 @@ function hostOf(url: string): string | undefined {
  * that resolve to a real URL.
  */
 export function MarketFacts({ market, analyticsProperties }: MarketFactsProps) {
-  const facts = marketFacts(market);
+  const highlights = marketHighlights(market.first_party);
+  const facts = marketFacts(market).filter((fact) =>
+    !(fact.term === 'Events' && highlights.events.length) &&
+    !(fact.term === 'Programs' && highlights.programs.length)
+  );
 
   const phones = (market.phone_numbers ?? [])
     .map((value) => ({ text: value.trim(), href: telHref(value) }))
@@ -41,12 +46,6 @@ export function MarketFacts({ market, analyticsProperties }: MarketFactsProps) {
   const websites = (market.websites ?? []).filter((url) => /^https?:\/\//i.test(url)).slice(0, 2);
   const socials = socialLinks(market.social_media);
   const richLinks = [
-    market.first_party?.vendors?.directory_url
-      ? { label: 'Vendor directory', url: market.first_party.vendors.directory_url.value, event: 'Vendor Directory Opened' }
-      : undefined,
-    market.first_party?.vendors?.weekly_roster_url
-      ? { label: 'Weekly vendor roster', url: market.first_party.vendors.weekly_roster_url.value, event: 'Vendor Roster Opened' }
-      : undefined,
     market.first_party?.access?.market_map_url
       ? { label: 'Market map', url: market.first_party.access.market_map_url.value, event: 'Market Map Opened' }
       : undefined,
@@ -57,7 +56,10 @@ export function MarketFacts({ market, analyticsProperties }: MarketFactsProps) {
           event: 'Market Newsletter Opened',
         }
       : undefined,
-  ].filter((link): link is { label: string; url: string; event: string } => Boolean(link));
+  ].flatMap((link) => {
+    const url = safeHighlightUrl(link?.url);
+    return link && url ? [{ ...link, url }] : [];
+  });
 
   if (!facts.length && !phones.length && !websites.length && !socials.length && !richLinks.length) return null;
 

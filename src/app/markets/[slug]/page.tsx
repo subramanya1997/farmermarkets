@@ -21,6 +21,7 @@ import { getMarketProvenance } from "@/lib/provenance";
 import { marketFaqs, marketSchemaGraph } from "@/lib/schema";
 import { MarketFaq } from "@/components/MarketFaq";
 import { MarketFacts } from "@/components/MarketFacts";
+import { MarketHighlights } from "@/components/MarketHighlights";
 import { MarketFreshnessNotice } from "@/components/MarketFreshnessNotice";
 import { MarketSourceNote } from "@/components/MarketSourceNote";
 import { NearbyMarkets } from "@/components/NearbyMarkets";
@@ -362,6 +363,7 @@ export default async function MarketDetailPage({
                       amenities, payment, ordering, phone, website, socials —
                       only the rows this record can fill. */}
                   <MarketFacts market={market} analyticsProperties={analyticsProperties} />
+                  <MarketHighlights market={market} analyticsProperties={analyticsProperties} />
 
                   {/* Answers in the words searchers type, in the HTML itself:
                       AI answer engines extract visible text on a direct fetch

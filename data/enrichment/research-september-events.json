@@ -1,0 +1,106 @@
+[
+  {
+    "id": "314265",
+    "market_name": "Bethel Park Farmers’ Market",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "bethel-indoor-market-2026-10-20",
+          "value": {
+            "name": "Bethel Park Indoor Market — October 20",
+            "kind": "special_market",
+            "start": "2026-10-20",
+            "description": "4–7 PM local time, indoors at Bethel Park Community Center, 5151 Park Avenue. Published activities include vendor trick-or-treating and fall shopping. The announcement does not confirm a vendor lineup.",
+            "url": "https://www.bethelparkpa.gov/2026-fall-markets"
+          },
+          "source_ids": [
+            "bethel-fall-2026"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "bethel-indoor-market-2026-11-17",
+          "value": {
+            "name": "Bethel Park Indoor Market — November 17",
+            "kind": "special_market",
+            "start": "2026-11-17",
+            "description": "4–7 PM local time, indoors at Bethel Park Community Center, 5151 Park Avenue. Thanksgiving shopping with local produce, baked goods and gifts. The announcement does not confirm a vendor lineup.",
+            "url": "https://www.bethelparkpa.gov/2026-fall-markets"
+          },
+          "source_ids": [
+            "bethel-fall-2026"
+          ],
+          "verified_at": "2026-09-30"
+        },
+        {
+          "id": "bethel-indoor-market-2026-12-05",
+          "value": {
+            "name": "Bethel Park Indoor Market — December 5",
+            "kind": "special_market",
+            "start": "2026-12-05",
+            "description": "3–7 PM local time, indoors at Bethel Park Community Center, 5151 Park Avenue. Holiday shopping during the community tree lighting. The announcement does not confirm a vendor lineup.",
+            "url": "https://www.bethelparkpa.gov/2026-fall-markets"
+          },
+          "source_ids": [
+            "bethel-fall-2026"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "bethel-fall-2026",
+        "title": "Bethel Park — Pumpkins, Turkeys, and Tinsel, Oh My!",
+        "url": "https://www.bethelparkpa.gov/2026-fall-markets",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  },
+  {
+    "id": "314213",
+    "market_name": "West Ashley Farmers Market - Charleston, SC",
+    "verified_at": "2026-09-30",
+    "verification_scope": "partial",
+    "schema_version": 2,
+    "first_party": {
+      "events": [
+        {
+          "id": "west-ashley-thanksgiving-2026-11-22",
+          "value": {
+            "name": "Thanksgiving Market & Pumpkin Smash",
+            "kind": "special_market",
+            "start": "2026-11-22",
+            "description": "Sunday, noon–4 PM local time at Ackerman Park, 55 Sycamore Avenue, Charleston, SC 29407. This is a special market outside the ordinary Wednesday season.",
+            "url": "https://www.charleston-sc.gov/3305/Farmers-Market"
+          },
+          "source_ids": [
+            "west-ashley-market-2026"
+          ],
+          "verified_at": "2026-09-30"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "west-ashley-market-2026",
+        "title": "City of Charleston — West Ashley Farmers Market 2026",
+        "url": "https://www.charleston-sc.gov/3305/Farmers-Market",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-09-30"
+      }
+    ]
+  }
+]
