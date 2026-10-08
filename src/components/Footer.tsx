@@ -96,12 +96,6 @@ export async function Footer() {
                 Privacy
               </Link>
               <span>&copy; {new Date().getFullYear()} Farmer Markets</span>
-              <span>
-                Built by{' '}
-                <a href="https://subramanya.ai/" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">
-                  Subramanya N
-                </a>
-              </span>
             </div>
             {/* The credit line links to the page that documents it: sources,
                 refresh cadence, coverage numbers and licence terms. */}
