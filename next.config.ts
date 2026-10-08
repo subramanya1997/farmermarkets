@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withPostHogConfig } from "@posthog/nextjs-config";
 import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { cpus } from "node:os";
@@ -71,4 +72,17 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const posthogPersonalApiKey = process.env.POSTHOG_API_KEY;
+const posthogProjectId = process.env.POSTHOG_PROJECT_ID;
+
+export default posthogPersonalApiKey && posthogProjectId
+  ? withPostHogConfig(nextConfig, {
+      personalApiKey: posthogPersonalApiKey,
+      projectId: posthogProjectId,
+      host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      sourcemaps: {
+        enabled: true,
+        deleteAfterUpload: true,
+      },
+    })
+  : nextConfig;
