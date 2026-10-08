@@ -1,7 +1,9 @@
 "use client";
 
 import { track as trackVercelEvent } from "@vercel/analytics/react";
+import posthog from 'posthog-js';
 import { createGoogleAnalyticsQueue } from './googleAnalyticsQueue';
+import { POSTHOG_DISTINCT_ID_HEADER, POSTHOG_SESSION_ID_HEADER } from './posthogConfig';
 
 export { analyticsSafeSearchTerm } from './searchAnalytics';
 
@@ -43,4 +45,20 @@ export function trackEvent(name: string, properties: AnalyticsProperties = {}) {
   const compacted = compactProperties(properties);
   googleEvents.track(googleEventName(name), compacted);
   trackVercelEvent(name, compacted);
+  // PostHog is initialized in `instrumentation-client.ts`, and only when a
+  // project token is configured.
+  if (posthog.__loaded) posthog.capture(name, compacted);
+}
+
+/**
+ * Headers that let a route handler attribute its server-side events to this
+ * visitor's PostHog session. Empty when PostHog is not running.
+ */
+export function posthogRequestHeaders(): Record<string, string> {
+  if (typeof window === "undefined" || !posthog.__loaded) return {};
+  const sessionId = posthog.get_session_id();
+  return {
+    [POSTHOG_DISTINCT_ID_HEADER]: posthog.get_distinct_id(),
+    ...(sessionId ? { [POSTHOG_SESSION_ID_HEADER]: sessionId } : {}),
+  };
 }

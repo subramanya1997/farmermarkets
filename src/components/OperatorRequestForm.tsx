@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { trackEvent } from '@/lib/analytics';
+import { posthogRequestHeaders, trackEvent } from '@/lib/analytics';
 
 type Purpose = 'get_listed' | 'update_listing';
 
@@ -98,7 +98,7 @@ export function OperatorRequestForm() {
       try {
         await fetch('/api/submissions', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...posthogRequestHeaders() },
           body: JSON.stringify({
             type: purpose === 'get_listed' ? 'new_market' : 'claim',
             ...(marketSlug ? { market_slug: marketSlug } : {}),

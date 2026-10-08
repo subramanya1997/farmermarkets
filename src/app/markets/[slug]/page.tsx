@@ -25,6 +25,7 @@ import { MarketHighlights } from "@/components/MarketHighlights";
 import { MarketFreshnessNotice } from "@/components/MarketFreshnessNotice";
 import { MarketSourceNote } from "@/components/MarketSourceNote";
 import { NearbyMarkets } from "@/components/NearbyMarkets";
+import { TrackedMarketClaimLink } from "@/components/TrackedMarketClaimLink";
 import { SITE_FRAME } from "@/lib/ui";
 
 export const revalidate = 86400;
@@ -387,12 +388,10 @@ export default async function MarketDetailPage({
                       long before they find a "for operators" page. */}
                   <p className="text-sm text-zinc-600 dark:text-zinc-400">
                     Do you run this market?{' '}
-                    <Link
-                      href={`/for-market-operators?market=${market.slug}`}
-                      className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
-                    >
-                      Claim and update this listing
-                    </Link>
+                    <TrackedMarketClaimLink
+                      marketId={market.id}
+                      marketSlug={market.slug}
+                    />
                     . Listing is free for market operators.
                   </p>
                 </div>

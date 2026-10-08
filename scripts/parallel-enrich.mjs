@@ -13,9 +13,11 @@
 //
 // Raw output and run-id mappings live under data/enrichment/parallel/<label>/.
 
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PostHog } from 'posthog-node';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const datasetPath = path.join(root, 'public/data/farmers_markets.json');
@@ -99,6 +101,60 @@ const INPUT_SCHEMA = {
 };
 
 const TASK_SPEC = { input_schema: INPUT_SCHEMA, output_schema: OUTPUT_SCHEMA };
+
+const posthogToken = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN?.trim();
+const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST?.trim();
+if (process.env.NODE_ENV === 'development' && !posthogToken) {
+  console.error('NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN is configured');
+}
+if (process.env.NODE_ENV === 'development' && !posthogHost) {
+  console.error('NEXT_PUBLIC_POSTHOG_HOST variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once NEXT_PUBLIC_POSTHOG_HOST is configured');
+}
+const posthog = posthogToken && posthogHost
+  ? new PostHog(posthogToken, { host: posthogHost, flushAt: 1, flushInterval: 0, privacyMode: false })
+  : null;
+
+function aiIdentifier(prefix, value) {
+  return `${prefix}-${createHash('sha256').update(String(value)).digest('hex')}`;
+}
+
+function captureParallelTaskGeneration(meta, runId, result, market) {
+  if (!posthog) return;
+
+  const sessionId = aiIdentifier('parallel-task-group', meta.groupId);
+  const output = result.output?.content;
+  try {
+    posthog.capture({
+      distinctId: sessionId,
+      event: '$ai_generation',
+      properties: {
+        $insert_id: aiIdentifier('parallel-task-result', runId),
+        $process_person_profile: false,
+        $ai_trace_id: aiIdentifier('parallel-task-run', runId),
+        $ai_session_id: sessionId,
+        $ai_span_name: 'parallel_task_run',
+        $ai_model: meta.processor,
+        $ai_provider: 'parallel',
+        $ai_input: [{ role: 'user', content: JSON.stringify({ purpose: meta.purpose, market }) }],
+        ...(output === null || output === undefined
+          ? {}
+          : { $ai_output_choices: [{ role: 'assistant', content: typeof output === 'string' ? output : JSON.stringify(output) }] }),
+        $ai_is_error: result.run?.status !== 'completed',
+      },
+    });
+  } catch (error) {
+    console.error('PostHog AI generation capture failed', error);
+  }
+}
+
+async function flushPostHogAiObservability() {
+  if (!posthog) return;
+  try {
+    await posthog.flush();
+  } catch (error) {
+    console.error('PostHog AI observability flush failed', error);
+  }
+}
 
 function apiKey() {
   const key = process.env.PARALLEL_API_KEY;
@@ -269,6 +325,7 @@ async function collect() {
           output: result.output?.content ?? null,
           basis: result.output?.basis ?? null,
         };
+        captureParallelTaskGeneration(meta, runId, result, record.market);
       } catch (err) {
         record = { market: runMap[runId], run_id: runId, status: 'fetch_error', error: String(err) };
       }
@@ -278,6 +335,7 @@ async function collect() {
     }
   });
   await Promise.all(workers);
+  await flushPostHogAiObservability();
   await fs.writeFile(outPath, lines.join('\n') + '\n');
   console.log(`Wrote ${lines.length} results to ${path.relative(root, outPath)}`);
 }

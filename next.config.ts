@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { cpus } from "node:os";
 import { join } from "node:path";
+import { POSTHOG_ASSETS_HOST, POSTHOG_HOST, POSTHOG_PROXY_PATH } from "./src/lib/posthogConfig";
 
 /**
  * Deterministic build id, derived from the application source (not the data).
@@ -39,6 +40,28 @@ function hashAppSource(): string {
 
 const nextConfig: NextConfig = {
   generateBuildId: async () => hashAppSource(),
+  // PostHog is reached through a first-party path so ingestion survives
+  // blockers that match posthog.com. The region follows NEXT_PUBLIC_POSTHOG_HOST.
+  async rewrites() {
+    return [
+      {
+        source: `${POSTHOG_PROXY_PATH}/static/:path*`,
+        destination: `${POSTHOG_ASSETS_HOST}/static/:path*`,
+      },
+      {
+        source: `${POSTHOG_PROXY_PATH}/array/:path*`,
+        destination: `${POSTHOG_ASSETS_HOST}/array/:path*`,
+      },
+      {
+        source: `${POSTHOG_PROXY_PATH}/:path*`,
+        destination: `${POSTHOG_HOST}/:path*`,
+      },
+    ];
+  },
+  // PostHog's API paths end in a slash (`/ingest/e/`), which Next would
+  // otherwise redirect away. Page URLs keep their no-trailing-slash canonical
+  // form because `src/proxy.ts` now issues that redirect itself.
+  skipTrailingSlashRedirect: true,
   experimental: {
     // Next defaults to cores-1 workers, which leaves one of the Vercel
     // builder's 4 cores idle through the ~100s static-generation phase while

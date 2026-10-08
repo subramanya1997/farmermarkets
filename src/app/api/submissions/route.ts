@@ -1,7 +1,9 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { DatabaseUnavailableError, dbSchema, getDb } from "@/db";
+import { flushPostHogLogs, getPostHogLogLogger } from "@/instrumentation";
+import { getPostHogServer, posthogRequestIdentity } from "@/lib/posthogServer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,16 +19,29 @@ const submissionSchema = z.object({
   website_url: z.string().max(0).optional(),
 });
 
+function logSubmissionOutcome(
+  body: string,
+  severityText: "INFO" | "WARN",
+  attributes: Record<string, boolean | string>,
+) {
+  getPostHogLogLogger()?.emit({ body, severityText, attributes });
+  after(async () => {
+    await flushPostHogLogs();
+  });
+}
+
 export async function POST(request: Request) {
   let body: unknown;
   try {
     body = await request.json();
   } catch {
+    logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "invalid_json" });
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
   const parsed = submissionSchema.safeParse(body);
   if (!parsed.success) {
+    logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "invalid_submission" });
     return NextResponse.json(
       { error: "Invalid submission", issues: parsed.error.issues },
       { status: 400 },
@@ -35,6 +50,7 @@ export async function POST(request: Request) {
   const { type, market_id, market_slug, email, payload } = parsed.data;
 
   if (JSON.stringify(payload).length > 20_000) {
+    logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "payload_too_large" });
     return NextResponse.json({ error: "Submission too large" }, { status: 413 });
   }
 
@@ -82,6 +98,35 @@ export async function POST(request: Request) {
       payload: market_slug ? { ...payload, market_slug } : payload,
     })
     .returning({ id: dbSchema.submissions.id, createdAt: dbSchema.submissions.createdAt });
+
+  logSubmissionOutcome("market_submission_persisted", "INFO", {
+    submission_type: type,
+    has_market: Boolean(resolvedMarketId),
+    has_email: Boolean(email),
+  });
+
+  // The durable row above is the record; this event only counts it. No email
+  // or payload content is sent, and an analytics failure never fails the request.
+  const posthog = getPostHogServer();
+  const { distinctId, sessionId } = posthogRequestIdentity(request.headers);
+  if (posthog && distinctId) {
+    try {
+      posthog.capture({
+        distinctId,
+        event: "Submission Received",
+        properties: {
+          submission_type: type,
+          has_market: Boolean(resolvedMarketId),
+          has_email: Boolean(email),
+          $process_person_profile: false,
+          ...(sessionId ? { $session_id: sessionId } : {}),
+        },
+      });
+      await posthog.flush();
+    } catch (error) {
+      console.error("PostHog capture failed", error);
+    }
+  }
 
   return NextResponse.json({ ok: true, id: row.id, created_at: row.createdAt }, { status: 201 });
 }

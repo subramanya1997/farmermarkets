@@ -171,6 +171,8 @@ The app can run locally without required environment variables. Server-side API 
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console verification token. No meta tag is rendered when unset. |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools `msvalidate.01` token. No meta tag is rendered when unset. |
 | `NEXT_PUBLIC_ORG_SAMEAS` | Comma-separated absolute URLs added to `Organization.sameAs` (Wikidata item, social profiles). The public repository URL is always included; entries that are not absolute `http(s)` URLs are dropped. See [Entity presence](#entity-presence). |
+| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | PostHog project token (`phc_...`). PostHog is off entirely when unset; development logs a console error saying so. |
+| `NEXT_PUBLIC_POSTHOG_HOST` | PostHog Cloud ingestion host. Defaults to `https://us.i.posthog.com`; set `https://eu.i.posthog.com` for an EU project. Read at build time by the `/ingest` rewrites in `next.config.ts`. |
 | `INDEXNOW_KEY` | Overrides the committed IndexNow key during a rotation. |
 | `INDEXNOW_DISABLE` | Set to `1` to skip all IndexNow submissions (CI, local runs). |
 
@@ -295,6 +297,15 @@ The deployed app sends the same normalized events to Vercel Web Analytics and Go
 - `Discovery Popup Opened`, `Discovery Popup Dismissed`, and `Discovery Survey Response`, using non-identifying fields only
 
 Search values that look like email addresses or phone numbers are replaced with `[redacted]`. The discovery modal can optionally collect a name, organization, email, phone number, and message. Those fields are sent server-side through Resend to the configured private inbox and are never included in Google or Vercel Analytics; analytics receives only answer IDs, counts, country filters, and boolean contact indicators. A `submitted` marker in browser storage prevents the modal from reappearing after a successful request. The site does not display a separate analytics consent banner. Event reporting is available in Vercel when Web Analytics and custom events are enabled, and in the configured GA4 property after deployment.
+
+### PostHog
+
+PostHog runs alongside Vercel Web Analytics and GA4 once `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` is set. `trackEvent()` in `src/lib/analytics.ts` sends every event listed above to it under the same name and properties, so the redaction rules above apply unchanged.
+
+- **Client**: initialized once in `src/instrumentation-client.ts`. Pageviews, pageleaves, autocapture, web vitals, unhandled exceptions, feature flags, and surveys come from the SDK. Session replay follows the project setting in PostHog, with every form input masked.
+- **Proxy**: the browser talks to `/ingest`, which `next.config.ts` rewrites to PostHog. That needs `skipTrailingSlashRedirect`, so `src/proxy.ts` now issues the trailing-slash redirect for page URLs itself.
+- **Server**: `src/instrumentation.ts` reports request errors to Error Tracking, and `/api/submissions` records a `Submission Received` event with the submission type only.
+- **Errors**: `src/app/global-error.tsx` reports render failures that reach the root boundary.
 
 ## Project Structure
 

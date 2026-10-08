@@ -1,6 +1,9 @@
+"use client";
+
 import Link from 'next/link';
 import { formatMiles } from '@/lib/marketFacts';
 import type { NearbyMarket } from '@/lib/nearby';
+import { trackEvent } from '@/lib/analytics';
 
 interface NearbyMarketsProps {
   markets: NearbyMarket[];
@@ -46,6 +49,10 @@ export function NearbyMarkets({
             <li key={market.slug}>
               <Link
                 href={market.href}
+                onClick={() => trackEvent('nearby_market_selected', {
+                  destination_market_slug: market.slug,
+                  distance_km: Math.round(market.distanceKm),
+                })}
                 className="block h-full rounded-lg border border-zinc-200 p-3 transition-colors hover:border-green-500 hover:bg-green-50/50 dark:border-zinc-700 dark:hover:border-green-600 dark:hover:bg-green-900/10"
               >
                 <span className="block font-medium text-green-700 dark:text-green-500">
