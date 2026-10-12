@@ -5,22 +5,8 @@ import L from 'leaflet';
 import type { FarmerMarket } from '@/lib/api';
 import { buildMarketPopupHtml } from './leafletPopupHtml';
 import { trackEvent } from '@/lib/analytics';
+import { MAP_ATTRIBUTION, MAP_DOT, MAP_TILE_URL } from './mapStyle';
 import 'leaflet/dist/leaflet.css';
-
-// Fix for Leaflet marker icon issue in Next.js
-let DefaultIcon: L.Icon;
-if (typeof window !== 'undefined') {
-  DefaultIcon = new L.Icon({
-    iconUrl: '/marker-icon.png',
-    iconRetinaUrl: '/marker-icon-2x.png',
-    shadowUrl: '/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-  L.Marker.prototype.options.icon = DefaultIcon;
-}
 
 interface MarketMapProps {
   markets: FarmerMarket[];
@@ -98,6 +84,7 @@ export default function MarketMap({
       try {
         // Initialize the map with explicit options
         mapInstance = L.map(mapRef.current, {
+          preferCanvas: true,
           zoomControl: true,
           attributionControl: true,
           fadeAnimation: true,
@@ -110,9 +97,7 @@ export default function MarketMap({
         setMapInitialized(true);
 
         // Add the OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(mapInstance);
+        L.tileLayer(MAP_TILE_URL, { attribution: MAP_ATTRIBUTION }).addTo(mapInstance);
       } catch (error) {
         console.error('Error initializing map:', error);
       }
@@ -210,7 +195,7 @@ export default function MarketMap({
         onVisibleMarketsChangeRef.current?.(visible.map((entry) => entry.market));
 
         for (const { market, lat, lon } of visible.slice(0, MAX_VISIBLE_MARKERS)) {
-          const marker = L.marker([lat, lon]).addTo(markerLayer);
+          const marker = L.circleMarker([lat, lon], MAP_DOT).addTo(markerLayer);
           marker.bindPopup(
             buildMarketPopupHtml({
               name: market.name,

@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from 'react';
 import L from 'leaflet';
-import { buildMarketPopupHtml } from './leafletPopupHtml';
+import { buildMarketPopupHtml, buildSingleMarketPopupHtml } from './leafletPopupHtml';
+import { MAP_ATTRIBUTION, MAP_DOT, MAP_DOT_ACTIVE, MAP_TILE_URL } from './mapStyle';
 import 'leaflet/dist/leaflet.css';
 
 export interface MapPlace {
@@ -19,24 +20,13 @@ interface PlacesMapProps {
   region: string;
   /** Slug of the place a list row is pointing at; that dot is enlarged. */
   activeSlug?: string | null;
+  /**
+   * False on a market's own page, where a "View Details" link in the popup
+   * would point at the page the reader is already on.
+   */
+  linkPlaces?: boolean;
   className?: string;
 }
-
-const DOT: L.CircleMarkerOptions = {
-  radius: 6,
-  color: '#ffffff',
-  weight: 1.5,
-  fillColor: '#15803d',
-  fillOpacity: 0.9,
-};
-
-const ACTIVE_DOT: L.CircleMarkerOptions = {
-  radius: 10,
-  color: '#ffffff',
-  weight: 2.5,
-  fillColor: '#14532d',
-  fillOpacity: 1,
-};
 
 /**
  * The box the map opens on.
@@ -65,7 +55,13 @@ function openingBounds(places: MapPlace[]): L.LatLngBounds {
  * every pan), this draws all of its points once, as canvas dots rather than
  * DOM pins, so a 1,000-market state costs one canvas and no layout work.
  */
-export default function PlacesMap({ places, region, activeSlug, className = '' }: PlacesMapProps) {
+export default function PlacesMap({
+  places,
+  region,
+  activeSlug,
+  linkPlaces = true,
+  className = '',
+}: PlacesMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<Map<string, L.CircleMarker>>(new Map());
   const previousActiveRef = useRef<string | null>(null);
@@ -75,26 +71,21 @@ export default function PlacesMap({ places, region, activeSlug, className = '' }
     if (!container || places.length === 0) return;
 
     const map = L.map(container, { preferCanvas: true, scrollWheelZoom: false });
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    L.tileLayer(MAP_TILE_URL, { attribution: MAP_ATTRIBUTION }).addTo(map);
 
-    map.fitBounds(openingBounds(places), { padding: [28, 28], maxZoom: 14 });
+    map.fitBounds(openingBounds(places), { padding: [28, 28], maxZoom: 15 });
     // The page scrolls past the map; only take over the wheel once the reader
     // has clicked into it.
     map.once('focus', () => map.scrollWheelZoom.enable());
 
     const dots = dotsRef.current;
     for (const place of places) {
-      const dot = L.circleMarker([place.lat, place.lon], DOT).addTo(map);
+      const dot = L.circleMarker([place.lat, place.lon], MAP_DOT).addTo(map);
+      const popup = { name: place.name, city: place.city, state: region };
       dot.bindPopup(
-        buildMarketPopupHtml({
-          name: place.name,
-          city: place.city,
-          state: region,
-          slug: place.slug,
-        })
+        linkPlaces
+          ? buildMarketPopupHtml({ ...popup, slug: place.slug })
+          : buildSingleMarketPopupHtml(popup)
       );
       dots.set(place.slug, dot);
     }
@@ -110,20 +101,20 @@ export default function PlacesMap({ places, region, activeSlug, className = '' }
       previousActiveRef.current = null;
       map.remove();
     };
-  }, [places, region]);
+  }, [places, region, linkPlaces]);
 
   useEffect(() => {
     const dots = dotsRef.current;
     const previous = previousActiveRef.current;
     if (previous && previous !== activeSlug) {
       const dot = dots.get(previous);
-      dot?.setStyle(DOT);
-      dot?.setRadius(DOT.radius!);
+      dot?.setStyle(MAP_DOT);
+      dot?.setRadius(MAP_DOT.radius!);
     }
     if (activeSlug) {
       const dot = dots.get(activeSlug);
-      dot?.setStyle(ACTIVE_DOT);
-      dot?.setRadius(ACTIVE_DOT.radius!);
+      dot?.setStyle(MAP_DOT_ACTIVE);
+      dot?.setRadius(MAP_DOT_ACTIVE.radius!);
       dot?.bringToFront();
     }
     previousActiveRef.current = activeSlug ?? null;

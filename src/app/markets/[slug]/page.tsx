@@ -3,7 +3,7 @@ import { getMarketAddress } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound, permanentRedirect } from "next/navigation";
-import GoogleMapEmbed from "@/components/GoogleMapEmbed";
+import MarketLocationMap from "@/components/MarketLocationMap";
 import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import Link from "next/link";
@@ -404,7 +404,7 @@ export default async function MarketDetailPage({
                     the header, so the column carries no heading or text. */}
                 <div className="lg:sticky lg:top-24">
                   {!market.suppress_map && (
-                    <GoogleMapEmbed market={market} height="480px" />
+                    <MarketLocationMap market={market} height="480px" />
                   )}
                   {mapActionUrl && (
                     <div className="mt-4">
