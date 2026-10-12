@@ -7,7 +7,9 @@
       "monthlySearches": 9900,
       "difficulty": 14,
       "cluster": "storage",
-      "status": "todo"
+      "status": "published",
+      "slug": "how-to-store-onions",
+      "publishedAt": "2026-10-12"
     },
     {
       "keyword": "how to store garlic",

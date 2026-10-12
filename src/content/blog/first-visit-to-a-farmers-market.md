@@ -3,6 +3,11 @@ title: "Your First Visit to a Farmers Market: A Practical Guide"
 description: "What to bring, when to arrive, how to shop the stalls, how prices work, and what to ask the vendors on your first farmers market trip."
 publishedAt: 2026-08-29
 cover: market
+image: first-visit-to-a-farmers-market.jpg
+imageAlt: "Pint boxes of tomatoes, peppers and cucumbers on a stall at the USDA Farmers Market in Washington, D.C., with melons and cut flowers behind"
+imageCredit: "Lance Cheung, USDA"
+imageCreditUrl: "https://www.flickr.com/photos/usdagov/43891328261/"
+imageLicense: "Public domain (U.S. Government work)"
 ---
 
 A farmers market is not a smaller grocery store. The stock changes week to week, and there is no aisle sign telling you where anything is. That throws off plenty of first-timers, who arrive with a written list and leave annoyed that nobody had celery. Once you know how the morning goes, it becomes the easiest errand of the week.
