@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllPosts, blogPath } from "@/lib/blog";
 import { BlogCover } from "@/components/BlogCover";
+import { BlogPhotoImage } from "@/components/BlogPhotoImage";
 import { absoluteUrl } from "@/lib/site";
 import { SITE_FRAME } from "@/lib/ui";
 
@@ -76,7 +77,11 @@ export default function BlogIndexPage() {
                 <li key={post.slug}>
                   <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-green-600/40 hover:shadow-lg hover:shadow-green-900/5 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-green-500/40">
                     <div className="aspect-[1200/630] w-full">
-                      <BlogCover slug={post.slug} title={post.title} theme={post.cover} />
+                      {post.photo ? (
+                        <BlogPhotoImage photo={post.photo} sizes="(min-width: 1024px) 340px, (min-width: 640px) 50vw, 100vw" />
+                      ) : (
+                        <BlogCover slug={post.slug} title={post.title} theme={post.cover} />
+                      )}
                     </div>
                     <div className="flex flex-1 flex-col p-5">
                       <p className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllPosts, getPost, blogPath } from "@/lib/blog";
 import { BlogCover } from "@/components/BlogCover";
+import { BlogPhotoImage } from "@/components/BlogPhotoImage";
 import { BlogProse } from "@/components/BlogProse";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { absoluteUrl } from "@/lib/site";
@@ -38,6 +39,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.publishedAt,
       ...(post.updatedAt ? { modifiedTime: post.updatedAt } : {}),
+      ...(post.photo
+        ? { images: [{ url: post.photo.src, width: 1600, height: 840, alt: post.photo.alt }] }
+        : {}),
     },
   };
 }
@@ -64,6 +68,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     url: absoluteUrl(blogPath(post.slug)),
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
+    ...(post.photo ? { image: absoluteUrl(post.photo.src) } : {}),
     // The root layout's Organization node is the publisher; naming it here by
     // reference keeps the two from drifting apart.
     author: {
@@ -113,9 +118,29 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </p>
           </header>
 
-          <div className="mx-auto mt-8 aspect-[1200/630] max-w-4xl overflow-hidden rounded-xl">
-            <BlogCover slug={post.slug} title={post.title} theme={post.cover} />
-          </div>
+          <figure className="mx-auto mt-8 max-w-4xl">
+            <div className="aspect-[1200/630] overflow-hidden rounded-xl">
+              {post.photo ? (
+                <BlogPhotoImage photo={post.photo} sizes="(min-width: 896px) 896px, 100vw" priority />
+              ) : (
+                <BlogCover slug={post.slug} title={post.title} theme={post.cover} />
+              )}
+            </div>
+            {post.photo && (
+              <figcaption className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                Photo:{' '}
+                <a
+                  href={post.photo.creditUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:text-zinc-700 dark:hover:text-zinc-200"
+                >
+                  {post.photo.credit}
+                </a>
+                {`, ${post.photo.license}`}
+              </figcaption>
+            )}
+          </figure>
 
           {/* Contents rail beside the article on wide screens. */}
           <div className="mx-auto mt-10 flex max-w-4xl gap-10">

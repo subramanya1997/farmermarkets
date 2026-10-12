@@ -1,0 +1,286 @@
+{
+  "about": "Topic queue for the blog routine. Keywords, volumes and difficulty come from OpenSEO research on 2026-10-11 (US, English). The routine takes the first topic with status \"todo\", publishes it, then sets status to \"published\" with the slug and date. See docs/blog-playbook.md.",
+  "researched": "2026-10-11",
+  "topics": [
+    {
+      "keyword": "how to store onions",
+      "monthlySearches": 9900,
+      "difficulty": 14,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store garlic",
+      "monthlySearches": 8100,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "what produce is in season",
+      "monthlySearches": 3600,
+      "difficulty": 36,
+      "cluster": "seasonal",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to sell at a farmers market",
+      "monthlySearches": 880,
+      "difficulty": 1,
+      "cluster": "vendors",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store avocados",
+      "monthlySearches": 6600,
+      "difficulty": 8,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "do farmers markets take ebt",
+      "monthlySearches": 590,
+      "difficulty": 13,
+      "cluster": "benefits",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store tomatoes",
+      "monthlySearches": 5400,
+      "difficulty": 5,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "csa farm share",
+      "monthlySearches": 480,
+      "difficulty": 16,
+      "cluster": "csa",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store green onions",
+      "monthlySearches": 5400,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "farmers market vs grocery store",
+      "monthlySearches": 90,
+      "difficulty": 0,
+      "cluster": "shopping",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store cilantro",
+      "monthlySearches": 5400,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "rhubarb season",
+      "monthlySearches": 2900,
+      "difficulty": 0,
+      "cluster": "seasonal",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store carrots",
+      "monthlySearches": 3600,
+      "difficulty": 1,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "organic farmers market",
+      "monthlySearches": 880,
+      "difficulty": 16,
+      "cluster": "shopping",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store lemons",
+      "monthlySearches": 4400,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "spring produce",
+      "monthlySearches": 720,
+      "difficulty": 17,
+      "cluster": "seasonal",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store zucchini",
+      "monthlySearches": 2900,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "what to buy at the farmers market",
+      "monthlySearches": 70,
+      "difficulty": 0,
+      "cluster": "shopping",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store potatoes long term",
+      "monthlySearches": 2400,
+      "difficulty": 4,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "farm share",
+      "monthlySearches": 4400,
+      "difficulty": 37,
+      "cluster": "csa",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to keep cucumbers fresh",
+      "monthlySearches": 2400,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "january seasonal produce",
+      "monthlySearches": 480,
+      "difficulty": 18,
+      "cluster": "seasonal",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store asparagus",
+      "monthlySearches": 2400,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "farmers market ebt match",
+      "monthlySearches": 50,
+      "difficulty": 18,
+      "cluster": "benefits",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store eggplant",
+      "monthlySearches": 2400,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to cut dragon fruit",
+      "monthlySearches": 40500,
+      "difficulty": 0,
+      "cluster": "produce",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store cabbage",
+      "monthlySearches": 1900,
+      "difficulty": 1,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "june seasonal produce",
+      "monthlySearches": 210,
+      "difficulty": 17,
+      "cluster": "seasonal",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store broccoli",
+      "monthlySearches": 1900,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "farmers market food vendors",
+      "monthlySearches": 70,
+      "difficulty": 0,
+      "cluster": "vendors",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to keep celery fresh",
+      "monthlySearches": 1900,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to eat passion fruit",
+      "monthlySearches": 6600,
+      "difficulty": 0,
+      "cluster": "produce",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store parsley",
+      "monthlySearches": 1900,
+      "difficulty": 4,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "what produce is in season in october",
+      "monthlySearches": 90,
+      "difficulty": 0,
+      "cluster": "seasonal",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store mushrooms in fridge",
+      "monthlySearches": 1600,
+      "difficulty": 2,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "sunday farmers market",
+      "monthlySearches": 14800,
+      "difficulty": 39,
+      "cluster": "shopping",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store oranges",
+      "monthlySearches": 1900,
+      "difficulty": 0,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to eat a prickly pear cactus fruit",
+      "monthlySearches": 8100,
+      "difficulty": 3,
+      "cluster": "produce",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to store vegetables in fridge",
+      "monthlySearches": 720,
+      "difficulty": 15,
+      "cluster": "storage",
+      "status": "todo"
+    },
+    {
+      "keyword": "how to roast vegetables",
+      "monthlySearches": 3600,
+      "difficulty": 24,
+      "cluster": "cooking",
+      "status": "todo"
+    }
+  ]
+}
