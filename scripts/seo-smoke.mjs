@@ -191,14 +191,14 @@ const SAMPLE = [
 
   /* --- Three city pages, including one deliberately unindexed -------- */
   {
-    path: '/farmers-markets/north-carolina/durham',
+    path: '/north-carolina/durham',
     kind: 'city (small)',
     minInternalLinks: 25, // renders 47
     robots: 'indexable',
     expectDateModified: true,
   },
   {
-    path: '/farmers-markets/alabama/birmingham',
+    path: '/alabama/birmingham',
     kind: 'city (10 markets)',
     minInternalLinks: 25, // renders 55
     robots: 'indexable',
@@ -210,7 +210,7 @@ const SAMPLE = [
     // them as "Excluded by noindex" (the sitemap submitted them all). They are
     // indexable now and earn it with a "markets nearby" block, so this case
     // asserts both the indexability and that block's links.
-    path: '/farmers-markets/alabama/abbeville',
+    path: '/alabama/abbeville',
     kind: 'city (one market, nearby block)',
     minInternalLinks: 30, // renders 46 before the nearby block's 6
     robots: 'indexable',
@@ -219,7 +219,7 @@ const SAMPLE = [
 
   /* --- Two state hubs ----------------------------------------------- */
   {
-    path: '/farmers-markets/north-carolina',
+    path: '/north-carolina',
     kind: 'state hub',
     minInternalLinks: 60, // renders 170
     robots: 'indexable',
@@ -228,7 +228,7 @@ const SAMPLE = [
   {
     // The largest hub (965 markets across 397 cities) — the response-size
     // check has something to bite on here.
-    path: '/farmers-markets/california',
+    path: '/california',
     kind: 'state hub (largest)',
     minInternalLinks: 60, // renders 434
     robots: 'indexable',
@@ -284,13 +284,31 @@ const NEGATIVE_CASES = [
     name: 'retired /markets/state/* 308s to the state hub',
     path: '/markets/state/texas',
     status: 308,
-    location: '/farmers-markets/texas',
+    location: '/texas',
   },
   {
     name: 'unknown state 404s and is noindexed',
-    path: '/farmers-markets/not-a-state',
+    path: '/not-a-state',
     status: 404,
     expectNoindex: true,
+  },
+  {
+    name: 'old /farmers-markets/{state} 308s to the root-level hub',
+    path: '/farmers-markets/texas',
+    status: 308,
+    location: '/texas',
+  },
+  {
+    name: 'old /farmers-markets/{code} 308s straight to the state slug',
+    path: '/farmers-markets/tx',
+    status: 308,
+    location: '/texas',
+  },
+  {
+    name: 'old /farmers-markets/{state}/{city} 308s to the root-level city page',
+    path: '/farmers-markets/north-carolina/durham',
+    status: 308,
+    location: '/north-carolina/durham',
   },
   {
     name: 'out-of-range pagination 404s and is noindexed',

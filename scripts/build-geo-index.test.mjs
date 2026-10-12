@@ -270,3 +270,24 @@ test('raw source rows are flattened, with the legacy export defaulting to the US
   ]);
   assert.equal(placeholder.lat, null, 'null island is not a location');
 });
+
+test('no state slug collides with a root-level route', async () => {
+  // State hubs are served from the site root (`/new-york`). A static route
+  // always wins over the `[state]` segment, so a state whose slug matched one
+  // (a region called "Blog", say) would silently lose its page.
+  const { readdirSync, readFileSync } = await import('node:fs');
+  const reserved = new Set([
+    ...readdirSync(new URL('../src/app', import.meta.url)).map((entry) =>
+      entry.replace(/\.(tsx?|css)$/, '')
+    ),
+    ...readdirSync(new URL('../public', import.meta.url)),
+    'api',
+    'ingest',
+    '_next'
+  ]);
+  const index = JSON.parse(
+    readFileSync(new URL('../public/data/geo_index.json', import.meta.url), 'utf8')
+  );
+  const collisions = index.states.map((state) => state.slug).filter((slug) => reserved.has(slug));
+  assert.deepEqual(collisions, []);
+});

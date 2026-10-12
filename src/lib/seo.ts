@@ -369,7 +369,7 @@ export function marketDescription(market: MarketSeoRecord): string {
 }
 
 /* ------------------------------------------------------------------ *
- * City pages (`/farmers-markets/{state}/{city}`)
+ * City pages (`/{state}/{city}`)
  *
  * The city page renders one row per market with Days / Hours / Season as
  * separate columns, which the source data does not provide separately: the
@@ -569,7 +569,7 @@ export function cityDescription({
 }
 
 /* ------------------------------------------------------------------ *
- * State hubs (`/farmers-markets/{state}`)
+ * State hubs (`/{state}`)
  * ------------------------------------------------------------------ */
 
 /** Inputs for the state hub's title tag. */

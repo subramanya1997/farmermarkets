@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { CityMarkets } from '@/components/CityMarkets';
 import { FaqSection } from '@/components/FaqSection';
 import { NearbyMarkets } from '@/components/NearbyMarkets';
 import { getCityPageData, type CityMarketRow, type CityPageData } from '@/lib/cityPage';
@@ -10,9 +11,9 @@ import { absoluteUrl } from '@/lib/site';
 import { SITE_FRAME } from "@/lib/ui";
 
 export const revalidate = 86400;
-// Cities added by a data refresh still render on demand and land in the ISR
-// cache; anything not in the geo index 404s below.
-export const dynamicParams = true;
+// Only the cities in the geo index exist; see the note on the state hub for
+// why this root-level route does not render unknown params on demand.
+export const dynamicParams = false;
 
 /**
  * Prerender every city in the geo index (4,870 pages).
@@ -30,10 +31,10 @@ export async function generateStaticParams() {
 /**
  * Markets listed under one weekday heading.
  *
- * The day sections repeat rows that are already in the table, so in a city
+ * The day sections repeat rows that are already in the list, so in a city
  * like Rochester (64 markets, 14 of them on a Tuesday) an uncapped list pushed
  * the page past 5,900 words — well outside the 500–2,000 band that gets cited.
- * Ten keeps the heading's answer concrete and points the rest at the table.
+ * Ten keeps the heading's answer concrete and points the rest at the list.
  */
 const DAY_SECTION_LIMIT = 10;
 
@@ -73,84 +74,17 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   };
 }
 
-function cell(value: string | undefined, fallback = '-') {
-  return value && value.trim() ? value : fallback;
-}
-
-function MarketTable({ data }: { data: CityPageData }) {
-  const { columns, rows } = data;
-
-  return (
-    /*
-      The frame is 1920px wide; this table is not allowed to be. It renders
-      between one and six columns depending on which fields the city's records
-      actually fill, and a two- or three-column table stretched edge to edge is
-      mostly empty space between the headings. One cap for every city page —
-      wide enough that a six-column table is still comfortable, narrow enough
-      that a sparse one still reads as a table.
-    */
-    <div className="max-w-screen-2xl overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-      <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
-        <caption className="sr-only">
-          Farmers markets in {data.city.name}, {data.regionFull}
-        </caption>
-        <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
-          <tr>
-            <th scope="col" className="px-4 py-3 font-semibold">Market</th>
-            {columns.address && <th scope="col" className="px-4 py-3 font-semibold">Address</th>}
-            {columns.days && <th scope="col" className="px-4 py-3 font-semibold">Days</th>}
-            {columns.hours && <th scope="col" className="px-4 py-3 font-semibold">Hours</th>}
-            {columns.season && <th scope="col" className="px-4 py-3 font-semibold">Season</th>}
-            {columns.snap && <th scope="col" className="px-4 py-3 font-semibold">SNAP</th>}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
-          {rows.map((row) => (
-            <tr key={row.slug} className="align-top hover:bg-zinc-50 dark:hover:bg-zinc-900/60">
-              <th scope="row" className="px-4 py-3 font-medium">
-                <Link
-                  href={row.href}
-                  className="text-green-700 hover:underline dark:text-green-500"
-                >
-                  {row.name}
-                </Link>
-              </th>
-              {columns.address && (
-                <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">{cell(row.address)}</td>
-              )}
-              {columns.days && (
-                <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
-                  {cell(row.days.join(', '))}
-                </td>
-              )}
-              {columns.hours && (
-                <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">{cell(row.hours)}</td>
-              )}
-              {columns.season && (
-                <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">{cell(row.season)}</td>
-              )}
-              {columns.snap && (
-                <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
-                  {row.snap ? 'Accepted' : '-'}
-                </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 function DayRow({ row }: { row: CityMarketRow }) {
-  const detail = [row.hours, row.address].filter(Boolean).join(' · ');
-
   return (
     <li className="py-2">
-      <Link href={row.href} className="font-medium text-green-700 hover:underline dark:text-green-500">
+      <Link href={row.href} className="font-medium text-green-800 hover:underline dark:text-green-400">
         {row.name}
       </Link>
-      {detail && <span className="text-zinc-600 dark:text-zinc-400"> - {detail}</span>}
+      {(row.hours || row.address) && (
+        <span className="block text-zinc-600 dark:text-zinc-400">
+          {[row.hours, row.address].filter(Boolean).join(', ')}
+        </span>
+      )}
     </li>
   );
 }
@@ -216,6 +150,14 @@ export default async function CityPage({ params }: CityPageProps) {
   if (!data) notFound();
 
   const heading = `Farmers Markets in ${data.city.name}, ${data.regionFull}`;
+  const busiest = [...data.dayGroups].sort((left, right) => right.rows.length - left.rows.length)[0];
+  const facts = [
+    { value: data.marketCount.toLocaleString(), label: 'farmers markets' },
+    ...(data.snapCount > 0
+      ? [{ value: data.snapCount.toLocaleString(), label: 'accept SNAP/EBT' }]
+      : []),
+    ...(busiest ? [{ value: busiest.day, label: 'is the busiest day' }] : []),
+  ];
 
   return (
     <>
@@ -245,6 +187,18 @@ export default async function CityPage({ params }: CityPageProps) {
             <p className="mt-4 max-w-3xl text-base text-zinc-700 sm:text-lg dark:text-zinc-300">
               {data.opener}
             </p>
+            {data.marketCount > 1 && (
+              <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-3">
+                {facts.map((fact) => (
+                  <div key={fact.label} className="flex items-baseline gap-2">
+                    <dd className="text-2xl font-bold tabular-nums tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
+                      {fact.value}
+                    </dd>
+                    <dt className="text-sm text-zinc-600 dark:text-zinc-400">{fact.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            )}
           </div>
         </section>
 
@@ -256,25 +210,33 @@ export default async function CityPage({ params }: CityPageProps) {
                   ? `The farmers market in ${data.city.name}`
                   : `All ${data.marketCount} farmers markets in ${data.city.name}`}
               </h2>
-              <MarketTable data={data} />
+              <CityMarkets
+                rows={data.rows}
+                cityName={data.city.name}
+                regionFull={data.regionFull}
+                days={data.dayGroups.map((group) => ({ day: group.day, count: group.rows.length }))}
+                snapCount={data.snapCount}
+              />
             </div>
 
             {data.dayGroups.length > 0 && (
-              <div className="space-y-6">
+              /* The week as a board: one column per trading day, so "what is
+                 on this Saturday" is a glance across rather than a scroll. */
+              <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7">
                 {data.dayGroups.map((group) => (
-                  <div key={group.day}>
-                    <h2 className="text-lg font-bold tracking-tight sm:text-xl">
+                  <div key={group.day} className="border-t-2 border-green-700 pt-3 dark:border-green-600">
+                    <h2 className="text-base font-bold tracking-tight">
                       {group.day} farmers markets in {data.city.name}
                     </h2>
-                    <ul className="mt-2 max-w-4xl divide-y divide-zinc-200 text-sm dark:divide-zinc-800">
+                    <ul className="mt-2 divide-y divide-zinc-200 text-sm dark:divide-zinc-800">
                       {group.rows.slice(0, DAY_SECTION_LIMIT).map((row) => (
                         <DayRow key={row.slug} row={row} />
                       ))}
                     </ul>
                     {group.rows.length > DAY_SECTION_LIMIT && (
-                      <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
+                      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
                         {group.rows.length - DAY_SECTION_LIMIT} more {group.day} market
-                        {group.rows.length - DAY_SECTION_LIMIT === 1 ? ' is' : 's are'} in the table
+                        {group.rows.length - DAY_SECTION_LIMIT === 1 ? ' is' : 's are'} in the list
                         above.
                       </p>
                     )}

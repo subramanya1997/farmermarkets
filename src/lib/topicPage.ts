@@ -12,10 +12,11 @@
  * is memoized per server process: each entry carries the market's weekdays,
  * hours and place, so a topic builder only filters and counts.
  *
- * Routing note: these are static segments, which Next matches ahead of the
- * sibling `[state]` dynamic segment, and none of the four slugs is a state
- * slug in the geo index — so `/farmers-markets/north-carolina` still reaches
- * the state hub and nothing is shadowed.
+ * Routing note: state hubs and city pages moved to the site root (`/texas`,
+ * `/texas/austin`) in October 2026, so these four are now the only pages under
+ * `/farmers-markets/`. The redirect that forwards the old state URLs
+ * (`next.config.ts`) carves these slugs out by name; a fifth topic has to be
+ * added to that list too.
  */
 
 import 'server-only';

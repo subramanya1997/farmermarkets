@@ -690,12 +690,12 @@ export function refreshUrls(changedSlugs, geoIndex, siteUrl = SITE_URL) {
     for (const city of state.cities ?? []) {
       if (!(city.market_slugs ?? []).some((slug) => changed.has(slug))) continue;
       stateTouched = true;
-      paths.push(`/farmers-markets/${state.slug}/${city.slug}`);
+      paths.push(`/${state.slug}/${city.slug}`);
     }
     if (!stateTouched) {
       stateTouched = (state.uncategorized_slugs ?? []).some((slug) => changed.has(slug));
     }
-    if (stateTouched) paths.push(`/farmers-markets/${state.slug}`);
+    if (stateTouched) paths.push(`/${state.slug}`);
   }
 
   paths.push('/sitemap.xml');

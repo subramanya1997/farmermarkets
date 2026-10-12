@@ -9,7 +9,7 @@ interface BrowseByStateProps {
 /**
  * Server-rendered directory of every state/region in the data.
  *
- * These link to the state hubs at `/farmers-markets/{state}`, which gives
+ * These link to the state hubs at `/{state}`, which gives
  * every market a three-hop path from `/markets` (state → city → market) — a
  * much shorter crawl route than paging 180+ times through the index.
  *

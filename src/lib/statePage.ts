@@ -1,5 +1,5 @@
 /**
- * View model for the state hubs (`/farmers-markets/{state}`).
+ * View model for the state hubs (`/{state}`, e.g. `/new-york`).
  *
  * Same contract as `src/lib/cityPage.ts`: the page component renders this and
  * nothing else, and no sentence here invents a claim — a clause whose input is
@@ -25,9 +25,27 @@ import {
   type Weekday,
 } from './seo';
 
-/** Canonical path for a state hub. */
+/**
+ * Canonical path for a state hub.
+ *
+ * Hubs sit at the site root (`/new-york`). They lived under
+ * `/farmers-markets/` until October 2026; `next.config.ts` 308s those URLs
+ * here. A state slug can never shadow a real page: static routes win over the
+ * `[state]` segment, and `scripts/build-geo-index.test.mjs` fails if a slug
+ * ever collides with one.
+ */
 export function statePath(stateSlug: string): string {
-  return `/farmers-markets/${stateSlug}`;
+  return `/${stateSlug}`;
+}
+
+/** One dot on the hub's map. */
+export interface StateMapPoint {
+  slug: string;
+  name: string;
+  /** City name, empty for a market whose city never resolved. */
+  city: string;
+  lat: number;
+  lon: number;
 }
 
 /** One entry in the hub's city directory. */
@@ -66,6 +84,8 @@ export interface StatePageData {
   /** Every city in the state, largest first. */
   cities: StateCityLink[];
   notableMarkets: StateNotableMarket[];
+  /** Every market in the state whose record carries coordinates. */
+  mapPoints: StateMapPoint[];
   /**
    * True when the hub has no city list to offer — every one of its markets
    * failed to resolve to a city. The page stays crawlable (a market page
@@ -208,8 +228,23 @@ function cityLink(state: GeoState, city: GeoCity): StateCityLink {
   return {
     name: city.name,
     slug: city.slug,
-    href: `/farmers-markets/${state.slug}/${city.slug}`,
+    href: `${statePath(state.slug)}/${city.slug}`,
     marketCount: city.market_count,
+  };
+}
+
+/** A market's pin, or undefined when the record has no usable coordinates. */
+function mapPoint(market: FarmerMarket, city: string): StateMapPoint | undefined {
+  const lat = market.location?.lat;
+  const lon = market.location?.lon;
+  if (typeof lat !== 'number' || typeof lon !== 'number' || (!lat && !lon)) return undefined;
+  // Five decimals is about a metre, and keeps the 1,000-pin hubs' payload down.
+  return {
+    slug: market.slug,
+    name: displayName(market.name),
+    city,
+    lat: Number(lat.toFixed(5)),
+    lon: Number(lon.toFixed(5)),
   };
 }
 
@@ -222,10 +257,16 @@ function cityLink(state: GeoState, city: GeoCity): StateCityLink {
  */
 async function collectNotable(
   state: GeoState
-): Promise<{ notable: StateNotableMarket[]; snapCount: number; lastModified?: string }> {
+): Promise<{
+  notable: StateNotableMarket[];
+  snapCount: number;
+  lastModified?: string;
+  mapPoints: StateMapPoint[];
+}> {
   const scored: { entry: StateNotableMarket; score: number }[] = [];
   let snapCount = 0;
   let lastModified: string | undefined;
+  const mapPoints: StateMapPoint[] = [];
 
   for (const city of state.cities) {
     for (const slug of city.market_slugs) {
@@ -233,6 +274,9 @@ async function collectNotable(
       if (!market) continue;
       if (market.snap === true) snapCount += 1;
       lastModified = newerInstant(lastModified, toIsoInstant(market.last_updated));
+
+      const point = mapPoint(market, city.name);
+      if (point) mapPoints.push(point);
 
       const days = marketWeekdays(market);
       const hours = marketHours(market);
@@ -242,7 +286,7 @@ async function collectNotable(
           name: displayName(market.name),
           href: `/markets/${market.slug}`,
           cityName: city.name,
-          cityHref: `/farmers-markets/${state.slug}/${city.slug}`,
+          cityHref: `${statePath(state.slug)}/${city.slug}`,
           address: resolveLocation(market).street,
           days,
           hours,
@@ -251,6 +295,13 @@ async function collectNotable(
         score: scoreMarket(market, days, hours),
       });
     }
+  }
+
+  // Markets with no city still have a pin, so they still belong on the map.
+  for (const slug of state.uncategorized_slugs) {
+    const market = await getMarketBySlug(slug);
+    const point = market ? mapPoint(market, '') : undefined;
+    if (point) mapPoints.push(point);
   }
 
   const seen = new Set<string>();
@@ -269,7 +320,7 @@ async function collectNotable(
     if (notable.length === NOTABLE_LIMIT) break;
   }
 
-  return { notable, snapCount, lastModified };
+  return { notable, snapCount, lastModified, mapPoints };
 }
 
 /**
@@ -285,7 +336,7 @@ export async function getStatePageData(stateSlug: string): Promise<StatePageData
   if (state.slug !== stateSlug.trim().toLowerCase()) return null;
 
   const cities = state.cities.map((city) => cityLink(state, city));
-  const { notable, snapCount, lastModified } = await collectNotable(state);
+  const { notable, snapCount, lastModified, mapPoints } = await collectNotable(state);
 
   const regionFull = state.name;
 
@@ -299,6 +350,7 @@ export async function getStatePageData(stateSlug: string): Promise<StatePageData
     snapCount,
     cities,
     notableMarkets: notable,
+    mapPoints,
     noindex: state.city_count === 0,
     title: stateTitle({
       state: regionFull,

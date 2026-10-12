@@ -6,7 +6,7 @@ export const revalidate = 86400;
 export const dynamicParams = true;
 
 /**
- * Retired route: the state hub now lives at `/farmers-markets/{state}`.
+ * Retired route: the state hub now lives at `/{state}`.
  *
  * This file exists only to 308 the URLs Google already has. It rendered a page
  * filtered on the **raw** `state` value, which meant `/markets/state/ny` and

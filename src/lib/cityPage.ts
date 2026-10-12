@@ -1,5 +1,5 @@
 /**
- * View model for the city pages (`/farmers-markets/{state}/{city}`).
+ * View model for the city pages (`/{state}/{city}`, e.g. `/new-york/brooklyn`).
  *
  * The page component renders this and nothing else: every decision that needs
  * to look at the data — which table columns have any content, which weekday
@@ -45,6 +45,9 @@ export interface CityMarketRow {
   /** Ranking input for "the most notable market", see `scoreMarket`. */
   completeness: number;
   vendorCount?: number;
+  /** The record's own coordinates, when it has them; drives the page's map. */
+  lat?: number;
+  lon?: number;
 }
 
 /** Which columns any market in this city has data for. */
@@ -89,7 +92,7 @@ export interface CityPageData {
   dayGroups: CityDayGroup[];
   faqs: CityFaq[];
   siblings: CitySibling[];
-  /** The state hub (`/farmers-markets/{state}`) this city sits under. */
+  /** The state hub (`/{state}`) this city sits under. */
   stateHubPath: string;
   title: string;
   description: string;
@@ -115,7 +118,7 @@ export interface CityPageData {
 
 /** Canonical path for a city page. */
 export function cityPath(stateSlug: string, citySlug: string): string {
-  return `/farmers-markets/${stateSlug}/${citySlug}`;
+  return `${statePath(stateSlug)}/${citySlug}`;
 }
 
 /**
@@ -142,6 +145,10 @@ function marketBlurb(market: FarmerMarket): string | undefined {
 
 function toRow(market: FarmerMarket): CityMarketRow {
   const days = marketWeekdays(market);
+  const lat = market.location?.lat;
+  const lon = market.location?.lon;
+  const hasCoordinates =
+    typeof lat === 'number' && typeof lon === 'number' && Boolean(lat || lon);
   const base = {
     slug: market.slug,
     name: displayName(market.name),
@@ -152,6 +159,7 @@ function toRow(market: FarmerMarket): CityMarketRow {
     season: marketSeasonLabel(market),
     snap: market.snap === true,
     vendorCount: market.vendor_count ?? undefined,
+    ...(hasCoordinates ? { lat: Number(lat.toFixed(5)), lon: Number(lon.toFixed(5)) } : {}),
   };
 
   return { ...base, completeness: scoreMarket(base, market) };

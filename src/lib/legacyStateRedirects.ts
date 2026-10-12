@@ -1,5 +1,5 @@
 /**
- * Old `/markets/state/{slug}` → new `/farmers-markets/{state}` mapping.
+ * Old `/markets/state/{slug}` → new `/{state}` mapping.
  *
  * The retired route slugged the **raw** `state` value on each record, so the
  * URLs Google has indexed include every spelling the source data uses: the

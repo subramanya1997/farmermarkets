@@ -39,8 +39,51 @@ function hashAppSource(): string {
   return hash.digest("hex").slice(0, 21);
 }
 
+/**
+ * State hubs and city pages moved from `/farmers-markets/{state}[/{city}]` to
+ * the site root (`/new-york`, `/new-york/brooklyn`) in October 2026. Every old
+ * URL 308s to its new one in a single hop, here rather than in a route so the
+ * redirect never costs a render.
+ *
+ * The four topic pages still live under `/farmers-markets/` and are carved out
+ * of the state pattern. The old route also accepted a state's 2-letter code
+ * (`/farmers-markets/ny`); those get explicit entries so they land on the slug
+ * directly instead of on a root-level `/ny` that does not exist.
+ */
+const TOPIC_SLUGS = ["snap-ebt", "online", "hours", "saturday"];
+
+function geoPageRedirects() {
+  const geoIndex = JSON.parse(readFileSync("public/data/geo_index.json", "utf8")) as {
+    states: { code: string | null; slug: string }[];
+  };
+  const codeRedirects = geoIndex.states
+    .filter((state) => state.code && state.code.toLowerCase() !== state.slug)
+    .map((state) => ({
+      source: `/farmers-markets/${state.code!.toLowerCase()}`,
+      destination: `/${state.slug}`,
+      permanent: true,
+    }));
+
+  return [
+    ...codeRedirects,
+    {
+      source: `/farmers-markets/:state((?!(?:${TOPIC_SLUGS.join("|")})$)[^/]+)`,
+      destination: "/:state",
+      permanent: true,
+    },
+    {
+      source: "/farmers-markets/:state/:city",
+      destination: "/:state/:city",
+      permanent: true,
+    },
+  ];
+}
+
 const nextConfig: NextConfig = {
   generateBuildId: async () => hashAppSource(),
+  async redirects() {
+    return geoPageRedirects();
+  },
   // PostHog is reached through a first-party path so ingestion survives
   // blockers that match posthog.com. The region follows NEXT_PUBLIC_POSTHOG_HOST.
   async rewrites() {

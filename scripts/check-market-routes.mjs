@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 const baseUrl = process.env.MARKET_BASE_URL || 'http://localhost:3000';
 
 function assert(condition, message) {
@@ -89,11 +90,34 @@ assert(
 const marketUrlCount = (sitemapText.match(/<loc>https?:\/\/[^/]+\/markets\/(?!page\/)/g) || []).length;
 assert(marketUrlCount >= 6832, `sitemap contains ${marketUrlCount} market URLs, expected at least 6832`);
 
-const stateHubCount = (sitemapText.match(/<loc>https?:\/\/[^/]+\/farmers-markets\/[^/<]+<\/loc>/g) || []).length;
+// State hubs and city pages sit at the site root (`/new-york`,
+// `/new-york/brooklyn`), so they are recognised by the geo index's own slugs
+// rather than by a path prefix.
+const geoIndex = JSON.parse(
+  readFileSync(new URL('../public/data/geo_index.json', import.meta.url), 'utf8')
+);
+const stateSlugs = new Set(geoIndex.states.map((state) => state.slug));
+const sitemapPaths = [...sitemapText.matchAll(/<loc>https?:\/\/[^/]+(\/[^<]*)<\/loc>/g)].map(
+  (match) => match[1].split('/').filter(Boolean)
+);
+
+const stateHubCount = sitemapPaths.filter(
+  (segments) => segments.length === 1 && stateSlugs.has(segments[0])
+).length;
 assert(stateHubCount >= 50, `sitemap contains ${stateHubCount} state hub URLs, expected at least 50`);
 
-const cityCount = (sitemapText.match(/<loc>https?:\/\/[^/]+\/farmers-markets\/[^/<]+\/[^<]+<\/loc>/g) || []).length;
+const cityCount = sitemapPaths.filter(
+  (segments) => segments.length === 2 && stateSlugs.has(segments[0])
+).length;
 assert(cityCount >= 4000, `sitemap contains ${cityCount} city URLs, expected at least 4000`);
+
+// The pre-October-2026 URLs are 308s now and must not be advertised.
+assert(
+  !sitemapPaths.some(
+    (segments) => segments[0] === 'farmers-markets' && stateSlugs.has(segments[1])
+  ),
+  'sitemap still includes retired /farmers-markets/{state} URLs'
+);
 
 // The lastmod trust check: nothing may be stamped with fetch time, so a second
 // read of the same chunk has to come back byte-identical.

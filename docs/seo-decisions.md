@@ -257,3 +257,33 @@ standardization ends a homepage/city-page/topic-page inconsistency.
 **Revisit when.** A locale's own typography requires different rules — the
 French-spacing carve-out is already in place, and any further exception should
 land in `clean()` with a test, not in an individual page.
+
+## 11. State and city pages live at the site root
+
+State hubs are `/{state}` (`/new-york`) and city pages are `/{state}/{city}`
+(`/new-york/brooklyn`). Until October 2026 both sat under `/farmers-markets/`.
+The four topic pages (`/farmers-markets/snap-ebt`, `/online`, `/hours`,
+`/saturday`) did not move.
+
+Every old URL 308s to its new one in a single hop from `next.config.ts`,
+including the 2-letter code form (`/farmers-markets/ny` goes to `/new-york`).
+The sitemap, canonicals, breadcrumbs, JSON-LD, `llms.txt` and the IndexNow
+paths all read `statePath()` / `cityPath()`, so they changed with the helpers.
+
+Both root-level routes set `dynamicParams = false`. A dynamic segment at the
+root catches every mistyped or probed top-level URL, and rendering each one on
+demand to produce a 404 would be a function invocation per bot request. Only
+the params in the geo index exist; a state or city added by a data refresh
+arrives with the deploy that refresh's commit triggers.
+
+**Why.** The domain already says "farmer markets", so the prefix repeated it
+in every URL and pushed the place name, the part a searcher reads, further
+right. The owner asked for the short form.
+
+**Guard rails.** A static route always beats `[state]`, so a state slug equal
+to a top-level route would silently lose its page; `test:geo` fails if one
+ever collides. A new topic page under `/farmers-markets/` must be added to
+`TOPIC_SLUGS` in `next.config.ts` or the state redirect will swallow it.
+
+**Revisit when.** Never casually: this was the second move for these URLs in
+two months, and each move costs a recrawl of about 5,000 pages.

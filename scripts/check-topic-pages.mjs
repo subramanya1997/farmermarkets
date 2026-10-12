@@ -199,8 +199,8 @@ async function checkTopicPage({ pathname, title, mustContain, stateTable }) {
   if (stateTable) {
     for (const slug of stateTable) {
       assert(
-        html.includes(`href="/farmers-markets/${slug}"`),
-        `${pathname} does not link the state hub /farmers-markets/${slug}`
+        html.includes(`href="/${slug}"`),
+        `${pathname} does not link the state hub /${slug}`
       );
     }
   }
@@ -307,16 +307,16 @@ await checkTopicPage({
  * Routing precedence, sitemap and site-wide links
  * ---------------------------------------------------------------- */
 
-const stateHub = await fetchPage('/farmers-markets/north-carolina');
+const stateHub = await fetchPage('/north-carolina');
 assert(
   headingOf(stateHub).includes('Farmers Markets in North Carolina'),
-  '/farmers-markets/north-carolina no longer serves the state hub'
+  '/north-carolina no longer serves the state hub'
 );
 
-const cityPage = await fetchPage('/farmers-markets/north-carolina/durham');
-assert(headingOf(cityPage).includes('Durham'), '/farmers-markets/north-carolina/durham broke');
+const cityPage = await fetchPage('/north-carolina/durham');
+assert(headingOf(cityPage).includes('Durham'), '/north-carolina/durham broke');
 
-await fetchPage('/farmers-markets/not-a-real-state', 404);
+await fetchPage('/not-a-real-state', 404);
 
 const topicPaths = [
   '/farmers-markets/snap-ebt',
