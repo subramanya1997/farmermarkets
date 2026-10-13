@@ -16,7 +16,9 @@
       "monthlySearches": 8100,
       "difficulty": 0,
       "cluster": "storage",
-      "status": "todo"
+      "status": "published",
+      "slug": "how-to-store-garlic",
+      "publishedAt": "2026-10-13"
     },
     {
       "keyword": "what produce is in season",
