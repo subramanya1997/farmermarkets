@@ -25,7 +25,9 @@
       "monthlySearches": 3600,
       "difficulty": 36,
       "cluster": "seasonal",
-      "status": "todo"
+      "status": "published",
+      "slug": "what-produce-is-in-season",
+      "publishedAt": "2026-10-15"
     },
     {
       "keyword": "how to sell at a farmers market",
