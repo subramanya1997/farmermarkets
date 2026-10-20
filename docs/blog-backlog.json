@@ -34,7 +34,9 @@
       "monthlySearches": 880,
       "difficulty": 1,
       "cluster": "vendors",
-      "status": "todo"
+      "status": "published",
+      "slug": "how-to-sell-at-a-farmers-market",
+      "publishedAt": "2026-10-20"
     },
     {
       "keyword": "how to store avocados",
