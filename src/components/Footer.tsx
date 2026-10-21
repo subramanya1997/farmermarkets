@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getStateHubSummaries } from "@/lib/statePage";
 import { TOPIC_LABELS, TOPIC_SLUGS, topicPath } from "@/lib/topicPage";
 import { SITE_FRAME } from "@/lib/ui";
+import { FeedbackLink } from "@/components/FeedbackLink";
 
 /** How many state hubs the footer links to, biggest first. */
 const FOOTER_STATE_LIMIT = 10;
@@ -82,6 +83,9 @@ export async function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <FeedbackLink className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-500" />
+                </li>
               </ul>
             </div>
           </div>

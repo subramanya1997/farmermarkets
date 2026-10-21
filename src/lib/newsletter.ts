@@ -21,7 +21,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import { Resend } from 'resend';
 import { absoluteUrl } from './site';
 
-export const NEWSLETTER_SOURCES = ['home', 'blog_index', 'blog_post', 'city', 'market'] as const;
+export const NEWSLETTER_SOURCES = ['home', 'blog_index', 'blog_post', 'city', 'market', 'prompt'] as const;
 export type NewsletterSource = (typeof NEWSLETTER_SOURCES)[number];
 
 /** How long a confirmation link works. */

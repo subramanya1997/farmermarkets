@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { trackEvent } from "@/lib/analytics";
 import { setPageExtras } from "@/lib/pageContext";
+import { setPromptContext } from "@/lib/visitSignals";
 
 interface MarketDetailAnalyticsProps {
   marketId: string;
@@ -10,6 +11,8 @@ interface MarketDetailAnalyticsProps {
   country?: string;
   marketType?: string;
   sourceId?: string;
+  marketSlug: string;
+  cityName?: string;
   /** Geo-index slugs, when the market was placed in a city. */
   stateSlug?: string;
   citySlug?: string;
@@ -24,6 +27,13 @@ export function MarketDetailAnalytics(props: MarketDetailAnalyticsProps) {
     // The URL names only the market; this lets every later event on the page
     // (website, directions, phone) be split by state and city too.
     setPageExtras(window.location.pathname, { page_state: props.stateSlug, page_city: props.citySlug });
+    setPromptContext({
+      kind: "market",
+      path: window.location.pathname,
+      slug: props.marketSlug,
+      name: props.marketName,
+      cityName: props.cityName,
+    });
     trackEvent("Market Detail Viewed", {
       market_id: props.marketId,
       market_name: props.marketName.slice(0, 80),

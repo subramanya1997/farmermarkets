@@ -17,7 +17,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { MarketCard } from "@/components/MarketCard";
 import { FilterBar } from "@/components/FilterBar";
-import { DiscoverySurvey } from "@/components/DiscoverySurvey";
 import dynamic from "next/dynamic";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useAllMarkets } from "@/hooks/useAllMarkets";
@@ -32,12 +31,6 @@ interface MarketsProps {
   title?: string;
   description?: string;
   hideHero?: boolean;
-  /**
-   * Set to false when the surrounding page already renders the discovery
-   * survey — on `/markets` the server-rendered index owns it, so the explorer
-   * must not open a second copy of the same dialog.
-   */
-  showDiscoverySurvey?: boolean;
 }
 
 /**
@@ -65,8 +58,7 @@ const MarketsMap = dynamic(() => import("@/components/MarketMap"), {
 export function Markets({
   title = "Find Local Food Markets",
   description = "Discover farmers markets, public food markets, cooperatives, and other local-food places around the world",
-  hideHero = false,
-  showDiscoverySurvey = true
+  hideHero = false
 }: MarketsProps) {
   const { markets, loading: marketsLoading, error: marketsError } = useAllMarkets();
   const [view, setView] = useState('grid');
@@ -613,13 +605,6 @@ export function Markets({
             Showing markets near {location.city}, {location.state}
           </span>
         </div>
-      )}
-
-      {showDiscoverySurvey && (
-        <DiscoverySurvey
-          selectedCountry={selectedCountry || 'All countries'}
-          resultCount={filteredMarkets.length}
-        />
       )}
 
       {/* Pagination Section (grid only: the map paginates by panning) */}

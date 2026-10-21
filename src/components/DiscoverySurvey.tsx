@@ -15,10 +15,15 @@ import {
 import { Input } from "@/components/ui/input";
 
 const STORAGE_KEY = "farmermarkets.discovery-survey.v2";
-// When the reader last closed the survey without answering. It stays away
-// for DISMISS_DAYS so a returning reader is not asked on every visit.
-const DISMISSED_AT_KEY = "farmermarkets.discovery-survey-dismissed-at.v2";
-const DISMISS_DAYS = 30;
+
+/**
+ * Dispatch this on `window` to open the survey. It no longer opens by itself:
+ * PostHog showed the timed popup was answered 0 times in 10 showings, and
+ * the questions that replaced it (src/components/VisitorPrompts.tsx) wait for
+ * a reason to ask. This longer form stays for readers who choose to write in,
+ * from the footer's "Send feedback" link.
+ */
+export const OPEN_FEEDBACK_EVENT = "fm:open-feedback";
 
 const surveyOptions = [
   { id: "farmers_market", label: "A farmers market" },
@@ -62,26 +67,21 @@ export function DiscoverySurvey({ selectedCountry, resultCount }: DiscoverySurve
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const submitted = window.localStorage.getItem(STORAGE_KEY) === "submitted";
-    const dismissedAt = Number(window.localStorage.getItem(DISMISSED_AT_KEY) || 0);
-    const recentlyDismissed = Date.now() - dismissedAt < DISMISS_DAYS * 24 * 60 * 60 * 1000;
-    if (submitted || recentlyDismissed) return;
-
-    const timeout = window.setTimeout(() => {
+    const open = () => {
       setIsOpen(true);
       trackEvent("Discovery Popup Opened", {
         country: initialContext.current.selectedCountry,
-        result_count: initialContext.current.resultCount
+        result_count: initialContext.current.resultCount,
+        trigger: "feedback_link"
       });
-    }, 1200);
-
-    return () => window.clearTimeout(timeout);
+    };
+    window.addEventListener(OPEN_FEEDBACK_EVENT, open);
+    return () => window.removeEventListener(OPEN_FEEDBACK_EVENT, open);
   }, []);
 
   const updateOpen = (open: boolean) => {
     setIsOpen(open);
     if (!open && !hasSubmitted) {
-      window.localStorage.setItem(DISMISSED_AT_KEY, String(Date.now()));
       trackEvent("Discovery Popup Dismissed", {
         selected_intent: Boolean(intent),
         country: selectedCountry

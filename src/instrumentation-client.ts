@@ -9,7 +9,14 @@ import { currentPageProperties } from '@/lib/pageContext';
 
 // The one place the browser PostHog client is initialized. Do not add a
 // PostHogProvider or a second `posthog.init` anywhere else.
-if (POSTHOG_TOKEN) {
+// Local dev shares the production project, so it stays out unless
+// NEXT_PUBLIC_POSTHOG_DEV=1 asks for it: localhost testing was showing up in
+// the site's real visitor numbers.
+const isLocalHost =
+  typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
+const captureLocally = process.env.NEXT_PUBLIC_POSTHOG_DEV === '1';
+
+if (POSTHOG_TOKEN && (!isLocalHost || captureLocally)) {
   posthog.init(POSTHOG_TOKEN, {
     api_host: POSTHOG_PROXY_PATH,
     ui_host: POSTHOG_UI_HOST,
@@ -23,6 +30,11 @@ if (POSTHOG_TOKEN) {
     // Session replay is switched on in the PostHog project settings. Inputs
     // stay masked so contact details typed into forms are never recorded.
     session_recording: { maskAllInputs: true },
+    // Most raw traffic is a crawler fleet running real Chrome; the ones that
+    // admit to being automated are tagged so PostHog filters can drop them.
+    loaded: (client) => {
+      if (navigator.webdriver) client.register({ is_automation: true });
+    },
     // Every event, page views included, says what kind of page it came from
     // (page_type, plus page_state / page_city / page_market where they apply).
     // An event's own properties win over these. Replay chunks are skipped:
@@ -32,6 +44,6 @@ if (POSTHOG_TOKEN) {
       return event;
     },
   });
-} else if (process.env.NODE_ENV === 'development') {
+} else if (!POSTHOG_TOKEN && process.env.NODE_ENV === 'development') {
   console.error(POSTHOG_MISSING_TOKEN_MESSAGE);
 }

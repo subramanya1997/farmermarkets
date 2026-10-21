@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { BrowseByState } from '@/components/BrowseByState';
 import { BrowseByTopic } from '@/components/BrowseByTopic';
-import { DiscoverySurvey } from '@/components/DiscoverySurvey';
 import { MarketsExplorer } from '@/components/MarketsExplorer';
 import { MarketsPagination } from '@/components/MarketsPagination';
 import { MarketSummaryCard } from '@/components/MarketSummaryCard';
@@ -99,12 +98,6 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
 
         <BrowseByState states={states} />
 
-        {/* Page 1 is the explorer, which mounts the survey itself with the
-            reader's live country and result count; the A-Z pages beyond it
-            get it here. Never both, so the dialog can't open twice. */}
-        {result.page > 1 && (
-          <DiscoverySurvey selectedCountry="All countries" resultCount={result.total} />
-        )}
       </div>
     </>
   );

@@ -244,6 +244,8 @@ export default async function MarketDetailPage({
         country={market.country}
         marketType={marketType}
         sourceId={market.provenance?.source_id}
+        marketSlug={market.slug}
+        cityName={placement?.city.name}
         stateSlug={placement?.state.slug}
         citySlug={placement?.city.slug}
       />

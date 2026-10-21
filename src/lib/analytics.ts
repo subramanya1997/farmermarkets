@@ -3,6 +3,7 @@
 import { track as trackVercelEvent } from "@vercel/analytics/react";
 import posthog from 'posthog-js';
 import { createGoogleAnalyticsQueue } from './googleAnalyticsQueue';
+import { recordSignal } from './visitSignals';
 import { POSTHOG_DISTINCT_ID_HEADER, POSTHOG_SESSION_ID_HEADER } from './posthogConfig';
 
 export { analyticsSafeSearchTerm } from './searchAnalytics';
@@ -48,6 +49,8 @@ export function trackEvent(name: string, properties: AnalyticsProperties = {}) {
   // PostHog is initialized in `instrumentation-client.ts`, and only when a
   // project token is configured.
   if (posthog.__loaded) posthog.capture(name, compacted);
+  // Visitor prompts decide when to appear from these same events.
+  recordSignal(name, compacted);
 }
 
 /**
