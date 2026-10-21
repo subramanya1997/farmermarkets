@@ -270,7 +270,9 @@ export function NewsletterSignup({
     return (
       <section
         {...rootProps}
-        className="relative isolate overflow-hidden rounded-3xl bg-gradient-to-br from-green-950 via-green-900 to-emerald-800 px-6 py-12 text-white shadow-xl shadow-green-950/10 sm:px-12 sm:py-16"
+        // The mobile menu's "Get the market note" links here.
+        id="newsletter"
+        className="relative isolate scroll-mt-24 overflow-hidden rounded-3xl bg-gradient-to-br from-green-950 via-green-900 to-emerald-800 px-6 py-12 text-white shadow-xl shadow-green-950/10 sm:px-12 sm:py-16"
       >
         <div aria-hidden="true" className="nl-glow absolute -left-1/4 -top-1/2 -z-10 h-[160%] w-[70%] rounded-full bg-lime-300/15 blur-3xl" />
         <GlyphField tone="text-white/[0.13]" />

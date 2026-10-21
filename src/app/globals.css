@@ -184,7 +184,28 @@
   animation-delay: var(--nl-delay, 0s);
 }
 
+/* Mobile menu rows (src/components/Header.tsx) rise in as the sheet opens. */
+.menu-rise {
+  animation: nl-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(120ms + var(--nl-i, 0) * 45ms);
+}
+
+/* Visitor prompt card (src/components/VisitorPrompts.tsx). */
+@keyframes prompt-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.prompt-in {
+  animation: prompt-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.prompt-done {
+  animation: nl-pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .prompt-in,
+  .prompt-done,
+  .menu-rise,
   [data-visible] .nl-reveal,
   .nl-pop {
     opacity: 1;
