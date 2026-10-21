@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/migrate-on-deploy.mjs && next build",
     "start": "next start",
     "lint": "eslint .",
     "assets:favicons": "node scripts/generate-favicons.mjs",

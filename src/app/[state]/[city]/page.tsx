@@ -9,6 +9,7 @@ import { getCityPageData, type CityMarketRow, type CityPageData } from '@/lib/ci
 import { getAllCityParams } from '@/lib/geoIndex';
 import { absoluteUrl } from '@/lib/site';
 import { SITE_FRAME } from "@/lib/ui";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 export const revalidate = 86400;
 // Only the cities in the geo index exist; see the note on the state hub for
@@ -244,6 +245,12 @@ export default async function CityPage({ params }: CityPageProps) {
                 ))}
               </div>
             )}
+
+            <NewsletterSignup
+              source="city"
+              heading={`Get ${data.city.name} market days in your inbox`}
+              blurb={`Markets near ${data.city.name} and what's in season, no more than once a week.`}
+            />
 
             <FaqSection items={data.faqs} />
 

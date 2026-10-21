@@ -120,3 +120,85 @@
     @apply bg-background text-foreground;
   }
 }
+
+/*
+ * Newsletter signup motion (src/components/NewsletterSignup.tsx).
+ * `.nl-reveal` children rise in, staggered by `--nl-i`, once the box's
+ * `data-visible` flips on scroll. Produce glyphs drift in the background, and
+ * the success state draws a check and lets a few glyphs float up. All of it
+ * is off for readers who ask for reduced motion.
+ */
+@keyframes nl-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nl-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(var(--nl-r, 0deg)); }
+  50% { transform: translate3d(6px, -14px, 0) rotate(calc(var(--nl-r, 0deg) + 8deg)); }
+}
+@keyframes nl-glow {
+  0%, 100% { transform: translate3d(-10%, -10%, 0) scale(1); opacity: 0.55; }
+  50% { transform: translate3d(12%, 8%, 0) scale(1.15); opacity: 0.8; }
+}
+@keyframes nl-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes nl-pop {
+  0% { opacity: 0; transform: scale(0.6); }
+  60% { opacity: 1; transform: scale(1.06); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes nl-burst {
+  0% { opacity: 0; transform: translate3d(0, 8px, 0) scale(0.6); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(var(--nl-x, 0), -70px, 0) scale(1) rotate(var(--nl-r, 0deg)); }
+}
+
+/* Hidden only once JS has armed the box, so it still shows without JS. */
+[data-visible="false"] .nl-reveal {
+  opacity: 0;
+}
+[data-visible="true"] .nl-reveal {
+  animation: nl-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--nl-i, 0) * 90ms);
+}
+.nl-drift {
+  animation: nl-drift var(--nl-d, 9s) ease-in-out infinite;
+  animation-delay: var(--nl-delay, 0s);
+}
+.nl-glow {
+  animation: nl-glow 14s ease-in-out infinite;
+}
+.nl-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: nl-draw 0.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: var(--nl-delay, 0s);
+}
+.nl-pop {
+  animation: nl-pop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--nl-delay, 0s);
+}
+.nl-burst {
+  animation: nl-burst 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--nl-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-visible] .nl-reveal,
+  .nl-pop {
+    opacity: 1;
+    animation: none;
+  }
+  .nl-drift,
+  .nl-glow {
+    animation: none;
+  }
+  .nl-draw {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .nl-burst {
+    display: none;
+  }
+}

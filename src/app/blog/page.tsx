@@ -6,6 +6,7 @@ import { BlogPhotoImage } from "@/components/BlogPhotoImage";
 import { absoluteUrl } from "@/lib/site";
 import { SITE_FRAME } from "@/lib/ui";
 import { displaySerif } from "@/lib/fonts";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 // Same static/ISR posture as the rest of the site; posts are code, so a new
 // deploy is what publishes one.
@@ -190,22 +191,18 @@ export default function BlogIndexPage() {
         )}
 
         <section className={`${SITE_FRAME} pb-16 sm:pb-24`}>
-          <div className="mx-auto flex max-w-6xl flex-col items-start gap-6 rounded-2xl bg-green-800 px-6 py-10 text-white sm:px-10 md:flex-row md:items-center md:justify-between dark:bg-green-900/60">
-            <div className="max-w-xl">
-              <h2 className={`${displaySerif.className} text-2xl font-semibold tracking-tight sm:text-3xl`}>
-                Find a farmers market near you
-              </h2>
-              <p className="mt-2 text-green-50/85">
-                Thousands of markets with hours, market days and SNAP/EBT acceptance.
-              </p>
-            </div>
-            <Link
-              href="/"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-green-800 transition-colors hover:bg-green-50"
-            >
-              Search the directory
-              <span aria-hidden="true">→</span>
-            </Link>
+          <div className="mx-auto max-w-6xl">
+            <NewsletterSignup
+              source="blog_index"
+              variant="band"
+              blurb="New guides, the markets near you and what's in season, no more than once a week."
+            />
+            <p className="mt-4 text-center text-sm text-zinc-500 dark:text-zinc-400">
+              Looking for a market today?{' '}
+              <Link href="/" className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400">
+                Search the directory
+              </Link>
+            </p>
           </div>
         </section>
       </div>

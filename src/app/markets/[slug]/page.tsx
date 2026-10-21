@@ -6,6 +6,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import MarketLocationMap from "@/components/MarketLocationMap";
 import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import Link from "next/link";
 import { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
@@ -424,6 +425,15 @@ export default async function MarketDetailPage({
                       </TrackedExternalLink>
                     </div>
                   )}
+                  <div className="mt-6">
+                    <NewsletterSignup
+                      source="market"
+                      variant="compact"
+                      marketSlug={market.slug}
+                      heading={placement ? `Markets near ${placement.city.name}, in your inbox` : 'Markets near you, in your inbox'}
+                      blurb="Market days near you and what's in season, no more than once a week."
+                    />
+                  </div>
                 </div>
               </div>
             </div>

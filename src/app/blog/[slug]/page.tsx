@@ -9,6 +9,7 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { absoluteUrl } from "@/lib/site";
 import { SITE_FRAME_GUTTER } from "@/lib/ui";
 import { displaySerif } from "@/lib/fonts";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 
 export const revalidate = 86400;
 // Posts are code: an unknown slug can never become real without a deploy.
@@ -177,8 +178,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <div dangerouslySetInnerHTML={{ __html: post.html }} />
               </BlogProse>
 
-              <footer className="mt-12 rounded-xl border border-green-600/20 bg-green-50 p-5 dark:border-green-500/20 dark:bg-green-900/20">
-                <p className="text-sm text-zinc-700 dark:text-zinc-300">
+              <footer className="mt-12">
+                <NewsletterSignup
+                  source="blog_post"
+                  heading="Liked this guide?"
+                  blurb="Get the next one, plus the markets near you and what's in season, no more than once a week."
+                />
+                <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
                   Looking for a market near you? The{' '}
                   <Link href="/" className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
                     directory

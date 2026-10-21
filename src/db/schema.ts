@@ -139,3 +139,40 @@ export const submissions = pgTable(
   },
   (t) => [index('submissions_status_idx').on(t.status), index('submissions_market_idx').on(t.marketId)],
 );
+
+export const newsletterStatus = pgEnum('newsletter_status', ['pending', 'confirmed', 'unsubscribed']);
+
+// Newsletter list with double opt-in. A row starts `pending` when someone
+// signs up and becomes `confirmed` only when they click the link in the
+// confirmation email; nothing is sent to a pending or unsubscribed address
+// except that one confirmation. Confirmed contacts are mirrored to Resend for
+// sending, but this table is the record of who consented, when and where.
+export const newsletterSubscribers = pgTable(
+  'newsletter_subscribers',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    /** Lower-cased and trimmed. */
+    email: text('email').notNull().unique(),
+    status: newsletterStatus('status').notNull().default('pending'),
+    /** Optional US ZIP, so emails can be about markets near the reader. */
+    zip: text('zip'),
+    /** Which signup box: home, blog_index, blog_post, city, market. */
+    source: text('source').notNull(),
+    /** The page the signup came from, e.g. `/new-york/albany`. */
+    sourcePath: text('source_path'),
+    marketSlug: text('market_slug'),
+    /** SHA-256 of the pending confirmation token; the token itself is only in the email. */
+    confirmTokenHash: text('confirm_token_hash'),
+    confirmExpiresAt: timestamp('confirm_expires_at', { withTimezone: true }),
+    confirmSentAt: timestamp('confirm_sent_at', { withTimezone: true }),
+    /** Long-lived, goes in every email's unsubscribe link. */
+    unsubscribeToken: text('unsubscribe_token').notNull().unique(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
+    unsubscribedAt: timestamp('unsubscribed_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('newsletter_status_idx').on(t.status),
+    index('newsletter_confirm_token_idx').on(t.confirmTokenHash),
+  ],
+);

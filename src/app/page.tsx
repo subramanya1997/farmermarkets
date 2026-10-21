@@ -5,6 +5,7 @@ import { getStateHubSummaries } from "@/lib/statePage";
 import { getTopicSummaries } from "@/lib/topicPage";
 import { MarketsExplorer } from "@/components/MarketsExplorer";
 import { FAQ } from "@/components/FAQ";
+import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { MapPin, CalendarDays, CreditCard, Clock, Laptop } from "lucide-react";
 import type { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
@@ -152,6 +153,12 @@ export default async function Home() {
                   </li>
                 ))}
               </ul>
+            </div>
+          </section>
+
+          <section className="w-full bg-white py-10 dark:bg-zinc-900 sm:py-14">
+            <div className={SITE_FRAME}>
+              <NewsletterSignup source="home" variant="band" />
             </div>
           </section>
 

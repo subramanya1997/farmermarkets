@@ -15,6 +15,13 @@
       "when": 1790827433557,
       "tag": "0001_market_highlights",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792620501226,
+      "tag": "0002_newsletter_subscribers",
+      "breakpoints": true
     }
   ]
 }
