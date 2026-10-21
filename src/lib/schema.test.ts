@@ -13,6 +13,7 @@ const {
   marketDateModified,
   marketFaqs,
   marketSchemaGraph,
+  nextMarketOccurrence,
   prune,
 } = schema;
 
@@ -539,6 +540,10 @@ test('Ferry Plaza v2 windows stay distinct in FAQ and Event JSON-LD', () => {
     },
   ]);
 
+  // Saturday the 22nd beats Tuesday the 25th across the two windows.
+  assert.equal(event.startDate, '2026-08-22T08:00');
+  assert.equal(event.endDate, '2026-08-22T14:00');
+
   const faqNode = nodes.find((node) => node['@type'] === 'FAQPage');
   assert.ok(faqNode);
   const jsonLdHours = (faqNode.mainEntity as Array<Record<string, unknown>>)
@@ -584,6 +589,10 @@ test('a full record emits every node, with no empty values anywhere', () => {
 
   const event = nodes[2];
   assert.deepEqual(event.location, { '@id': business['@id'] });
+  assert.deepEqual(event.organizer, { '@id': business['@id'] });
+  // 2026-08-21 is a Friday; the next Sunday inside May-October is the 23rd.
+  assert.equal(event.startDate, '2026-08-23T09:00');
+  assert.equal(event.endDate, '2026-08-23T13:00');
   assert.deepEqual(event.eventSchedule, {
     '@type': 'Schedule',
     byDay: ['Sunday'],
@@ -668,6 +677,76 @@ test('a weekday-only record gets hours without times and no Event', () => {
   assert.deepEqual(nodes[0].openingHoursSpecification, [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'] },
   ]);
+});
+
+/* ------------------------------------------------------------------ *
+ * Event occurrence
+ * ------------------------------------------------------------------ */
+
+const saturday = (extra: Partial<Parameters<typeof nextMarketOccurrence>[0][number]> = {}) => ({
+  '@type': 'OpeningHoursSpecification' as const,
+  dayOfWeek: ['Saturday' as const],
+  opens: '08:00',
+  closes: '13:00',
+  ...extra,
+});
+
+test('the next occurrence is today when today is a market day', () => {
+  assert.deepEqual(nextMarketOccurrence([saturday()], new Date('2026-08-22T15:00:00Z')), {
+    startDate: '2026-08-22T08:00',
+    endDate: '2026-08-22T13:00',
+  });
+});
+
+test('a season that has not opened yet starts on its first market day', () => {
+  // May 1, 2027 is a Saturday.
+  assert.equal(
+    nextMarketOccurrence([saturday({ validFrom: '2027-04-28', validThrough: '2027-10-30' })], OPTIONS.now)?.startDate,
+    '2027-05-01T08:00'
+  );
+});
+
+test('no market day left inside the window means no occurrence', () => {
+  assert.equal(nextMarketOccurrence([saturday({ validThrough: '2026-08-21' })], OPTIONS.now), undefined);
+  assert.equal(nextMarketOccurrence([saturday({ validFrom: '2026-05-01', validThrough: '2026-06-30' })], OPTIONS.now), undefined);
+  assert.equal(nextMarketOccurrence([{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'] }], OPTIONS.now), undefined);
+});
+
+test('a window past midnight ends on the following day', () => {
+  assert.deepEqual(
+    nextMarketOccurrence([saturday({ opens: '18:00', closes: '01:00' })], OPTIONS.now),
+    { startDate: '2026-08-22T18:00', endDate: '2026-08-23T01:00' }
+  );
+});
+
+test('a market whose dated schedule has ended emits no Event', () => {
+  const graph = marketSchemaGraph(
+    market({
+      slug: 'ended',
+      name: 'Ended Market',
+      days: ['Saturday 08:00-13:00'],
+      first_party: {
+        operations: {
+          schedules: [{
+            id: 'summer',
+            value: {
+              recurrence: { kind: 'weekly', weekdays: ['saturday'] },
+              opens: '08:00',
+              closes: '13:00',
+              start_date: '2026-06-06',
+              end_date: '2026-08-15',
+            },
+            source_ids: ['x'],
+            verified_at: '2026-06-01',
+          }],
+        },
+      },
+    } as Partial<Market>),
+    OPTIONS
+  ) as Record<string, unknown>;
+  const nodes = graph['@graph'] as Record<string, unknown>[];
+  assert.equal(nodes.some((node) => node['@type'] === 'Event'), false);
+  assert.ok((nodes[0].openingHoursSpecification as unknown[]).length, 'hours stay on the business');
 });
 
 /* ------------------------------------------------------------------ *

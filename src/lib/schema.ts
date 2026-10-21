@@ -665,6 +665,60 @@ export function prune<T>(value: T): T | undefined {
   return value;
 }
 
+/* ------------------------------------------------------------------ *
+ * Event occurrence
+ * ------------------------------------------------------------------ */
+
+const WEEKDAY_INDEX: Record<Weekday, number> = {
+  Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6,
+};
+
+export interface EventOccurrence {
+  /** Local wall clock, `YYYY-MM-DDTHH:MM`, no offset. */
+  startDate: string;
+  endDate: string;
+}
+
+/**
+ * The next market day on or after `now`, across every timed specification.
+ *
+ * Google reads only a top-level `startDate` on an Event, never the dates inside
+ * `eventSchedule`, so the recurring Event needs one concrete occurrence. Dates
+ * are compared as UTC calendar days and emitted as local wall clocks without
+ * an offset (we hold no reliable per-market timezone), which Google resolves
+ * against the event location. Pages revalidate daily, so "today" at worst
+ * names a market day that is already under way. A specification whose window
+ * has no matching weekday left yields nothing, and so does the Event.
+ */
+export function nextMarketOccurrence(
+  specs: OpeningHoursSpecification[],
+  now = new Date()
+): EventOccurrence | undefined {
+  const today = isoDate(now.getUTCFullYear(), now.getUTCMonth() + 1, now.getUTCDate());
+  let best: EventOccurrence | undefined;
+  for (const spec of specs) {
+    if (!spec.opens || !spec.closes || !spec.dayOfWeek.length) continue;
+    const from = spec.validFrom && spec.validFrom > today ? spec.validFrom : today;
+    const cursor = new Date(`${from}T00:00:00Z`);
+    if (Number.isNaN(cursor.getTime())) continue;
+    for (let offset = 0; offset < 7; offset += 1, cursor.setUTCDate(cursor.getUTCDate() + 1)) {
+      if (!spec.dayOfWeek.some((day) => WEEKDAY_INDEX[day] === cursor.getUTCDay())) continue;
+      const day = cursor.toISOString().slice(0, 10);
+      if (spec.validThrough && day > spec.validThrough) break;
+      const end = new Date(cursor);
+      // A window that closes at or before it opens runs past midnight.
+      if (spec.closes <= spec.opens) end.setUTCDate(end.getUTCDate() + 1);
+      const occurrence = {
+        startDate: `${day}T${spec.opens}`,
+        endDate: `${end.toISOString().slice(0, 10)}T${spec.closes}`,
+      };
+      if (!best || occurrence.startDate < best.startDate) best = occurrence;
+      break;
+    }
+  }
+  return best;
+}
+
 /**
  * The `@graph` for one market page: a `GroceryStore`/`LocalBusiness`, the
  * recurring `Event` it holds when we know a day and a time, and the `FAQPage`
@@ -731,9 +785,10 @@ export function marketSchemaGraph(
   // A farmers market is a recurring event as much as it is a place, and the
   // Event node is what answers "what markets are open this Saturday". It is
   // only true when we know both the day and the time, so it is only emitted
-  // then.
+  // then, and only while an upcoming market day falls inside its season.
   const timed = openingHours?.filter((spec) => spec.opens && spec.closes) ?? [];
-  if (timed.length) {
+  const occurrence = nextMarketOccurrence(timed, now);
+  if (occurrence) {
     const schedules = timed.map((spec) => ({
       '@type': 'Schedule',
       byDay: spec.dayOfWeek,
@@ -750,9 +805,12 @@ export function marketSchemaGraph(
       url,
       image: imageUrl,
       description: marketDescription(market),
+      startDate: occurrence.startDate,
+      endDate: occurrence.endDate,
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       eventStatus: 'https://schema.org/EventScheduled',
       location: { '@id': businessId },
+      organizer: { '@id': businessId },
       eventSchedule: schedules.length === 1 ? schedules[0] : schedules,
     });
   }
