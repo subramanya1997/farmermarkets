@@ -204,9 +204,9 @@ test('changed markets expand to their market, city, state, and sitemap URLs', ()
   assert.deepEqual(urls, [
     'https://www.farmermarkets.app/markets/b',
     'https://www.farmermarkets.app/markets/c',
-    'https://www.farmermarkets.app/farmers-markets/new-york/albany',
-    'https://www.farmermarkets.app/farmers-markets/new-york',
-    'https://www.farmermarkets.app/farmers-markets/ontario',
+    'https://www.farmermarkets.app/new-york/albany',
+    'https://www.farmermarkets.app/new-york',
+    'https://www.farmermarkets.app/ontario',
     'https://www.farmermarkets.app/sitemap.xml'
   ]);
   assert.deepEqual(refreshUrls([], geoIndex), []);
