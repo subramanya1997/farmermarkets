@@ -8,6 +8,7 @@ import { BlogProse } from "@/components/BlogProse";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { absoluteUrl } from "@/lib/site";
 import { SITE_FRAME_GUTTER } from "@/lib/ui";
+import { displaySerif } from "@/lib/fonts";
 
 export const revalidate = 86400;
 // Posts are code: an unknown slug can never become real without a deploy.
@@ -89,13 +90,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       />
       <div className="min-h-[calc(100vh-4rem)] bg-white dark:bg-zinc-900">
         <article className={`${SITE_FRAME_GUTTER} mx-auto w-full max-w-5xl py-8 sm:py-12`}>
-          <div className="mx-auto max-w-3xl">
+          {/* Same width as the cover photo, so the trail starts on its left edge. */}
+          <div className="mx-auto max-w-4xl">
             <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: post.title, href: blogPath(post.slug) }]} />
           </div>
 
           {/* Editorial header: centered title, then the byline row. */}
           <header className="mx-auto mt-6 max-w-3xl text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl md:text-[2.75rem] md:leading-[1.15]">
+            <h1 className={`${displaySerif.className} text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl md:text-[2.75rem] md:leading-[1.15]`}>
               {post.title}
             </h1>
             <p className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-zinc-500 dark:text-zinc-400">
