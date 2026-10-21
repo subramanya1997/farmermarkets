@@ -99,13 +99,12 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
 
         <BrowseByState states={states} />
 
-        {/*
-          The discovery survey used to live inside the client `Markets`
-          component, which every visitor to `/markets` mounted. Now that the
-          explorer is opt-in, the index page owns it so the prompt still
-          reaches the same readers.
-        */}
-        <DiscoverySurvey selectedCountry="All countries" resultCount={result.total} />
+        {/* Page 1 is the explorer, which mounts the survey itself with the
+            reader's live country and result count; the A-Z pages beyond it
+            get it here. Never both, so the dialog can't open twice. */}
+        {result.page > 1 && (
+          <DiscoverySurvey selectedCountry="All countries" resultCount={result.total} />
+        )}
       </div>
     </>
   );

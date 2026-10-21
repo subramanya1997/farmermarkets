@@ -15,7 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 
 const STORAGE_KEY = "farmermarkets.discovery-survey.v2";
-const SESSION_DISMISSED_KEY = "farmermarkets.discovery-survey-dismissed.v1";
+// When the reader last closed the survey without answering. It stays away
+// for DISMISS_DAYS so a returning reader is not asked on every visit.
+const DISMISSED_AT_KEY = "farmermarkets.discovery-survey-dismissed-at.v2";
+const DISMISS_DAYS = 30;
 
 const surveyOptions = [
   { id: "farmers_market", label: "A farmers market" },
@@ -60,8 +63,9 @@ export function DiscoverySurvey({ selectedCountry, resultCount }: DiscoverySurve
 
   useEffect(() => {
     const submitted = window.localStorage.getItem(STORAGE_KEY) === "submitted";
-    const dismissedThisSession = window.sessionStorage.getItem(SESSION_DISMISSED_KEY) === "dismissed";
-    if (submitted || dismissedThisSession) return;
+    const dismissedAt = Number(window.localStorage.getItem(DISMISSED_AT_KEY) || 0);
+    const recentlyDismissed = Date.now() - dismissedAt < DISMISS_DAYS * 24 * 60 * 60 * 1000;
+    if (submitted || recentlyDismissed) return;
 
     const timeout = window.setTimeout(() => {
       setIsOpen(true);
@@ -77,7 +81,7 @@ export function DiscoverySurvey({ selectedCountry, resultCount }: DiscoverySurve
   const updateOpen = (open: boolean) => {
     setIsOpen(open);
     if (!open && !hasSubmitted) {
-      window.sessionStorage.setItem(SESSION_DISMISSED_KEY, "dismissed");
+      window.localStorage.setItem(DISMISSED_AT_KEY, String(Date.now()));
       trackEvent("Discovery Popup Dismissed", {
         selected_intent: Boolean(intent),
         country: selectedCountry
