@@ -29,6 +29,7 @@ export function getPostHogServer(): PostHog | null {
     host: POSTHOG_HOST,
     flushAt: 1,
     flushInterval: 0,
+    metrics: { serviceName: 'farmermarkets' },
   });
   return client;
 }

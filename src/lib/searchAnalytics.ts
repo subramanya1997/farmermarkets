@@ -21,8 +21,28 @@ export function settledMarketSearchEvent(options: SettledSearchOptions) {
   return {
     query,
     result_count: options.resultCount,
+    // Searches that find nothing are the clearest sign of unmet demand.
+    zero_results: options.resultCount === 0,
+    search_source: 'market_explorer',
     country: options.country || 'All countries',
     data_ready: true,
+    sensitive_value_redacted: query === '[redacted]',
+  };
+}
+
+/**
+ * The city finder on a state page. Same redaction and minimum length as the
+ * market search, so the two can be read side by side.
+ */
+export function citySearchEvent(options: { query: string; resultCount: number; region: string }) {
+  const query = analyticsSafeSearchTerm(options.query);
+  if (query.length < 2) return null;
+  return {
+    query,
+    result_count: options.resultCount,
+    zero_results: options.resultCount === 0,
+    search_source: 'state_city_directory',
+    region: options.region,
     sensitive_value_redacted: query === '[redacted]',
   };
 }

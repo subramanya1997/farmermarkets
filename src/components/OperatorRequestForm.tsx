@@ -93,10 +93,12 @@ export function OperatorRequestForm() {
       }
 
       // Also record a durable submission row for the review queue. The email
-      // above is the notification; this is the premise for operator claiming,
-      // so a failure here should not eat the request.
+      // above already delivered the request, so the visitor still sees
+      // success if this fails; the failure is reported instead of swallowed
+      // so a missing review-queue row shows up in analytics.
+      let stored: number | 'network_error';
       try {
-        await fetch('/api/submissions', {
+        const storedResponse = await fetch('/api/submissions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', ...posthogRequestHeaders() },
           body: JSON.stringify({
@@ -109,10 +111,15 @@ export function OperatorRequestForm() {
               organization,
               message,
             },
+            website_url: website,
           }),
         });
+        stored = storedResponse.status;
       } catch {
-        // Logged server-side if it ever matters; the emailed request stands.
+        stored = 'network_error';
+      }
+      if (stored === 'network_error' || stored >= 400) {
+        trackEvent('Operator Request Not Stored', { purpose, status: String(stored) });
       }
 
       setStatus('sent');

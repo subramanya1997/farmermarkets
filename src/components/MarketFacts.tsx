@@ -98,12 +98,14 @@ export function MarketFacts({ market, analyticsProperties }: MarketFactsProps) {
                 <span key={phone.text}>
                   {index > 0 && ', '}
                   {phone.href ? (
-                    <a
+                    <TrackedExternalLink
                       href={phone.href}
                       className="text-green-700 hover:underline dark:text-green-500"
+                      eventName="Market Phone Clicked"
+                      eventProperties={analyticsProperties}
                     >
                       {phone.text}
-                    </a>
+                    </TrackedExternalLink>
                   ) : (
                     phone.text
                   )}

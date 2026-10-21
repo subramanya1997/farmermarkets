@@ -199,6 +199,7 @@ export function Markets({
       if (lastTrackedSearch.current === eventKey) return;
       lastTrackedSearch.current = eventKey;
       trackEvent('Market Search', event);
+      if (event.zero_results) trackEvent('Market Search No Results', event);
     }, 1200);
 
     return () => window.clearTimeout(timer);

@@ -1,9 +1,11 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
 import type { StateCityLink } from '@/lib/statePage';
+import { trackEvent } from '@/lib/analytics';
+import { citySearchEvent } from '@/lib/searchAnalytics';
 
 interface CityDirectoryProps {
   cities: StateCityLink[];
@@ -55,6 +57,21 @@ export function CityDirectory({ cities, regionFull }: CityDirectoryProps) {
   }, [cities, query]);
 
   const matchCount = groups.reduce((total, [, bucket]) => total + bucket.length, 0);
+  const lastTrackedQuery = useRef<string | null>(null);
+
+  // Report a search once the reader stops typing, so "spr", "spri", "sprin"
+  // are one event, not four.
+  useEffect(() => {
+    const event = citySearchEvent({ query, resultCount: matchCount, region: regionFull });
+    if (!event) return;
+    const timer = window.setTimeout(() => {
+      if (lastTrackedQuery.current === event.query) return;
+      lastTrackedQuery.current = event.query;
+      trackEvent('City Search', event);
+      if (event.zero_results) trackEvent('City Search No Results', event);
+    }, 1200);
+    return () => window.clearTimeout(timer);
+  }, [query, matchCount, regionFull]);
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import { marketService, slimMarket } from './data';
-import { NextRequest, NextResponse } from 'next/server';
+import { after, NextRequest, NextResponse } from 'next/server';
+import { getPostHogServer } from '@/lib/posthogServer';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 50;
@@ -55,8 +56,24 @@ function parseCoordinates(latParam: string | null, lonParam: string | null): Par
   return { userLat, userLon };
 }
 
+function recordRequestMetrics(startedAt: number, statusCode: '200' | '400' | '500') {
+  const posthog = getPostHogServer();
+  if (!posthog) return;
+
+  const attributes = { method: 'GET', route: '/api/markets', status_code: statusCode };
+  posthog.metrics.count('http.requests', 1, { attributes });
+  posthog.metrics.histogram('http.request.duration', Date.now() - startedAt, {
+    unit: 'ms',
+    attributes,
+  });
+  after(() => posthog.metrics.flush().catch((error) => {
+    console.error('PostHog metrics flush failed', error);
+  }));
+}
+
 // GET /api/markets - Get all markets (with pagination)
 export async function GET(request: NextRequest) {
+  const startedAt = Date.now();
   const searchParams = request.nextUrl.searchParams;
   const page = parsePositiveIntegerParam(searchParams.get('page'), DEFAULT_PAGE);
   const limit = parsePositiveIntegerParam(searchParams.get('limit'), DEFAULT_LIMIT, MAX_LIMIT);
@@ -71,6 +88,7 @@ export async function GET(request: NextRequest) {
   // Get user location for distance sorting
   const coordinates = parseCoordinates(searchParams.get('lat'), searchParams.get('lon'));
   if (coordinates.error) {
+    recordRequestMetrics(startedAt, '400');
     return NextResponse.json(
       { error: coordinates.error },
       { status: 400 }
@@ -90,11 +108,13 @@ export async function GET(request: NextRequest) {
     });
 
     // Return response with pagination metadata
+    recordRequestMetrics(startedAt, '200');
     return NextResponse.json(
       slim ? { ...result, data: result.data.map(slimMarket) } : result
     );
   } catch (error) {
     console.error('Error fetching markets:', error);
+    recordRequestMetrics(startedAt, '500');
     return NextResponse.json(
       { error: 'Failed to fetch markets' },
       { status: 500 }

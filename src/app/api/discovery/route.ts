@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
+import { createRateLimiter, requestOriginAllowed, requestTooLarge } from "@/lib/formGuards";
+import { getPostHogServer } from "@/lib/posthogServer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -61,9 +63,7 @@ const submissionSchema = z.object({
   }
 });
 
-const rateLimits = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
-const RATE_LIMIT_MAX = 5;
+const isRateLimited = createRateLimiter({ windowMs: 15 * 60 * 1000, max: 5 });
 
 function escapeHtml(value: string) {
   return value
@@ -74,38 +74,17 @@ function escapeHtml(value: string) {
     .replaceAll("'", "&#039;");
 }
 
-function requestIsAllowed(request: NextRequest) {
-  const origin = request.headers.get("origin");
-  if (!origin) return true;
-
+async function flushMetrics(posthog: ReturnType<typeof getPostHogServer>) {
+  if (!posthog) return;
   try {
-    const hostname = new URL(origin).hostname;
-    return hostname === "farmermarkets.app"
-      || hostname === "www.farmermarkets.app"
-      || hostname === "localhost"
-      || hostname === "127.0.0.1"
-      || hostname.endsWith(".vercel.app");
-  } catch {
-    return false;
+    await posthog.metrics.flush();
+  } catch (error) {
+    console.error("PostHog metrics flush failed", error);
   }
-}
-
-function isRateLimited(request: NextRequest) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const now = Date.now();
-  const current = rateLimits.get(ip);
-
-  if (!current || current.resetAt <= now) {
-    rateLimits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
-  }
-
-  current.count += 1;
-  return current.count > RATE_LIMIT_MAX;
 }
 
 export async function POST(request: NextRequest) {
-  if (!requestIsAllowed(request)) {
+  if (!requestOriginAllowed(request)) {
     return NextResponse.json({ error: "Request origin is not allowed." }, { status: 403 });
   }
 
@@ -113,8 +92,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
   }
 
-  const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > 10000) {
+  if (requestTooLarge(request, 10000)) {
     return NextResponse.json({ error: "Request is too large." }, { status: 413 });
   }
 
@@ -136,6 +114,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Contact delivery is not configured." }, { status: 503 });
   }
 
+  const posthog = getPostHogServer();
   const intent = intentLabels[submission.intent];
   const helpTopics = submission.helpTopics.map((topic) => helpLabels[topic]);
   const submittedAt = new Date().toISOString();
@@ -164,6 +143,7 @@ export async function POST(request: NextRequest) {
   // submission is posted to that incoming webhook. A Slack failure never
   // fails the request — the email above is the delivery of record.
   const slackWebhookUrl = process.env.DISCOVERY_SLACK_WEBHOOK_URL;
+  const slackStartedAt = Date.now();
   const slackNotification = slackWebhookUrl
     ? fetch(slackWebhookUrl, {
         method: "POST",
@@ -183,14 +163,30 @@ export async function POST(request: NextRequest) {
         })
       })
         .then((response) => {
+          const outcome = response.ok ? "success" : "error";
+          posthog?.metrics.count("external.requests", 1, {
+            attributes: { dependency: "slack", outcome },
+          });
+          posthog?.metrics.histogram("external.request.duration", Date.now() - slackStartedAt, {
+            unit: "ms",
+            attributes: { dependency: "slack", outcome },
+          });
           if (!response.ok) console.error("Slack discovery notification failed", response.status);
         })
         .catch((slackError) => {
+          posthog?.metrics.count("external.requests", 1, {
+            attributes: { dependency: "slack", outcome: "error" },
+          });
+          posthog?.metrics.histogram("external.request.duration", Date.now() - slackStartedAt, {
+            unit: "ms",
+            attributes: { dependency: "slack", outcome: "error" },
+          });
           console.error("Slack discovery notification failed", slackError instanceof Error ? slackError.message : "unknown");
         })
     : Promise.resolve();
 
   const resend = new Resend(apiKey);
+  const resendStartedAt = Date.now();
   const { data, error } = await resend.emails.send({
     from,
     to: [to],
@@ -200,14 +196,29 @@ export async function POST(request: NextRequest) {
     html: `<div style="font-family:Arial,sans-serif;color:#18181b"><h1 style="font-size:20px">New discovery request</h1><table style="border-collapse:collapse;width:100%;max-width:700px">${htmlRows}</table></div>`
   });
 
+  const resendOutcome = error ? "error" : "success";
+  posthog?.metrics.count("external.requests", 1, {
+    attributes: { dependency: "resend", outcome: resendOutcome },
+  });
+  posthog?.metrics.histogram("external.request.duration", Date.now() - resendStartedAt, {
+    unit: "ms",
+    attributes: { dependency: "resend", outcome: resendOutcome },
+  });
+
   // Let the Slack post settle before the function freezes (serverless
   // runtimes may kill in-flight work after the response returns).
   await slackNotification;
 
   if (error) {
+    await flushMetrics(posthog);
     console.error("Resend discovery submission failed", error.name);
     return NextResponse.json({ error: "We could not send your request. Please try again." }, { status: 502 });
   }
+
+  posthog?.metrics.count("discovery.requests.delivered", 1, {
+    attributes: { intent: submission.intent },
+  });
+  await flushMetrics(posthog);
 
   return NextResponse.json(
     { ok: true, id: data?.id },

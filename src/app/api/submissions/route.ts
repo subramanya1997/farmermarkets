@@ -3,6 +3,7 @@ import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { DatabaseUnavailableError, dbSchema, getDb } from "@/db";
 import { flushPostHogLogs, getPostHogLogLogger } from "@/instrumentation";
+import { createRateLimiter, requestOriginAllowed, requestTooLarge } from "@/lib/formGuards";
 import { getPostHogServer, posthogRequestIdentity } from "@/lib/posthogServer";
 
 export const runtime = "nodejs";
@@ -15,9 +16,13 @@ const submissionSchema = z.object({
   market_slug: z.string().max(200).regex(/^[a-z0-9-]+$/).optional(),
   email: z.string().email().max(254).optional(),
   payload: z.record(z.string(), z.unknown()),
-  // Honeypot: real users never fill this; bots do.
-  website_url: z.string().max(0).optional(),
+  // Honeypot: real users never fill this; bots do. Accepted here and
+  // answered with a fake success below, so a bot cannot tell it was caught.
+  website_url: z.string().max(2000).optional(),
 });
+
+// Same burst cap as /api/discovery: a person files a handful of these, not dozens.
+const isRateLimited = createRateLimiter({ windowMs: 15 * 60 * 1000, max: 5 });
 
 function logSubmissionOutcome(
   body: string,
@@ -31,6 +36,19 @@ function logSubmissionOutcome(
 }
 
 export async function POST(request: Request) {
+  if (!requestOriginAllowed(request)) {
+    logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "origin" });
+    return NextResponse.json({ error: "Request origin is not allowed." }, { status: 403 });
+  }
+  if (isRateLimited(request)) {
+    logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "rate_limited" });
+    return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+  }
+  if (requestTooLarge(request, 24_000)) {
+    logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "payload_too_large" });
+    return NextResponse.json({ error: "Submission too large" }, { status: 413 });
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -42,12 +60,14 @@ export async function POST(request: Request) {
   const parsed = submissionSchema.safeParse(body);
   if (!parsed.success) {
     logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "invalid_submission" });
-    return NextResponse.json(
-      { error: "Invalid submission", issues: parsed.error.issues },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: "Invalid submission" }, { status: 400 });
   }
-  const { type, market_id, market_slug, email, payload } = parsed.data;
+  const { type, market_id, market_slug, email, payload, website_url } = parsed.data;
+
+  if (website_url) {
+    logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "honeypot" });
+    return NextResponse.json({ ok: true }, { status: 201 });
+  }
 
   if (JSON.stringify(payload).length > 20_000) {
     logSubmissionOutcome("market_submission_rejected", "WARN", { reason: "payload_too_large" });
@@ -105,9 +125,16 @@ export async function POST(request: Request) {
     has_email: Boolean(email),
   });
 
+  const posthog = getPostHogServer();
+  posthog?.metrics.count("market.submissions.persisted", 1, {
+    attributes: {
+      submission_type: type,
+      market_resolved: resolvedMarketId ? "true" : "false",
+    },
+  });
+
   // The durable row above is the record; this event only counts it. No email
   // or payload content is sent, and an analytics failure never fails the request.
-  const posthog = getPostHogServer();
   const { distinctId, sessionId } = posthogRequestIdentity(request.headers);
   if (posthog && distinctId) {
     try {
@@ -125,6 +152,13 @@ export async function POST(request: Request) {
       await posthog.flush();
     } catch (error) {
       console.error("PostHog capture failed", error);
+    }
+  }
+  if (posthog) {
+    try {
+      await posthog.metrics.flush();
+    } catch (error) {
+      console.error("PostHog metrics flush failed", error);
     }
   }
 
