@@ -59,10 +59,15 @@ interface MailConfig {
   from: string;
 }
 
-/** Null when Resend is not configured; the subscribe route turns that into a 503. */
+/**
+ * Null when Resend is not configured; the subscribe route turns that into a
+ * 503. The site has one sender, `DISCOVERY_FROM_EMAIL`, shared with the
+ * discovery and operator notifications, so it must be on a domain verified
+ * in Resend.
+ */
 export function newsletterMailConfig(): MailConfig | null {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.NEWSLETTER_FROM_EMAIL || process.env.DISCOVERY_FROM_EMAIL;
+  const from = process.env.DISCOVERY_FROM_EMAIL;
   if (!apiKey || !from) return null;
   return { resend: new Resend(apiKey), from };
 }
