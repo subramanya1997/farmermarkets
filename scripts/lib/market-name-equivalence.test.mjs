@@ -7,6 +7,10 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { marketNamesEquivalent } from './market-name-equivalence.mjs';
 
+// The scheduled refresh sets this to tolerate source drift; these tests check
+// the strict local behaviour, so the spawned builders must not inherit it.
+delete process.env.ENRICHMENT_STALE;
+
 test('Ontario apostrophe refresh preserves the same market identity', () => {
   assert.equal(marketNamesEquivalent('Hamilton Farmers’ Market', "Hamilton Farmers' Market"), true);
 });

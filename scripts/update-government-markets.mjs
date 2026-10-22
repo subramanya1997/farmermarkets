@@ -720,6 +720,7 @@ function parseArguments(argv) {
     else if (argument === '--manifest') options.manifest = argv[++index];
     else if (argument === '--fixtures-dir') options.fixturesDir = argv[++index];
     else if (argument === '--allow-partial') options.allowPartial = true;
+    else if (argument === '--urls-file') options.urlsFile = argv[++index];
     else throw new Error(`Unknown argument: ${argument}`);
   }
   return options;
@@ -840,6 +841,11 @@ export async function updateGovernmentMarkets(options) {
   const urls = refreshUrls(changedSlugs, geoIndex);
   const ping = options.ping ?? pingIndexNow;
   console.log(`indexnow: ${changedSlugs.length} changed market(s) → ${urls.length} URL(s)`);
+  // The scheduled job pings only after the snapshot has passed its checks and
+  // been pushed, so it asks for the list here and runs with pings disabled.
+  if (options.urlsFile) {
+    await fs.writeFile(path.resolve(root, options.urlsFile), urls.length ? `${urls.join('\n')}\n` : '', 'utf8');
+  }
   let pingResult;
   if (urls.length) {
     try {

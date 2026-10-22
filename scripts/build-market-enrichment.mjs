@@ -294,11 +294,36 @@ export async function buildMarketEnrichment() {
   const files = names.filter((name) => /^research-.+\.json$/.test(name)).sort();
   if (!files.length) fail('No data/enrichment/research-*.json files found');
 
+  // A scheduled refresh can find that the government source renamed or
+  // dropped a market some research was pinned to. Locally that stays a hard
+  // error (fix the research). In the refresh job (`ENRICHMENT_STALE=skip`) the
+  // stale record is left out with a warning instead: its facts were checked
+  // against the old identity, so publishing them would be wrong, and failing
+  // the whole refresh over one renamed market froze every other update.
+  const skipStale = String(process.env.ENRICHMENT_STALE ?? '').trim().toLowerCase() === 'skip';
+  const stale = [];
   const recordsById = new Map();
   for (const file of files) {
     const parsed = JSON.parse(await fs.readFile(path.join(enrichmentDir, file), 'utf8'));
     if (!Array.isArray(parsed)) fail(`${file} must contain a top-level array`);
     for (const [index, record] of parsed.entries()) {
+      if (skipStale && record && typeof record === 'object') {
+        const market = marketsById.get(String(record.id));
+        // A casing-only change ("Castro Fm" -> "Castro FM") is the same
+        // market; carry the research over under the source's new spelling.
+        if (
+          market &&
+          !marketNamesEquivalent(record.market_name, market.name) &&
+          typeof record.market_name === 'string' &&
+          record.market_name.trim().toLowerCase() === String(market.name).trim().toLowerCase()
+        ) {
+          record.market_name = market.name;
+        }
+        if (!market || !marketNamesEquivalent(record.market_name, market.name)) {
+          stale.push(`${file}[${index}] ${record.id}: research names ${JSON.stringify(record.market_name)}, source now has ${market ? JSON.stringify(market.name) : 'no such market'}`);
+          continue;
+        }
+      }
       validateRecord(record, `${file}[${index}]`, marketsById);
       const id = String(record.id);
       const normalized = { ...record, id };
@@ -339,7 +364,8 @@ export async function buildMarketEnrichment() {
   records.sort((left, right) => left.id.localeCompare(right.id, 'en'));
   records.forEach((record, index) => validateRecord(record, `compiled[${index}]`, marketsById));
 
-  console.log(`validated ${records.length} independently enriched markets from ${files.length} research batches`);
+  for (const line of stale) console.warn(`enrichment: skipped stale record ${line}`);
+  console.log(`validated ${records.length} independently enriched markets from ${files.length} research batches${stale.length ? ` (${stale.length} stale skipped)` : ''}`);
   return records;
 }
 
