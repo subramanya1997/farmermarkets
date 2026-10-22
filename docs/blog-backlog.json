@@ -43,7 +43,9 @@
       "monthlySearches": 6600,
       "difficulty": 8,
       "cluster": "storage",
-      "status": "todo"
+      "status": "published",
+      "slug": "how-to-store-avocados",
+      "publishedAt": "2026-10-22"
     },
     {
       "keyword": "do farmers markets take ebt",
