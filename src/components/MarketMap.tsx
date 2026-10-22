@@ -5,7 +5,7 @@ import maplibregl from 'maplibre-gl';
 import type { FarmerMarket } from '@/lib/api';
 import { buildMarketPopupHtml } from './leafletPopupHtml';
 import { trackEvent } from '@/lib/analytics';
-import { loadMapStyle, prefersDarkMap } from './mapStyle';
+import { loadMapStyle, mapPerfOptions, prefersDarkMap } from './mapStyle';
 import {
   addMarketLayers,
   featureProps,
@@ -124,13 +124,16 @@ export default function MarketMap({
         cooperativeGestures: true,
         dragRotate: false,
         pitchWithRotate: false,
+        ...mapPerfOptions(),
       });
       mapRef.current = map;
       map.addControl(new maplibregl.AttributionControl({ compact: true }));
       map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.touchZoomRotate.disableRotation();
 
-      map.on('load', () => {
+      // The style is ready before any tile is: draw the markets now rather
+      // than after the whole base map has loaded, which is seconds on a phone.
+      map.once('style.load', () => {
         if (!map) return;
         addMarketLayers(map, points, { cluster: true });
         wireClusterZoom(map);

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import { buildMarketPopupHtml, buildSingleMarketPopupHtml } from './leafletPopupHtml';
-import { loadMapStyle, prefersDarkMap } from './mapStyle';
+import { loadMapStyle, mapPerfOptions, prefersDarkMap } from './mapStyle';
 import {
   SOURCE,
   addMarketLayers,
@@ -110,6 +110,7 @@ export default function PlacesMap({
         cooperativeGestures: !still,
         dragRotate: false,
         pitchWithRotate: false,
+        ...mapPerfOptions(),
         ...(single
           ? { center: [points[0].lon, points[0].lat] as [number, number], zoom: 14.5 }
           : { bounds: openingBounds(places), fitBoundsOptions: { padding: 36, maxZoom: 14 } }),
@@ -119,7 +120,9 @@ export default function PlacesMap({
       if (!still) map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
       map.touchZoomRotate.disableRotation();
 
-      map.on('load', () => {
+      // The style is ready before any tile is: draw the markets now rather
+      // than after the whole base map has loaded, which is seconds on a phone.
+      map.once('style.load', () => {
         if (!map) return;
         addMarketLayers(map, points, { cluster: points.length > 40 });
         readyRef.current = true;

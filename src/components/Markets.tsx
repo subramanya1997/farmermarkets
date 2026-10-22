@@ -18,6 +18,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { MarketCard } from "@/components/MarketCard";
 import { FilterBar } from "@/components/FilterBar";
 import dynamic from "next/dynamic";
+import { preloadMapStyle } from "@/components/mapStyle";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useAllMarkets } from "@/hooks/useAllMarkets";
 import { calculateDistance } from "@/lib/utils";
@@ -57,6 +58,10 @@ const MarketsMap = dynamic(() => import("@/components/MarketMap"), {
 export function Markets() {
   const { markets, loading: marketsLoading, error: marketsError } = useAllMarkets();
   const [view, setView] = useState('grid');
+  // Fetch the map style alongside the map's code rather than after it.
+  useEffect(() => {
+    if (view === 'map') preloadMapStyle();
+  }, [view]);
   const [page, setPage] = useState(1);
   // Seeded from `?search=` so the homepage search bar (and the WebSite
   // SearchAction schema) land here with the query applied. Safe to read
