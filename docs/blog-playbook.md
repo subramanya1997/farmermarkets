@@ -63,14 +63,26 @@ The body:
   commas, colons, parentheses or a plain hyphen for ranges ("8am-1pm").
 - No filler openers, no "in today's world", no "whether you're a ... or a
   ...", no closing paragraph that restates the post.
+- No sentences about the post itself ("The details below are about...",
+  "What follows is..."). Start the next section instead.
+- No lines tied to the day you write ("Right now, in October", "Since it is
+  mid-October", "this fall"). The post stays up for years; write "in October"
+  or "late in the season" instead.
+- No pitch for the site. Do not end on a count of the directory ("our
+  directory lists 9,132 markets...") or a "find a market near you" line: the
+  post page already has the newsletter signup and the site header, so the
+  prose only needs links that help with the question.
 - Every factual claim about food safety, storage times, benefit programs or
   regulations comes from a primary source you actually opened during this run
   (USDA, FDA, a state agency, a university extension service) and links to
   it. If you cannot find a source, leave the claim out.
-- Numbers about this site's markets come from the data, not from memory:
-  compute them from `public/data/farmers_markets.json` and
+- Numbers about this site's markets are optional. Use one only where it
+  answers the reader's question (for example, how many vendors a typical
+  market has, in a post about selling), never as a closing stat. When you use
+  one, compute it from `public/data/farmers_markets.json` and
   `public/data/geo_index.json` with a short script and quote what it prints.
-- At least three internal links, written as root-relative paths. Useful
+- At least three internal links, written as root-relative paths, each placed
+  in the sentence it helps, not stacked in a closing paragraph. Useful
   targets: `/markets`, the topic pages (`/farmers-markets/snap-ebt`,
   `/farmers-markets/hours`, `/farmers-markets/saturday`,
   `/farmers-markets/online`), state pages (`/california`), city pages

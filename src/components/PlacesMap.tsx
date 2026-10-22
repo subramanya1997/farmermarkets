@@ -1,10 +1,19 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import L from 'leaflet';
+import { useEffect, useMemo, useRef } from 'react';
+import maplibregl from 'maplibre-gl';
 import { buildMarketPopupHtml, buildSingleMarketPopupHtml } from './leafletPopupHtml';
-import { MAP_ATTRIBUTION, MAP_DOT, MAP_DOT_ACTIVE, MAP_TILE_URL } from './mapStyle';
-import 'leaflet/dist/leaflet.css';
+import { loadMapStyle, prefersDarkMap } from './mapStyle';
+import {
+  SOURCE,
+  addMarketLayers,
+  featureProps,
+  slugId,
+  wireClusterZoom,
+  wireHover,
+  type MarketPoint,
+} from './mapLayers';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 export interface MapPlace {
   slug: string;
@@ -18,13 +27,15 @@ interface PlacesMapProps {
   places: MapPlace[];
   /** Region name for the popup's location line ("Brooklyn, New York"). */
   region: string;
-  /** Slug of the place a list row is pointing at; that dot is enlarged. */
+  /** Slug of the place a list row is pointing at; that dot is emphasised. */
   activeSlug?: string | null;
   /**
-   * False on a market's own page, where a "View Details" link in the popup
+   * False on a market's own page, where a "View market" link in the popup
    * would point at the page the reader is already on.
    */
   linkPlaces?: boolean;
+  /** Draw a still picture: no pan, zoom or popups (the market page hero). */
+  still?: boolean;
   className?: string;
 }
 
@@ -37,95 +48,131 @@ interface PlacesMapProps {
  * once there are enough points to tell, the outer 2% on each side is left out
  * of the opening view. Those dots are still drawn; the reader can pan to them.
  */
-function openingBounds(places: MapPlace[]): L.LatLngBounds {
+function openingBounds(places: MapPlace[]): maplibregl.LngLatBoundsLike {
   const lats = places.map((place) => place.lat).sort((a, b) => a - b);
   const lons = places.map((place) => place.lon).sort((a, b) => a - b);
   const trim = places.length >= 25 ? Math.floor(places.length * 0.02) : 0;
-  return L.latLngBounds(
-    [lats[trim], lons[trim]],
-    [lats[lats.length - 1 - trim], lons[lons.length - 1 - trim]]
-  );
+  return [
+    [lons[trim], lats[trim]],
+    [lons[lons.length - 1 - trim], lats[lats.length - 1 - trim]],
+  ];
 }
 
 /**
- * A map of a fixed set of markets: every market in one city, or every market
- * in one state.
+ * A map of a fixed set of markets: every market in one city or state, or the
+ * single market on its own page.
  *
- * Unlike `MarketMap` (the worldwide explorer, which re-queries its markers on
- * every pan), this draws all of its points once, as canvas dots rather than
- * DOM pins, so a 1,000-market state costs one canvas and no layout work.
+ * MapLibre vector tiles in the site's quiet style (`mapStyle.ts`), markets as
+ * green dots drawn on the GPU, clustered when there are many. Scroll-wheel
+ * and one-finger drags are left to the page until the reader engages the map
+ * (cooperative gestures), so the map never traps a scroll.
  */
 export default function PlacesMap({
   places,
   region,
   activeSlug,
   linkPlaces = true,
+  still = false,
   className = '',
 }: PlacesMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const dotsRef = useRef<Map<string, L.CircleMarker>>(new Map());
-  const previousActiveRef = useRef<string | null>(null);
+  const mapRef = useRef<maplibregl.Map | null>(null);
+  const readyRef = useRef(false);
+  const previousActiveRef = useRef<number | null>(null);
+
+  const points = useMemo<MarketPoint[]>(
+    () =>
+      places.map((place) => ({
+        id: slugId(place.slug),
+        slug: place.slug,
+        name: place.name,
+        place: [place.city, region].filter(Boolean).join(', '),
+        lat: place.lat,
+        lon: place.lon,
+      })),
+    [places, region]
+  );
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || places.length === 0) return;
+    if (!container || points.length === 0) return;
+    let cancelled = false;
+    let map: maplibregl.Map | undefined;
 
-    const map = L.map(container, { preferCanvas: true, scrollWheelZoom: false });
-    L.tileLayer(MAP_TILE_URL, { attribution: MAP_ATTRIBUTION }).addTo(map);
+    loadMapStyle(prefersDarkMap()).then((style) => {
+      if (cancelled) return;
+      const single = points.length === 1;
+      map = new maplibregl.Map({
+        container,
+        style,
+        attributionControl: false,
+        interactive: !still,
+        cooperativeGestures: !still,
+        dragRotate: false,
+        pitchWithRotate: false,
+        ...(single
+          ? { center: [points[0].lon, points[0].lat] as [number, number], zoom: 14.5 }
+          : { bounds: openingBounds(places), fitBoundsOptions: { padding: 36, maxZoom: 14 } }),
+      });
+      mapRef.current = map;
+      map.addControl(new maplibregl.AttributionControl({ compact: true }));
+      if (!still) map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      map.touchZoomRotate.disableRotation();
 
-    map.fitBounds(openingBounds(places), { padding: [28, 28], maxZoom: 15 });
-    // The page scrolls past the map; only take over the wheel once the reader
-    // has clicked into it.
-    map.once('focus', () => map.scrollWheelZoom.enable());
-
-    const dots = dotsRef.current;
-    for (const place of places) {
-      const dot = L.circleMarker([place.lat, place.lon], MAP_DOT).addTo(map);
-      const popup = { name: place.name, city: place.city, state: region };
-      dot.bindPopup(
-        linkPlaces
-          ? buildMarketPopupHtml({ ...popup, slug: place.slug })
-          : buildSingleMarketPopupHtml(popup)
-      );
-      dots.set(place.slug, dot);
-    }
-
-    // The container's final size is not always known on the first frame (the
-    // city layout's sticky column settles after hydration).
-    const observer = new ResizeObserver(() => map.invalidateSize());
-    observer.observe(container);
+      map.on('load', () => {
+        if (!map) return;
+        addMarketLayers(map, points, { cluster: points.length > 40 });
+        readyRef.current = true;
+        if (still) return;
+        wireClusterZoom(map);
+        wireHover(map);
+        map.on('click', 'market-dots', (event) => {
+          const feature = event.features?.[0];
+          if (!feature || !map) return;
+          const { slug, name, place } = featureProps(feature);
+          const [city, ...rest] = place.split(', ');
+          const popup = { name, city, state: rest.join(', ') || region };
+          new maplibregl.Popup({ closeButton: false, offset: 12, className: 'market-popup', maxWidth: '260px' })
+            .setLngLat((feature.geometry as { coordinates: [number, number] }).coordinates)
+            .setHTML(linkPlaces ? buildMarketPopupHtml({ ...popup, slug }) : buildSingleMarketPopupHtml(popup))
+            .addTo(map);
+        });
+      });
+    });
 
     return () => {
-      observer.disconnect();
-      dots.clear();
+      cancelled = true;
+      readyRef.current = false;
       previousActiveRef.current = null;
-      map.remove();
+      map?.remove();
+      mapRef.current = null;
     };
-  }, [places, region, linkPlaces]);
+  }, [points, places, region, linkPlaces, still]);
 
+  // The market a list row points at, or the market on its own page.
   useEffect(() => {
-    const dots = dotsRef.current;
-    const previous = previousActiveRef.current;
-    if (previous && previous !== activeSlug) {
-      const dot = dots.get(previous);
-      dot?.setStyle(MAP_DOT);
-      dot?.setRadius(MAP_DOT.radius!);
-    }
-    if (activeSlug) {
-      const dot = dots.get(activeSlug);
-      dot?.setStyle(MAP_DOT_ACTIVE);
-      dot?.setRadius(MAP_DOT_ACTIVE.radius!);
-      dot?.bringToFront();
-    }
-    previousActiveRef.current = activeSlug ?? null;
-  }, [activeSlug, places]);
+    const apply = () => {
+      const map = mapRef.current;
+      if (!map || !readyRef.current) return false;
+      const previous = previousActiveRef.current;
+      const next = activeSlug ? slugId(activeSlug) : null;
+      if (previous !== null && previous !== next) map.setFeatureState({ source: SOURCE, id: previous }, { active: false });
+      if (next !== null) map.setFeatureState({ source: SOURCE, id: next }, { active: true });
+      previousActiveRef.current = next;
+      return true;
+    };
+    if (apply()) return;
+    // The map may still be loading its style; try again shortly.
+    const timer = window.setInterval(() => apply() && window.clearInterval(timer), 150);
+    return () => window.clearInterval(timer);
+  }, [activeSlug, points]);
 
   return (
     <div
       ref={containerRef}
       role="region"
       aria-label={`Map of farmers markets in ${region}`}
-      className={`isolate z-0 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
+      className={`isolate z-0 overflow-hidden rounded-2xl border border-zinc-200 bg-[#f6f6f2] dark:border-zinc-800 dark:bg-zinc-900 ${className}`}
     />
   );
 }

@@ -196,3 +196,27 @@ export async function getNearbyMarkets(
 
   return best;
 }
+
+let pointsPromise: Promise<Map<string, { lat: number; lon: number }>> | null = null;
+
+/**
+ * Every geocoded market's coordinates by slug, from the same grid, so a city
+ * page can place its neighbouring cities without loading each record.
+ */
+export function getMarketPoints(): Promise<Map<string, { lat: number; lon: number }>> {
+  if (!pointsPromise) {
+    pointsPromise = getGrid()
+      .then((grid) => {
+        const points = new Map<string, { lat: number; lon: number }>();
+        for (const cell of grid.values()) {
+          for (const entry of cell) points.set(entry.slug, { lat: entry.lat, lon: entry.lon });
+        }
+        return points;
+      })
+      .catch((error) => {
+        pointsPromise = null;
+        throw error;
+      });
+  }
+  return pointsPromise;
+}

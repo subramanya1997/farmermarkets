@@ -132,17 +132,19 @@ export function searchMarkets(markets: FarmerMarket[], query: string): FarmerMar
 }
 
 /**
- * Sort key for the browse listing (no query, "nearest first"): distance in
- * miles, with a 15 mile handicap on records lacking recent positive
- * confirmation and a hard demotion for ones the upstream directory dropped.
- * Without a location every distance is missing, so the listing becomes
- * verified first, then unconfirmed, then unverified, each keeping the
- * caller's order.
+ * Sort key for the browse listing (no query, "nearest first"): plain distance
+ * in miles, nearest first. Verification only breaks ties (distances are
+ * rounded to 0.1 mi, so the 0.01 nudge never jumps a nearer market); a
+ * mileage handicap here split the list into "verified by distance, then the
+ * rest by distance", which read as broken sorting. Records the upstream
+ * directory dropped still go last. Without a location every distance is
+ * missing, so the listing becomes verified first, then unconfirmed, then
+ * unverified, each keeping the caller's order.
  */
 export function listingSortKey(
   market: Pick<FarmerMarket, 'distance' | 'verified' | 'unverified'>
 ): number {
   const distance =
     market.distance !== undefined && Number.isFinite(market.distance) ? market.distance : 25000;
-  return distance + (market.verified ? 0 : 15) + (market.unverified ? 100000 : 0);
+  return distance + (market.verified ? 0 : 0.01) + (market.unverified ? 100000 : 0);
 }

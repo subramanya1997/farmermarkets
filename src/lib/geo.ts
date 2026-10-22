@@ -16,9 +16,50 @@
  * only works for a file with no runtime dependencies and no path aliases.
  */
 
+/**
+ * Windows-1252 characters for the bytes 0x80-0x9F, the ones a UTF-8 string
+ * decoded as cp1252 turns into ("’" becomes "â€™"). The bytes cp1252 leaves
+ * undefined come through as the matching C1 control character instead.
+ */
+const CP1252_HIGH = '€\u0081‚ƒ„…†‡ˆ‰Š‹Œ\u008DŽ\u008F\u0090‘’“”•–—˜™š›œ\u009DžŸ';
+
+function cp1252Byte(char: string): number | undefined {
+  const index = CP1252_HIGH.indexOf(char);
+  if (index >= 0) return 0x80 + index;
+  const code = char.charCodeAt(0);
+  return code >= 0xa0 && code <= 0xbf ? code : undefined;
+}
+
+/** A continuation byte as it shows up after a cp1252 mis-decode. */
+const MOJIBAKE_TAIL = `[${CP1252_HIGH}\\u00A0-\\u00BF]`;
+const MOJIBAKE_RE = new RegExp(`â${MOJIBAKE_TAIL}${MOJIBAKE_TAIL}|[ÂÃ]${MOJIBAKE_TAIL}`, 'g');
+
+/**
+ * Undo UTF-8 that was read as Windows-1252 somewhere upstream ("The â€˜Patch"
+ * -> "The ‘Patch", "CafÃ©" -> "Café"). Only the lead characters that sequence
+ * produces for punctuation (â) and Latin-1 letters (Â, Ã) are tried, and only
+ * when the bytes decode to one valid character, so ordinary accented text such
+ * as "Château" or "São" is never touched.
+ */
+export function repairMojibake(value: string): string {
+  if (!/[âÂÃ]/.test(value)) return value;
+  return value.replace(MOJIBAKE_RE, (sequence) => {
+    const bytes = [sequence.charCodeAt(0), ...[...sequence.slice(1)].map(cp1252Byte)];
+    if (bytes.some((byte) => byte === undefined)) return sequence;
+    try {
+      const decoded = new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(bytes as number[]));
+      return [...decoded].length === 1 ? decoded : sequence;
+    } catch {
+      return sequence;
+    }
+  });
+}
+
 /** Collapse whitespace and stray ellipses; the entry point for any raw field. */
 export function clean(value?: string | null): string {
-  return (value ?? '')
+  return repairMojibake(value ?? '')
+    // Zero-width spaces and joiners ride along with copy-pasted web text.
+    .replace(/[​-‍﻿]/g, '')
     .replace(/\s+/g, ' ')
     // Some source names are already truncated with "..."; keep that as a single
     // ellipsis so a sentence never ends in a run of dots.
@@ -262,8 +303,9 @@ export function normalizeStateValue(raw?: string | null): string {
  * without a comma ("2511 Reynolds Road Ashton, IL 61006"), then normalize case
  * and shorten the street suffix.
  */
-function tidyStreet(rawStreet: string, city: string, state: string): string | undefined {
-  let street = clean(rawStreet);
+function tidyStreet(rawStreet: string, city: string, state: string, town?: string): string | undefined {
+  // "750 Aurora Avenue 750 Aurora Avenue Naperville": a field pasted twice.
+  let street = clean(rawStreet).replace(/^(\S.{5,}?)\s+\1(?=[\s,]|$)/i, '$1');
   if (!street) return undefined;
 
   const tails = [
@@ -276,13 +318,15 @@ function tidyStreet(rawStreet: string, city: string, state: string): string | un
       ? new RegExp(`[\\s,]+${escapeForRegExp(stateFullName(state) as string)}$`, 'i')
       : undefined,
     city ? new RegExp(`[\\s,]+${escapeForRegExp(city)}$`, 'i') : undefined,
+    town && town !== city ? new RegExp(`[\\s,]+${escapeForRegExp(town)}$`, 'i') : undefined,
   ].filter((pattern): pattern is RegExp => Boolean(pattern));
 
   // Two passes: the tail is usually "<city>, <ST> <zip>", stripped inside out.
   for (let pass = 0; pass < 2; pass += 1) {
     for (const pattern of tails) {
       const trimmed = clean(street.replace(pattern, ''));
-      if (trimmed) street = trimmed;
+      // Never strip a line down to a bare number ("#1 The Plaza Sonoma").
+      if (/[A-Za-z]{2}/.test(trimmed)) street = trimmed;
     }
   }
 
@@ -292,6 +336,91 @@ function tidyStreet(rawStreet: string, city: string, state: string): string | un
     // ("The Shoppes in") pointing at nothing.
     .replace(/[\s,]+(in|at|on|near|by|behind|across from|the|and|of)$/i, '');
   return street || undefined;
+}
+
+/**
+ * Words that open a directions or parking note rather than an address line:
+ * "We are located within the parking lot of…", "Take CTA to…", "Plenty of
+ * parking…". Matched case-sensitively as a capitalised sentence opener.
+ */
+const NOTE_OPENER =
+  /^(?:(?:We|We're|We’re|Our|Located|Location|Parking|Plenty|Free|Take|Turn|There|There's|There’s|Please|Look|Join|Enter|Follow|Drive|Head|Go|Use|Just|Every|During|This|It|Its|CTA|Handicap|Wheelchair)\b|The\s+[a-z]|\d+(?:\/\d+)?\s+(?:Blocks?|Miles?)\s+(?:from|north|south|east|west|away)\b)/;
+
+/**
+ * Cut the directions and parking notes some records append to their address.
+ *
+ * Two shapes, both seen in hundreds of USDA rows: a complete
+ * "street City, ST 12345" followed by a free-text paragraph ("6525 N Hiawatha
+ * Chicago, IL 60646 We are located within the parking lot of…"), and a street
+ * line that runs on into a second sentence ("…Ave. Located north of the Home
+ * Depot"). Everything up to and including the ZIP is kept; a later sentence is
+ * dropped only when it opens like a note, so "St. Agnes Church" and
+ * "W. Adams Blvd." survive.
+ */
+export function trimAddressNotes(address: string): string {
+  let value = clean(address);
+  const afterZip = /^(.*?[\s,]([A-Za-z]{2})\.?,?\s+\d{5}(?:-\d{4})?)\s+(\S.*)$/.exec(value);
+  if (
+    afterZip &&
+    (stateAbbreviation(afterZip[2]) || provinceAbbreviation(afterZip[2])) &&
+    /[A-Za-z]{2}/.test(afterZip[3]) &&
+    !COUNTRY_TOKENS.has(afterZip[3].replace(/[.,]+$/, '').toLowerCase())
+  ) {
+    value = afterZip[1];
+  }
+  // A full stop followed by a note opener ends the address. Abbreviations
+  // ("Ave.", "St.") followed by an ordinary word do not.
+  for (const match of value.matchAll(/[.!]\s+(?=[A-Z0-9])/g)) {
+    const rest = value.slice(match.index + match[0].length);
+    if (NOTE_OPENER.test(rest)) {
+      return clean(value.slice(0, match.index));
+    }
+  }
+  return value;
+}
+
+/** Words that never belong to a US or Canadian town name. */
+const NOT_A_CITY_WORD =
+  /\b(road|street|avenue|boulevard|blvd|highway|hwy|freeway|thruway|route|parking|lot|entrance|entr|exit|corner|campus|behind|across|located|between|opposite|building|gazebo|pavilion|fairgrounds?|farmers|market|marketplace|plaza|rd|ave|ln|museum|library|church|school|courthouse|hospital|mall|use|gps|government|balance|we|take|drive|turn)\b/i;
+
+function isPlausibleCity(value: string): boolean {
+  return (
+    value.length >= 2 &&
+    value.length <= 40 &&
+    /^[\p{Lu}\p{Lo}]/u.test(value) &&
+    !/\d/.test(value) &&
+    !/[^\p{L}\p{M}\s'’.\-/]/u.test(value) &&
+    !/\p{L}\.\p{L}/u.test(value) &&
+    value.split(/\s+/).length <= 4 &&
+    !NOT_A_CITY_WORD.test(value)
+  );
+}
+
+/**
+ * A city value fit to print. About 200 records carry more than the town in
+ * their `city` field: "Old Town Plaza, Elk Grove", "Wrightstown (Use Newtown
+ * For Gps)", "(Centennial Bank Park) Mountain View", or a whole
+ * parking paragraph. The town is kept when one segment of the value is
+ * plausibly a town on its own (the last one wins, since the town is what these
+ * strings end on); otherwise the value is dropped, never shown.
+ */
+export function tidyCityName(raw?: string | null): string | undefined {
+  const value = clean(raw);
+  if (!value) return undefined;
+  if (isPlausibleCity(value)) return value;
+  // A paragraph is directions, not a place; picking a town out of it is a guess.
+  if (value.length > 60) return undefined;
+  const segments = value
+    // "(Centennial Bank Park) Mountain View": the aside is never the town.
+    .replace(/\([^)]*\)/g, ',')
+    .split(/[,;()]|\s+-\s+|\s\d{5}(?:-\d{4})?\s/)
+    .map((segment) => clean(segment).replace(/^(?:in|at|near|the|downtown)\s+/i, ''))
+    .filter(Boolean);
+  for (const segment of segments.reverse()) {
+    // "Nashville, Tennessee": the state is not the town.
+    if (isPlausibleCity(segment) && !stateAbbreviation(segment) && !provinceAbbreviation(segment)) return segment;
+  }
+  return undefined;
 }
 
 function escapeForRegExp(value: string): string {
@@ -328,10 +457,15 @@ export interface ResolvedLocation {
  */
 export function resolveLocation(market: GeoRecord): ResolvedLocation {
   const zip = clean(market.zip_code);
-  let city = clean(market.city);
+  // The raw `city` is what the address repeats, so it is what the tail is
+  // matched against, unless it is really a street ("68-72 Main Street
+  // Sunapee"): then only the town inside it, if any, is used.
+  const rawCity = clean(market.city);
+  const townName = tidyCityName(rawCity);
+  let city = /\d/.test(rawCity) ? townName ?? '' : rawCity;
   let state = normalizeStateValue(market.state);
 
-  let parts = clean(market.address)
+  let parts = trimAddressNotes(clean(market.address))
     .split(',')
     .map((part) => clean(part))
     .filter(Boolean);
@@ -398,7 +532,7 @@ export function resolveLocation(market: GeoRecord): ResolvedLocation {
     parts = [];
   }
 
-  const street = tidyStreet(parts.join(', '), city, state);
+  const street = tidyStreet(parts.join(', '), city, state, townName);
 
   const isUnitedStates =
     !market.country_code || market.country_code.toUpperCase() === 'US' || !market.country;
@@ -407,9 +541,11 @@ export function resolveLocation(market: GeoRecord): ResolvedLocation {
     ? abbreviation
     : state || undefined;
 
-  // "Colorado, Colorado" and "Singapore, Singapore" read as a data glitch.
+  // "Colorado, Colorado" and "Singapore, Singapore" read as a data glitch, and
+  // a "city" that is really a parking note is never printed.
+  const tidyCity = city === rawCity ? townName : tidyCityName(city);
   const cityDisplay =
-    city && stateDisplay && city.toLowerCase() === stateDisplay.toLowerCase() ? undefined : city || undefined;
+    tidyCity && stateDisplay && tidyCity.toLowerCase() === stateDisplay.toLowerCase() ? undefined : tidyCity;
 
   return {
     street: street || undefined,

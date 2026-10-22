@@ -16,7 +16,10 @@ import { getGeoIndex, getStateByCode, type GeoCity, type GeoState } from './geoI
 import { getMarketBySlug, type FarmerMarket } from './data';
 import { resolveLocation } from './geo';
 import { newerInstant, toIsoInstant } from './dates';
+import { isMarketAlias } from './marketAliases';
+import { tidyHours } from './marketDisplay';
 import {
+  WEEKDAY_NAMES,
   displayName,
   marketHours,
   marketWeekdays,
@@ -70,6 +73,12 @@ export interface StateNotableMarket {
   snap: boolean;
 }
 
+/** How many of the state's markets trade on one weekday. */
+export interface StateWeekdayCount {
+  day: Weekday;
+  count: number;
+}
+
 export interface StatePageData {
   state: GeoState;
   /** Root-relative canonical path. */
@@ -78,12 +87,16 @@ export interface StatePageData {
   regionFull: string;
   marketCount: number;
   cityCount: number;
-  /** Markets whose city never resolved; listed as a count, never as links. */
-  uncategorizedCount: number;
   snapCount: number;
   /** Every city in the state, largest first. */
   cities: StateCityLink[];
+  /** Empty unless at least `NOTABLE_MIN` markets clear the bar. */
   notableMarkets: StateNotableMarket[];
+  /**
+   * Markets per weekday, Monday first, from the parsed schedules. Empty when
+   * no market in the state has a weekday the reader can parse.
+   */
+  weekdayCounts: StateWeekdayCount[];
   /** Every market in the state whose record carries coordinates. */
   mapPoints: StateMapPoint[];
   /**
@@ -94,8 +107,11 @@ export interface StatePageData {
   noindex: boolean;
   title: string;
   description: string;
-  /** 40–75 words of plain factual prose, above the city list. */
-  opener: string;
+  /**
+   * One short sentence under the H1, or undefined when the data has nothing
+   * worth saying in words (the stat chips already carry the counts).
+   */
+  summary?: string;
   /**
    * Newest `last_updated` among the markets this hub covers, as an ISO
    * instant, or undefined when none of them carries a usable date.
@@ -108,120 +124,90 @@ export interface StatePageData {
 }
 
 /**
- * How many markets the hub names outright.
+ * How many markets the hub names outright, and the fewest worth a section.
  *
- * The city directory is the page's substance; the notable list exists to give
- * a reader (and a crawler) a direct hop to a few market pages without turning
- * the hub into a second copy of the paginated index.
+ * The city directory is the page's substance; the notable list gives a reader
+ * a direct hop to a few well-documented markets. Fewer than four good picks
+ * reads as filler, so the block is left out instead.
  */
 const NOTABLE_LIMIT = 8;
-
-function marketBlurb(market: FarmerMarket): string | undefined {
-  const text = (market.location_description || market.organization_description || '').trim();
-  return text || undefined;
-}
+const NOTABLE_MIN = 4;
+/** No more than this many picks from one city, so the list spans the state. */
+const NOTABLE_PER_CITY = 2;
+/**
+ * The weekday tally needs enough parsed schedules to mean something: at least
+ * this many markets, and this share of the state's markets.
+ */
+const WEEKDAY_MIN_MARKETS = 10;
+const WEEKDAY_MIN_SHARE = 0.2;
 
 /**
- * Data completeness, matching the city page's ranking exactly: stated opening
- * times beat a bare weekday, which beats a vendor count, which beats a
- * description. A market nobody can find the hours for is a bad thing to
- * headline a state with.
+ * Names that are not farmers markets even when a feed lists them as one:
+ * seasonal fairs, flea and craft markets, single-farm stands.
  */
-function scoreMarket(market: FarmerMarket, days: Weekday[], hours?: string): number {
-  return (
-    (hours ? 8 : 0) +
-    (days.length > 0 ? 4 : 0) +
-    (market.vendor_count ? 2 : 0) +
-    (marketBlurb(market) ? 1 : 0)
+const NOT_A_FARMERS_MARKET =
+  /\b(christmas|holiday|xmas|flea|antiques?|swap meet|craft (fair|show|market)|brocante|chineurs|puces|vide[- ]greniers?|farm ?stand|roadside stand|produce stand|pick[- ]your[- ]own|u-?pick)\b/i;
+
+const NOT_A_FARMERS_MARKET_TYPES = new Set(['community garden', 'food cooperative pickup']);
+
+function isFarmersMarket(market: FarmerMarket): boolean {
+  if (NOT_A_FARMERS_MARKET.test(market.name)) return false;
+  return !(market.organization_types ?? []).some((type) =>
+    NOT_A_FARMERS_MARKET_TYPES.has(type.trim().toLowerCase())
   );
 }
 
-function pluralMarkets(count: number): string {
-  return count === 1 ? '1 farmers market' : `${count} farmers markets`;
+/**
+ * "Alturas Farmers Market" and "Alturas Fm" are one market to a reader: drop
+ * punctuation and the generic words, keep what names the place.
+ */
+export function notableKey(name: string, city: string): string {
+  const core = name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/['’`]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .split(' ')
+    .filter((word) => word && !GENERIC_WORDS.has(word))
+    // "Association II" and "Association IV" are one operator's sites.
+    .filter((word, index, words) => index === 0 || index < words.length - 1 || !/^[ivx]+$/.test(word))
+    .join(' ');
+  return `${core}|${city.trim().toLowerCase()}`;
 }
 
-function joinWithAnd(items: string[]): string {
-  if (items.length <= 1) return items[0] ?? '';
-  if (items.length === 2) return `${items[0]} and ${items[1]}`;
-  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+const GENERIC_WORDS = new Set([
+  'the', 'of', 'at', 'and', 'in', 'on',
+  'farmers', 'farmer', 'market', 'markets', 'fm', 'cfm', 'certified', 'inc',
+]);
+
+/**
+ * Ranking by real signals: a schedule researched from the market's own site
+ * outranks a feed row, a current source outranks a stale one, and SNAP plus
+ * stated days and hours are what a visitor needs to go. Records the upstream
+ * directory dropped sink.
+ */
+function scoreMarket(market: FarmerMarket, days: Weekday[], hours?: string): number {
+  return (
+    (market.first_party?.operations?.schedules?.length ? 8 : market.first_party ? 4 : 0) +
+    (market.enrichment ? 2 : 0) +
+    (market.verified ? 2 : 0) +
+    (market.snap ? 2 : 0) +
+    (hours ? 2 : 0) +
+    (days.length > 0 ? 1 : 0) -
+    (market.unverified ? 6 : 0)
+  );
 }
 
-function countWords(text: string): number {
-  return text.split(/\s+/).filter(Boolean).length;
-}
-
-/** Answer-first opener: 40–75 words assembled from clauses that are true. */
-function buildOpener(input: {
-  regionFull: string;
-  marketCount: number;
-  cities: StateCityLink[];
-  snapCount: number;
-  notable?: StateNotableMarket;
-}): string {
-  const { regionFull, marketCount, cities, snapCount, notable } = input;
-
-  const sentences: string[] = [
-    cities.length > 0
-      ? `This page lists ${pluralMarkets(marketCount)} in ${regionFull}, spread across ${
-          cities.length === 1 ? '1 city' : `${cities.length} cities and towns`
-        }.`
-      : `This page lists ${pluralMarkets(marketCount)} in ${regionFull}.`,
-  ];
-
-  const top = cities.slice(0, 3);
-  if (top.length > 0) {
-    sentences.push(
-      `${joinWithAnd(
-        top.map((city) => `${city.name} (${city.marketCount})`)
-      )} ${top.length === 1 ? 'is' : 'are'} the largest by market count.`
-    );
+/** "Saturday is the busiest market day." from the weekday tally, or nothing. */
+function buildSummary(weekdayCounts: StateWeekdayCount[]): string | undefined {
+  const ranked = [...weekdayCounts].sort((left, right) => right.count - left.count);
+  const [top, second] = ranked;
+  if (!top || top.count === 0) return undefined;
+  if (second && second.count === top.count) {
+    return `${top.day} and ${second.day} are the busiest market days.`;
   }
-
-  if (notable) {
-    const detail = [
-      notable.address ? `at ${notable.address}` : undefined,
-      notable.days.length > 0
-        ? `on ${joinWithAnd(notable.days.slice(0, 2).map((day) => `${day}s`))}`
-        : undefined,
-      notable.hours ? `from ${notable.hours}` : undefined,
-    ]
-      .filter(Boolean)
-      .join(', ');
-
-    sentences.push(
-      detail
-        ? `${notable.name} in ${notable.cityName} is the most fully documented record, ${detail}.`
-        : `${notable.name} in ${notable.cityName} is the most fully documented record.`
-    );
-  }
-
-  if (snapCount > 0) {
-    sentences.push(
-      `${snapCount} of them ${snapCount === 1 ? 'accepts' : 'accept'} SNAP/EBT benefits.`
-    );
-  }
-
-  // Used only to reach the 40-word floor. The first line is only true when
-  // the state actually has a city list below it.
-  const closers = [
-    cities.length > 0
-      ? 'Each city below links to a page listing that city’s markets with addresses, days and opening times.'
-      : undefined,
-    'Details come from the official market datasets the directory is built from, and are refreshed with each data update.',
-  ].filter((closer): closer is string => Boolean(closer));
-
-  const paragraph: string[] = [];
-  for (const sentence of sentences) {
-    if (countWords([...paragraph, sentence].join(' ')) > 75 && paragraph.length > 0) break;
-    paragraph.push(sentence);
-  }
-  for (const closer of closers) {
-    if (countWords(paragraph.join(' ')) >= 40) break;
-    if (countWords([...paragraph, closer].join(' ')) > 75) break;
-    paragraph.push(closer);
-  }
-
-  return paragraph.join(' ');
+  return `${top.day} is the busiest market day.`;
 }
 
 function cityLink(state: GeoState, city: GeoCity): StateCityLink {
@@ -249,26 +235,34 @@ function mapPoint(market: FarmerMarket, city: string): StateMapPoint | undefined
 }
 
 /**
- * The most data-complete markets in the state, plus the state's SNAP tally.
+ * The state's best-documented farmers markets, its SNAP tally and its
+ * weekday tally.
  *
  * Every record in the state is read: `getMarketBySlug` is an O(1) map lookup
  * over the already-memoized dataset, so the whole 60-hub prerender costs one
- * pass over the 8,807 markets in total.
+ * pass over the dataset in total.
  */
 async function collectNotable(
   state: GeoState
 ): Promise<{
   notable: StateNotableMarket[];
   snapCount: number;
+  weekdayCounts: StateWeekdayCount[];
   lastModified?: string;
   mapPoints: StateMapPoint[];
 }> {
-  const scored: { entry: StateNotableMarket; score: number }[] = [];
+  const scored: { entry: StateNotableMarket; score: number; cityRank: number }[] = [];
   let snapCount = 0;
   let lastModified: string | undefined;
   const mapPoints: StateMapPoint[] = [];
+  const perDay = new Map<Weekday, number>();
+  let withDays = 0;
+  const tally = (days: Weekday[]) => {
+    if (days.length > 0) withDays += 1;
+    for (const day of days) perDay.set(day, (perDay.get(day) ?? 0) + 1);
+  };
 
-  for (const city of state.cities) {
+  for (const [cityRank, city] of state.cities.entries()) {
     for (const slug of city.market_slugs) {
       const market = await getMarketBySlug(slug);
       if (!market) continue;
@@ -279,7 +273,12 @@ async function collectNotable(
       if (point) mapPoints.push(point);
 
       const days = marketWeekdays(market);
-      const hours = marketHours(market);
+      tally(days);
+
+      const hours = tidyHours(marketHours(market));
+      // A pick has to tell a visitor when to go, and has to be a farmers
+      // market rather than a fair, a stand or a second row for one market.
+      if (days.length === 0 || !hours || isMarketAlias(market.id) || !isFarmersMarket(market)) continue;
       scored.push({
         entry: {
           slug: market.slug,
@@ -293,6 +292,7 @@ async function collectNotable(
           snap: market.snap === true,
         },
         score: scoreMarket(market, days, hours),
+        cityRank,
       });
     }
   }
@@ -300,27 +300,45 @@ async function collectNotable(
   // Markets with no city still have a pin, so they still belong on the map.
   for (const slug of state.uncategorized_slugs) {
     const market = await getMarketBySlug(slug);
-    const point = market ? mapPoint(market, '') : undefined;
+    if (!market) continue;
+    tally(marketWeekdays(market));
+    const point = mapPoint(market, '');
     if (point) mapPoints.push(point);
   }
 
   const seen = new Set<string>();
+  const perCity = new Map<string, number>();
   const notable: StateNotableMarket[] = [];
   for (const { entry, score } of scored.sort(
     (left, right) =>
-      right.score - left.score || left.entry.name.localeCompare(right.entry.name, 'en')
+      right.score - left.score ||
+      left.cityRank - right.cityRank ||
+      left.entry.name.localeCompare(right.entry.name, 'en')
   )) {
-    if (score === 0) break;
-    // The data holds genuine duplicate names at different addresses; a list
-    // showing the same name twice reads as a bug even when it is not.
-    const key = `${entry.name.toLowerCase()}|${entry.cityName.toLowerCase()}`;
+    if (score <= 0) break;
+    const key = notableKey(entry.name, entry.cityName);
     if (seen.has(key)) continue;
+    const fromCity = perCity.get(entry.cityHref) ?? 0;
+    if (fromCity >= NOTABLE_PER_CITY) continue;
     seen.add(key);
+    perCity.set(entry.cityHref, fromCity + 1);
     notable.push(entry);
     if (notable.length === NOTABLE_LIMIT) break;
   }
 
-  return { notable, snapCount, lastModified, mapPoints };
+  const marketCount = state.market_count;
+  const weekdayCounts =
+    withDays >= WEEKDAY_MIN_MARKETS && withDays >= marketCount * WEEKDAY_MIN_SHARE
+    ? WEEKDAY_NAMES.map((day) => ({ day, count: perDay.get(day) ?? 0 }))
+    : [];
+
+  return {
+    notable: notable.length >= NOTABLE_MIN ? notable : [],
+    snapCount,
+    weekdayCounts,
+    lastModified,
+    mapPoints,
+  };
 }
 
 /**
@@ -336,7 +354,7 @@ export async function getStatePageData(stateSlug: string): Promise<StatePageData
   if (state.slug !== stateSlug.trim().toLowerCase()) return null;
 
   const cities = state.cities.map((city) => cityLink(state, city));
-  const { notable, snapCount, lastModified, mapPoints } = await collectNotable(state);
+  const { notable, snapCount, weekdayCounts, lastModified, mapPoints } = await collectNotable(state);
 
   const regionFull = state.name;
 
@@ -346,10 +364,10 @@ export async function getStatePageData(stateSlug: string): Promise<StatePageData
     regionFull,
     marketCount: state.market_count,
     cityCount: state.city_count,
-    uncategorizedCount: state.uncategorized_slugs.length,
     snapCount,
     cities,
     notableMarkets: notable,
+    weekdayCounts,
     mapPoints,
     noindex: state.city_count === 0,
     title: stateTitle({
@@ -365,13 +383,7 @@ export async function getStatePageData(stateSlug: string): Promise<StatePageData
       biggestCityCount: cities[0]?.marketCount ?? 0,
       snapCount,
     }),
-    opener: buildOpener({
-      regionFull,
-      marketCount: state.market_count,
-      cities,
-      snapCount,
-      notable: notable[0],
-    }),
+    summary: buildSummary(weekdayCounts),
     lastModified,
   };
 }
@@ -389,6 +401,8 @@ export interface StateHubSummary {
   href: string;
   marketCount: number;
   cityCount: number;
+  /** ISO country code ("US", "CA", "FR"), for splitting US states from the rest. */
+  countryCode: string;
 }
 
 /**
@@ -406,5 +420,6 @@ export async function getStateHubSummaries(): Promise<StateHubSummary[]> {
     href: statePath(state.slug),
     marketCount: state.market_count,
     cityCount: state.city_count,
+    countryCode: state.country_code,
   }));
 }

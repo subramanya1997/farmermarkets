@@ -1,4 +1,5 @@
 import { formatDate } from '@/lib/marketFacts';
+import { clean } from '@/lib/geo';
 import type { MarketProvenance } from '@/lib/provenance';
 import type { MarketAuditMetadata, MarketEnrichmentMetadata } from '@/lib/enrichment';
 
@@ -11,89 +12,106 @@ interface MarketSourceNoteProps {
   audit?: MarketAuditMetadata;
 }
 
+function hostOf(url?: string | null): string | undefined {
+  try {
+    return url ? new URL(url).hostname.replace(/^www\./i, '') : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function isoDay(value?: string | null): string | undefined {
+  const text = clean(value);
+  if (!text) return undefined;
+  const parsed = new Date(/^\d{4}-\d{2}-\d{2}$/.test(text) ? `${text}T00:00:00Z` : text);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString().slice(0, 10);
+}
+
+const LINK = 'underline hover:text-green-700 dark:hover:text-green-500';
+
 /**
- * The footer line: who published this record, and when it was last touched.
+ * The footer: one line saying when the page's facts were last updated and
+ * from where, with every source behind a "Sources" fold.
  *
- * Both dates are the data's own. "Last verified" is the record's
- * `last_updated` field — for much of the USDA export that is 2020, and saying
- * so is the honest answer; printing today's date would be the fake-freshness
- * signal this page is being cleaned up to remove. If the record carries
- * neither a publisher nor a date, nothing renders.
+ * All dates are the data's own (never today's), so an old USDA stamp still
+ * says so; it is just no longer the headline when researched facts are newer.
+ * The "could not be matched" caution only shows when no newer research
+ * supersedes that check.
  */
 export function MarketSourceNote({ provenance, lastUpdated, enrichment, audit }: MarketSourceNoteProps) {
-  const verified = formatDate(lastUpdated);
-  const retrieved = formatDate(provenance?.retrievedAt);
-  const independentlyVerified = formatDate(enrichment?.verified_at);
-  const auditDate = formatDate(audit?.checked_at);
-  if (!provenance && !verified && !enrichment && !audit) return null;
+  if (!provenance && !formatDate(lastUpdated) && !enrichment && !audit) return null;
 
-  const datasetLabel = [provenance?.publisher, provenance?.datasetName]
-    .filter(Boolean)
-    .join(', ');
+  const sources = (enrichment?.sources ?? []).filter((source) => hostOf(source.url));
+  const researchHost =
+    hostOf(sources.find((source) => source.kind === 'first_party')?.url) ?? hostOf(sources[0]?.url);
+  const publisher = clean(provenance?.publisher) || undefined;
+  const candidates = [
+    { day: isoDay(enrichment?.verified_at), from: researchHost },
+    { day: isoDay(provenance?.retrievedAt), from: publisher },
+    { day: isoDay(lastUpdated), from: publisher },
+  ].filter((candidate): candidate is { day: string; from: string | undefined } => Boolean(candidate.day));
+  const latest = candidates.sort((left, right) => right.day.localeCompare(left.day))[0];
+
+  const enrichedDay = isoDay(enrichment?.verified_at);
+  const auditDay = isoDay(audit?.checked_at);
+  const auditDate = formatDate(audit?.checked_at);
+  const caution =
+    (audit?.status === 'identity_ambiguous' || audit?.status === 'blocked') &&
+    !(enrichedDay && auditDay && enrichedDay > auditDay);
+
+  const datasetLabel = [provenance?.publisher, provenance?.datasetName].filter(Boolean).join(', ');
+  const retrieved = formatDate(provenance?.retrievedAt);
+  const original = formatDate(lastUpdated);
 
   return (
-    <footer className="mt-6 max-w-3xl space-y-1 border-t border-zinc-200 pt-4 text-xs text-zinc-500 sm:mt-8 dark:border-zinc-700 dark:text-zinc-400">
-      {provenance && (
-        <p>
-          Source:{' '}
-          {provenance.catalogUrl ? (
-            <a
-              href={provenance.catalogUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-green-700 dark:hover:text-green-500"
-            >
-              {datasetLabel}
-            </a>
-          ) : (
-            datasetLabel
+    <footer className="mt-8 max-w-3xl space-y-2 border-t border-zinc-200 pt-4 text-xs text-zinc-500 sm:mt-10 dark:border-zinc-700 dark:text-zinc-400">
+      {caution && (
+        <p className="text-amber-700 dark:text-amber-400">
+          We could not confirm this listing{auditDate ? ` on ${auditDate}` : ''}. Check details before you go.
+        </p>
+      )}
+      <details className="group">
+        <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+          {latest ? (
+            <>
+              Updated {formatDate(latest.day)}
+              {latest.from ? ` from ${latest.from}` : ''}
+              {' · '}
+            </>
+          ) : null}
+          <span className="underline group-open:no-underline">Sources</span>
+        </summary>
+        <ul className="mt-2 space-y-1">
+          {provenance && (
+            <li>
+              {provenance.catalogUrl ? (
+                <a href={provenance.catalogUrl} target="_blank" rel="noopener noreferrer" className={LINK}>
+                  {datasetLabel}
+                </a>
+              ) : (
+                datasetLabel
+              )}
+              {retrieved && `, retrieved ${retrieved}`}
+              {provenance.license && ` · ${provenance.license}`}
+            </li>
           )}
-          {retrieved && `, retrieved ${retrieved}`}
-          {provenance.license && ` · ${provenance.license}`}
-        </p>
-      )}
-      {verified && <p>Last verified in the source data: {verified}.</p>}
-      {enrichment && (
-        <p>
-          Additional details checked
-          {independentlyVerified ? ` ${independentlyVerified}` : ''} against{' '}
-          {enrichment.sources.map((source, index) => (
-            <span key={`${source.url}-${index}`}>
-              {index > 0 && (index === enrichment.sources.length - 1 ? ' and ' : ', ')}
-              <a
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-green-700 dark:hover:text-green-500"
-              >
-                {source.title}
+          {original && <li>Original listing last updated {original}</li>}
+          {sources.map((source, index) => (
+            <li key={`${source.url}-${index}`}>
+              <a href={source.url} target="_blank" rel="noopener noreferrer" className={LINK}>
+                {/* Page titles arrive with the publisher's own dashes. */}
+                {clean(source.title) || hostOf(source.url)}
               </a>
-            </span>
+            </li>
           ))}
-          .
-        </p>
-      )}
-      {audit?.status === 'official_source_reviewed' && (
-        <p>Official publisher catalog or source reviewed{auditDate ? ` ${auditDate}` : ''}.</p>
-      )}
-      {audit?.status === 'checked_no_verified_update' && (
-        <p>
-          Current listing checked{auditDate ? ` ${auditDate}` : ''}; no additional public details
-          were confirmed.
-        </p>
-      )}
-      {audit?.status === 'identity_ambiguous' && (
-        <p className="text-amber-700 dark:text-amber-400">
-          A current listing could not be confidently matched{auditDate ? ` on ${auditDate}` : ''}.
-          Verify the location and schedule before traveling.
-        </p>
-      )}
-      {audit?.status === 'blocked' && (
-        <p className="text-amber-700 dark:text-amber-400">
-          The current-details check could not be completed{auditDate ? ` on ${auditDate}` : ''}.
-          Verify details before traveling.
-        </p>
-      )}
+          {audit?.status === 'official_source_reviewed' && (
+            <li>Official source reviewed{auditDate ? ` ${auditDate}` : ''}</li>
+          )}
+          {audit?.status === 'checked_no_verified_update' && (
+            <li>Rechecked{auditDate ? ` ${auditDate}` : ''}, no changes found</li>
+          )}
+        </ul>
+      </details>
     </footer>
   );
 }

@@ -5,14 +5,15 @@ import { newerInstant, toIsoInstant } from './dates.ts';
 import {
   TITLE_MAX_LENGTH,
   DESCRIPTION_MAX_LENGTH,
-  buildParagraph,
   fitDescription,
   fitTitle,
   formatCount,
   joinWithAnd,
+  placesPhrase,
   pluralMarkets,
   pluralShort,
   sharePercent,
+  tidyHours,
 } from './topicCopy.ts';
 
 test('joinWithAnd reads as English for one, two and three items', () => {
@@ -76,28 +77,33 @@ test('fitDescription drops empty clauses', () => {
   assert.equal(fitDescription('Opening line.', [undefined, '', '  ']), 'Opening line.');
 });
 
-test('buildParagraph stays inside the 40–75 word band', () => {
-  const words = (count: number) => `${'word '.repeat(count).trim()}.`;
-  const paragraph = buildParagraph([words(30), words(20), words(40)], [words(12)]);
-
-  const total = paragraph.split(/\s+/).filter(Boolean).length;
-  assert.ok(total >= 40 && total <= 75, `paragraph had ${total} words`);
-  // The third sentence would have pushed it past 75, so it is left out.
-  assert.equal(paragraph.split('.').filter((part) => part.trim()).length, 2);
+test('placesPhrase counts DC alongside the states, never as one', () => {
+  assert.equal(placesPhrase(47, true), '47 states and DC');
+  assert.equal(placesPhrase(50, false), '50 states');
+  assert.equal(placesPhrase(1, false), '1 state');
+  assert.equal(placesPhrase(0, true), 'DC');
 });
 
-test('buildParagraph tops a short opener up from the closers', () => {
-  const paragraph = buildParagraph(['One short sentence.'], [
-    'A closing line that exists only to give the paragraph enough words to read as a paragraph rather than as a stub of a sentence on its own.',
-  ]);
-
-  assert.ok(paragraph.startsWith('One short sentence.'));
-  assert.ok(paragraph.split(/\s+/).length >= 20);
+test('tidyHours gives one spelling for the same window', () => {
+  assert.equal(tidyHours('9am-1pm'), '9am-1pm');
+  assert.equal(tidyHours('10AM-2PM'), '10am-2pm');
+  assert.equal(tidyHours('9:00am-1:00pm'), '9am-1pm');
+  assert.equal(tidyHours('8:30 AM - 1:30 PM'), '8:30am-1:30pm');
+  assert.equal(tidyHours('9am\u20131pm'), '9am-1pm');
+  assert.equal(tidyHours('3-7pm'), '3-7pm');
 });
 
-test('buildParagraph keeps the first sentence even when it is over the cap', () => {
-  const long = `${'word '.repeat(90).trim()}.`;
-  assert.equal(buildParagraph([long]), long);
+test('tidyHours converts only an unambiguous 24-hour range', () => {
+  assert.equal(tidyHours('8:00-18:00'), '8am-6pm');
+  assert.equal(tidyHours('07:30-13:00'), '7:30am-1pm');
+  // Could be morning or afternoon, so it is left alone.
+  assert.equal(tidyHours('9:00-12:00'), '9:00-12:00');
+});
+
+test('topic copy carries no en or em dashes', () => {
+  for (const value of [tidyHours('9am \u2014 1pm'), placesPhrase(3, true)]) {
+    assert.ok(!/[\u2013\u2014]/.test(value), value);
+  }
 });
 
 test('toIsoInstant reads zone-less dataset timestamps as UTC', () => {

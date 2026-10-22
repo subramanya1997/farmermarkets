@@ -1,6 +1,5 @@
-import { getMarketBySlug, getMarkets, getSlugByLegacyId } from "@/lib/data";
+import { getMarketById, getMarketBySlug, getMarkets, getSlugByLegacyId } from "@/lib/data";
 import { getMarketAddress } from "@/lib/api";
-import { Button } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound, permanentRedirect } from "next/navigation";
 import MarketLocationMap from "@/components/MarketLocationMap";
@@ -15,19 +14,24 @@ import { cityPath } from "@/lib/cityPage";
 import { statePath } from "@/lib/statePage";
 import { displayName, marketAddressParts, marketDescription, marketTitle } from "@/lib/seo";
 import { clean } from "@/lib/geo";
-import { composedSummary } from "@/lib/marketFacts";
+import { GLANCE_COVERED_TERMS, marketGlance } from "@/lib/marketFacts";
 import { getMarketProse } from "@/lib/marketProse";
 import { getNearbyMarkets } from "@/lib/nearby";
 import { getMarketProvenance } from "@/lib/provenance";
 import { marketFaqs, marketSchemaGraph } from "@/lib/schema";
 import { MarketFaq } from "@/components/MarketFaq";
-import { MarketFacts } from "@/components/MarketFacts";
+import { MarketFacts, MarketGlanceCard } from "@/components/MarketFacts";
 import { MarketHighlights } from "@/components/MarketHighlights";
 import { MarketFreshnessNotice } from "@/components/MarketFreshnessNotice";
 import { MarketSourceNote } from "@/components/MarketSourceNote";
 import { NearbyMarkets } from "@/components/NearbyMarkets";
 import { TrackedMarketClaimLink } from "@/components/TrackedMarketClaimLink";
 import { SITE_FRAME } from "@/lib/ui";
+import { marketAlias } from "@/lib/marketAliases";
+import { planVisitCoveredTerms, planVisitSummary } from "@/lib/planVisit";
+import { planVisitView } from "@/lib/planVisitView";
+import { openStatusInput } from "@/lib/openStatus";
+import { PlanYourVisit } from "@/components/PlanYourVisit";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -67,6 +71,14 @@ function marketImageUrl(slug: string): string {
   return absoluteUrl(`/markets/${slug}/opengraph-image`);
 }
 
+/** The main listing this record duplicates, when it is a known alias. */
+async function getCanonicalMarket(id: string) {
+  const alias = marketAlias(id);
+  if (!alias) return undefined;
+  const canonical = await getMarketById(alias.canonicalId);
+  return canonical?.slug ? canonical : undefined;
+}
+
 interface MarketDetailPageProps {
   params: Promise<{
     slug: string;
@@ -97,6 +109,10 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
   const title = marketTitle(market);
   const description = marketDescription(market);
   const path = `/markets/${resolvedParams.slug}`;
+  // A duplicate row of a market listed elsewhere (src/lib/marketAliases.ts)
+  // names the main listing as canonical, so the signals land on one page.
+  const canonicalMarket = await getCanonicalMarket(market.id);
+  const canonicalPath = canonicalMarket ? `/markets/${canonicalMarket.slug}` : path;
 
   return {
     // `absolute` bypasses the root layout's "%s | Farmer Markets" template:
@@ -107,7 +123,7 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
     openGraph: {
       title,
       description,
-      url: path,
+      url: canonicalPath,
       type: 'website',
     },
     twitter: {
@@ -116,7 +132,7 @@ export async function generateMetadata({ params }: MarketDetailPageProps): Promi
       description,
     },
     alternates: {
-      canonical: path,
+      canonical: canonicalPath,
     },
   };
 }
@@ -154,12 +170,9 @@ export default async function MarketDetailPage({
   const address = clean(rawAddress.replace(/^[,\s]+/, ''));
   const hasAddress = Boolean(address) && address !== ',';
 
-  // The record's own words where they are its own — `getMarketProse` drops the
-  // per-source blurbs that hundreds of records share — otherwise a summary
-  // composed from the fields this record does have. Both replace the two
-  // paragraphs that used to be byte-identical on all 8,807 pages.
+  // The record's own words where they are its own: `getMarketProse` drops the
+  // per-source blurbs that hundreds of records share.
   const prose = await getMarketProse(market);
-  const summary = prose.about.length ? [] : composedSummary(market);
 
   const addressParts = marketAddressParts(market);
 
@@ -227,13 +240,43 @@ export default async function MarketDetailPage({
 
   // The same list the FAQPage node quotes, so markup and page can never drift.
   const faqs = marketFaqs(market);
+
+  // The main listing, when this record is a duplicate row of it.
+  const canonicalMarket = await getCanonicalMarket(market.id);
+
+  // "Plan your visit": the when / getting there / paying / what is sold
+  // answers for records with enough first-party facts; [] for everything
+  // else, which keeps the full "Market details" list as before. Exceptions
+  // are compared against the market's own local date when it has a sourced
+  // timezone (the page revalidates daily).
+  const timezone = market.first_party?.operations?.timezone?.value;
+  let today = new Date().toISOString().slice(0, 10);
+  if (timezone) {
+    try {
+      today = new Intl.DateTimeFormat('en-CA', { timeZone: timezone }).format(new Date());
+    } catch {
+      // Keep the UTC date for an invalid zone; the validator rejects those.
+    }
+  }
+  const planRows = planVisitSummary(market, today);
+  const planOpenStatus = planRows.length ? openStatusInput(market.first_party) : undefined;
+  // The listing's directions fold into the card's "More details" when the
+  // card shows, rather than repeating parking in a section of their own.
+  const planView = planRows.length
+    ? planVisitView(market, today, { directions: prose.location })
+    : undefined;
+  // Pages without the card get the schedule as a strip and a few values.
+  const glance = planView ? undefined : marketGlance(market);
+  const coveredTerms = planView
+    ? planVisitCoveredTerms(planRows)
+    : new Set(glance ? GLANCE_COVERED_TERMS : []);
   const firstPartyStatus = market.first_party?.operations?.status?.value;
   const firstPartyStatusLabel = firstPartyStatus?.value === 'seasonal_break'
     ? 'This market is currently between seasons.'
     : firstPartyStatus?.value === 'temporarily_closed'
       ? 'This market is temporarily closed.'
       : firstPartyStatus?.value === 'permanently_closed'
-        ? 'This market is reported permanently closed.'
+        ? 'This market is permanently closed.'
         : undefined;
 
   return (
@@ -299,6 +342,19 @@ export default async function MarketDetailPage({
                 <p className="text-sm font-medium text-amber-800 dark:text-amber-200">Imported address; check the location note below before visiting.</p>
               )}
               <MarketFreshnessNotice market={market} />
+              {canonicalMarket && (
+                <p className="max-w-[75ch] text-sm text-zinc-700 dark:text-zinc-300">
+                  This is one listing from a public dataset. The full guide to this market, with hours,
+                  directions and vendors, is{' '}
+                  <Link
+                    href={`/markets/${canonicalMarket.slug}`}
+                    className="font-medium text-green-700 underline hover:text-green-800 dark:text-green-500"
+                  >
+                    {displayName(canonicalMarket.name)}
+                  </Link>
+                  .
+                </p>
+              )}
               {(mapActionUrl || websiteActionUrl) && (
                 <div className="flex flex-wrap gap-3 lg:hidden">
                   {mapActionUrl && (
@@ -334,13 +390,18 @@ export default async function MarketDetailPage({
               {/* Main content */}
               <div>
                 <div className="max-w-none">
-                  {/* No "About {name}" heading — the name is the H1 directly
-                      above, so the description just begins. */}
-                  {/* The market's own description where the record has one,
-                      otherwise a summary composed from its schedule, size,
-                      setting and programs — every clause backed by a field
-                      this record actually carries. */}
-                  {(prose.about.length ? prose.about : summary).map((paragraph) => (
+                  {planView && (
+                    <PlanYourVisit
+                      view={planView}
+                      timezone={timezone}
+                      openStatus={planOpenStatus}
+                      analyticsProperties={analyticsProperties}
+                    />
+                  )}
+                  {glance && <MarketGlanceCard glance={glance} />}
+                  {/* The market's own description, when it has one. No
+                      heading: the name is the H1 directly above. */}
+                  {prose.about.map((paragraph) => (
                     <p
                       key={paragraph}
                       className="mb-3 max-w-[75ch] text-sm sm:text-base text-zinc-600 last:mb-0 dark:text-zinc-400"
@@ -349,7 +410,7 @@ export default async function MarketDetailPage({
                     </p>
                   ))}
 
-                  {prose.location.length > 0 && (
+                  {!planView && prose.location.length > 0 && (
                     <div className="mt-6 sm:mt-8">
                       <h2 className="text-lg sm:text-xl font-semibold tracking-tight mb-3">
                         Finding the market
@@ -365,10 +426,9 @@ export default async function MarketDetailPage({
                     </div>
                   )}
 
-                  {/* Days, hours, season, vendors, setting, what is sold,
-                      amenities, payment, ordering, phone, website, socials —
-                      only the rows this record can fill. */}
-                  <MarketFacts market={market} analyticsProperties={analyticsProperties} />
+                  {/* The rows this record can fill that nothing above has
+                      answered, then one contact row. */}
+                  <MarketFacts market={market} analyticsProperties={analyticsProperties} omitTerms={coveredTerms} hasPlanCard={Boolean(planView)} />
                   <MarketHighlights market={market} analyticsProperties={analyticsProperties} />
 
                   {/* Answers in the words searchers type, in the HTML itself:
@@ -405,27 +465,11 @@ export default async function MarketDetailPage({
               {/* Details precede the map on mobile; the map occupies the
                   right-hand column on wide screens. */}
               <div>
-                {/* Just the map — the address sits under the market name in
-                    the header, so the column carries no heading or text. */}
+                {/* Just the map, which carries its own directions button; the
+                    address sits under the market name in the header. */}
                 <div className="lg:sticky lg:top-24">
                   {!market.suppress_map && (
                     <MarketLocationMap market={market} height="480px" />
-                  )}
-                  {mapActionUrl && (
-                    <div className="mt-4">
-                      <TrackedExternalLink
-                        href={mapActionUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full block"
-                        eventName="Market Directions Opened"
-                        eventProperties={{ ...analyticsProperties, destination: 'google-maps' }}
-                      >
-                        <Button className="w-full bg-green-600 hover:bg-green-700">
-                          {market.google_maps_url ? 'View on Google Maps' : 'Get Directions'}
-                        </Button>
-                      </TrackedExternalLink>
-                    </div>
                   )}
                   <div className="mt-6">
                     <NewsletterSignup

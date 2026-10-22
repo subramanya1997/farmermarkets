@@ -1,63 +1,35 @@
 import type { FarmerMarket } from '@/lib/api';
 import { LazyPlacesMap } from '@/components/LazyPlacesMap';
-import { displayName } from '@/lib/seo';
-
-/**
- * The pin, inlined so the no-coordinates fallback doesn't pull `lucide-react`
- * into pages that otherwise need no icon set.
- */
-function MapPinIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
+import { TrackedExternalLink } from '@/components/TrackedExternalLink';
+import { displayName, marketAddressParts } from '@/lib/seo';
 
 interface MarketLocationMapProps {
   market: FarmerMarket;
   height?: string;
 }
 
+/** Google Maps for turn-by-turn: the market's own listing when sourced, else its coordinates. */
+function directionsUrl(market: FarmerMarket, lat: number, lon: number): string {
+  if (market.google_maps_url) return market.google_maps_url;
+  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
+}
+
 /**
- * The map on a market's own page: one dot, on the same OpenStreetMap tiles and
- * in the same style as the explorer, the state hubs and the city pages.
- *
- * This was a Google Maps iframe until October 2026. It moved because the
- * many-market maps cannot be Google without per-load pricing, and a site whose
- * map changes provider from one page to the next reads as two products. The
- * "Get directions" link under the map still opens Google Maps.
+ * "Where it is" on a market's own page: a calm map in the site's one map
+ * style with the market as a single emphasised dot, and a floating card with
+ * the street address and a Directions button. One glance answers "where" and
+ * one tap starts the trip; the map itself is still, so it never fights the
+ * page scroll on a phone.
  */
 export default function MarketLocationMap({ market, height = '300px' }: MarketLocationMapProps) {
   const latitude = market.location?.lat;
   const longitude = market.location?.lon;
+  if (!latitude || !longitude) return null;
 
-  if (!latitude || !longitude) {
-    return (
-      <div
-        style={{ height, width: '100%' }}
-        className="flex flex-col items-center justify-center gap-3 rounded-lg bg-zinc-100 px-4 text-center dark:bg-zinc-800/60"
-      >
-        <MapPinIcon className="h-6 w-6 text-zinc-400" />
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          Location coordinates are not available for this market
-        </p>
-      </div>
-    );
-  }
+  const { street, cityLabel: locality } = marketAddressParts(market);
 
   return (
-    <div style={{ height, width: '100%' }}>
+    <div className="relative" style={{ height, width: '100%' }}>
       <LazyPlacesMap
         places={[
           {
@@ -71,8 +43,29 @@ export default function MarketLocationMap({ market, height = '300px' }: MarketLo
         region={market.state ?? ''}
         activeSlug={market.slug}
         linkPlaces={false}
+        still
         className="h-full w-full"
       />
+      <div className="pointer-events-none absolute inset-x-3 bottom-3 flex">
+        <div className="pointer-events-auto flex w-full items-center gap-3 rounded-xl bg-white/95 p-3 shadow-lg shadow-green-950/10 ring-1 ring-black/5 backdrop-blur dark:bg-zinc-900/95 dark:ring-white/10">
+          <div className="min-w-0 flex-1">
+            {street && (
+              <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{street}</p>
+            )}
+            {locality && <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">{locality}</p>}
+          </div>
+          <TrackedExternalLink
+            href={directionsUrl(market, latitude, longitude)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 rounded-full bg-green-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-800"
+            eventName="Market Directions Opened"
+            eventProperties={{ market_slug: market.slug, destination: 'google-maps', placement: 'map-card' }}
+          >
+            Directions
+          </TrackedExternalLink>
+        </div>
+      </div>
     </div>
   );
 }

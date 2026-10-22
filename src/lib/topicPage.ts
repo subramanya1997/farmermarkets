@@ -2,6 +2,12 @@
  * View models for the four topic pages under `/farmers-markets/`:
  * `snap-ebt`, `online`, `hours` and `saturday`.
  *
+ * Each page leads with one answer sentence and a row of headline numbers,
+ * then shows its data visually (a state grid, day bars, market rows with
+ * chips) rather than describing it in prose. Copy is written in a reader's
+ * voice ("895 farmers markets accept SNAP/EBT"), not the dataset's ("recorded
+ * as accepting ... in this directory"), and carries no denominators.
+ *
  * Same contract as `src/lib/cityPage.ts` and `src/lib/statePage.ts`: the page
  * components render what these builders return and nothing else, every number
  * is computed from the two market snapshots at build/ISR time rather than
@@ -22,8 +28,7 @@
 import 'server-only';
 import type { Metadata } from 'next';
 import { getMarkets, type FarmerMarket } from './data';
-import { getGeoIndex } from './geoIndex';
-import { resolveLocation } from './geo';
+import { getGeoIndex, type GeoState } from './geoIndex';
 import { cityPath } from './cityPage';
 import { statePath } from './statePage';
 import { newerInstant, toIsoInstant } from './dates';
@@ -31,19 +36,18 @@ import {
   WEEKDAY_NAMES,
   displayName,
   marketHours,
-  marketSeasonLabel,
   marketWeekdays,
   type Weekday,
 } from './seo';
 import {
-  buildParagraph,
   fitDescription,
   fitTitle,
   formatCount,
   joinWithAnd,
+  placesPhrase,
   pluralMarkets,
   pluralShort,
-  sharePercent,
+  tidyHours,
 } from './topicCopy';
 
 /* ------------------------------------------------------------------ *
@@ -70,29 +74,45 @@ export const TOPIC_LABELS: Record<TopicSlug, string> = {
  * Shared view-model types
  * ------------------------------------------------------------------ */
 
-/** One row of a topic page's state-by-state table. */
+/** One state in a topic page's state grid. */
 export interface TopicStateRow {
+  /** "New York"; DC reads "Washington, DC". */
   name: string;
+  /** Two-letter postal code. */
+  code: string;
   slug: string;
   href: string;
   count: number;
 }
+
+/** The icon a headline number is drawn with (mapped in `TopicPage.tsx`). */
+export type TopicStatIcon = 'snap' | 'map' | 'wic' | 'calendar' | 'clock' | 'online' | 'delivery' | 'csa';
+
+/** One headline number under the answer sentence. */
+export interface TopicStat {
+  value: string;
+  label: string;
+  icon: TopicStatIcon;
+}
+
+/** A short pill on a market row. */
+export type TopicBadge = 'SNAP' | 'WIC' | 'Online' | 'Delivery' | 'CSA';
 
 /** One market a topic page names outright. */
 export interface TopicMarketRow {
   slug: string;
   name: string;
   href: string;
-  /** "Durham, North Carolina" — where the market sits. */
-  placeLabel?: string;
+  /** "Austin, TX", "Washington, DC". */
+  place?: string;
   /** The city page, when the market resolved to one. */
   placeHref?: string;
-  address?: string;
+  stateName: string;
+  stateHref: string;
   days: Weekday[];
+  /** One house spelling, e.g. "9am-1pm". */
   hours?: string;
-  season?: string;
-  /** Short factual tags rendered after the place ("SNAP", "Delivery"). */
-  tags: string[];
+  badges: TopicBadge[];
 }
 
 export interface TopicFaq {
@@ -109,17 +129,17 @@ export interface TopicPageData {
   description: string;
   /** The H1. */
   heading: string;
-  /** 40–75 words of plain factual prose, above the tables. */
-  opener: string;
+  /** One sentence that answers the page's search query. */
+  answer: string;
+  /** Three or four headline numbers, drawn as tiles under the answer. */
+  stats: TopicStat[];
   /** How many markets the page is about. */
   marketCount: number;
-  /** Every market in the directory, for the "N of M" framing. */
-  totalMarkets: number;
   /** States with at least one matching market, largest first. */
   states: TopicStateRow[];
-  /** Matching markets with no state in the data; a count, never links. */
-  statelessCount: number;
+  /** The markets the page names, mirrored by its ItemList JSON-LD. */
   topMarkets: TopicMarketRow[];
+  /** Two or three questions the rest of the page does not already answer. */
   faqs: TopicFaq[];
   /** Newest `last_updated` among the matching markets, for the sitemap. */
   lastModified?: string;
@@ -129,18 +149,39 @@ export interface TopicPageData {
  * One pass over the dataset
  * ------------------------------------------------------------------ */
 
+/**
+ * The topic pages cover the 50 states and DC. The geo index also carries
+ * Canadian provinces, other countries and US territories; a national "open on
+ * Saturday" or "market hours" page listing Ontario or Singapore next to Ohio
+ * read as broken, so those markets are left out of every count here.
+ */
+const US_STATE_CODES = new Set([
+  'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA',
+  'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
+  'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA',
+  'WV', 'WI', 'WY',
+]);
+
+function isCoveredState(state: GeoState): state is GeoState & { code: string } {
+  return state.country_code === 'US' && Boolean(state.code) && US_STATE_CODES.has(state.code!);
+}
+
+/** "Washington, D.C." in the geo index; "Washington, DC" on the page. */
+function stateLabel(state: GeoState & { code: string }): string {
+  return state.code === 'DC' ? 'Washington, DC' : state.name;
+}
+
 interface TopicEntry {
   market: FarmerMarket;
   name: string;
   href: string;
-  stateName?: string;
-  stateSlug?: string;
+  stateName: string;
+  stateCode: string;
+  stateSlug: string;
   cityName?: string;
   cityHref?: string;
-  address?: string;
   days: Weekday[];
   hours?: string;
-  season?: string;
   /** Data completeness, ranked exactly as the city and state pages rank it. */
   score: number;
   lastModified?: string;
@@ -159,59 +200,53 @@ async function buildEntries(): Promise<TopicEntry[]> {
   // Slug → place, covering both the cities and the markets whose state is
   // known but whose city never resolved (`uncategorized_slugs`). The geo
   // index's own reverse lookup only covers cities, and a topic page's state
-  // table should count every market the state actually has.
+  // grid should count every market the state actually has.
   const places = new Map<
     string,
-    { stateName: string; stateSlug: string; cityName?: string; cityHref?: string }
+    { stateName: string; stateCode: string; stateSlug: string; cityName?: string; cityHref?: string }
   >();
   for (const state of index.states) {
+    if (!isCoveredState(state)) continue;
+    const base = { stateName: stateLabel(state), stateCode: state.code, stateSlug: state.slug };
     for (const city of state.cities) {
       for (const slug of city.market_slugs) {
         if (places.has(slug)) continue;
-        places.set(slug, {
-          stateName: state.name,
-          stateSlug: state.slug,
-          cityName: city.name,
-          cityHref: cityPath(state.slug, city.slug),
-        });
+        places.set(slug, { ...base, cityName: city.name, cityHref: cityPath(state.slug, city.slug) });
       }
     }
     for (const slug of state.uncategorized_slugs) {
-      if (places.has(slug)) continue;
-      places.set(slug, { stateName: state.name, stateSlug: state.slug });
+      if (!places.has(slug)) places.set(slug, base);
     }
   }
 
-  return markets
-    .filter((market) => Boolean(market.slug))
-    .map((market) => {
-      const place = places.get(market.slug);
-      const days = marketWeekdays(market);
-      const hours = marketHours(market);
+  const entries: TopicEntry[] = [];
+  for (const market of markets) {
+    if (!market.slug) continue;
+    const place = places.get(market.slug);
+    if (!place) continue;
+    const days = marketWeekdays(market);
+    const rawHours = marketHours(market);
+    const hours = rawHours ? tidyHours(rawHours) : undefined;
 
-      return {
-        market,
-        name: displayName(market.name),
-        href: `/markets/${market.slug}`,
-        stateName: place?.stateName,
-        stateSlug: place?.stateSlug,
-        cityName: place?.cityName,
-        cityHref: place?.cityHref,
-        address: resolveLocation(market).street,
-        days,
-        hours,
-        season: marketSeasonLabel(market),
-        score:
-          (hours ? 8 : 0) +
-          (days.length > 0 ? 4 : 0) +
-          (market.vendor_count ? 2 : 0) +
-          (marketBlurb(market) ? 1 : 0),
-        lastModified: toIsoInstant(market.last_updated),
-      };
+    entries.push({
+      market,
+      name: displayName(market.name),
+      href: `/markets/${market.slug}`,
+      ...place,
+      days,
+      hours,
+      score:
+        (hours ? 8 : 0) +
+        (days.length > 0 ? 4 : 0) +
+        (market.vendor_count ? 2 : 0) +
+        (marketBlurb(market) ? 1 : 0),
+      lastModified: toIsoInstant(market.last_updated),
     });
+  }
+  return entries;
 }
 
-/** Every market with its place, weekdays and hours. Built once per process. */
+/** Every covered market with its place, weekdays and hours. Built once per process. */
 function getTopicEntries(): Promise<TopicEntry[]> {
   if (!entriesPromise) {
     entriesPromise = buildEntries().catch((error) => {
@@ -226,66 +261,80 @@ function getTopicEntries(): Promise<TopicEntry[]> {
  * Selection helpers
  * ------------------------------------------------------------------ */
 
-/** How many markets a topic page names outright. */
-const TOP_MARKET_LIMIT = 12;
-/** How many markets each `/farmers-markets/online` segment names. */
-const SEGMENT_MARKET_LIMIT = 8;
+/** How many markets a topic page samples, one per top state. */
+const SAMPLE_LIMIT = 8;
 
-function placeLabel(entry: TopicEntry): string | undefined {
-  return [entry.cityName, entry.stateName].filter(Boolean).join(', ') || undefined;
-}
+type BadgesFor = (entry: TopicEntry) => TopicBadge[];
 
-function toRow(entry: TopicEntry, tags: string[] = []): TopicMarketRow {
+/** SNAP and WIC: the pills most topic rows carry. */
+const benefitBadges: BadgesFor = (entry) => [
+  ...(entry.market.snap === true ? (['SNAP'] as const) : []),
+  ...(entry.market.wic === true ? (['WIC'] as const) : []),
+];
+
+function toRow(entry: TopicEntry, badgesFor: BadgesFor): TopicMarketRow {
   return {
     slug: entry.market.slug,
     name: entry.name,
     href: entry.href,
-    placeLabel: placeLabel(entry),
+    place: entry.cityName ? `${entry.cityName}, ${entry.stateCode}` : undefined,
     placeHref: entry.cityHref,
-    address: entry.address,
+    stateName: entry.stateName,
+    stateHref: statePath(entry.stateSlug),
     days: entry.days,
     hours: entry.hours,
-    season: entry.season,
-    tags,
+    badges: badgesFor(entry),
   };
 }
 
-/**
- * The most data-complete markets in a selection.
- *
- * The data holds genuine duplicate names at different addresses; showing the
- * same name twice in a short list reads as a bug even when it is not, so one
- * name per place wins.
- */
-function topMarkets(
-  entries: TopicEntry[],
-  tagsFor: (entry: TopicEntry) => string[] = () => [],
-  limit = TOP_MARKET_LIMIT
-): TopicMarketRow[] {
-  const seen = new Set<string>();
-  const rows: TopicMarketRow[] = [];
+function compareByPlace(left: TopicEntry, right: TopicEntry): number {
+  return (
+    left.stateName.localeCompare(right.stateName, 'en') ||
+    (left.cityName ?? '').localeCompare(right.cityName ?? '', 'en') ||
+    left.name.localeCompare(right.name, 'en')
+  );
+}
 
-  for (const entry of [...entries].sort(
-    (left, right) => right.score - left.score || left.name.localeCompare(right.name, 'en')
-  )) {
-    if (entry.score === 0) break;
-    const key = `${entry.name.toLowerCase()}|${(placeLabel(entry) ?? '').toLowerCase()}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    rows.push(toRow(entry, tagsFor(entry)));
-    if (rows.length === limit) break;
+/**
+ * The best-documented market in each of the top states, in the state grid's
+ * order. A national list ranked purely by completeness filled up with one
+ * city's markets; one per state reads as a map of where to start.
+ */
+function sampleByState(
+  entries: TopicEntry[],
+  states: TopicStateRow[],
+  badgesFor: BadgesFor = benefitBadges,
+  limit = SAMPLE_LIMIT
+): TopicMarketRow[] {
+  const best = new Map<string, TopicEntry>();
+  for (const entry of entries) {
+    if (entry.score === 0) continue;
+    const current = best.get(entry.stateSlug);
+    if (
+      !current ||
+      entry.score > current.score ||
+      (entry.score === current.score && entry.name.localeCompare(current.name, 'en') < 0)
+    ) {
+      best.set(entry.stateSlug, entry);
+    }
   }
 
+  const rows: TopicMarketRow[] = [];
+  for (const state of states) {
+    const entry = best.get(state.slug);
+    if (entry) rows.push(toRow(entry, badgesFor));
+    if (rows.length === limit) break;
+  }
   return rows;
 }
 
 /** State rows for a selection, largest first, states with no match omitted. */
 function stateRows(entries: TopicEntry[]): TopicStateRow[] {
-  const counts = new Map<string, { name: string; slug: string; count: number }>();
+  const counts = new Map<string, Omit<TopicStateRow, 'href'>>();
   for (const entry of entries) {
-    if (!entry.stateSlug || !entry.stateName) continue;
     const row = counts.get(entry.stateSlug) ?? {
       name: entry.stateName,
+      code: entry.stateCode,
       slug: entry.stateSlug,
       count: 0,
     };
@@ -298,22 +347,33 @@ function stateRows(entries: TopicEntry[]): TopicStateRow[] {
     .map((row) => ({ ...row, href: statePath(row.slug) }));
 }
 
+/** "47 states and DC" for a state grid. */
+function statesPhrase(states: TopicStateRow[]): string {
+  const includesDc = states.some((state) => state.code === 'DC');
+  return placesPhrase(states.length - (includesDc ? 1 : 0), includesDc);
+}
+
+/** The states tile: "47" over "States + DC". */
+function statesStat(states: TopicStateRow[]): TopicStat {
+  const includesDc = states.some((state) => state.code === 'DC');
+  return {
+    value: formatCount(states.length - (includesDc ? 1 : 0)),
+    label: includesDc ? 'States, plus DC' : 'States',
+    icon: 'map',
+  };
+}
+
 function lastModifiedOf(entries: TopicEntry[]): string | undefined {
   let latest: string | undefined;
   for (const entry of entries) latest = newerInstant(latest, entry.lastModified);
   return latest;
 }
 
-/** "New York (85), California (61) and Texas (44)". */
-function namedStates(states: TopicStateRow[], limit = 3): string {
-  return joinWithAnd(states.slice(0, limit).map((state) => `${state.name} (${state.count})`));
-}
-
 function countMatching(entries: TopicEntry[], predicate: (entry: TopicEntry) => boolean): number {
   return entries.reduce((total, entry) => total + (predicate(entry) ? 1 : 0), 0);
 }
 
-/** The opening-times string the most records in a selection state. */
+/** The opening times the most markets in a selection list. */
 function commonHours(entries: TopicEntry[]): { hours: string; count: number } | undefined {
   const frequency = new Map<string, number>();
   for (const entry of entries) {
@@ -327,18 +387,15 @@ function commonHours(entries: TopicEntry[]): { hours: string; count: number } | 
   return ranked ? { hours: ranked[0], count: ranked[1] } : undefined;
 }
 
+function isDefined<T>(value: T | undefined | false): value is T {
+  return Boolean(value);
+}
+
 /* ------------------------------------------------------------------ *
  * /farmers-markets/snap-ebt
  * ------------------------------------------------------------------ */
 
-export interface SnapTopicPageData extends TopicPageData {
-  /** Of the matching markets, how many also accept these programs. */
-  wicCount: number;
-  sfmnpCount: number;
-  fmnpCount: number;
-}
-
-export async function getSnapTopicPage(): Promise<SnapTopicPageData> {
+export async function getSnapTopicPage(): Promise<TopicPageData> {
   const all = await getTopicEntries();
   const entries = all.filter((entry) => entry.market.snap === true);
 
@@ -346,111 +403,61 @@ export async function getSnapTopicPage(): Promise<SnapTopicPageData> {
   const count = entries.length;
   const wicCount = countMatching(entries, (entry) => entry.market.wic === true);
   const sfmnpCount = countMatching(entries, (entry) => entry.market.sfmnp === true);
-  const fmnpCount = countMatching(entries, (entry) => entry.market.fmnp === true);
-  const withDays = entries.filter((entry) => entry.days.length > 0);
   const saturdayCount = countMatching(entries, (entry) => entry.days.includes('Saturday'));
-  const share = sharePercent(count, all.length);
+  const sundayCount = countMatching(entries, (entry) => entry.days.includes('Sunday'));
+  const where = states.length > 0 ? ` across ${statesPhrase(states)}` : '';
+
+  const benefitClauses = [
+    wicCount > 0 ? `${formatCount(wicCount)} also take WIC` : undefined,
+    sfmnpCount > 0
+      ? `${formatCount(sfmnpCount)} take Senior Farmers Market Nutrition Program (SFMNP) coupons`
+      : undefined,
+  ].filter(isDefined);
 
   const faqs: TopicFaq[] = [
-    {
-      question: 'How many farmers markets accept SNAP/EBT?',
-      answer: `${formatCount(count)} of the ${formatCount(
-        all.length
-      )} markets in this directory are recorded as accepting SNAP/EBT${
-        share ? `, about ${share}% of every record` : ''
-      }. They are spread across ${states.length} states and regions.`,
+    benefitClauses.length > 0 && {
+      question: 'Do SNAP farmers markets also take WIC or senior coupons?',
+      answer: `Many do. ${joinWithAnd(benefitClauses)}.`,
     },
-    states.length > 0
-      ? {
-          question: 'Which states have the most SNAP farmers markets?',
-          answer: `${namedStates(states)} list the most SNAP-accepting markets. The full state-by-state count is in the table above.`,
-        }
-      : undefined,
-    wicCount > 0 || sfmnpCount > 0
-      ? {
-          question: 'Do SNAP markets accept WIC and senior nutrition benefits too?',
-          answer: `Often, but not always: ${formatCount(
-            wicCount
-          )} of these ${formatCount(count)} markets also accept WIC and ${formatCount(
-            sfmnpCount
-          )} accept the Senior Farmers Market Nutrition Program. Each market page lists the programs that market is recorded as taking.`,
-        }
-      : undefined,
-    withDays.length > 0
-      ? {
-          question: 'Are SNAP farmers markets open on Saturdays?',
-          answer: `${formatCount(withDays.length)} of the ${formatCount(
-            count
-          )} SNAP markets state which days they open, and ${formatCount(
-            saturdayCount
-          )} of those trade on a Saturday. The rest of the days are on the market hours page.`,
-        }
-      : undefined,
-    {
-      question: 'How do you pay with SNAP at a farmers market?',
-      answer:
-        'It depends on how the market is set up. Some markets run a single card terminal at an information booth, where you swipe your EBT card and receive tokens or scrip to spend with any participating vendor; at others, individual vendors take the card at their own stall. Ask at the information booth when you arrive.',
+    saturdayCount > 0 && {
+      question: 'Are SNAP farmers markets open on weekends?',
+      answer: `Yes. ${formatCount(saturdayCount)} are open on Saturday${
+        sundayCount > 0 ? ` and ${formatCount(sundayCount)} on Sunday` : ''
+      }.`,
     },
-  ].filter((faq): faq is TopicFaq => Boolean(faq));
-
-  const title = fitTitle([
-    `${formatCount(count)} Farmers Markets That Accept SNAP/EBT`,
-    `${formatCount(count)} Farmers Markets Accepting SNAP/EBT`,
-    'Farmers Markets That Accept SNAP/EBT',
-  ]);
+  ].filter(isDefined);
 
   return {
     slug: 'snap-ebt',
     path: topicPath('snap-ebt'),
     heading: 'Farmers Markets That Accept SNAP/EBT',
-    title,
-    description: fitDescription(
-      `${formatCount(count)} farmers markets in this directory accept SNAP/EBT.`,
-      [
-        states.length > 0 ? `Browse them by state, starting with ${states[0].name} (${states[0].count}).` : undefined,
-        wicCount > 0 ? `${formatCount(wicCount)} also accept WIC.` : undefined,
-        'See days, hours and addresses.',
-      ]
-    ),
-    opener: buildParagraph(
-      [
-        `${pluralMarkets(count)} in this directory are recorded as accepting SNAP/EBT benefits${
-          states.length > 0
-            ? `, across ${states.length} states and regions`
-            : ''
-        }.`,
-        states.length > 0 ? `${namedStates(states)} list the most.` : undefined,
-        wicCount > 0 || sfmnpCount > 0
-          ? `${formatCount(wicCount)} of them also accept WIC and ${formatCount(
-              sfmnpCount
-            )} accept the Senior Farmers Market Nutrition Program.`
-          : undefined,
-        withDays.length > 0
-          ? `${formatCount(withDays.length)} state which days they open; ${formatCount(
-              saturdayCount
-            )} of those open on a Saturday.`
-          : undefined,
-      ],
-      [
-        'Each state below links to a page listing that state’s markets city by city, with addresses, days and opening times.',
-      ]
-    ),
+    title: fitTitle([
+      `${formatCount(count)} Farmers Markets That Accept SNAP/EBT`,
+      `${formatCount(count)} Farmers Markets Accepting SNAP/EBT`,
+      'Farmers Markets That Accept SNAP/EBT',
+    ]),
+    description: fitDescription(`${pluralMarkets(count)} accept SNAP/EBT${where}.`, [
+      wicCount > 0 ? `${formatCount(wicCount)} also take WIC.` : undefined,
+      'Find one in your state, with days and hours.',
+    ]),
+    answer: `${pluralMarkets(count)} accept SNAP/EBT${where}.`,
+    stats: [
+      { value: formatCount(count), label: 'Take SNAP/EBT', icon: 'snap' as const },
+      states.length > 0 && statesStat(states),
+      wicCount > 0 && { value: formatCount(wicCount), label: 'Also take WIC', icon: 'wic' as const },
+      saturdayCount > 0 && {
+        value: formatCount(saturdayCount),
+        label: 'Open Saturdays',
+        icon: 'calendar' as const,
+      },
+    ].filter(isDefined),
     marketCount: count,
-    totalMarkets: all.length,
     states,
-    statelessCount: countMatching(entries, (entry) => !entry.stateSlug),
-    topMarkets: topMarkets(entries, (entry) =>
-      [
-        'SNAP',
-        entry.market.wic === true ? 'WIC' : undefined,
-        entry.market.sfmnp === true ? 'SFMNP' : undefined,
-      ].filter((tag): tag is string => Boolean(tag))
+    topMarkets: sampleByState(entries, states, (entry) =>
+      entry.market.wic === true ? ['WIC'] : []
     ),
     faqs,
     lastModified: lastModifiedOf(entries),
-    wicCount,
-    sfmnpCount,
-    fmnpCount,
   };
 }
 
@@ -458,34 +465,27 @@ export async function getSnapTopicPage(): Promise<SnapTopicPageData> {
  * /farmers-markets/online
  * ------------------------------------------------------------------ */
 
-/** One ordering channel, with the markets that offer it. */
-export interface OrderingSegment {
-  key: 'online' | 'delivery' | 'csa' | 'phone';
-  heading: string;
-  /** One factual sentence about what the flag means in the data. */
-  intro: string;
-  count: number;
-  markets: TopicMarketRow[];
-}
-
-export interface OnlineTopicPageData extends TopicPageData {
-  segments: OrderingSegment[];
-}
-
+/**
+ * The three ways to buy beyond the stall. Phone orders are left out: the flag
+ * is set on almost every record that sets any of these, so it told a reader
+ * nothing.
+ */
 const ORDERING_FLAGS = {
-  online: (market: FarmerMarket) => market.online_ordering_available === true,
-  delivery: (market: FarmerMarket) => market.delivery_available === true,
-  csa: (market: FarmerMarket) => market.csa_available === true,
-  phone: (market: FarmerMarket) => market.phone_ordering === true,
+  Online: (market: FarmerMarket) => market.online_ordering_available === true,
+  Delivery: (market: FarmerMarket) => market.delivery_available === true,
+  CSA: (market: FarmerMarket) => market.csa_available === true,
 } as const;
 
-function orderingTags(entry: TopicEntry): string[] {
-  return [
-    ORDERING_FLAGS.online(entry.market) ? 'Online ordering' : undefined,
-    ORDERING_FLAGS.delivery(entry.market) ? 'Delivery' : undefined,
-    ORDERING_FLAGS.csa(entry.market) ? 'CSA' : undefined,
-    ORDERING_FLAGS.phone(entry.market) ? 'Phone orders' : undefined,
-  ].filter((tag): tag is string => Boolean(tag));
+export type OrderingBadge = keyof typeof ORDERING_FLAGS;
+
+const orderingBadges: BadgesFor = (entry) =>
+  (Object.keys(ORDERING_FLAGS) as OrderingBadge[]).filter((key) =>
+    ORDERING_FLAGS[key](entry.market)
+  );
+
+export interface OnlineTopicPageData extends TopicPageData {
+  /** How many markets carry each ordering badge. */
+  counts: Record<OrderingBadge, number>;
 }
 
 export async function getOnlineTopicPage(): Promise<OnlineTopicPageData> {
@@ -496,131 +496,73 @@ export async function getOnlineTopicPage(): Promise<OnlineTopicPageData> {
 
   const states = stateRows(entries);
   const count = entries.length;
-
-  const segmentEntries = {
-    online: entries.filter((entry) => ORDERING_FLAGS.online(entry.market)),
-    delivery: entries.filter((entry) => ORDERING_FLAGS.delivery(entry.market)),
-    csa: entries.filter((entry) => ORDERING_FLAGS.csa(entry.market)),
-    phone: entries.filter((entry) => ORDERING_FLAGS.phone(entry.market)),
+  const counts: Record<OrderingBadge, number> = {
+    Online: countMatching(entries, (entry) => ORDERING_FLAGS.Online(entry.market)),
+    Delivery: countMatching(entries, (entry) => ORDERING_FLAGS.Delivery(entry.market)),
+    CSA: countMatching(entries, (entry) => ORDERING_FLAGS.CSA(entry.market)),
   };
 
-  const segmentCopy: Record<OrderingSegment['key'], { heading: string; intro: string }> = {
-    online: {
-      heading: 'Markets with online ordering',
-      intro:
-        'These markets are recorded as taking orders through a website or ordering platform of their own. Order details are set by the market, so check its own site or phone number before ordering.',
-    },
-    delivery: {
-      heading: 'Markets that deliver',
-      intro:
-        'These markets are recorded as offering delivery. Delivery areas and fees are set market by market and are not part of this dataset.',
-    },
-    csa: {
-      heading: 'Markets with CSA shares',
-      intro:
-        'A CSA (community supported agriculture) share is a subscription paid up front for a recurring box of produce. These markets are recorded as offering one.',
-    },
-    phone: {
-      heading: 'Markets that take phone orders',
-      intro:
-        'These markets are recorded as taking orders by phone. Each market page lists the phone numbers in the source data.',
-    },
-  };
-
-  const segments: OrderingSegment[] = (
-    ['online', 'delivery', 'csa', 'phone'] as const
-  )
-    .map((key) => ({
-      key,
-      heading: segmentCopy[key].heading,
-      intro: segmentCopy[key].intro,
-      count: segmentEntries[key].length,
-      markets: topMarkets(segmentEntries[key], orderingTags, SEGMENT_MARKET_LIMIT),
-    }))
-    .filter((segment) => segment.count > 0);
+  // The whole set is small enough to list in full, so there is no "N more"
+  // dead end: every market, grouped by state and city. The data holds a few
+  // genuine duplicate names at different addresses in one city; one row per
+  // name and place keeps the list from reading as a bug.
+  const seen = new Set<string>();
+  const markets = [...entries]
+    .sort(compareByPlace)
+    .filter((entry) => {
+      const key = `${entry.name.toLowerCase()}|${entry.cityName ?? ''}|${entry.stateSlug}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .map((entry) => toRow(entry, orderingBadges));
 
   const faqs: TopicFaq[] = [
-    {
+    counts.Online > 0 && {
       question: 'Can you order from a farmers market online?',
-      answer: `Some markets do take orders remotely: ${formatCount(
-        segmentEntries.online.length
-      )} of the ${formatCount(all.length)} markets in this directory are recorded as offering online ordering, and ${formatCount(
-        segmentEntries.phone.length
-      )} take orders by phone. The rest sell in person at the market only.`,
+      answer: `Yes, ${pluralShort(counts.Online)} take online orders. You order through the market itself, not through this site.`,
     },
-    segmentEntries.delivery.length > 0
-      ? {
-          question: 'Do farmers markets deliver?',
-          answer: `${formatCount(
-            segmentEntries.delivery.length
-          )} markets in this directory are recorded as delivering. Delivery areas, fees and cut-off times are set by each market and are not in the source data, so check with the market before ordering.`,
-        }
-      : undefined,
-    segmentEntries.csa.length > 0
-      ? {
-          question: 'Which farmers markets offer CSA boxes?',
-          answer: `${formatCount(
-            segmentEntries.csa.length
-          )} markets list a CSA share. They are named in the CSA section above, and each market page carries the description the market itself supplied.`,
-        }
-      : undefined,
-    states.length > 0
-      ? {
-          question: 'Which states have the most markets with online ordering or delivery?',
-          answer: `${namedStates(states)} have the most. The state-by-state count for all ${formatCount(
-            count
-          )} markets is in the table above.`,
-        }
-      : undefined,
-    {
-      question: 'Is there a farmers market app?',
-      answer:
-        'This directory is a website rather than an app: it works in any phone browser, and every market page lists the address, days, hours and contact details the market published. Ordering itself happens through the individual market, not through this site.',
+    counts.Delivery > 0 && {
+      question: 'Do farmers markets deliver?',
+      answer: `Some do: ${pluralShort(counts.Delivery)} offer delivery. Areas, fees and cut-off times vary, so check with the market before you order.`,
     },
-  ].filter((faq): faq is TopicFaq => Boolean(faq));
-
-  const title = fitTitle([
-    `${formatCount(count)} Farmers Markets With Online Ordering & Delivery`,
-    `${formatCount(count)} Farmers Markets: Online Ordering & Delivery`,
-    `Online Farmers Markets - ${formatCount(count)} With Ordering`,
-  ]);
+    counts.CSA > 0 && {
+      question: 'What is a CSA share?',
+      answer: `A CSA (community supported agriculture) share is a subscription you pay up front for a regular box of produce. ${pluralShort(counts.CSA)} offer one.`,
+    },
+  ].filter(isDefined);
 
   return {
     slug: 'online',
     path: topicPath('online'),
     heading: 'Farmers Markets With Online Ordering, Delivery and CSA',
-    title,
+    title: fitTitle([
+      `${formatCount(count)} Farmers Markets With Online Ordering & Delivery`,
+      `${formatCount(count)} Farmers Markets: Online Ordering & Delivery`,
+      'Farmers Markets With Online Ordering & Delivery',
+    ]),
     description: fitDescription(
-      `${formatCount(count)} farmers markets in this directory sell beyond the market stall.`,
+      `${pluralMarkets(count)} let you order online, get delivery or join a CSA.`,
       [
-        `${formatCount(segmentEntries.online.length)} take online orders, ${formatCount(
-          segmentEntries.delivery.length
-        )} deliver and ${formatCount(segmentEntries.csa.length)} offer CSA shares.`,
-        'Browse by state.',
+        `${formatCount(counts.Online)} take online orders, ${formatCount(
+          counts.Delivery
+        )} deliver and ${formatCount(counts.CSA)} offer CSA shares.`,
+        'See them all by state.',
       ]
     ),
-    opener: buildParagraph(
-      [
-        `${pluralMarkets(count)} in this directory are recorded as selling beyond the market stall.`,
-        `${formatCount(segmentEntries.online.length)} take orders online, ${formatCount(
-          segmentEntries.delivery.length
-        )} offer delivery, ${formatCount(segmentEntries.csa.length)} run a CSA share and ${formatCount(
-          segmentEntries.phone.length
-        )} take orders by phone; a market can appear in more than one of those groups.`,
-        states.length > 0 ? `${namedStates(states)} have the most.` : undefined,
-      ],
-      [
-        'Ordering happens through the individual market rather than through this site, so each name below links to that market’s page and its own contact details.',
-      ]
-    ),
+    answer: `${pluralMarkets(count)} let you order online, get delivery or join a CSA.`,
+    stats: [
+      { value: formatCount(counts.Online), label: 'Order online', icon: 'online' as const },
+      { value: formatCount(counts.Delivery), label: 'Deliver', icon: 'delivery' as const },
+      { value: formatCount(counts.CSA), label: 'Offer a CSA', icon: 'csa' as const },
+      states.length > 0 && statesStat(states),
+    ].filter(isDefined),
     marketCount: count,
-    totalMarkets: all.length,
     states,
-    statelessCount: countMatching(entries, (entry) => !entry.stateSlug),
-    topMarkets: topMarkets(entries, orderingTags),
+    topMarkets: markets,
     faqs,
     lastModified: lastModifiedOf(entries),
-    segments,
+    counts,
   };
 }
 
@@ -628,64 +570,58 @@ export async function getOnlineTopicPage(): Promise<OnlineTopicPageData> {
  * /farmers-markets/hours
  * ------------------------------------------------------------------ */
 
-/** One row of the day-of-week table. */
+/** One day in a day-of-week chart. */
 export interface TopicDayRow {
   day: Weekday;
   count: number;
-  /** Percentage of the markets that state any day at all. */
-  share?: number;
   /** Set for the days that have a page of their own. */
   href?: string;
 }
 
 export interface HoursTopicPageData extends TopicPageData {
-  /** Markets that state at least one opening day. */
-  withDayData: number;
-  /** Markets that state opening times anywhere in the directory. */
-  withHours: number;
-  /** Markets that state both their days and their opening times. */
-  withDaysAndHours: number;
   dayRows: TopicDayRow[];
-  /** The opening times the most records state, e.g. "9am–1pm". */
+  /** The opening times the most markets list, e.g. "9am-1pm". */
   commonHours?: { hours: string; count: number };
   /** The biggest cities by market count, for local hours. */
   topCities: { name: string; href: string; count: number }[];
 }
 
-const TOP_CITY_LIMIT = 10;
+const TOP_CITY_LIMIT = 12;
+const WEEKEND: Weekday[] = ['Saturday', 'Sunday'];
+
+function rankDays(rows: TopicDayRow[]): TopicDayRow[] {
+  return [...rows].sort(
+    (left, right) =>
+      right.count - left.count || WEEKDAY_NAMES.indexOf(left.day) - WEEKDAY_NAMES.indexOf(right.day)
+  );
+}
 
 export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
   const all = await getTopicEntries();
   const index = await getGeoIndex();
 
   const entries = all.filter((entry) => entry.days.length > 0);
-  const withHoursEntries = all.filter((entry) => Boolean(entry.hours));
   const states = stateRows(entries);
 
-  const dayRows: TopicDayRow[] = WEEKDAY_NAMES.map((day) => {
-    const count = countMatching(entries, (entry) => entry.days.includes(day));
-    return {
-      day,
-      count,
-      share: sharePercent(count, entries.length),
-      href: day === 'Saturday' ? topicPath('saturday') : undefined,
-    };
-  }).filter((row) => row.count > 0);
+  const dayRows: TopicDayRow[] = WEEKDAY_NAMES.map((day) => ({
+    day,
+    count: countMatching(entries, (entry) => entry.days.includes(day)),
+    href: day === 'Saturday' ? topicPath('saturday') : undefined,
+  })).filter((row) => row.count > 0);
 
-  const ranked = [...dayRows].sort(
-    (left, right) =>
-      right.count - left.count || WEEKDAY_NAMES.indexOf(left.day) - WEEKDAY_NAMES.indexOf(right.day)
+  const busiest = rankDays(dayRows)[0];
+  const [busiestWeekday, nextWeekday] = rankDays(
+    dayRows.filter((row) => !WEEKEND.includes(row.day))
   );
-  const withDaysAndHours = countMatching(entries, (entry) => Boolean(entry.hours));
-  const busiest = ranked[0];
-  const runnerUp = ranked[1];
+  const saturday = dayRows.find((row) => row.day === 'Saturday');
   const sunday = dayRows.find((row) => row.day === 'Sunday');
-  const hours = commonHours(withHoursEntries);
+  const hours = commonHours(all);
 
   const topCities = index.states
+    .filter(isCoveredState)
     .flatMap((state) =>
       state.cities.map((city) => ({
-        name: `${city.name}, ${state.name}`,
+        name: `${city.name}, ${state.code}`,
         href: cityPath(state.slug, city.slug),
         count: city.market_count,
       }))
@@ -694,111 +630,55 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
     .slice(0, TOP_CITY_LIMIT);
 
   const faqs: TopicFaq[] = [
-    busiest
-      ? {
-          question: 'What day are most farmers markets open?',
-          answer: `${busiest.day}. ${formatCount(busiest.count)} of the ${formatCount(
-            entries.length
-          )} markets that state an opening day trade on a ${busiest.day}${
-            busiest.share ? `, ${busiest.share}% of them` : ''
-          }${runnerUp ? `, ahead of ${runnerUp.day} with ${formatCount(runnerUp.count)}` : ''}.`,
-        }
-      : undefined,
-    hours
-      ? {
-          question: 'What time do farmers markets open?',
-          answer: `Opening times vary market to market, but ${hours.hours} is the most commonly listed: ${formatCount(
-            hours.count
-          )} of the ${formatCount(
-            withHoursEntries.length
-          )} markets that state their times use it. Morning and late-morning starts dominate the data.`,
-        }
-      : undefined,
-    sunday
-      ? {
-          question: 'Are farmers markets open on Sundays?',
-          answer: `${formatCount(sunday.count)} of the ${formatCount(
-            entries.length
-          )} markets with day data are listed as open on Sunday${
-            sunday.share ? `, ${sunday.share}% of them` : ''
-          }. That is fewer than Saturday, which is the busiest market day by a wide margin.`,
-        }
-      : undefined,
-    {
-      question: 'How do I find the hours for a farmers market near me?',
-      answer: `Hours are set by each market and change with the season, so the city pages are the place to check: each one lists every market in that city with its days, opening times and season. ${
-        topCities.length > 0
-          ? `The largest are ${joinWithAnd(topCities.slice(0, 3).map((city) => city.name))}.`
-          : ''
-      }`.trim(),
+    sunday && {
+      question: 'Are farmers markets open on Sundays?',
+      answer: `Some are: ${pluralShort(sunday.count)} open on Sunday${
+        saturday ? `, compared with ${formatCount(saturday.count)} on Saturday` : ''
+      }.`,
     },
-    {
-      question: 'How many markets in this directory publish their opening days?',
-      answer: `${formatCount(entries.length)} of ${formatCount(
-        all.length
-      )} state at least one opening day, and ${formatCount(
-        withHoursEntries.length
-      )} state opening times. ${formatCount(
-        withDaysAndHours
-      )} records carry both. The rest carry an address but no schedule at all.`,
+    busiestWeekday && {
+      question: 'Are farmers markets open on weekdays?',
+      answer: `Yes. ${busiestWeekday.day} is the busiest weekday, with ${pluralShort(
+        busiestWeekday.count
+      )}${nextWeekday ? `, followed by ${nextWeekday.day} with ${formatCount(nextWeekday.count)}` : ''}.`,
     },
-  ].filter((faq): faq is TopicFaq => Boolean(faq));
+  ].filter(isDefined);
 
-  const title = fitTitle([
-    `Farmers Market Hours: Opening Days for ${formatCount(entries.length)} Markets`,
-    `Farmers Market Hours - ${formatCount(entries.length)} Markets by Day`,
-    `Farmers Market Hours: ${formatCount(entries.length)} Markets`,
-  ]);
+  const answer =
+    busiest && hours
+      ? `${busiest.day} is the busiest farmers market day, and ${hours.hours} are the most common hours.`
+      : busiest
+        ? `${busiest.day} is the busiest farmers market day.`
+        : `${pluralMarkets(entries.length)} list their opening days.`;
 
   return {
     slug: 'hours',
     path: topicPath('hours'),
     heading: 'Farmers Market Hours: When Are They Open?',
-    title,
-    description: fitDescription(
-      busiest
-        ? `${formatCount(busiest.count)} of the ${formatCount(
-            entries.length
-          )} markets with day data open on ${busiest.day}.`
-        : `${formatCount(entries.length)} markets in this directory state their opening days.`,
-      [
-        'See the full day-of-week breakdown.',
-        hours ? `${hours.hours} is the most common opening time.` : undefined,
-        'Check a city page for local hours.',
-      ]
-    ),
-    opener: buildParagraph(
-      [
-        `${formatCount(entries.length)} of the ${formatCount(
-          all.length
-        )} markets in this directory state which days they open, and ${formatCount(
-          withHoursEntries.length
-        )} state their opening times.`,
-        busiest
-          ? `${busiest.day} is the busiest market day: ${formatCount(busiest.count)} markets${
-              busiest.share ? `, ${busiest.share}% of those with day data` : ''
-            }${runnerUp ? `, ahead of ${runnerUp.day} with ${formatCount(runnerUp.count)}` : ''}.`
-          : undefined,
-        hours
-          ? `${hours.hours} is the most commonly listed opening window, used by ${formatCount(
-              hours.count
-            )} markets.`
-          : undefined,
-      ],
-      [
-        'Hours are set market by market and change with the season, so the city pages below are the place to check before you go.',
-      ]
-    ),
+    title: fitTitle([
+      `Farmers Market Hours: Opening Days for ${formatCount(entries.length)} Markets`,
+      `Farmers Market Hours: ${formatCount(entries.length)} Markets by Day`,
+      `Farmers Market Hours: ${formatCount(entries.length)} Markets`,
+    ]),
+    description: fitDescription(answer, [
+      'See how many markets open each day, then check hours in your city.',
+    ]),
+    answer,
+    stats: [
+      busiest && { value: busiest.day, label: 'Busiest day', icon: 'calendar' as const },
+      busiestWeekday && {
+        value: busiestWeekday.day,
+        label: 'Busiest weekday',
+        icon: 'calendar' as const,
+      },
+      hours && { value: hours.hours, label: 'Most common hours', icon: 'clock' as const },
+      sunday && { value: formatCount(sunday.count), label: 'Open Sundays', icon: 'calendar' as const },
+    ].filter(isDefined),
     marketCount: entries.length,
-    totalMarkets: all.length,
     states,
-    statelessCount: countMatching(entries, (entry) => !entry.stateSlug),
-    topMarkets: topMarkets(entries),
+    topMarkets: sampleByState(entries, states),
     faqs,
     lastModified: lastModifiedOf(entries),
-    withDayData: entries.length,
-    withHours: withHoursEntries.length,
-    withDaysAndHours,
     dayRows,
     commonHours: hours,
     topCities,
@@ -810,10 +690,8 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
  * ------------------------------------------------------------------ */
 
 export interface SaturdayTopicPageData extends TopicPageData {
-  /** Every other weekday, with its own count, for the closing note. */
+  /** Every other weekday with its own count, in week order. */
   otherDays: TopicDayRow[];
-  /** Saturday markets that also open on another day. */
-  alsoOtherDayCount: number;
   commonHours?: { hours: string; count: number };
 }
 
@@ -827,112 +705,65 @@ export async function getSaturdayTopicPage(): Promise<SaturdayTopicPageData> {
   const hours = commonHours(entries);
   const alsoOtherDayCount = countMatching(entries, (entry) => entry.days.length > 1);
   const snapCount = countMatching(entries, (entry) => entry.market.snap === true);
-  const share = sharePercent(count, withDays.length);
+  const where = states.length > 0 ? ` across ${statesPhrase(states)}` : '';
 
   const otherDays: TopicDayRow[] = WEEKDAY_NAMES.filter((day) => day !== 'Saturday')
     .map((day) => ({
       day,
       count: countMatching(withDays, (entry) => entry.days.includes(day)),
-      share: sharePercent(
-        countMatching(withDays, (entry) => entry.days.includes(day)),
-        withDays.length
-      ),
+      href: topicPath('hours'),
     }))
-    .filter((row) => row.count > 0)
-    .sort((left, right) => right.count - left.count);
+    .filter((row) => row.count > 0);
+
+  // Of the Saturday markets that also open another day, which day that most
+  // often is.
+  const [topOtherDay] = rankDays(
+    WEEKDAY_NAMES.filter((day) => day !== 'Saturday').map((day) => ({
+      day,
+      count: countMatching(entries, (entry) => entry.days.includes(day)),
+    }))
+  ).filter((row) => row.count > 0);
 
   const faqs: TopicFaq[] = [
-    {
-      question: 'How many farmers markets are open on Saturday?',
-      answer: `${formatCount(count)} markets in this directory list Saturday as an opening day, ${
-        share ? `${share}% of ` : ''
-      }the ${formatCount(
-        withDays.length
-      )} records that state any day at all. They cover ${states.length} states and regions.`,
+    alsoOtherDayCount > 0 && {
+      question: 'Are Saturday farmers markets open on other days too?',
+      answer: `${formatCount(alsoOtherDayCount)} of them are${
+        topOtherDay ? `, most often on ${topOtherDay.day}` : ''
+      }.`,
     },
-    states.length > 0
-      ? {
-          question: 'Which states have the most Saturday farmers markets?',
-          answer: `${namedStates(states)} list the most Saturday markets. Every state with at least one is in the table above, linking to that state’s full directory.`,
-        }
-      : undefined,
-    hours
-      ? {
-          question: 'What time do Saturday farmers markets open?',
-          answer: `${hours.hours} is the most commonly listed window for a Saturday market, used by ${formatCount(
-            hours.count
-          )} of them. Times are set by each market, so check the market’s own page before you go.`,
-        }
-      : undefined,
-    alsoOtherDayCount > 0
-      ? {
-          question: 'Are Saturday markets open on other days as well?',
-          answer: `${formatCount(alsoOtherDayCount)} of the ${formatCount(
-            count
-          )} Saturday markets also list at least one other opening day. The full day-of-week breakdown is on the market hours page.`,
-        }
-      : undefined,
-    snapCount > 0
-      ? {
-          question: 'Do Saturday farmers markets accept SNAP/EBT?',
-          answer: `${formatCount(snapCount)} of these ${formatCount(
-            count
-          )} Saturday markets are recorded as accepting SNAP/EBT benefits.`,
-        }
-      : undefined,
-  ].filter((faq): faq is TopicFaq => Boolean(faq));
-
-  const title = fitTitle([
-    `${formatCount(count)} Saturday Farmers Markets by State`,
-    `Saturday Farmers Markets - ${formatCount(count)} by State`,
-    'Saturday Farmers Markets by State',
-  ]);
+    snapCount > 0 && {
+      question: 'Do Saturday farmers markets take SNAP/EBT?',
+      answer: `${formatCount(snapCount)} of them do.`,
+    },
+  ].filter(isDefined);
 
   return {
     slug: 'saturday',
     path: topicPath('saturday'),
     heading: 'Saturday Farmers Markets',
-    title,
-    description: fitDescription(
-      `${formatCount(count)} farmers markets in this directory open on Saturdays.`,
-      [
-        states.length > 0
-          ? `Browse them by state, starting with ${states[0].name} (${states[0].count}).`
-          : undefined,
-        hours ? `${hours.hours} is the most common window.` : undefined,
-        'See addresses and hours.',
-      ]
-    ),
-    opener: buildParagraph(
-      [
-        `${pluralMarkets(count)} in this directory list Saturday as an opening day${
-          share ? `, ${share}% of the ${formatCount(withDays.length)} records that state any day` : ''
-        }.`,
-        states.length > 0
-          ? `They cover ${states.length} states and regions, with ${namedStates(states)} listing the most.`
-          : undefined,
-        hours
-          ? `${hours.hours} is the most commonly listed Saturday window, used by ${pluralShort(
-              hours.count
-            )}.`
-          : undefined,
-        snapCount > 0 ? `${formatCount(snapCount)} of them accept SNAP/EBT.` : undefined,
-      ],
-      [
-        'Each state below links to that state’s full directory, city by city, with addresses and opening times.',
-      ]
-    ),
+    title: fitTitle([
+      `${formatCount(count)} Saturday Farmers Markets by State`,
+      `Saturday Farmers Markets: ${formatCount(count)} by State`,
+      'Saturday Farmers Markets by State',
+    ]),
+    description: fitDescription(`${pluralMarkets(count)} open on Saturday${where}.`, [
+      hours ? `The most common hours are ${hours.hours}.` : undefined,
+      states.length > 0
+        ? `Browse by state, starting with ${states[0].name} (${formatCount(states[0].count)}).`
+        : undefined,
+    ]),
+    answer: `${pluralMarkets(count)} open on Saturday${where}.`,
+    stats: [
+      { value: formatCount(count), label: 'Open Saturdays', icon: 'calendar' as const },
+      states.length > 0 && statesStat(states),
+      hours && { value: hours.hours, label: 'Most common hours', icon: 'clock' as const },
+    ].filter(isDefined),
     marketCount: count,
-    totalMarkets: all.length,
     states,
-    statelessCount: countMatching(entries, (entry) => !entry.stateSlug),
-    topMarkets: topMarkets(entries, (entry) =>
-      entry.market.snap === true ? ['SNAP'] : []
-    ),
+    topMarkets: sampleByState(entries, states),
     faqs,
     lastModified: lastModifiedOf(entries),
     otherDays,
-    alsoOtherDayCount,
     commonHours: hours,
   };
 }

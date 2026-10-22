@@ -27,7 +27,8 @@ import {
  * - search_miss: a search found nothing. Offer to add it.
  * - listing_check: they tapped Website / Directions / Phone and came back.
  *   Ask if the listing was right; a "no" becomes a correction to review.
- * - trip_planner: 3+ markets viewed, or 2+ acted on. Offer the newsletter.
+ * - trip_planner: 3+ markets viewed, or 2+ acted on. Offer the newsletter,
+ *   unless the page already shows its own signup (two asks is the cap).
  * - unmet_need: 35s of reading, scrolled to the end, no action. Ask what
  *   was missing.
  *
@@ -73,6 +74,11 @@ const CITY_NEEDS = [
   { id: "produce", label: "Specific produce" },
   { id: "other", label: "Something else" },
 ] as const;
+
+/** True when the page on screen already renders a NewsletterSignup. */
+function pageHasSignup(): boolean {
+  return typeof document !== "undefined" && document.querySelector("[data-newsletter-signup]") !== null;
+}
 
 async function postSubmission(body: Record<string, unknown>) {
   try {
@@ -175,6 +181,7 @@ export function VisitorPrompts() {
       window.clearTimeout(tripTimer);
       tripTimer = window.setTimeout(() => {
         if (pendingCheck.current) return; // the listing check comes first
+        if (pageHasSignup()) return; // one newsletter ask per page is enough
         const now = currentContext();
         const place = now?.kind === "market" ? now.cityName : now?.kind === "city" ? now.name : undefined;
         show({ id: "trip_planner", place }, visit.outcomeMarkets.length >= 2 ? "two_outcomes" : "three_markets");
@@ -375,13 +382,15 @@ export function VisitorPrompts() {
   } else if (active.id === "trip_planner") {
     icon = <CalendarHeart className="h-4 w-4" />;
     eyebrow = "Planning a market run?";
-    title = active.place ? `Market days near ${active.place}, weekly` : "Market days near you, weekly";
+    title = "Never miss market day";
     body =
       step === "done" ? (
         <Done>Check your inbox for a confirmation link.</Done>
       ) : (
         <form onSubmit={onSubscribe}>
-          <p className="mb-3 text-sm text-zinc-600 dark:text-zinc-400">One short email with what&apos;s open and in season. Unsubscribe any time.</p>
+          <p className="mb-3 text-sm text-zinc-600 dark:text-zinc-400">
+            Market days near {active.place ?? "you"} and what&apos;s in season, at most once a week.
+          </p>
           <div className="flex gap-2">
             <label className="sr-only" htmlFor="prompt-email">Email address</label>
             <input

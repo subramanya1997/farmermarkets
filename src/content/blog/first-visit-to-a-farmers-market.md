@@ -52,5 +52,3 @@ Do not haggle hard. This is not a flea market, and the margin on a bunch of carr
 ## If You Use SNAP, WIC, or FMNP
 
 Many markets take SNAP through a central booth that swipes your card and hands you tokens to spend at the stands, and some markets add matching dollars for fruit and vegetables. Our guide to [using SNAP and EBT at farmers markets](/blog/how-to-use-snap-ebt-at-farmers-markets) walks through how that works, and you can see [every market that accepts SNAP, WIC, or FMNP](/farmers-markets/snap-ebt) in one list.
-
-When you are ready to pick a market, the [directory of thousands of farmers markets](/) lists market days, hours, products, and official websites, built from USDA Local Food Portal data and government open data. Find the one closest to you, check what day it runs, and go walk a lap.

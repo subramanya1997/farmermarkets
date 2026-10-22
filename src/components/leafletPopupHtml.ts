@@ -36,11 +36,7 @@ export function buildMarketPopupHtml({
 }: MarketPopupWithLinkData): string {
   const marketPath = `/markets/${encodeURIComponent(slug ?? '')}`;
 
-  return `
-            <strong>${escapeHtml(name)}</strong><br>
-            ${marketLocationLine(city, state)}<br>
-            <a href="${escapeHtml(marketPath)}">View Details</a>
-          `;
+  return `<a class="market-popup-card" href="${escapeHtml(marketPath)}"><span class="market-popup-name">${escapeHtml(name)}</span><span class="market-popup-place">${marketLocationLine(city, state)}</span><span class="market-popup-cta">View market</span></a>`;
 }
 
 export function buildSingleMarketPopupHtml({
@@ -48,8 +44,5 @@ export function buildSingleMarketPopupHtml({
   city,
   state,
 }: MarketPopupData): string {
-  return `
-          <strong>${escapeHtml(name)}</strong><br>
-          ${marketLocationLine(city, state)}
-        `;
+  return `<div class="market-popup-card"><span class="market-popup-name">${escapeHtml(name)}</span><span class="market-popup-place">${marketLocationLine(city, state)}</span></div>`;
 }

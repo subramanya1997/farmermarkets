@@ -36,7 +36,7 @@ import {
 export { parseHourRange };
 export type { HourRange };
 import type { MarketFirstPartyFacts, MarketWeekday } from './enrichment.ts';
-import { paymentLabels, structuredScheduleLabels } from './marketFacts.ts';
+import { paymentLabels, plainFact, structuredScheduleLabels } from './marketFacts.ts';
 import {
   displayName,
   marketDescription,
@@ -280,7 +280,26 @@ export function marketOpeningHoursSpec(
         ...(schedule.end_date || season?.validThrough ? { validThrough: schedule.end_date || season?.validThrough } : {}),
       }];
     });
-    return specs.length ? specs : undefined;
+    // A labelled sub-market (Findlay's Saturday Farm Shed, 8am-2pm) can sit
+    // inside the place's own hours (8am-6pm). The place is open for the wider
+    // window, so a spec whose every day is covered by a wider one on the same
+    // dates is dropped rather than published as a second, shorter claim.
+    const covers = (outer: OpeningHoursSpecification, inner: OpeningHoursSpecification) =>
+      outer !== inner &&
+      outer.validFrom === inner.validFrom &&
+      outer.validThrough === inner.validThrough &&
+      Boolean(outer.opens && outer.closes && inner.opens && inner.closes) &&
+      outer.opens! <= inner.opens! &&
+      outer.closes! >= inner.closes! &&
+      inner.dayOfWeek.every((day) => outer.dayOfWeek.includes(day));
+    const kept = specs.filter((spec, index) =>
+      !specs.some((other, otherIndex) =>
+        covers(other, spec) &&
+        // Two identical windows: keep the first so one always survives.
+        !(covers(spec, other) && otherIndex > index)
+      )
+    );
+    return kept.length ? kept : undefined;
   }
 
   const sources = [...(market.days ?? []), market.season].map(clean).filter(Boolean);
@@ -306,6 +325,35 @@ export function marketOpeningHoursSpec(
     byWindow.set(key, spec);
   }
   return byWindow.size ? [...byWindow.values()] : undefined;
+}
+
+/**
+ * Upcoming source-backed holiday closures and special hours, as
+ * `specialOpeningHoursSpecification`. Schema.org marks a closed day with
+ * opens = closes = 00:00. Past exceptions are dropped (the page revalidates
+ * daily), and nothing is emitted for a closed or suspended market.
+ */
+export function marketSpecialOpeningHours(
+  market: MarketSchemaRecord,
+  now = new Date()
+): OpeningHoursSpecification[] | undefined {
+  const status = market.first_party?.operations?.status?.value.value;
+  if (status === 'permanently_closed' || status === 'temporarily_closed') return undefined;
+  const today = now.toISOString().slice(0, 10);
+  const specs = (market.first_party?.operations?.exceptions ?? [])
+    .map((item) => item.value)
+    .filter((value) => (value.end_date ?? value.start_date) >= today)
+    .sort((left, right) => left.start_date.localeCompare(right.start_date))
+    .map((value): OpeningHoursSpecification => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [],
+      opens: value.status === 'closed' ? '00:00' : value.opens,
+      closes: value.status === 'closed' ? '00:00' : value.closes,
+      validFrom: value.start_date,
+      validThrough: value.end_date ?? value.start_date,
+    }));
+  // `dayOfWeek` is implied by the dates; prune() drops the empty array.
+  return specs.length ? specs : undefined;
 }
 
 /* ------------------------------------------------------------------ *
@@ -435,7 +483,7 @@ function addressLine(market: MarketSchemaRecord): string | undefined {
   return line || undefined;
 }
 
-const FAQ_TOPIC_QUESTIONS: Record<NonNullable<MarketFirstPartyFacts['faq_facts']>[number]['value']['topic'], (name: string) => string> = {
+const FAQ_TOPIC_QUESTIONS: Record<FaqTopic, (name: string) => string> = {
   arrival: (name) => `What should I know before arriving at ${name}?`,
   weather: (name) => `What is ${name}'s weather policy?`,
   accessibility: (name) => `What accessibility information is available for ${name}?`,
@@ -446,99 +494,79 @@ const FAQ_TOPIC_QUESTIONS: Record<NonNullable<MarketFirstPartyFacts['faq_facts']
   updates: (name) => `How can I get updates from ${name}?`,
 };
 
+type FaqTopic = NonNullable<MarketFirstPartyFacts['faq_facts']>[number]['value']['topic'];
+
+/**
+ * What an answer must mention to answer its topic's question. Research
+ * occasionally files a fact under the wrong topic (holiday hours under
+ * "updates", wholesale hours under "products"); such an answer is asked under
+ * a question it does answer, or not at all.
+ */
+const FAQ_TOPIC_EVIDENCE: Partial<Record<FaqTopic, RegExp>> = {
+  weather: /rain|weather|snow|heat|storm|shine/i,
+  accessibility: /wheelchair|accessib|\bada\b|stroller|ramp/i,
+  pets: /\bpets?\b|\bdogs?\b|animals?/i,
+  parking: /park|\blots?\b|garage/i,
+  payments: /\bpay|cash|card|ebt|snap|token|credit|debit|\bwic\b|coupon/i,
+  products: /\bsell|\bsold\b|produce|vegetable|fruit|meat|cheese|bread|baked|flower|seafood|\bfoods?\b|goods|crafts?/i,
+  updates: /newsletter|e-?mail|sign ?up|instagram|facebook|follow|subscribe|website|text alerts?/i,
+};
+
+function faqQuestion(topic: FaqTopic, answer: string, name: string): string | undefined {
+  const evidence = FAQ_TOPIC_EVIDENCE[topic];
+  if (!evidence || evidence.test(answer)) return FAQ_TOPIC_QUESTIONS[topic](name);
+  if (/holiday|thanksgiving|christmas|new year/i.test(answer)) return `What are ${name}'s holiday hours?`;
+  if (/wholesale/i.test(answer)) return `Can the public shop ${name}'s wholesale market?`;
+  return undefined;
+}
+
 function titleWords(value: string): string {
   return value.replaceAll('_', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+/** The most questions a page answers; the lowest-ranked ones are dropped. */
+export const MAX_FAQ_COUNT = 6;
+
+const ASSISTANCE_PAYMENT = /^(snap|ebt|wic|fmnp|sfmnp|p-ebt)\b|nutrition program|\bsnap\b|\bebt\b|\bwic\b|bucks|match|coupon|voucher|perks|veggie|fresh/i;
+
 /**
- * The questions this record can answer, in the order they are rendered.
+ * The questions this record can answer, most useful first, at most
+ * `MAX_FAQ_COUNT` of them.
  *
  * This is the single source for both the visible FAQ block and the `FAQPage`
  * node, which is the only way to guarantee the markup quotes the page. A
- * question whose answer would be a shrug is not asked at all.
+ * question whose answer would be a shrug, or would only repeat another
+ * answer, is not asked at all.
  */
-export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
+export function marketFaqs(market: MarketSchemaRecord, now = new Date()): MarketFaq[] {
   const name = displayName(market.name) || 'This market';
   const days = marketWeekdays(market);
   const hours = marketHours(market);
   const richSchedule = structuredScheduleLabels(market.first_party);
   const legacySchedule = !hours ? marketScheduleLabels(market) : [];
-  const datedSchedule = richSchedule.length
-    ? market.first_party?.operations?.schedules?.some((item) => item.value.start_date || item.value.end_date)
-      ? richSchedule
-      : []
-    : legacySchedule.some(hasSeasonContext) ? legacySchedule : [];
+  const richDated = Boolean(
+    market.first_party?.operations?.schedules?.some((item) => item.value.start_date || item.value.end_date)
+  );
   const seasonLabel = marketSeasonLabel(market);
   const address = addressLine(market);
   const payments = marketPaymentAccepted(market);
+  const firstParty = market.first_party;
   const acceptsSnap = Boolean(
     market.snap ||
-      market.first_party?.payments?.assistance?.some((item) => item.value.code === 'snap_ebt') ||
+      firstParty?.payments?.assistance?.some((item) => item.value.code === 'snap_ebt') ||
       payments?.includes('SNAP/EBT')
   );
+  const today = now.toISOString().slice(0, 10);
+  const facts = (firstParty?.faq_facts ?? []).filter(
+    (item) => !(item.value.expires_on && item.value.expires_on < today) && clean(item.value.answer)
+  );
 
-  const faqs: MarketFaq[] = [];
+  const ranked: { rank: number; faq: MarketFaq }[] = [];
+  const add = (rank: number, question: string, answer: string) => {
+    if (ranked.some((item) => item.faq.question === question)) return;
+    ranked.push({ rank, faq: { question, answer } });
+  };
 
-  if (days.length) {
-    const season = !seasonLabel
-      ? ''
-      : /^year[\s-]?round$/i.test(seasonLabel)
-        ? ' It is open year-round.'
-        : ` The season runs ${seasonLabel}.`;
-    faqs.push({
-      question: `What days is ${name} open?`,
-      answer: datedSchedule.length
-        ? `${name}'s reported schedule is ${datedSchedule.join('; ').replace(/\.+$/, '')}.`
-        : `${name} is open on ${weekdayPhrase(days)}.${season}`,
-    });
-  }
-
-  if (richSchedule.length) {
-    faqs.push({
-      question: `What are ${name}'s hours?`,
-      answer: `${name}'s schedule is ${richSchedule.join('; ')}.`,
-    });
-  } else if (legacySchedule.length) {
-    faqs.push({
-      question: `What are ${name}'s hours?`,
-      answer: `${name}'s reported schedule is ${legacySchedule.join('; ').replace(/\.+$/, '')}.`,
-    });
-  } else if (hours) {
-    faqs.push({
-      question: `What are ${name}'s hours?`,
-      answer: days.length
-        ? `${name} is open ${hours} on ${weekdayPhrase(days)}.`
-        : `${name} is open ${hours}.`,
-    });
-  }
-
-  if (address) {
-    faqs.push({
-      question: `Where is ${name} located?`,
-      answer: `${name} is located at ${address}.`,
-    });
-  }
-
-  if (acceptsSnap) {
-    faqs.push({
-      question: `Does ${name} accept SNAP/EBT?`,
-      answer: `Yes. ${name} accepts SNAP/EBT benefits.`,
-    });
-  } else if (hasPaymentData(market)) {
-    faqs.push({
-      question: `Does ${name} accept SNAP/EBT?`,
-      answer: `SNAP/EBT is not listed among the payment options reported for ${name}. Contact the market to confirm before you visit.`,
-    });
-  }
-
-  if (payments) {
-    faqs.push({
-      question: `What payment methods does ${name} accept?`,
-      answer: `${name} accepts ${joinWithAnd(payments)}.`,
-    });
-  }
-
-  const firstParty = market.first_party;
   const status = firstParty?.operations?.status?.value;
   if (status && status.value !== 'active') {
     const statusText = status.value === 'seasonal_break'
@@ -546,34 +574,98 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
       : status.value === 'temporarily_closed'
         ? 'temporarily closed'
         : 'permanently closed';
-    faqs.unshift({
-      question: `Is ${name} currently open?`,
-      answer: `${name} is ${statusText}.${status.note ? ` ${clean(status.note)}` : ''}`,
-    });
+    add(0, `Is ${name} currently open?`, `${name} is ${statusText}.${status.note ? ` ${clean(status.note)}` : ''}`);
+  }
+
+  // One schedule answer, not a "days" and an "hours" question saying the
+  // same thing twice.
+  const season = !seasonLabel
+    ? ''
+    : /^year[\s-]?round$/i.test(seasonLabel)
+      ? ' It is open year-round.'
+      : ` The season runs ${seasonLabel}.`;
+  if (richSchedule.length) {
+    add(1, `What are ${name}'s hours?`, `${name} is open ${richSchedule.join('; ')}.${richDated ? '' : season}`);
+  } else if (legacySchedule.length) {
+    add(
+      1,
+      `What are ${name}'s hours?`,
+      `${name} is open ${legacySchedule.join('; ').replace(/\.+$/, '')}.${legacySchedule.some(hasSeasonContext) ? '' : season}`
+    );
+  } else if (hours) {
+    add(
+      1,
+      `What are ${name}'s hours?`,
+      days.length ? `${name} is open ${weekdayPhrase(days)}, ${hours}.${season}` : `${name} is open ${hours}.${season}`
+    );
+  } else if (days.length) {
+    add(1, `What days is ${name} open?`, `${name} is open on ${weekdayPhrase(days)}.${season}`);
+  }
+
+  if (address) add(2, `Where is ${name} located?`, `${name} is located at ${address}.`);
+
+  // A researched note on how to pay with benefits makes the SNAP answer
+  // concrete instead of a bare yes.
+  const paymentFact = facts.find(
+    (item) => item.value.topic === 'payments' && /\b(snap|ebt)\b/i.test(item.value.answer)
+  );
+  if (acceptsSnap) {
+    add(
+      3,
+      `Does ${name} accept SNAP/EBT?`,
+      paymentFact ? `Yes. ${clean(paymentFact.value.answer)}` : `Yes. ${name} accepts SNAP/EBT.`
+    );
+  } else if (hasPaymentData(market)) {
+    add(3, `Does ${name} accept SNAP/EBT?`, `${name} does not list SNAP/EBT among its payment options.`);
+  }
+
+  // A list of benefit programs alone would read as "no cards"; the SNAP
+  // answer covers that case.
+  if (payments?.some((label) => !ASSISTANCE_PAYMENT.test(label))) {
+    add(4, `What payment methods does ${name} accept?`, `${name} accepts ${joinWithAnd(payments)}.`);
   }
 
   const parking = firstParty?.access?.parking;
   if (parking?.availability) {
-    const cost = parking.cost ? ` Parking is listed as ${parking.cost.value}.` : '';
-    const note = parking.location_note ? ` ${clean(parking.location_note.value)}` : '';
-    faqs.push({
-      question: `Is parking available at ${name}?`,
-      answer: `Parking availability at ${name} is ${parking.availability.value}.${cost}${note}`,
+    const availability = parking.availability.value;
+    const head = availability === 'no'
+      ? `${name} has no visitor parking.`
+      : availability === 'limited'
+        ? `Parking at ${name} is limited.`
+        : `Yes, ${name} has parking.`;
+    const cost = availability === 'no' || !parking.cost
+      ? ''
+      : parking.cost.value === 'free'
+        ? ' It is free.'
+        : parking.cost.value === 'paid'
+          ? ' It is paid.'
+          : ' There are free and paid options.';
+    const note = parking.location_note ? ` ${plainFact(parking.location_note.value)}` : '';
+    add(5, `Is parking available at ${name}?`, `${head}${cost}${note}`);
+  }
+
+  const incentives = firstParty?.payments?.incentives ?? [];
+  if (incentives.length) {
+    const offers = incentives.map((item) => {
+      const value = item.value;
+      const amounts = value.input_amount !== undefined && value.benefit_amount !== undefined
+        ? `, $${value.benefit_amount} extra for every $${value.input_amount}${value.maximum_amount !== undefined ? ` up to $${value.maximum_amount} a day` : ''}`
+        : '';
+      const who = clean(value.eligibility) ? ` for ${clean(value.eligibility).replace(/\.$/, '')}` : '';
+      return `${clean(value.name)}${who}${amounts}`;
     });
+    add(7, `Does ${name} offer food benefit incentives?`, `Yes: ${offers.join('; ')}.`);
   }
 
   const transit = firstParty?.access?.transit ?? [];
   if (transit.length) {
     const options = transit.map((item) => {
       const value = item.value;
-      return [titleWords(value.mode), value.routes?.join('/'), value.stop_name, value.note]
-        .filter(Boolean)
-        .join(' - ');
+      const routes = value.routes?.length ? ` (${value.routes.join(', ')})` : '';
+      const where = [clean(value.stop_name), plainFact(value.note)].filter(Boolean).join('. ');
+      return `${titleWords(value.mode)}${routes}${where ? `: ${where.replace(/\.$/, '')}` : ''}`;
     });
-    faqs.push({
-      question: `How can I reach ${name} by public transit?`,
-      answer: `${name} lists these transit options: ${joinWithAnd(options)}.`,
-    });
+    add(8, `How can I reach ${name} by public transit?`, `${options.join('. ')}.`);
   }
 
   const petPolicy = firstParty?.policies?.find((item) => item.value.code === 'pets')?.value;
@@ -586,39 +678,30 @@ export function marketFaqs(market: MarketSchemaRecord): MarketFaq[] {
           ? 'Only service animals are allowed'
           : petPolicy.rule === 'discouraged'
             ? 'Visitors are asked not to bring pets'
-            : 'Pets are allowed only under the stated conditions';
-    faqs.push({
-      question: `Are pets allowed at ${name}?`,
-      answer: `${rule} at ${name}.${petPolicy.note ? ` ${clean(petPolicy.note)}` : ''}`,
-    });
+            : 'Pets are allowed with conditions';
+    add(9, `Are pets allowed at ${name}?`, `${rule} at ${name}.${petPolicy.note ? ` ${plainFact(petPolicy.note)}` : ''}`);
   }
 
-  const incentives = firstParty?.payments?.incentives ?? [];
-  if (incentives.length) {
-    faqs.push({
-      question: `Does ${name} offer food benefit incentives?`,
-      answer: `${name} lists ${joinWithAnd(incentives.map((item) => item.value.name))}.`,
-    });
+  for (const item of facts) {
+    if (item === paymentFact && acceptsSnap) continue;
+    const answer = clean(item.value.answer);
+    const question = faqQuestion(item.value.topic, answer, name);
+    if (question) add(item.value.topic === 'arrival' ? 6 : 10, question, answer);
   }
 
   const newsletter = firstParty?.contact?.newsletter?.value;
   if (newsletter) {
-    faqs.push({
-      question: `How can I get updates from ${name}?`,
-      answer: `${name} offers${newsletter.name ? ` the ${clean(newsletter.name)}` : ' a'} newsletter signup on its official website.`,
-    });
+    add(
+      11,
+      `How can I get updates from ${name}?`,
+      `Sign up for ${newsletter.name ? `the ${clean(newsletter.name)}` : `${name}'s newsletter`} on the market's website.`
+    );
   }
 
-  const today = new Date().toISOString().slice(0, 10);
-  const existingQuestions = new Set(faqs.map((faq) => faq.question));
-  for (const item of firstParty?.faq_facts ?? []) {
-    if (item.value.expires_on && item.value.expires_on < today) continue;
-    const question = FAQ_TOPIC_QUESTIONS[item.value.topic](name);
-    if (existingQuestions.has(question)) continue;
-    faqs.push({ question, answer: clean(item.value.answer) });
-    existingQuestions.add(question);
-  }
-
+  const faqs = ranked
+    .sort((left, right) => left.rank - right.rank)
+    .slice(0, MAX_FAQ_COUNT)
+    .map((item) => item.faq);
   return faqs.length >= MIN_FAQ_COUNT ? faqs : [];
 }
 
@@ -738,7 +821,7 @@ export function marketSchemaGraph(
   const coordinates = marketCoordinates(market);
   const openingHours = marketOpeningHoursSpec(market, now);
   const season = marketSeasonRange(market, now);
-  const faqs = marketFaqs(market);
+  const faqs = marketFaqs(market, now);
 
   const business: Record<string, unknown> = {
     '@type': ['GroceryStore', 'LocalBusiness'],
@@ -761,6 +844,7 @@ export function marketSchemaGraph(
     email: clean(market.emails?.[0]) || undefined,
     sameAs: marketSameAs(market),
     openingHoursSpecification: openingHours,
+    specialOpeningHoursSpecification: marketSpecialOpeningHours(market, now),
     paymentAccepted: marketPaymentAccepted(market),
   };
 

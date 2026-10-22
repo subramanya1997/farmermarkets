@@ -1,12 +1,20 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
+import { useEffect, useMemo, useRef } from 'react';
+import maplibregl from 'maplibre-gl';
 import type { FarmerMarket } from '@/lib/api';
 import { buildMarketPopupHtml } from './leafletPopupHtml';
 import { trackEvent } from '@/lib/analytics';
-import { MAP_ATTRIBUTION, MAP_DOT, MAP_TILE_URL } from './mapStyle';
-import 'leaflet/dist/leaflet.css';
+import { loadMapStyle, prefersDarkMap } from './mapStyle';
+import {
+  addMarketLayers,
+  featureProps,
+  slugId,
+  wireClusterZoom,
+  wireHover,
+  type MarketPoint,
+} from './mapLayers';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 interface MarketMapProps {
   markets: FarmerMarket[];
@@ -15,22 +23,11 @@ interface MarketMapProps {
   height?: string;
   /**
    * Called with the markets currently in view (closest to the map center
-   * first, uncapped) after every render of the marker layer, so a caller can
-   * mirror the map in a list.
+   * first, uncapped) after every move, so a caller can mirror the map in a
+   * list.
    */
   onVisibleMarketsChange?: (visible: FarmerMarket[]) => void;
 }
-
-/**
- * Markers rendered at once. Only markets inside the current viewport are
- * added, closest to the map center first, so a worldwide dataset never puts
- * thousands of DOM markers on the map. Panning or zooming re-renders for the
- * new view.
- */
-const MAX_VISIBLE_MARKERS = 250;
-
-/** Padding around the viewport so markers exist just past the edges while panning. */
-const VIEWPORT_PAD = 0.25;
 
 /**
  * Default view: center of the US. A module constant, not a default parameter,
@@ -39,209 +36,156 @@ const VIEWPORT_PAD = 0.25;
  */
 const DEFAULT_CENTER: [number, number] = [39.8283, -98.5795];
 
+/** Squared distance in degrees, longitude scaled by latitude; ordering only. */
+function closeness(lat: number, lon: number, centerLat: number, centerLon: number): number {
+  const dLat = lat - centerLat;
+  const dLon = (lon - centerLon) * Math.cos((centerLat * Math.PI) / 180);
+  return dLat * dLat + dLon * dLon;
+}
+
+/**
+ * The explorer map: every market in the directory at once.
+ *
+ * All ~9,000 points go into one clustered GeoJSON source, so the map shows
+ * soft green clusters with counts when zoomed out and single dots up close,
+ * without the old cap of 250 DOM markers per view. After each move the
+ * markets inside the view are handed to the list, closest to the center
+ * first.
+ */
 export default function MarketMap({
   markets,
   center = DEFAULT_CENTER,
   zoom = 4,
   height = '500px',
-  onVisibleMarketsChange
+  onVisibleMarketsChange,
 }: MarketMapProps) {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const leafletMapRef = useRef<L.Map | null>(null);
-  const [mapInitialized, setMapInitialized] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<maplibregl.Map | null>(null);
   /** True once the reader pans or zooms by hand; blocks programmatic recentering. */
   const userMovedRef = useRef(false);
-  /** True while a `setView` this component issued is firing move/zoom events. */
-  const programmaticMoveRef = useRef(false);
-  // Kept in a ref so an inline callback prop doesn't re-run the marker effect
-  // (and re-render every marker) on each parent render.
-  const onVisibleMarketsChangeRef = useRef(onVisibleMarketsChange);
+  // Kept in a ref so an inline callback prop doesn't rebuild the map.
+  const onVisibleRef = useRef(onVisibleMarketsChange);
   useEffect(() => {
-    onVisibleMarketsChangeRef.current = onVisibleMarketsChange;
+    onVisibleRef.current = onVisibleMarketsChange;
   }, [onVisibleMarketsChange]);
+  const initialViewRef = useRef({ center, zoom });
 
-  // Create map instance with proper error handling
+  const located = useMemo(
+    () =>
+      markets.filter(
+        (market): market is FarmerMarket & { location: { lat: number; lon: number } } =>
+          Boolean(market.location?.lat && market.location?.lon)
+      ),
+    [markets]
+  );
+  const bySlug = useMemo(() => new Map(located.map((market) => [market.slug, market])), [located]);
+  const points = useMemo<MarketPoint[]>(
+    () =>
+      located.map((market) => ({
+        id: slugId(market.slug),
+        slug: market.slug,
+        name: market.name,
+        place: [market.city, market.state].filter(Boolean).join(', '),
+        lat: market.location.lat,
+        lon: market.location.lon,
+      })),
+    [located]
+  );
+
   useEffect(() => {
-    // Only run this on the client side
-    if (typeof window === 'undefined' || !mapRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
+    let cancelled = false;
+    let map: maplibregl.Map | undefined;
 
-    let mapInstance: L.Map | null = null;
-
-    // Add small delay to ensure container is properly rendered
-    const initializeMap = () => {
-      // If map is already initialized, clean it up before reinitializing
-      if (leafletMapRef.current) {
-        try {
-          leafletMapRef.current.remove();
-        } catch (e) {
-          console.error('Error removing previous map instance:', e);
-        }
-        leafletMapRef.current = null;
-      }
-
-      if (!mapRef.current) return;
-
-      try {
-        // Initialize the map with explicit options
-        mapInstance = L.map(mapRef.current, {
-          preferCanvas: true,
-          zoomControl: true,
-          attributionControl: true,
-          fadeAnimation: true,
-          zoomAnimation: true
-        }).setView(center, zoom);
-
-        // Ensure map is properly sized
-        mapInstance.invalidateSize();
-        leafletMapRef.current = mapInstance;
-        setMapInitialized(true);
-
-        // Add the OpenStreetMap tiles
-        L.tileLayer(MAP_TILE_URL, { attribution: MAP_ATTRIBUTION }).addTo(mapInstance);
-      } catch (error) {
-        console.error('Error initializing map:', error);
-      }
+    const reportVisible = () => {
+      if (!map) return;
+      const bounds = map.getBounds();
+      const mapCenter = map.getCenter();
+      const visible = located
+        .filter((market) => bounds.contains([market.location.lon, market.location.lat]))
+        .sort(
+          (a, b) =>
+            closeness(a.location.lat, a.location.lon, mapCenter.lat, mapCenter.lng) -
+            closeness(b.location.lat, b.location.lon, mapCenter.lat, mapCenter.lng)
+        );
+      onVisibleRef.current?.(visible);
     };
 
-    // Delay initialization slightly to ensure DOM is ready
-    const timer = setTimeout(() => {
-      initializeMap();
-    }, 100);
+    loadMapStyle(prefersDarkMap()).then((style) => {
+      if (cancelled) return;
+      const { center: start, zoom: startZoom } = initialViewRef.current;
+      map = new maplibregl.Map({
+        container,
+        style,
+        center: [start[1], start[0]],
+        zoom: startZoom,
+        attributionControl: false,
+        cooperativeGestures: true,
+        dragRotate: false,
+        pitchWithRotate: false,
+      });
+      mapRef.current = map;
+      map.addControl(new maplibregl.AttributionControl({ compact: true }));
+      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      map.touchZoomRotate.disableRotation();
 
-    // Clean up on unmount
-    return () => {
-      clearTimeout(timer);
-      if (leafletMapRef.current) {
-        try {
-          leafletMapRef.current.remove();
-        } catch (e) {
-          console.error('Error cleaning up map on unmount:', e);
-        }
-        leafletMapRef.current = null;
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run once on mount to prevent re-initialization issues
-
-  // Handle resize to fix map issues when container size changes
-  useEffect(() => {
-    const handleResize = () => {
-      if (leafletMapRef.current) {
-        try {
-          leafletMapRef.current.invalidateSize();
-        } catch (e) {
-          console.error('Error invalidating map size:', e);
-        }
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Also invalidate size when component mounts
-    if (leafletMapRef.current) {
-      setTimeout(() => {
-        try {
-          leafletMapRef.current?.invalidateSize();
-        } catch (e) {
-          console.error('Error invalidating map size on mount:', e);
-        }
-      }, 100);
-    }
+      map.on('load', () => {
+        if (!map) return;
+        addMarketLayers(map, points, { cluster: true });
+        wireClusterZoom(map);
+        wireHover(map);
+        map.on('click', 'market-dots', (event) => {
+          const feature = event.features?.[0];
+          if (!feature || !map) return;
+          const { slug } = featureProps(feature);
+          const market = bySlug.get(slug);
+          if (!market) return;
+          new maplibregl.Popup({ closeButton: false, offset: 12, className: 'market-popup', maxWidth: '260px' })
+            .setLngLat((feature.geometry as { coordinates: [number, number] }).coordinates)
+            .setHTML(buildMarketPopupHtml({ name: market.name, city: market.city, state: market.state, slug }))
+            .addTo(map);
+          trackEvent('Map Marker Selected', {
+            market_id: market.id,
+            market_name: market.name.slice(0, 80),
+            country: market.country,
+            source_id: market.provenance?.source_id,
+          });
+        });
+        reportVisible();
+      });
+      map.on('moveend', reportVisible);
+      // Only gestures carry an originalEvent; programmatic jumps do not.
+      map.on('dragstart', () => (userMovedRef.current = true));
+      map.on('zoomstart', (event) => {
+        if ((event as { originalEvent?: Event }).originalEvent) userMovedRef.current = true;
+      });
+    });
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      cancelled = true;
+      map?.remove();
+      mapRef.current = null;
     };
-  }, [mapInitialized]);
+  }, [points, located, bySlug]);
 
   // Recenter when the caller resolves a better starting point (e.g. the
   // reader's approximate location arrives after mount), but never fight a
   // reader who has already panned or zoomed by hand.
   useEffect(() => {
-    if (!mapInitialized || !leafletMapRef.current || userMovedRef.current) return;
-    try {
-      programmaticMoveRef.current = true;
-      // No animation, so the move/zoom events fire inside this call and the
-      // flag reliably covers them.
-      leafletMapRef.current.setView(center, zoom, { animate: false });
-    } catch (error) {
-      console.error('Error recentering map:', error);
-    } finally {
-      programmaticMoveRef.current = false;
-    }
-  }, [center, zoom, mapInitialized]);
-
-  // Render only the markers inside the current viewport, closest to the map
-  // center first, and refresh them whenever the reader pans or zooms.
-  useEffect(() => {
-    if (!mapInitialized || !leafletMapRef.current) return;
-
-    const map = leafletMapRef.current;
-    const markerLayer = L.layerGroup().addTo(map);
-
-    const renderVisibleMarkers = () => {
-      try {
-        markerLayer.clearLayers();
-        const viewport = map.getBounds().pad(VIEWPORT_PAD);
-        const mapCenter = map.getCenter();
-
-        const visible: Array<{ market: FarmerMarket; lat: number; lon: number; distance: number }> = [];
-        for (const market of markets) {
-          const lat = market.location?.lat;
-          const lon = market.location?.lon;
-          if (!lat || !lon || !viewport.contains([lat, lon])) continue;
-          visible.push({ market, lat, lon, distance: mapCenter.distanceTo([lat, lon]) });
-        }
-        visible.sort((a, b) => a.distance - b.distance);
-        onVisibleMarketsChangeRef.current?.(visible.map((entry) => entry.market));
-
-        for (const { market, lat, lon } of visible.slice(0, MAX_VISIBLE_MARKERS)) {
-          const marker = L.circleMarker([lat, lon], MAP_DOT).addTo(markerLayer);
-          marker.bindPopup(
-            buildMarketPopupHtml({
-              name: market.name,
-              city: market.city,
-              state: market.state,
-              slug: market.slug,
-            })
-          );
-          marker.on('click', () => {
-            trackEvent('Map Marker Selected', {
-              market_id: market.id,
-              market_name: market.name.slice(0, 80),
-              country: market.country,
-              source_id: market.provenance?.source_id
-            });
-          });
-        }
-      } catch (error) {
-        console.error('Error adding markers to map:', error);
-      }
-    };
-
-    const markUserMoved = () => {
-      if (!programmaticMoveRef.current) {
-        userMovedRef.current = true;
-      }
-    };
-
-    renderVisibleMarkers();
-    map.on('moveend', renderVisibleMarkers);
-    map.on('zoomend', renderVisibleMarkers);
-    // Only reader-initiated gestures count as "moved"; a programmatic
-    // `setView` also fires moveend but must not lock the recenter effect out.
-    map.on('dragstart', markUserMoved);
-    map.on('zoomstart', markUserMoved);
-
-    return () => {
-      map.off('moveend', renderVisibleMarkers);
-      map.off('zoomend', renderVisibleMarkers);
-      map.off('dragstart', markUserMoved);
-      map.off('zoomstart', markUserMoved);
-      markerLayer.remove();
-    };
-  }, [markets, mapInitialized]);
+    initialViewRef.current = { center, zoom };
+    const map = mapRef.current;
+    if (!map || userMovedRef.current) return;
+    map.jumpTo({ center: [center[1], center[0]], zoom });
+  }, [center, zoom]);
 
   return (
-    <div ref={mapRef} style={{ height, width: '100%' }} className="rounded-md overflow-hidden" />
+    <div
+      ref={containerRef}
+      role="region"
+      aria-label="Map of farmers markets"
+      style={{ height, width: '100%' }}
+      className="isolate z-0 overflow-hidden rounded-2xl border border-zinc-200 bg-[#f6f6f2] dark:border-zinc-800 dark:bg-zinc-900"
+    />
   );
 }

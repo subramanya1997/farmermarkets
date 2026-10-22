@@ -1,14 +1,56 @@
 import type { FarmerMarket } from './api';
 import type { LucideIcon } from 'lucide-react';
-import { Leaf, CreditCard, Utensils, Beef, Milk, Carrot, Package, Sprout, Heart, ShoppingBag } from 'lucide-react';
+import {
+  Leaf,
+  CreditCard,
+  Utensils,
+  Beef,
+  Milk,
+  Carrot,
+  Package,
+  Sprout,
+  Heart,
+  HandCoins,
+  CalendarCheck,
+  CalendarDays,
+} from 'lucide-react';
+import type { Weekday } from './seo.ts';
+import { weekdayOf, weekdaysFor } from './marketDisplay.ts';
 
 export interface FilterOption {
   id: string;
   label: string;
   icon: LucideIcon;
+  /** How many markets match; options with none are dropped, never shown. */
   count?: number;
+  /** Shown in the always-visible row; the rest sit behind "More". */
+  primary?: boolean;
   filterFn: (market: FarmerMarket) => boolean;
 }
+
+/** The filters the explorer shows up front, in this order. */
+export const PRIMARY_FILTER_IDS = ['today', 'weekend', 'snap', 'credit'] as const;
+
+/**
+ * Parsed weekdays per record. The schedule reader is regex-heavy and the
+ * explorer filters ~9,000 records on every toggle, so each record is read once.
+ */
+const weekdayCache = new WeakMap<FarmerMarket, Weekday[]>();
+
+function weekdaysOf(market: FarmerMarket): Weekday[] {
+  let days = weekdayCache.get(market);
+  if (!days) {
+    days = weekdaysFor(market);
+    weekdayCache.set(market, days);
+  }
+  return days;
+}
+
+function opensOn(market: FarmerMarket, days: readonly Weekday[]): boolean {
+  return weekdaysOf(market).some((day) => days.includes(day));
+}
+
+const WEEKEND: readonly Weekday[] = ['Saturday', 'Sunday'];
 
 export interface FilterCategory {
   id: string;
@@ -19,8 +61,35 @@ export interface FilterCategory {
 /**
  * Extract unique filter options from market data
  */
-export function extractFilterOptions(markets: FarmerMarket[]): FilterCategory[] {
+export function extractFilterOptions(markets: FarmerMarket[], now: Date = new Date()): FilterCategory[] {
   const categories: FilterCategory[] = [];
+
+  // When: read from the parsed schedule against the reader's own clock.
+  // Records with no parseable weekday never match, so "Today" never promises
+  // a market whose days are unknown.
+  const today = weekdayOf(now);
+  const whenFilters: FilterOption[] = [
+    {
+      id: 'today',
+      label: 'Today',
+      icon: CalendarCheck,
+      primary: true,
+      filterFn: (m: FarmerMarket) => opensOn(m, [today]),
+      count: markets.filter((m) => opensOn(m, [today])).length,
+    },
+    {
+      id: 'weekend',
+      label: 'This weekend',
+      icon: CalendarDays,
+      primary: true,
+      filterFn: (m: FarmerMarket) => opensOn(m, WEEKEND),
+      count: markets.filter((m) => opensOn(m, WEEKEND)).length,
+    },
+  ].filter((option) => (option.count ?? 0) > 0);
+
+  if (whenFilters.length > 0) {
+    categories.push({ id: 'when', label: 'When', options: whenFilters });
+  }
 
   // Products Category
   const productFilters: FilterOption[] = [
@@ -72,18 +141,20 @@ export function extractFilterOptions(markets: FarmerMarket[]): FilterCategory[] 
   // Payment Methods Category
   const paymentFilters: FilterOption[] = [
     {
-      id: 'credit',
-      label: 'Credit/Debit',
-      icon: CreditCard,
-      filterFn: (m: FarmerMarket) => m.accepts_credit_debit === true,
-      count: markets.filter((m: FarmerMarket) => m.accepts_credit_debit).length,
-    },
-    {
       id: 'snap',
       label: 'SNAP/EBT',
-      icon: ShoppingBag,
+      icon: HandCoins,
+      primary: true,
       filterFn: (m: FarmerMarket) => m.snap === true,
       count: markets.filter((m: FarmerMarket) => m.snap).length,
+    },
+    {
+      id: 'credit',
+      label: 'Cards',
+      icon: CreditCard,
+      primary: true,
+      filterFn: (m: FarmerMarket) => m.accepts_credit_debit === true,
+      count: markets.filter((m: FarmerMarket) => m.accepts_credit_debit).length,
     },
     {
       id: 'wic',
@@ -97,7 +168,7 @@ export function extractFilterOptions(markets: FarmerMarket[]): FilterCategory[] 
   if (paymentFilters.length > 0) {
     categories.push({
       id: 'payment',
-      label: 'Payment Options',
+      label: 'Payment',
       options: paymentFilters,
     });
   }
@@ -123,12 +194,27 @@ export function extractFilterOptions(markets: FarmerMarket[]): FilterCategory[] 
   if (productionFilters.length > 0) {
     categories.push({
       id: 'production',
-      label: 'Production Methods',
+      label: 'Growing',
       options: productionFilters,
     });
   }
 
   return categories;
+}
+
+/** Every option, flattened, for the up-front row and the "More" panel. */
+export function splitFilterOptions(categories: FilterCategory[]): {
+  primary: FilterOption[];
+  more: FilterCategory[];
+} {
+  const all = categories.flatMap((category) => category.options);
+  const primary = PRIMARY_FILTER_IDS
+    .map((id) => all.find((option) => option.id === id))
+    .filter((option): option is FilterOption => Boolean(option));
+  const more = categories
+    .map((category) => ({ ...category, options: category.options.filter((option) => !option.primary) }))
+    .filter((category) => category.options.length > 0);
+  return { primary, more };
 }
 
 /**

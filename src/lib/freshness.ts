@@ -50,6 +50,8 @@ export interface MarketFreshnessRecord {
   last_updated?: string | null;
   unverified?: boolean;
   enrichment?: { verified_at?: string | null; verification_scope?: 'partial' | null } | null;
+  /** Only the structured schedules' check dates are read. */
+  first_party?: { operations?: { schedules?: { verified_at: string }[] } } | null;
 }
 
 /**
@@ -74,34 +76,51 @@ export function marketFreshness(
   now: Date = new Date()
 ): MarketFreshness {
   // Enrichment batches verify only their cited fields. They never make the
-  // source listing's location or schedule newly current as a whole.
-  const independentDate = undefined;
+  // source listing's location or schedule newly current as a whole, so the
+  // level stays the source's; a recent check only quiets the header line.
   const sourceDate = parseDate(input.last_updated);
-  const effectiveValue = independentDate ? input.enrichment?.verified_at : input.last_updated;
-  const lastVerified = formatDate(effectiveValue);
+  const lastVerified = formatDate(input.last_updated);
+  const year = sourceDate ? String(sourceDate.getUTCFullYear()) : undefined;
 
-  if (input.unverified === true && !independentDate) {
+  if (input.unverified === true) {
     return {
       level: 'unverified',
       lastVerified,
-      notice: lastVerified
-        ? `This listing is no longer published in the USDA directory and may be closed. It was last verified ${lastVerified}, so please check before visiting.`
-        : 'This listing is no longer published in the USDA directory and may be closed. Please check before visiting.',
+      notice: year
+        ? `No longer in the USDA directory and may be closed. Last checked ${year}.`
+        : 'No longer in the USDA directory and may be closed.',
     };
   }
 
-  const parsed = independentDate ?? sourceDate;
-  if (parsed && lastVerified) {
+  if (sourceDate && lastVerified) {
     const threshold = new Date(now.getTime());
     threshold.setUTCFullYear(threshold.getUTCFullYear() - STALE_AFTER_YEARS);
-    if (parsed.getTime() < threshold.getTime()) {
-      return {
-        level: 'stale',
-        lastVerified,
-        notice: `This listing was last verified ${lastVerified} and may be out of date. Please check before visiting.`,
-      };
+    if (sourceDate.getTime() < threshold.getTime()) {
+      return recentlyChecked(input, now)
+        ? { level: 'stale', lastVerified }
+        : { level: 'stale', lastVerified, notice: `Listing last checked ${year}.` };
     }
   }
 
   return lastVerified ? { level: 'fresh', lastVerified } : { level: 'fresh' };
+}
+
+/** How recent a research check must be to stand in for the old listing date. */
+export const RECENT_CHECK_MONTHS = 12;
+
+/**
+ * True when the market's details were researched within the last
+ * `RECENT_CHECK_MONTHS`: the page then shows those fresher facts, and an
+ * "out of date" line about the original import would contradict them.
+ */
+function recentlyChecked(input: MarketFreshnessRecord, now: Date): boolean {
+  const dates = [
+    input.enrichment?.verified_at,
+    ...(input.first_party?.operations?.schedules ?? []).map((item) => item.verified_at),
+  ]
+    .map((value) => parseDate(value))
+    .filter((value): value is Date => Boolean(value));
+  const cutoff = new Date(now.getTime());
+  cutoff.setUTCMonth(cutoff.getUTCMonth() - RECENT_CHECK_MONTHS);
+  return dates.some((date) => date.getTime() >= cutoff.getTime() && date.getTime() <= now.getTime() + 86_400_000);
 }

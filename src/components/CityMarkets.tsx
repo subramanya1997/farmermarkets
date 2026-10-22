@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
-import { Clock, MapPin, Sprout } from 'lucide-react';
+import { ChevronDown, Clock, MapPin, Sprout } from 'lucide-react';
 import type { CityMarketRow } from '@/lib/cityPage';
+import { SNAP_HASH, dayHash, splitBySchedule } from '@/lib/cityPageView';
 import type { Weekday } from '@/lib/schedule';
 import { LazyPlacesMap, type MapPlace } from '@/components/LazyPlacesMap';
 import { WeekStrip } from '@/components/WeekStrip';
@@ -39,7 +40,7 @@ function MarketRow({
       onMouseLeave={() => onPoint(null)}
       onFocus={() => onPoint(row.slug)}
       onBlur={() => onPoint(null)}
-      className={`group relative rounded-xl border bg-white p-4 transition-colors dark:bg-zinc-900 ${
+      className={`group relative rounded-2xl border bg-white p-4 transition-colors dark:bg-zinc-900 ${
         active
           ? 'border-green-600 dark:border-green-500'
           : 'border-zinc-200 hover:border-green-600/60 dark:border-zinc-800 dark:hover:border-green-500/60'
@@ -51,7 +52,7 @@ function MarketRow({
               anchor text a crawler follows. */}
           <Link
             href={row.href}
-            className="text-green-800 after:absolute after:inset-0 after:rounded-xl after:content-[''] group-hover:underline focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-green-700 dark:text-green-400"
+            className="text-green-800 after:absolute after:inset-0 after:rounded-2xl after:content-[''] group-hover:underline focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-green-700 dark:text-green-400"
           >
             {row.name}
           </Link>
@@ -91,6 +92,44 @@ function MarketRow({
   );
 }
 
+/** The URL hash is the filter, so a stat chip or a shared link can set it. */
+function subscribeToHash(onChange: () => void) {
+  window.addEventListener('hashchange', onChange);
+  return () => window.removeEventListener('hashchange', onChange);
+}
+const readHash = () => decodeURIComponent(window.location.hash.slice(1)).toLowerCase();
+const noHash = () => '';
+
+/** Sets the filter hash without a history entry or a scroll jump. */
+function writeHash(hash: string) {
+  const url = `${window.location.pathname}${window.location.search}${hash ? `#${hash}` : ''}`;
+  window.history.replaceState(window.history.state, '', url);
+  window.dispatchEvent(new HashChangeEvent('hashchange'));
+}
+
+/** A market with no posted schedule: name and street, one line. */
+function ThinRow({ row, onPoint }: { row: CityMarketRow; onPoint: (slug: string | null) => void }) {
+  return (
+    <li
+      onMouseEnter={() => onPoint(row.slug)}
+      onMouseLeave={() => onPoint(null)}
+      className="flex items-baseline justify-between gap-3 py-2 text-sm"
+    >
+      <span className="min-w-0">
+        <Link href={row.href} className="font-medium text-green-800 hover:underline dark:text-green-400">
+          {row.name}
+        </Link>
+        {row.address && (
+          <span className="text-zinc-500 dark:text-zinc-400"> &middot; {row.address}</span>
+        )}
+      </span>
+      {row.snap && (
+        <span className="shrink-0 text-xs font-semibold text-green-800 dark:text-green-400">SNAP/EBT</span>
+      )}
+    </li>
+  );
+}
+
 /**
  * A city's markets as a filterable list beside a map of the same markets.
  *
@@ -98,10 +137,25 @@ function MarketRow({
  * holds the full list and every link; the day and SNAP filters only narrow
  * what a reader sees afterwards. Pointing at a row lights up its dot on the
  * map, which is how a reader matches a name to a place without opening it.
+ *
+ * Markets that state no day, hours or season get no card: they sit in a
+ * compact "Also listed" disclosure under the cards, still linked and mapped.
+ * The filters live in the URL hash (`#day-saturday`, `#snap`), which is what
+ * the stat chips above the list link to.
  */
 export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: CityMarketsProps) {
-  const [day, setDay] = useState<Weekday | null>(null);
-  const [snapOnly, setSnapOnly] = useState(false);
+  const hash = useSyncExternalStore(subscribeToHash, readHash, noHash);
+  // "#day-saturday", "#snap", or both as "#day-saturday,snap".
+  const tokens = hash.split(',');
+  const day = days.find((entry) => tokens.includes(dayHash(entry.day)))?.day ?? null;
+  const snapOnly = tokens.includes(SNAP_HASH);
+  const setFilter = useCallback(
+    (nextDay: Weekday | null, nextSnap: boolean) =>
+      writeHash([nextDay ? dayHash(nextDay) : '', nextSnap ? SNAP_HASH : ''].filter(Boolean).join(',')),
+    []
+  );
+  const setDay = (next: Weekday | null) => setFilter(next, snapOnly);
+  const setSnapOnly = (next: boolean) => setFilter(day, next);
   const [pointed, setPointed] = useState<string | null>(null);
 
   const visible = useMemo(
@@ -111,6 +165,7 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
       ),
     [rows, day, snapOnly]
   );
+  const { documented, thin } = useMemo(() => splitBySchedule(visible), [visible]);
 
   const places = useMemo<MapPlace[]>(
     () =>
@@ -129,7 +184,11 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
   const filtered = day !== null || snapOnly;
 
   return (
-    <div>
+    <div className="relative">
+      {/* Scroll targets for the filter hashes, so a stat chip lands here. */}
+      {[...days.map((entry) => dayHash(entry.day)), SNAP_HASH].map((id) => (
+        <span key={id} id={id} aria-hidden="true" className="absolute top-0 scroll-mt-24" />
+      ))}
       {(showDayChips || showSnapChip) && (
         <div className="mb-4 flex flex-wrap items-center gap-2" role="group" aria-label="Filter markets">
           {showDayChips && (
@@ -202,17 +261,40 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
         )}
 
         {visible.length > 0 ? (
-          <ul
-            className={
-              anyPlaces
-                ? 'grid content-start gap-3 xl:grid-cols-2 lg:order-1'
-                : 'grid max-w-screen-2xl content-start gap-3 md:grid-cols-2 xl:grid-cols-3'
-            }
-          >
-            {visible.map((row) => (
-              <MarketRow key={row.slug} row={row} active={pointed === row.slug} onPoint={setPointed} />
-            ))}
-          </ul>
+          <div className="content-start lg:order-1">
+            <ul
+              className={
+                anyPlaces
+                  ? 'grid content-start gap-3 xl:grid-cols-2'
+                  : 'grid max-w-screen-2xl content-start gap-3 md:grid-cols-2 xl:grid-cols-3'
+              }
+            >
+              {documented.map((row) => (
+                <MarketRow key={row.slug} row={row} active={pointed === row.slug} onPoint={setPointed} />
+              ))}
+            </ul>
+            {thin.length > 0 && (
+              <details className="group mt-3 rounded-2xl border border-zinc-200 bg-white px-4 dark:border-zinc-800 dark:bg-zinc-900">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-3 text-sm marker:content-none [&::-webkit-details-marker]:hidden">
+                  <span>
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                      Also listed &middot; {thin.length}
+                    </span>
+                    <span className="ml-2 text-zinc-500 dark:text-zinc-400">No posted days or hours</span>
+                  </span>
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="h-4 w-4 shrink-0 text-zinc-500 transition-transform group-open:rotate-180 motion-reduce:transition-none"
+                  />
+                </summary>
+                <ul className="divide-y divide-zinc-100 border-t border-zinc-100 pb-1 dark:divide-zinc-800 dark:border-zinc-800">
+                  {thin.map((row) => (
+                    <ThinRow key={row.slug} row={row} onPoint={setPointed} />
+                  ))}
+                </ul>
+              </details>
+            )}
+          </div>
         ) : (
           <div className="rounded-xl border border-dashed border-zinc-300 p-6 text-sm text-zinc-600 lg:order-1 dark:border-zinc-700 dark:text-zinc-400">
             <p>
@@ -222,10 +304,7 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
             </p>
             <button
               type="button"
-              onClick={() => {
-                setDay(null);
-                setSnapOnly(false);
-              }}
+              onClick={() => setFilter(null, false)}
               className="mt-2 font-medium text-green-700 hover:underline dark:text-green-500"
             >
               Show all {rows.length} markets

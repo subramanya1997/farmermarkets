@@ -20,6 +20,9 @@ import { getMarkets, type FarmerMarket } from '@/lib/data';
  */
 export const MARKETS_PER_PAGE = 48;
 
+/** The index's one name: page titles, H1s and JSON-LD all use it. */
+export const INDEX_NAME = 'Farmers Markets Directory';
+
 /**
  * Number of `/markets/page/N` routes prerendered at build time.
  *

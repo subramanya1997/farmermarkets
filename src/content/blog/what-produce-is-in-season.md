@@ -11,9 +11,9 @@ imageCreditUrl: "https://commons.wikimedia.org/w/index.php?curid=70761618"
 imageLicense: "CC BY 2.0"
 ---
 
-Right now, in October, most of the country is in fall produce: apples, pears, winter squash, pumpkins, potatoes, sweet potatoes, cabbage, Brussels sprouts, and leafy greens like kale and collards. Spring brings asparagus, peas, rhubarb and strawberries, and summer is tomatoes, corn, peppers, berries and melons.
+In fall, most of the country's markets have apples, pears, winter squash, pumpkins, potatoes, sweet potatoes, cabbage, Brussels sprouts, and leafy greens like kale and collards. Spring brings asparagus, peas, rhubarb and strawberries, and summer is tomatoes, corn, peppers, berries and melons.
 
-That is the national picture. What is actually on the table at your market depends on your state, and the difference can be months. Below is the season-by-season list, why it only gets you halfway, and how to find the calendar that fits where you shop.
+That is the national picture. What is actually on the table at your market depends on your state, and the difference can be months.
 
 ## The National List, Season by Season
 
@@ -64,9 +64,9 @@ The market schedules follow the same pattern. Our directory lists 228 [farmers m
 
 ## What Is in Season in October
 
-Since it is mid-October, here is what the two calendars above say for this month.
+October shows the gap well. Here is what the two calendars above say for it.
 
-In South Dakota, October is late harvest. The calendar has apples, beets, cabbage, carrots, cauliflower, eggplant, garlic, grapes, leeks, onions, parsnips, pears, potatoes, pumpkins, radishes, spinach, summer and winter squash, sweet potatoes, and turnips and rutabagas all in season this month. Several of those end in October, so the selection drops quickly after it.
+In South Dakota, October is late harvest. The calendar has apples, beets, cabbage, carrots, cauliflower, eggplant, garlic, grapes, leeks, onions, parsnips, pears, potatoes, pumpkins, radishes, spinach, summer and winter squash, sweet potatoes, and turnips and rutabagas all in season in October. Several of those end in October, so the selection drops quickly after it.
 
 In Florida, October is the start of the season rather than the end. Bell peppers, cucumbers, eggplant, snap beans, squash and tomatoes all come back in October on the state chart after a summer off, and citrus is returning too: grapefruit from October, oranges and tangerines from September.
 
@@ -80,5 +80,3 @@ A national list is fine for a grocery run. For a market, these work better:
 2. **Look at the dates, not just the list.** A calendar that says July-September for tomatoes is telling you when the first ones arrive and when the last ones go, so it is also telling you how long you have left.
 3. **Ask the grower.** The person behind the table knows what is coming next week and what just finished. It is also the fastest way to find out whether something on the table was grown on that farm.
 4. **Check that the market is still open.** Outdoor markets close for the winter across much of the country. Our guide to [market seasons and hours](/blog/farmers-market-seasons-and-hours) explains how to read a schedule, and you can [filter by day and hours](/farmers-markets/hours) to see what is running this week.
-
-The full [market directory](/markets) has 9,132 listings, and just over 1,000 of them describe their season as year-round, which is the short list to start from once November comes. Another 218 have "winter" in their name, which is worth a search of its own.

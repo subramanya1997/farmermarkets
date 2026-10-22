@@ -74,12 +74,20 @@ test('verified record outranks an equal unconfirmed match', () => {
   assert.equal(results[0].id, 'verified');
 });
 
-test('listing key prefers close verified markets and buries unverified ones', () => {
-  const verifiedNear = listingSortKey({ distance: 5, verified: true });
+test('listing key is plain distance, verified breaks ties, dropped records last', () => {
+  const verifiedFar = listingSortKey({ distance: 5, verified: true });
   const plainNearer = listingSortKey({ distance: 2 });
+  const plainNearest = listingSortKey({ distance: 0.1 });
+  const verifiedTie = listingSortKey({ distance: 2, verified: true });
   const unverifiedNearest = listingSortKey({ distance: 0.1, unverified: true });
-  assert.ok(verifiedNear < plainNearer);
-  assert.ok(plainNearer < unverifiedNearest);
+  // Plain distance: a nearer unconfirmed market beats a farther verified one.
+  assert.ok(plainNearest < plainNearer);
+  assert.ok(plainNearer < verifiedFar);
+  // Verification only breaks a tie.
+  assert.ok(verifiedTie < plainNearer);
+  assert.ok(listingSortKey({ distance: 2.1, verified: true }) > plainNearer);
+  // Records the upstream directory dropped still go last.
+  assert.ok(verifiedFar < unverifiedNearest);
 });
 
 test('without distances the listing orders verified, unconfirmed, unverified', () => {

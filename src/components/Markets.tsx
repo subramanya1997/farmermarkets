@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { FarmerMarket } from "@/lib/api";
-import { Search, Map as MapIcon, Grid, Store, MapPin, Globe2, ArrowUpDown, SlidersHorizontal } from "lucide-react";
+import { Search, Map as MapIcon, Grid, Store, MapPin, ArrowUpDown, SlidersHorizontal } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect, useMemo, useRef } from "react";
@@ -27,12 +27,6 @@ import { trackEvent } from "@/lib/analytics";
 import { settledMarketSearchEvent } from '@/lib/searchAnalytics';
 import { SITE_FRAME } from "@/lib/ui";
 
-interface MarketsProps {
-  title?: string;
-  description?: string;
-  hideHero?: boolean;
-}
-
 /**
  * Must stay a multiple of 12: the results grid renders 2, 3, 4, or 6 columns
  * depending on viewport, and 12 is the smallest count they all divide, so a
@@ -40,8 +34,8 @@ interface MarketsProps {
  */
 const ITEMS_PER_PAGE = 36;
 
-/** Radix Select forbids `""` as an item value, so "all countries" needs a sentinel. */
-const ALL_COUNTRIES_VALUE = 'all';
+/** "Near Austin, TX · 236 markets within 50 mi": the radius the header counts. */
+const NEAR_RADIUS_MILES = 50;
 
 /** Cards shown beside the map, mirroring what the current view displays. */
 const MAP_LIST_SIZE = 20;
@@ -55,11 +49,12 @@ const MarketsMap = dynamic(() => import("@/components/MarketMap"), {
   ),
 });
 
-export function Markets({
-  title = "Find Local Food Markets",
-  description = "Discover farmers markets, public food markets, cooperatives, and other local-food places around the world",
-  hideHero = false
-}: MarketsProps) {
+/**
+ * The interactive explorer: search, a short row of filters, results nearest
+ * first, and a grid/map toggle. Pages supply their own heading; this renders
+ * none.
+ */
+export function Markets() {
   const { markets, loading: marketsLoading, error: marketsError } = useAllMarkets();
   const [view, setView] = useState('grid');
   const [page, setPage] = useState(1);
@@ -134,12 +129,13 @@ export function Markets({
       }
     }
     return [...stats.entries()]
-      .map(([name, { count, nearest }]) => ({ name, count, nearest }))
+      .map(([name, { nearest }]) => ({ name, nearest }))
       .sort((left, right) =>
         left.nearest !== right.nearest
           ? left.nearest - right.nearest
           : left.name.localeCompare(right.name)
-      );
+      )
+      .map((country) => country.name);
   }, [marketsWithDistance]);
   
   const filteredMarkets = useMemo(() => {
@@ -174,7 +170,16 @@ export function Markets({
   }, [marketsWithDistance, searchTerm, selectedCountry, activeFilters, filterCategories, sortOrder]);
 
   const totalPages = Math.ceil(filteredMarkets.length / ITEMS_PER_PAGE);
-  const resultCountryCount = new Set(filteredMarkets.map((market) => market.country).filter(Boolean)).size;
+
+  // Markets within reach of the reader, for the one-line results header.
+  const nearCount = useMemo(
+    () =>
+      location
+        ? filteredMarkets.filter((market) => (market.distance ?? Infinity) <= NEAR_RADIUS_MILES).length
+        : 0,
+    [filteredMarkets, location]
+  );
+  const place = location ? [location.city, location.state].filter(Boolean).join(', ') : '';
 
   useEffect(() => {
     const event = settledMarketSearchEvent({
@@ -225,20 +230,6 @@ export function Markets({
     setPage(1);
   };
 
-  // Filter toggle for the phone options sheet (the desktop FilterBar has its
-  // own copy of this, with the same analytics event).
-  const toggleSheetFilter = (filterId: string) => {
-    const next = new Set(activeFilters);
-    const enabled = !next.has(filterId);
-    if (enabled) {
-      next.add(filterId);
-    } else {
-      next.delete(filterId);
-    }
-    handleFilterChange(next);
-    trackEvent('Market Filter Changed', { filter: filterId, enabled });
-  };
-
   const toggleView = () => {
     const nextView = view === 'grid' ? 'map' : 'grid';
     setView(nextView);
@@ -264,22 +255,6 @@ export function Markets({
 
   return (
     <div className="min-h-[calc(100vh-4rem)]">
-      {/* Hero Section */}
-      {!hideHero && (
-        <section className="w-full py-8 sm:py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-          <div className={SITE_FRAME}>
-            <div className="flex flex-col items-center space-y-4 sm:space-y-6 text-center">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter">
-                {title}
-              </h1>
-              <p className="mx-auto max-w-[700px] text-sm sm:text-base md:text-lg text-zinc-600 dark:text-zinc-400">
-                {description}
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Google-style Search Bar */}
       <section className="sticky top-16 z-10 w-full py-4 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
         <div className={SITE_FRAME}>
@@ -303,32 +278,6 @@ export function Markets({
                   className="pl-10 pr-4 py-2 w-full bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
               </div>
-              <Select
-                value={selectedCountry || ALL_COUNTRIES_VALUE}
-                onValueChange={(value) =>
-                  handleCountryChange(value === ALL_COUNTRIES_VALUE ? '' : value)
-                }
-              >
-                <SelectTrigger
-                  aria-label="Country"
-                  className="hidden h-10 w-auto shrink-0 rounded-full border-zinc-300 bg-white pl-3 data-[size=default]:h-10 dark:border-zinc-700 dark:bg-zinc-800 md:flex lg:w-56"
-                >
-                  <Globe2 className="h-4 w-4 shrink-0 text-zinc-400" />
-                  <span className="hidden flex-1 truncate text-left lg:block">
-                    <SelectValue />
-                  </span>
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value={ALL_COUNTRIES_VALUE}>
-                    All countries ({markets.length})
-                  </SelectItem>
-                  {countries.map((country) => (
-                    <SelectItem key={country.name} value={country.name}>
-                      {country.name} ({country.count})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
               <Select
                 value={sortOrder}
                 onValueChange={(value) => {
@@ -370,20 +319,16 @@ export function Markets({
                 )}
               </Button>
 
-              {/* Phone: view, sort, country, and filters fold into one sheet. */}
+              {/* Phone: view and sort fold into one sheet; filters sit in the
+                  chip row below on every screen size. */}
               <Sheet>
                 <SheetTrigger asChild>
                   <Button
                     variant="outline"
-                    aria-label="View, sort, country, and filter options"
-                    className="relative h-10 w-10 shrink-0 rounded-full border-zinc-300 bg-white p-0 dark:border-zinc-700 dark:bg-zinc-800 md:hidden"
+                    aria-label="View and sort options"
+                    className="h-10 w-10 shrink-0 rounded-full border-zinc-300 bg-white p-0 dark:border-zinc-700 dark:bg-zinc-800 md:hidden"
                   >
                     <SlidersHorizontal className="h-4 w-4" />
-                    {activeFilters.size > 0 && (
-                      <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-green-600 px-1 text-[10px] font-semibold text-white">
-                        {activeFilters.size}
-                      </span>
-                    )}
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="bottom" className="max-h-[85vh] rounded-t-2xl">
@@ -434,77 +379,6 @@ export function Markets({
                           </TabsList>
                         </Tabs>
                       </div>
-                      <div>
-                        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                          Country
-                        </p>
-                        <Select
-                          value={selectedCountry || ALL_COUNTRIES_VALUE}
-                          onValueChange={(value) =>
-                            handleCountryChange(value === ALL_COUNTRIES_VALUE ? '' : value)
-                          }
-                        >
-                          <SelectTrigger className="w-full rounded-full">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent position="popper">
-                            <SelectItem value={ALL_COUNTRIES_VALUE}>
-                              All countries ({markets.length})
-                            </SelectItem>
-                            {countries.map((country) => (
-                              <SelectItem key={country.name} value={country.name}>
-                                {country.name} ({country.count})
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      {filterCategories.map((category) => (
-                        <div key={category.id}>
-                          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                            {category.label}
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {category.options.map((option) => {
-                              const Icon = option.icon;
-                              const isActive = activeFilters.has(option.id);
-                              return (
-                                <button
-                                  key={option.id}
-                                  onClick={() => toggleSheetFilter(option.id)}
-                                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                                    isActive
-                                      ? 'border-green-500 bg-green-50 text-green-700 dark:border-green-600 dark:bg-green-900/20 dark:text-green-500'
-                                      : 'border-zinc-200 bg-white text-zinc-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300'
-                                  }`}
-                                >
-                                  <Icon className="h-4 w-4" />
-                                  {option.label}
-                                  {option.count !== undefined && (
-                                    <span className={`text-xs ${isActive ? 'text-green-600 dark:text-green-400' : 'text-zinc-500'}`}>
-                                      ({option.count})
-                                    </span>
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ))}
-                      {activeFilters.size > 0 && (
-                        <Button
-                          variant="outline"
-                          className="w-full rounded-full"
-                          onClick={() => {
-                            handleFilterChange(new Set());
-                            trackEvent('Market Filters Cleared', {
-                              previous_filter_count: activeFilters.size,
-                            });
-                          }}
-                        >
-                          Clear all filters ({activeFilters.size})
-                        </Button>
-                      )}
                     </div>
                   </div>
                 </SheetContent>
@@ -514,30 +388,51 @@ export function Markets({
         </div>
       </section>
 
-      {/* Linear Filter Bar */}
-      <FilterBar 
-        categories={filterCategories} 
+      <FilterBar
+        categories={filterCategories}
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
+        countries={countries}
+        selectedCountry={selectedCountry}
+        onCountryChange={handleCountryChange}
       />
 
       {/* Markets Grid/Map Section */}
       <section className="w-full py-8">
         <div className={SITE_FRAME}>
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              {marketsLoading && markets.length === 0 ? (
-                'Loading markets…'
-              ) : (
-                <>
-                  {filteredMarkets.length.toLocaleString()} {filteredMarkets.length === 1 ? 'place' : 'places'}
-                  {selectedCountry ? ` in ${selectedCountry}` : resultCountryCount > 0 ? ` across ${resultCountryCount} ${resultCountryCount === 1 ? 'country or territory' : 'countries and territories'}` : ''}
-                  {marketsLoading ? ' (still loading…)' : ''}
-                  {marketsError ? ' (some data could not be loaded)' : ''}
-                </>
-              )}
-            </p>
-          </div>
+          <p className="mb-5 flex flex-wrap items-center gap-x-1.5 text-sm text-zinc-600 dark:text-zinc-400" aria-live="polite">
+            {marketsLoading && markets.length === 0 ? (
+              'Loading markets...'
+            ) : searchTerm ? (
+              <>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                  {filteredMarkets.length.toLocaleString()}
+                </span>
+                {filteredMarkets.length === 1 ? 'result' : 'results'} for &ldquo;{searchTerm.trim()}&rdquo;
+              </>
+            ) : selectedCountry ? (
+              <>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-100">{selectedCountry}</span>
+                <span aria-hidden="true">&middot;</span>
+                {filteredMarkets.length.toLocaleString()} {filteredMarkets.length === 1 ? 'market' : 'markets'}
+              </>
+            ) : place && nearCount > 0 && sortOrder === 'nearest' ? (
+              <>
+                <MapPin aria-hidden className="h-4 w-4 text-green-700 dark:text-green-500" />
+                <span className="font-semibold text-zinc-900 dark:text-zinc-100">Near {place}</span>
+                <span aria-hidden="true">&middot;</span>
+                {nearCount.toLocaleString()} {nearCount === 1 ? 'market' : 'markets'} within {NEAR_RADIUS_MILES} mi
+              </>
+            ) : (
+              <>
+                <span className="font-semibold text-zinc-900 dark:text-zinc-100">
+                  {filteredMarkets.length.toLocaleString()}
+                </span>
+                {filteredMarkets.length === 1 ? 'market' : 'markets'}
+              </>
+            )}
+            {marketsError && markets.length > 0 ? <span>(some data could not be loaded)</span> : null}
+          </p>
           {view === 'grid' ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 sm:gap-6">
@@ -558,8 +453,8 @@ export function Markets({
                   </h3>
                   <p className="text-sm text-zinc-600 dark:text-zinc-400 max-w-[500px]">
                     {marketsError
-                      ? 'The market data could not be loaded. Reload the page, or browse the full directory below.'
-                      : 'Try adjusting your search, country, or filters to find local-food places.'}
+                      ? 'Reload the page, or browse by state below.'
+                      : 'Try a different search, or clear a filter.'}
                   </p>
                 </div>
               )}
@@ -596,16 +491,6 @@ export function Markets({
           )}
         </div>
       </section>
-
-      {/* Location note lives down here so the search bar keeps the space. */}
-      {location && !locationLoading && (
-        <div className="flex items-center justify-center gap-1.5 pb-4 text-xs text-zinc-500 dark:text-zinc-400">
-          <MapPin className="h-3 w-3" />
-          <span>
-            Showing markets near {location.city}, {location.state}
-          </span>
-        </div>
-      )}
 
       {/* Pagination Section (grid only: the map paginates by panning) */}
       {view === 'grid' && filteredMarkets.length > 0 && (

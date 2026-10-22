@@ -29,6 +29,7 @@ import { statePath } from './statePage';
 import { getTopicSitemapEntries } from './topicPage';
 import { toIsoInstant } from './dates';
 import { SITE_URL } from './site';
+import { isMarketAlias } from './marketAliases';
 
 /**
  * URLs per chunk. The sitemap protocol caps a file at 50,000 URLs / 50 MB;
@@ -142,8 +143,10 @@ async function buildEntries(): Promise<SitemapEntry[]> {
     }))
   );
 
+  // An alias record's page is canonicalized to its main listing (see
+  // src/lib/marketAliases.ts), so submitting it would be a contradiction.
   const marketEntries: SitemapEntry[] = markets
-    .filter((market) => Boolean(market.slug))
+    .filter((market) => Boolean(market.slug) && !isMarketAlias(market.id))
     .map((market) => ({
       url: absolute(`/markets/${market.slug}`),
       lastModified: marketDates.get(market.slug),

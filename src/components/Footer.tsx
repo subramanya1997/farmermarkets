@@ -18,8 +18,8 @@ const FOOTER_STATE_LIMIT = 10;
 export async function Footer() {
   const states = (await getStateHubSummaries()).slice(0, FOOTER_STATE_LIMIT);
 
+  // "All markets" in Browse already links /markets, so it is not repeated here.
   const navigation = [
-    { name: 'Discover', href: '/markets' },
     { name: 'Blog', href: '/blog' },
     { name: 'For market operators', href: '/for-market-operators' },
     { name: 'About', href: '/about' },
@@ -56,7 +56,7 @@ export async function Footer() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold mb-3">States</h3>
+              <h3 className="text-sm font-semibold mb-3">States &amp; regions</h3>
               <ul className="space-y-2">
                 {states.map((state) => (
                   <li key={state.slug}>
@@ -64,7 +64,7 @@ export async function Footer() {
                       href={state.href}
                       className="text-sm text-zinc-600 dark:text-zinc-400 hover:text-green-600 dark:hover:text-green-500"
                     >
-                      {state.name} markets
+                      {state.name}
                     </Link>
                   </li>
                 ))}
@@ -101,15 +101,9 @@ export async function Footer() {
               </Link>
               <span>&copy; {new Date().getFullYear()} Farmer Markets</span>
             </div>
-            {/* The credit line links to the page that documents it: sources,
-                refresh cadence, coverage numbers and licence terms. */}
-            <p>
-              Data from the USDA Local Food Portal directory and official government open-data
-              portals:{' '}
-              <Link href="/about-the-data" className="text-green-600 hover:underline">
-                about the data
-              </Link>
-            </p>
+            {/* Sources and licences are documented on /about-the-data, linked
+                in the Site column above. */}
+            <p>Data: USDA and government open data</p>
           </div>
         </div>
       </div>

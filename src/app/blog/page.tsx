@@ -44,10 +44,6 @@ const IMAGE_FRAME =
 const COVER_LINK =
   "after:absolute after:inset-0 after:content-[''] transition-colors group-hover:text-green-700 dark:group-hover:text-green-400";
 
-function postLabel(post: BlogPost): string {
-  return post.tag.toLowerCase();
-}
-
 function PostImage({ post, sizes, priority = false }: { post: BlogPost; sizes: string; priority?: boolean }) {
   return post.photo ? (
     <BlogPhotoImage photo={post.photo} sizes={sizes} priority={priority} />
@@ -95,29 +91,15 @@ export default function BlogIndexPage() {
         <header className="border-b border-zinc-200/80 dark:border-zinc-800">
           <div className={`${SITE_FRAME} py-12 sm:py-16 lg:py-20`}>
             <div className="mx-auto max-w-6xl">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green-700 dark:text-green-400">
-                The Farmer Markets Blog
-              </p>
               <h1
-                className={`${displaySerif.className} mt-4 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl lg:text-6xl`}
+                className={`${displaySerif.className} max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-5xl lg:text-6xl`}
               >
                 Guides for market day
               </h1>
-              <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-                <p className="max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-                  Practical guides to farmers markets: how to pay, when to go, what is in season,
-                  and how to keep what you bring home fresh.
-                </p>
-                <p className="shrink-0 text-sm text-zinc-500 dark:text-zinc-400">
-                  {posts.length} guides
-                  {latest && (
-                    <>
-                      <span aria-hidden="true" className="mx-2">·</span>
-                      Latest <time dateTime={latest.publishedAt}>{formatDate(latest.publishedAt)}</time>
-                    </>
-                  )}
-                </p>
-              </div>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
+                How to pay, when to go, what is in season, and how to keep what you bring home
+                fresh.
+              </p>
             </div>
           </div>
         </header>
@@ -129,11 +111,8 @@ export default function BlogIndexPage() {
                 <PostImage post={latest} sizes="(min-width: 1152px) 660px, (min-width: 1024px) 58vw, 100vw" priority />
               </div>
               <div className="lg:col-span-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-green-700 dark:text-green-400">
-                  Latest {postLabel(latest)}
-                </p>
                 <h2
-                  className={`${displaySerif.className} mt-3 text-3xl font-semibold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl`}
+                  className={`${displaySerif.className} text-3xl font-semibold leading-tight tracking-tight text-zinc-900 dark:text-zinc-50 sm:text-4xl`}
                 >
                   <Link href={blogPath(latest.slug)} className={COVER_LINK}>
                     {latest.title}
@@ -192,17 +171,7 @@ export default function BlogIndexPage() {
 
         <section className={`${SITE_FRAME} pb-16 sm:pb-24`}>
           <div className="mx-auto max-w-6xl">
-            <NewsletterSignup
-              source="blog_index"
-              variant="band"
-              blurb="New guides, the markets near you and what's in season, no more than once a week."
-            />
-            <p className="mt-4 text-center text-sm text-zinc-500 dark:text-zinc-400">
-              Looking for a market today?{' '}
-              <Link href="/" className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400">
-                Search the directory
-              </Link>
-            </p>
+            <NewsletterSignup source="blog_index" variant="band" />
           </div>
         </section>
       </div>

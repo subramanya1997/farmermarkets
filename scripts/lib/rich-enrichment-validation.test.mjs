@@ -49,6 +49,27 @@ test('rejects operator-scoped market facts', () => {
   );
 });
 
+test('an operator-wide seasonal guide may back only the in-season note', () => {
+  const fail = (message) => { throw new Error(message); };
+  const record = validRecord();
+  record.sources.push({
+    id: 'operator-seasonal-guide',
+    title: 'What is in season',
+    url: 'https://example.org/in-season',
+    fields: ['first_party.products'],
+    kind: 'first_party',
+    scope: 'operator',
+    accessed_at: '2026-08-21',
+  });
+  record.first_party.products = {
+    availability_note: { value: 'Apples and squash in October.', source_ids: ['operator-seasonal-guide'], verified_at: '2026-08-21' },
+  };
+  assert.doesNotThrow(() => validateRichEnrichment(record, 'record', fail));
+
+  record.first_party.products.items = [{ id: 'apples', value: 'Apples', source_ids: ['operator-seasonal-guide'], verified_at: '2026-08-21' }];
+  assert.throws(() => validateRichEnrichment(record, 'record', fail), /market scoped/);
+});
+
 test('rejects a schedule without timezone', () => {
   const record = validRecord();
   delete record.first_party.operations.timezone;

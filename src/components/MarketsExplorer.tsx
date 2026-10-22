@@ -26,7 +26,7 @@ const InteractiveMarkets = dynamic(
 export function MarketsExplorer() {
   return (
     <section className="w-full border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-      <InteractiveMarkets hideHero />
+      <InteractiveMarkets />
     </section>
   );
 }

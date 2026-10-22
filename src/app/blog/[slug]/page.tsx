@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { getAllPosts, getPost, blogPath } from "@/lib/blog";
 import { BlogCover } from "@/components/BlogCover";
@@ -82,6 +81,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   };
 
   const contents = post.headings.filter((heading) => heading.depth === 2);
+  const showTag = new Set(getAllPosts().map((entry) => entry.tag)).size > 1;
 
   return (
     <>
@@ -93,7 +93,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <article className={`${SITE_FRAME_GUTTER} mx-auto w-full max-w-5xl py-8 sm:py-12`}>
           {/* Same width as the cover photo, so the trail starts on its left edge. */}
           <div className="mx-auto max-w-4xl">
-            <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: post.title, href: blogPath(post.slug) }]} />
+            {/* The title is the H1 right below, so only "Blog" shows; the
+                full trail stays in the JSON-LD. */}
+            <Breadcrumbs
+              items={[{ label: 'Blog', href: '/blog' }, { label: post.title, href: blogPath(post.slug) }]}
+              visible={1}
+            />
           </div>
 
           {/* Editorial header: centered title, then the byline row. */}
@@ -115,9 +120,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               )}
               <span aria-hidden="true">·</span>
               <span>{post.readingMinutes} min read</span>
-              <span className="inline-flex items-center rounded-sm bg-green-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-green-800 dark:bg-green-900/40 dark:text-green-300">
-                {post.tag}
-              </span>
+              {/* A tag only means something once there is more than one. */}
+              {showTag && (
+                <span className="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                  {post.tag}
+                </span>
+              )}
             </p>
           </header>
 
@@ -179,18 +187,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </BlogProse>
 
               <footer className="mt-12">
-                <NewsletterSignup
-                  source="blog_post"
-                  heading="Liked this guide?"
-                  blurb="Get the next one, plus the markets near you and what's in season, no more than once a week."
-                />
-                <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
-                  Looking for a market near you? The{' '}
-                  <Link href="/" className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300">
-                    directory
-                  </Link>{' '}
-                  lists thousands of farmers markets with hours, market days, and SNAP/EBT acceptance.
-                </p>
+                <NewsletterSignup source="blog_post" />
               </footer>
             </div>
           </div>

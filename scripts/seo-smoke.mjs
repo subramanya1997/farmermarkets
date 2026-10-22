@@ -91,6 +91,41 @@ const BANNED_DESCRIPTION_FRAGMENTS = [
   '—',
 ];
 
+/**
+ * Meta and hedge phrases the owner reads as junk: notes about our sources
+ * ("not published", "in available evidence"), template throat-clearing ("This
+ * page lists", "The page states") and data-quality caveats dressed as copy.
+ * None may appear anywhere a reader or a search engine sees text: the body,
+ * the meta description, or the JSON-LD. Matched case-insensitively.
+ */
+const BANNED_PAGE_PHRASES = [
+  'in available evidence',
+  'not published',
+  'Snapshot as of',
+  'Examples from the published',
+  'most fully documented',
+  'This page lists',
+  'is not listed among the payment options reported',
+  'The page states',
+  'The market says',
+  'reported schedule',
+];
+
+/**
+ * What a reader or crawler is shown: visible text, meta descriptions and
+ * JSON-LD. Other scripts are dropped, because the client payload carries raw
+ * record fields that the page itself never prints.
+ */
+function readableText(html) {
+  const jsonLd = jsonLdBlocks(html).join(' ');
+  const meta = metaContents(html, 'description').join(' ');
+  const body = html
+    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ');
+  return decodeEntities(`${body} ${meta} ${jsonLd}`).replace(/\s+/g, ' ');
+}
+
 /* ------------------------------------------------------------------ *
  * The sample
  * ------------------------------------------------------------------ */
@@ -149,7 +184,9 @@ const SAMPLE = [
     kind: 'market (with hours)',
     minInternalLinks: 20, // renders 35
     robots: 'indexable',
-    mustContain: ['4pm-7pm'],
+    // Hours print in the house clock style ("4-7pm", "11am-3pm"), whatever the
+    // source wrote ("4pm-7pm").
+    mustContain: ['11am-3pm'],
   },
   {
     // A legacy record the geo index could not place in any city (25 of them).
@@ -171,13 +208,14 @@ const SAMPLE = [
     mustContain: ['New York State Department of Agriculture and Markets'],
   },
   {
-    // `last_updated` in 2021, past STALE_AFTER_YEARS — the page owes the reader
-    // the "may be out of date" caveat (952 records qualify).
-    path: '/markets/18th-street-farmers-market-scottsbluff',
+    // An old `last_updated` and no newer research: the page owes the reader
+    // the "last checked" caveat. (A market whose days were re-researched in
+    // the past year drops it, so this sample has no enrichment.)
+    path: '/markets/shelby-county-farmers-market-harlan',
     kind: 'market (freshness notice)',
-    minInternalLinks: 20, // renders 36
+    minInternalLinks: 20,
     robots: 'indexable',
-    mustContain: ['may be out of date'],
+    mustContain: ['Listing last checked'],
   },
   {
     // Flagged `unverified` by the legacy refresh: no longer listed upstream.
@@ -186,21 +224,25 @@ const SAMPLE = [
     kind: 'market (unverified)',
     minInternalLinks: 20, // renders 35
     robots: 'indexable',
-    mustContain: ['no longer published in the USDA directory'],
+    mustContain: ['No longer in the USDA directory'],
   },
 
   /* --- Three city pages, including one deliberately unindexed -------- */
   {
     path: '/north-carolina/durham',
     kind: 'city (small)',
-    minInternalLinks: 25, // renders 47
+    // Floor lowered in Oct 2026 when the weekday board and generated FAQs
+    // were removed from city pages; it rendered 47 before that.
+    minInternalLinks: 20,
     robots: 'indexable',
     expectDateModified: true,
   },
   {
     path: '/alabama/birmingham',
     kind: 'city (10 markets)',
-    minInternalLinks: 25, // renders 55
+    // Floor lowered in Oct 2026 with the weekday board and FAQs gone; it
+    // rendered 55 before. Ten market links plus chrome still clear it.
+    minInternalLinks: 25,
     robots: 'indexable',
     expectDateModified: true,
   },
@@ -212,9 +254,11 @@ const SAMPLE = [
     // asserts both the indexability and that block's links.
     path: '/alabama/abbeville',
     kind: 'city (one market, nearby block)',
-    minInternalLinks: 30, // renders 46 before the nearby block's 6
+    // Floor lowered in Oct 2026 when the generated FAQs were removed; it
+    // rendered 46 plus the nearby block's 6 before that.
+    minInternalLinks: 20,
     robots: 'indexable',
-    mustContain: ['Farmers markets near Abbeville', 'Are there other farmers markets near Abbeville?'],
+    mustContain: ['Farmers markets near Abbeville'],
   },
 
   /* --- Two state hubs ----------------------------------------------- */
@@ -589,6 +633,12 @@ function assertPage(page, response) {
         `description contains "${fragment}" — a field interpolated empty: "${description}"`
       );
     }
+  });
+
+  check(group, 'no meta or hedge phrases in the readable text', () => {
+    const text = readableText(html).toLowerCase();
+    const found = BANNED_PAGE_PHRASES.filter((phrase) => text.includes(phrase.toLowerCase()));
+    assert.deepEqual(found, [], `page text contains banned phrases: ${found.map((phrase) => `"${phrase}"`).join(', ')}`);
   });
 
   check(group, 'exactly one self-referential canonical on the canonical host', () => {

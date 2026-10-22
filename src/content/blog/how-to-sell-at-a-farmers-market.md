@@ -13,11 +13,9 @@ imageLicense: "Public domain (U.S. Government work)"
 
 To sell at a farmers market, you pick a market, apply to its manager, and show that you meet the market's rules and your state's rules for what you sell: usually liability insurance, any license your product needs, and a certified scale if you sell by weight. The paperwork is lighter for raw fruit and vegetables than for anything you cook, can or bake, and every one of these rules is set by your state or the market rather than by one national standard.
 
-What follows is the order to work through it, with the questions to ask at each step and where the answers come from.
-
 ## Pick a Market and Talk to the Manager
 
-Start with the markets near you. Our [directory](/markets) lists 9,132 of them, and the state pages, such as [Minnesota](/minnesota) with 439 markets or [Pennsylvania](/pennsylvania) with 210, show which ones are open on which days. Only 254 markets in our data publish a vendor count, but among those the median is 51 vendors, and the middle half run from about 32 to 89. That is the kind of company you are joining.
+Start with the markets near you. The [state pages](/markets), such as [Minnesota](/minnesota) or [Pennsylvania](/pennsylvania), show which ones are open on which days. Only 254 markets in our data publish a vendor count, but among those the median is 51 vendors, and the middle half run from about 32 to 89. That is the kind of company you are joining.
 
 Then go and look. Penn State Extension's [advice for new vendors](https://extension.psu.edu/dos-and-donts-for-selling-at-farmers-markets) is to visit in the last hour or two a market is open, when managers and vendors have time to talk. While you are there, it suggests checking the practical things: customer and vendor parking, whether you can park at your stand, electricity, and restrooms and handwashing nearby.
 

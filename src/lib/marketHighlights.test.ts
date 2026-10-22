@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { eventDisplayState, marketHighlights, publishedEventDate, publishedLocalHours, rosterContextLabels, rosterPeriodHasEnded, safeHighlightUrl } from './marketHighlights.ts';
+import { compactPublishedHours, eventDateBlock, eventDisplayState, eventSpan, marketHighlights, publishedEventDate, publishedLocalHours, rosterPeriodHasEnded, rosterSubhead, safeHighlightUrl, vendorHasDetails } from './marketHighlights.ts';
 
 test('published date-only events stay on the stated day across server time zones', () => {
   const original = process.env.TZ;
@@ -61,6 +61,7 @@ test('counts alone do not create vendor sections, and supported named details re
     },
   });
   assert.equal(rich.events[0].value.start, '2026-11-22');
+  assert.equal(rich.vendorLinks[0].label, 'Full vendor list');
   assert.equal(rich.programs.length, 1);
   assert.equal(rich.roster[0].value.name, 'Example Farm');
   assert.equal(rich.vendorLinks[0].href, 'https://official.example/vendors');
@@ -79,20 +80,64 @@ test('expired calendar events are labeled past without an inferred future recurr
   assert.equal(eventDisplayState({ ...event, start: 'not a date' }, now), undefined);
 });
 
-test('roster periods and partial snapshots stay qualified and an ended period is detected', () => {
+test('a roster gets one short subhead instead of its provenance, and an ended period is detected', () => {
+  const now = new Date('2026-09-30T12:00:00Z');
   const context = { label: '2026 outdoor season', as_of: '2026-09-30', start_date: '2026-05-01', end_date: '2026-09-20', non_exhaustive: true };
-  assert.deepEqual(rosterContextLabels(context), [
-    '2026 outdoor season',
-    'Published period: May 1, 2026 - September 20, 2026',
-    'Snapshot as of September 30, 2026',
-  ]);
+  assert.equal(rosterSubhead(context, now), 'From last season');
+  assert.equal(rosterSubhead({ ...context, label: '2026 season' }, now), 'From the 2026 season');
+  assert.equal(rosterSubhead({ non_exhaustive: true }, now), 'Some regulars');
+  assert.equal(rosterSubhead({ label: 'Wednesday producer list' }, now), undefined);
   assert.equal(rosterPeriodHasEnded(context, new Date('2026-09-30T12:00:00Z')), true);
   assert.equal(rosterPeriodHasEnded({ label: 'Unspecified edition' }, new Date('2026-09-30T12:00:00Z')), false);
   assert.equal(rosterPeriodHasEnded({ end_date: '2026-02-30' }, new Date('2026-09-30T12:00:00Z')), false);
 });
 
 test('structured local event clocks are displayed without inventing a timezone', () => {
-  assert.equal(publishedLocalHours({ opens: '12:00', closes: '16:30' }), '12:00pm - 4:30pm (local time)');
+  assert.equal(publishedLocalHours({ opens: '12:00', closes: '16:30' }), '12-4:30pm');
+  assert.equal(publishedLocalHours({ opens: '10:00', closes: '14:00' }), '10am-2pm');
   assert.equal(publishedLocalHours({ opens: '25:00', closes: '26:00' }), undefined);
   assert.equal(publishedLocalHours({ opens: '16:00', closes: '12:00' }), undefined);
+});
+
+test('past events drop out; cancelled and upcoming ones stay', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-09-30' };
+  const now = new Date('2026-10-21T12:00:00Z');
+  const { events } = marketHighlights({
+    events: [
+      { id: 'past', value: { name: 'Block party', kind: 'other', start: '2026-10-14' }, ...evidence },
+      { id: 'next', value: { name: 'Community night', kind: 'other', start: '2026-10-28' }, ...evidence },
+      { id: 'off', value: { name: 'Pie day', kind: 'other', start: '2026-11-02', status: 'cancelled' }, ...evidence },
+    ],
+  }, now);
+  assert.deepEqual(events.map((item) => item.id), ['next', 'off']);
+});
+
+test('an attendance note repeated across the roster is dropped from every vendor', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-09-30' };
+  const note = 'Published roster: 2026 season. Attendance on a particular date is not confirmed.';
+  const { roster } = marketHighlights({
+    vendors: {
+      roster: [
+        { id: 'a', value: { name: 'Black Sheep Garlic', attendance_note: note }, ...evidence },
+        { id: 'b', value: { name: 'Gresczyk Farms', attendance_note: note }, ...evidence },
+        { id: 'c', value: { name: 'Twin Pines Farm', attendance_note: 'Saturdays only' }, ...evidence },
+      ],
+    },
+  });
+  assert.deepEqual(roster.map((item) => item.value.attendance_note), [undefined, undefined, 'Saturdays only']);
+  assert.deepEqual(roster.map(vendorHasDetails), [false, false, true]);
+  assert.equal(vendorHasDetails({ id: 'd', value: { name: 'Farm', categories: ['Eggs'] }, ...evidence }), true);
+});
+
+test('event rows get a date block, a span for multi-day events and short clocks', () => {
+  assert.deepEqual(eventDateBlock('2026-10-28'), { month: 'Oct', day: '28', dateTime: '2026-10-28' });
+  assert.equal(eventDateBlock('soon'), undefined);
+  assert.equal(eventSpan('2026-12-05', '2026-12-06'), 'Dec 5-6');
+  assert.equal(eventSpan('2026-11-30', '2026-12-02'), 'Nov 30-Dec 2');
+  assert.equal(eventSpan('2026-12-05', '2026-12-05'), undefined);
+  assert.equal(compactPublishedHours('4:00 PM-6:00 PM'), '4-6pm');
+  assert.equal(compactPublishedHours('10:00 am-1:00 pm'), '10am-1pm');
+  assert.equal(compactPublishedHours('5 PM - 8 PM'), '5-8pm');
+  assert.equal(compactPublishedHours('All day'), 'All day');
+  assert.equal(compactPublishedHours(''), undefined);
 });

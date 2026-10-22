@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "note": "Hand-researched visitor guides for city pages, keyed by \"{state-slug}/{city-slug}\" from public/data/geo_index.json. Every tip and FAQ cites a source by id; the page links each card to its source. An FAQ must add a fact the tips do not already show, or the validator rejects it. Rules and workflow: docs/city-growth-playbook.md. Validated by npm run test:city-guides.",
+  "guides": {
+    "tennessee/nashville": {
+      "verified_at": "2026-10-21",
+      "title": "Nashville Farmers Markets - {count} Markets, Days and Hours",
+      "description": "{count} farmers markets in Nashville, TN with days, hours and parking. Nashville Farmers' Market is open Friday-Sunday and doubles SNAP up to $100.",
+      "tips": [
+        {
+          "label": "Year-round",
+          "text": "The farm sheds at Nashville Farmers' Market run Friday-Sunday all year: 9am-2pm March-October and 10am-2pm November-February.",
+          "source_ids": ["nfm-hours"]
+        },
+        {
+          "label": "Parking",
+          "text": "Nashville Farmers' Market has free 2-hour parking on site and along 7th Ave. State government lots nearby are free on Saturdays and Sundays.",
+          "source_ids": ["nfm-hours"]
+        },
+        {
+          "label": "By bus",
+          "text": "WeGo buses stop in front of Nashville Farmers' Market on Rosa L. Parks Blvd.",
+          "source_ids": ["nfm-hours"]
+        },
+        {
+          "label": "SNAP doubled",
+          "text": "Fresh Bucks at Nashville Farmers' Market matches SNAP $1 for $1, up to $100, at the info booth in Farm Shed 1 on weekends from 10am-2pm.",
+          "source_ids": ["nfm-fresh-bucks"]
+        },
+        {
+          "label": "Winter Saturdays",
+          "text": "Richland Park Farmers' Market runs every Saturday, rain or shine: 9am-12pm April-December and 10am-12pm January-March.",
+          "source_ids": ["richland-home"]
+        },
+        {
+          "label": "Late season",
+          "text": "East Nashville Farmers' Market keeps going on Tuesdays through December 22, 2026, from 3:30pm-6pm, with free parking on site.",
+          "source_ids": ["east-nashville-home"]
+        }
+      ],
+      "faqs": [],
+      "sources": [
+        {
+          "id": "nfm-hours",
+          "title": "Hours and Directions, Nashville Farmers' Market",
+          "url": "https://www.nashvillefarmersmarket.org/hours-and-directions"
+        },
+        {
+          "id": "nfm-fresh-bucks",
+          "title": "Fresh Bucks Double SNAP, Nashville Farmers' Market",
+          "url": "https://www.nashvillefarmersmarket.org/fresh-bucks-double-snap"
+        },
+        {
+          "id": "richland-home",
+          "title": "Richland Park Farmers' Market",
+          "url": "http://www.richlandparkfarmersmarket.com/"
+        },
+        {
+          "id": "east-nashville-home",
+          "title": "East Nashville Farmers' Market",
+          "url": "https://www.eastnashvillemarket.com/"
+        }
+      ]
+    }
+  }
+}

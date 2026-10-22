@@ -9,6 +9,7 @@ import type {
   MarketFirstPartyFacts,
 } from '@/lib/enrichment';
 import { mergeEnrichment } from '@/lib/enrichment';
+import { marketHours, marketWeekdays } from '@/lib/seo';
 export { mergeEnrichment };
 
 // FarmerMarket interface for TypeScript typing
@@ -617,6 +618,15 @@ export function slimMarket(market: FarmerMarket): Partial<FarmerMarket> {
   if (market.provenance?.source_id) {
     slim.provenance = { source_id: market.provenance.source_id };
   }
+
+  // The client cannot read `first_party` (dropped above), so the schedule the
+  // explorer filters and prints ("Today", "Sat 8am-1pm") is parsed here from
+  // the full record. Always present, possibly empty, so the client knows not
+  // to re-parse the raw `days` text. See `weekdaysFor` in marketDisplay.ts.
+  const weekdays = marketWeekdays(market);
+  slim.weekdays = weekdays;
+  const hours = weekdays.length > 0 ? marketHours(market) : undefined;
+  if (hours) slim.hours = hours;
 
   return slim as Partial<FarmerMarket>;
 }

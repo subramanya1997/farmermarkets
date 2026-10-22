@@ -341,7 +341,7 @@ test('the season column carries seasons, not the weekly schedule', () => {
   assert.equal(marketSeasonLabel({ name: 'x', season: 'Year Round' }), 'Year-round');
   assert.equal(marketSeasonLabel({ name: 'x', season: 'year-round' }), 'Year-round');
   assert.equal(marketSeasonLabel({ name: 'x', season: 'summer, fall' }), 'Summer, Fall');
-  assert.equal(marketSeasonLabel({ name: 'x', season: 'May-Oct' }), 'May-Oct');
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'May-Oct' }), 'May-October');
   // Already rendered in the Days/Hours columns, so it is not repeated here.
   assert.equal(marketSeasonLabel({ name: 'x', season: 'Saturdays 8am to 1pm' }), undefined);
   assert.equal(marketSeasonLabel({ name: 'x' }), undefined);
@@ -493,7 +493,7 @@ test('upstream punctuation is normalized: no space before commas, no en/em dashe
     fmnp: true,
   });
   assert.doesNotMatch(description, / [,.]/, `space before punctuation: ${description}`);
-  assert.match(description, /4pm-7pm, Sat\/Sun 11am-3pm/);
+  assert.match(description, /4-7pm, Sat\/Sun 11am-3pm/);
 
   // One record's *name* carries the same flaw ("Agricenter International , Farmers Market").
   const title = marketTitle({ name: 'Agricenter International , Farmers Market', city: 'Memphis', state: 'TN' });
@@ -560,4 +560,178 @@ test('closed lines and differing clocks cannot flatten into every-day opening cl
   assert.equal(marketHours({ name: '1892', days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'] }), undefined);
   assert.equal(marketHours({ name: 'x', days: ['Saturday'], season: 'First Saturday 9am-1pm' }), undefined);
   assert.deepEqual(marketWeekdays({ name: 'x', days: ['Saturday'], season: 'First Saturday 9am-1pm' }), []);
+});
+
+/* ------------------------------------------------------------------ *
+ * Text hygiene: every example below is a real record shape from
+ * public/data/farmers_markets.json.
+ * ------------------------------------------------------------------ */
+
+const geo = await import('./geo.ts');
+
+test('season: data-quality notes are never printed as a season', () => {
+  for (const season of [
+    'No current published operating season identified in available evidence.',
+    'Seasonal; exact operating season dates not published.',
+    'Not published',
+    'Not stated on the official market page',
+    'Operating season not specified in the published information.',
+    'The official page does not publish an operating season.',
+    '2026 season; end date not published',
+    '2026 season',
+    '2026 Farmers Market season',
+    'Seasonal',
+    'Seasonal (specific months not published)',
+    'No current season found; historical listing: 06/27/2015-10/17/2015.',
+  ]) {
+    assert.equal(marketSeasonLabel({ name: 'x', season }), undefined, season);
+  }
+  // The real part of a mixed value survives.
+  assert.equal(marketSeasonLabel({ name: 'x', season: 'Outdoor market: May-October; indoor market season not specified' }), 'Outdoor market: May-October');
+  assert.equal(marketSeasonLabel({ name: 'x', season: '2026 season began May 9, 2026; end date not stated' }), 'From May 9, 2026');
+  assert.equal(marketSeasonLabel({ name: 'x', season: "June 5th-October 9th (2024 published listing)" }), 'June 5-October 9');
+  // "may" the verb is not the month.
+  assert.match(
+    marketSeasonLabel({ name: 'x', season: 'Year-round (market); produce is seasonal and may be limited June-September' }) ?? '',
+    /and may be limited June-September/
+  );
+});
+
+test('season: one date style', () => {
+  const label = (season: string) => marketSeasonLabel({ name: 'x', season });
+  assert.equal(label('Year - Round (Weather Permitting)'), 'Year-round');
+  assert.equal(label('Open year round.'), 'Year-round');
+  assert.equal(label('All Year'), 'Year-round');
+  assert.equal(label('January-December'), 'Year-round');
+  assert.equal(label('May through October'), 'May-October');
+  assert.equal(label('June - October'), 'June-October');
+  assert.equal(label('May thru Oct'), 'May-October');
+  assert.equal(label('may through october'), 'May-October');
+  assert.equal(label('June 20th through November 21st, 2026'), 'June 20-November 21, 2026');
+  assert.equal(label('May 2, 2026-October 31, 2026'), 'May 2-October 31, 2026');
+  assert.equal(label('2026 Season: April 12-November 22'), 'April 12-November 22, 2026');
+  assert.equal(label('spring through Fall'), 'Spring through fall');
+  // A qualifier keeps its words: "Mid-May-October" would misread.
+  assert.equal(label('Mid-May through October'), 'Mid-May through October');
+  // "17th season" is not a date.
+  assert.match(label('2026 season (17th season), beginning June 21, 2026') ?? '', /17th season/);
+});
+
+test('season: structured ranges read as dates, not ISO strings', () => {
+  const dated = { name: 'x', first_party: { operations: { season: { value: { kind: 'dated_range', start_date: '2026-05-28', end_date: '2026-10-08' } } } } };
+  assert.equal(marketSeasonLabel(dated as never), 'May 28-October 8, 2026');
+  const spanning = { name: 'x', first_party: { operations: { season: { value: { kind: 'dated_range', start_date: '2026-10-24', end_date: '2027-05-22' } } } } };
+  assert.equal(marketSeasonLabel(spanning as never), 'October 24, 2026-May 22, 2027');
+  const annual = { name: 'x', first_party: { operations: { season: { value: { kind: 'annual_range', start: { month: 6, day: 14 }, end: { month: 9, day: 27 } } } } } };
+  assert.equal(marketSeasonLabel(annual as never), 'June 14-September 27');
+});
+
+test('season: mid-sentence form keeps month capitals', () => {
+  const { seasonForSentence } = seo;
+  assert.equal(seasonForSentence('May-October'), 'May-October');
+  assert.equal(seasonForSentence('Spring through fall'), 'spring through fall');
+  assert.equal(seasonForSentence('Year-round'), 'year-round');
+  assert.equal(seasonForSentence('From May 9, 2026'), 'from May 9, 2026');
+});
+
+test('description: a season note never becomes "Open Not published", and dates are not repeated', () => {
+  const noted = marketDescription({ name: 'City Heights Certified Farmers Market', city: 'San Diego', state: 'CA', days: ['saturday'], season: 'Not specified in published information' });
+  assert.doesNotMatch(noted, /published|specified/);
+  assert.match(noted, /Open Saturdays/);
+  const repeated = marketDescription({
+    name: 'New Hope Community Farmers Market',
+    city: 'Minneapolis',
+    state: 'MN',
+    season: 'June 4 through October 1, 2026',
+    days: ['Thursdays, June 4 - October 1, 3-7 p.m.'],
+  });
+  assert.equal(repeated.match(/June 4/g)?.length, 1, repeated);
+});
+
+test('hours: one clock style across sources', () => {
+  const hours = (days: string[], extra: Record<string, string> = {}) => marketHours({ name: 'x', days, ...extra });
+  assert.equal(hours(['Saturday 8am until 12pm']), '8am-12pm');
+  assert.equal(hours(['Saturday 8am-12']), '8am-12pm');
+  assert.equal(hours(['Tuesday 2pm-6pm']), '2-6pm');
+  assert.equal(hours(['Saturday 7AM to 1PM']), '7am-1pm');
+  assert.equal(hours(['Thursday 4:00 PM-6:00 PM']), '4-6pm');
+  assert.equal(hours(['Sunday 10:00am - 5:00pm']), '10am-5pm');
+  assert.equal(hours(['Friday 4pm-8pm.']), '4-8pm');
+  // 24-hour sources: an hour past 12, the French "h", or a European feed.
+  assert.equal(hours(['Tuesday 15:00-19:00']), '3-7pm');
+  assert.equal(hours(['Mercredi 07h30-13h30'], { country_code: 'FR' }), '7:30am-1:30pm');
+  assert.equal(hours(['Samedi 07:30:00 - 12:30:00'], { country_code: 'FR' }), '7:30am-12:30pm');
+  // A US range with no am/pm and no hour past 12 is left as written.
+  assert.equal(hours(['Thursday 3:30-6:30']), '3:30-6:30');
+});
+
+test('names: state-code lookalikes read as words unless they are the state', () => {
+  const { displayName } = seo;
+  assert.equal(displayName('Plaza Growers’ Market IN Allentown'), 'Plaza Growers’ Market in Allentown');
+  assert.equal(displayName('Faith IN Place Winter Farmers Markets - Chicago Area'), 'Faith in Place Winter Farmers Markets - Chicago Area');
+  assert.equal(displayName('Ujamaa CO-op Farmers Market'), 'Ujamaa Co-op Farmers Market');
+  assert.equal(displayName('CO-Operative Farmers Market'), 'Co-operative Farmers Market');
+  assert.equal(displayName('LA Grange Farmers’ Market & Artisans'), 'La Grange Farmers’ Market & Artisans');
+  assert.equal(displayName('MT. Pleasant Farmers’ Market - Island Park'), 'Mt. Pleasant Farmers’ Market - Island Park');
+  assert.equal(displayName('Marché DE LA Place Jourdan / Markt van het Jourdanplein'), 'Marché de la Place Jourdan / Markt van het Jourdanplein');
+  assert.equal(displayName('DE Soto Farmers’ Market'), 'De Soto Farmers’ Market');
+  // Real states and real acronyms keep their capitals.
+  assert.equal(displayName('Farmers Market - Greenview MO'), 'Farmers Market - Greenview MO');
+  assert.equal(displayName('Michigan City, IN Farmers Market'), 'Michigan City, IN Farmers Market');
+  assert.equal(displayName('Weston MO Farmer’s Market'), 'Weston MO Farmer’s Market');
+  assert.equal(displayName('YMCA IN Frederick Farmers Market'), 'YMCA in Frederick Farmers Market');
+  assert.equal(displayName('Downtown LA Certified Farmers Market'), 'Downtown LA Certified Farmers Market');
+});
+
+test('mojibake from a cp1252 mis-decode is repaired', () => {
+  assert.equal(geo.clean('N. Main St. & Riverside Ave., The â€˜Patch Downtown'), 'N. Main St. & Riverside Ave., The ‘Patch Downtown');
+  assert.equal(geo.clean('Farmerâ€™s Market'), 'Farmer’s Market');
+  assert.equal(geo.clean('CafÃ© du Marché'), 'Café du Marché');
+  assert.equal(geo.clean('8am - 1pm â€‹2016 Season'), '8am - 1pm 2016 Season');
+  // Real accented text is untouched.
+  assert.equal(geo.clean('Château São Paulo Â'), 'Château São Paulo Â');
+});
+
+test('addresses: directions and parking notes are cut, the street is kept', () => {
+  const street = (record: Record<string, string>) => resolveLocation({ ...record }).street;
+  assert.equal(
+    street({ address: '6525 N Hiawatha Chicago, IL 60646 We are located within the parking lot of Edgebrook Elementary School located at the corner of Central Ave and Hiawatha Ave IN Chicago, Illinois.', city: 'Chicago', state: 'Illinois', zip_code: '60646' }),
+    '6525 N Hiawatha'
+  );
+  assert.equal(
+    street({ address: '800 S. Desplaines St. Chicago, IL 60607 Parking Limited free parking available on Desplaines from Harrison to Polk and from Taylor to Roosevelt. CTA Transportation Take CTA to the Clinton Blue Line St', city: 'Chicago', state: 'Illinois', zip_code: '60607' }),
+    '800 S. Desplaines St.'
+  );
+  assert.equal(
+    street({ address: '1245 Heights Boulevard Houston, TX 77008 There are two parking lots at the church, parking on the street. Plenty of parking its a', city: 'Houston', state: 'Texas', zip_code: '77008' }),
+    '1245 Heights Blvd'
+  );
+  assert.equal(
+    street({ address: '3511 Dickerson Pike Nashville, TN 37207 1 Block from Skyline Hospital and 1/2 mile from Briley Pkwy heading North towards Goodlettsville.', city: 'Nashville', state: 'Tennessee', zip_code: '37207' }),
+    '3511 Dickerson Pike'
+  );
+  // Location detail that is part of the address stays.
+  assert.equal(street({ address: '1432 W. Adams Blvd., St. Agnes Church Parking Lot, Los Angeles, CA, 90007', city: 'Los Angeles', state: 'CA' }), '1432 W. Adams Blvd., St. Agnes Church Parking Lot');
+  assert.equal(street({ address: '200 Church St., Behind City Hall, Bishop, CA, 93514', city: 'Bishop', state: 'CA' }), '200 Church St., Behind City Hall');
+  assert.equal(street({ address: '111 E. 9 Mile Rd., Ferndale, MI 48220', city: 'Ferndale', state: 'MI' }), '111 E. 9 Mile Rd.');
+});
+
+test('addresses: a city is a town, never a note longer than four words', () => {
+  const city = (record: Record<string, string>) => resolveLocation({ ...record }).city;
+  assert.equal(city({ city: 'Old Town Plaza, Elk Grove', state: 'California' }), 'Elk Grove');
+  assert.equal(city({ city: 'Wrightstown (Use Newtown For Gps)', state: 'Pennsylvania' }), 'Wrightstown');
+  assert.equal(city({ city: '(Centennial Bank Park) Mountain View', state: 'AR' }), 'Mountain View');
+  assert.equal(city({ city: 'In Culver City, Culver City', state: 'CA' }), 'Culver City');
+  assert.equal(city({ city: 'Nashville, Tennessee', state: 'Tennessee' }), 'Nashville');
+  assert.equal(city({ city: 'Augusta-Richmond County Consolidated Government (Balance)', state: 'Georgia' }), undefined);
+  assert.equal(
+    city({ address: '3619 E. Indian School Road Phoenix, AZ 85018 Take highway 51 to Indian School Road, Drive East until you meet 36th. Gaslight Square is a large shopping center with plenty of parking.', state: 'Arizona', zip_code: '85018' }),
+    undefined
+  );
+  assert.equal(
+    marketLocationLine({ name: 'x', city: 'City Park And Fairgrounds, Twin Bridges', state: 'Montana', country_code: 'US' }),
+    'Twin Bridges, Montana'
+  );
+  // A field pasted twice collapses.
+  assert.equal(resolveLocation({ address: '750 Aurora Avenue 750 Aurora Avenue Naperville', city: '750 Aurora Avenue 750 Aurora Avenue Naperville', state: 'Illinois' }).street, '750 Aurora Avenue Naperville');
 });

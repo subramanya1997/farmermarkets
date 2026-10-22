@@ -6625,7 +6625,13 @@
       "index": 4118,
       "id": 310950,
       "path": "visitor_note",
-      "value": "Use the official address 2934 Russell Street. The legacy record says 2943 Russell Street, which does not match the market’s current official website. Pets are not allowed in sheds, covered structures, or near vendor stalls except trained service animals."
+      "value": ""
+    },
+    {
+      "index": 4118,
+      "id": 310950,
+      "path": "location.address",
+      "value": "2934 Russell St., Detroit, MI, 48207"
     },
     {
       "index": 4120,

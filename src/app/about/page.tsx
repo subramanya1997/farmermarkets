@@ -1,99 +1,61 @@
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Metadata } from "next";
-import { SITE_FRAME } from "@/lib/ui";
+import type { Metadata } from "next";
+import { SITE_FRAME_GUTTER } from "@/lib/ui";
+
+const DESCRIPTION =
+  "A free directory of farmers markets and public local-food places, built from USDA and government open data.";
 
 export const metadata: Metadata = {
-  title: "About Farmer Markets - Our Mission and Values",
-  description: "Learn how Farmer Markets connects people with farmers markets and public local-food places around the world.",
+  title: "About Farmer Markets",
+  description: DESCRIPTION,
   alternates: {
     canonical: '/about',
   },
   openGraph: {
-    title: "About Farmer Markets - Our Mission and Values",
-    description: "Learn how Farmer Markets connects people with farmers markets and public local-food places around the world.",
+    title: "About Farmer Markets",
+    description: DESCRIPTION,
     url: '/about',
   },
 };
 
+const LINK = "font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300";
+
 export default function AboutPage() {
   return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)]">
-      {/* Header Section */}
-      <section className="w-full py-12 md:py-16 bg-gradient-to-b from-green-50 to-white dark:from-green-900/20 dark:to-zinc-950">
-        <div className={SITE_FRAME}>
-          <div className="flex flex-col gap-4">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-              About Farmer Markets
-            </h1>
-            <p className="text-zinc-600 dark:text-zinc-400 max-w-[700px] md:text-xl">
-              Farmer Markets is a platform dedicated to connecting people with farmers markets, producers, and public local-food places around the world.
-            </p>
-          </div>
+    <div className="min-h-[calc(100vh-4rem)] bg-white dark:bg-zinc-900">
+      <div className={`${SITE_FRAME_GUTTER} mx-auto w-full max-w-2xl py-12 sm:py-16`}>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+          About Farmer Markets
+        </h1>
+        <div className="mt-6 space-y-5 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
+          <p>
+            Farmer Markets is a free directory of farmers markets and other public local-food
+            places, from market halls and food co-ops to community gardens and hawker centres. Each
+            listing shows where a market is, when it runs, what it sells and which payment and food
+            assistance programs it takes, wherever the source data says so.
+          </p>
+          <p>
+            It is for anyone deciding where to shop this week, paying with{' '}
+            <Link href="/farmers-markets/snap-ebt" className={LINK}>
+              SNAP, WIC or FMNP
+            </Link>
+            , or looking for a market in a new city. If you run a market, you can{' '}
+            <Link href="/for-market-operators" className={LINK}>
+              add or correct your listing
+            </Link>
+            .
+          </p>
+          <p>
+            Listings come from the USDA Local Food Portal and official government open-data
+            portals. The site is independent and not affiliated with the USDA or any of those
+            publishers.{' '}
+            <Link href="/about-the-data" className={LINK}>
+              About the data
+            </Link>{' '}
+            lists every source and how current each record is.
+          </p>
         </div>
-      </section>
-
-      {/* Content Section */}
-      <section className="w-full py-8 md:py-12 bg-white dark:bg-zinc-900">
-        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="prose max-w-none dark:prose-invert">
-            <h2 className="text-2xl font-bold tracking-tight mb-4">Our Mission</h2>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Our mission is to support local agriculture and sustainable food systems by making it easier for consumers to discover and access farmer markets in their communities and while traveling across the country.
-            </p>
-            
-            <h2 className="text-2xl font-bold tracking-tight mt-12 mb-6">Why Farmer Markets Matter</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 my-6">
-              <Card>
-                <CardContent className="p-4 sm:p-6">
-                  <h3 className="text-xl font-medium mb-2">Support Local Economy</h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    When you shop at farmer markets, your money stays in the local economy, supporting small-scale farmers and producers.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4 sm:p-6">
-                  <h3 className="text-xl font-medium mb-2">Fresh & Seasonal</h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    Farmer markets offer the freshest produce, harvested at peak ripeness and sold directly from the farm to you.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4 sm:p-6">
-                  <h3 className="text-xl font-medium mb-2">Reduce Environmental Impact</h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    Locally grown food travels fewer miles, reducing carbon emissions and environmental impact.
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="p-4 sm:p-6">
-                  <h3 className="text-xl font-medium mb-2">Community Connection</h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">
-                    Farmer markets create spaces for community gathering and direct connections between producers and consumers.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <h2 className="text-2xl font-bold tracking-tight mt-12 mb-4">About Our Data</h2>
-            <p className="text-zinc-600 dark:text-zinc-400">
-              Our directory is built on farmers market directory data from the USDA Local Food Portal together with normalized records from official government open-data portals. The data includes market locations, schedules, market types, contact details, and source provenance where available.
-            </p>
-            <p className="text-zinc-600 dark:text-zinc-400 mt-4">
-              Government sources are refreshed nightly and the USDA records on a seasonal schedule, and every record keeps its own upstream date rather than a cosmetic one, so a listing that has not been touched in years says so.
-            </p>
-            <p className="text-zinc-600 dark:text-zinc-400 mt-4">
-              <Link href="/about-the-data" className="text-green-600 hover:underline">
-                About the data
-              </Link>{' '}
-              sets out every source and publisher, how records are processed, the refresh cadence, current coverage numbers, known limitations, and how to report a correction.
-            </p>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }

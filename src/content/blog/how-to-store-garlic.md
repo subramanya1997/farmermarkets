@@ -13,8 +13,6 @@ imageLicense: "CC BY-SA 3.0"
 
 Store garlic as whole, unbroken bulbs in a cool, dry, dark place with air moving around them: a mesh bag or an open basket in a pantry, not a sealed container and not the windowsill. Kept that way a bulb lasts for months, while a clove you have pulled off the head is on a clock of a couple of weeks.
 
-The details below are about which garlic to buy if you want it to last, why the refrigerator is a poor default, and the one popular method, garlic under oil on the counter, that is unsafe.
-
 ## Where Whole Bulbs Should Live
 
 The University of California's guide to garlic says to keep bulbs in [a cool, dry, well-ventilated place in well-ventilated containers such as mesh bags](https://ucanr.edu/sites/default/files/2020-09/335681.pdf). Oregon State University Extension lists the same kind of options: [mesh bags, slatted crates, or braids and bunches hung up](https://extension.oregonstate.edu/food/preservation/preserving-garlic), in any cool, well-ventilated spot.
@@ -87,4 +85,4 @@ Bigger is not better for keeping. The Cornell article notes that small and mediu
 
 Ask the grower two things: whether it is softneck or hardneck, and whether it has been cured. Curing is the drying after harvest. California says it takes about 2 to 3 weeks for the outer skins to turn papery, and that the point of it is to keep the bulbs from rotting in storage.
 
-California grows more than 90 percent of the country's commercial garlic, by that same guide's count, and our directory lists 965 [farmers markets in California](/california) if you want it from close to the source. Garlic keeps on the same kind of shelf as [storage onions](/blog/how-to-store-onions), so one dry corner can hold both. The full [directory](/markets) has 9,132 markets, 218 of them with "winter" in the name. Outdoor seasons are winding down in much of the country, so [check the day and hours](/farmers-markets/hours) before you go.
+[California](/california) grows more than 90 percent of the country's commercial garlic, by that same guide's count. Garlic keeps on the same kind of shelf as [storage onions](/blog/how-to-store-onions), so one dry corner can hold both. Many outdoor markets close for the winter, so [check the day and hours](/farmers-markets/hours) before a late-season trip.

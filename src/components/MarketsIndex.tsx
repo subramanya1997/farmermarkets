@@ -4,7 +4,7 @@ import { BrowseByTopic } from '@/components/BrowseByTopic';
 import { MarketsExplorer } from '@/components/MarketsExplorer';
 import { MarketsPagination } from '@/components/MarketsPagination';
 import { MarketSummaryCard } from '@/components/MarketSummaryCard';
-import { MARKETS_PER_PAGE, getMarketsPage, marketsPagePath } from '@/lib/marketsIndex';
+import { INDEX_NAME, MARKETS_PER_PAGE, getMarketsPage, marketsPagePath } from '@/lib/marketsIndex';
 import { getStateHubSummaries } from '@/lib/statePage';
 import { getTopicSummaries } from '@/lib/topicPage';
 import { absoluteUrl } from '@/lib/site';
@@ -18,11 +18,10 @@ interface MarketsIndexProps {
  * The crawlable market index, shared by `/markets` (page 1) and
  * `/markets/page/[n]`.
  *
- * Page 1 leads with the interactive search/filter/map explorer and shows no
- * hero copy or A-Z card grid: readers land straight on markets. Its crawl
- * paths are the server-rendered state and topic directories below the
- * explorer, plus the sitemap. Pages 2+ stay pure link-based index pages (48
- * market links and pagination) for crawlers and no-JS readers.
+ * Page 1 leads with the interactive search/filter/map explorer, then the topic
+ * chips and the state directory as its server-rendered crawl paths. Pages 2+
+ * are plain link pages (48 market cards and pagination) for crawlers and no-JS
+ * readers; they skip the topic and state blocks, which page 1 already carries.
  */
 export async function MarketsIndex({ page }: MarketsIndexProps) {
   const result = await getMarketsPage(page);
@@ -30,17 +29,17 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
     notFound();
   }
 
-  const [states, topics] = await Promise.all([getStateHubSummaries(), getTopicSummaries()]);
+  const isFirst = result.page === 1;
+  const [states, topics] = isFirst
+    ? await Promise.all([getStateHubSummaries(), getTopicSummaries()])
+    : [[], []];
   const firstIndex = (result.page - 1) * MARKETS_PER_PAGE + 1;
   const lastIndex = firstIndex + result.markets.length - 1;
 
   const collectionSchema = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name:
-      result.page === 1
-        ? 'Farmers Markets Directory'
-        : `Farmers Markets Directory - Page ${result.page}`,
+    name: isFirst ? INDEX_NAME : `${INDEX_NAME} - Page ${result.page}`,
     url: absoluteUrl(marketsPagePath(result.page)),
     numberOfItems: result.total,
     mainEntity: {
@@ -63,26 +62,33 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
       <div className="min-h-[calc(100vh-4rem)]">
-        {result.page === 1 ? (
+        {isFirst ? (
           <>
-            {/* Readers land straight on markets; the h1 stays for crawlers
-                and screen readers. */}
-            <h1 className="sr-only">Find Local Food Markets</h1>
+            <section className="w-full bg-gradient-to-b from-green-50 to-white pt-6 pb-2 dark:from-green-900/20 dark:to-zinc-900">
+              <div className={SITE_FRAME}>
+                <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{INDEX_NAME}</h1>
+                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400 sm:text-base">
+                  {result.total.toLocaleString()} markets with hours and SNAP/EBT.
+                </p>
+              </div>
+            </section>
             <MarketsExplorer />
+            <BrowseByTopic topics={topics} />
+            <BrowseByState states={states} />
           </>
         ) : (
           <section className="w-full py-8">
             <div className={SITE_FRAME}>
               <div className="mb-5">
-                <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
-                  Local Food Markets - Page {result.page}
-                </h1>
+                <h1 className="text-xl font-bold tracking-tight sm:text-2xl">{INDEX_NAME}</h1>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                  Showing {firstIndex.toLocaleString()}-{lastIndex.toLocaleString()} of{' '}
-                  {result.total.toLocaleString()} markets, listed A-Z
+                  Page {result.page.toLocaleString()} of {result.totalPages.toLocaleString()}
+                  <span aria-hidden="true"> &middot; </span>
+                  {firstIndex.toLocaleString()}-{lastIndex.toLocaleString()} of{' '}
+                  {result.total.toLocaleString()}, A to Z
                 </p>
               </div>
-              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
                 {result.markets.map((market) => (
                   <li key={market.id}>
                     <MarketSummaryCard market={market} />
@@ -93,11 +99,6 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
             </div>
           </section>
         )}
-
-        <BrowseByTopic topics={topics} />
-
-        <BrowseByState states={states} />
-
       </div>
     </>
   );

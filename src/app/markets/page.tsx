@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { MarketsIndex } from "@/components/MarketsIndex";
+import { INDEX_NAME } from "@/lib/marketsIndex";
+
+const DESCRIPTION =
+  "Search farmers markets by town or name, then filter by market day, SNAP/EBT and card payment.";
 
 /**
  * Page 1 of the market index.
@@ -12,13 +16,11 @@ import { MarketsIndex } from "@/components/MarketsIndex";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Browse Farmer Markets - Find Fresh Local Produce",
-  description:
-    "Browse farmers markets, public food markets, cooperatives, and other local-food places by country and region.",
+  title: INDEX_NAME,
+  description: DESCRIPTION,
   openGraph: {
-    title: "Browse Farmer Markets - Find Fresh Local Produce",
-    description:
-      "Browse farmers markets, public food markets, cooperatives, and other local-food places by country and region.",
+    title: INDEX_NAME,
+    description: DESCRIPTION,
     url: '/markets',
   },
   alternates: {

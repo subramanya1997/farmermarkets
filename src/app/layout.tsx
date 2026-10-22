@@ -159,7 +159,7 @@ export default function RootLayout({
           {/* Contextual questions (src/components/VisitorPrompts.tsx) and the
               on-demand feedback form behind the footer's "Send feedback". */}
           <VisitorPrompts />
-          <DiscoverySurvey selectedCountry="All countries" resultCount={0} />
+          <DiscoverySurvey />
         </div>
         <AnalyticsProviders
           googleMeasurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-S2P5DZTJC8"}

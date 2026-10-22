@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
+import type { ComponentType, ReactNode } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ArrowRight, CalendarDays, HandCoins, Store } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
+import { CityGuide } from '@/components/CityGuide';
 import { CityMarkets } from '@/components/CityMarkets';
 import { FaqSection } from '@/components/FaqSection';
 import { NearbyMarkets } from '@/components/NearbyMarkets';
-import { getCityPageData, type CityMarketRow, type CityPageData } from '@/lib/cityPage';
+import { getCityPageData, type CityPageData } from '@/lib/cityPage';
+import { SNAP_HASH, dayHash } from '@/lib/cityPageView';
 import { getAllCityParams } from '@/lib/geoIndex';
 import { absoluteUrl } from '@/lib/site';
 import { SITE_FRAME } from "@/lib/ui";
@@ -29,16 +33,6 @@ export const dynamicParams = false;
 export async function generateStaticParams() {
   return getAllCityParams();
 }
-
-/**
- * Markets listed under one weekday heading.
- *
- * The day sections repeat rows that are already in the list, so in a city
- * like Rochester (64 markets, 14 of them on a Tuesday) an uncapped list pushed
- * the page past 5,900 words — well outside the 500–2,000 band that gets cited.
- * Ten keeps the heading's answer concrete and points the rest at the list.
- */
-const DAY_SECTION_LIMIT = 10;
 
 interface CityPageProps {
   params: Promise<{ state: string; city: string }>;
@@ -76,16 +70,29 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   };
 }
 
-function DayRow({ row }: { row: CityMarketRow }) {
+type Icon = ComponentType<{ className?: string; 'aria-hidden'?: boolean }>;
+
+const STAT_CHIP =
+  'inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200';
+const STAT_LINK =
+  'transition-colors hover:border-green-600 hover:text-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 dark:hover:border-green-500 dark:hover:text-green-400';
+
+/** One stat as a chip; a link when it can filter the list below. */
+function StatChip({ icon: Glyph, href, children }: { icon: Icon; href?: string; children: ReactNode }) {
+  const body = (
+    <>
+      <Glyph aria-hidden className="h-4 w-4 shrink-0 text-green-700 dark:text-green-500" />
+      {children}
+    </>
+  );
   return (
-    <li className="py-2">
-      <Link href={row.href} className="font-medium text-green-800 hover:underline dark:text-green-400">
-        {row.name}
-      </Link>
-      {(row.hours || row.address) && (
-        <span className="block text-zinc-600 dark:text-zinc-400">
-          {[row.hours, row.address].filter(Boolean).join(', ')}
-        </span>
+    <li>
+      {href ? (
+        <a href={href} className={`${STAT_CHIP} ${STAT_LINK}`}>
+          {body}
+        </a>
+      ) : (
+        <span className={STAT_CHIP}>{body}</span>
       )}
     </li>
   );
@@ -130,8 +137,10 @@ function structuredData(data: CityPageData) {
     })),
   };
 
-  // Mirrors the rendered Q&A exactly — a FAQPage node that carries a question
-  // the page does not show is a manual-action risk, not a rich result.
+  // Mirrors the rendered Q&A exactly: a FAQPage node that carries a question
+  // the page does not show is a manual-action risk, not a rich result. No
+  // visible FAQ, no node.
+  if (data.faqs.length === 0) return [collectionPage, itemList];
   const faqPage = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -152,14 +161,8 @@ export default async function CityPage({ params }: CityPageProps) {
   if (!data) notFound();
 
   const heading = `Farmers Markets in ${data.city.name}, ${data.regionFull}`;
-  const busiest = [...data.dayGroups].sort((left, right) => right.rows.length - left.rows.length)[0];
-  const facts = [
-    { value: data.marketCount.toLocaleString(), label: 'farmers markets' },
-    ...(data.snapCount > 0
-      ? [{ value: data.snapCount.toLocaleString(), label: 'accept SNAP/EBT' }]
-      : []),
-    ...(busiest ? [{ value: busiest.day, label: 'is the busiest day' }] : []),
-  ];
+  // The SNAP chip filters only when it would narrow the list.
+  const snapFilters = data.snapCount > 0 && data.snapCount < data.marketCount;
 
   return (
     <>
@@ -172,7 +175,7 @@ export default async function CityPage({ params }: CityPageProps) {
       ))}
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
-        <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
+        <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 dark:from-green-900/20 dark:to-zinc-950">
           <div className={SITE_FRAME}>
             <Breadcrumbs
               items={[
@@ -184,29 +187,45 @@ export default async function CityPage({ params }: CityPageProps) {
             <h1 className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-2xl font-bold tracking-tighter text-transparent sm:text-3xl md:text-4xl">
               {heading}
             </h1>
-            {/* Answer-first: the count and the notable market are the first
-                thing both a reader and an extractive AI crawler see. */}
-            <p className="mt-4 max-w-3xl text-base text-zinc-700 sm:text-lg dark:text-zinc-300">
-              {data.opener}
-            </p>
+            {/* Answer-first, at a glance: how many, which day, who takes
+                SNAP. Each chip that can narrow the list links to that filter. */}
             {data.marketCount > 1 && (
-              <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-3">
-                {facts.map((fact) => (
-                  <div key={fact.label} className="flex items-baseline gap-2">
-                    <dd className="text-2xl font-bold tabular-nums tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-50">
-                      {fact.value}
-                    </dd>
-                    <dt className="text-sm text-zinc-600 dark:text-zinc-400">{fact.label}</dt>
-                  </div>
-                ))}
-              </dl>
+              <ul className="mt-4 flex flex-wrap gap-2" aria-label={`${data.city.name} at a glance`}>
+                <StatChip icon={Store} href="#markets">
+                  <strong className="font-semibold tabular-nums">{data.marketCount}</strong> markets
+                </StatChip>
+                {data.busiest && (
+                  <StatChip icon={CalendarDays} href={`#${dayHash(data.busiest.day)}`}>
+                    Busiest on <strong className="font-semibold">{data.busiest.day}</strong>
+                    <span className="text-zinc-500 tabular-nums dark:text-zinc-400">
+                      {data.busiest.count}
+                    </span>
+                  </StatChip>
+                )}
+                {data.snapCount > 0 && (
+                  <StatChip icon={HandCoins} href={snapFilters ? `#${SNAP_HASH}` : undefined}>
+                    {snapFilters ? (
+                      <>
+                        <strong className="font-semibold tabular-nums">{data.snapCount}</strong> take SNAP/EBT
+                      </>
+                    ) : (
+                      'All take SNAP/EBT'
+                    )}
+                  </StatChip>
+                )}
+              </ul>
+            )}
+            {data.summary && (
+              <p className="mt-3 max-w-3xl text-sm text-zinc-600 sm:text-base dark:text-zinc-400">
+                {data.summary}
+              </p>
             )}
           </div>
         </section>
 
-        <section className="w-full bg-white py-6 sm:py-8 md:py-10 dark:bg-zinc-900">
-          <div className={`${SITE_FRAME} space-y-10`}>
-            <div>
+        <section className="w-full bg-white py-6 sm:py-8 dark:bg-zinc-900">
+          <div className={`${SITE_FRAME} space-y-12`}>
+            <div id="markets" className="scroll-mt-24">
               <h2 className="mb-4 text-xl font-bold tracking-tight sm:text-2xl">
                 {data.marketCount === 1
                   ? `The farmers market in ${data.city.name}`
@@ -221,38 +240,7 @@ export default async function CityPage({ params }: CityPageProps) {
               />
             </div>
 
-            {data.dayGroups.length > 0 && (
-              /* The week as a board: one column per trading day, so "what is
-                 on this Saturday" is a glance across rather than a scroll. */
-              <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7">
-                {data.dayGroups.map((group) => (
-                  <div key={group.day} className="border-t-2 border-green-700 pt-3 dark:border-green-600">
-                    <h2 className="text-base font-bold tracking-tight">
-                      {group.day} farmers markets in {data.city.name}
-                    </h2>
-                    <ul className="mt-2 divide-y divide-zinc-200 text-sm dark:divide-zinc-800">
-                      {group.rows.slice(0, DAY_SECTION_LIMIT).map((row) => (
-                        <DayRow key={row.slug} row={row} />
-                      ))}
-                    </ul>
-                    {group.rows.length > DAY_SECTION_LIMIT && (
-                      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                        {group.rows.length - DAY_SECTION_LIMIT} more {group.day} market
-                        {group.rows.length - DAY_SECTION_LIMIT === 1 ? ' is' : 's are'} in the list
-                        above.
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <CityPromptContext name={data.city.name} stateName={data.regionFull} />
-            <NewsletterSignup
-              source="city"
-              heading={`Get ${data.city.name} market days in your inbox`}
-              blurb={`Markets near ${data.city.name} and what's in season, no more than once a week.`}
-            />
+            {data.guide && <CityGuide guide={data.guide} />}
 
             <FaqSection items={data.faqs} />
 
@@ -264,37 +252,45 @@ export default async function CityPage({ params }: CityPageProps) {
               />
             )}
 
-            {data.siblings.length > 0 && (
-              <div>
-                <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
-                  Other cities in {data.regionFull}
-                </h2>
-                <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
-                  {data.siblings.map((sibling) => (
-                    <li key={sibling.slug}>
-                      <Link
-                        href={sibling.href}
-                        className="flex items-baseline justify-between gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-zinc-50 hover:underline dark:hover:bg-zinc-800"
-                      >
-                        <span className="truncate">{sibling.name}</span>
-                        <span className="shrink-0 text-xs text-zinc-500 dark:text-zinc-400">
-                          {sibling.marketCount}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-4 text-sm">
+            <nav aria-labelledby="more-cities-heading">
+              <h2
+                id="more-cities-heading"
+                className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400"
+              >
+                More cities in {data.regionFull}
+              </h2>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {data.siblings.map((sibling) => (
+                  <li key={sibling.slug}>
+                    <Link
+                      href={sibling.href}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-800 transition-colors hover:border-green-600 hover:text-green-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-green-500 dark:hover:text-green-400"
+                    >
+                      {sibling.name}
+                      <span className="text-xs tabular-nums text-zinc-500 dark:text-zinc-400">
+                        {sibling.marketCount}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+                <li>
                   <Link
                     href={data.stateHubPath}
-                    className="text-green-700 hover:underline dark:text-green-500"
+                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-green-700 hover:underline dark:text-green-500"
                   >
-                    Browse all {data.state.market_count.toLocaleString()} farmers markets in{' '}
-                    {data.regionFull}
+                    All {data.state.market_count.toLocaleString()} in {data.regionFull}
+                    <ArrowRight aria-hidden className="h-4 w-4" />
                   </Link>
-                </p>
-              </div>
-            )}
+                </li>
+              </ul>
+            </nav>
+
+            <CityPromptContext name={data.city.name} stateName={data.regionFull} />
+            <NewsletterSignup
+              source="city"
+              heading={`Get ${data.city.name} market days in your inbox`}
+              blurb={`Markets near ${data.city.name} and what's in season, no more than once a week.`}
+            />
           </div>
         </section>
       </div>

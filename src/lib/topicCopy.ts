@@ -2,10 +2,9 @@
  * Copy helpers shared by the four topic pages (`src/lib/topicPage.ts`).
  *
  * Everything here is a pure function of numbers and strings — no data layer,
- * no Next.js — so the rules the topic pages depend on (a title that fits the
- * SERP, a description that fits the snippet, an opener that stays inside the
- * 40–75 word band the city and state pages use) are unit tested directly in
- * `src/lib/topicCopy.test.ts`.
+ * no Next.js, so the rules the topic pages depend on (a title that fits the
+ * SERP, a description that fits the snippet, one spelling for opening times)
+ * are unit tested directly in `src/lib/topicCopy.test.ts`.
  *
  * The same discipline as the rest of the copy layer applies: a clause whose
  * input is missing is dropped, never filled in with a guess.
@@ -79,36 +78,48 @@ export function fitDescription(opening: string, optional: (string | undefined)[]
   return description.replace(/\s+/g, ' ').trim();
 }
 
-function countWords(text: string): number {
-  return text.split(/\s+/).filter(Boolean).length;
+/**
+ * "47 states and DC", "1 state", "DC". The topic pages cover the 50 states
+ * plus the District of Columbia, and DC reads wrong counted as a state.
+ */
+export function placesPhrase(stateCount: number, includesDc: boolean): string {
+  const states = stateCount === 1 ? '1 state' : `${formatCount(stateCount)} states`;
+  if (!includesDc) return states;
+  return stateCount > 0 ? `${states} and DC` : 'DC';
+}
+
+function twelveHour(hour: number, minute: string): string {
+  const suffix = hour >= 12 && hour < 24 ? 'pm' : 'am';
+  const display = hour % 12 === 0 ? 12 : hour % 12;
+  return `${display}${minute && minute !== '00' ? `:${minute}` : ''}${suffix}`;
 }
 
 /**
- * The 40–75 word opener the city and state pages use, assembled from
- * `sentences` and topped up from `closers` only when the result would
- * otherwise be too short to read as a paragraph.
+ * One house style for an opening-times string, so "9AM-1PM", "9:00am-1:00pm"
+ * and "9am-1pm" count (and read) as the same window. A 24-hour range is only
+ * converted when it is unambiguous (the close is after noon); anything the
+ * rules do not recognise is returned with just the dashes normalised.
  */
-export function buildParagraph(
-  sentences: (string | undefined)[],
-  closers: (string | undefined)[] = [],
-  { min = 40, max = 75 }: { min?: number; max?: number } = {}
-): string {
-  const paragraph: string[] = [];
+export function tidyHours(value: string): string {
+  let text = value
+    .trim()
+    .replace(/\s*[\u2013\u2014]\s*/g, '-')
+    .replace(/\s*-\s*/g, '-');
 
-  for (const sentence of sentences) {
-    const next = sentence?.trim();
-    if (!next) continue;
-    if (paragraph.length > 0 && countWords([...paragraph, next].join(' ')) > max) break;
-    paragraph.push(next);
+  const twentyFour = /^(\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})$/.exec(text);
+  if (twentyFour) {
+    const [, openHour, openMinute, closeHour, closeMinute] = twentyFour;
+    const open = Number(openHour);
+    const close = Number(closeHour);
+    if (close > 12 && close <= 24 && open < close) {
+      return `${twelveHour(open, openMinute)}-${twelveHour(close, closeMinute)}`;
+    }
   }
 
-  for (const closer of closers) {
-    const next = closer?.trim();
-    if (!next) continue;
-    if (countWords(paragraph.join(' ')) >= min) break;
-    if (countWords([...paragraph, next].join(' ')) > max) continue;
-    paragraph.push(next);
-  }
-
-  return paragraph.join(' ');
+  text = text
+    .replace(/(\d)\s*([AaPp])\.?[Mm]\.?/g, (_match, digit: string, meridiem: string) =>
+      `${digit}${meridiem.toLowerCase()}m`
+    )
+    .replace(/(\d{1,2}):00(?=[ap]m)/g, '$1');
+  return text;
 }

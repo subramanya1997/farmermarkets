@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { MarketsIndex } from "@/components/MarketsIndex";
 import {
+  INDEX_NAME,
   PRERENDERED_PAGE_COUNT,
   getTotalMarketPages,
   marketsPagePath,
@@ -42,10 +43,10 @@ export async function generateMetadata({ params }: MarketsPageNProps): Promise<M
   const path = marketsPagePath(page);
 
   return {
-    title: `Farmers Markets Directory - Page ${page}`,
-    description: `Page ${page} of the farmers market directory: browse local-food markets, cooperatives, and public food markets A-Z.`,
+    title: `${INDEX_NAME} - Page ${page}`,
+    description: `Page ${page} of the farmers market directory, A to Z: names, towns, market days and SNAP/EBT.`,
     openGraph: {
-      title: `Farmers Markets Directory - Page ${page}`,
+      title: `${INDEX_NAME} - Page ${page}`,
       description: `Page ${page} of the farmers market directory.`,
       url: path,
     },

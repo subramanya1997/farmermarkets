@@ -1,0 +1,362 @@
+{
+  "note": "Work queue for docs/city-growth-playbook.md. Volumes and difficulty are US monthly averages from OpenSEO (DataForSEO), pulled 2026-10-21. Summer peaks run several times higher. difficulty null = not measured.",
+  "needsResearch": false,
+  "data_issues": [
+    {
+      "city": "tennessee/nashville",
+      "market": "richland-park-farmers-market",
+      "issue": "Dataset address is 4701 Charlotte Pike; the market's own site (richlandparkfarmersmarket.com, checked 2026-10-21) says 4711 Charlotte Avenue.",
+      "status": "open"
+    }
+  ],
+  "ideas": [],
+  "cities": [
+    {
+      "priority": 1,
+      "city": "tennessee/nashville",
+      "url": "https://www.farmermarkets.app/tennessee/nashville",
+      "keyword": "farmers market nashville",
+      "volume": 49500,
+      "difficulty": 11,
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-10-21",
+          "changes": "First guide: 6 sourced tips (year-round sheds, parking, WeGo bus, Fresh Bucks SNAP match, Richland winter Saturdays, East Nashville late season), 2 FAQs, title and description override.",
+          "baseline": "City URL moved to /tennessee/nashville on 2026-10-11; no settled GSC baseline yet."
+        }
+      ],
+      "next_check": "2026-11-18"
+    },
+    {
+      "priority": 2,
+      "city": "ohio/columbus",
+      "url": "https://www.farmermarkets.app/ohio/columbus",
+      "keyword": "farmers market columbus",
+      "volume": 33100,
+      "difficulty": 22,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 3,
+      "city": "minnesota/minneapolis",
+      "url": "https://www.farmermarkets.app/minnesota/minneapolis",
+      "keyword": "farmers market minneapolis",
+      "volume": 22200,
+      "difficulty": 35,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 4,
+      "city": "texas/houston",
+      "url": "https://www.farmermarkets.app/texas/houston",
+      "keyword": "farmers market houston",
+      "volume": 18100,
+      "difficulty": 21,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 5,
+      "city": "california/los-angeles",
+      "url": "https://www.farmermarkets.app/california/los-angeles",
+      "keyword": "farmers market los angeles",
+      "volume": 18100,
+      "difficulty": 21,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 6,
+      "city": "pennsylvania/allentown",
+      "url": "https://www.farmermarkets.app/pennsylvania/allentown",
+      "keyword": "farmers market allentown",
+      "volume": 18100,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 7,
+      "city": "north-carolina/raleigh",
+      "url": "https://www.farmermarkets.app/north-carolina/raleigh",
+      "keyword": "farmers market raleigh",
+      "volume": 14800,
+      "difficulty": 20,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 8,
+      "city": "california/san-diego",
+      "url": "https://www.farmermarkets.app/california/san-diego",
+      "keyword": "farmers market san diego",
+      "volume": 14800,
+      "difficulty": 31,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 9,
+      "city": "wisconsin/madison",
+      "url": "https://www.farmermarkets.app/wisconsin/madison",
+      "keyword": "farmers market madison",
+      "volume": 14800,
+      "difficulty": 43,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 10,
+      "city": "florida/orlando",
+      "url": "https://www.farmermarkets.app/florida/orlando",
+      "keyword": "farmers market orlando",
+      "volume": 12100,
+      "difficulty": 13,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 11,
+      "city": "north-carolina/charlotte",
+      "url": "https://www.farmermarkets.app/north-carolina/charlotte",
+      "keyword": "farmers market charlotte",
+      "volume": 9900,
+      "difficulty": 20,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 12,
+      "city": "illinois/chicago",
+      "url": "https://www.farmermarkets.app/illinois/chicago",
+      "keyword": "farmers market chicago",
+      "volume": 9900,
+      "difficulty": 41,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 13,
+      "city": "michigan/ann-arbor",
+      "url": "https://www.farmermarkets.app/michigan/ann-arbor",
+      "keyword": "farmers market ann arbor",
+      "volume": 9900,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 14,
+      "city": "california/davis",
+      "url": "https://www.farmermarkets.app/california/davis",
+      "keyword": "davis ca farmers market",
+      "volume": 9900,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 15,
+      "city": "georgia/atlanta",
+      "url": "https://www.farmermarkets.app/georgia/atlanta",
+      "keyword": "farmers market atlanta",
+      "volume": 8100,
+      "difficulty": 29,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 16,
+      "city": "texas/dallas",
+      "url": "https://www.farmermarkets.app/texas/dallas",
+      "keyword": "farmers market dallas",
+      "volume": 8100,
+      "difficulty": 25,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 17,
+      "city": "colorado/denver",
+      "url": "https://www.farmermarkets.app/colorado/denver",
+      "keyword": "farmers market denver",
+      "volume": 8100,
+      "difficulty": 31,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 18,
+      "city": "california/sacramento",
+      "url": "https://www.farmermarkets.app/california/sacramento",
+      "keyword": "farmers market sacramento",
+      "volume": 8100,
+      "difficulty": 25,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 19,
+      "city": "washington/seattle",
+      "url": "https://www.farmermarkets.app/washington/seattle",
+      "keyword": "farmers market seattle",
+      "volume": 8100,
+      "difficulty": 46,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 20,
+      "city": "texas/austin",
+      "url": "https://www.farmermarkets.app/texas/austin",
+      "keyword": "farmers market austin",
+      "volume": 6600,
+      "difficulty": 19,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 21,
+      "city": "new-york/new-york",
+      "url": "https://www.farmermarkets.app/new-york/new-york",
+      "keyword": "farmers market nyc",
+      "volume": 6600,
+      "difficulty": 41,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 22,
+      "city": "arizona/phoenix",
+      "url": "https://www.farmermarkets.app/arizona/phoenix",
+      "keyword": "farmers market phoenix",
+      "volume": 6600,
+      "difficulty": 25,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 23,
+      "city": "california/san-francisco",
+      "url": "https://www.farmermarkets.app/california/san-francisco",
+      "keyword": "farmers market san francisco",
+      "volume": 6600,
+      "difficulty": 23,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 24,
+      "city": "california/santa-barbara",
+      "url": "https://www.farmermarkets.app/california/santa-barbara",
+      "keyword": "santa barbara farmers market",
+      "volume": 6600,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 25,
+      "city": "california/redlands",
+      "url": "https://www.farmermarkets.app/california/redlands",
+      "keyword": "farmers market redlands ca",
+      "volume": 6600,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 26,
+      "city": "washington/bellevue",
+      "url": "https://www.farmermarkets.app/washington/bellevue",
+      "keyword": "bellevue farmers market",
+      "volume": 5400,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 27,
+      "city": "colorado/fort-collins",
+      "url": "https://www.farmermarkets.app/colorado/fort-collins",
+      "keyword": "fort collins co farmers market",
+      "volume": 5400,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 28,
+      "city": "indiana/south-bend",
+      "url": "https://www.farmermarkets.app/indiana/south-bend",
+      "keyword": "south bend indiana farmers market",
+      "volume": 5400,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 29,
+      "city": "virginia/arlington",
+      "url": "https://www.farmermarkets.app/virginia/arlington",
+      "keyword": "arlington va farmers market",
+      "volume": 4400,
+      "difficulty": null,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 30,
+      "city": "massachusetts/boston",
+      "url": "https://www.farmermarkets.app/massachusetts/boston",
+      "keyword": "farmers market boston",
+      "volume": 3600,
+      "difficulty": 29,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 31,
+      "city": "florida/miami",
+      "url": "https://www.farmermarkets.app/florida/miami",
+      "keyword": "farmers market miami",
+      "volume": 3600,
+      "difficulty": 8,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 32,
+      "city": "oregon/portland",
+      "url": "https://www.farmermarkets.app/oregon/portland",
+      "keyword": "farmers market portland",
+      "volume": 3600,
+      "difficulty": 52,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 33,
+      "city": "florida/tampa",
+      "url": "https://www.farmermarkets.app/florida/tampa",
+      "keyword": "farmers market tampa",
+      "volume": 3600,
+      "difficulty": 13,
+      "status": "todo",
+      "runs": []
+    },
+    {
+      "priority": 34,
+      "city": "pennsylvania/philadelphia",
+      "url": "https://www.farmermarkets.app/pennsylvania/philadelphia",
+      "keyword": "farmers market philadelphia",
+      "volume": 2400,
+      "difficulty": 9,
+      "status": "todo",
+      "runs": []
+    }
+  ]
+}

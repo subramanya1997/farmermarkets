@@ -389,18 +389,16 @@ const RICH: Partial<Market> = {
 test('asks only the questions the record can answer', () => {
   const faqs = marketFaqs(market(RICH));
   assert.deepEqual(faqs.map((faq) => faq.question), [
-    'What days is Brighton Farmers Market open?',
     "What are Brighton Farmers Market's hours?",
     'Where is Brighton Farmers Market located?',
     'Does Brighton Farmers Market accept SNAP/EBT?',
     'What payment methods does Brighton Farmers Market accept?',
   ]);
-  assert.equal(
-    faqs[0].answer,
-    'Brighton Farmers Market is open on Sundays. The season runs May-Oct.'
-  );
-  assert.equal(faqs[2].answer, 'Brighton Farmers Market is located at 1150 Winton Road South, Rochester, NY 14618.');
-  assert.equal(faqs[3].answer, 'Yes. Brighton Farmers Market accepts SNAP/EBT benefits.');
+  // Days and hours are one answer, not two questions saying the same thing.
+  // The season label's wording belongs to seo.ts ("May-Oct" or "May-October").
+  assert.match(faqs[0].answer, /^Brighton Farmers Market is open Sundays, 9am-1pm\. The season runs May-Oct(ober)?\.$/);
+  assert.equal(faqs[1].answer, 'Brighton Farmers Market is located at 1150 Winton Road South, Rochester, NY 14618.');
+  assert.equal(faqs[2].answer, 'Yes. Brighton Farmers Market accepts SNAP/EBT.');
 });
 
 test('a record with fewer than two answerable questions renders no FAQ block', () => {
@@ -413,7 +411,7 @@ test('SNAP is answered honestly when other payment data exists but SNAP is absen
   const faqs = marketFaqs(market({ ...RICH, snap: false }));
   const snap = faqs.find((faq) => faq.question.includes('SNAP'));
   assert.ok(snap);
-  assert.match(snap.answer, /not listed among the payment options/);
+  assert.equal(snap.answer, 'Brighton Farmers Market does not list SNAP/EBT among its payment options.');
 });
 
 test('a market with no payment data at all is not asked about SNAP', () => {
@@ -440,7 +438,7 @@ test('a source-backed regional SNAP name still produces an affirmative SNAP FAQ'
     },
   }));
   const snap = faqs.find((faq) => faq.question.includes('SNAP'));
-  assert.equal(snap?.answer, 'Yes. Test Farmers Market accepts SNAP/EBT benefits.');
+  assert.equal(snap?.answer, 'Yes. Test Farmers Market accepts SNAP/EBT.');
 });
 
 test('source-backed rich facts create visitor FAQs without invented negatives', () => {
@@ -515,9 +513,9 @@ test('Ferry Plaza v2 windows stay distinct in FAQ and Event JSON-LD', () => {
   const hoursFaq = marketFaqs(ferry).find((faq) => faq.question.includes("hours"));
   assert.equal(
     hoursFaq?.answer,
-    "Ferry Plaza Farmers Market's schedule is Saturdays, 8am–2pm; Tuesdays and Thursdays, 10am–2pm."
+    'Ferry Plaza Farmers Market is open Saturdays, 8am-2pm; Tuesdays and Thursdays, 10am-2pm. It is open year-round.'
   );
-  assert.doesNotMatch(hoursFaq?.answer ?? '', /8am–2pm on Tuesdays/);
+  assert.doesNotMatch(hoursFaq?.answer ?? '', /8am-2pm on Tuesdays/);
 
   const graph = marketSchemaGraph(ferry, OPTIONS) as Record<string, unknown>;
   const nodes = graph['@graph'] as Record<string, unknown>[];
@@ -812,11 +810,13 @@ test('season-specific windows keep their bounds and unknown qualifiers omit prec
 });
 
 test('FAQ quotes distinct windows instead of giving every day the first clock', () => {
-  const faqs = marketFaqs(market({ days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'] }));
+  // An address makes the second question; one alone renders no FAQ block.
+  const where = { address: '1 Main St', city: 'Ames', state: 'IA' };
+  const faqs = marketFaqs(market({ ...where, days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'] }));
   assert.match(faqs.find((item) => item.question.endsWith("hours?"))!.answer, /Mon-Fri 9am-6pm; Sat\/Sun 8am-5pm/);
-  const closed = marketFaqs(market({ days: ['Mon-Fri Closed', 'Sat 8am-1pm', 'Sun Closed'] }));
-  assert.match(closed.find((item) => item.question.includes('What days'))!.answer, /Saturdays/);
-  assert.doesNotMatch(closed.find((item) => item.question.includes('What days'))!.answer, /every day|Monday|Sunday/);
+  const closed = marketFaqs(market({ ...where, days: ['Mon-Fri Closed', 'Sat 8am-1pm', 'Sun Closed'] }));
+  assert.equal(closed.find((item) => item.question.endsWith('hours?'))!.answer, 'Test Farmers Market is open Saturdays, 8am-1pm.');
+  assert.equal(closed.filter((item) => /hours\?|What days/.test(item.question)).length, 1);
 });
 
 test('weekday lists and multiple daily sessions retain the correct day context', () => {
@@ -836,6 +836,9 @@ test('weekday lists and multiple daily sessions retain the correct day context',
 test('Ham Lake preserves both explicitly dated seasons including a shared September month', () => {
   const hamLake = market({
     name: 'Ham Lake Farmers’ & Artisan Market',
+    address: '1 Main St',
+    city: 'Ham Lake',
+    state: 'MN',
     season: 'June 17-September 26, 2026',
     days: [
       'Wednesdays, 3:00PM-7:00PM, June 17-August 26, 2026',
@@ -853,7 +856,7 @@ test('Ham Lake preserves both explicitly dated seasons including a shared Septem
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday'], opens: '15:00', closes: '19:00', validFrom: '2026-06-17', validThrough: '2026-08-26' },
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Saturday'], opens: '09:00', closes: '12:00', validFrom: '2026-09-05', validThrough: '2026-09-26' },
   ]);
-  const daysFaq = marketFaqs(hamLake).find((item) => item.question.includes('What days'))!;
+  const daysFaq = marketFaqs(hamLake).find((item) => item.question.endsWith('hours?'))!;
   assert.match(daysFaq.answer, /Wednesdays, 3:00PM-7:00PM, June 17-August 26, 2026/);
   assert.match(daysFaq.answer, /Saturdays, 9AM-12PM, September 5-26, 2026/);
   assert.doesNotMatch(daysFaq.answer, /open on Wednesdays and Saturdays|2027/);
@@ -863,6 +866,9 @@ test('West Ashley special dated Sunday remains visible without becoming a weekly
   const { marketWeekdays, marketHours } = await import('./seo.ts');
   const westAshley = market({
     name: 'West Ashley Farmers Market',
+    address: '1 Main St',
+    city: 'Charleston',
+    state: 'SC',
     days: ['Wednesdays 3-7pm', 'Sunday, November 22, 2026, 12-4pm (Thanksgiving Market)'],
   });
   assert.deepEqual(marketWeekdays(westAshley), ['Wednesday']);
@@ -871,10 +877,90 @@ test('West Ashley special dated Sunday remains visible without becoming a weekly
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday'], opens: '15:00', closes: '19:00' },
   ]);
   const faqs = marketFaqs(westAshley);
-  const daysFaq = faqs.find((item) => item.question.includes('What days'))!;
+  const daysFaq = faqs.find((item) => item.question.endsWith('hours?'))!;
   assert.match(daysFaq.answer, /Sunday, November 22, 2026, 12-4pm \(Thanksgiving Market\)/);
   assert.doesNotMatch(daysFaq.answer, /open on Wednesdays and Sundays|weekly Sunday/);
   assert.equal(marketOpeningHoursSpec(market({ days: ['Sunday, November 22, 2026, 12-4pm'] }), OPTIONS.now), undefined);
   assert.deepEqual(marketWeekdays(market({ days: ['Sunday, November22,2026,12-4pm'] })), []);
   assert.equal(marketOpeningHoursSpec(market({ days: ['Saturdays 10am-2pm, except October 31, 2026: 10am-4pm'] }), OPTIONS.now), undefined);
+});
+
+test('a researched FAQ filed under the wrong topic is asked under a question it answers', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-10-21' };
+  const faqs = marketFaqs(market({
+    name: 'Findlay Market',
+    address: '1801 Race St',
+    city: 'Cincinnati',
+    state: 'OH',
+    first_party: {
+      faq_facts: [
+        { id: 'holidays', value: { topic: 'updates', answer: 'Closed Thanksgiving (Nov 26) and Christmas Day.' }, ...evidence },
+        { id: 'wholesale', value: { topic: 'products', answer: 'The Wholesale Market is open to the public for bulk purchases only, midnight-6am.' }, ...evidence },
+        { id: 'stray', value: { topic: 'pets', answer: 'Mondays are closed.' }, ...evidence },
+        { id: 'fine', value: { topic: 'products', answer: 'Farmers sell produce, meat and cheese.' }, ...evidence },
+      ],
+    },
+  }), new Date('2026-10-21T00:00:00Z'));
+  const questions = faqs.map((faq) => faq.question);
+  assert.ok(questions.includes("What are Findlay Market's holiday hours?"));
+  assert.ok(questions.includes("Can the public shop Findlay Market's wholesale market?"));
+  assert.ok(questions.includes('What can I buy at Findlay Market?'));
+  assert.equal(questions.includes('How can I get updates from Findlay Market?'), false);
+  assert.equal(questions.includes('Are pets allowed at Findlay Market?'), false);
+});
+
+test('benefit programs alone do not get a payment-methods answer that reads as "no cards"', () => {
+  const faqs = marketFaqs(market({ address: '1 Main St', city: 'Ames', state: 'IA', snap: true }));
+  assert.equal(faqs.some((faq) => faq.question.startsWith('What payment methods')), false);
+  assert.ok(faqs.some((faq) => faq.question.includes('SNAP/EBT')));
+});
+
+test('incentives are described, a SNAP how-to answers the SNAP question, and the list is capped', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-10-21' };
+  const record = market({
+    ...RICH,
+    first_party: {
+      access: {
+        parking: { availability: { value: 'yes', ...evidence }, cost: { value: 'paid', ...evidence } },
+        transit: [{ id: 'rail', value: { mode: 'rail', routes: ['Connector'] }, ...evidence }],
+      },
+      policies: [{ id: 'pets', value: { code: 'pets', rule: 'not_allowed' }, ...evidence }],
+      payments: {
+        incentives: [{
+          id: 'perks',
+          value: { name: 'Produce Perks', kind: 'match', input_amount: 1, benefit_amount: 1, maximum_amount: 25, eligibility: 'SNAP/EBT shoppers' },
+          ...evidence,
+        }],
+      },
+      faq_facts: [
+        { id: 'pay', value: { topic: 'payments', answer: 'Get SNAP tokens at the Market Center.' }, ...evidence },
+        { id: 'arrive', value: { topic: 'arrival', answer: 'Saturday is the busiest day.' }, ...evidence },
+      ],
+    },
+  });
+  const faqs = marketFaqs(record, OPTIONS.now);
+  assert.equal(faqs.length, 6);
+  assert.equal(faqs.find((faq) => faq.question.includes('SNAP'))?.answer, 'Yes. Get SNAP tokens at the Market Center.');
+  assert.equal(faqs.some((faq) => faq.question.startsWith('What should I know about paying')), false);
+  const graph = marketSchemaGraph(record, OPTIONS) as { '@graph': { '@type': string; mainEntity?: { name: string }[] }[] };
+  const faqNode = graph['@graph'].find((node) => node['@type'] === 'FAQPage');
+  assert.deepEqual(faqNode?.mainEntity?.map((item) => item.name), faqs.map((faq) => faq.question));
+  const all = marketFaqs({ ...record, first_party: { ...record.first_party, faq_facts: [] } } as Market, OPTIONS.now);
+  assert.ok(all.every((faq) => !faq.answer.includes(' lists ')));
+});
+
+test('the incentive answer states the offer', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-10-21' };
+  const faqs = marketFaqs(market({
+    address: '1 Main St', city: 'Ames', state: 'IA',
+    first_party: { payments: { incentives: [{
+      id: 'perks',
+      value: { name: 'Produce Perks', kind: 'match', input_amount: 1, benefit_amount: 1, maximum_amount: 25, eligibility: 'SNAP/EBT shoppers' },
+      ...evidence,
+    }] } },
+  }), OPTIONS.now);
+  assert.equal(
+    faqs.find((faq) => faq.question.includes('incentives'))?.answer,
+    'Yes: Produce Perks for SNAP/EBT shoppers, $1 extra for every $1 up to $25 a day.'
+  );
 });

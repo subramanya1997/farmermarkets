@@ -13,7 +13,7 @@ imageLicense: "Public domain (U.S. Government work)"
 
 Store whole onions somewhere dry, dark and airy, in a mesh bag or an open basket, and keep them out of sealed plastic. Once an onion is peeled or cut it belongs in a sealed container in the refrigerator, where it is good for about a week.
 
-That covers most kitchens. The rest of this is about getting from "a few weeks" to "a few months", which mostly comes down to which onions you bought and how warm the spot is.
+That covers most kitchens. Getting from "a few weeks" to "a few months", which mostly comes down to which onions you bought and how warm the spot is.
 
 ## Where Whole Onions Should Live
 
@@ -73,6 +73,6 @@ Stored onions do not announce when one has gone bad until the smell does it for 
 
 ## Buying Onions to Store
 
-Cured storage onions are a fall and winter crop at most markets, and if you have a dry shelf to spare it is worth buying more than a week's worth. Our [farmers market directory](/markets) lists 9,132 markets, and 218 of them have "winter" in their name, so in a lot of places you can also just keep buying a few pounds at a time through the cold months.
+Cured storage onions are a fall and winter crop at most markets, and if you have a dry shelf to spare it is worth buying more than a week's worth. [Garlic](/blog/how-to-store-garlic) keeps on the same kind of shelf, so one dry corner can hold both.
 
-Market schedules change at the end of the outdoor season, so [check the day and hours](/farmers-markets/hours) before you make the trip. Our guide to [market seasons and hours](/blog/farmers-market-seasons-and-hours) explains how winter schedules usually work, and if you have not shopped a market before, start with [what to expect on a first visit](/blog/first-visit-to-a-farmers-market).
+Market schedules change at the end of the outdoor season, so [check the day and hours](/farmers-markets/hours) before you make the trip. Our guide to [market seasons and hours](/blog/farmers-market-seasons-and-hours) explains how winter schedules usually work.

@@ -223,3 +223,44 @@
     display: none;
   }
 }
+
+/* Map popups (MapLibre): a small floating card, not the default speech bubble. */
+.market-popup .maplibregl-popup-content {
+  padding: 0;
+  border-radius: 0.875rem;
+  box-shadow: 0 10px 30px -10px rgb(20 83 45 / 0.35), 0 2px 6px rgb(0 0 0 / 0.08);
+  overflow: hidden;
+}
+.market-popup .maplibregl-popup-tip {
+  display: none;
+}
+.market-popup-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.75rem 0.875rem;
+  font-family: inherit;
+  color: #18181b;
+  text-decoration: none;
+}
+.market-popup-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25;
+}
+.market-popup-place {
+  font-size: 0.75rem;
+  color: #71717a;
+}
+.market-popup-cta {
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #15803d;
+}
+a.market-popup-card:hover .market-popup-cta {
+  text-decoration: underline;
+}
+.maplibregl-ctrl-attrib {
+  font-size: 10px;
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { preconnect } from 'react-dom';
 
 /**
  * `PlacesMap` behind a client-only import.
@@ -13,9 +14,15 @@ import dynamic from 'next/dynamic';
 const PlacesMap = dynamic(() => import('@/components/PlacesMap'), {
   ssr: false,
   loading: () => (
-    <div className="h-full w-full animate-pulse rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900" />
+    <div className="h-full w-full animate-pulse rounded-2xl border border-zinc-200 bg-[#f6f6f2] dark:border-zinc-800 dark:bg-zinc-900" />
   ),
 });
 
+/** Open the tile connection while the map's code is still downloading. */
+function LazyPlacesMap(props: React.ComponentProps<typeof PlacesMap>) {
+  preconnect('https://tiles.openfreemap.org', { crossOrigin: 'anonymous' });
+  return <PlacesMap {...props} />;
+}
+
 export type { MapPlace } from '@/components/PlacesMap';
-export { PlacesMap as LazyPlacesMap };
+export { LazyPlacesMap };

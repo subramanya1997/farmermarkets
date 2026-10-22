@@ -36,7 +36,7 @@ Holiday weeks are the other regular exception. When a market day lands on Thanks
 
 ## Check the Week You Plan to Go
 
-Look up the market close to your visit, not months ahead. Our [directory of farmers markets](/) lists market days and hours alongside products, SNAP and EBT acceptance, and a link to the market's official site where one exists, built from USDA Local Food Portal data and government open-data portals. You can also compare [opening days and hours across the directory](/farmers-markets/hours) when you are lining up a few markets in one week.
+Look up the market close to your visit, not months ahead. Each [market listing](/) shows its days and hours where the source has them, and you can compare [opening days and hours](/farmers-markets/hours) when you are lining up a few markets in one week.
 
 For the exact date you are going, the market's own website or social account is the last word. That is where cancellations and season opening dates get posted first, usually days before anything else catches up.
 

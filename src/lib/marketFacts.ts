@@ -27,13 +27,10 @@ import type {
   StructuredMarketSchedule,
 } from './enrichment.ts';
 import {
-  displayName,
   marketHours,
   marketSeasonLabel,
   marketScheduleLabels,
   marketWeekdays,
-  nameSaysMarket,
-  resolveLocation,
   type MarketSeoRecord,
 } from './seo.ts';
 
@@ -106,6 +103,21 @@ export function descriptionParagraphs(value?: string | null): string[] {
     .split(/\n\s*\n+/)
     .map((paragraph) => clean(paragraph))
     .filter(Boolean);
+}
+
+/**
+ * A researched note with its reporting frame removed, so the page states the
+ * fact: "The page states that CalFresh shoppers can double benefits" becomes
+ * "CalFresh shoppers can double benefits". Only the frame goes; the claim and
+ * its qualifiers stay word for word.
+ */
+export function plainFact(value?: string | null): string {
+  const text = clean(value)
+    .replace(/\s*It is a regional guide, not a list of what is at this market today\.?/i, '')
+    .replace(/^(?:the|this) (?:page|site|website|market|source|listing) (?:states|says|notes|reports|lists|indicates)(?: that)?\s+/i, '')
+    .replace(/^an available\s+/i, 'a ')
+    .trim();
+  return text ? text[0].toUpperCase() + text.slice(1) : '';
 }
 
 /* ------------------------------------------------------------------ *
@@ -334,6 +346,11 @@ export function paymentLabels(market: MarketFactsRecord): string[] {
   if (market.fmnp) push('FMNP');
   if (market.sfmnp) push('SFMNP');
 
+  // "Credit/Debit" says nothing once both cards are listed on their own.
+  const lower = labels.map((label) => label.toLowerCase());
+  if (lower.includes('credit card') && lower.includes('debit card')) {
+    return labels.filter((label) => !/^credit\s*[/&+-]\s*debit(?: cards?)?$/i.test(label));
+  }
   return labels;
 }
 
@@ -437,7 +454,10 @@ export function structuredScheduleLabels(firstParty?: MarketFirstPartyFacts): st
     const start = item.value.start_date ? formatDate(item.value.start_date) : undefined;
     const end = item.value.end_date ? formatDate(item.value.end_date) : undefined;
     const dates = start && end ? ` (${start} - ${end})` : start ? ` (from ${start})` : end ? ` (through ${end})` : '';
-    const label = `${recurrence}, ${opens}\u2013${closes}${dates}`;
+    // A label tells two windows on the same day apart ("Farm Shed farmers
+    // market" vs. the whole market house); a plain hyphen per the copy rules.
+    const part = item.value.label ? ` (${clean(item.value.label)})` : '';
+    const label = `${recurrence}, ${opens}-${closes}${dates}${part}`;
     if (!labels.includes(label)) labels.push(label);
   }
   return labels;
@@ -483,7 +503,7 @@ function richFactRows(firstParty?: MarketFirstPartyFacts): MarketFact[] {
     push('Bike parking', [titleWords(firstParty.access.bicycle_parking.value)]);
   }
   if (firstParty.access?.accessibility_note) {
-    push('Accessibility', [firstParty.access.accessibility_note.value]);
+    push('Accessibility', [plainFact(firstParty.access.accessibility_note.value)]);
   }
 
   const amenityNames: Partial<Record<NonNullable<MarketFirstPartyFacts['amenities']>[number]['value']['code'], string>> = {
@@ -567,7 +587,9 @@ export function marketFacts(market: MarketFactsRecord): MarketFact[] {
   const setting = [settingLabel(market.indoor_outdoor), siteTypeLabel(market.site_type)].filter(
     (value): value is string => Boolean(value)
   );
-  push('Setting', setting);
+  // The legacy setting ("Private business parking lot") predates and can
+  // contradict researched access and schedule facts, so those win.
+  if (!market.first_party?.access && !market.first_party?.operations) push('Setting', setting);
 
   push('Sold here', productLabels(market));
   push('Growing practices', productionLabels(market));
@@ -718,7 +740,7 @@ export function formatMiles(kilometres: number): string {
 }
 
 /* ------------------------------------------------------------------ *
- * Composed summary
+ * At a glance
  * ------------------------------------------------------------------ */
 
 function joinWithAnd(items: string[]): string {
@@ -727,104 +749,47 @@ function joinWithAnd(items: string[]): string {
   return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
 }
 
-function weekdayPhrase(days: string[]): string {
-  return joinWithAnd(days.map((day) => `${day}s`));
+/** The schedule at a glance for a page without the "Plan your visit" card. */
+export interface MarketGlance {
+  /** Drawn as a week strip. */
+  days: ReturnType<typeof marketWeekdays>;
+  /** "9am-1pm", when one window covers every market day. */
+  hours?: string;
+  /** Whole schedule lines, when the windows differ or carry dates. */
+  lines: string[];
+  season?: string;
+  vendors?: number;
 }
 
-function lowerFirst(value: string): string {
-  return value ? value[0].toLowerCase() + value.slice(1) : value;
-}
+/** `MarketFacts` terms the glance answers, so the facts list skips them. */
+export const GLANCE_COVERED_TERMS = ['Schedule', 'Days', 'Hours', 'Season', 'Vendors'];
 
 /**
- * The body summary for a record with no description of its own.
- *
- * Two to four short sentences, each one built from a field this record has:
- * where it is, when it opens, how big it is and what it takes at the till.
- * Because the inputs differ market to market, so does the paragraph — that is
- * the point. A record that can only fill the first clause gets one honest
- * sentence and leans on the facts block for the rest.
- *
- * Returns `[]` when the record cannot fill a single clause, which is rare
- * enough to be worth rendering nothing for.
+ * Days, hours, season and size as glanceable parts, replacing the composed
+ * summary paragraph that restated the schedule in prose. `undefined` when the
+ * record knows none of them.
  */
-export function composedSummary(market: MarketFactsRecord): string[] {
-  const name = displayName(market.name) || 'This market';
-  const location = resolveLocation(market);
-  const place =
-    (location.city && location.state
-      ? `${location.city}, ${location.state}`
-      : location.city || location.state) || undefined;
-  // A handful of records carry a whole paragraph in the address field; anything
-  // that long is left to the address row rather than run into a sentence.
-  const street = location.street && location.street.length <= 60 ? location.street : undefined;
-
-  const sentences: string[] = [];
-
-  const subject = nameSaysMarket(name) ? name : `${name}, a farmers market,`;
-  const where = [street ? `at ${street}` : undefined, place ? `in ${place}` : undefined]
-    .filter(Boolean)
-    .join(' ');
-  if (where) {
-    sentences.push(`${subject} is ${where}.`);
-  } else if (!nameSaysMarket(name)) {
-    sentences.push(`${name} is a farmers market.`);
-  }
-
-  const richSchedule = structuredScheduleLabels(market.first_party);
-  const legacySchedule = marketScheduleLabels(market);
+export function marketGlance(market: MarketFactsRecord): MarketGlance | undefined {
   const days = marketWeekdays(market);
   const hours = marketHours(market);
-  const season = marketSeasonLabel(market);
-  const seasonTail = !season
-    ? ''
-    : /^year[\s-]?round$/i.test(season)
-      ? ', year-round'
-      : `, ${/^(?:January|February|March|April|May|June|July|August|September|October|November|December|\d)/.test(season) ? season : lowerFirst(season)}`;
-
-  if (richSchedule.length === 1) {
-    sentences.push(`It is open ${richSchedule[0]}${seasonTail}.`);
-  } else if (richSchedule.length > 1) {
-    sentences.push(`Its schedule is ${richSchedule.join('; ')}${seasonTail}.`);
-  } else if (legacySchedule.length && !hours) {
-    sentences.push(`Its reported schedule is ${legacySchedule.join('; ').replace(/\.+$/, '')}.`);
-  } else if (days.length && hours) {
-    sentences.push(`It is open ${weekdayPhrase(days)} from ${hours}${seasonTail}.`);
-  } else if (days.length) {
-    sentences.push(`It is open ${weekdayPhrase(days)}${seasonTail}.`);
-  } else if (hours) {
-    sentences.push(`It is open ${hours}${seasonTail}.`);
-  } else if (season) {
-    sentences.push(
-      /^year[\s-]?round$/i.test(season) ? 'It is open year-round.' : `The season runs ${season}.`
-    );
-  }
-
-  const vendorCount = market.vendor_count;
-  const setting = settingLabel(market.indoor_outdoor);
-  if (typeof vendorCount === 'number' && Number.isFinite(vendorCount) && vendorCount > 0) {
-    const scale = `${vendorCount} vendor${vendorCount === 1 ? '' : 's'}`;
-    sentences.push(
-      setting
-        ? `${scale} are listed at this ${lowerFirst(setting)} market.`
-        : `${scale} are listed at this market.`
-    );
-  } else if (setting) {
-    sentences.push(
-      setting === 'Indoor and outdoor'
-        ? 'The market runs both indoors and outdoors.'
-        : `The market is held ${setting.toLowerCase() === 'indoor' ? 'indoors' : 'outdoors'}.`
-    );
-  }
-
-  const programs = [
-    market.snap ? 'SNAP/EBT' : undefined,
-    market.wic ? 'WIC' : undefined,
-    market.fmnp ? 'FMNP' : undefined,
-    market.sfmnp ? 'SFMNP' : undefined,
-  ].filter((program): program is string => Boolean(program));
-  if (programs.length) {
-    sentences.push(`It accepts ${joinWithAnd(programs)}.`);
-  }
-
-  return sentences;
+  const rich = structuredScheduleLabels(market.first_party);
+  const legacy = [...new Set(marketScheduleLabels({ ...market, season: undefined }).map((line) => clean(line)))];
+  const lines = rich.length
+    ? rich
+    : legacy.length && (!hours || legacy.length > 1)
+      ? legacy
+      : [];
+  // A season the schedule lines already spell out is not repeated.
+  const seasonLabel = marketSeasonLabel(market);
+  const season = seasonLabel && !lines.some((line) => line.includes(seasonLabel)) ? seasonLabel : undefined;
+  const count = market.vendor_count;
+  const vendors = typeof count === 'number' && Number.isFinite(count) && count > 0 ? count : undefined;
+  const glance: MarketGlance = {
+    days,
+    ...(hours && !lines.length ? { hours } : {}),
+    lines,
+    ...(season ? { season: /^year[\s-]?round$/i.test(season) ? 'Year-round' : season } : {}),
+    ...(vendors ? { vendors } : {}),
+  };
+  return days.length || glance.hours || lines.length || glance.season || vendors ? glance : undefined;
 }

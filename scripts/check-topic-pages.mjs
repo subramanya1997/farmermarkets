@@ -30,7 +30,28 @@ const [markets, geoIndex] = await Promise.all([
   readSnapshot('geo_index.json'),
 ]);
 
-const records = markets.map((market) => {
+// The topic pages cover the 50 states and DC only: provinces, other
+// countries and US territories in the geo index are left out of every count.
+const US_STATE_CODES = new Set([
+  'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA',
+  'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
+  'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA',
+  'WV', 'WI', 'WY',
+]);
+
+// Market slug -> covered state slug, first placement wins.
+const placement = new Map();
+for (const state of geoIndex.states) {
+  if (state.country_code !== 'US' || !US_STATE_CODES.has(state.code)) continue;
+  for (const city of state.cities) {
+    for (const slug of city.market_slugs) if (!placement.has(slug)) placement.set(slug, state.slug);
+  }
+  for (const slug of state.uncategorized_slugs) if (!placement.has(slug)) placement.set(slug, state.slug);
+}
+
+const coveredMarkets = markets.filter((market) => market.slug && placement.has(market.slug));
+
+const records = coveredMarkets.map((market) => {
   const assistance = market.payment?.food_assistance ?? {};
   const channels = market.sales_channels ?? {};
   const record = {
@@ -44,25 +65,22 @@ const records = markets.map((market) => {
     online: channels.online_ordering?.available === true,
     delivery: channels.delivery?.available === true,
     csa: channels.csa?.available === true,
-    phone: channels.phone_ordering === true,
   };
   record.weekdays = marketWeekdays(record);
   record.hours = marketHours(record);
   return record;
 });
 
-const total = records.length;
 const format = (value) => value.toLocaleString('en-US');
 
 const expected = {
   snap: records.filter((record) => record.snap).length,
   online: records.filter(
-    (record) => record.online || record.delivery || record.csa || record.phone
+    (record) => record.online || record.delivery || record.csa
   ).length,
   onlineOnly: records.filter((record) => record.online).length,
   delivery: records.filter((record) => record.delivery).length,
   csa: records.filter((record) => record.csa).length,
-  phone: records.filter((record) => record.phone).length,
   withDays: records.filter((record) => record.weekdays.length > 0).length,
   withHours: records.filter((record) => Boolean(record.hours)).length,
   saturday: records.filter((record) => record.weekdays.includes('Saturday')).length,
@@ -216,17 +234,9 @@ async function checkTopicPage({ pathname, title, mustContain, stateTable }) {
 // The states with the most matching markets, recomputed from the geo index so
 // the table's ordering is checked against the data rather than against itself.
 function topStateSlugs(predicate, limit = 3) {
-  const placement = new Map();
-  for (const state of geoIndex.states) {
-    for (const city of state.cities) {
-      for (const slug of city.market_slugs) placement.set(slug, state.slug);
-    }
-    for (const slug of state.uncategorized_slugs) placement.set(slug, state.slug);
-  }
-
   const counts = new Map();
-  for (const market of markets) {
-    if (!market.slug || !predicate(market)) continue;
+  for (const market of coveredMarkets) {
+    if (!predicate(market)) continue;
     const stateSlug = placement.get(market.slug);
     if (!stateSlug) continue;
     counts.set(stateSlug, (counts.get(stateSlug) ?? 0) + 1);
@@ -241,7 +251,7 @@ function topStateSlugs(predicate, limit = 3) {
 await checkTopicPage({
   pathname: '/farmers-markets/snap-ebt',
   title: `${format(expected.snap)} Farmers Markets That Accept SNAP/EBT`,
-  mustContain: [`${format(expected.snap)} farmers markets in this directory are recorded as accepting SNAP/EBT`],
+  mustContain: [`${format(expected.snap)} farmers markets accept SNAP/EBT across`],
   stateTable: topStateSlugs((market) => market.payment?.food_assistance?.snap === true),
 });
 
@@ -249,19 +259,18 @@ await checkTopicPage({
   pathname: '/farmers-markets/online',
   title: `${format(expected.online)} Farmers Markets With Online Ordering & Delivery`,
   mustContain: [
-    `${format(expected.online)} farmers markets in this directory are recorded as selling beyond the market stall`,
-    `${format(expected.onlineOnly)} take orders online`,
-    `${format(expected.delivery)} offer delivery`,
-    `${format(expected.csa)} run a CSA share`,
-    `${format(expected.phone)} take orders by phone`,
+    `${format(expected.online)} farmers markets let you order online, get delivery or join a CSA`,
+    `Online ordering ${format(expected.onlineOnly)}`,
+    `Delivery ${format(expected.delivery)}`,
+    `CSA ${format(expected.csa)}`,
   ],
+
   stateTable: topStateSlugs((market) => {
     const channels = market.sales_channels ?? {};
     return (
       channels.online_ordering?.available === true ||
       channels.delivery?.available === true ||
-      channels.csa?.available === true ||
-      channels.phone_ordering === true
+      channels.csa?.available === true
     );
   }),
 });
@@ -269,11 +278,8 @@ await checkTopicPage({
 const hoursPage = await checkTopicPage({
   pathname: '/farmers-markets/hours',
   title: `Farmers Market Hours: Opening Days for ${format(expected.withDays)} Markets`,
-  mustContain: [
-    `${format(expected.withDays)} of the ${format(total)} markets in this directory state which days they open`,
-    `${format(expected.withHours)} state their opening times`,
-    `${format(expected.saturday)} markets`,
-  ],
+  mustContain: ['is the busiest farmers market day', 'Busiest day', 'Most common hours'],
+
 });
 
 // The day table must carry every weekday count, and Saturday must link out.
@@ -292,7 +298,7 @@ assert(
 await checkTopicPage({
   pathname: '/farmers-markets/saturday',
   title: `${format(expected.saturday)} Saturday Farmers Markets by State`,
-  mustContain: [`${format(expected.saturday)} farmers markets in this directory list Saturday as an opening day`],
+  mustContain: [`${format(expected.saturday)} farmers markets open on Saturday across`],
   stateTable: topStateSlugs((market) =>
     marketWeekdays({
       name: market.name,

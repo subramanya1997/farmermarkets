@@ -24,6 +24,8 @@ first that a decision has been undone.
 | 8 | [Stale records get a notice, not a delete](#8-stale-records-get-a-notice-not-a-delete) | `src/lib/freshness.ts` |
 | 9 | [Prerender everything, revalidate daily](#9-prerender-everything-revalidate-daily) | `generateStaticParams` + `revalidate` |
 | 10 | [Generated copy: plain hyphens, tight punctuation, one FAQ heading](#10-generated-copy-plain-hyphens-tight-punctuation-one-faq-heading) | `clean()` in `src/lib/geo.ts`, `scripts/seo-smoke.mjs` |
+| 11 | [State and city pages live at the site root](#11-state-and-city-pages-live-at-the-site-root) | `next.config.ts`, `statePath()` / `cityPath()` |
+| 12 | [Duplicate market rows canonicalize to one main listing](#12-duplicate-market-rows-canonicalize-to-one-main-listing) | `src/lib/marketAliases.ts`, `src/lib/sitemapEntries.ts` |
 
 ---
 
@@ -287,3 +289,27 @@ ever collides. A new topic page under `/farmers-markets/` must be added to
 
 **Revisit when.** Never casually: this was the second move for these URLs in
 two months, and each move costs a recrawl of about 5,000 pages.
+
+## 12. Duplicate market rows canonicalize to one main listing
+
+**Decision.** When two records are verifiably the same market (same place,
+same operator), the duplicate is listed in `MARKET_ALIASES`
+(`src/lib/marketAliases.ts`), keyed by stable market ID. Its page stays up and
+its record stays in the data and API, but its `<link rel=canonical>` and
+`og:url` name the main listing, a line under the address links there, and the
+sitemap leaves it out. First entries (October 2026): the second USDA row for
+Detroit Eastern Market, the four per-day NY State rows for Union Square
+Greenmarket and the three per-day California WIC rows for Ferry Plaza.
+
+**Why.** Search Console showed the same navigational query spread across up to
+five URLs per market, each ranking 50-65, while the main listing (the one with
+the verified hours, transit and vendor facts) had the fewest impressions. A
+cross-page canonical consolidates the signals without deleting records (rule 8)
+or adding `noindex` (rule 6), and is reversible by removing one map entry. A
+308 was rejected because city pages and search still link these rows, and a
+page that names its dataset of origin is useful to the few who land on it.
+
+**Revisit when.** A duplicate turns out to differ (a separate satellite market
+with its own hours): remove the entry. If the dataset builder ever learns to
+merge rows itself, this map becomes its input rather than a second mechanism.
+

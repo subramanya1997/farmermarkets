@@ -24,10 +24,17 @@ function requireHttpUrl(value, label, fail) {
   }
 }
 
+// A seasonal produce guide is published by the operator for all of its
+// markets (GrowNYC, Foodwise), never per market. It may back the "what is in
+// season" note and nothing else: hours, contacts and payments stay market-scoped.
+const OPERATOR_SCOPE_ALLOWED = /\.products\.availability_note$/;
+
 function validateSourceReference(sourceId, sourcesById, verifiedAt, label, fail) {
   const source = sourcesById.get(sourceId);
   if (!source) fail(`${label} references unknown source id ${sourceId}`);
-  if (source.kind !== 'first_party' || source.scope !== 'market') {
+  const scopeAllowed = source.scope === 'market' ||
+    (source.scope === 'operator' && OPERATOR_SCOPE_ALLOWED.test(label));
+  if (source.kind !== 'first_party' || !scopeAllowed) {
     fail(`${label} source ${sourceId} must be first_party and market scoped`);
   }
   if (!realIsoDate(source.accessed_at)) fail(`${label} source ${sourceId} needs a real accessed_at date`);

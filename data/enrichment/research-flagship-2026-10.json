@@ -1,0 +1,2583 @@
+[
+  {
+    "id": "314117",
+    "market_name": "Findlay Market",
+    "schema_version": 2,
+    "verified_at": "2026-10-21",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Findlay Market",
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "operator_name": {
+          "value": "Corporation for Findlay Market",
+          "source_ids": [
+            "hours"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "market_type": {
+          "value": "public_food_market",
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "hours"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "hours"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "schedules": [
+          {
+            "value": {
+              "label": "market house and shops",
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "tuesday",
+                  "wednesday",
+                  "thursday",
+                  "friday"
+                ]
+              },
+              "opens": "09:00",
+              "closes": "18:00"
+            },
+            "source_ids": [
+              "hours"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "market-house-tue-fri"
+          },
+          {
+            "value": {
+              "label": "market house and shops",
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "18:00"
+            },
+            "source_ids": [
+              "hours"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "market-house-sat"
+          },
+          {
+            "value": {
+              "label": "market house and shops",
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "sunday"
+                ]
+              },
+              "opens": "10:00",
+              "closes": "16:00"
+            },
+            "source_ids": [
+              "hours"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "market-house-sun"
+          },
+          {
+            "value": {
+              "label": "Farm Shed farmers market",
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "14:00",
+              "location_note": "Farm Shed"
+            },
+            "source_ids": [
+              "hours"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "farm-shed-sat"
+          },
+          {
+            "value": {
+              "label": "Farm Shed farmers market",
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "sunday"
+                ]
+              },
+              "opens": "10:00",
+              "closes": "14:00",
+              "location_note": "Farm Shed"
+            },
+            "source_ids": [
+              "hours"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "farm-shed-sun"
+          }
+        ],
+        "exceptions": [
+          {
+            "value": {
+              "start_date": "2026-11-11",
+              "status": "modified_hours",
+              "opens": "09:00",
+              "closes": "15:00",
+              "note": "Veterans Day"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "veterans-day-2026"
+          },
+          {
+            "value": {
+              "start_date": "2026-11-23",
+              "status": "special_opening",
+              "opens": "09:00",
+              "closes": "15:00",
+              "note": "Monday of Thanksgiving week"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "thanksgiving-monday-2026"
+          },
+          {
+            "value": {
+              "start_date": "2026-11-26",
+              "status": "closed",
+              "note": "Thanksgiving"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "thanksgiving-2026"
+          },
+          {
+            "value": {
+              "start_date": "2026-12-21",
+              "status": "special_opening",
+              "opens": "09:00",
+              "closes": "15:00",
+              "note": "Monday of Christmas week"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "christmas-monday-2026"
+          },
+          {
+            "value": {
+              "start_date": "2026-12-24",
+              "status": "modified_hours",
+              "opens": "09:00",
+              "closes": "15:00",
+              "note": "Christmas Eve"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "christmas-eve-2026"
+          },
+          {
+            "value": {
+              "start_date": "2026-12-25",
+              "status": "closed",
+              "note": "Christmas Day"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "christmas-2026"
+          },
+          {
+            "value": {
+              "start_date": "2026-12-31",
+              "status": "modified_hours",
+              "opens": "09:00",
+              "closes": "15:00",
+              "note": "New Year's Eve"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "new-years-eve-2026"
+          },
+          {
+            "value": {
+              "start_date": "2027-01-01",
+              "status": "closed",
+              "note": "New Year's Day"
+            },
+            "source_ids": [
+              "holiday-hours-2026"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "new-years-day-2027"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "value": {
+              "code": "snap_ebt",
+              "name": "SNAP/EBT",
+              "redemption_instructions": "Most outdoor farmers can't swipe EBT, so get gold SNAP tokens at the Market Center (or the Education Center on weekends). Butchers take EBT directly."
+            },
+            "source_ids": [
+              "ebt-faq",
+              "assistance-benefits"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "snap-ebt"
+          }
+        ],
+        "incentives": [
+          {
+            "value": {
+              "name": "Produce Perks",
+              "kind": "match",
+              "applies_to": [
+                "fruits",
+                "vegetables"
+              ],
+              "input_amount": 1,
+              "benefit_amount": 1,
+              "maximum_amount": 25,
+              "currency": "USD",
+              "eligibility": "SNAP/EBT shoppers",
+              "note": "Each $1 in SNAP tokens is matched with $1 in green Produce Perks tokens, up to $25 a day. Produce Perks tokens are for produce only."
+            },
+            "source_ids": [
+              "assistance-benefits",
+              "ebt-faq"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "produce-perks"
+          }
+        ]
+      },
+      "access": {
+        "transit": [
+          {
+            "value": {
+              "mode": "rail",
+              "routes": [
+                "Cincinnati Bell Connector"
+              ],
+              "stop_name": "Station 10 (Elm St, northbound) and Station 12 (Race St, southbound)",
+              "url": "https://www.cincinnati-oh.gov/streetcar/"
+            },
+            "source_ids": [
+              "parking-directions"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "streetcar"
+          }
+        ],
+        "parking": {
+          "availability": {
+            "value": "yes",
+            "source_ids": [
+              "parking-directions"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "cost": {
+            "value": "paid",
+            "source_ids": [
+              "parking-directions"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "location_note": {
+            "value": "The North Lot (off Findlay St) and South Lot (off Race St) cost $3 an hour, paid by plate or with Cincy EZPark zone 4523. Merchants hand out discount codes.",
+            "source_ids": [
+              "parking-directions"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "url": {
+            "value": "https://www.findlaymarket.org/parking",
+            "source_ids": [
+              "parking-directions"
+            ],
+            "verified_at": "2026-10-21"
+          }
+        },
+        "market_map_url": {
+          "value": "https://www.findlaymarket.org/s/FindlayMarketMap2026.pdf",
+          "source_ids": [
+            "market-map"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "amenities": [
+        {
+          "value": {
+            "code": "information_booth",
+            "availability": "yes",
+            "note": "Education Center, the red booth next to the Farm Shed in the North Lot: Fri 11am-4pm, Sat 8am-3pm, Sun 9am-3pm. The Market Center desk in the market house helps when it is closed."
+          },
+          "source_ids": [
+            "assistance-benefits"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "information-booth"
+        },
+        {
+          "value": {
+            "code": "live_music",
+            "availability": "yes",
+            "note": "Live music on weekends at Race St. Station, open Sat-Sun 11am-4pm, with plenty of seating."
+          },
+          "source_ids": [
+            "race-st-station"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "live-music"
+        }
+      ],
+      "vendors": {
+        "count": {
+          "value": {
+            "value": 50,
+            "qualifier": "more than"
+          },
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "weekly_roster_url": {
+          "value": "https://maps.managemymarket.com/8070",
+          "source_ids": [
+            "outdoor-market"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "attendance_is_dynamic": {
+          "value": true,
+          "source_ids": [
+            "outdoor-market"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "meat",
+              "label": "Meat and poultry"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "meat"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Fish and seafood"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "seafood"
+          },
+          {
+            "value": {
+              "code": "fresh_produce"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "produce"
+          },
+          {
+            "value": {
+              "code": "flowers"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "flowers"
+          },
+          {
+            "value": {
+              "code": "dairy",
+              "label": "Cheese"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "cheese"
+          },
+          {
+            "value": {
+              "code": "prepared_food",
+              "label": "Deli and ethnic foods"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "deli"
+          }
+        ]
+      },
+      "programs": [
+        {
+          "value": {
+            "name": "Education Center",
+            "kind": "food_access",
+            "description": "Staffed weekend resource center for SNAP and Produce Perks redemption, seasonal recipe cards, and SFMNP and TANF applications."
+          },
+          "source_ids": [
+            "assistance-benefits"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "education-center"
+        },
+        {
+          "value": {
+            "name": "Community Resource Tent",
+            "kind": "community",
+            "description": "Each weekend a nonprofit or community group tables at the Outdoor Market with information and resources."
+          },
+          "source_ids": [
+            "outdoor-market"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "community-resource-tent"
+        }
+      ],
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "The market house is open Tuesday through Sunday year-round. The Farm Shed farmers market runs only on weekends: Saturday 8am-2pm and Sunday 10am-2pm. Mondays are closed."
+          },
+          "source_ids": [
+            "hours"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "faq-two-schedules"
+        },
+        {
+          "value": {
+            "topic": "parking",
+            "answer": "The North and South lots cost $3 an hour. Pay by plate at the stations or use Cincy EZPark zone 4523, and ask a merchant for a discount code after you buy something."
+          },
+          "source_ids": [
+            "parking-directions"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "faq-parking"
+        },
+        {
+          "value": {
+            "topic": "payments",
+            "answer": "Most outdoor farmers can't swipe EBT. Get gold SNAP tokens at the Market Center or Education Center, plus matching green Produce Perks tokens for produce, up to $25 a day."
+          },
+          "source_ids": [
+            "ebt-faq",
+            "assistance-benefits"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "faq-ebt"
+        },
+        {
+          "value": {
+            "topic": "updates",
+            "answer": "Holiday hours for 2026: closed Thanksgiving (Nov 26), Christmas Day and New Year's Day, with 9am-3pm hours on Nov 11, Nov 23, Dec 21, Dec 24 and Dec 31."
+          },
+          "source_ids": [
+            "holiday-hours-2026"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "faq-holidays"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "home",
+        "url": "https://www.findlaymarket.org/",
+        "title": "Findlay Market",
+        "fields": [
+          "first_party.identity",
+          "first_party.vendors",
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "hours",
+        "url": "https://www.findlaymarket.org/hours",
+        "title": "Hours | Findlay Market",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "holiday-hours-2026",
+        "url": "https://www.findlaymarket.org/s/2026-Findlay-Market-Holiday-Hours.pdf",
+        "title": "2026 Findlay Market Holiday Hours",
+        "fields": [
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "parking-directions",
+        "url": "https://www.findlaymarket.org/parking",
+        "title": "Parking & Directions | Findlay Market",
+        "fields": [
+          "first_party.access",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "assistance-benefits",
+        "url": "https://www.findlaymarket.org/assistancebenefits",
+        "title": "Assistance Benefits | Findlay Market",
+        "fields": [
+          "first_party.payments",
+          "first_party.amenities",
+          "first_party.programs",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "ebt-faq",
+        "url": "https://www.findlaymarket.org/ebtfaq",
+        "title": "FAQ | Findlay Market",
+        "fields": [
+          "first_party.payments",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "outdoor-market",
+        "url": "https://www.findlaymarket.org/outdoormarket",
+        "title": "Outdoor & Farmers Market | Findlay Market",
+        "fields": [
+          "first_party.vendors",
+          "first_party.programs"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "market-map",
+        "url": "https://www.findlaymarket.org/map",
+        "title": "Map | Findlay Market",
+        "fields": [
+          "first_party.access"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "race-st-station",
+        "url": "https://www.findlaymarket.org/raceststation",
+        "title": "Race St. Station | Findlay Market",
+        "fields": [
+          "first_party.amenities"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      }
+    ]
+  },
+  {
+    "id": "311340",
+    "market_name": "Soulard Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-10-21",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "City of St. Louis Department of Parks, Recreation and Forestry",
+          "source_ids": [
+            "city-soulard-market",
+            "city-farmers-market-week-2025"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Chicago",
+          "source_ids": [
+            "city-soulard-market"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "status": {
+          "value": {
+            "value": "active"
+          },
+          "source_ids": [
+            "city-soulard-market"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "city-farmers-market-week-2025"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "schedules": [
+          {
+            "id": "wednesday-saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "wednesday",
+                  "thursday",
+                  "friday",
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "17:00"
+            },
+            "source_ids": [
+              "city-soulard-market"
+            ],
+            "verified_at": "2026-10-21"
+          }
+        ]
+      },
+      "access": {
+        "parking": {
+          "availability": {
+            "value": "yes",
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "cost": {
+            "value": "mixed",
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "location_note": {
+            "value": "Metered street parking around the market, plus a free public lot across from 7th Street and Carroll Street.",
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          }
+        }
+      },
+      "policies": [
+        {
+          "id": "pets",
+          "value": {
+            "code": "pets",
+            "rule": "not_allowed",
+            "note": "Animals are prohibited anywhere on market grounds."
+          },
+          "source_ids": [
+            "city-soulard-market"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "smoking",
+          "value": {
+            "code": "smoking",
+            "rule": "not_allowed",
+            "note": "Smoking is prohibited anywhere on market grounds."
+          },
+          "source_ids": [
+            "city-soulard-market"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      ],
+      "vendors": {
+        "count": {
+          "value": {
+            "value": 100,
+            "qualifier": "more than",
+            "as_of": "2025-07-28"
+          },
+          "source_ids": [
+            "city-farmers-market-week-2025"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "attendance_is_dynamic": {
+          "value": true,
+          "source_ids": [
+            "city-soulard-market"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "products": {
+        "categories": [
+          {
+            "id": "fresh-produce",
+            "value": {
+              "code": "fresh_produce"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "meat",
+            "value": {
+              "code": "meat",
+              "label": "Fresh meat and fish"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "baked-goods",
+            "value": {
+              "code": "baked_goods"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "honey",
+            "value": {
+              "code": "honey"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "prepared-food",
+            "value": {
+              "code": "prepared_food",
+              "label": "Prepared meals and snacks"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "flowers",
+            "value": {
+              "code": "flowers"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "crafts",
+            "value": {
+              "code": "crafts",
+              "label": "Arts and crafts"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "other-goods",
+            "value": {
+              "code": "other",
+              "label": "Apparel, souvenirs, health and beauty"
+            },
+            "source_ids": [
+              "city-farmers-market-week-2025"
+            ],
+            "verified_at": "2026-10-21"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "best-day",
+          "value": {
+            "topic": "arrival",
+            "answer": "Saturday is the full market day with every vendor in. Only about 10% of vendors open Wednesday and Thursday, and about 35% on Friday."
+          },
+          "source_ids": [
+            "city-soulard-market"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "sunday",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market is closed Sunday through Tuesday, except one produce stand on Sundays. Call the market at (314) 622-4180 before coming on a Sunday."
+          },
+          "source_ids": [
+            "city-soulard-market"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "parking",
+          "value": {
+            "topic": "parking",
+            "answer": "There is metered street parking around the market and a free public lot across from 7th Street and Carroll Street."
+          },
+          "source_ids": [
+            "city-farmers-market-week-2025"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "vendor-hours",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market is open year round, but individual vendor hours may vary."
+          },
+          "source_ids": [
+            "city-farmers-market-week-2025"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "city-soulard-market",
+        "url": "https://www.stlouis-mo.gov/government/departments/parks/soulard/index.cfm",
+        "title": "Soulard Market",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.policies",
+          "first_party.vendors",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "city-farmers-market-week-2025",
+        "url": "https://www.stlouis-mo.gov/government/departments/parks/news/national-farmers-market-week.cfm",
+        "title": "Celebrate National Farmers Market Week with a Visit to Soulard Farmers Market",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.access",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      }
+    ]
+  },
+  {
+    "id": "301318",
+    "market_name": "Ferry Plaza Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-10-21",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "exceptions": [
+          {
+            "id": "thanksgiving-2026",
+            "value": {
+              "start_date": "2026-11-26",
+              "status": "closed",
+              "note": "Thursday market, Thanksgiving"
+            },
+            "source_ids": [
+              "ferry-plaza-closed-2026-11-26",
+              "foodwise-events-calendar"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "christmas-eve-2026",
+            "value": {
+              "start_date": "2026-12-24",
+              "status": "closed",
+              "note": "Thursday market, Christmas Eve"
+            },
+            "source_ids": [
+              "ferry-plaza-closed-2026-12-24",
+              "foodwise-events-calendar"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "new-years-eve-2026",
+            "value": {
+              "start_date": "2026-12-31",
+              "status": "closed",
+              "note": "Thursday market, New Year's Eve"
+            },
+            "source_ids": [
+              "ferry-plaza-closed-2026-12-31",
+              "foodwise-events-calendar"
+            ],
+            "verified_at": "2026-10-21"
+          }
+        ]
+      },
+      "vendors": {
+        "count": {
+          "value": {
+            "value": 100,
+            "qualifier": "more than",
+            "as_of": "2026-10-21"
+          },
+          "source_ids": [
+            "ferry-plaza-market-page"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "products": {
+        "categories": [
+          {
+            "id": "baked-goods",
+            "value": {
+              "code": "baked_goods",
+              "label": "Breads and baked goods"
+            },
+            "source_ids": [
+              "ferry-plaza-visitor-faq",
+              "ferry-plaza-saturday-sellers"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "dairy",
+            "value": {
+              "code": "dairy",
+              "label": "Cheese and dairy"
+            },
+            "source_ids": [
+              "ferry-plaza-visitor-faq",
+              "ferry-plaza-saturday-sellers"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "meat",
+            "value": {
+              "code": "meat",
+              "label": "Meat"
+            },
+            "source_ids": [
+              "ferry-plaza-visitor-faq",
+              "ferry-plaza-saturday-sellers"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "preserves",
+            "value": {
+              "code": "preserves",
+              "label": "Jams and preserves"
+            },
+            "source_ids": [
+              "ferry-plaza-visitor-faq",
+              "ferry-plaza-saturday-sellers"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "eggs",
+            "value": {
+              "code": "eggs",
+              "label": "Eggs"
+            },
+            "source_ids": [
+              "ferry-plaza-saturday-sellers"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "flowers",
+            "value": {
+              "code": "flowers",
+              "label": "Flowers"
+            },
+            "source_ids": [
+              "ferry-plaza-saturday-sellers"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          {
+            "id": "honey",
+            "value": {
+              "code": "honey",
+              "label": "Honey"
+            },
+            "source_ids": [
+              "ferry-plaza-saturday-sellers"
+            ],
+            "verified_at": "2026-10-21"
+          }
+        ],
+        "availability_note": {
+          "value": "Foodwise's October picks for its farmers markets include apples, pears, persimmons, pomegranates, quince, winter squash, chestnuts, and new-crop walnuts and almonds.",
+          "source_ids": [
+            "foodwise-this-weeks-picks"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "events": [
+        {
+          "id": "fall-fruit-celebration-2026",
+          "value": {
+            "name": "Fall Fruit Celebration",
+            "kind": "festival",
+            "start": "2026-10-31",
+            "local_hours": {
+              "opens": "11:00",
+              "closes": "13:00"
+            },
+            "description": "Seasonal Spotlight celebration of fall fruit with free samples, recipes, and a variety tasting at the orange tent in front of the Ferry Building, plus an 11am cooking demo.",
+            "url": "https://foodwise.org/events/fall-fruit-celebration/",
+            "venue": "Front plaza, Ferry Building"
+          },
+          "source_ids": [
+            "fall-fruit-celebration-2026"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "fall-holiday-farmers-market-2026",
+          "value": {
+            "name": "Fall Holiday Farmers Market",
+            "kind": "special_market",
+            "start": "2026-11-24",
+            "local_hours": {
+              "opens": "10:00",
+              "closes": "14:00"
+            },
+            "description": "The regular Tuesday farms plus special guest vendors, for stocking up before Thanksgiving.",
+            "url": "https://foodwise.org/events/fall-holiday-farmers-market/"
+          },
+          "source_ids": [
+            "fall-holiday-farmers-market-2026"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "black-holiday-market-2026",
+          "value": {
+            "name": "Pop-Ups on the Plaza: Black Holiday Market",
+            "kind": "special_market",
+            "start": "2026-12-12",
+            "local_hours": {
+              "opens": "09:00",
+              "closes": "14:00"
+            },
+            "description": "Holiday market of Bay Area Black-owned food makers and designers. Free entry.",
+            "url": "https://foodwise.org/events/pop-ups-on-the-plaza-black-holiday-market/",
+            "venue": "South arcade of the Ferry Building"
+          },
+          "source_ids": [
+            "black-holiday-market-2026"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      ],
+      "faq_facts": [
+        {
+          "id": "which-day",
+          "value": {
+            "topic": "arrival",
+            "answer": "Saturday is the big market, with more than 100 vendors around the Ferry Building. Tuesday has about 20 vendors focused on produce and hot lunch, and Thursday has 10 to 15 vendors, mostly street food lunch plus produce."
+          },
+          "source_ids": [
+            "ferry-plaza-market-page"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "holiday-closures",
+          "value": {
+            "topic": "updates",
+            "answer": "The Thursday market is closed on November 26, December 24, and December 31, 2026. A special Fall Holiday Farmers Market runs Tuesday, November 24, 10am-2pm."
+          },
+          "source_ids": [
+            "foodwise-events-calendar"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        {
+          "id": "lost-and-found",
+          "value": {
+            "topic": "arrival",
+            "answer": "Lost items go to the Ferry Building Lost & Found at the Security Desk in the office lobby, first floor on the Embarcadero side. Phone 415-983-8007."
+          },
+          "source_ids": [
+            "ferry-plaza-visitor-faq"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "ferry-plaza-market-page",
+        "url": "https://foodwise.org/markets/ferry-plaza-farmers-market/",
+        "title": "Ferry Plaza Farmers Market at the San Francisco Ferry Building : Foodwise",
+        "fields": [
+          "first_party.vendors",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "ferry-plaza-visitor-faq",
+        "url": "https://foodwise.org/markets/ferry-plaza-farmers-market/visitor-info/",
+        "title": "Ferry Plaza Farmers Market Visitor Info & Services : Foodwise",
+        "fields": [
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "ferry-plaza-saturday-sellers",
+        "url": "https://foodwise.org/markets/sellers/?_market_days=ferry-plaza-farmers-market-saturday",
+        "title": "Our Sellers : Foodwise (Ferry Plaza Saturday filter)",
+        "fields": [
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "foodwise-this-weeks-picks",
+        "url": "https://foodwise.org/eat-seasonally/this-weeks-picks/",
+        "title": "This Week's Picks & Market Updates : Foodwise",
+        "fields": [
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "operator",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "foodwise-events-calendar",
+        "url": "https://foodwise.org/events/",
+        "title": "Events : Foodwise",
+        "fields": [
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "ferry-plaza-closed-2026-11-26",
+        "url": "https://foodwise.org/events/ferry-plaza-farmers-market-closed-17/",
+        "title": "Ferry Plaza Farmers Market Closed : Foodwise",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "ferry-plaza-closed-2026-12-24",
+        "url": "https://foodwise.org/events/ferry-plaza-farmers-market-closed-18/",
+        "title": "Ferry Plaza Farmers Market Closed : Foodwise",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "ferry-plaza-closed-2026-12-31",
+        "url": "https://foodwise.org/events/ferry-plaza-farmers-market-closed-19/",
+        "title": "Ferry Plaza Farmers Market Closed : Foodwise",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "fall-fruit-celebration-2026",
+        "url": "https://foodwise.org/events/fall-fruit-celebration/",
+        "title": "Fall Fruit Celebration : Foodwise",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "fall-holiday-farmers-market-2026",
+        "url": "https://foodwise.org/events/fall-holiday-farmers-market/",
+        "title": "Fall Holiday Farmers Market : Foodwise",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "black-holiday-market-2026",
+        "url": "https://foodwise.org/events/pop-ups-on-the-plaza-black-holiday-market/",
+        "title": "Pop-Ups on the Plaza: Black Holiday Market : Foodwise",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      }
+    ]
+  },
+  {
+    "id": "312120",
+    "market_name": "Union Square Greenmarket",
+    "schema_version": 2,
+    "verified_at": "2026-10-21",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Union Square Greenmarket",
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "operator_name": {
+          "value": "GrowNYC",
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "market_type": {
+          "value": "farmers_market",
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "status": {
+          "value": {
+            "value": "active"
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "schedules": [
+          {
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "monday",
+                  "wednesday",
+                  "friday",
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "18:00",
+              "location_note": "17th Street between Broadway & Park Ave South, Union Square West between 17th Street & 15th Street"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "market-mon-wed-fri-sat"
+          }
+        ]
+      },
+      "payments": {
+        "methods": [
+          {
+            "value": {
+              "code": "cash"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "cash"
+          },
+          {
+            "value": {
+              "code": "debit_card"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "debit"
+          },
+          {
+            "value": {
+              "code": "credit_card"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "credit"
+          }
+        ],
+        "assistance": [
+          {
+            "value": {
+              "code": "snap_ebt",
+              "name": "SNAP EBT",
+              "redemption_instructions": "Go to the market information tent, swipe your EBT card and enter your PIN to buy $1 or $5 wooden tokens that spend like cash. Unused tokens do not expire."
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "snap-ebt"
+          },
+          {
+            "value": {
+              "code": "fmnp",
+              "name": "Farmers Market Nutrition Program",
+              "redemption_instructions": "Pay the farmer directly with $5 FMNP checks for fresh fruits and vegetables. No change is given."
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "fmnp"
+          },
+          {
+            "value": {
+              "code": "other",
+              "name": "FreshConnect Coupons"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "freshconnect"
+          },
+          {
+            "value": {
+              "code": "other",
+              "name": "Healthfirst OTC (select plans)",
+              "redemption_instructions": "Bring your OTC card to the market information tent to exchange OTC dollars for $2 Greenmarket Bucks."
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "healthfirst-otc"
+          }
+        ],
+        "incentives": [
+          {
+            "value": {
+              "name": "Health Bucks",
+              "kind": "match",
+              "applies_to": [
+                "fresh fruits",
+                "vegetables"
+              ],
+              "input_amount": 2,
+              "benefit_amount": 2,
+              "maximum_amount": 10,
+              "currency": "USD",
+              "eligibility": "SNAP/EBT and Summer EBT shoppers",
+              "note": "Up to $10 per day. Health Bucks expire December 31 each year."
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "health-bucks"
+          },
+          {
+            "value": {
+              "name": "Greenmarket Bucks",
+              "kind": "voucher",
+              "note": "$2 coupons accepted at all Greenmarkets, given out by partner organizations; they expire December 31 each year."
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "greenmarket-bucks"
+          }
+        ]
+      },
+      "vendors": {
+        "count": {
+          "value": {
+            "value": 140,
+            "qualifier": "up to, in peak season"
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "directory_url": {
+          "value": "https://grownyc.org/locations/union-square-greenmarket/",
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "attendance_is_dynamic": {
+          "value": true,
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "roster_context": {
+          "value": {
+            "label": "Wednesday producer list",
+            "as_of": "2026-10-21",
+            "non_exhaustive": true
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "roster": [
+          {
+            "value": {
+              "name": "Ronnybrook Farm Dairy",
+              "categories": [
+                "dairy"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "ronnybrook"
+          },
+          {
+            "value": {
+              "name": "Bread Alone",
+              "categories": [
+                "baked goods"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "bread-alone"
+          },
+          {
+            "value": {
+              "name": "Migliorelli Farm",
+              "categories": [
+                "vegetables",
+                "orchard fruit",
+                "cider"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "migliorelli"
+          },
+          {
+            "value": {
+              "name": "Hawthorne Valley Farm",
+              "categories": [
+                "organic produce",
+                "meat",
+                "dairy",
+                "baked goods"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "hawthorne-valley"
+          },
+          {
+            "value": {
+              "name": "Valley Shepherd",
+              "categories": [
+                "cheese",
+                "yogurt"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "valley-shepherd"
+          },
+          {
+            "value": {
+              "name": "Eckerton Hill Farm",
+              "categories": [
+                "heirloom tomatoes",
+                "peppers"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "eckerton-hill"
+          },
+          {
+            "value": {
+              "name": "Bulich Mushroom Co.",
+              "categories": [
+                "mushrooms"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "bulich-mushroom"
+          },
+          {
+            "value": {
+              "name": "American Pride Seafood",
+              "categories": [
+                "fish",
+                "shellfish"
+              ]
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "american-pride-seafood"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "fresh-produce"
+          },
+          {
+            "value": {
+              "code": "meat"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "meat"
+          },
+          {
+            "value": {
+              "code": "dairy"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "dairy"
+          },
+          {
+            "value": {
+              "code": "eggs"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "eggs"
+          },
+          {
+            "value": {
+              "code": "baked_goods"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "baked-goods"
+          },
+          {
+            "value": {
+              "code": "flowers"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "flowers"
+          },
+          {
+            "value": {
+              "code": "honey"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "honey"
+          },
+          {
+            "value": {
+              "code": "preserves"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "preserves"
+          },
+          {
+            "value": {
+              "code": "wine"
+            },
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "wine"
+          }
+        ],
+        "items": [
+          {
+            "value": "Orchard fruit",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "orchard-fruit"
+          },
+          {
+            "value": "Cider",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "cider"
+          },
+          {
+            "value": "Mushrooms",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "mushrooms"
+          },
+          {
+            "value": "Cheese",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "cheese"
+          },
+          {
+            "value": "Maple syrup",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "maple-syrup"
+          },
+          {
+            "value": "Bread",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "bread"
+          },
+          {
+            "value": "Wild-caught fish and shellfish",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "seafood"
+          },
+          {
+            "value": "Cut flowers",
+            "source_ids": [
+              "grownyc-union-square"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "cut-flowers"
+          }
+        ],
+        "availability_note": {
+          "value": "GrowNYC's seasonal guide lists fall picks like apples, Concord grapes, Seckel pears, winter squash, Brussels sprouts and root vegetables. It is a regional guide, not a list of what is at this market today.",
+          "source_ids": [
+            "grownyc-whats-in-season"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "events": [
+        {
+          "value": {
+            "name": "6th Annual Cider Village",
+            "kind": "festival",
+            "start": "2026-10-23",
+            "description": "Tastings from eight New York cideries, an apple cider donut eating contest, apple trivia and rare apple varieties. Rescheduled from the October 16 rain date.",
+            "url": "https://grownyc.org/?post_type=events&p=10480",
+            "local_hours": {
+              "opens": "10:00",
+              "closes": "17:00"
+            },
+            "status": "scheduled"
+          },
+          "source_ids": [
+            "grownyc-union-square",
+            "grownyc-event-cider-village"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "cider-village-2026"
+        },
+        {
+          "value": {
+            "name": "Cultured book signing with Richard Martin",
+            "kind": "other",
+            "start": "2026-10-24",
+            "description": "Book signing for Cultured: A Global Guide to Fermenting and Preserving Fruit, Vegetables, Dairy, and Grains.",
+            "url": "https://grownyc.org/?post_type=events&p=10393",
+            "local_hours": {
+              "opens": "11:00",
+              "closes": "13:00"
+            },
+            "status": "scheduled"
+          },
+          "source_ids": [
+            "grownyc-union-square",
+            "grownyc-event-cultured"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "cultured-book-signing"
+        },
+        {
+          "value": {
+            "name": "Día de los Muertos with Luna Family Farm",
+            "kind": "other",
+            "start": "2026-10-30",
+            "description": "Bring a photo of a loved one to place on Luna Family Farm's ofrenda.",
+            "url": "https://grownyc.org/?post_type=events&p=10525",
+            "local_hours": {
+              "opens": "08:00",
+              "closes": "17:00"
+            },
+            "status": "scheduled"
+          },
+          "source_ids": [
+            "grownyc-union-square",
+            "grownyc-event-dia-de-los-muertos"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "dia-de-los-muertos"
+        },
+        {
+          "value": {
+            "name": "Mediterranean All the Way book signing with Ayesha Nurdjaja",
+            "kind": "other",
+            "start": "2026-10-31",
+            "url": "https://grownyc.org/?post_type=events&p=10493",
+            "local_hours": {
+              "opens": "11:00",
+              "closes": "13:00"
+            },
+            "status": "scheduled"
+          },
+          "source_ids": [
+            "grownyc-union-square",
+            "grownyc-event-mediterranean"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "mediterranean-book-signing"
+        },
+        {
+          "value": {
+            "name": "Radicchio book signing with Lane Selman",
+            "kind": "other",
+            "start": "2026-11-14",
+            "url": "https://grownyc.org/?post_type=events&p=10495",
+            "local_hours": {
+              "opens": "11:00",
+              "closes": "13:00"
+            },
+            "status": "scheduled"
+          },
+          "source_ids": [
+            "grownyc-union-square",
+            "grownyc-event-radicchio"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "radicchio-book-signing"
+        }
+      ],
+      "programs": [
+        {
+          "value": {
+            "name": "Compost drop-off",
+            "kind": "composting",
+            "description": "Compost is collected Monday, Wednesday, Friday and Saturday, 8:00 am - 5:00 pm, an hour before the market closes."
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "compost-drop-off"
+        },
+        {
+          "value": {
+            "name": "Cooking demos and family activities",
+            "kind": "education",
+            "description": "Cooking demonstrations, educational programs and activities for families at the market."
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "demos-and-family-activities"
+        }
+      ],
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "The market runs year round on Mondays, Wednesdays, Fridays and Saturdays, 8am-6pm, along 17th Street and Union Square West."
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "faq-hours"
+        },
+        {
+          "value": {
+            "topic": "payments",
+            "answer": "Bring your EBT card and PIN to the green information tent to buy wooden tokens. Every $2 in SNAP earns a $2 Health Buck for fruits and vegetables, up to $10 a day."
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "faq-snap"
+        },
+        {
+          "value": {
+            "topic": "products",
+            "answer": "Up to 140 regional farmers, fishers and bakers sell here in peak season. The lineup changes by day, so check GrowNYC's producer list for the day you plan to visit."
+          },
+          "source_ids": [
+            "grownyc-union-square"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "faq-vendors"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "grownyc-union-square",
+        "url": "https://grownyc.org/locations/union-square-greenmarket/",
+        "title": "Union Square Greenmarket - GrowNYC",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.events",
+          "first_party.programs",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "grownyc-whats-in-season",
+        "url": "https://grownyc.org/whats-available/",
+        "title": "What's in Season - GrowNYC",
+        "fields": [
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "operator",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "grownyc-event-cider-village",
+        "url": "https://grownyc.org/?post_type=events&p=10480",
+        "title": "6th Annual Cider Village at the Union Square Greenmarket! - GrowNYC",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "grownyc-event-cultured",
+        "url": "https://grownyc.org/?post_type=events&p=10393",
+        "title": "Cultured: A Global Guide to Fermenting and Preserving Fruit, Vegetables, Dairy, and Grains - GrowNYC",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "grownyc-event-dia-de-los-muertos",
+        "url": "https://grownyc.org/?post_type=events&p=10525",
+        "title": "Día de los Muertos with Luna Family Farm - GrowNYC",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "grownyc-event-mediterranean",
+        "url": "https://grownyc.org/?post_type=events&p=10493",
+        "title": "Mediterranean All the Way: Bold Flavors, Built to Share - GrowNYC",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "grownyc-event-radicchio",
+        "url": "https://grownyc.org/?post_type=events&p=10495",
+        "title": "Radicchio: A Celebration of the Beloved Italian Vegetable - GrowNYC",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      }
+    ]
+  },
+  {
+    "id": "310950",
+    "market_name": "Detroit Eastern Market",
+    "schema_version": 2,
+    "verified_at": "2026-10-21",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Eastern Market",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "operator_name": {
+          "value": "Eastern Market Corporation",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "market_type": {
+          "value": "public_food_market",
+          "source_ids": [
+            "em-saturday-market"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Detroit",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "status": {
+          "value": {
+            "value": "active",
+            "note": "Saturday Market runs weekly, year-round."
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "schedules": [
+          {
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "06:00",
+              "closes": "16:00",
+              "location_note": "All sheds open"
+            },
+            "source_ids": [
+              "em-explore",
+              "em-saturday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "saturday-market"
+          }
+        ],
+        "exceptions": [
+          {
+            "value": {
+              "start_date": "2026-11-24",
+              "status": "special_opening",
+              "opens": "09:00",
+              "closes": "15:00",
+              "note": "Holiday Market, Thanksgiving food shopping"
+            },
+            "source_ids": [
+              "em-holiday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "thanksgiving-tuesday-2026"
+          },
+          {
+            "value": {
+              "start_date": "2026-11-29",
+              "status": "special_opening",
+              "opens": "10:00",
+              "closes": "16:00",
+              "note": "Holiday Market, Michigan-made gifts"
+            },
+            "source_ids": [
+              "em-holiday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "holiday-sunday-2026-11-29"
+          },
+          {
+            "value": {
+              "start_date": "2026-12-06",
+              "status": "special_opening",
+              "opens": "10:00",
+              "closes": "16:00",
+              "note": "Holiday Market, Michigan-made gifts"
+            },
+            "source_ids": [
+              "em-holiday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "holiday-sunday-2026-12-06"
+          },
+          {
+            "value": {
+              "start_date": "2026-12-13",
+              "status": "special_opening",
+              "opens": "10:00",
+              "closes": "16:00",
+              "note": "Holiday Market, Michigan-made gifts"
+            },
+            "source_ids": [
+              "em-holiday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "holiday-sunday-2026-12-13"
+          },
+          {
+            "value": {
+              "start_date": "2026-12-20",
+              "status": "special_opening",
+              "opens": "10:00",
+              "closes": "16:00",
+              "note": "Holiday Market, Michigan-made gifts"
+            },
+            "source_ids": [
+              "em-holiday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "holiday-sunday-2026-12-20"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "value": {
+              "code": "snap_ebt",
+              "name": "SNAP / Bridge Card",
+              "redemption_instructions": "Many vendors accept Bridge Cards. Ask at the Welcome Center or the Shed 5 Information Booth for how to use your card at the market."
+            },
+            "source_ids": [
+              "em-explore",
+              "em-food-access"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "snap-ebt"
+          },
+          {
+            "value": {
+              "code": "wic",
+              "name": "WIC Produce Connect",
+              "redemption_instructions": "Michigan farmers can accept WIC Produce Connect cards May through October at the Saturday and Tuesday markets. Ask at the Welcome Center or Shed 5 Information Booth which vendors accept it."
+            },
+            "source_ids": [
+              "em-food-access"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "wic-produce-connect"
+          },
+          {
+            "value": {
+              "code": "sfmnp",
+              "name": "Senior Project FRESH",
+              "redemption_instructions": "Michigan farmers can accept Senior Project FRESH cards May through October at the Saturday and Tuesday markets. Ask at the Welcome Center or Shed 5 Information Booth which vendors accept it."
+            },
+            "source_ids": [
+              "em-food-access"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "senior-project-fresh"
+          }
+        ],
+        "incentives": [
+          {
+            "value": {
+              "name": "Double Up Food Bucks",
+              "kind": "match",
+              "applies_to": [
+                "Michigan fresh fruits and vegetables"
+              ],
+              "input_amount": 1,
+              "benefit_amount": 1,
+              "maximum_amount": 50,
+              "currency": "USD",
+              "eligibility": "SNAP shoppers",
+              "note": "Matches SNAP purchases dollar-for-dollar, up to $50 per day.",
+              "url": "https://doubleupfoodbucks.org/"
+            },
+            "source_ids": [
+              "em-food-access"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "double-up-food-bucks"
+          }
+        ]
+      },
+      "access": {
+        "parking": {
+          "availability": {
+            "value": "yes",
+            "source_ids": [
+              "em-explore"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "cost": {
+            "value": "free",
+            "source_ids": [
+              "em-explore"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "location_note": {
+            "value": "Parking is free throughout most of the district. Street parking tickets are $45, so check signs.",
+            "source_ids": [
+              "em-explore"
+            ],
+            "verified_at": "2026-10-21"
+          },
+          "url": {
+            "value": "https://easternmarket.org/wp-content/uploads/2025/02/ParkingMap2022.pdf",
+            "source_ids": [
+              "em-explore"
+            ],
+            "verified_at": "2026-10-21"
+          }
+        },
+        "accessibility_note": {
+          "value": "The market says it is accessible for wheelchairs and strollers.",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "market_map_url": {
+          "value": "https://easternmarket.org/wp-content/uploads/2026/05/EM-DistrictMap-2026-web.pdf",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "amenities": [
+        {
+          "value": {
+            "code": "information_booth",
+            "availability": "yes",
+            "note": "Welcome Center on the south side of Shed 3, and an Information Booth inside Shed 5."
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "information-booth"
+        }
+      ],
+      "policies": [
+        {
+          "value": {
+            "code": "pets",
+            "rule": "service_animals_only",
+            "note": "Dogs and other animals are not allowed in sheds, covered structures, or near vendor stalls, except registered service animals. Dogs are welcome elsewhere in the district."
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "pets"
+        },
+        {
+          "value": {
+            "code": "smoking",
+            "rule": "not_allowed",
+            "note": "No smoking or vaping in sheds, covered structures, or near vendor stalls."
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "smoking"
+        }
+      ],
+      "vendors": {
+        "directory_url": {
+          "value": "https://easternmarket.org/directory/",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        },
+        "weekly_roster_url": {
+          "value": "https://marketspread.com/market/12145/eastern-market/",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce",
+              "label": "Local produce"
+            },
+            "source_ids": [
+              "em-saturday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "fresh-produce"
+          },
+          {
+            "value": {
+              "code": "flowers",
+              "label": "Flowers and plants"
+            },
+            "source_ids": [
+              "em-saturday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "flowers"
+          },
+          {
+            "value": {
+              "code": "crafts",
+              "label": "Handcrafted items"
+            },
+            "source_ids": [
+              "em-saturday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "crafts"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Packaged food items"
+            },
+            "source_ids": [
+              "em-saturday-market"
+            ],
+            "verified_at": "2026-10-21",
+            "id": "packaged-food"
+          }
+        ],
+        "availability_note": {
+          "value": "Eastern Market publishes a seasonal produce calendar on its Explore the Market page showing when Michigan fruits and vegetables are in season.",
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21"
+        }
+      },
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "Besides the year-round Saturday Market, there is a Flower Tuesday Market every Tuesday in May (9am-3pm) and summer markets June-September: Sunday Street Market 10am-4pm and Tuesday Health and Wellness Market 9am-3pm."
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "summer-and-flower-markets"
+        },
+        {
+          "value": {
+            "topic": "products",
+            "answer": "The Wholesale Market is open to the public for bulk purchases only, midnight-6am, Monday-Friday, April-November."
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "wholesale-market"
+        },
+        {
+          "value": {
+            "topic": "products",
+            "answer": "Flower Day is the Sunday after Mother's Day each year. Saturday Markets typically have a wide selection of flowers from mid-April through June."
+          },
+          "source_ids": [
+            "em-explore"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "flower-day"
+        },
+        {
+          "value": {
+            "topic": "products",
+            "answer": "Christmas tree vendors set up in the parking lot outside Sheds 5 and 6, seven days a week, starting around Thanksgiving."
+          },
+          "source_ids": [
+            "em-holiday-market"
+          ],
+          "verified_at": "2026-10-21",
+          "id": "christmas-trees"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "em-explore",
+        "url": "https://easternmarket.org/explore-the-market/",
+        "title": "Explore the Market | Eastern Market",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.access",
+          "first_party.amenities",
+          "first_party.policies",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "em-food-access",
+        "url": "https://easternmarket.org/food-access/",
+        "title": "Food Access | Eastern Market",
+        "fields": [
+          "first_party.payments"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "em-holiday-market",
+        "url": "https://easternmarket.org/events/holiday-market-2026-thanksgiving-food-shopping/",
+        "title": "Holiday Market 2026: Thanksgiving Food Shopping | Eastern Market",
+        "fields": [
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      },
+      {
+        "id": "em-saturday-market",
+        "url": "https://easternmarket.org/events/saturday-market/2026-10-24/",
+        "title": "Saturday Market | Eastern Market",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-10-21"
+      }
+    ]
+  }
+]

@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   Apple,
   ArrowRight,
-  CalendarDays,
   Carrot,
   Cherry,
   Citrus,
@@ -13,7 +12,6 @@ import {
   Leaf,
   LoaderCircle,
   Mail,
-  Sprout,
   Wheat,
   type LucideIcon,
 } from "lucide-react";
@@ -21,25 +19,25 @@ import { trackEvent } from "@/lib/analytics";
 import { displaySerif } from "@/lib/fonts";
 
 type Source = "home" | "blog_index" | "blog_post" | "city" | "market";
-type Variant = "band" | "card" | "compact";
+type Variant = "slim" | "band" | "card" | "compact";
 
 interface NewsletterSignupProps {
   source: Source;
-  /** band: full-width dark green. card: inline light panel. compact: narrow sidebar. */
+  /**
+   * slim (default): one bordered row, for inline placements in a page.
+   * band: full-width dark green, for the homepage and blog index.
+   * card: larger light panel. compact: narrow sidebar.
+   */
   variant?: Variant;
   heading?: string;
   blurb?: string;
   marketSlug?: string;
 }
 
+// One name everywhere: the signup is "Never miss market day", and the blurb
+// is the only place the cadence is stated.
 const DEFAULT_HEADING = "Never miss market day";
-const DEFAULT_BLURB = "The markets near you and what's in season, in one short email.";
-
-const BENEFITS: { icon: LucideIcon; label: string }[] = [
-  { icon: CalendarDays, label: "Market days near you" },
-  { icon: Sprout, label: "What's in season" },
-  { icon: Mail, label: "Once a week at most" },
-];
+const DEFAULT_BLURB = "Market days near you and what's in season, at most once a week.";
 
 /** Background produce glyphs: position, size, tilt and drift timing. */
 const GLYPHS: { icon: LucideIcon; style: CSSProperties }[] = [
@@ -119,7 +117,7 @@ function SentMessage({ email, dark }: { email: string; dark: boolean }) {
  */
 export function NewsletterSignup({
   source,
-  variant = "card",
+  variant = "slim",
   heading = DEFAULT_HEADING,
   blurb = DEFAULT_BLURB,
   marketSlug,
@@ -196,7 +194,7 @@ export function NewsletterSignup({
   }`;
   const fine = dark ? "text-green-50/60" : "text-zinc-500 dark:text-zinc-400";
 
-  const form = (rowAt: "sm" | "never"): ReactNode => (
+  const form = (rowAt: "sm" | "never", withZip = true): ReactNode => (
     <form onSubmit={onSubmit} noValidate>
       <div className={`flex flex-col gap-2.5 ${rowAt === "sm" ? "sm:flex-row" : ""}`}>
         <label className="sr-only" htmlFor={`newsletter-email-${source}`}>Email address</label>
@@ -210,17 +208,21 @@ export function NewsletterSignup({
           onChange={(event) => setEmail(event.target.value)}
           className={`${input} ${rowAt === "sm" ? "sm:flex-1" : ""}`}
         />
-        <label className="sr-only" htmlFor={`newsletter-zip-${source}`}>ZIP code (optional)</label>
-        <input
-          id={`newsletter-zip-${source}`}
-          inputMode="numeric"
-          autoComplete="postal-code"
-          maxLength={5}
-          placeholder="ZIP (optional)"
-          value={zip}
-          onChange={(event) => setZip(event.target.value.replace(/\D/g, ""))}
-          className={`${input} ${rowAt === "sm" ? "sm:w-36" : ""}`}
-        />
+        {withZip && (
+          <>
+            <label className="sr-only" htmlFor={`newsletter-zip-${source}`}>ZIP code (optional)</label>
+            <input
+              id={`newsletter-zip-${source}`}
+              inputMode="numeric"
+              autoComplete="postal-code"
+              maxLength={5}
+              placeholder="ZIP (optional)"
+              value={zip}
+              onChange={(event) => setZip(event.target.value.replace(/\D/g, ""))}
+              className={`${input} ${rowAt === "sm" ? "sm:w-36" : ""}`}
+            />
+          </>
+        )}
         {/* Honeypot: hidden from people and screen readers. */}
         <input
           type="text"
@@ -252,8 +254,8 @@ export function NewsletterSignup({
         </p>
       ) : (
         <p className={`mt-2.5 text-xs ${fine}`}>
-          Free. Unsubscribe any time. See our{" "}
-          <Link href="/privacy" className="underline underline-offset-2">privacy policy</Link>.
+          Free. Unsubscribe any time.{" "}
+          <Link href="/privacy" className="underline underline-offset-2">Privacy</Link>
         </p>
       )}
     </form>
@@ -263,6 +265,9 @@ export function NewsletterSignup({
   const rootProps = {
     ref: rootRef,
     "aria-label": "Newsletter signup",
+    // VisitorPrompts looks for this so it never offers a second signup on a
+    // page that already shows one.
+    "data-newsletter-signup": "",
     ...(visible === null ? {} : { "data-visible": String(visible) }),
   };
 
@@ -270,7 +275,6 @@ export function NewsletterSignup({
     return (
       <section
         {...rootProps}
-        // The mobile menu's "Get the market note" links here.
         id="newsletter"
         className="relative isolate scroll-mt-24 overflow-hidden rounded-3xl bg-gradient-to-br from-green-950 via-green-900 to-emerald-800 px-6 py-12 text-white shadow-xl shadow-green-950/10 sm:px-12 sm:py-16"
       >
@@ -278,36 +282,41 @@ export function NewsletterSignup({
         <GlyphField tone="text-white/[0.13]" />
         <div className="relative grid items-center gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
           <div>
-            <p {...reveal(0)} className="nl-reveal inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-lime-200 ring-1 ring-white/15">
-              <Sprout aria-hidden="true" className="h-3.5 w-3.5" />
-              The market note
-            </p>
-            <h2 {...reveal(1)} className={`nl-reveal ${displaySerif.className} mt-5 text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl`}>
+            <h2 {...reveal(0)} className={`nl-reveal ${displaySerif.className} text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl`}>
               {heading}
             </h2>
-            <p {...reveal(2)} className="nl-reveal mt-4 max-w-md text-lg leading-relaxed text-green-50/80">{blurb}</p>
-            <ul {...reveal(3)} className="nl-reveal mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-green-50/90">
-              {BENEFITS.map(({ icon: Icon, label }) => (
-                <li key={label} className="flex items-center gap-2">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 ring-1 ring-white/15">
-                    <Icon aria-hidden="true" className="h-3.5 w-3.5 text-lime-200" />
-                  </span>
-                  {label}
-                </li>
-              ))}
-            </ul>
+            <p {...reveal(1)} className="nl-reveal mt-4 max-w-md text-lg leading-relaxed text-green-50/80">{blurb}</p>
           </div>
           {/* Fixed minimum height so swapping the form for the success
               message doesn't make the whole band jump. */}
-          <div {...reveal(4)} className="nl-reveal flex min-h-[16.5rem] flex-col justify-center rounded-2xl bg-white/[0.07] p-5 ring-1 ring-white/15 backdrop-blur-sm sm:p-7">
-            {body ?? (
-              <>
-                <p className="mb-4 text-sm font-medium text-green-50/90">Get it in your inbox</p>
-                {form("never")}
-              </>
-            )}
+          <div {...reveal(2)} className="nl-reveal flex min-h-[13rem] flex-col justify-center rounded-2xl bg-white/[0.07] p-5 ring-1 ring-white/15 backdrop-blur-sm sm:p-7">
+            {body ?? form("never")}
           </div>
         </div>
+      </section>
+    );
+  }
+
+  if (variant === "slim") {
+    return (
+      <section
+        {...rootProps}
+        className="rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        {body ?? (
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-8">
+            <div {...reveal(0)} className="nl-reveal flex min-w-0 items-start gap-3 lg:w-2/5 lg:pt-1">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-50 dark:bg-green-900/30">
+                <Mail aria-hidden="true" className="h-4 w-4 text-green-700 dark:text-green-400" />
+              </span>
+              <div className="min-w-0">
+                <h2 className="font-semibold text-zinc-900 dark:text-zinc-50">{heading}</h2>
+                <p className="mt-0.5 text-sm text-zinc-600 dark:text-zinc-400">{blurb}</p>
+              </div>
+            </div>
+            <div {...reveal(1)} className="nl-reveal min-w-0 flex-1">{form("sm", false)}</div>
+          </div>
+        )}
       </section>
     );
   }

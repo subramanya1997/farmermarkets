@@ -10,7 +10,6 @@ import {
   Clock,
   CreditCard,
   Info,
-  Mail,
   MapPin,
   Menu,
   Search,
@@ -22,7 +21,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { trackEvent } from "@/lib/analytics";
-import { displaySerif } from "@/lib/fonts";
 import { SITE_FRAME } from "@/lib/ui";
 
 interface HeaderProps {
@@ -43,7 +41,7 @@ const MENU_NAV: { name: string; hint: string; href: string; icon: LucideIcon }[]
   { name: "Find a market", hint: "Search 9,000+ markets near you", href: "/", icon: MapPin },
   { name: "Blog", hint: "Guides for shopping, storing, selling", href: "/blog", icon: BookOpen },
   { name: "For market operators", hint: "Claim or add your listing", href: "/for-market-operators", icon: Store },
-  { name: "About", hint: "Who we are and our data sources", href: "/about", icon: Info },
+  { name: "About", hint: "What this is and where the data comes from", href: "/about", icon: Info },
 ];
 
 const TOPIC_ICONS: Record<string, LucideIcon> = {
@@ -221,22 +219,6 @@ export function Header({ states, topics }: HeaderProps) {
                     </ul>
                   </section>
                 )}
-
-                {/* Newsletter prompt; the full form is the band on the homepage. */}
-                <Link
-                  href="/#newsletter"
-                  onClick={() => go("/#newsletter")}
-                  className="menu-rise group relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-900 to-emerald-700 p-5 text-white"
-                  style={rise(row++)}
-                >
-                  <Mail aria-hidden="true" className="absolute -right-3 -top-3 h-24 w-24 rotate-12 text-white/10" strokeWidth={1.25} />
-                  <p className={`${displaySerif.className} text-xl font-semibold tracking-tight`}>Never miss market day</p>
-                  <p className="mt-1 text-sm text-green-50/80">Markets near you and what&apos;s in season, once a week at most.</p>
-                  <span className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-lime-300 px-3.5 py-2 text-sm font-semibold text-green-950 transition-colors group-hover:bg-lime-200">
-                    Get the market note
-                    <ChevronRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  </span>
-                </Link>
               </div>
             </SheetContent>
           </Sheet>

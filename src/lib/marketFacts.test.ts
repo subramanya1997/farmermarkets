@@ -5,11 +5,12 @@ const facts = await import('./marketFacts.ts');
 
 const {
   amenityLabels,
-  composedSummary,
   descriptionParagraphs,
   formatDate,
   formatMiles,
   marketFacts,
+  marketGlance,
+  plainFact,
   orderingLabels,
   paymentLabels,
   productLabels,
@@ -295,23 +296,23 @@ test('representative v2 schedules and amenities render without collapsing or dis
   });
 
   assert.deepEqual(structuredScheduleLabels(first_party), [
-    'Saturdays, 8am–2pm',
-    'Tuesdays and Thursdays, 10am–2pm',
+    'Saturdays, 8am-2pm',
+    'Tuesdays and Thursdays, 10am-2pm',
   ]);
   const byTerm = new Map(marketFacts(record).map((row) => [row.term, row.values]));
   assert.deepEqual(byTerm.get('Schedule'), [
-    'Saturdays, 8am–2pm',
-    'Tuesdays and Thursdays, 10am–2pm',
+    'Saturdays, 8am-2pm',
+    'Tuesdays and Thursdays, 10am-2pm',
   ]);
   assert.deepEqual(byTerm.get('Amenities'), [
     'ATM - ATMs are inside the Ferry Building.',
     'Purchase holding - The free Veggie Valet holds purchases.',
   ]);
-  assert.ok(
-    composedSummary(record).includes(
-      'Its schedule is Saturdays, 8am–2pm; Tuesdays and Thursdays, 10am–2pm, year-round.'
-    )
-  );
+  assert.deepEqual(marketGlance(record)?.lines, [
+    'Saturdays, 8am-2pm',
+    'Tuesdays and Thursdays, 10am-2pm',
+  ]);
+  assert.equal(marketGlance(record)?.season, 'Year-round');
 });
 
 test('exact v2 payment methods take precedence and deduplicate legacy synonyms', () => {
@@ -339,12 +340,45 @@ test('exact v2 payment methods take precedence and deduplicate legacy synonyms',
   })), ['Credit Card', 'Contactless payments such as Apple Pay', 'Wooden market coins']);
 });
 
-test('dated seasons keep the month capitalized in visit summaries', () => {
-  const summary = composedSummary(market({
+test('dated seasons keep the month capitalized at a glance', () => {
+  const glance = marketGlance(market({
     days: ['Wednesday 15:00-19:00'],
     season: 'June 3-September 30, 2026',
-  })).join(' ');
-  assert.ok(summary.includes(', June 3-September 30, 2026.'));
+  }));
+  assert.equal(glance?.season, 'June 3-September 30, 2026');
+});
+
+test('a combined Credit/Debit label is dropped once both cards are listed', () => {
+  assert.deepEqual(
+    paymentLabels(market({ payment_methods: ['Credit/Debit', 'WIC'], accepts_credit_debit: true })),
+    ['WIC', 'Credit Card', 'Debit Card']
+  );
+  assert.deepEqual(paymentLabels(market({ payment_methods: ['Credit/Debit'] })), ['Credit/Debit']);
+});
+
+test('the legacy setting is hidden once researched access or schedule facts exist', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-09-30' };
+  const legacy = market({ site_type: 'Private business parking lot', indoor_outdoor: 'Indoor' });
+  assert.ok(marketFacts(legacy).some((row) => row.term === 'Setting'));
+  const researched = market({
+    site_type: 'Private business parking lot',
+    first_party: { access: { bicycle_parking: { value: 'yes', ...evidence } } },
+  });
+  assert.equal(marketFacts(researched).some((row) => row.term === 'Setting'), false);
+});
+
+test('research notes lose their reporting frame but keep the claim', () => {
+  assert.equal(
+    plainFact('The page states that CalFresh shoppers can double benefits up to a set maximum per market day.'),
+    'CalFresh shoppers can double benefits up to a set maximum per market day.'
+  );
+  assert.equal(plainFact('The market says it is accessible for wheelchairs and strollers.'), 'It is accessible for wheelchairs and strollers.');
+  assert.equal(plainFact('The market lists an available SNAP match of up to $20.'), 'A SNAP match of up to $20.');
+  assert.equal(
+    plainFact("GrowNYC's guide lists apples. It is a regional guide, not a list of what is at this market today."),
+    "GrowNYC's guide lists apples."
+  );
+  assert.equal(plainFact('Parking is free.'), 'Parking is free.');
 });
 
 /* ------------------------------------------------------------------ *
@@ -387,78 +421,38 @@ test('distances read in miles at a sane precision', () => {
 });
 
 /* ------------------------------------------------------------------ *
- * Composed summary
+ * At a glance
  * ------------------------------------------------------------------ */
 
-/** The summary must never expose a template slot or an unsupported claim. */
-function assertWellFormed(sentences: string[]) {
-  for (const sentence of sentences) {
-    assert.doesNotMatch(sentence, /\s{2,}/, sentence);
-    assert.doesNotMatch(sentence, /\s\./, sentence);
-    assert.doesNotMatch(sentence, /\b(in|at|from|and)\s*\./i, sentence);
-    assert.doesNotMatch(sentence, /undefined|NaN|null/, sentence);
-    assert.match(sentence, /\.$/, sentence);
-  }
-}
-
-test('the summary is built from the fields the record has', () => {
-  const sentences = composedSummary(
+test('the glance shows days, one clock, season and size from the record', () => {
+  const glance = marketGlance(
     market({
       name: 'Durham Farmers Market',
-      address: '501 Foster Street, Durham, North Carolina, 27701',
-      city: 'Durham',
-      state: 'North Carolina',
       days: ['saturday'],
       season: 'Saturdays 8:00 AM to 1:00 PM',
       vendor_count: 24,
-      indoor_outdoor: 'No Indoor;',
-      snap: true,
-      wic: true,
     })
   );
-
-  assertWellFormed(sentences);
-  assert.equal(sentences[0], 'Durham Farmers Market is at 501 Foster St in Durham, NC.');
-  assert.equal(sentences[1], 'It is open Saturdays from 8am-1pm.');
-  assert.equal(sentences[2], '24 vendors are listed at this outdoor market.');
-  assert.equal(sentences[3], 'It accepts SNAP/EBT and WIC.');
+  assert.deepEqual(glance?.days, ['Saturday']);
+  assert.equal(glance?.hours, '8am-1pm');
+  assert.deepEqual(glance?.lines, []);
+  assert.equal(glance?.vendors, 24);
 });
 
-test('a name that does not say "market" gets the gloss, once', () => {
-  const [first] = composedSummary(market({ name: 'Winter Bazaar', city: 'Boone', state: 'NC' }));
-  assert.equal(first, 'Winter Bazaar, a farmers market, is in Boone, NC.');
+test('a record with no schedule, season or size has no glance', () => {
+  assert.equal(marketGlance(market({ name: 'Ennis Farmers Market', city: 'Ennis', state: 'TX' })), undefined);
+  assert.equal(marketGlance(market({ vendor_count: 0 })), undefined);
 });
 
-test('a sparse record gets one honest sentence, not filler', () => {
-  const sentences = composedSummary(market({ name: 'Ennis Farmers Market', city: 'Ennis', state: 'TX' }));
-  assertWellFormed(sentences);
-  assert.deepEqual(sentences, ['Ennis Farmers Market is in Ennis, TX.']);
-});
-
-test('a record with no location at all still says nothing false', () => {
-  assertWellFormed(composedSummary(market({ name: 'Riverside Market' })));
-  assertWellFormed(composedSummary(market({ name: 'Riverside Grocers' })));
-});
-
-test('the summary varies with the data rather than repeating a template', () => {
-  const one = composedSummary(
-    market({ name: 'A Market', city: 'Akron', state: 'OH', days: ['tuesday'] })
-  ).join(' ');
-  const two = composedSummary(
-    market({ name: 'B Market', city: 'Boise', state: 'ID', season: 'Year Round', snap: true })
-  ).join(' ');
-  assert.notEqual(one, two);
-});
-
-test('summary and fact rows preserve Market 1892 windows and closure-only weekdays', () => {
+test('the glance keeps Market 1892 windows whole and closure-only weekdays closed', () => {
   const record = market({ name: 'Market 1892', days: ['Mon-Fri 9am-6pm, Sat/Sun 8am-5pm'] });
-  const summary = composedSummary(record).join(' ');
-  assert.match(summary, /Mon-Fri 9am-6pm; Sat\/Sun 8am-5pm/);
-  assert.doesNotMatch(summary, /every day.*9am-6pm/);
+  const glance = marketGlance(record);
+  assert.deepEqual(glance?.lines, ['Mon-Fri 9am-6pm', 'Sat/Sun 8am-5pm']);
+  assert.equal(glance?.hours, undefined);
   assert.deepEqual(marketFacts(record).find((row) => row.term === 'Schedule')?.values, ['Mon-Fri 9am-6pm', 'Sat/Sun 8am-5pm']);
-  const closed = market({ days: ['Mon-Fri Closed', 'Sat 8am-1pm', 'Sun Closed'] });
-  assert.match(composedSummary(closed).join(' '), /Saturdays from 8am-1pm/);
-  assert.doesNotMatch(composedSummary(closed).join(' '), /every day|Mondays|Sundays/);
+  const closed = marketGlance(market({ days: ['Mon-Fri Closed', 'Sat 8am-1pm', 'Sun Closed'] }));
+  assert.deepEqual(closed?.days, ['Saturday']);
+  assert.equal(closed?.hours, '8am-1pm');
 });
 
 test('rich dated schedules keep their bounds in visible labels', () => {
@@ -468,5 +462,5 @@ test('rich dated schedules keep their bounds in visible labels', () => {
       id: 'summer', ...evidence,
       value: { recurrence: { kind: 'weekly', weekdays: ['thursday'] }, opens: '15:00', closes: '19:00', start_date: '2026-05-07', end_date: '2026-08-27' },
     }] },
-  }), ['Thursdays, 3pm–7pm (May 7, 2026 - August 27, 2026)']);
+  }), ['Thursdays, 3pm-7pm (May 7, 2026 - August 27, 2026)']);
 });

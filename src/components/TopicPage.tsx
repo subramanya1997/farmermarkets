@@ -1,7 +1,19 @@
-import type { ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import Link from 'next/link';
+import {
+  ArrowUpRight,
+  Baby,
+  CalendarDays,
+  Clock,
+  HandCoins,
+  MapPin,
+  MousePointerClick,
+  ShoppingBasket,
+  Truck,
+} from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FaqSection } from '@/components/FaqSection';
+import { TopicMarketCard } from '@/app/farmers-markets/_components/TopicMarketRow';
 import { absoluteUrl } from '@/lib/site';
 import {
   TOPIC_LABELS,
@@ -10,7 +22,8 @@ import {
   type TopicDayRow,
   type TopicMarketRow,
   type TopicPageData,
-  type TopicStateRow,
+  type TopicStat,
+  type TopicStatIcon,
 } from '@/lib/topicPage';
 import { SITE_FRAME } from '@/lib/ui';
 
@@ -18,15 +31,16 @@ import { SITE_FRAME } from '@/lib/ui';
  * The one layout the four topic pages share.
  *
  * Each page supplies its view model from `src/lib/topicPage.ts` plus its own
- * sections as children; everything the four have in common — breadcrumbs, the
- * answer-first opener, the FAQ block, the CollectionPage/ItemList/FAQPage
- * JSON-LD and the cross-links to the other topics — lives here once, so the
- * pages cannot drift into four slightly different templates.
+ * sections as children; everything the four have in common (breadcrumbs, the
+ * answer sentence and headline numbers, the FAQ block, the
+ * CollectionPage/ItemList/FAQPage JSON-LD and the cross-links to the other
+ * topics) lives here once, so the pages cannot drift into four slightly
+ * different templates.
  *
- * Styling shares the city and state pages' hero gradient and table and list
- * treatments, but unlike those pages the content sits in one centered
- * max-w-4xl document column: topic pages are prose, tables and FAQs with no
- * wide grids, and left-anchoring that on the 1920px frame read as broken.
+ * Built to be scanned, not read, in the same visual language as the market
+ * page's "Plan your visit" card: numbers as tiles, states and cities as chip
+ * grids, weekdays as bars, market rows as chips. Content sits in one centered
+ * max-w-4xl column.
  */
 
 /** CollectionPage + ItemList + FAQPage, on absolute canonical URLs. */
@@ -79,179 +93,178 @@ function structuredData(data: TopicPageData) {
   ];
 }
 
-/** An h2 section with an optional one-line intro. Renders nothing when empty. */
-export function TopicSection({
-  heading,
-  intro,
-  children,
-}: {
-  heading: string;
-  intro?: string;
-  children: ReactNode;
-}) {
+type Icon = ComponentType<{ className?: string; 'aria-hidden'?: boolean }>;
+
+const STAT_ICONS: Record<TopicStatIcon, Icon> = {
+  snap: HandCoins,
+  wic: Baby,
+  map: MapPin,
+  calendar: CalendarDays,
+  clock: Clock,
+  online: MousePointerClick,
+  delivery: Truck,
+  csa: ShoppingBasket,
+};
+
+const HEADING = 'text-xl font-bold tracking-tight sm:text-2xl';
+
+/** An h2 section. */
+export function TopicSection({ heading, children }: { heading: string; children: ReactNode }) {
   return (
     <section>
-      <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{heading}</h2>
-      {intro && (
-        <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">{intro}</p>
-      )}
+      <h2 className={HEADING}>{heading}</h2>
       <div className="mt-4">{children}</div>
     </section>
   );
 }
 
-/** State → count table. Every row links to that state's hub. */
-export function TopicStateTable({
-  states,
-  caption,
-  countHeading,
-}: {
-  states: TopicStateRow[];
-  caption: string;
-  countHeading: string;
-}) {
-  if (states.length === 0) return null;
+/** The headline numbers under the answer sentence. */
+function TopicStats({ stats }: { stats: TopicStat[] }) {
+  if (stats.length === 0) return null;
+  const columns = stats.length >= 4 ? 'sm:grid-cols-4' : stats.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2';
 
   return (
-    <div className="w-full overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-      <table className="w-full min-w-[20rem] border-collapse text-left text-sm">
-        <caption className="sr-only">{caption}</caption>
-        <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
-          <tr>
-            <th scope="col" className="px-4 py-3 font-semibold">
-              State or region
-            </th>
-            <th scope="col" className="px-4 py-3 text-right font-semibold">
-              {countHeading}
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
-          {states.map((state) => (
-            <tr key={state.slug} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/60">
-              <th scope="row" className="px-4 py-2.5 font-medium">
-                <Link
-                  href={state.href}
-                  className="text-green-700 hover:underline dark:text-green-500"
-                >
-                  {state.name}
-                </Link>
-              </th>
-              <td className="px-4 py-2.5 text-right text-zinc-600 tabular-nums dark:text-zinc-400">
-                {state.count.toLocaleString('en-US')}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-/** Weekday → count table. Days with a page of their own link to it. */
-export function TopicDayTable({
-  days,
-  caption,
-  total,
-}: {
-  days: TopicDayRow[];
-  caption: string;
-  /** The denominator the share column is a percentage of. */
-  total: number;
-}) {
-  if (days.length === 0) return null;
-
-  return (
-    <div className="w-full overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-      <table className="w-full min-w-[24rem] border-collapse text-left text-sm">
-        <caption className="sr-only">{caption}</caption>
-        <thead className="bg-zinc-50 text-xs uppercase tracking-wide text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
-          <tr>
-            <th scope="col" className="px-4 py-3 font-semibold">
-              Day
-            </th>
-            <th scope="col" className="px-4 py-3 text-right font-semibold">
-              Markets
-            </th>
-            <th scope="col" className="px-4 py-3 text-right font-semibold">
-              Share of {total.toLocaleString('en-US')}
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
-          {days.map((row) => (
-            <tr key={row.day} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/60">
-              <th scope="row" className="px-4 py-2.5 font-medium">
-                {row.href ? (
-                  <Link
-                    href={row.href}
-                    className="text-green-700 hover:underline dark:text-green-500"
-                  >
-                    {row.day} markets
-                  </Link>
-                ) : (
-                  row.day
-                )}
-              </th>
-              <td className="px-4 py-2.5 text-right text-zinc-600 tabular-nums dark:text-zinc-400">
-                {row.count.toLocaleString('en-US')}
-              </td>
-              <td className="px-4 py-2.5 text-right text-zinc-600 tabular-nums dark:text-zinc-400">
-                {row.share === undefined ? '-' : `${row.share}%`}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-/** Market list: name → city → the details the record actually has. */
-export function TopicMarketList({ markets }: { markets: TopicMarketRow[] }) {
-  if (markets.length === 0) return null;
-
-  return (
-    <ul className="w-full divide-y divide-zinc-200 dark:divide-zinc-800">
-      {markets.map((market) => {
-        const details = [
-          market.address,
-          market.days.length > 0
-            ? market.days.map((day) => day.slice(0, 3)).join(', ')
-            : undefined,
-          market.hours,
-          market.season,
-          ...market.tags,
-        ].filter((detail): detail is string => Boolean(detail));
-
+    <dl className={`mt-5 grid grid-cols-2 gap-2 sm:gap-3 ${columns}`}>
+      {stats.map((stat) => {
+        const Glyph = STAT_ICONS[stat.icon];
         return (
-          <li key={market.slug} className="py-3 text-sm">
-            <Link
-              href={market.href}
-              className="font-medium text-green-700 hover:underline dark:text-green-500"
-            >
-              {market.name}
-            </Link>
-            <span className="text-zinc-600 dark:text-zinc-400">
-              {market.placeLabel && (
-                <>
-                  {' - '}
-                  {market.placeHref ? (
-                    <Link href={market.placeHref} className="hover:underline">
-                      {market.placeLabel}
-                    </Link>
-                  ) : (
-                    market.placeLabel
-                  )}
-                </>
-              )}
-              {details.map((detail) => ` · ${detail}`).join('')}
+          <div
+            key={stat.label}
+            className="flex flex-col-reverse rounded-2xl border border-zinc-200 bg-white/80 p-3 sm:p-4 dark:border-zinc-800 dark:bg-zinc-900/60"
+          >
+            <dt className="mt-1 flex items-center gap-1.5 text-xs font-medium text-zinc-500 dark:text-zinc-400">
+              <Glyph aria-hidden className="h-4 w-4 shrink-0 text-green-700 dark:text-green-500" />
+              {stat.label}
+            </dt>
+            <dd className="text-xl font-semibold tracking-tight text-zinc-900 tabular-nums sm:text-2xl dark:text-zinc-100">
+              {stat.value}
+            </dd>
+          </div>
+        );
+      })}
+    </dl>
+  );
+}
+
+export interface TopicChip {
+  label: string;
+  href: string;
+  count?: number;
+}
+
+/**
+ * A compact multi-column grid of linked chips ("New York 327"), the first
+ * `highlight` drawn in green. Used for states and cities.
+ */
+export function TopicChipGrid({
+  items,
+  highlight = 0,
+  countLabel = 'markets',
+}: {
+  items: TopicChip[];
+  highlight?: number;
+  /** Read after the count by screen readers: "327 markets". */
+  countLabel?: string;
+}) {
+  if (items.length === 0) return null;
+
+  return (
+    <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+      {items.map((item, index) => (
+        <li key={item.href}>
+          <Link
+            href={item.href}
+            className={`flex items-center justify-between gap-2 rounded-xl border px-3 py-2 text-sm transition-colors ${
+              index < highlight
+                ? 'border-green-200 bg-green-50 font-medium text-green-900 hover:bg-green-100 dark:border-green-900 dark:bg-green-950/40 dark:text-green-200 dark:hover:bg-green-950/70'
+                : 'border-zinc-200 text-zinc-800 hover:border-green-300 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-800'
+            }`}
+          >
+            <span className="truncate">{item.label}</span>
+            {item.count !== undefined && (
+              <span className="shrink-0 text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
+                {item.count.toLocaleString('en-US')}
+                <span className="sr-only"> {countLabel}</span>
+              </span>
+            )}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** A single wrapping row of rounded-full link chips. */
+export function TopicChipRow({ items }: { items: TopicChip[] }) {
+  if (items.length === 0) return null;
+
+  return (
+    <ul className="flex flex-wrap gap-1.5">
+      {items.map((item) => (
+        <li key={item.label}>
+          <Link
+            href={item.href}
+            className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-800 transition-colors hover:border-green-300 hover:bg-green-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+          >
+            {item.label}
+            {item.count !== undefined && (
+              <span className="text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
+                {item.count.toLocaleString('en-US')}
+              </span>
+            )}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Weekdays as horizontal bars, busiest in full green. Days with a page link to it. */
+export function TopicDayBars({ days }: { days: TopicDayRow[] }) {
+  if (days.length === 0) return null;
+  const max = Math.max(...days.map((row) => row.count));
+
+  return (
+    <ul className="space-y-2.5 rounded-2xl border border-zinc-200 bg-white p-4 sm:p-5 dark:border-zinc-800 dark:bg-zinc-900">
+      {days.map((row) => {
+        const width = Math.max(2, Math.round((row.count / max) * 100));
+        return (
+          <li
+            key={row.day}
+            className="grid grid-cols-[6.5rem_1fr_3.5rem] items-center gap-3 text-sm"
+          >
+            {row.href ? (
+              <Link
+                href={row.href}
+                className="inline-flex items-center gap-1 font-medium text-green-700 hover:underline dark:text-green-500"
+              >
+                {row.day}
+                <ArrowUpRight aria-hidden className="h-3.5 w-3.5" />
+              </Link>
+            ) : (
+              <span className="font-medium text-zinc-800 dark:text-zinc-200">{row.day}</span>
+            )}
+            <div aria-hidden className="h-3 overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+              <div
+                className={`h-full rounded-full ${
+                  row.count === max ? 'bg-green-600' : 'bg-green-600/45 dark:bg-green-500/40'
+                }`}
+                style={{ width: `${width}%` }}
+              />
+            </div>
+            <span className="text-right text-zinc-600 tabular-nums dark:text-zinc-400">
+              {row.count.toLocaleString('en-US')}
             </span>
           </li>
         );
       })}
     </ul>
   );
+}
+
+/** Market rows: name and city, then day, hours and pill chips. */
+export function TopicMarketList({ markets }: { markets: TopicMarketRow[] }) {
+  return <TopicMarketCard markets={markets} />;
 }
 
 /** The FAQ block, mirrored exactly by the FAQPage JSON-LD above. */
@@ -263,28 +276,20 @@ function TopicFaqs({ data }: { data: TopicPageData }) {
 
 /** Links to the other three topic pages and back to the directory. */
 function TopicCrossLinks({ current }: { current: TopicPageData['slug'] }) {
-  const others = TOPIC_SLUGS.filter((slug) => slug !== current);
+  const items: TopicChip[] = [
+    ...TOPIC_SLUGS.filter((slug) => slug !== current).map((slug) => ({
+      label: TOPIC_LABELS[slug],
+      href: topicPath(slug),
+    })),
+    { label: 'All states', href: '/markets' },
+  ];
 
   return (
     <section>
-      <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Keep browsing</h2>
-      <ul className="mt-4 space-y-2 text-sm">
-        {others.map((slug) => (
-          <li key={slug}>
-            <Link
-              href={topicPath(slug)}
-              className="text-green-700 hover:underline dark:text-green-500"
-            >
-              {TOPIC_LABELS[slug]}
-            </Link>
-          </li>
-        ))}
-        <li>
-          <Link href="/markets" className="text-green-700 hover:underline dark:text-green-500">
-            Every state and region in the directory
-          </Link>
-        </li>
-      </ul>
+      <h2 className="mb-2.5 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        Keep browsing
+      </h2>
+      <TopicChipRow items={items} />
     </section>
   );
 }
@@ -310,12 +315,6 @@ export function TopicPageShell({
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">
         <section className="w-full bg-gradient-to-b from-green-50 to-white py-6 sm:py-8 md:py-12 dark:from-green-900/20 dark:to-zinc-950">
           <div className={SITE_FRAME}>
-            {/*
-              Topic pages are documents: prose, tables and FAQs, nothing that
-              earns the full 1920px frame. Left-anchoring the capped content on
-              a frame this wide left two thirds of the screen empty, so the
-              whole page reads in one centered column instead.
-            */}
             <div className="mx-auto w-full max-w-4xl">
               <Breadcrumbs
                 items={[
@@ -326,11 +325,12 @@ export function TopicPageShell({
               <h1 className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-2xl font-bold tracking-tighter text-transparent sm:text-3xl md:text-4xl">
                 {data.heading}
               </h1>
-              {/* Answer-first: the counts are the first thing both a reader and
+              {/* Answer-first: the count is the first thing both a reader and
                   an extractive AI crawler see. */}
-              <p className="mt-4 max-w-3xl text-base text-zinc-700 sm:text-lg dark:text-zinc-300">
-                {data.opener}
+              <p className="mt-3 max-w-3xl text-base text-zinc-700 sm:text-lg dark:text-zinc-300">
+                {data.answer}
               </p>
+              <TopicStats stats={data.stats} />
             </div>
           </div>
         </section>

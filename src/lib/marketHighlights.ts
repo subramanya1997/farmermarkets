@@ -37,31 +37,61 @@ export function eventDisplayState(event: MarketEvent, now = new Date()): 'Cancel
   return undefined;
 }
 
-/** Dates and the publisher's edition label qualify the roster, not attendance. */
-export function rosterContextLabels(context?: RosterContext): string[] {
-  if (!context) return [];
-  const labels = clean(context.label) ? [clean(context.label)] : [];
-  const start = publishedEventDate(context.start_date)?.label;
-  const end = publishedEventDate(context.end_date)?.label;
-  const asOf = publishedEventDate(context.as_of)?.label;
-  if (start && end) labels.push(`Published period: ${start} - ${end}`);
-  else if (start) labels.push(`Published period starts ${start}`);
-  else if (end) labels.push(`Published period ends ${end}`);
-  if (asOf) labels.push(`Snapshot as of ${asOf}`);
-  return labels;
-}
-
 export function rosterPeriodHasEnded(context?: RosterContext, now = new Date()): boolean {
   return calendarPeriodHasEnded(context?.end_date, now);
 }
 
+/** "4-6pm" from structured clocks; no zone suffix, the page is local. */
 export function publishedLocalHours(hours?: MarketEvent['local_hours']): string | undefined {
   if (!hours || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hours.opens) || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(hours.closes) || hours.closes <= hours.opens) return undefined;
-  const clock = (value: string) => {
-    const [hour, minute] = value.split(':').map(Number);
-    return `${hour % 12 || 12}:${String(minute).padStart(2, '0')}${hour < 12 ? 'am' : 'pm'}`;
+  return clockRange(hours.opens, hours.closes);
+}
+
+function clockRange(opens: string, closes: string): string {
+  const parts = (value: string) => value.split(':').map(Number);
+  const [openHour, openMinute] = parts(opens);
+  const [closeHour, closeMinute] = parts(closes);
+  const text = (hour: number, minute: number) => `${hour % 12 || 12}${minute ? `:${String(minute).padStart(2, '0')}` : ''}`;
+  const meridiem = (hour: number) => (hour < 12 ? 'am' : 'pm');
+  const sameHalf = meridiem(openHour) === meridiem(closeHour);
+  return `${text(openHour, openMinute)}${sameHalf ? '' : meridiem(openHour)}-${text(closeHour, closeMinute)}${meridiem(closeHour)}`;
+}
+
+/**
+ * The publisher's free-text hours in the same short form when they parse
+ * ("4:00 PM-6:00 PM" becomes "4-6pm"); anything else is shown as written.
+ */
+export function compactPublishedHours(value?: string | null): string | undefined {
+  const text = clean(value);
+  if (!text) return undefined;
+  const clock = '(\\d{1,2})(?::(\\d{2}))?\\s*([ap])\\.?m\\.?';
+  const match = new RegExp(`^${clock}\\s*(?:-|to)\\s*${clock}$`, 'i').exec(text);
+  if (!match) return text;
+  const to24 = (hour: string, minute: string | undefined, half: string) => {
+    const value = (Number(hour) % 12) + (half.toLowerCase() === 'p' ? 12 : 0);
+    return `${String(value).padStart(2, '0')}:${minute ?? '00'}`;
   };
-  return `${clock(hours.opens)} - ${clock(hours.closes)} (local time)`;
+  const opens = to24(match[1], match[2], match[3]);
+  const closes = to24(match[4], match[5], match[6]);
+  return closes > opens ? clockRange(opens, closes) : text;
+}
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** The calendar block on an event row: { month: "Oct", day: "28" }. */
+export function eventDateBlock(value?: string | null): { month: string; day: string; dateTime: string } | undefined {
+  const formatted = publishedEventDate(value);
+  if (!formatted) return undefined;
+  const [, month, day] = /^\d{4}-(\d{2})-(\d{2})/.exec(formatted.dateTime) ?? [];
+  return month ? { month: MONTHS[Number(month) - 1], day: String(Number(day)), dateTime: formatted.dateTime.slice(0, 10) } : undefined;
+}
+
+/** "Dec 5-6" or "Nov 30-Dec 2" for a multi-day event; undefined for one day. */
+export function eventSpan(start?: string | null, end?: string | null): string | undefined {
+  const from = eventDateBlock(start);
+  const to = eventDateBlock(end);
+  if (!from || !to || to.dateTime <= from.dateTime) return undefined;
+  return from.month === to.month ? `${from.month} ${from.day}-${to.day}` : `${from.month} ${from.day}-${to.month} ${to.day}`;
 }
 
 /** Format the written calendar date and clock, never the server's local zone. */
@@ -94,18 +124,58 @@ export function publishedEventDate(value?: string | null): PublishedEventDate | 
   return { dateTime: text, label: `${calendar} at ${clock}${zone}` };
 }
 
-/** Shared visibility rules keep detail rows and the dedicated sections in sync. */
-export function marketHighlights(firstParty?: MarketFirstPartyFacts) {
-  const events = (firstParty?.events ?? []).filter((item) => clean(item.value.name));
+type RosterItem = NonNullable<NonNullable<MarketFirstPartyFacts['vendors']>['roster']>[number];
+
+/**
+ * Shared visibility rules keep detail rows and the dedicated sections in
+ * sync. Past events are dropped (a cancelled or postponed one stays, with its
+ * state), and an attendance note repeated across the roster says something
+ * about the list, not the vendor, so it is dropped from every card.
+ */
+export function marketHighlights(firstParty?: MarketFirstPartyFacts, now = new Date()) {
+  const events = (firstParty?.events ?? []).filter(
+    (item) => clean(item.value.name) && eventDisplayState(item.value, now) !== 'Past event'
+  );
   const programs = (firstParty?.programs ?? []).filter((item) => clean(item.value.name));
   const vendors = firstParty?.vendors;
-  const roster = (vendors?.roster ?? []).filter((item) => clean(item.value.name));
+  const named = (vendors?.roster ?? []).filter((item) => clean(item.value.name));
+  const noteCounts = new Map<string, number>();
+  for (const item of named) {
+    const note = clean(item.value.attendance_note);
+    if (note) noteCounts.set(note, (noteCounts.get(note) ?? 0) + 1);
+  }
+  const roster: RosterItem[] = named.map((item) => {
+    const note = clean(item.value.attendance_note);
+    if (!note || (noteCounts.get(note) ?? 0) < 2) return item;
+    return { ...item, value: { ...item.value, attendance_note: undefined } };
+  });
   const vendorLinks = [
-    vendors?.directory_url ? { label: 'Vendor directory', fact: vendors.directory_url, eventName: 'Vendor Directory Opened' } : undefined,
-    vendors?.weekly_roster_url ? { label: 'Weekly vendor roster', fact: vendors.weekly_roster_url, eventName: 'Vendor Roster Opened' } : undefined,
+    vendors?.directory_url ? { label: 'Full vendor list', fact: vendors.directory_url, eventName: 'Vendor Directory Opened' } : undefined,
+    vendors?.weekly_roster_url ? { label: "This week's vendors", fact: vendors.weekly_roster_url, eventName: 'Vendor Roster Opened' } : undefined,
   ].flatMap((link) => {
     const href = safeHighlightUrl(link?.fact.value);
     return link && href ? [{ ...link, href }] : [];
   });
   return { events, programs, roster, vendorLinks, attendanceIsDynamic: vendors?.attendance_is_dynamic?.value === true };
+}
+
+/** A roster entry with something besides its name earns a card; the rest are chips. */
+export function vendorHasDetails(item: RosterItem): boolean {
+  const vendor = item.value;
+  return Boolean(
+    vendor.seasonal ||
+      vendor.categories?.some((category) => clean(category)) ||
+      clean(vendor.attendance_note) ||
+      safeHighlightUrl(vendor.website) ||
+      safeHighlightUrl(vendor.social_url)
+  );
+}
+
+/** The muted line over the vendor names, in place of the roster's provenance. */
+export function rosterSubhead(context?: RosterContext, now = new Date()): string | undefined {
+  if (rosterPeriodHasEnded(context, now)) {
+    const season = /^\d{4} season$/i.exec(clean(context?.label))?.[0];
+    return season ? `From the ${season.toLowerCase()}` : 'From last season';
+  }
+  return context?.non_exhaustive ? 'Some regulars' : undefined;
 }

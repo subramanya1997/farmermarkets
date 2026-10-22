@@ -29,6 +29,12 @@ policies, vendor/product information, events and programs, languages,
 newsletter links, canonical social profiles, and declarative FAQ answers.
 Unknown facts stay absent; a missing field never means “no.”
 
+Rich facts must cite market-scoped sources. The one exception is
+`first_party.products.availability_note`, which may cite an operator-wide
+seasonal guide (`scope: "operator"`, e.g. GrowNYC's or Foodwise's in-season
+list), because operators publish one guide for all their markets. The note
+should say it is a regional guide, not today's stall list.
+
 ## Archived audit workspaces
 
 The completed `audit/` and `site-audit/` workspaces are compressed under

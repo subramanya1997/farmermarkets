@@ -1,42 +1,44 @@
 import Link from 'next/link';
+import { CalendarDays, Clock, HandCoins, Laptop, MapPin } from 'lucide-react';
 import type { TopicSummary } from '@/lib/topicPage';
-import { SITE_FRAME } from "@/lib/ui";
+import { SITE_FRAME } from '@/lib/ui';
 
 interface BrowseByTopicProps {
   topics: TopicSummary[];
 }
 
-/**
- * Server-rendered links to the four topic pages, shown on `/markets` above the
- * state directory.
- *
- * The counts come from the same builders the pages themselves use, so a data
- * refresh moves this section and the pages together.
- */
+const TOPIC_ICONS = {
+  saturday: CalendarDays,
+  'snap-ebt': HandCoins,
+  hours: Clock,
+  online: Laptop,
+} as const;
+
+/** Server-rendered links to the four topic pages, as a row of icon chips. */
 export function BrowseByTopic({ topics }: BrowseByTopicProps) {
   if (topics.length === 0) return null;
 
   return (
-    <section className="w-full border-t border-zinc-200 py-12 dark:border-zinc-800">
+    <section className="w-full border-t border-zinc-200 py-8 dark:border-zinc-800">
       <div className={SITE_FRAME}>
-        <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Browse markets by topic</h2>
-        <p className="mt-2 max-w-3xl text-sm text-zinc-600 dark:text-zinc-400">
-          Payment programs, ordering options and opening days, counted across the whole directory.
-        </p>
-        <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 2xl:gap-6">
-          {topics.map((topic) => (
-            <li key={topic.slug}>
-              <Link
-                href={topic.href}
-                className="flex h-full flex-col rounded-lg border border-zinc-200 p-4 transition-colors hover:border-green-600 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:border-green-500 dark:hover:bg-zinc-800"
-              >
-                <span className="text-sm font-semibold text-green-700 dark:text-green-500">
-                  {topic.heading}
-                </span>
-                <span className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">{topic.blurb}</span>
-              </Link>
-            </li>
-          ))}
+        <h2 className="mb-4 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          Browse by topic
+        </h2>
+        <ul className="flex flex-wrap gap-2">
+          {topics.map((topic) => {
+            const Icon = TOPIC_ICONS[topic.slug] ?? MapPin;
+            return (
+              <li key={topic.slug}>
+                <Link
+                  href={topic.href}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3.5 py-2 text-sm font-medium text-zinc-800 transition-colors hover:border-green-600/40 hover:bg-green-50 hover:text-green-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:border-green-500/40 dark:hover:bg-green-900/20 dark:hover:text-green-300"
+                >
+                  <Icon aria-hidden className="h-4 w-4 text-green-700 dark:text-green-500" />
+                  {topic.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>

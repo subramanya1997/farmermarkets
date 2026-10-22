@@ -52,7 +52,7 @@ test('a record older than the staleness threshold is stale', () => {
   assert.equal(result.lastVerified, 'August 3, 2020');
   assert.equal(
     result.notice,
-    'This listing was last verified August 3, 2020 and may be out of date. Please check before visiting.'
+    'Listing last checked 2020.'
   );
 });
 
@@ -75,7 +75,7 @@ test('a record dropped from the USDA directory is unverified, whatever its date'
   assert.equal(result.level, 'unverified');
   assert.equal(
     result.notice,
-    'This listing is no longer published in the USDA directory and may be closed. It was last verified June 1, 2025, so please check before visiting.'
+    'No longer in the USDA directory and may be closed. Last checked 2025.'
   );
 });
 
@@ -86,7 +86,7 @@ test('an unverified record with no usable date drops the date clause', () => {
     assert.equal(result.lastVerified, undefined);
     assert.equal(
       result.notice,
-      'This listing is no longer published in the USDA directory and may be closed. Please check before visiting.'
+      'No longer in the USDA directory and may be closed.'
     );
   }
 });
@@ -111,4 +111,34 @@ test('a missing or garbage date never invents a staleness claim', () => {
 test('now defaults to the current time', () => {
   // 2020 is more than four years before any plausible "now".
   assert.equal(marketFreshness({ last_updated: '2020-08-03' }).level, 'stale');
+});
+
+test('a research check within a year quiets the header line without making the listing fresh', () => {
+  const result = marketFreshness(
+    {
+      last_updated: '2020-08-27',
+      enrichment: { verified_at: '2026-08-21', verification_scope: 'partial' },
+      first_party: { operations: { schedules: [{ verified_at: '2026-08-21' }] } },
+    },
+    NOW
+  );
+  assert.equal(result.level, 'stale');
+  assert.equal(result.lastVerified, 'August 27, 2020');
+  assert.equal(result.notice, undefined);
+});
+
+test('a research check older than a year leaves the short stale line', () => {
+  const result = marketFreshness(
+    { last_updated: '2020-08-27', enrichment: { verified_at: '2025-06-01' } },
+    NOW
+  );
+  assert.equal(result.notice, 'Listing last checked 2020.');
+});
+
+test('a recent check never hides that a listing left the USDA directory', () => {
+  const result = marketFreshness(
+    { last_updated: '2020-08-27', unverified: true, enrichment: { verified_at: '2026-08-01' } },
+    NOW
+  );
+  assert.equal(result.notice, 'No longer in the USDA directory and may be closed. Last checked 2020.');
 });

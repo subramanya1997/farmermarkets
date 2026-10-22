@@ -466,7 +466,8 @@ function formatStructuredSchedule(schedule: StructuredMarketSchedule): string[] 
     : schedule.recurrence.interval_weeks === 2
       ? `Every other ${days.join(', ')}`
       : days.join(', ');
-  return [`${recurrence} ${range}`];
+  const label = schedule.label?.trim() ? ` (${schedule.label.trim()})` : '';
+  return [`${recurrence} ${range}${label}`];
 }
 
 /**
