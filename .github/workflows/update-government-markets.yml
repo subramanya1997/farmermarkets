@@ -1,8 +1,10 @@
 name: Update official government market data
 
+# Monthly: the government sources change slowly, and each refresh rebuilds and
+# redeploys ~14k pages. Run it by hand from the Actions tab when needed.
 on:
   schedule:
-    - cron: '17 8 * * *'
+    - cron: '17 8 1 * *'
   workflow_dispatch:
 
 permissions:
@@ -16,6 +18,10 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      # A source that renamed or dropped a researched market leaves that
+      # research out (with a warning) instead of failing the whole refresh.
+      ENRICHMENT_STALE: skip
     steps:
       - uses: actions/checkout@v4
 
@@ -29,14 +35,25 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      # The refresh submits the URLs it changed to IndexNow. A failed
-      # submission is only a warning, so it can never fail this step; set the
-      # repository variable INDEXNOW_DISABLE to 1 to switch submissions off.
-      - id: update_data
-        continue-on-error: true
+      # A source that is down keeps its last good records (`--allow-partial`),
+      # so one dead feed no longer stops every other source from updating.
+      # IndexNow is pinged only after the snapshot is checked and pushed.
+      - name: Keep the current market list for redirect matching
+        run: |
+          cp public/data/farmers_markets.json "$RUNNER_TEMP/previous-markets.json"
+          cp public/data/geo_index.json "$RUNNER_TEMP/previous-geo.json"
+
+      - name: Fetch sources
         env:
-          INDEXNOW_DISABLE: ${{ vars.INDEXNOW_DISABLE }}
-        run: bun run data:update
+          INDEXNOW_DISABLE: '1'
+        run: node scripts/update-government-markets.mjs --allow-partial --urls-file "$RUNNER_TEMP/indexnow-urls.txt"
+
+      - run: bun run data:consolidate
+
+      - run: bun run data:geo
+
+      # Old /markets/{slug} URLs that this refresh retired keep working.
+      - run: node scripts/build-slug-redirects.mjs --previous "$RUNNER_TEMP/previous-markets.json" --previous-geo "$RUNNER_TEMP/previous-geo.json"
 
       - run: bun run test
 
@@ -45,19 +62,29 @@ jobs:
       - run: bun run build
 
       - name: Commit a validated snapshot
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/sources/government_markets.json data/sources/government_markets.manifest.json public/data/farmers_markets.json public/data/geo_index.json
+          git add data/sources/government_markets.json data/sources/government_markets.manifest.json public/data/farmers_markets.json public/data/geo_index.json data/slug-redirects.json
           if git diff --cached --quiet; then
             echo "No generated data changes"
           else
             git commit -m "data: refresh official government markets"
             git push
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Report partial source failures
-        if: steps.update_data.outcome == 'failure'
+      - name: Ping IndexNow with the changed URLs
+        if: steps.commit.outputs.pushed == 'true' && vars.INDEXNOW_DISABLE != '1'
         run: |
-          echo "One or more sources failed. Successful sources were updated and last-good records were retained for failed sources."
-          exit 1
+          if [ -s "$RUNNER_TEMP/indexnow-urls.txt" ]; then
+            node scripts/indexnow-ping.mjs < "$RUNNER_TEMP/indexnow-urls.txt"
+          fi
+
+      - name: Note sources that failed
+        run: |
+          status=$(node -e "console.log(require('./data/sources/government_markets.manifest.json').status)")
+          if [ "$status" != "ok" ]; then
+            echo "::warning::One or more government sources failed this run; their last good records were kept. See the Fetch sources log."
+          fi

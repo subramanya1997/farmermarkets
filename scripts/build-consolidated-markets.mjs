@@ -19,6 +19,10 @@ const auditArchivePath = path.join(root, 'data/enrichment/archive/audit-2026-08-
 const outputPath = path.join(root, 'public/data/farmers_markets.json');
 const overridesPath = path.join(root, 'data/overrides/editorial-overrides.json');
 
+
+/** Set by the scheduled refresh: tolerate source drift with warnings (see build-market-enrichment.mjs). */
+const skipStale = String(process.env.ENRICHMENT_STALE ?? '').trim().toLowerCase() === 'skip';
+
 function fail(message) {
   throw new Error(message);
 }
@@ -160,16 +164,31 @@ async function applyEditorialOverrides(markets) {
   if (schemaVersion !== 1 || !Array.isArray(overrides)) {
     fail('editorial overrides file has an unsupported shape');
   }
-  for (const override of overrides) {
-    const market = markets[override.index];
+  overrides: for (const override of overrides) {
+    let market = markets[override.index];
     if (!market || String(market.id) !== String(override.id)) {
-      fail(`editorial override at index ${override.index} does not match market ${override.id}`);
+      // Government rows shift when a source adds or drops markets, so the
+      // stored index goes stale; the id is the identity. Follow it when it
+      // names exactly one row.
+      const matches = markets.filter((candidate) => String(candidate.id) === String(override.id));
+      if (matches.length === 1) {
+        market = matches[0];
+      } else if (skipStale) {
+        console.warn(`editorial override for ${override.id} skipped: market not found after the refresh`);
+        continue;
+      } else {
+        fail(`editorial override at index ${override.index} does not match market ${override.id}`);
+      }
     }
     const keys = override.path.split('.');
     let target = market;
     for (const key of keys.slice(0, -1)) {
       target = target?.[key];
       if (target === null || typeof target !== 'object') {
+        if (skipStale) {
+          console.warn(`editorial override ${override.path} skipped: missing on market ${override.id}`);
+          continue overrides;
+        }
         fail(`editorial override path ${override.path} is missing on market ${override.id}`);
       }
     }
@@ -188,6 +207,17 @@ export async function buildConsolidatedMarkets({ check = false } = {}) {
   ]);
   const enrichmentById = new Map(enrichments.map((record) => [String(record.id), record]));
   const sources = [...legacy, ...government];
+  if (skipStale) {
+    // Audit metadata for a market the source no longer publishes has nothing
+    // to attach to; drop it rather than fail the refresh.
+    const ids = new Set(sources.map((source) => String(source.id)));
+    for (const id of [...auditById.keys()]) {
+      if (!ids.has(id)) {
+        auditById.delete(id);
+        console.warn(`audit metadata for ${id} skipped: market no longer in the sources`);
+      }
+    }
+  }
   const markets = sources.map((source, index) => {
     const market = index < legacy.length
       ? { ...source, country: source.country || 'United States', country_code: source.country_code || 'US' }

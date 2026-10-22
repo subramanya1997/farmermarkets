@@ -79,10 +79,29 @@ function geoPageRedirects() {
   ];
 }
 
+/**
+ * Market slugs that a data refresh retired (a source re-keyed its records or
+ * dropped a market), each pointing at the same market's new page or the city
+ * it was listed in. Written by `scripts/build-slug-redirects.mjs`.
+ */
+function marketSlugRedirects() {
+  let file: { redirects?: Record<string, string> } = {};
+  try {
+    file = JSON.parse(readFileSync("data/slug-redirects.json", "utf8"));
+  } catch {
+    return [];
+  }
+  return Object.entries(file.redirects ?? {}).map(([slug, destination]) => ({
+    source: `/markets/${slug}`,
+    destination,
+    permanent: true,
+  }));
+}
+
 const nextConfig: NextConfig = {
   generateBuildId: async () => hashAppSource(),
   async redirects() {
-    return geoPageRedirects();
+    return [...geoPageRedirects(), ...marketSlugRedirects()];
   },
   // PostHog is reached through a first-party path so ingestion survives
   // blockers that match posthog.com. The region follows NEXT_PUBLIC_POSTHOG_HOST.
