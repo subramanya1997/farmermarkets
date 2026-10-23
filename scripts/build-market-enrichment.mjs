@@ -5,6 +5,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateRichEnrichment } from './lib/rich-enrichment-validation.mjs';
 import { marketNamesEquivalent } from './lib/market-name-equivalence.mjs';
+import { readAddedMarkets } from './lib/added-markets.mjs';
 import { mergeRichRecords } from './lib/rich-enrichment-merge.mjs';
 import {
   hasConflictingUnqualifiedSeasonalHours,
@@ -290,7 +291,9 @@ export async function buildMarketEnrichment() {
     fs.readFile(governmentSourcePath, 'utf8').then(JSON.parse),
     fs.readdir(enrichmentDir),
   ]);
-  const marketsById = new Map([...legacy, ...government].map((market) => [String(market.id), market]));
+  const skipStale = String(process.env.ENRICHMENT_STALE ?? '').trim().toLowerCase() === 'skip';
+  const added = await readAddedMarkets([...legacy, ...government], { root, skipStale });
+  const marketsById = new Map([...legacy, ...government, ...added].map((market) => [String(market.id), market]));
   const files = names.filter((name) => /^research-.+\.json$/.test(name)).sort();
   if (!files.length) fail('No data/enrichment/research-*.json files found');
 
@@ -300,7 +303,6 @@ export async function buildMarketEnrichment() {
   // stale record is left out with a warning instead: its facts were checked
   // against the old identity, so publishing them would be wrong, and failing
   // the whole refresh over one renamed market froze every other update.
-  const skipStale = String(process.env.ENRICHMENT_STALE ?? '').trim().toLowerCase() === 'skip';
   const stale = [];
   const recordsById = new Map();
   for (const file of files) {

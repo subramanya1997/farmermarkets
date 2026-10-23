@@ -1,0 +1,221 @@
+[
+  {
+    "id": "added:clintonville-farmers-market-columbus-oh",
+    "slug": "clintonville-farmers-market-columbus-oh",
+    "name": "Clintonville Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "3535 N High St, Columbus, OH",
+      "city": "Columbus",
+      "state": "Ohio",
+      "zip_code": null,
+      "description": "At N. High St and Dunedin Rd. Free parking at Columbus Mennonite Church and on side streets; free bike corral on Orchard Ln."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Run by Common Greens."
+    },
+    "contact": {
+      "websites": [
+        "https://www.commongreensohio.org/clintonville/"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "April 25-November 21",
+      "days": [
+        "Saturday 09:00 am - 12:00 pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Common Greens",
+      "dataset_name": "Clintonville Farmers Market",
+      "catalog_url": "https://www.commongreensohio.org/clintonville/",
+      "retrieved_at": "2026-10-23"
+    },
+    "payment": {
+      "methods": [
+        "SNAP/EBT"
+      ],
+      "food_assistance": {
+        "snap": true,
+        "fmnp": true,
+        "snap_option": "$1-for-$1 match up to $25 on Ohio Direction Card (EBT); WIC FMNP coupons welcome"
+      }
+    }
+  },
+  {
+    "id": "added:downtown-columbus-farmers-market-columbus-oh",
+    "slug": "downtown-columbus-farmers-market-columbus-oh",
+    "name": "Downtown Columbus Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "160 S High St, Columbus, OH",
+      "city": "Columbus",
+      "state": "Ohio",
+      "zip_code": null,
+      "description": "At Columbus Commons, during Food Truck Food Court."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Run by Common Greens."
+    },
+    "contact": {
+      "websites": [
+        "https://www.commongreensohio.org/downtownmarket/"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "May 7-October 1",
+      "days": [
+        "Thursday 11:00 am - 02:00 pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Common Greens",
+      "dataset_name": "The Downtown Market",
+      "catalog_url": "https://www.commongreensohio.org/downtownmarket/",
+      "retrieved_at": "2026-10-23"
+    }
+  },
+  {
+    "id": "added:conservatory-farmers-market-columbus-oh",
+    "slug": "conservatory-farmers-market-columbus-oh",
+    "name": "Conservatory Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "1777 E Broad St, Columbus, OH",
+      "city": "Columbus",
+      "state": "Ohio",
+      "zip_code": "43203",
+      "description": "In the Wells Barn parking lot at Franklin Park Conservatory. Free parking."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "websites": [
+        "https://www.fpconservatory.org/education-programs/outreach-programs/farmers-market/"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "June 3-September 16",
+      "days": [
+        "Wednesday 03:30 pm - 06:30 pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Franklin Park Conservatory and Botanical Gardens",
+      "dataset_name": "Farmers Market",
+      "catalog_url": "https://www.fpconservatory.org/education-programs/outreach-programs/farmers-market/",
+      "retrieved_at": "2026-10-23"
+    },
+    "payment": {
+      "methods": [
+        "SNAP/EBT"
+      ],
+      "food_assistance": {
+        "snap": true,
+        "snap_option": "EBT accepted for all qualifying purchases; Produce Perks for fresh produce"
+      }
+    }
+  },
+  {
+    "id": "added:bronzeville-growers-market-columbus-oh",
+    "slug": "bronzeville-growers-market-columbus-oh",
+    "name": "Bronzeville Growers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "925 Mt Vernon Ave, Columbus, OH",
+      "city": "Columbus",
+      "state": "Ohio",
+      "zip_code": "43203",
+      "description": ""
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Fiscally sponsored by Maroon Arts Group."
+    },
+    "contact": {
+      "websites": [
+        "https://www.bronzevillegrowersmarket.com/"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "July 2-September 24",
+      "days": [
+        "Thursday 03:00 pm - 06:00 pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Franklin County Auditor",
+      "dataset_name": "2026 Farmers Markets",
+      "catalog_url": "https://auditor.franklincountyohio.gov/Consumer/Weights-and-Measures/Farmers-Markets",
+      "retrieved_at": "2026-10-23"
+    }
+  },
+  {
+    "id": "added:westgate-farmers-market-columbus-oh",
+    "slug": "westgate-farmers-market-columbus-oh",
+    "name": "Westgate Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "2925 W Broad St, Columbus, OH",
+      "city": "Columbus",
+      "state": "Ohio",
+      "zip_code": "43204",
+      "description": ""
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "websites": [
+        "https://www.westgatefarmersmarket.com/"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "June-October",
+      "days": [
+        "1st and 3rd Saturdays, 9am-12pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Westgate Farmers Market",
+      "dataset_name": "Westgate Farmers Market",
+      "catalog_url": "https://www.westgatefarmersmarket.com/",
+      "retrieved_at": "2026-10-23"
+    }
+  }
+]

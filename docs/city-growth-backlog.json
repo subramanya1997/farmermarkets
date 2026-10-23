@@ -31,7 +31,8 @@
       "city": "ohio/columbus",
       "market": null,
       "issue": "Missing Columbus markets on the Franklin County Auditor 2026 list: Clintonville Farmers Market (3535 N High St, the city's biggest Saturday market), Downtown Columbus Farmers Market (Columbus Commons), Bronzeville Growers Market (925 Mt Vernon Ave), Conservatory Farmers Market (1777 E Broad St), Westgate Farmers Market (2925 W Broad St). The page lists only 3 markets, one closed.",
-      "status": "open"
+      "status": "fixed",
+      "resolution": "Added Clintonville, Downtown Columbus, Conservatory, Bronzeville and Westgate to data/enrichment/added-markets.json (2026-10-23). OhioHealth Market left out: its page says it is for OhioHealth staff only."
     }
   ],
   "ideas": [
@@ -75,6 +76,10 @@
           "date": "2026-10-23",
           "changes": "First guide: 6 sourced tips (German Village Saturdays to Nov 21, Clintonville indoor holiday market Dec 5/12/19, Clintonville $25 SNAP match, Clintonville parking and bike corral, OhioHealth Riverside Nov 17, Pearl Market closed and Thursday Downtown market at Columbus Commons), 2 FAQs (weekday evening markets, Westgate), title and description override.",
           "baseline": "No settled GSC baseline yet; city URL moved to /ohio/columbus on 2026-10-11."
+        },
+        {
+          "date": "2026-10-23",
+          "changes": "Page now lists 8 markets (5 added from their own pages). Replaced the OhioHealth tip (staff-only market) with Conservatory EBT and Produce Perks; Clintonville joined the late-season tip."
         }
       ],
       "next_check": "2026-11-20"

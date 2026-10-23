@@ -98,8 +98,10 @@ days, a closed market) or a well-known market in the city is missing, add an
 entry to `data_issues` in the backlog. Do not edit
 `public/data/farmers_markets.json` or the source snapshots by hand. If you
 can follow `data/enrichment/README.md` exactly, you may add a small sourced
-enrichment batch and rebuild with `npm run data:enrichment`; otherwise leave
-it as an issue.
+enrichment batch (or a missing market, under "Adding a market" there) and
+rebuild with `npm run data:enrichment && npm run data:geo`; otherwise leave
+it as an issue. Only add a market the public can visit: skip staff-only or
+members-only markets.
 
 **d. Internal links.** If a blog post in `src/content/blog/` names the city
 or one of its markets without linking, link the first mention to the city

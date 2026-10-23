@@ -35,6 +35,29 @@ seasonal guide (`scope: "operator"`, e.g. GrowNYC's or Foodwise's in-season
 list), because operators publish one guide for all their markets. The note
 should say it is a regional guide, not today's stall list.
 
+## Adding a market
+
+A market that no legacy or government source lists goes in
+`added-markets.json`, one row per market in the same shape as
+`data/sources/government_markets.json`. The consolidation reads it as a third
+source after those two, so enrichment batches, the geo index and every page
+treat the row like any other market. It sits here rather than in
+`data/sources/` because the refresh rewrites that directory.
+
+- `id` is `added:{slug}`; the slug follows `{name}-{city}-{state code}`.
+- `provenance` is `{ "official": false, "source_id": "added" }` plus the
+  `publisher`, `dataset_name` (page title), `catalog_url` (the page every base
+  fact came from) and `retrieved_at`. Prefer the market's or operator's own
+  page; a municipal list is fine when the market's site gives no schedule.
+- Leave out anything the page does not say, coordinates included.
+- Richer facts go in a normal `research-*.json` batch keyed by the same id.
+- Rebuild with `npm run data:enrichment && npm run data:geo`.
+
+When a source starts listing the same market (same name and city, ignoring
+"farmers market" and punctuation) the build fails locally and names the source
+id: delete the added row and move its research to that id. The scheduled
+refresh keeps the source row and skips the added one with a warning.
+
 ## Archived audit workspaces
 
 The completed `audit/` and `site-audit/` workspaces are compressed under

@@ -90,8 +90,8 @@
       "tips": [
         {
           "label": "Late season",
-          "text": "German Village Farmers Market runs Saturdays 9am-1pm at 555 S Third St through November 21, 2026.",
-          "source_ids": ["franklin-auditor-2026"]
+          "text": "German Village (Saturdays 9am-1pm, 555 S Third St) and Clintonville (Saturdays 9am-12pm) both run through November 21, 2026.",
+          "source_ids": ["franklin-auditor-2026", "clintonville-market"]
         },
         {
           "label": "Holiday market",
@@ -109,9 +109,9 @@
           "source_ids": ["clintonville-market"]
         },
         {
-          "label": "Riverside",
-          "text": "The OhioHealth Market at the Riverside campus holds its last 2026 date on Tuesday, November 17, from 4pm-7pm.",
-          "source_ids": ["common-greens-home"]
+          "label": "Produce Perks",
+          "text": "The Conservatory Farmers Market at Franklin Park Conservatory takes EBT and adds Produce Perks dollars for fresh produce. It runs Wednesdays, June-September.",
+          "source_ids": ["conservatory-market"]
         },
         {
           "label": "Pearl Market",
@@ -156,6 +156,11 @@
           "id": "downtown-market",
           "title": "Downtown Columbus Farmers Market, Common Greens",
           "url": "https://www.commongreensohio.org/downtownmarket/"
+        },
+        {
+          "id": "conservatory-market",
+          "title": "Farmers Market, Franklin Park Conservatory",
+          "url": "https://www.fpconservatory.org/education-programs/outreach-programs/farmers-market/"
         }
       ]
     }

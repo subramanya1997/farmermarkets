@@ -1,20 +1,20 @@
 Geo index build report
-generated_at            2026-10-01T03:20:59.324Z
+generated_at            2026-10-23T19:13:57.586Z
 
 Records
-  total                 9132
-  indexed               9127
+  total                 9137
+  indexed               9132
   unresolved            5
-  without coordinates   383
+  without coordinates   388
 
 Resolution method (weakest source a record needed)
-  from fields           8789
-  from address          15
-  from coordinates      283
+  from fields           8791
+  from address          77
+  from coordinates      224
   corrupt combos fixed  1
 
 State resolution
-  from fields           8620
+  from fields           8625
   from address          2
   from coordinates      2
   missing before        511
@@ -22,28 +22,28 @@ State resolution
     of those, outside US/CA (grouped by country instead)  503
 
 City resolution
-  from fields           8771
-  from address          15
-  from coordinates      283
+  from fields           8776
+  from address          77
+  from coordinates      224
   missing before        132
-  missing after         63
+  missing after         60
 
 Index
   top-level entries     60 (53 US states/territories)
-  cities                4991
-  cities with 3+ markets 588
+  cities                5019
+  cities with 3+ markets 585
 
 Top 10 entries by market count
    1. New York                  1085 markets   466 cities
-   2. California                 965 markets   400 cities
-   3. Minnesota                  439 markets   283 cities
+   2. California                 965 markets   406 cities
+   3. Minnesota                  439 markets   285 cities
    4. Ontario                    388 markets   259 cities
    5. Illinois                   366 markets   195 cities
    6. Michigan                   340 markets   233 cities
    7. Virginia                   299 markets   162 cities
-   8. Georgia                    237 markets   124 cities
-   9. Wisconsin                  237 markets   149 cities
-  10. Texas                      236 markets   120 cities
+   8. Georgia                    237 markets   123 cities
+   9. Wisconsin                  237 markets   151 cities
+  10. Texas                      236 markets   121 cities
 
 Unresolved examples
   cambridge-farmers-market — Cambridge Farmers’ Market (US)

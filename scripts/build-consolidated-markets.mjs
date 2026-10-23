@@ -8,6 +8,7 @@ import { promisify } from 'node:util';
 import { mergeEnrichment } from '../src/lib/enrichment.ts';
 import { normalizeSourcePostalCode } from '../src/lib/postal.ts';
 import { buildMarketEnrichment } from './build-market-enrichment.mjs';
+import { readAddedMarkets } from './lib/added-markets.mjs';
 import { applySourceCorrections } from './lib/editorial-sources.mjs';
 
 const root = process.cwd();
@@ -206,7 +207,9 @@ export async function buildConsolidatedMarkets({ check = false } = {}) {
     readAuditById(),
   ]);
   const enrichmentById = new Map(enrichments.map((record) => [String(record.id), record]));
-  const sources = [...legacy, ...government];
+  // Markets no source lists yet, added from their own pages; see scripts/lib/added-markets.mjs.
+  const added = await readAddedMarkets([...legacy, ...government], { root, skipStale });
+  const sources = [...legacy, ...government, ...added];
   if (skipStale) {
     // Audit metadata for a market the source no longer publishes has nothing
     // to attach to; drop it rather than fail the refresh.

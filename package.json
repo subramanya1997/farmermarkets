@@ -68,7 +68,7 @@
     "test:parallel": "node --test scripts/lib/parallel-campaign.test.mjs scripts/lib/parallel-evidence.test.mjs scripts/lib/parallel-rich-evidence.test.mjs scripts/lib/parallel-spec-validation.test.mjs",
     "test:db": "node --test scripts/lib/db-projections.test.mjs scripts/lib/db-sync-transaction.test.mjs",
     "test:db:postgres": "RUN_DB_POSTGRES_TESTS=1 node --test scripts/lib/db-sync-postgres.test.mjs",
-    "test:enrichment": "node --test scripts/lib/enrichment-audit-quality.test.mjs scripts/lib/market-name-equivalence.test.mjs scripts/lib/rich-enrichment-merge.test.mjs scripts/lib/editorial-sources.test.mjs && npm run data:archives:check && npm run data:consolidate:check"
+    "test:enrichment": "node --test scripts/lib/enrichment-audit-quality.test.mjs scripts/lib/market-name-equivalence.test.mjs scripts/lib/rich-enrichment-merge.test.mjs scripts/lib/editorial-sources.test.mjs scripts/lib/added-markets.test.mjs && npm run data:archives:check && npm run data:consolidate:check"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",

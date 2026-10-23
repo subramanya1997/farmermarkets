@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-01T03:20:59.324Z",
-  "market_count": 9132,
+  "generated_at": "2026-10-23T19:13:57.586Z",
+  "market_count": 9137,
   "states": [
     {
       "code": "NY",
@@ -4366,12 +4366,12 @@
       "country_code": "US",
       "slug": "california",
       "market_count": 965,
-      "city_count": 400,
+      "city_count": 406,
       "cities": [
         {
           "name": "Los Angeles",
           "slug": "los-angeles",
-          "market_count": 65,
+          "market_count": 64,
           "market_slugs": [
             "adams-and-vermont-cfm-los-angeles-c9818fea",
             "adamsvermont-farmers-market",
@@ -4388,7 +4388,6 @@
             "central-avenue-fm-los-angeles-aad55cb2",
             "crenshaw-farmers-market-los-angeles",
             "crenshaw-fm-los-angeles-f5b35103",
-            "culver-city-farmers-market-in-culver-city-culver-city",
             "downtown-la-farmers-market",
             "eagle-rock-farmers-market",
             "east-hollywood-certified-farmers-market-los-angeles",
@@ -4757,19 +4756,6 @@
           ]
         },
         {
-          "name": "Escondido",
-          "slug": "escondido",
-          "market_count": 6,
-          "market_slugs": [
-            "bonsall-certified-farmers-market-and-open-air-fair-bonsall-elementary-school-bonsall",
-            "escondido-cfm-and-other-purveyors-escondido-82a07330",
-            "escondido-tuesday-organic-farmers-market-escondido",
-            "hidden-cfm-escondido-7a7c14bf",
-            "north-san-diego-certified-farmers-market",
-            "welk-certified-farmers-market"
-          ]
-        },
-        {
           "name": "Monterey",
           "slug": "monterey",
           "market_count": 6,
@@ -4870,6 +4856,18 @@
             "menlo-park-farmers-market-california",
             "soco-farmers-market-california",
             "the-springs-community-farmers-market-california"
+          ]
+        },
+        {
+          "name": "Escondido",
+          "slug": "escondido",
+          "market_count": 5,
+          "market_slugs": [
+            "escondido-cfm-and-other-purveyors-escondido-82a07330",
+            "escondido-tuesday-organic-farmers-market-escondido",
+            "hidden-cfm-escondido-7a7c14bf",
+            "north-san-diego-certified-farmers-market",
+            "welk-certified-farmers-market"
           ]
         },
         {
@@ -5183,16 +5181,6 @@
           ]
         },
         {
-          "name": "Castro Valley",
-          "slug": "castro-valley",
-          "market_count": 3,
-          "market_slugs": [
-            "castro-valley-farmers-market",
-            "castro-valley-fm-castro-valley-6e6eb796",
-            "hayward-farmers-market-hayward-city-plaza-hayward"
-          ]
-        },
-        {
           "name": "Claremont",
           "slug": "claremont",
           "market_count": 3,
@@ -5200,6 +5188,16 @@
             "claremont-farmers-and-artisans-market-claremont-d2e02f23",
             "claremont-farmers-artisans-market-claremont",
             "claremont-farmers-market"
+          ]
+        },
+        {
+          "name": "Culver City",
+          "slug": "culver-city",
+          "market_count": 3,
+          "market_slugs": [
+            "culver-city-farmers-market-in-culver-city-culver-city",
+            "culver-city-fm-culver-city-b378bb9c",
+            "culver-south-certified-farmers-market-culver-city"
           ]
         },
         {
@@ -5233,16 +5231,6 @@
           ]
         },
         {
-          "name": "Folsom",
-          "slug": "folsom",
-          "market_count": 3,
-          "market_slugs": [
-            "folsom-parkshore-plaza-farmers-market",
-            "historic-folsom-farmers-market-folsom",
-            "orangevale-farmers-market-dairy-queen-parking-lot-orangevale"
-          ]
-        },
-        {
           "name": "Gardena",
           "slug": "gardena",
           "market_count": 3,
@@ -5273,16 +5261,6 @@
           ]
         },
         {
-          "name": "Manteca",
-          "slug": "manteca",
-          "market_count": 3,
-          "market_slugs": [
-            "a1-ag-farmers-market",
-            "manteca-farmers-market",
-            "ripon-certified-farmers-market-mavis-stouffer-park-ripon"
-          ]
-        },
-        {
           "name": "Martinez",
           "slug": "martinez",
           "market_count": 3,
@@ -5290,16 +5268,6 @@
             "ccc-martinez-farmers-market",
             "martinez-farmers-market",
             "martinez-fm-martinez-ed06afd5"
-          ]
-        },
-        {
-          "name": "Murphys",
-          "slug": "murphys",
-          "market_count": 3,
-          "market_slugs": [
-            "angels-camp-fresh-fridays-certified-farmers-market-utica-park-angels-camp",
-            "calaverasgrown-murphys-certified-farmers-market-murphys",
-            "val-du-vinos-farmers-market-murphys"
           ]
         },
         {
@@ -5559,15 +5527,6 @@
           ]
         },
         {
-          "name": "Arbuckle",
-          "slug": "arbuckle",
-          "market_count": 2,
-          "market_slugs": [
-            "arbuckle-certified-farmers-market",
-            "colusa-certified-farmers-market-memorial-park-colusa"
-          ]
-        },
-        {
           "name": "Arcata",
           "slug": "arcata",
           "market_count": 2,
@@ -5694,6 +5653,15 @@
           ]
         },
         {
+          "name": "Castro Valley",
+          "slug": "castro-valley",
+          "market_count": 2,
+          "market_slugs": [
+            "castro-valley-farmers-market",
+            "castro-valley-fm-castro-valley-6e6eb796"
+          ]
+        },
+        {
           "name": "Cedarville",
           "slug": "cedarville",
           "market_count": 2,
@@ -5757,15 +5725,6 @@
           ]
         },
         {
-          "name": "Culver City",
-          "slug": "culver-city",
-          "market_count": 2,
-          "market_slugs": [
-            "culver-city-fm-culver-city-b378bb9c",
-            "culver-south-certified-farmers-market-culver-city"
-          ]
-        },
-        {
           "name": "Daly City",
           "slug": "daly-city",
           "market_count": 2,
@@ -5790,15 +5749,6 @@
           "market_slugs": [
             "downey-cfm-downey-ce35281f",
             "kaiser-permanete-downey-certified-farmers-market"
-          ]
-        },
-        {
-          "name": "Downtown Vacaville",
-          "slug": "downtown-vacaville",
-          "market_count": 2,
-          "market_slugs": [
-            "nut-tree-certified-farmers-market-vaville-vacaville",
-            "vacaville-farmers-market-downtown-vacaville"
           ]
         },
         {
@@ -5892,6 +5842,15 @@
           ]
         },
         {
+          "name": "Folsom",
+          "slug": "folsom",
+          "market_count": 2,
+          "market_slugs": [
+            "folsom-parkshore-plaza-farmers-market",
+            "historic-folsom-farmers-market-folsom"
+          ]
+        },
+        {
           "name": "Fontana",
           "slug": "fontana",
           "market_count": 2,
@@ -5934,6 +5893,15 @@
           "market_slugs": [
             "hanford-farmers-market",
             "thursday-night-market-place-hanford-96d00f30"
+          ]
+        },
+        {
+          "name": "Hayward",
+          "slug": "hayward",
+          "market_count": 2,
+          "market_slugs": [
+            "hayward-farmers-market-hayward-city-plaza-hayward",
+            "hayward-farmers-market-hayward-f8dd8212"
           ]
         },
         {
@@ -6081,6 +6049,15 @@
           ]
         },
         {
+          "name": "Manteca",
+          "slug": "manteca",
+          "market_count": 2,
+          "market_slugs": [
+            "a1-ag-farmers-market",
+            "manteca-farmers-market"
+          ]
+        },
+        {
           "name": "Marina",
           "slug": "marina",
           "market_count": 2,
@@ -6162,6 +6139,15 @@
           ]
         },
         {
+          "name": "Murphys",
+          "slug": "murphys",
+          "market_count": 2,
+          "market_slugs": [
+            "calaverasgrown-murphys-certified-farmers-market-murphys",
+            "val-du-vinos-farmers-market-murphys"
+          ]
+        },
+        {
           "name": "Murrieta",
           "slug": "murrieta",
           "market_count": 2,
@@ -6216,6 +6202,15 @@
           ]
         },
         {
+          "name": "Orangevale",
+          "slug": "orangevale",
+          "market_count": 2,
+          "market_slugs": [
+            "orangevale-farmers-market-dairy-queen-parking-lot-orangevale",
+            "orangevale-farmers-market-orangevale-5e2b2f41"
+          ]
+        },
+        {
           "name": "Orinda",
           "slug": "orinda",
           "market_count": 2,
@@ -6258,15 +6253,6 @@
           "market_slugs": [
             "pinole-cfm-pinole-d09c1c72",
             "pinole-farmers-market"
-          ]
-        },
-        {
-          "name": "Portola Valley",
-          "slug": "portola-valley",
-          "market_count": 2,
-          "market_slugs": [
-            "pescadero-grown-farmers-markets-pesdero-pescadero",
-            "portola-valley-farmers-market-portola-valley"
           ]
         },
         {
@@ -6590,11 +6576,27 @@
           ]
         },
         {
+          "name": "Angels Camp",
+          "slug": "angels-camp",
+          "market_count": 1,
+          "market_slugs": [
+            "angels-camp-fresh-fridays-certified-farmers-market-utica-park-angels-camp"
+          ]
+        },
+        {
           "name": "Apple Valley",
           "slug": "apple-valley",
           "market_count": 1,
           "market_slugs": [
             "1st-saturday-super-market"
+          ]
+        },
+        {
+          "name": "Arbuckle",
+          "slug": "arbuckle",
+          "market_count": 1,
+          "market_slugs": [
+            "arbuckle-certified-farmers-market"
           ]
         },
         {
@@ -6683,6 +6685,14 @@
           "market_count": 1,
           "market_slugs": [
             "petaluma-saturday-cfm-bloomfield-7be63a46"
+          ]
+        },
+        {
+          "name": "Bonsall",
+          "slug": "bonsall",
+          "market_count": 1,
+          "market_slugs": [
+            "bonsall-certified-farmers-market-and-open-air-fair-bonsall-elementary-school-bonsall"
           ]
         },
         {
@@ -6878,6 +6888,14 @@
           ]
         },
         {
+          "name": "Colusa",
+          "slug": "colusa",
+          "market_count": 1,
+          "market_slugs": [
+            "colusa-certified-farmers-market-memorial-park-colusa"
+          ]
+        },
+        {
           "name": "Compton",
           "slug": "compton",
           "market_count": 1,
@@ -6955,6 +6973,14 @@
           "market_count": 1,
           "market_slugs": [
             "dobbins-certified-farmers-market-ca"
+          ]
+        },
+        {
+          "name": "Downtown Vacaville",
+          "slug": "downtown-vacaville",
+          "market_count": 1,
+          "market_slugs": [
+            "vacaville-farmers-market-downtown-vacaville"
           ]
         },
         {
@@ -7171,14 +7197,6 @@
           "market_count": 1,
           "market_slugs": [
             "hawthorne-del-aire-farmers-market-hawthorne-hawthorne"
-          ]
-        },
-        {
-          "name": "Hayward",
-          "slug": "hayward",
-          "market_count": 1,
-          "market_slugs": [
-            "hayward-farmers-market-hayward-f8dd8212"
           ]
         },
         {
@@ -7510,14 +7528,6 @@
           ]
         },
         {
-          "name": "Orangevale",
-          "slug": "orangevale",
-          "market_count": 1,
-          "market_slugs": [
-            "orangevale-farmers-market-orangevale-5e2b2f41"
-          ]
-        },
-        {
           "name": "Orcutt",
           "slug": "orcutt",
           "market_count": 1,
@@ -7571,6 +7581,14 @@
           "market_count": 1,
           "market_slugs": [
             "sunblest-valley-farmers-markets"
+          ]
+        },
+        {
+          "name": "Pescadero",
+          "slug": "pescadero",
+          "market_count": 1,
+          "market_slugs": [
+            "pescadero-grown-farmers-markets-pesdero-pescadero"
           ]
         },
         {
@@ -7654,6 +7672,14 @@
           ]
         },
         {
+          "name": "Portola Valley",
+          "slug": "portola-valley",
+          "market_count": 1,
+          "market_slugs": [
+            "portola-valley-farmers-market-portola-valley"
+          ]
+        },
+        {
           "name": "Potter Valley",
           "slug": "potter-valley",
           "market_count": 1,
@@ -7731,6 +7757,14 @@
           "market_count": 1,
           "market_slugs": [
             "rio-vista-certified-farmers-market"
+          ]
+        },
+        {
+          "name": "Ripon",
+          "slug": "ripon",
+          "market_count": 1,
+          "market_slugs": [
+            "ripon-certified-farmers-market-mavis-stouffer-park-ripon"
           ]
         },
         {
@@ -7974,6 +8008,14 @@
           ]
         },
         {
+          "name": "Vacaville",
+          "slug": "vacaville",
+          "market_count": 1,
+          "market_slugs": [
+            "nut-tree-certified-farmers-market-vaville-vacaville"
+          ]
+        },
+        {
           "name": "Valencia",
           "slug": "valencia",
           "market_count": 1,
@@ -8142,7 +8184,7 @@
       "country_code": "US",
       "slug": "minnesota",
       "market_count": 439,
-      "city_count": 283,
+      "city_count": 285,
       "cities": [
         {
           "name": "Minneapolis",
@@ -8518,15 +8560,6 @@
           ]
         },
         {
-          "name": "Farwell",
-          "slug": "farwell",
-          "market_count": 2,
-          "market_slugs": [
-            "hoffman-farmers-market-hoffman-city-park-hoffman",
-            "holmes-city-farmers-market-farwell"
-          ]
-        },
-        {
           "name": "Finland",
           "slug": "finland",
           "market_count": 2,
@@ -8641,15 +8674,6 @@
           "market_slugs": [
             "cimarron-market-stand-cimarron-farm-lake-elmo",
             "lake-elmo-farmers-market-lake-elmo"
-          ]
-        },
-        {
-          "name": "Lakefield",
-          "slug": "lakefield",
-          "market_count": 2,
-          "market_slugs": [
-            "brandt-gardens-greenhouse-lakefield",
-            "riverside-farmers-and-makers-market-state-st-jackson"
           ]
         },
         {
@@ -9421,6 +9445,14 @@
           ]
         },
         {
+          "name": "Farwell",
+          "slug": "farwell",
+          "market_count": 1,
+          "market_slugs": [
+            "holmes-city-farmers-market-farwell"
+          ]
+        },
+        {
           "name": "Fergus Falls",
           "slug": "fergus-falls",
           "market_count": 1,
@@ -9573,6 +9605,14 @@
           ]
         },
         {
+          "name": "Hoffman",
+          "slug": "hoffman",
+          "market_count": 1,
+          "market_slugs": [
+            "hoffman-farmers-market-hoffman-city-park-hoffman"
+          ]
+        },
+        {
           "name": "Inver Grove Heights",
           "slug": "inver-grove-heights",
           "market_count": 1,
@@ -9594,6 +9634,14 @@
           "market_count": 1,
           "market_slugs": [
             "ivanhoe-farmers-market-ivanhoe"
+          ]
+        },
+        {
+          "name": "Jackson",
+          "slug": "jackson",
+          "market_count": 1,
+          "market_slugs": [
+            "riverside-farmers-and-makers-market-state-st-jackson"
           ]
         },
         {
@@ -9658,6 +9706,14 @@
           "market_count": 1,
           "market_slugs": [
             "lake-shetek-farmers-market-lake-shetek"
+          ]
+        },
+        {
+          "name": "Lakefield",
+          "slug": "lakefield",
+          "market_count": 1,
+          "market_slugs": [
+            "brandt-gardens-greenhouse-lakefield"
           ]
         },
         {
@@ -16539,7 +16595,7 @@
         {
           "name": "Arlington",
           "slug": "arlington",
-          "market_count": 11,
+          "market_count": 10,
           "market_slugs": [
             "arlington-farmers-market-arlington",
             "ballston-freshfarm-market",
@@ -16550,14 +16606,13 @@
             "freshfarm-rosslyn-farmers-market-arlington",
             "marymount-farmers-market-arlington",
             "rosslyn-farmers-market-arlington",
-            "west-end-farmers-market-in-ben-brenman-park-alexandria",
             "westover-farmers-market-arlington"
           ]
         },
         {
           "name": "Alexandria",
           "slug": "alexandria",
-          "market_count": 7,
+          "market_count": 8,
           "market_slugs": [
             "fairfax-county-farmers-markets-alexandria",
             "four-mile-run-farmers-and-artisans-market-alexandria",
@@ -16565,7 +16620,8 @@
             "kingstowne-farmers-market-alexandria",
             "mccutcheonmount-vernon-farmers-market",
             "old-town-farmers-market-alexandria",
-            "smart-markets-huntington"
+            "smart-markets-huntington",
+            "west-end-farmers-market-in-ben-brenman-park-alexandria"
           ]
         },
         {
@@ -16690,14 +16746,14 @@
           ]
         },
         {
-          "name": "Oakton",
-          "slug": "oakton",
+          "name": "Vienna",
+          "slug": "vienna",
           "market_count": 4,
           "market_slugs": [
-            "freshfarm-oakton-oakton",
+            "nova-central-farm-market-vienna",
             "oak-marr-farmers-market-oak-marr-recreation-center-vienna",
-            "oakton-farmers-market-oakton",
-            "smart-markets-oakton"
+            "vienna-farmers-market-vienna",
+            "vienna-saturday-farmers-market"
           ]
         },
         {
@@ -16773,6 +16829,16 @@
           ]
         },
         {
+          "name": "Oakton",
+          "slug": "oakton",
+          "market_count": 3,
+          "market_slugs": [
+            "freshfarm-oakton-oakton",
+            "oakton-farmers-market-oakton",
+            "smart-markets-oakton"
+          ]
+        },
+        {
           "name": "Powhatan",
           "slug": "powhatan",
           "market_count": 3,
@@ -16813,13 +16879,12 @@
           ]
         },
         {
-          "name": "Vienna",
-          "slug": "vienna",
-          "market_count": 3,
+          "name": "Annandale",
+          "slug": "annandale",
+          "market_count": 2,
           "market_slugs": [
-            "nova-central-farm-market-vienna",
-            "vienna-farmers-market-vienna",
-            "vienna-saturday-farmers-market"
+            "annandale-farmers-market-annandale-1",
+            "wakefield-farmers-market-wakefield-park-annandale"
           ]
         },
         {
@@ -17030,15 +17095,6 @@
           ]
         },
         {
-          "name": "Springfield",
-          "slug": "springfield",
-          "market_count": 2,
-          "market_slugs": [
-            "smart-markets-springfield",
-            "wakefield-farmers-market-wakefield-park-annandale"
-          ]
-        },
-        {
           "name": "Stafford",
           "slug": "stafford",
           "market_count": 2,
@@ -17142,14 +17198,6 @@
           "market_count": 1,
           "market_slugs": [
             "altavista-farmers-market"
-          ]
-        },
-        {
-          "name": "Annandale",
-          "slug": "annandale",
-          "market_count": 1,
-          "market_slugs": [
-            "annandale-farmers-market-annandale-1"
           ]
         },
         {
@@ -17761,6 +17809,14 @@
           ]
         },
         {
+          "name": "Springfield",
+          "slug": "springfield",
+          "market_count": 1,
+          "market_slugs": [
+            "smart-markets-springfield"
+          ]
+        },
+        {
           "name": "Stanardsville",
           "slug": "stanardsville",
           "market_count": 1,
@@ -17953,7 +18009,7 @@
       "country_code": "US",
       "slug": "georgia",
       "market_count": 237,
-      "city_count": 124,
+      "city_count": 123,
       "cities": [
         {
           "name": "Atlanta",
@@ -18110,6 +18166,16 @@
             "cumming-farmers-market-cumming",
             "forsyth-county-farmers-market-cumming",
             "vickery-village-thursday-farmers-market-cumming"
+          ]
+        },
+        {
+          "name": "Dallas",
+          "slug": "dallas",
+          "market_count": 3,
+          "market_slugs": [
+            "dallas-farmers-market",
+            "paulding-county-farm-bureau-farmers-market-dallas",
+            "the-dallas-farmers-market"
           ]
         },
         {
@@ -18301,15 +18367,6 @@
           "market_slugs": [
             "city-of-dahlonega-farmers-market-dahlonega",
             "little-farmers-market-dahlonega"
-          ]
-        },
-        {
-          "name": "Dallas",
-          "slug": "dallas",
-          "market_count": 2,
-          "market_slugs": [
-            "paulding-county-farm-bureau-farmers-market-dallas",
-            "the-dallas-farmers-market"
           ]
         },
         {
@@ -18709,14 +18766,6 @@
           ]
         },
         {
-          "name": "GA.",
-          "slug": "ga",
-          "market_count": 1,
-          "market_slugs": [
-            "dallas-farmers-market"
-          ]
-        },
-        {
           "name": "Greensboro",
           "slug": "greensboro",
           "market_count": 1,
@@ -19069,7 +19118,7 @@
       "country_code": "US",
       "slug": "wisconsin",
       "market_count": 237,
-      "city_count": 149,
+      "city_count": 151,
       "cities": [
         {
           "name": "Milwaukee",
@@ -19233,16 +19282,6 @@
           ]
         },
         {
-          "name": "Neenah",
-          "slug": "neenah",
-          "market_count": 3,
-          "market_slugs": [
-            "festival-foods-neenah-farmers-market",
-            "future-neenah-farmers-market-neenah",
-            "menasha-farm-fresh-market-terrace-in-front-of-the-marina-menasha"
-          ]
-        },
-        {
           "name": "Oconomowoc",
           "slug": "oconomowoc",
           "market_count": 3,
@@ -19390,6 +19429,15 @@
           ]
         },
         {
+          "name": "Neenah",
+          "slug": "neenah",
+          "market_count": 2,
+          "market_slugs": [
+            "festival-foods-neenah-farmers-market",
+            "future-neenah-farmers-market-neenah"
+          ]
+        },
+        {
           "name": "Port Washington",
           "slug": "port-washington",
           "market_count": 2,
@@ -19459,15 +19507,6 @@
           "market_slugs": [
             "enderis-park-farmers-market",
             "tosa-farmers-market-wauwatosa"
-          ]
-        },
-        {
-          "name": "Wisconsin Rapids",
-          "slug": "wisconsin-rapids",
-          "market_count": 2,
-          "market_slugs": [
-            "peach-street-farmers-market",
-            "rome-farmers-market-business-park-rome"
           ]
         },
         {
@@ -19943,6 +19982,14 @@
           ]
         },
         {
+          "name": "Menasha",
+          "slug": "menasha",
+          "market_count": 1,
+          "market_slugs": [
+            "menasha-farm-fresh-market-terrace-in-front-of-the-marina-menasha"
+          ]
+        },
+        {
           "name": "Menomonee Falls",
           "slug": "menomonee-falls",
           "market_count": 1,
@@ -20140,6 +20187,14 @@
           "market_count": 1,
           "market_slugs": [
             "richland-area-farmers-market"
+          ]
+        },
+        {
+          "name": "Rome",
+          "slug": "rome",
+          "market_count": 1,
+          "market_slugs": [
+            "rome-farmers-market-business-park-rome"
           ]
         },
         {
@@ -20349,6 +20404,14 @@
           "market_slugs": [
             "whitefish-bay-farmers-market-whitefish-bay"
           ]
+        },
+        {
+          "name": "Wisconsin Rapids",
+          "slug": "wisconsin-rapids",
+          "market_count": 1,
+          "market_slugs": [
+            "peach-street-farmers-market"
+          ]
         }
       ],
       "uncategorized_slugs": [
@@ -20361,7 +20424,7 @@
       "country_code": "US",
       "slug": "texas",
       "market_count": 236,
-      "city_count": 120,
+      "city_count": 121,
       "cities": [
         {
           "name": "San Antonio",
@@ -20674,15 +20737,6 @@
           ]
         },
         {
-          "name": "Hutto",
-          "slug": "hutto",
-          "market_count": 2,
-          "market_slugs": [
-            "day-star-organic-farmers-market",
-            "hutto-silos-farmers-market"
-          ]
-        },
-        {
           "name": "Katy",
           "slug": "katy",
           "market_count": 2,
@@ -20992,6 +21046,14 @@
           ]
         },
         {
+          "name": "Georgetown",
+          "slug": "georgetown",
+          "market_count": 1,
+          "market_slugs": [
+            "day-star-organic-farmers-market"
+          ]
+        },
+        {
           "name": "Glen Rose",
           "slug": "glen-rose",
           "market_count": 1,
@@ -21013,6 +21075,14 @@
           "market_count": 1,
           "market_slugs": [
             "huntsville-downtown-farmers-market-huntsville"
+          ]
+        },
+        {
+          "name": "Hutto",
+          "slug": "hutto",
+          "market_count": 1,
+          "market_slugs": [
+            "hutto-silos-farmers-market"
           ]
         },
         {
@@ -22556,7 +22626,7 @@
       "country_code": "US",
       "slug": "massachusetts",
       "market_count": 221,
-      "city_count": 150,
+      "city_count": 151,
       "cities": [
         {
           "name": "Worcester",
@@ -22582,10 +22652,11 @@
         {
           "name": "Boston",
           "slug": "boston",
-          "market_count": 9,
+          "market_count": 10,
           "market_slugs": [
             "ashmont-farmers-market-boston",
             "boston-public-market-on-the-greenway",
+            "boston-university-farmers-market-george-sherman-union-plaza-boston",
             "dorchester-winter-farmers-market-boston",
             "dudley-farmers-market-boston",
             "mission-hill-farmers-market",
@@ -22727,15 +22798,6 @@
           ]
         },
         {
-          "name": "Brookline",
-          "slug": "brookline",
-          "market_count": 2,
-          "market_slugs": [
-            "boston-university-farmers-market-george-sherman-union-plaza-boston",
-            "brookline-farmers-market-brookline"
-          ]
-        },
-        {
           "name": "Chelmsford",
           "slug": "chelmsford",
           "market_count": 2,
@@ -22778,15 +22840,6 @@
           "market_slugs": [
             "mattapan-farmers-market-mattapan",
             "mattapan-square-farmers-market-mattapan-food-and-fitness-coaltion-mattapan"
-          ]
-        },
-        {
-          "name": "Medway",
-          "slug": "medway",
-          "market_count": 2,
-          "market_slugs": [
-            "medway-farmers-market-medway",
-            "milford-farmers-market-milford-water-company-milford"
           ]
         },
         {
@@ -22971,6 +23024,14 @@
           "market_count": 1,
           "market_slugs": [
             "brockton-farmers-market-brockton"
+          ]
+        },
+        {
+          "name": "Brookline",
+          "slug": "brookline",
+          "market_count": 1,
+          "market_slugs": [
+            "brookline-farmers-market-brookline"
           ]
         },
         {
@@ -23342,11 +23403,27 @@
           ]
         },
         {
+          "name": "Medway",
+          "slug": "medway",
+          "market_count": 1,
+          "market_slugs": [
+            "medway-farmers-market-medway"
+          ]
+        },
+        {
           "name": "Methuen",
           "slug": "methuen",
           "market_count": 1,
           "market_slugs": [
             "methuen-farmers-market-methuen"
+          ]
+        },
+        {
+          "name": "Milford",
+          "slug": "milford",
+          "market_count": 1,
+          "market_slugs": [
+            "milford-farmers-market-milford-water-company-milford"
           ]
         },
         {
@@ -24038,21 +24115,21 @@
           ]
         },
         {
+          "name": "Dobson",
+          "slug": "dobson",
+          "market_count": 2,
+          "market_slugs": [
+            "dobson-farmers-market",
+            "surry-county-farmers-market"
+          ]
+        },
+        {
           "name": "Durham",
           "slug": "durham",
           "market_count": 2,
           "market_slugs": [
             "durham-farmers-market-durham",
             "south-durham-farmers-market-durham"
-          ]
-        },
-        {
-          "name": "Efland",
-          "slug": "efland",
-          "market_count": 2,
-          "market_slugs": [
-            "efland-farmers-market-efland",
-            "eno-river-farmers-market-farmers-market-pavilion-hillsborough"
           ]
         },
         {
@@ -24438,19 +24515,19 @@
           ]
         },
         {
-          "name": "Dobson",
-          "slug": "dobson",
-          "market_count": 1,
-          "market_slugs": [
-            "dobson-farmers-market"
-          ]
-        },
-        {
           "name": "Edenton",
           "slug": "edenton",
           "market_count": 1,
           "market_slugs": [
             "edenton-farmers-market-edenton"
+          ]
+        },
+        {
+          "name": "Efland",
+          "slug": "efland",
+          "market_count": 1,
+          "market_slugs": [
+            "efland-farmers-market-efland"
           ]
         },
         {
@@ -24563,6 +24640,14 @@
           "market_count": 1,
           "market_slugs": [
             "hildebran-farmers-market"
+          ]
+        },
+        {
+          "name": "Hillsborough",
+          "slug": "hillsborough",
+          "market_count": 1,
+          "market_slugs": [
+            "eno-river-farmers-market-farmers-market-pavilion-hillsborough"
           ]
         },
         {
@@ -24715,14 +24800,6 @@
           "market_count": 1,
           "market_slugs": [
             "obx-farmers-market"
-          ]
-        },
-        {
-          "name": "North CA",
-          "slug": "north-ca",
-          "market_count": 1,
-          "market_slugs": [
-            "surry-county-farmers-market"
           ]
         },
         {
@@ -25054,7 +25131,7 @@
       "country_code": "US",
       "slug": "pennsylvania",
       "market_count": 210,
-      "city_count": 130,
+      "city_count": 132,
       "cities": [
         {
           "name": "Philadelphia",
@@ -25122,6 +25199,17 @@
             "farmers-on-the-square-carlisle",
             "old-pomfret-farmers-market-rear-carlisle",
             "village-craft-country-peddlers-market-carlisle"
+          ]
+        },
+        {
+          "name": "Clarks Summit",
+          "slug": "clarks-summit",
+          "market_count": 4,
+          "market_slugs": [
+            "abington-winter-farm-market",
+            "carlin-farm4-seasons-farm-marketcarlin-farm",
+            "essential-eating-farmers-market",
+            "hillside-park-farmers-market"
           ]
         },
         {
@@ -25251,24 +25339,6 @@
           ]
         },
         {
-          "name": "Clarks Summit",
-          "slug": "clarks-summit",
-          "market_count": 2,
-          "market_slugs": [
-            "abington-winter-farm-market",
-            "essential-eating-farmers-market"
-          ]
-        },
-        {
-          "name": "Doylestown",
-          "slug": "doylestown",
-          "market_count": 2,
-          "market_slugs": [
-            "doylestown-farmers-market-pa",
-            "wrightstown-farmers-market-wrightstown-use-newtown-for-gps"
-          ]
-        },
-        {
           "name": "Emmaus",
           "slug": "emmaus",
           "market_count": 2,
@@ -25293,15 +25363,6 @@
           "market_slugs": [
             "hanover-farmers-market-1",
             "hanover-market-house"
-          ]
-        },
-        {
-          "name": "Huntingdon",
-          "slug": "huntingdon",
-          "market_count": 2,
-          "market_slugs": [
-            "hollidaysburg-farmers-market-near-the-diamond-hollidaysburg",
-            "huntingdon-farmers-market-huntingdon"
           ]
         },
         {
@@ -25341,15 +25402,6 @@
           ]
         },
         {
-          "name": "Langhorne",
-          "slug": "langhorne",
-          "market_count": 2,
-          "market_slugs": [
-            "langhorne-borough-farmers-market-langhorne",
-            "yardley-farmers-market-buttonwood-park-yardley-borough"
-          ]
-        },
-        {
           "name": "Lansdale",
           "slug": "lansdale",
           "market_count": 2,
@@ -25374,15 +25426,6 @@
           "market_slugs": [
             "downtown-lititz-farmers-market-lititz",
             "lititz-farmers-market"
-          ]
-        },
-        {
-          "name": "May through October.",
-          "slug": "may-through-october",
-          "market_count": 2,
-          "market_slugs": [
-            "carlin-farm4-seasons-farm-marketcarlin-farm",
-            "hillside-park-farmers-market"
           ]
         },
         {
@@ -25625,6 +25668,14 @@
           ]
         },
         {
+          "name": "Doylestown",
+          "slug": "doylestown",
+          "market_count": 1,
+          "market_slugs": [
+            "doylestown-farmers-market-pa"
+          ]
+        },
+        {
           "name": "Easton",
           "slug": "easton",
           "market_count": 1,
@@ -25737,6 +25788,22 @@
           ]
         },
         {
+          "name": "Hollidaysburg",
+          "slug": "hollidaysburg",
+          "market_count": 1,
+          "market_slugs": [
+            "hollidaysburg-farmers-market-near-the-diamond-hollidaysburg"
+          ]
+        },
+        {
+          "name": "Huntingdon",
+          "slug": "huntingdon",
+          "market_count": 1,
+          "market_slugs": [
+            "huntingdon-farmers-market-huntingdon"
+          ]
+        },
+        {
           "name": "Irwin",
           "slug": "irwin",
           "market_count": 1,
@@ -25750,6 +25817,14 @@
           "market_count": 1,
           "market_slugs": [
             "from-around-here-marketplace-jenkintown"
+          ]
+        },
+        {
+          "name": "Langhorne",
+          "slug": "langhorne",
+          "market_count": 1,
+          "market_slugs": [
+            "langhorne-borough-farmers-market-langhorne"
           ]
         },
         {
@@ -26169,11 +26244,27 @@
           ]
         },
         {
+          "name": "Wrightstown",
+          "slug": "wrightstown",
+          "market_count": 1,
+          "market_slugs": [
+            "wrightstown-farmers-market-wrightstown-use-newtown-for-gps"
+          ]
+        },
+        {
           "name": "Wyomissing",
           "slug": "wyomissing",
           "market_count": 1,
           "market_slugs": [
             "pa-dutch-farmers-market-of-wyomissing-wyomissing"
+          ]
+        },
+        {
+          "name": "Yardley Borough",
+          "slug": "yardley-borough",
+          "market_count": 1,
+          "market_slugs": [
+            "yardley-farmers-market-buttonwood-park-yardley-borough"
           ]
         }
       ],
@@ -27767,7 +27858,7 @@
       "country_code": "US",
       "slug": "iowa",
       "market_count": 195,
-      "city_count": 139,
+      "city_count": 141,
       "cities": [
         {
           "name": "Des Moines",
@@ -27994,30 +28085,12 @@
           ]
         },
         {
-          "name": "Humboldt",
-          "slug": "humboldt",
-          "market_count": 2,
-          "market_slugs": [
-            "humboldt-farmers-market-humboldt",
-            "rolfe-farmers-market-downtown-heritage-park-rolfe"
-          ]
-        },
-        {
           "name": "Iowa Falls",
           "slug": "iowa-falls",
           "market_count": 2,
           "market_slugs": [
             "iowa-falls-farmers-market-iowa-falls",
             "iowa-falls-farmers-market-saturday-iowa-falls"
-          ]
-        },
-        {
-          "name": "Manson",
-          "slug": "manson",
-          "market_count": 2,
-          "market_slugs": [
-            "manson-farmers-market-manson",
-            "pocahontas-farmers-market-south-main-street-south-of-the-pocahontas-inn-pocahontas"
           ]
         },
         {
@@ -28030,12 +28103,12 @@
           ]
         },
         {
-          "name": "Sioux Center",
-          "slug": "sioux-center",
+          "name": "Pocahontas",
+          "slug": "pocahontas",
           "market_count": 2,
           "market_slugs": [
-            "orange-city-farmers-market-windmill-park-orange-city",
-            "sioux-center-farmers-market-sioux-center"
+            "pocahontas-farmers-market-south-main-street-south-of-the-pocahontas-inn-pocahontas",
+            "rolfe-farmers-market-downtown-heritage-park-rolfe"
           ]
         },
         {
@@ -28418,6 +28491,14 @@
           ]
         },
         {
+          "name": "Humboldt",
+          "slug": "humboldt",
+          "market_count": 1,
+          "market_slugs": [
+            "humboldt-farmers-market-humboldt"
+          ]
+        },
+        {
           "name": "Huxley",
           "slug": "huxley",
           "market_count": 1,
@@ -28546,6 +28627,14 @@
           ]
         },
         {
+          "name": "Manson",
+          "slug": "manson",
+          "market_count": 1,
+          "market_slugs": [
+            "manson-farmers-market-manson"
+          ]
+        },
+        {
           "name": "Maquoketa",
           "slug": "maquoketa",
           "market_count": 1,
@@ -28639,6 +28728,14 @@
           "market_count": 1,
           "market_slugs": [
             "oelwein-farmers-market-oelwein"
+          ]
+        },
+        {
+          "name": "Orange City",
+          "slug": "orange-city",
+          "market_count": 1,
+          "market_slugs": [
+            "orange-city-farmers-market-windmill-park-orange-city"
           ]
         },
         {
@@ -28783,6 +28880,14 @@
           "market_count": 1,
           "market_slugs": [
             "silver-creek-farmers-market"
+          ]
+        },
+        {
+          "name": "Sioux Center",
+          "slug": "sioux-center",
+          "market_count": 1,
+          "market_slugs": [
+            "sioux-center-farmers-market-sioux-center"
           ]
         },
         {
@@ -30749,7 +30854,7 @@
       "country_code": "US",
       "slug": "connecticut",
       "market_count": 137,
-      "city_count": 88,
+      "city_count": 89,
       "cities": [
         {
           "name": "Hartford",
@@ -30963,15 +31068,6 @@
           "market_slugs": [
             "larsons-farm-market-new-milford",
             "new-milford-farmers-market"
-          ]
-        },
-        {
-          "name": "Saybrook",
-          "slug": "saybrook",
-          "market_count": 2,
-          "market_slugs": [
-            "lyme-farmers-market-ashlawn-farm-lyme",
-            "old-saybrook-summer-farmers-market-saybrook"
           ]
         },
         {
@@ -31193,6 +31289,14 @@
           ]
         },
         {
+          "name": "Lyme",
+          "slug": "lyme",
+          "market_count": 1,
+          "market_slugs": [
+            "lyme-farmers-market-ashlawn-farm-lyme"
+          ]
+        },
+        {
           "name": "Meriden",
           "slug": "meriden",
           "market_count": 1,
@@ -31310,6 +31414,14 @@
           "market_count": 1,
           "market_slugs": [
             "salem-farmers-market-salem-2"
+          ]
+        },
+        {
+          "name": "Saybrook",
+          "slug": "saybrook",
+          "market_count": 1,
+          "market_slugs": [
+            "old-saybrook-summer-farmers-market-saybrook"
           ]
         },
         {
@@ -31513,7 +31625,7 @@
       "country_code": "US",
       "slug": "oregon",
       "market_count": 136,
-      "city_count": 76,
+      "city_count": 78,
       "cities": [
         {
           "name": "Portland",
@@ -31640,15 +31752,6 @@
           ]
         },
         {
-          "name": "Clatskanie",
-          "slug": "clatskanie",
-          "market_count": 2,
-          "market_slugs": [
-            "clatskanie-farmers-market",
-            "goble-community-market-goble-tavern-rainier"
-          ]
-        },
-        {
           "name": "Coos Bay",
           "slug": "coos-bay",
           "market_count": 2,
@@ -31718,15 +31821,6 @@
           "market_slugs": [
             "new-heritage-public-market-medford",
             "rogue-valley-growers-and-crafters-market-thursday-medford-farmers-market-oregon"
-          ]
-        },
-        {
-          "name": "Monmouth",
-          "slug": "monmouth",
-          "market_count": 2,
-          "market_slugs": [
-            "polk-county-bounty-market",
-            "polk-county-bounty-market-polk-county-courthouse-lawn-dallas"
           ]
         },
         {
@@ -31823,6 +31917,14 @@
           ]
         },
         {
+          "name": "Clatskanie",
+          "slug": "clatskanie",
+          "market_count": 1,
+          "market_slugs": [
+            "clatskanie-farmers-market"
+          ]
+        },
+        {
           "name": "Colton",
           "slug": "colton",
           "market_count": 1,
@@ -31844,6 +31946,14 @@
           "market_count": 1,
           "market_slugs": [
             "creswell-farmers-market"
+          ]
+        },
+        {
+          "name": "Dallas",
+          "slug": "dallas",
+          "market_count": 1,
+          "market_slugs": [
+            "polk-county-bounty-market-polk-county-courthouse-lawn-dallas"
           ]
         },
         {
@@ -31975,6 +32085,14 @@
           ]
         },
         {
+          "name": "Monmouth",
+          "slug": "monmouth",
+          "market_count": 1,
+          "market_slugs": [
+            "polk-county-bounty-market"
+          ]
+        },
+        {
           "name": "Montgomery",
           "slug": "montgomery",
           "market_count": 1,
@@ -32036,6 +32154,14 @@
           "market_count": 1,
           "market_slugs": [
             "crop-farmers-market-prineville"
+          ]
+        },
+        {
+          "name": "Rainier",
+          "slug": "rainier",
+          "market_count": 1,
+          "market_slugs": [
+            "goble-community-market-goble-tavern-rainier"
           ]
         },
         {
@@ -32340,7 +32466,7 @@
       "country_code": "US",
       "slug": "washington",
       "market_count": 129,
-      "city_count": 86,
+      "city_count": 87,
       "cities": [
         {
           "name": "Spokane",
@@ -32451,15 +32577,6 @@
           "market_slugs": [
             "everett-farmers-market-1",
             "snohomish-farmers-market"
-          ]
-        },
-        {
-          "name": "Fife",
-          "slug": "fife",
-          "market_count": 2,
-          "market_slugs": [
-            "fife-farmers-market",
-            "puyallup-farmers-market-downtown-puyallup"
           ]
         },
         {
@@ -32729,6 +32846,14 @@
           ]
         },
         {
+          "name": "Fife",
+          "slug": "fife",
+          "market_count": 1,
+          "market_slugs": [
+            "fife-farmers-market"
+          ]
+        },
+        {
           "name": "Goldendale",
           "slug": "goldendale",
           "market_count": 1,
@@ -32910,6 +33035,14 @@
           "market_count": 1,
           "market_slugs": [
             "pullman-farmers-market-pullman"
+          ]
+        },
+        {
+          "name": "Puyallup",
+          "slug": "puyallup",
+          "market_count": 1,
+          "market_slugs": [
+            "puyallup-farmers-market-downtown-puyallup"
           ]
         },
         {
@@ -34676,7 +34809,7 @@
       "country_code": "US",
       "slug": "alabama",
       "market_count": 117,
-      "city_count": 79,
+      "city_count": 80,
       "cities": [
         {
           "name": "Birmingham",
@@ -34803,15 +34936,6 @@
           ]
         },
         {
-          "name": "Guntersville",
-          "slug": "guntersville",
-          "market_count": 2,
-          "market_slugs": [
-            "albertville-farmers-market-bertville-albertville",
-            "guntersville-farmers-market-guntersville"
-          ]
-        },
-        {
           "name": "Tuscaloosa",
           "slug": "tuscaloosa",
           "market_count": 2,
@@ -34850,6 +34974,14 @@
           "market_count": 1,
           "market_slugs": [
             "alabaster-farmers-market-alabaster"
+          ]
+        },
+        {
+          "name": "Albertville",
+          "slug": "albertville",
+          "market_count": 1,
+          "market_slugs": [
+            "albertville-farmers-market-bertville-albertville"
           ]
         },
         {
@@ -35050,6 +35182,14 @@
           "market_count": 1,
           "market_slugs": [
             "butler-county-farmers-market-greenville"
+          ]
+        },
+        {
+          "name": "Guntersville",
+          "slug": "guntersville",
+          "market_count": 1,
+          "market_slugs": [
+            "guntersville-farmers-market-guntersville"
           ]
         },
         {
@@ -37581,7 +37721,7 @@
       "country_code": "US",
       "slug": "new-jersey",
       "market_count": 93,
-      "city_count": 71,
+      "city_count": 72,
       "cities": [
         {
           "name": "Jersey City",
@@ -37623,16 +37763,6 @@
             "farm-stand-at-the-urban-farm",
             "morris-county-winter-farmers-market-morristown",
             "morristown-farmers-market-morristown-1"
-          ]
-        },
-        {
-          "name": "South Orange",
-          "slug": "south-orange",
-          "market_count": 3,
-          "market_slugs": [
-            "south-orange-farmers-market-south-orange",
-            "south-orange-village-farmers-market",
-            "west-orange-farmers-market-parking-lot-behind-town-hall-west-orange"
           ]
         },
         {
@@ -37723,6 +37853,15 @@
           "market_slugs": [
             "downtown-somerville-farmers-market",
             "somerset-county-regional-farmers-market-nj"
+          ]
+        },
+        {
+          "name": "South Orange",
+          "slug": "south-orange",
+          "market_count": 2,
+          "market_slugs": [
+            "south-orange-farmers-market-south-orange",
+            "south-orange-village-farmers-market"
           ]
         },
         {
@@ -38142,6 +38281,14 @@
           ]
         },
         {
+          "name": "West Orange",
+          "slug": "west-orange",
+          "market_count": 1,
+          "market_slugs": [
+            "west-orange-farmers-market-parking-lot-behind-town-hall-west-orange"
+          ]
+        },
+        {
           "name": "West Windsor Township",
           "slug": "west-windsor-township",
           "market_count": 1,
@@ -38182,7 +38329,7 @@
       "country_code": "US",
       "slug": "arkansas",
       "market_count": 82,
-      "city_count": 58,
+      "city_count": 59,
       "cities": [
         {
           "name": "Little Rock",
@@ -38226,15 +38373,6 @@
             "pope-county-farmers-market",
             "russellville-community-market-russellville",
             "tri-peaks-community-market-train-depot-russellville"
-          ]
-        },
-        {
-          "name": "Calico Rock",
-          "slug": "calico-rock",
-          "market_count": 2,
-          "market_slugs": [
-            "calico-rock-downtown-market-calico-rock",
-            "stone-county-farmers-market-centennial-bank-park-mountain-view"
           ]
         },
         {
@@ -38382,6 +38520,14 @@
           "market_count": 1,
           "market_slugs": [
             "cabot-farmers-market-cabot"
+          ]
+        },
+        {
+          "name": "Calico Rock",
+          "slug": "calico-rock",
+          "market_count": 1,
+          "market_slugs": [
+            "calico-rock-downtown-market-calico-rock"
           ]
         },
         {
@@ -38574,6 +38720,14 @@
           "market_count": 1,
           "market_slugs": [
             "mountain-home-farmers-market"
+          ]
+        },
+        {
+          "name": "Mountain View",
+          "slug": "mountain-view",
+          "market_count": 1,
+          "market_slugs": [
+            "stone-county-farmers-market-centennial-bank-park-mountain-view"
           ]
         },
         {
@@ -39162,7 +39316,7 @@
       "country_code": "US",
       "slug": "louisiana",
       "market_count": 77,
-      "city_count": 45,
+      "city_count": 47,
       "cities": [
         {
           "name": "New Orleans",
@@ -39225,15 +39379,6 @@
             "provenance-fall-farmers-market-shreveport",
             "shreveport-farmers-market-shreveport",
             "the-market-nhumc-shreveport"
-          ]
-        },
-        {
-          "name": "Abita Springs",
-          "slug": "abita-springs",
-          "market_count": 2,
-          "market_slugs": [
-            "abita-springs-farmers-market-abita-springs-1",
-            "covington-farmers-market-covington-city-hall-covington"
           ]
         },
         {
@@ -39308,6 +39453,14 @@
           ]
         },
         {
+          "name": "Abita Springs",
+          "slug": "abita-springs",
+          "market_count": 1,
+          "market_slugs": [
+            "abita-springs-farmers-market-abita-springs-1"
+          ]
+        },
+        {
           "name": "Arabi",
           "slug": "arabi",
           "market_count": 1,
@@ -39329,6 +39482,14 @@
           "market_count": 1,
           "market_slugs": [
             "george-brooks-farmers-market-belle-chasse"
+          ]
+        },
+        {
+          "name": "Covington",
+          "slug": "covington",
+          "market_count": 1,
+          "market_slugs": [
+            "covington-farmers-market-covington-city-hall-covington"
           ]
         },
         {
@@ -39548,6 +39709,14 @@
           ]
         },
         {
+          "name": "Winnfield",
+          "slug": "winnfield",
+          "market_count": 1,
+          "market_slugs": [
+            "winn-farmers-market"
+          ]
+        },
+        {
           "name": "Zachary",
           "slug": "zachary",
           "market_count": 1,
@@ -39556,8 +39725,436 @@
           ]
         }
       ],
+      "uncategorized_slugs": []
+    },
+    {
+      "code": "OH",
+      "name": "Ohio",
+      "country_code": "US",
+      "slug": "ohio",
+      "market_count": 68,
+      "city_count": 50,
+      "cities": [
+        {
+          "name": "Columbus",
+          "slug": "columbus",
+          "market_count": 8,
+          "market_slugs": [
+            "bronzeville-growers-market-columbus-oh",
+            "clintonville-farmers-market-columbus-oh",
+            "conservatory-farmers-market-columbus-oh",
+            "downtown-columbus-farmers-market-columbus-oh",
+            "german-village-farmers-market-oh",
+            "merion-village-farmers-market",
+            "pearl-market-oh",
+            "westgate-farmers-market-columbus-oh"
+          ]
+        },
+        {
+          "name": "Cincinnati",
+          "slug": "cincinnati",
+          "market_count": 5,
+          "market_slugs": [
+            "clifton-plaza-farmers-market-cincinnati",
+            "findlay-market-oh",
+            "lunken-farmers-market-oh",
+            "mt-washington-farmers-market-cincinnati",
+            "northside-farmers-market-cincinnati"
+          ]
+        },
+        {
+          "name": "Dayton",
+          "slug": "dayton",
+          "market_count": 4,
+          "market_slugs": [
+            "bath-church-farmers-market",
+            "downtown-troy-farmers-market",
+            "trotwood-community-market",
+            "wegerzyn-horticultural-association-farmers-market-dayton"
+          ]
+        },
+        {
+          "name": "Euclid",
+          "slug": "euclid",
+          "market_count": 2,
+          "market_slugs": [
+            "euclid-community-farmers-market-euclid",
+            "euclid-farmers-market-euclid"
+          ]
+        },
+        {
+          "name": "Kent",
+          "slug": "kent",
+          "market_count": 2,
+          "market_slugs": [
+            "haymaker-farmers-market-kent",
+            "haymaker-farmers-market-summer-season-oh-44240"
+          ]
+        },
+        {
+          "name": "Medina",
+          "slug": "medina",
+          "market_count": 2,
+          "market_slugs": [
+            "farmers-market-of-medina-county",
+            "farmers-market-of-medina-county-medina"
+          ]
+        },
+        {
+          "name": "Akron",
+          "slug": "akron",
+          "market_count": 1,
+          "market_slugs": [
+            "cuyahoga-valley-winter-farmers-market-akron"
+          ]
+        },
+        {
+          "name": "Athens",
+          "slug": "athens",
+          "market_count": 1,
+          "market_slugs": [
+            "athens-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Barnersville",
+          "slug": "barnersville",
+          "market_count": 1,
+          "market_slugs": [
+            "barnersville-farmers-market-barnersville"
+          ]
+        },
+        {
+          "name": "Bellaire",
+          "slug": "bellaire",
+          "market_count": 1,
+          "market_slugs": [
+            "ohio-valley-farmers-market-bellaire"
+          ]
+        },
+        {
+          "name": "Bellville",
+          "slug": "bellville",
+          "market_count": 1,
+          "market_slugs": [
+            "bellville-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Belmont",
+          "slug": "belmont",
+          "market_count": 1,
+          "market_slugs": [
+            "ohio-valley-farmers-market"
+          ]
+        },
+        {
+          "name": "Belpre",
+          "slug": "belpre",
+          "market_count": 1,
+          "market_slugs": [
+            "belpre-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Blacklick",
+          "slug": "blacklick",
+          "market_count": 1,
+          "market_slugs": [
+            "jefferson-community-farmers-market-blacklick"
+          ]
+        },
+        {
+          "name": "Blue Ash",
+          "slug": "blue-ash",
+          "market_count": 1,
+          "market_slugs": [
+            "blue-ash-farmers-market-blue-ash"
+          ]
+        },
+        {
+          "name": "Bowling Green",
+          "slug": "bowling-green",
+          "market_count": 1,
+          "market_slugs": [
+            "fremont-farmers-market-bowling-green"
+          ]
+        },
+        {
+          "name": "Brookville",
+          "slug": "brookville",
+          "market_count": 1,
+          "market_slugs": [
+            "brookville-community-farmers-market-brookville"
+          ]
+        },
+        {
+          "name": "Brunswick",
+          "slug": "brunswick",
+          "market_count": 1,
+          "market_slugs": [
+            "brunswick-farmers-market"
+          ]
+        },
+        {
+          "name": "Bucyrus",
+          "slug": "bucyrus",
+          "market_count": 1,
+          "market_slugs": [
+            "t-oc-farmers-market-bucyrus"
+          ]
+        },
+        {
+          "name": "Caledonia",
+          "slug": "caledonia",
+          "market_count": 1,
+          "market_slugs": [
+            "caledonia-farmers-market-public-square-caledonia-ohio-oh"
+          ]
+        },
+        {
+          "name": "Centerburg",
+          "slug": "centerburg",
+          "market_count": 1,
+          "market_slugs": [
+            "heart-of-ohio-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Cheviot",
+          "slug": "cheviot",
+          "market_count": 1,
+          "market_slugs": [
+            "lettuce-eat-well-oh"
+          ]
+        },
+        {
+          "name": "Fremont",
+          "slug": "fremont",
+          "market_count": 1,
+          "market_slugs": [
+            "ralphs-joy-of-living-farmers-market-fremont"
+          ]
+        },
+        {
+          "name": "Garrettsville",
+          "slug": "garrettsville",
+          "market_count": 1,
+          "market_slugs": [
+            "garrettsville-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Gilead",
+          "slug": "gilead",
+          "market_count": 1,
+          "market_slugs": [
+            "mt-gilead-farmers-market-gilead"
+          ]
+        },
+        {
+          "name": "Grand Rapids",
+          "slug": "grand-rapids",
+          "market_count": 1,
+          "market_slugs": [
+            "mclaughlins-greenhouse-market-grand-rapids"
+          ]
+        },
+        {
+          "name": "Hartville",
+          "slug": "hartville",
+          "market_count": 1,
+          "market_slugs": [
+            "ohio-farmers-market-hartville"
+          ]
+        },
+        {
+          "name": "Hinckley",
+          "slug": "hinckley",
+          "market_count": 1,
+          "market_slugs": [
+            "hillside-orchard-and-farm-market-hinckley"
+          ]
+        },
+        {
+          "name": "Lewis Center",
+          "slug": "lewis-center",
+          "market_count": 1,
+          "market_slugs": [
+            "all-life-community-market-lewis-center"
+          ]
+        },
+        {
+          "name": "Marietta",
+          "slug": "marietta",
+          "market_count": 1,
+          "market_slugs": [
+            "river-city-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Marion",
+          "slug": "marion",
+          "market_count": 1,
+          "market_slugs": [
+            "caledonia-farmers-market-marion-family-ymca-marion-oh-oh"
+          ]
+        },
+        {
+          "name": "Mount Vernon",
+          "slug": "mount-vernon",
+          "market_count": 1,
+          "market_slugs": [
+            "mount-vernon-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "North Canton",
+          "slug": "north-canton",
+          "market_count": 1,
+          "market_slugs": [
+            "north-canton-farmers-market-north-canton"
+          ]
+        },
+        {
+          "name": "Oxford",
+          "slug": "oxford",
+          "market_count": 1,
+          "market_slugs": [
+            "the-original-talawanda-farmers-market"
+          ]
+        },
+        {
+          "name": "Painesville",
+          "slug": "painesville",
+          "market_count": 1,
+          "market_slugs": [
+            "outdoor-y-farmers-market"
+          ]
+        },
+        {
+          "name": "Parma",
+          "slug": "parma",
+          "market_count": 1,
+          "market_slugs": [
+            "stearns-homestead-farmers-market"
+          ]
+        },
+        {
+          "name": "Peninsula",
+          "slug": "peninsula",
+          "market_count": 1,
+          "market_slugs": [
+            "cuyahoga-valley-summer-farmers-market"
+          ]
+        },
+        {
+          "name": "Portsmouth",
+          "slug": "portsmouth",
+          "market_count": 1,
+          "market_slugs": [
+            "main-street-portsmouth-in-bloom-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Richwood",
+          "slug": "richwood",
+          "market_count": 1,
+          "market_slugs": [
+            "union-county-farmers-market-richwood-location-richwood"
+          ]
+        },
+        {
+          "name": "Russellville",
+          "slug": "russellville",
+          "market_count": 1,
+          "market_slugs": [
+            "brown-county-farmers-markets"
+          ]
+        },
+        {
+          "name": "Saint Clairsville",
+          "slug": "saint-clairsville",
+          "market_count": 1,
+          "market_slugs": [
+            "ohio-valley-farmers-market-1"
+          ]
+        },
+        {
+          "name": "Salem",
+          "slug": "salem",
+          "market_count": 1,
+          "market_slugs": [
+            "salem-farm-market-ohio"
+          ]
+        },
+        {
+          "name": "Springboro",
+          "slug": "springboro",
+          "market_count": 1,
+          "market_slugs": [
+            "springboro-farmers-market"
+          ]
+        },
+        {
+          "name": "Urbana",
+          "slug": "urbana",
+          "market_count": 1,
+          "market_slugs": [
+            "the-woodruff-farm-connection-market-oh"
+          ]
+        },
+        {
+          "name": "Warren",
+          "slug": "warren",
+          "market_count": 1,
+          "market_slugs": [
+            "sunshine-golden-acres-oh"
+          ]
+        },
+        {
+          "name": "West Geneva",
+          "slug": "west-geneva",
+          "market_count": 1,
+          "market_slugs": [
+            "springhill-orchards-farm-market-west-geneva"
+          ]
+        },
+        {
+          "name": "Wheelersburg",
+          "slug": "wheelersburg",
+          "market_count": 1,
+          "market_slugs": [
+            "portsmouth-farmers-market-wheelersburg"
+          ]
+        },
+        {
+          "name": "Worthington",
+          "slug": "worthington",
+          "market_count": 1,
+          "market_slugs": [
+            "worthington-farmers-market-oh"
+          ]
+        },
+        {
+          "name": "Wyoming",
+          "slug": "wyoming",
+          "market_count": 1,
+          "market_slugs": [
+            "wyoming-farmers-market-wyoming"
+          ]
+        },
+        {
+          "name": "Youngstown",
+          "slug": "youngstown",
+          "market_count": 1,
+          "market_slugs": [
+            "northside-farmers-market"
+          ]
+        }
+      ],
       "uncategorized_slugs": [
-        "winn-farmers-market"
+        "haymaker-farmers-market-winter-season"
       ]
     },
     {
@@ -40143,431 +40740,6 @@
         }
       ],
       "uncategorized_slugs": []
-    },
-    {
-      "code": "OH",
-      "name": "Ohio",
-      "country_code": "US",
-      "slug": "ohio",
-      "market_count": 63,
-      "city_count": 50,
-      "cities": [
-        {
-          "name": "Cincinnati",
-          "slug": "cincinnati",
-          "market_count": 5,
-          "market_slugs": [
-            "clifton-plaza-farmers-market-cincinnati",
-            "findlay-market-oh",
-            "lunken-farmers-market-oh",
-            "mt-washington-farmers-market-cincinnati",
-            "northside-farmers-market-cincinnati"
-          ]
-        },
-        {
-          "name": "Dayton",
-          "slug": "dayton",
-          "market_count": 4,
-          "market_slugs": [
-            "bath-church-farmers-market",
-            "downtown-troy-farmers-market",
-            "trotwood-community-market",
-            "wegerzyn-horticultural-association-farmers-market-dayton"
-          ]
-        },
-        {
-          "name": "Columbus",
-          "slug": "columbus",
-          "market_count": 3,
-          "market_slugs": [
-            "german-village-farmers-market-oh",
-            "merion-village-farmers-market",
-            "pearl-market-oh"
-          ]
-        },
-        {
-          "name": "Euclid",
-          "slug": "euclid",
-          "market_count": 2,
-          "market_slugs": [
-            "euclid-community-farmers-market-euclid",
-            "euclid-farmers-market-euclid"
-          ]
-        },
-        {
-          "name": "Kent",
-          "slug": "kent",
-          "market_count": 2,
-          "market_slugs": [
-            "haymaker-farmers-market-kent",
-            "haymaker-farmers-market-summer-season-oh-44240"
-          ]
-        },
-        {
-          "name": "Medina",
-          "slug": "medina",
-          "market_count": 2,
-          "market_slugs": [
-            "farmers-market-of-medina-county",
-            "farmers-market-of-medina-county-medina"
-          ]
-        },
-        {
-          "name": "Akron",
-          "slug": "akron",
-          "market_count": 1,
-          "market_slugs": [
-            "cuyahoga-valley-winter-farmers-market-akron"
-          ]
-        },
-        {
-          "name": "Athens",
-          "slug": "athens",
-          "market_count": 1,
-          "market_slugs": [
-            "athens-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Barnersville",
-          "slug": "barnersville",
-          "market_count": 1,
-          "market_slugs": [
-            "barnersville-farmers-market-barnersville"
-          ]
-        },
-        {
-          "name": "Bellaire",
-          "slug": "bellaire",
-          "market_count": 1,
-          "market_slugs": [
-            "ohio-valley-farmers-market-bellaire"
-          ]
-        },
-        {
-          "name": "Bellville",
-          "slug": "bellville",
-          "market_count": 1,
-          "market_slugs": [
-            "bellville-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Belmont",
-          "slug": "belmont",
-          "market_count": 1,
-          "market_slugs": [
-            "ohio-valley-farmers-market"
-          ]
-        },
-        {
-          "name": "Belpre",
-          "slug": "belpre",
-          "market_count": 1,
-          "market_slugs": [
-            "belpre-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Blacklick",
-          "slug": "blacklick",
-          "market_count": 1,
-          "market_slugs": [
-            "jefferson-community-farmers-market-blacklick"
-          ]
-        },
-        {
-          "name": "Blue Ash",
-          "slug": "blue-ash",
-          "market_count": 1,
-          "market_slugs": [
-            "blue-ash-farmers-market-blue-ash"
-          ]
-        },
-        {
-          "name": "Bowling Green",
-          "slug": "bowling-green",
-          "market_count": 1,
-          "market_slugs": [
-            "fremont-farmers-market-bowling-green"
-          ]
-        },
-        {
-          "name": "Brookville",
-          "slug": "brookville",
-          "market_count": 1,
-          "market_slugs": [
-            "brookville-community-farmers-market-brookville"
-          ]
-        },
-        {
-          "name": "Brunswick",
-          "slug": "brunswick",
-          "market_count": 1,
-          "market_slugs": [
-            "brunswick-farmers-market"
-          ]
-        },
-        {
-          "name": "Bucyrus",
-          "slug": "bucyrus",
-          "market_count": 1,
-          "market_slugs": [
-            "t-oc-farmers-market-bucyrus"
-          ]
-        },
-        {
-          "name": "Caledonia",
-          "slug": "caledonia",
-          "market_count": 1,
-          "market_slugs": [
-            "caledonia-farmers-market-public-square-caledonia-ohio-oh"
-          ]
-        },
-        {
-          "name": "Centerburg",
-          "slug": "centerburg",
-          "market_count": 1,
-          "market_slugs": [
-            "heart-of-ohio-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Cheviot",
-          "slug": "cheviot",
-          "market_count": 1,
-          "market_slugs": [
-            "lettuce-eat-well-oh"
-          ]
-        },
-        {
-          "name": "Fremont",
-          "slug": "fremont",
-          "market_count": 1,
-          "market_slugs": [
-            "ralphs-joy-of-living-farmers-market-fremont"
-          ]
-        },
-        {
-          "name": "Garrettsville",
-          "slug": "garrettsville",
-          "market_count": 1,
-          "market_slugs": [
-            "garrettsville-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Gilead",
-          "slug": "gilead",
-          "market_count": 1,
-          "market_slugs": [
-            "mt-gilead-farmers-market-gilead"
-          ]
-        },
-        {
-          "name": "Grand Rapids",
-          "slug": "grand-rapids",
-          "market_count": 1,
-          "market_slugs": [
-            "mclaughlins-greenhouse-market-grand-rapids"
-          ]
-        },
-        {
-          "name": "Hartville",
-          "slug": "hartville",
-          "market_count": 1,
-          "market_slugs": [
-            "ohio-farmers-market-hartville"
-          ]
-        },
-        {
-          "name": "Hinckley",
-          "slug": "hinckley",
-          "market_count": 1,
-          "market_slugs": [
-            "hillside-orchard-and-farm-market-hinckley"
-          ]
-        },
-        {
-          "name": "Lewis Center",
-          "slug": "lewis-center",
-          "market_count": 1,
-          "market_slugs": [
-            "all-life-community-market-lewis-center"
-          ]
-        },
-        {
-          "name": "Marietta",
-          "slug": "marietta",
-          "market_count": 1,
-          "market_slugs": [
-            "river-city-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Marion",
-          "slug": "marion",
-          "market_count": 1,
-          "market_slugs": [
-            "caledonia-farmers-market-marion-family-ymca-marion-oh-oh"
-          ]
-        },
-        {
-          "name": "Mount Vernon",
-          "slug": "mount-vernon",
-          "market_count": 1,
-          "market_slugs": [
-            "mount-vernon-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "North Canton",
-          "slug": "north-canton",
-          "market_count": 1,
-          "market_slugs": [
-            "north-canton-farmers-market-north-canton"
-          ]
-        },
-        {
-          "name": "Oxford",
-          "slug": "oxford",
-          "market_count": 1,
-          "market_slugs": [
-            "the-original-talawanda-farmers-market"
-          ]
-        },
-        {
-          "name": "Painesville",
-          "slug": "painesville",
-          "market_count": 1,
-          "market_slugs": [
-            "outdoor-y-farmers-market"
-          ]
-        },
-        {
-          "name": "Parma",
-          "slug": "parma",
-          "market_count": 1,
-          "market_slugs": [
-            "stearns-homestead-farmers-market"
-          ]
-        },
-        {
-          "name": "Peninsula",
-          "slug": "peninsula",
-          "market_count": 1,
-          "market_slugs": [
-            "cuyahoga-valley-summer-farmers-market"
-          ]
-        },
-        {
-          "name": "Portsmouth",
-          "slug": "portsmouth",
-          "market_count": 1,
-          "market_slugs": [
-            "main-street-portsmouth-in-bloom-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Richwood",
-          "slug": "richwood",
-          "market_count": 1,
-          "market_slugs": [
-            "union-county-farmers-market-richwood-location-richwood"
-          ]
-        },
-        {
-          "name": "Russellville",
-          "slug": "russellville",
-          "market_count": 1,
-          "market_slugs": [
-            "brown-county-farmers-markets"
-          ]
-        },
-        {
-          "name": "Saint Clairsville",
-          "slug": "saint-clairsville",
-          "market_count": 1,
-          "market_slugs": [
-            "ohio-valley-farmers-market-1"
-          ]
-        },
-        {
-          "name": "Salem",
-          "slug": "salem",
-          "market_count": 1,
-          "market_slugs": [
-            "salem-farm-market-ohio"
-          ]
-        },
-        {
-          "name": "Springboro",
-          "slug": "springboro",
-          "market_count": 1,
-          "market_slugs": [
-            "springboro-farmers-market"
-          ]
-        },
-        {
-          "name": "Urbana",
-          "slug": "urbana",
-          "market_count": 1,
-          "market_slugs": [
-            "the-woodruff-farm-connection-market-oh"
-          ]
-        },
-        {
-          "name": "Warren",
-          "slug": "warren",
-          "market_count": 1,
-          "market_slugs": [
-            "sunshine-golden-acres-oh"
-          ]
-        },
-        {
-          "name": "West Geneva",
-          "slug": "west-geneva",
-          "market_count": 1,
-          "market_slugs": [
-            "springhill-orchards-farm-market-west-geneva"
-          ]
-        },
-        {
-          "name": "Wheelersburg",
-          "slug": "wheelersburg",
-          "market_count": 1,
-          "market_slugs": [
-            "portsmouth-farmers-market-wheelersburg"
-          ]
-        },
-        {
-          "name": "Worthington",
-          "slug": "worthington",
-          "market_count": 1,
-          "market_slugs": [
-            "worthington-farmers-market-oh"
-          ]
-        },
-        {
-          "name": "Wyoming",
-          "slug": "wyoming",
-          "market_count": 1,
-          "market_slugs": [
-            "wyoming-farmers-market-wyoming"
-          ]
-        },
-        {
-          "name": "Youngstown",
-          "slug": "youngstown",
-          "market_count": 1,
-          "market_slugs": [
-            "northside-farmers-market"
-          ]
-        }
-      ],
-      "uncategorized_slugs": [
-        "haymaker-farmers-market-winter-season"
-      ]
     },
     {
       "code": "WY",
@@ -42713,7 +42885,7 @@
       "country_code": "US",
       "slug": "idaho",
       "market_count": 42,
-      "city_count": 37,
+      "city_count": 38,
       "cities": [
         {
           "name": "Athol",
@@ -42752,12 +42924,11 @@
           ]
         },
         {
-          "name": "Pocatello",
-          "slug": "pocatello",
-          "market_count": 2,
+          "name": "American Falls",
+          "slug": "american-falls",
+          "market_count": 1,
           "market_slugs": [
-            "american-falls-farmers-market-city-park-american-falls",
-            "portneuf-valley-farmers-market-pocatello"
+            "american-falls-farmers-market-city-park-american-falls"
           ]
         },
         {
@@ -42958,6 +43129,14 @@
           "market_count": 1,
           "market_slugs": [
             "parma-farmers-market"
+          ]
+        },
+        {
+          "name": "Pocatello",
+          "slug": "pocatello",
+          "market_count": 1,
+          "market_slugs": [
+            "portneuf-valley-farmers-market-pocatello"
           ]
         },
         {
@@ -43252,7 +43431,7 @@
       "country_code": "US",
       "slug": "montana",
       "market_count": 38,
-      "city_count": 28,
+      "city_count": 30,
       "cities": [
         {
           "name": "Missoula",
@@ -43462,6 +43641,14 @@
           ]
         },
         {
+          "name": "Miles City",
+          "slug": "miles-city",
+          "market_count": 1,
+          "market_slugs": [
+            "miles-city-farmers-market-riverside-park-miles-city"
+          ]
+        },
+        {
           "name": "Sidney",
           "slug": "sidney",
           "market_count": 1,
@@ -43478,6 +43665,14 @@
           ]
         },
         {
+          "name": "Twin Bridges",
+          "slug": "twin-bridges",
+          "market_count": 1,
+          "market_slugs": [
+            "twin-bridges-all-year-farmers-market-city-park-and-fairgrounds-twin-bridges"
+          ]
+        },
+        {
           "name": "Whitefish",
           "slug": "whitefish",
           "market_count": 1,
@@ -43487,9 +43682,7 @@
         }
       ],
       "uncategorized_slugs": [
-        "havre-hi-line-farmers-market-second-street-havre",
-        "miles-city-farmers-market-riverside-park-miles-city",
-        "twin-bridges-all-year-farmers-market-city-park-and-fairgrounds-twin-bridges"
+        "havre-hi-line-farmers-market-second-street-havre"
       ]
     },
     {
@@ -43498,7 +43691,7 @@
       "country_code": "US",
       "slug": "new-mexico",
       "market_count": 38,
-      "city_count": 31,
+      "city_count": 32,
       "cities": [
         {
           "name": "Albuquerque",
@@ -43530,15 +43723,6 @@
           ]
         },
         {
-          "name": "Bosque Farms",
-          "slug": "bosque-farms",
-          "market_count": 2,
-          "market_slugs": [
-            "belen-farmers-market-anna-becker-park-belen",
-            "bosque-farms-growers-market"
-          ]
-        },
-        {
           "name": "Las Cruces",
           "slug": "las-cruces",
           "market_count": 2,
@@ -43553,6 +43737,22 @@
           "market_count": 1,
           "market_slugs": [
             "san-felipe-farmers-market"
+          ]
+        },
+        {
+          "name": "Belen",
+          "slug": "belen",
+          "market_count": 1,
+          "market_slugs": [
+            "belen-farmers-market-anna-becker-park-belen"
+          ]
+        },
+        {
+          "name": "Bosque Farms",
+          "slug": "bosque-farms",
+          "market_count": 1,
+          "market_slugs": [
+            "bosque-farms-growers-market"
           ]
         },
         {
