@@ -7,9 +7,38 @@
       "market": "richland-park-farmers-market",
       "issue": "Dataset address is 4701 Charlotte Pike; the market's own site (richlandparkfarmersmarket.com, checked 2026-10-21) says 4711 Charlotte Avenue.",
       "status": "open"
+    },
+    {
+      "city": "ohio/columbus",
+      "market": "pearl-market-oh",
+      "issue": "Downtown Services (downtownservices.org/?p=93538, checked 2026-10-23) says 'This year marked Pearl Market's final season after 26 years'. The market looks closed; Common Greens now runs the Thursday Downtown Columbus Farmers Market at Columbus Commons instead.",
+      "status": "open"
+    },
+    {
+      "city": "ohio/columbus",
+      "market": "merion-village-farmers-market",
+      "issue": "Could not find any 2026 listing or official site for Merion Village Farmers' Market (106 E. Moler St.); it is not on the Franklin County Auditor's 2026 list. May be closed.",
+      "status": "open"
+    },
+    {
+      "city": "ohio/columbus",
+      "market": "german-village-farmers-market-oh",
+      "issue": "Dataset has no schedule or website. Franklin County Auditor 2026 list: Saturdays May 2-Nov 21, 9am-1pm, 555 S Third St, facebook.com/germanvillagefarmersmarket. Some listings give 588 S Third St.",
+      "status": "open"
+    },
+    {
+      "city": "ohio/columbus",
+      "market": null,
+      "issue": "Missing Columbus markets on the Franklin County Auditor 2026 list: Clintonville Farmers Market (3535 N High St, the city's biggest Saturday market), Downtown Columbus Farmers Market (Columbus Commons), Bronzeville Growers Market (925 Mt Vernon Ave), Conservatory Farmers Market (1777 E Broad St), Westgate Farmers Market (2925 W Broad St). The page lists only 3 markets, one closed.",
+      "status": "open"
     }
   ],
-  "ideas": [],
+  "ideas": [
+    {
+      "city": "ohio/columbus",
+      "idea": "Let a city guide name markets that are missing from the dataset (or show 'recently closed' on a market card), so pages like Columbus with stale USDA data still show the real lineup."
+    }
+  ],
   "cities": [
     {
       "priority": 1,
@@ -35,8 +64,15 @@
       "keyword": "farmers market columbus",
       "volume": 33100,
       "difficulty": 22,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-10-23",
+          "changes": "First guide: 6 sourced tips (German Village Saturdays to Nov 21, Clintonville indoor holiday market Dec 5/12/19, Clintonville $25 SNAP match, Clintonville parking and bike corral, OhioHealth Riverside Nov 17, Pearl Market closed and Thursday Downtown market at Columbus Commons), 2 FAQs (weekday evening markets, Westgate), title and description override.",
+          "baseline": "No settled GSC baseline yet; city URL moved to /ohio/columbus on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-11-20"
     },
     {
       "priority": 3,

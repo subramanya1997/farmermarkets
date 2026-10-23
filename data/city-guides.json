@@ -61,6 +61,82 @@
           "url": "https://www.eastnashvillemarket.com/"
         }
       ]
+    },
+    "ohio/columbus": {
+      "verified_at": "2026-10-23",
+      "title": "Columbus, OH Farmers Markets: Saturday and Holiday Markets",
+      "description": "Columbus, OH farmers markets with days and hours. German Village and Clintonville run Saturdays through Nov 21, then Clintonville moves indoors in December.",
+      "tips": [
+        {
+          "label": "Late season",
+          "text": "German Village Farmers Market runs Saturdays 9am-1pm at 555 S Third St through November 21, 2026.",
+          "source_ids": ["franklin-auditor-2026"]
+        },
+        {
+          "label": "Holiday market",
+          "text": "Clintonville's Holiday Market moves inside North Broadway United Methodist Church on Saturdays December 5, 12 and 19, from 9am-1pm.",
+          "source_ids": ["common-greens-home"]
+        },
+        {
+          "label": "SNAP match",
+          "text": "Clintonville Farmers Market matches SNAP $1 for $1, up to $25, on your Ohio Direction Card (EBT). WIC farmers market coupons are welcome too.",
+          "source_ids": ["clintonville-market"]
+        },
+        {
+          "label": "Parking",
+          "text": "Clintonville Farmers Market (3535 N High St) has free parking at Columbus Mennonite Church and on side streets, plus a free bike corral on Orchard Ln.",
+          "source_ids": ["clintonville-market"]
+        },
+        {
+          "label": "Riverside",
+          "text": "The OhioHealth Market at the Riverside campus holds its last 2026 date on Tuesday, November 17, from 4pm-7pm.",
+          "source_ids": ["common-greens-home"]
+        },
+        {
+          "label": "Pearl Market",
+          "text": "Pearl Market in the Gay Street District has ended after 26 years. Downtown's weekday market is now Thursdays 11am-2pm at Columbus Commons (160 S High St).",
+          "source_ids": ["pearl-market-final", "downtown-market"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Are there farmers markets on weekday evenings in Columbus?",
+          "answer": "In summer, yes. Bronzeville Growers Market runs Thursdays 3pm-6pm at 925 Mt Vernon Ave (July 2-Sept 24), and Franklin Park Conservatory hosts a market on Wednesdays 3:30pm-6:30pm (June 3-Sept 16).",
+          "source_ids": ["franklin-auditor-2026"]
+        },
+        {
+          "question": "Is there a farmers market on the West Side of Columbus?",
+          "answer": "Westgate Farmers Market sets up at 2925 W Broad St on the 1st and 3rd Saturdays of each month, June through October, from 9am-12pm.",
+          "source_ids": ["franklin-auditor-2026"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "franklin-auditor-2026",
+          "title": "2026 Farmers Markets, Franklin County Auditor",
+          "url": "https://auditor.franklincountyohio.gov/Consumer/Weights-and-Measures/Farmers-Markets"
+        },
+        {
+          "id": "common-greens-home",
+          "title": "Markets and Holiday Market, Common Greens",
+          "url": "https://www.commongreensohio.org/"
+        },
+        {
+          "id": "clintonville-market",
+          "title": "Clintonville Farmers Market, Common Greens",
+          "url": "https://www.commongreensohio.org/clintonville/"
+        },
+        {
+          "id": "pearl-market-final",
+          "title": "Pearl Market's final season, Downtown Services",
+          "url": "https://downtownservices.org/?p=93538"
+        },
+        {
+          "id": "downtown-market",
+          "title": "Downtown Columbus Farmers Market, Common Greens",
+          "url": "https://www.commongreensohio.org/downtownmarket/"
+        }
+      ]
     }
   }
 }
