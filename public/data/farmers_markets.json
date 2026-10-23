@@ -680721,7 +680721,8 @@
     },
     "products": {
       "items": [],
-      "production_methods": []
+      "production_methods": [],
+      "categories": {}
     },
     "payment": {
       "methods": [],
@@ -680751,11 +680752,47 @@
     "slug": "pearl-market-oh",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "operations": {
+        "status": {
+          "value": {
+            "value": "permanently_closed",
+            "effective_date": "2025-11-24",
+            "note": "The 2025 season was Pearl Market's last after 26 years (operator page updated Nov 24, 2025)."
+          },
+          "source_ids": [
+            "final-season"
+          ],
+          "verified_at": "2026-10-23"
+        }
+      }
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=39.963693%2C-82.99999629999999",
+    "amenities": {
+      "features": []
+    },
+    "enrichment": {
+      "verified_at": "2026-10-23",
+      "verification_scope": "partial",
+      "sources": [
+        {
+          "id": "final-season",
+          "url": "https://downtownservices.org/?p=93538",
+          "title": "Pearl Market's final season, Downtown Services",
+          "fields": [
+            "first_party.operations"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-10-23"
+        }
+      ]
+    },
     "audit": {
       "checked_at": "2026-08-21",
       "status": "checked_no_verified_update"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=39.963693%2C-82.99999629999999"
+    }
   },
   {
     "id": 313957,

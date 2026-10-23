@@ -17,15 +17,23 @@ other sessions edit it):
 
 ```bash
 cd /Users/subramanya/Desktop/projects/farmermarkets
+git fetch origin
 git worktree list | grep -q farmermarkets-growth \
-  || git worktree add ../farmermarkets-growth main
+  || git worktree add --detach ../farmermarkets-growth origin/main
 cd ../farmermarkets-growth
-git checkout main && git pull --ff-only
-npm ci   # only when package-lock.json changed since the last run
+git status --short   # only an untracked package-lock.json is expected
+git checkout --detach origin/main
+npm install --no-audit --no-fund   # when node_modules is missing or package.json changed
 ```
 
-If the pull fails or the worktree has uncommitted changes from a crashed run,
-inspect them; discard only your own leftovers from a previous run.
+`main` is checked out in the owner's folder, so git will not check it out a
+second time: the worktree stays on a detached HEAD at `origin/main` and
+publishes with `git push origin HEAD:main` (step 6). There is no committed
+lockfile, so `npm ci` fails; `npm install` writes an untracked
+`package-lock.json` that never gets committed.
+
+If the worktree has uncommitted changes from a crashed run, inspect them;
+discard only your own leftovers from a previous run.
 
 ## 1. Measure what earlier runs did
 
@@ -141,8 +149,12 @@ changes, record the failure in the city's `runs`, and stop.
 ```bash
 git add data/city-guides.json docs/city-growth-backlog.json [any blog or enrichment files]
 git commit -m "City growth: {City}, {ST}: {what changed}"
-git push origin main
+git fetch origin && git rebase origin/main
+git push origin HEAD:main
 ```
+
+`next dev` may rewrite `AGENTS.md`; restore it with `git checkout AGENTS.md`
+rather than committing it.
 
 End the commit message with:
 `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`

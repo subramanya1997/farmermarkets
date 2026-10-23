@@ -38,7 +38,28 @@
           "source_ids": ["east-nashville-home"]
         }
       ],
-      "faqs": [],
+      "faqs": [
+        {
+          "question": "Is the Market House at Nashville Farmers' Market open every day?",
+          "answer": "Yes. The Market House building is open daily from 8am-8pm, though each restaurant and shop inside sets its own hours.",
+          "source_ids": ["nfm-hours"]
+        },
+        {
+          "question": "Can I bring my dog to a Nashville farmers market?",
+          "answer": "East Nashville Farmers' Market welcomes pets, but asks that dogs wear foot protection on hot summer asphalt.",
+          "source_ids": ["east-nashville-home"]
+        },
+        {
+          "question": "Where is the East Nashville Farmers' Market?",
+          "answer": "At 5th and Woodland (511 Woodland Street). Extra free lots are at 6th and Main St and at First Church of the Nazarene across the street.",
+          "source_ids": ["east-nashville-home"]
+        },
+        {
+          "question": "How big is Richland Park Farmers' Market?",
+          "answer": "It has 80+ vendors in peak season, from farmers and bakers to cheese makers, chefs and food entrepreneurs.",
+          "source_ids": ["richland-home"]
+        }
+      ],
       "sources": [
         {
           "id": "nfm-hours",

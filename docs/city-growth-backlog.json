@@ -5,14 +5,15 @@
     {
       "city": "tennessee/nashville",
       "market": "richland-park-farmers-market",
-      "issue": "Dataset address is 4701 Charlotte Pike; the market's own site (richlandparkfarmersmarket.com, checked 2026-10-21) says 4711 Charlotte Avenue.",
+      "issue": "Dataset address is 4701 Charlotte Pike; the market's own site (richlandparkfarmersmarket.com, checked 2026-10-21) says 4711 Charlotte Avenue. Rechecked 2026-10-23: site still says 4711 Charlotte Avenue.",
       "status": "open"
     },
     {
       "city": "ohio/columbus",
       "market": "pearl-market-oh",
       "issue": "Downtown Services (downtownservices.org/?p=93538, checked 2026-10-23) says 'This year marked Pearl Market's final season after 26 years'. The market looks closed; Common Greens now runs the Thursday Downtown Columbus Farmers Market at Columbus Commons instead.",
-      "status": "open"
+      "status": "fixed",
+      "resolution": "Marked permanently_closed in data/enrichment/research-city-growth-2026-10.json (2026-10-23)."
     },
     {
       "city": "ohio/columbus",
@@ -51,8 +52,12 @@
       "runs": [
         {
           "date": "2026-10-21",
-          "changes": "First guide: 6 sourced tips (year-round sheds, parking, WeGo bus, Fresh Bucks SNAP match, Richland winter Saturdays, East Nashville late season), 2 FAQs, title and description override.",
+          "changes": "First guide: 6 sourced tips (year-round sheds, parking, WeGo bus, Fresh Bucks SNAP match, Richland winter Saturdays, East Nashville late season), no FAQs (the drafts repeated the tips), title and description override.",
           "baseline": "City URL moved to /tennessee/nashville on 2026-10-11; no settled GSC baseline yet."
+        },
+        {
+          "date": "2026-10-23",
+          "changes": "Added 4 sourced FAQs (Market House daily 8am-8pm, East Nashville pet rule, East Nashville location and overflow lots, Richland Park 80+ vendors)."
         }
       ],
       "next_check": "2026-11-18"
