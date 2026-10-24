@@ -52,14 +52,17 @@
       "monthlySearches": 590,
       "difficulty": 13,
       "cluster": "benefits",
-      "status": "todo"
+      "status": "skipped",
+      "note": "Repeats the existing post how-to-use-snap-ebt-at-farmers-markets."
     },
     {
       "keyword": "how to store tomatoes",
       "monthlySearches": 5400,
       "difficulty": 5,
       "cluster": "storage",
-      "status": "todo"
+      "status": "published",
+      "slug": "how-to-store-tomatoes",
+      "publishedAt": "2026-10-24"
     },
     {
       "keyword": "csa farm share",
