@@ -69,7 +69,9 @@
       "monthlySearches": 480,
       "difficulty": 16,
       "cluster": "csa",
-      "status": "todo"
+      "status": "published",
+      "slug": "csa-farm-share",
+      "publishedAt": "2026-10-26"
     },
     {
       "keyword": "how to store green onions",
