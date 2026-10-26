@@ -163,6 +163,112 @@
           "url": "https://www.fpconservatory.org/education-programs/outreach-programs/farmers-market/"
         }
       ]
+    },
+    "minnesota/minneapolis": {
+      "verified_at": "2026-10-26",
+      "title": "Minneapolis Farmers Markets: Winter Markets, Days and Hours",
+      "description": "{count} farmers markets in Minneapolis, MN with days and hours. Mill City and Northeast move indoors for winter, and the Lyndale market runs May-Oct, Wed-Sun.",
+      "tips": [
+        {
+          "label": "Biggest market",
+          "text": "The Minneapolis Farmers Market at 312 E Lyndale Ave N runs May 2-Oct 31 in 2026: Wednesday-Friday 7am-1pm, Saturday and Sunday 6am-1pm.",
+          "source_ids": ["mfm-about"]
+        },
+        {
+          "label": "Winter",
+          "text": "Mill City's last outdoor market is Oct 31. From Nov 7 it moves inside the Mill City Museum on the 1st and 3rd Saturdays, 9am-1pm, through April. Entry is free.",
+          "source_ids": ["millcity-home", "millcity-winter"]
+        },
+        {
+          "label": "Holiday season",
+          "text": "Mill City's indoor markets before the holidays fall on Nov 7, Nov 21, Dec 5 and Dec 19. There is no market on Saturday, Jan 2.",
+          "source_ids": ["millcity-winter"]
+        },
+        {
+          "label": "Southwest winter",
+          "text": "Neighborhood Roots runs winter markets indoors at Bachman's, 6010 Lyndale Ave S, 10am-1pm on Nov 14, 2026, then Jan 9, Feb 6 and Mar 13, 2027.",
+          "source_ids": ["nr-winter", "nr-calendar"]
+        },
+        {
+          "label": "SNAP match",
+          "text": "At Mill City's Info Booth, SNAP/EBT is triple matched year-round: buy $10 in tokens and get $40 to spend.",
+          "source_ids": ["millcity-snap"]
+        },
+        {
+          "label": "Parking",
+          "text": "Mill City: the Mill Quarter ramp across the street has a $3 Saturday special (in before 10am, out by 1pm). The US Bank Stadium light rail stop is two blocks away.",
+          "source_ids": ["millcity-visit"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I bring my dog to Mill City Farmers Market?",
+          "answer": "Outdoors, leashed dogs (6 feet or shorter) are welcome in the open Chicago Mall between the Guthrie and the museum, but not under the covered Train Shed. Dogs are not allowed at the indoor winter market.",
+          "source_ids": ["millcity-visit", "millcity-winter"]
+        },
+        {
+          "question": "Is there a winter farmers market in Northeast Minneapolis?",
+          "answer": "Yes. The Northeast Minneapolis Farmers Market meets the first Saturday of each month, November through April, 10am-1pm at East Side Neighborhood Services, 1700 2nd St NE.",
+          "source_ids": ["ne-visit"]
+        },
+        {
+          "question": "How old is the Minneapolis Farmers Market?",
+          "answer": "It started in 1876 at First Street and Hennepin Avenue. The Lyndale market, with its three red sheds, opened in 1937 and now has 170 stalls shared by more than 100 vendors.",
+          "source_ids": ["mfm-about"]
+        },
+        {
+          "question": "Does the Minneapolis Farmers Market on Lyndale take EBT?",
+          "answer": "Yes, in season. Swipe your card at the EBT booth for tokens, and Market Bucks match SNAP spending dollar for dollar, up to $10 per visit.",
+          "source_ids": ["mfm-food-access"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "mfm-about",
+          "title": "About and 2026 hours, Minneapolis Farmers Market",
+          "url": "https://www.mplsfarmersmarket.com/about"
+        },
+        {
+          "id": "mfm-food-access",
+          "title": "Food Access, Minneapolis Farmers Market",
+          "url": "https://www.mplsfarmersmarket.com/food-access"
+        },
+        {
+          "id": "millcity-home",
+          "title": "Mill City Farmers Market",
+          "url": "https://www.millcityfarmersmarket.org/"
+        },
+        {
+          "id": "millcity-winter",
+          "title": "Indoor Winter Market, Mill City",
+          "url": "https://www.millcityfarmersmarket.org/visit/indoor-winter-market/"
+        },
+        {
+          "id": "millcity-visit",
+          "title": "Visit: parking and dogs, Mill City",
+          "url": "https://www.millcityfarmersmarket.org/visit/"
+        },
+        {
+          "id": "millcity-snap",
+          "title": "SNAP/EBT and Market Tokens, Mill City",
+          "url": "https://www.millcityfarmersmarket.org/snap-ebt-market-tokens/"
+        },
+        {
+          "id": "nr-winter",
+          "title": "Winter Markets, Neighborhood Roots",
+          "url": "https://www.neighborhoodrootsmn.org/winter-markets"
+        },
+        {
+          "id": "nr-calendar",
+          "title": "Market calendar, Neighborhood Roots",
+          "url": "https://www.neighborhoodrootsmn.org/calendar"
+        },
+        {
+          "id": "ne-visit",
+          "title": "Visit, Northeast Minneapolis Farmers Market",
+          "url": "https://www.northeastmarket.org/visit"
+        }
+      ]
     }
   }
 }

@@ -33,6 +33,30 @@
       "issue": "Missing Columbus markets on the Franklin County Auditor 2026 list: Clintonville Farmers Market (3535 N High St, the city's biggest Saturday market), Downtown Columbus Farmers Market (Columbus Commons), Bronzeville Growers Market (925 Mt Vernon Ave), Conservatory Farmers Market (1777 E Broad St), Westgate Farmers Market (2925 W Broad St). The page lists only 3 markets, one closed.",
       "status": "fixed",
       "resolution": "Added Clintonville, Downtown Columbus, Conservatory, Bronzeville and Westgate to data/enrichment/added-markets.json (2026-10-23). OhioHealth Market left out: its page says it is for OhioHealth staff only."
+    },
+    {
+      "city": "minnesota/minneapolis",
+      "market": "minneapolis-farmers-market-lyndale-market-winter-minneapolis",
+      "issue": "Dataset lists a winter Lyndale market, but the market's own site (mplsfarmersmarket.com/about, checked 2026-10-26) gives only a 2026 season of May 2-October 31.",
+      "status": "open"
+    },
+    {
+      "city": "minnesota/minneapolis",
+      "market": "kingfield-farmers-market-winter-minneapolis",
+      "issue": "Dataset puts the Kingfield winter market at 4901 Chowen Ave S. Neighborhood Roots (neighborhoodrootsmn.org/winter-markets, checked 2026-10-26) runs its 2026-27 winter markets at Bachman's, 6010 Lyndale Ave S.",
+      "status": "open"
+    },
+    {
+      "city": "minnesota/minneapolis",
+      "market": "mill-city-farmers-market-minneapolis",
+      "issue": "Mill City appears twice (mill-city-farmers-market-minneapolis at 704 S 2nd St and mill-city-farmers-market-minneapolis-1 at 750 S 2nd St). The official site gives 750 S 2nd St as the market address and 704 S 2nd St as the mailing address.",
+      "status": "open"
+    },
+    {
+      "city": "minnesota/minneapolis",
+      "market": "northeast-minneapolis-farmers-market-winter-minneapolis",
+      "issue": "Dataset puts the Northeast winter market at 629 NE 2nd St (the summer lot). The market's site (northeastmarket.org/visit, checked 2026-10-26) says winter markets are at East Side Neighborhood Services, 1700 2nd St NE.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -91,8 +115,15 @@
       "keyword": "farmers market minneapolis",
       "volume": 22200,
       "difficulty": 35,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-10-26",
+          "changes": "First guide: 6 sourced tips (Lyndale market 2026 hours, Mill City indoor winter market from Nov 7, Mill City holiday-season dates, Neighborhood Roots winter markets at Bachman's, Mill City SNAP triple match, Mill City parking and light rail), 4 FAQs (Mill City dog rules, Northeast winter market, Lyndale history, Lyndale EBT and Market Bucks), title and description override.",
+          "baseline": "No settled GSC baseline yet; city URL moved to /minnesota/minneapolis on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-11-23"
     },
     {
       "priority": 4,
