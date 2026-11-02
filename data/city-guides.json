@@ -269,6 +269,102 @@
           "url": "https://www.northeastmarket.org/visit"
         }
       ]
+    },
+    "texas/houston": {
+      "verified_at": "2026-11-01",
+      "title": "Houston Farmers Markets: Open Year-Round, Days and Hours",
+      "description": "{count} farmers markets in Houston, TX with days and hours. Urban Harvest runs every Saturday year-round, and the Airline Drive market is open daily.",
+      "tips": [
+        {
+          "label": "Year-round",
+          "text": "Urban Harvest Farmers Market at 2752 Buffalo Speedway runs every Saturday, 8am-12pm, year-round, rain or shine.",
+          "source_ids": ["uh-market"]
+        },
+        {
+          "label": "Parking",
+          "text": "Urban Harvest has free parking in the garage, with 500+ spaces. Enter from W. Alabama St or Westheimer Rd.",
+          "source_ids": ["uh-market"]
+        },
+        {
+          "label": "SNAP match",
+          "text": "Bring your Lone Star Card to the Urban Harvest info booth: Double Up matches SNAP dollar for dollar, up to $40 a day, in produce credit.",
+          "source_ids": ["uh-snap"]
+        },
+        {
+          "label": "Open daily",
+          "text": "The Houston Farmers Market at 2520 Airline Dr is open every day, 6am-7pm, but each merchant sets its own hours. It does not take SNAP/EBT, and most vendors prefer cash.",
+          "source_ids": ["hfm-faq"]
+        },
+        {
+          "label": "Sundays",
+          "text": "Heights Mercantile, 714 Yale St, hosts a farmers market every 2nd and 4th Sunday, 9am-1pm.",
+          "source_ids": ["hm-markets"]
+        },
+        {
+          "label": "Farm visit",
+          "text": "Hope Farms, 10401 Scott St, opens to the public on the first Saturday of every month, 9am-2pm, with produce picked right before market day.",
+          "source_ids": ["hope-market-days"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I bring my dog to a Houston farmers market?",
+          "answer": "Not to Urban Harvest or the Houston Farmers Market on Airline. Both ban pets under health rules; Urban Harvest allows service animals.",
+          "source_ids": ["uh-faq", "hfm-faq"]
+        },
+        {
+          "question": "Where does the food at Urban Harvest come from?",
+          "answer": "Only from farmers and food vendors within 180 miles of Houston. Crafts and reselling are not allowed, and since not every farm is certified organic, each booth posts its growing practices.",
+          "source_ids": ["uh-faq"]
+        },
+        {
+          "question": "How old is the Houston Farmers Market?",
+          "answer": "It was established in 1941 in the Greater Northside District and calls itself the largest and oldest farmers market in Houston.",
+          "source_ids": ["hfm-home"]
+        },
+        {
+          "question": "Where else can I use Double Up Food Bucks in Houston?",
+          "answer": "Freedman's Town Farmers Market, 1108 Victor St, on Saturdays 9am-2pm, and the Acres Homes Farmers Market, 2500 S Victory St, on the 3rd Saturday, 10am-1pm. Double Up credit does not expire.",
+          "source_ids": ["uh-snap"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "uh-market",
+          "title": "Urban Harvest Farmers Market",
+          "url": "https://www.urbanharvest.org/urban-harvest-farmers-market/"
+        },
+        {
+          "id": "uh-faq",
+          "title": "Market FAQ, Urban Harvest",
+          "url": "https://www.urbanharvest.org/farmers-market/faq/"
+        },
+        {
+          "id": "uh-snap",
+          "title": "SNAP/EBT Double Up, Urban Harvest",
+          "url": "https://www.urbanharvest.org/urban-harvest-farmers-market/snap/"
+        },
+        {
+          "id": "hfm-home",
+          "title": "Houston Farmers Market",
+          "url": "https://thehoustonfarmersmarket.com/"
+        },
+        {
+          "id": "hfm-faq",
+          "title": "Market FAQs, Houston Farmers Market",
+          "url": "https://thehoustonfarmersmarket.com/market-faqs/"
+        },
+        {
+          "id": "hm-markets",
+          "title": "Markets, Heights Mercantile",
+          "url": "https://www.heightsmercantile.com/heights-mercantile-markets"
+        },
+        {
+          "id": "hope-market-days",
+          "title": "Market Days, Hope Farms",
+          "url": "https://hopefarmshtx.org/market-days/"
+        }
+      ]
     }
   }
 }

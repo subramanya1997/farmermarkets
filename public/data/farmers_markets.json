@@ -828637,5 +828637,87 @@
       "retrieved_at": "2026-10-23"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Westgate%20Farmers%20Market%2C%202925%20W%20Broad%20St%2C%20Columbus%2C%20OH"
+  },
+  {
+    "id": "added:houston-farmers-market-houston-tx",
+    "slug": "houston-farmers-market-houston-tx",
+    "name": "Houston Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "2520 Airline Drive, Houston, TX",
+      "city": "Houston",
+      "state": "Texas",
+      "zip_code": "77009",
+      "description": "In the Greater Northside District. Merchant hours vary. No pets."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Established in 1941."
+    },
+    "contact": {
+      "websites": [
+        "https://thehoustonfarmersmarket.com/"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "Year-round",
+      "days": [
+        "Monday to Sunday 6am to 7pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Houston Farmers Market",
+      "dataset_name": "Market FAQs",
+      "catalog_url": "https://thehoustonfarmersmarket.com/market-faqs/",
+      "retrieved_at": "2026-11-01"
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Houston%20Farmers%20Market%2C%202520%20Airline%20Drive%2C%20Houston%2C%20TX"
+  },
+  {
+    "id": "added:heights-mercantile-farmers-market-houston-tx",
+    "slug": "heights-mercantile-farmers-market-houston-tx",
+    "name": "Heights Mercantile Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "714 Yale Street, Houston, TX",
+      "city": "Houston",
+      "state": "Texas",
+      "zip_code": "77007",
+      "description": ""
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "websites": [
+        "https://www.heightsmercantile.com/heights-mercantile-markets"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "2nd and 4th Sundays, 9am-1pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Heights Mercantile",
+      "dataset_name": "Heights Mercantile Markets",
+      "catalog_url": "https://www.heightsmercantile.com/heights-mercantile-markets",
+      "retrieved_at": "2026-11-01"
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Heights%20Mercantile%20Farmers%20Market%2C%20714%20Yale%20Street%2C%20Houston%2C%20TX"
   }
 ]

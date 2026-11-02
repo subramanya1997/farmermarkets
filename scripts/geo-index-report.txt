@@ -1,20 +1,20 @@
 Geo index build report
-generated_at            2026-10-23T19:13:57.586Z
+generated_at            2026-11-02T00:56:26.936Z
 
 Records
-  total                 9137
-  indexed               9132
+  total                 9139
+  indexed               9134
   unresolved            5
-  without coordinates   388
+  without coordinates   390
 
 Resolution method (weakest source a record needed)
-  from fields           8791
+  from fields           8793
   from address          77
   from coordinates      224
   corrupt combos fixed  1
 
 State resolution
-  from fields           8625
+  from fields           8627
   from address          2
   from coordinates      2
   missing before        511
@@ -22,7 +22,7 @@ State resolution
     of those, outside US/CA (grouped by country instead)  503
 
 City resolution
-  from fields           8776
+  from fields           8778
   from address          77
   from coordinates      224
   missing before        132
@@ -41,9 +41,9 @@ Top 10 entries by market count
    5. Illinois                   366 markets   195 cities
    6. Michigan                   340 markets   233 cities
    7. Virginia                   299 markets   162 cities
-   8. Georgia                    237 markets   123 cities
-   9. Wisconsin                  237 markets   151 cities
-  10. Texas                      236 markets   121 cities
+   8. Texas                      238 markets   121 cities
+   9. Georgia                    237 markets   123 cities
+  10. Wisconsin                  237 markets   151 cities
 
 Unresolved examples
   cambridge-farmers-market — Cambridge Farmers’ Market (US)

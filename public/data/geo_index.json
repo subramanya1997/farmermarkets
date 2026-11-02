@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-23T19:13:57.586Z",
-  "market_count": 9137,
+  "generated_at": "2026-11-02T00:56:26.936Z",
+  "market_count": 9139,
   "states": [
     {
       "code": "NY",
@@ -18004,6 +18004,1102 @@
       "uncategorized_slugs": []
     },
     {
+      "code": "TX",
+      "name": "Texas",
+      "country_code": "US",
+      "slug": "texas",
+      "market_count": 238,
+      "city_count": 121,
+      "cities": [
+        {
+          "name": "San Antonio",
+          "slug": "san-antonio",
+          "market_count": 33,
+          "market_slugs": [
+            "collins-garden-park-farmers-market",
+            "dignowity-hill-farmers-market",
+            "ella-austin-community-center-farmers-market",
+            "hill-country-farmers-market",
+            "hill-country-farmers-market-association-san-antonio",
+            "main-plaza-farmers-market-san-antonio",
+            "mission-marquee-plaza-farmers-market-san-antonio",
+            "pearl-brewery-farmers-market-association-san-antonio",
+            "pearl-farmers-market-san-antonio",
+            "pica-pica-plaza-farmers-market-san-antonio",
+            "saha-farmers-market",
+            "sam-houston-high-school-farmers-market",
+            "san-antonio-farmers-market-association-ii-san-antonio",
+            "san-antonio-farmers-market-association-iii-san-antonio",
+            "san-antonio-farmers-market-association-iv-san-antonio",
+            "san-antonio-farmers-market-association-vi-san-antonio",
+            "san-antonio-farmers-market-association-viii-san-antonio",
+            "san-antonio-food-bank-farmers-market-san-antonio",
+            "south-texas-farmers-market-association-i-san-antonio",
+            "south-texas-farmers-market-association-ii-san-antonio",
+            "south-texas-farmers-market-association-iv-san-antonio",
+            "south-texas-farmers-market-association-v-san-antonio",
+            "south-texas-farmers-market-association-vi-san-antonio",
+            "tri-county-farmers-market-association-i-san-antonio",
+            "tri-county-farmers-market-association-ii-san-antonio",
+            "tri-county-farmers-market-association-iii-san-antonio",
+            "tri-county-farmers-market-association-iv-san-antonio",
+            "tri-county-farmers-market-association-v-san-antonio",
+            "tri-county-farmers-market-association-vi-at-marbach-plaza-san-antonio",
+            "wic-clinic-callaghan-farmers-market-san-antonio",
+            "wic-clinic-naco-perrin-farmers-market-san-antonio",
+            "wic-clinic-pecan-valley-farmers-market-san-antonio",
+            "wic-clinic-salinas-farmers-market-san-antonio"
+          ]
+        },
+        {
+          "name": "Austin",
+          "slug": "austin",
+          "market_count": 13,
+          "market_slugs": [
+            "6701-burnet-road-market-market-austin",
+            "austin-farmers-market-association-i-austin",
+            "austin-farmers-market-association-iii-austin",
+            "austin-farmers-market-association-vi-austin",
+            "austin-farmers-market-austin",
+            "barton-creek-farmers-market-austin",
+            "chaparral-crossing-farmers-market-tx",
+            "hope-farmers-market-austin",
+            "sfc-farmers-market-at-sunset-valley",
+            "sfc-farmers-market-east-austin",
+            "sustainable-food-center-farmers-market-downtown-austin",
+            "sustainable-food-center-farmers-market-sunset-valley-austin",
+            "texas-farmers-market-at-mueller-austin"
+          ]
+        },
+        {
+          "name": "Houston",
+          "slug": "houston",
+          "market_count": 13,
+          "market_slugs": [
+            "bayou-city-farmers-market-houston",
+            "braeswood-farmers-market-houston",
+            "city-hall-farmers-market-houston",
+            "heights-epicurean-farmers-market-houston",
+            "heights-mercantile-farmers-market-houston-tx",
+            "hope-farms-first-wednesday-market",
+            "houston-farmers-market-houston-tx",
+            "memorial-villages-farmers-market-tx",
+            "midtown-farmers-market-houston",
+            "natural-living-farmers-market-houston",
+            "urban-harvest-farmers-market-houston",
+            "westchase-district-farmers-market",
+            "white-oak-farmers-market-houston"
+          ]
+        },
+        {
+          "name": "Dallas",
+          "slug": "dallas",
+          "market_count": 11,
+          "market_slugs": [
+            "dallas-farmers-market-1",
+            "dallas-farmers-market-dallas",
+            "for-oak-cliff-farmers-market",
+            "for-oak-cliff-farmers-market-dallas",
+            "good-local-market-white-rock-farmers-market-tx",
+            "good-local-markets-lakewood-tower-farmers-market-tx",
+            "good-local-markets-white-rock-farmers-market-dallas",
+            "lakewood-village-farmers-market-dallas",
+            "saint-michaels-farmers-market-dallas",
+            "west-village-farm-to-market-dallas",
+            "white-rock-local-market"
+          ]
+        },
+        {
+          "name": "Fort Worth",
+          "slug": "fort-worth",
+          "market_count": 6,
+          "market_slugs": [
+            "arlington-foodies-farmers-market",
+            "beach-street-local-market-fort-worth",
+            "cowtown-farmers-market-fort-worth",
+            "downtown-farmers-market-5",
+            "efwmas-fresh-food-market-fort-worth",
+            "farmers-market-fort-worth-inc-fort-worth"
+          ]
+        },
+        {
+          "name": "Tyler",
+          "slug": "tyler",
+          "market_count": 6,
+          "market_slugs": [
+            "east-texas-fresh-farmers-market-tyler",
+            "east-texas-state-fair-farmers-market-tyler",
+            "rose-city-farmers-market",
+            "rose-city-farmers-market-tx",
+            "tyler-farmers-market",
+            "tyler-farmers-market-association-tyler"
+          ]
+        },
+        {
+          "name": "Troy",
+          "slug": "troy",
+          "market_count": 4,
+          "market_slugs": [
+            "an-evening-market-at-troy-tx-tx",
+            "evening-market-at-troy-tx",
+            "troy-farmers-market-arts-crafts",
+            "troy-farmers-market-arts-crafts-1"
+          ]
+        },
+        {
+          "name": "Athens",
+          "slug": "athens",
+          "market_count": 3,
+          "market_slugs": [
+            "athens-farmers-market-athens-3",
+            "athens-tx-farmers-market-tx",
+            "downtown-canton-farmers-market"
+          ]
+        },
+        {
+          "name": "Corpus Christi",
+          "slug": "corpus-christi",
+          "market_count": 3,
+          "market_slugs": [
+            "area-farmers-market-corpus-christi",
+            "corpus-christi-downtown-farmers-market",
+            "corpus-christi-southside-farmers-market"
+          ]
+        },
+        {
+          "name": "Friendswood",
+          "slug": "friendswood",
+          "market_count": 3,
+          "market_slugs": [
+            "bay-area-farmers-market-friendswood",
+            "friendswood-farmers-market-friendswood",
+            "friendswood-farmers-market-friendswood-1"
+          ]
+        },
+        {
+          "name": "Grapevine",
+          "slug": "grapevine",
+          "market_count": 3,
+          "market_slugs": [
+            "farmers-market-of-grapevine-grapevine",
+            "grapevine-farmers-market",
+            "north-central-texas-farmers-market-corporation-iii-grapevine"
+          ]
+        },
+        {
+          "name": "Harlingen",
+          "slug": "harlingen",
+          "market_count": 3,
+          "market_slugs": [
+            "all-natural-and-certified-organic-farmers-market-hope-farm-harlingen",
+            "harlingen-farmers-market-harlingen",
+            "hope-farm-farmers-market-harlingen"
+          ]
+        },
+        {
+          "name": "Wichita Falls",
+          "slug": "wichita-falls",
+          "market_count": 3,
+          "market_slugs": [
+            "charlie-thornberry-certified-farmers-market-association-wichita-falls",
+            "charlie-thornberry-farmers-market-wichita-falls",
+            "red-river-farmers-market-wichita-falls"
+          ]
+        },
+        {
+          "name": "Atascocita",
+          "slug": "atascocita",
+          "market_count": 2,
+          "market_slugs": [
+            "eagle-springs-farmers-market-atascocita",
+            "the-groves-marketplace-atascocita"
+          ]
+        },
+        {
+          "name": "Bastrop",
+          "slug": "bastrop",
+          "market_count": 2,
+          "market_slugs": [
+            "bastrop-1832-farmers-market-bastrop",
+            "river-valley-farmers-market-bastrop"
+          ]
+        },
+        {
+          "name": "Brenham",
+          "slug": "brenham",
+          "market_count": 2,
+          "market_slugs": [
+            "downtown-brenham-first-fridays-farmer-artisan-market-brenham",
+            "home-sweet-farm-market-brenham"
+          ]
+        },
+        {
+          "name": "Bryan",
+          "slug": "bryan",
+          "market_count": 2,
+          "market_slugs": [
+            "brazos-valley-farmers-market-bryan",
+            "independent-growers-market-bryan"
+          ]
+        },
+        {
+          "name": "Clarksville City",
+          "slug": "clarksville-city",
+          "market_count": 2,
+          "market_slugs": [
+            "grass-roots-farmers-market",
+            "hwy-80-produce-clarksville-city"
+          ]
+        },
+        {
+          "name": "Clear Lake Shores",
+          "slug": "clear-lake-shores",
+          "market_count": 2,
+          "market_slugs": [
+            "baytown-farmers-market",
+            "clear-lake-shores-farmers-market"
+          ]
+        },
+        {
+          "name": "College Station",
+          "slug": "college-station",
+          "market_count": 2,
+          "market_slugs": [
+            "aggieland-farmers-market-tx",
+            "community-fresh-farmers-market"
+          ]
+        },
+        {
+          "name": "Corsicana",
+          "slug": "corsicana",
+          "market_count": 2,
+          "market_slugs": [
+            "navarro-county-farmers-market",
+            "richland-chambers-lake-farmers-market-385a-fm-416-streetman"
+          ]
+        },
+        {
+          "name": "Denton",
+          "slug": "denton",
+          "market_count": 2,
+          "market_slugs": [
+            "denton-community-market-denton",
+            "denton-county-farmers-market"
+          ]
+        },
+        {
+          "name": "Elgin",
+          "slug": "elgin",
+          "market_count": 2,
+          "market_slugs": [
+            "elgin-farmers-market-elgin",
+            "river-valley-farmers-market"
+          ]
+        },
+        {
+          "name": "Galveston",
+          "slug": "galveston",
+          "market_count": 2,
+          "market_slugs": [
+            "galveston-west-end-farmers-market-galveston",
+            "west-island-farmers-market-galveston"
+          ]
+        },
+        {
+          "name": "Grand Prairie",
+          "slug": "grand-prairie",
+          "market_count": 2,
+          "market_slugs": [
+            "grand-prairie-farmers-market-grand-prairie",
+            "north-central-texas-farmers-market-corporation-i-grand-prairie"
+          ]
+        },
+        {
+          "name": "Humble",
+          "slug": "humble",
+          "market_count": 2,
+          "market_slugs": [
+            "buy-local-farmers-market-fall-creek-humble",
+            "fall-creek-farmers-market-humble"
+          ]
+        },
+        {
+          "name": "Katy",
+          "slug": "katy",
+          "market_count": 2,
+          "market_slugs": [
+            "farmers-market-on-grand-parkway-katy",
+            "katy-farmers-market-katy"
+          ]
+        },
+        {
+          "name": "Killeen",
+          "slug": "killeen",
+          "market_count": 2,
+          "market_slugs": [
+            "green-avenue-farmers-market-killeen",
+            "killeen-farmers-market"
+          ]
+        },
+        {
+          "name": "Lubbock",
+          "slug": "lubbock",
+          "market_count": 2,
+          "market_slugs": [
+            "apple-country-farmers-market-ii-lubbock",
+            "lubbock-farmers-market"
+          ]
+        },
+        {
+          "name": "Midland",
+          "slug": "midland",
+          "market_count": 2,
+          "market_slugs": [
+            "midland-downtown-farmers-market",
+            "permian-basin-farmers-market-midland"
+          ]
+        },
+        {
+          "name": "New Braunfels",
+          "slug": "new-braunfels",
+          "market_count": 2,
+          "market_slugs": [
+            "new-braunfels-farmers-market-tx",
+            "new-braunfels-food-bank-farmers-market-new-braunfels"
+          ]
+        },
+        {
+          "name": "Pflugerville",
+          "slug": "pflugerville",
+          "market_count": 2,
+          "market_slugs": [
+            "manor-farmers-market",
+            "pflugerville-pfarmers-market"
+          ]
+        },
+        {
+          "name": "Round Top",
+          "slug": "round-top",
+          "market_count": 2,
+          "market_slugs": [
+            "burton-farmers-and-artisans-market",
+            "round-top-farmers-market-round-top"
+          ]
+        },
+        {
+          "name": "San Angelo",
+          "slug": "san-angelo",
+          "market_count": 2,
+          "market_slugs": [
+            "concho-valley-farmers-market",
+            "san-angelo-farmers-market"
+          ]
+        },
+        {
+          "name": "San Marcos",
+          "slug": "san-marcos",
+          "market_count": 2,
+          "market_slugs": [
+            "san-marcos-farmers-market",
+            "san-marcosnew-braunfels-farmers-market-association-san-marcos"
+          ]
+        },
+        {
+          "name": "Seguin",
+          "slug": "seguin",
+          "market_count": 2,
+          "market_slugs": [
+            "guadalupe-valley-gardeners-market-seguin",
+            "seguin-farmers-market-association-seguin"
+          ]
+        },
+        {
+          "name": "Temple",
+          "slug": "temple",
+          "market_count": 2,
+          "market_slugs": [
+            "bell-county-farmers-market-association-ii-temple",
+            "temple-farmers-market"
+          ]
+        },
+        {
+          "name": "Waxahachie",
+          "slug": "waxahachie",
+          "market_count": 2,
+          "market_slugs": [
+            "hometown-farmers-market-waxahachie",
+            "waxahachie-downtown-farmers-market-waxahachie"
+          ]
+        },
+        {
+          "name": "Winnsboro",
+          "slug": "winnsboro",
+          "market_count": 2,
+          "market_slugs": [
+            "mineola-farmers-market",
+            "winnsboro-farmers-market-tx"
+          ]
+        },
+        {
+          "name": "A Lubbock",
+          "slug": "a-lubbock",
+          "market_count": 1,
+          "market_slugs": [
+            "apple-country-farmers-market-a-lubbock"
+          ]
+        },
+        {
+          "name": "Abilene",
+          "slug": "abilene",
+          "market_count": 1,
+          "market_slugs": [
+            "abilene-farmers-market-tx"
+          ]
+        },
+        {
+          "name": "Amarillo",
+          "slug": "amarillo",
+          "market_count": 1,
+          "market_slugs": [
+            "amarillo-community-market-amarillo"
+          ]
+        },
+        {
+          "name": "Annetta",
+          "slug": "annetta",
+          "market_count": 1,
+          "market_slugs": [
+            "annetta-valley-farmers-market-annetta"
+          ]
+        },
+        {
+          "name": "Augustine San Antonio",
+          "slug": "augustine-san-antonio",
+          "market_count": 1,
+          "market_slugs": [
+            "san-antonio-farmers-market-association-v-augustine-san-antonio"
+          ]
+        },
+        {
+          "name": "Bangs",
+          "slug": "bangs",
+          "market_count": 1,
+          "market_slugs": [
+            "bangs-farmers-market-bangs"
+          ]
+        },
+        {
+          "name": "Bay City",
+          "slug": "bay-city",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-farmers-market-bay-city-bay-city"
+          ]
+        },
+        {
+          "name": "Beaumont",
+          "slug": "beaumont",
+          "market_count": 1,
+          "market_slugs": [
+            "beaumont-farmers-market"
+          ]
+        },
+        {
+          "name": "Bedford",
+          "slug": "bedford",
+          "market_count": 1,
+          "market_slugs": [
+            "bedford-farmers-market-bedford-2"
+          ]
+        },
+        {
+          "name": "Boerne",
+          "slug": "boerne",
+          "market_count": 1,
+          "market_slugs": [
+            "farmers-market-at-the-cibolo-boerne"
+          ]
+        },
+        {
+          "name": "Buda",
+          "slug": "buda",
+          "market_count": 1,
+          "market_slugs": [
+            "san-marcosnew-braunfeis-farmers-market-assoc-ii-buda"
+          ]
+        },
+        {
+          "name": "Burleson",
+          "slug": "burleson",
+          "market_count": 1,
+          "market_slugs": [
+            "burleson-farmers-market-burleson"
+          ]
+        },
+        {
+          "name": "Canton",
+          "slug": "canton",
+          "market_count": 1,
+          "market_slugs": [
+            "canton-farmers-market-canton-6"
+          ]
+        },
+        {
+          "name": "Cedar Park",
+          "slug": "cedar-park",
+          "market_count": 1,
+          "market_slugs": [
+            "texas-farmers-market-at-lakeline-cedar-park"
+          ]
+        },
+        {
+          "name": "Celina",
+          "slug": "celina",
+          "market_count": 1,
+          "market_slugs": [
+            "celinas-friday-night-market-celina"
+          ]
+        },
+        {
+          "name": "Centerville",
+          "slug": "centerville",
+          "market_count": 1,
+          "market_slugs": [
+            "farmers-market-centerville-texas"
+          ]
+        },
+        {
+          "name": "Coppell",
+          "slug": "coppell",
+          "market_count": 1,
+          "market_slugs": [
+            "coppell-farmers-market-coppell"
+          ]
+        },
+        {
+          "name": "Coupland",
+          "slug": "coupland",
+          "market_count": 1,
+          "market_slugs": [
+            "the-coupland-farmers-artisan-market-coupland"
+          ]
+        },
+        {
+          "name": "Decatur",
+          "slug": "decatur",
+          "market_count": 1,
+          "market_slugs": [
+            "decatur-community-market-decatur"
+          ]
+        },
+        {
+          "name": "Downtown Denison",
+          "slug": "downtown-denison",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-denison-farmers-market-downtown-denison"
+          ]
+        },
+        {
+          "name": "Edinburg",
+          "slug": "edinburg",
+          "market_count": 1,
+          "market_slugs": [
+            "grown-growers-farmers-market-edinburg"
+          ]
+        },
+        {
+          "name": "Ennis",
+          "slug": "ennis",
+          "market_count": 1,
+          "market_slugs": [
+            "ennis-farmers-market"
+          ]
+        },
+        {
+          "name": "Fulshear",
+          "slug": "fulshear",
+          "market_count": 1,
+          "market_slugs": [
+            "fulshear-farmers-market-fulshear"
+          ]
+        },
+        {
+          "name": "Garden Ridge",
+          "slug": "garden-ridge",
+          "market_count": 1,
+          "market_slugs": [
+            "garden-ridge-farmers-market-garden-ridge"
+          ]
+        },
+        {
+          "name": "Georgetown",
+          "slug": "georgetown",
+          "market_count": 1,
+          "market_slugs": [
+            "day-star-organic-farmers-market"
+          ]
+        },
+        {
+          "name": "Glen Rose",
+          "slug": "glen-rose",
+          "market_count": 1,
+          "market_slugs": [
+            "sweet-magnolia-market-glen-rose"
+          ]
+        },
+        {
+          "name": "Hereford",
+          "slug": "hereford",
+          "market_count": 1,
+          "market_slugs": [
+            "deaf-smith-chamber-of-commerce-farmers-market-hereford"
+          ]
+        },
+        {
+          "name": "Huntsville",
+          "slug": "huntsville",
+          "market_count": 1,
+          "market_slugs": [
+            "huntsville-downtown-farmers-market-huntsville"
+          ]
+        },
+        {
+          "name": "Hutto",
+          "slug": "hutto",
+          "market_count": 1,
+          "market_slugs": [
+            "hutto-silos-farmers-market"
+          ]
+        },
+        {
+          "name": "Jacksonville",
+          "slug": "jacksonville",
+          "market_count": 1,
+          "market_slugs": [
+            "east-texas-farmers-market-jacksonville"
+          ]
+        },
+        {
+          "name": "Jefferson",
+          "slug": "jefferson",
+          "market_count": 1,
+          "market_slugs": [
+            "jefferson-farmers-market-jefferson-1"
+          ]
+        },
+        {
+          "name": "Justin",
+          "slug": "justin",
+          "market_count": 1,
+          "market_slugs": [
+            "justin-farmers-market-tx"
+          ]
+        },
+        {
+          "name": "Keller",
+          "slug": "keller",
+          "market_count": 1,
+          "market_slugs": [
+            "keller-farmers-market-keller"
+          ]
+        },
+        {
+          "name": "Kerrville",
+          "slug": "kerrville",
+          "market_count": 1,
+          "market_slugs": [
+            "local-kerrville-farmers-market-kerrville"
+          ]
+        },
+        {
+          "name": "Kilgore",
+          "slug": "kilgore",
+          "market_count": 1,
+          "market_slugs": [
+            "iron-farm-farmers-market-kilgore"
+          ]
+        },
+        {
+          "name": "Kingwood",
+          "slug": "kingwood",
+          "market_count": 1,
+          "market_slugs": [
+            "kingwood-farmers-market-kingwood"
+          ]
+        },
+        {
+          "name": "League City",
+          "slug": "league-city",
+          "market_count": 1,
+          "market_slugs": [
+            "market-on-the-bayou-certified-farmers-market-tx"
+          ]
+        },
+        {
+          "name": "Leon Valley",
+          "slug": "leon-valley",
+          "market_count": 1,
+          "market_slugs": [
+            "san-antonio-farmers-market-association-leon-valley"
+          ]
+        },
+        {
+          "name": "Little Elm",
+          "slug": "little-elm",
+          "market_count": 1,
+          "market_slugs": [
+            "little-elm-farmers-market-little-elm"
+          ]
+        },
+        {
+          "name": "Longview",
+          "slug": "longview",
+          "market_count": 1,
+          "market_slugs": [
+            "historic-longview-farmers-market-longview"
+          ]
+        },
+        {
+          "name": "Lucas",
+          "slug": "lucas",
+          "market_count": 1,
+          "market_slugs": [
+            "lucas-farmers-market-lucas"
+          ]
+        },
+        {
+          "name": "Lufkin",
+          "slug": "lufkin",
+          "market_count": 1,
+          "market_slugs": [
+            "angelina-county-farmers-market"
+          ]
+        },
+        {
+          "name": "Maltsberger San Antonio",
+          "slug": "maltsberger-san-antonio",
+          "market_count": 1,
+          "market_slugs": [
+            "tri-county-farmers-market-association-vii-maltsberger-san-antonio"
+          ]
+        },
+        {
+          "name": "Martindale",
+          "slug": "martindale",
+          "market_count": 1,
+          "market_slugs": [
+            "martindale-market-martindale"
+          ]
+        },
+        {
+          "name": "Mcallen",
+          "slug": "mcallen",
+          "market_count": 1,
+          "market_slugs": [
+            "the-market-at-alhambra-mcallen"
+          ]
+        },
+        {
+          "name": "Mckinney",
+          "slug": "mckinney",
+          "market_count": 1,
+          "market_slugs": [
+            "historic-mckinney-farmers-market-at-chestnut-square-historic-village-mckinney"
+          ]
+        },
+        {
+          "name": "Melissa",
+          "slug": "melissa",
+          "market_count": 1,
+          "market_slugs": [
+            "melissa-farmers-market-tx-75454"
+          ]
+        },
+        {
+          "name": "Mesquite",
+          "slug": "mesquite",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-mesquite-farmers-market"
+          ]
+        },
+        {
+          "name": "Mineral Wells",
+          "slug": "mineral-wells",
+          "market_count": 1,
+          "market_slugs": [
+            "let-s-grow-crazy-mineral-wells"
+          ]
+        },
+        {
+          "name": "Missorui City",
+          "slug": "missorui-city",
+          "market_count": 1,
+          "market_slugs": [
+            "farmers-market-partners-missorui-city"
+          ]
+        },
+        {
+          "name": "Murphy",
+          "slug": "murphy",
+          "market_count": 1,
+          "market_slugs": [
+            "collin-county-farmers-market"
+          ]
+        },
+        {
+          "name": "Nacogdoches",
+          "slug": "nacogdoches",
+          "market_count": 1,
+          "market_slugs": [
+            "nacogdoches-farmers-market-nacogdoches"
+          ]
+        },
+        {
+          "name": "Natalia",
+          "slug": "natalia",
+          "market_count": 1,
+          "market_slugs": [
+            "tri-county-farmers-market-association-natalia"
+          ]
+        },
+        {
+          "name": "North Texas City",
+          "slug": "north-texas-city",
+          "market_count": 1,
+          "market_slugs": [
+            "coastal-community-farmers-market-north-texas-city"
+          ]
+        },
+        {
+          "name": "Oaks San Antonio",
+          "slug": "oaks-san-antonio",
+          "market_count": 1,
+          "market_slugs": [
+            "south-texas-farmers-market-association-oaks-san-antonio"
+          ]
+        },
+        {
+          "name": "Office Galveston",
+          "slug": "office-galveston",
+          "market_count": 1,
+          "market_slugs": [
+            "galvestons-own-farmers-market-office-galveston"
+          ]
+        },
+        {
+          "name": "Orange",
+          "slug": "orange",
+          "market_count": 1,
+          "market_slugs": [
+            "the-artisan-farmers-market-tx"
+          ]
+        },
+        {
+          "name": "Pearland",
+          "slug": "pearland",
+          "market_count": 1,
+          "market_slugs": [
+            "pearland-old-townsite-farmers-market-pearland"
+          ]
+        },
+        {
+          "name": "Pharr",
+          "slug": "pharr",
+          "market_count": 1,
+          "market_slugs": [
+            "pharrmers-market-farmers-market-pharr"
+          ]
+        },
+        {
+          "name": "Raymondville",
+          "slug": "raymondville",
+          "market_count": 1,
+          "market_slugs": [
+            "studebaker-farmers-market-raymondville"
+          ]
+        },
+        {
+          "name": "Richardson",
+          "slug": "richardson",
+          "market_count": 1,
+          "market_slugs": [
+            "richardson-farmers-market-richardson"
+          ]
+        },
+        {
+          "name": "Richland Hills",
+          "slug": "richland-hills",
+          "market_count": 1,
+          "market_slugs": [
+            "richland-hills-farmers-market-richland-hills"
+          ]
+        },
+        {
+          "name": "Rockdale",
+          "slug": "rockdale",
+          "market_count": 1,
+          "market_slugs": [
+            "star-farmers-market-rockdale"
+          ]
+        },
+        {
+          "name": "Rosenberg",
+          "slug": "rosenberg",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-rosenberg-farmers-market-rosenberg"
+          ]
+        },
+        {
+          "name": "Round Rock",
+          "slug": "round-rock",
+          "market_count": 1,
+          "market_slugs": [
+            "round-rock-farmers-market-round-rock"
+          ]
+        },
+        {
+          "name": "Sage Garland",
+          "slug": "sage-garland",
+          "market_count": 1,
+          "market_slugs": [
+            "four-seasons-markets-at-firewheel-sage-garland"
+          ]
+        },
+        {
+          "name": "Salado",
+          "slug": "salado",
+          "market_count": 1,
+          "market_slugs": [
+            "salado-farmers-market"
+          ]
+        },
+        {
+          "name": "San Juan",
+          "slug": "san-juan",
+          "market_count": 1,
+          "market_slugs": [
+            "grown-growers-farmers-market-san-juan"
+          ]
+        },
+        {
+          "name": "Sanger",
+          "slug": "sanger",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-sanger-farmers-market-tx-76266"
+          ]
+        },
+        {
+          "name": "Sealy",
+          "slug": "sealy",
+          "market_count": 1,
+          "market_slugs": [
+            "sealy-farmers-market-sealy"
+          ]
+        },
+        {
+          "name": "Sherman",
+          "slug": "sherman",
+          "market_count": 1,
+          "market_slugs": [
+            "sherman-farmers-market-tx"
+          ]
+        },
+        {
+          "name": "Sugar Land",
+          "slug": "sugar-land",
+          "market_count": 1,
+          "market_slugs": [
+            "farmers-market-at-imperial-sugar-land"
+          ]
+        },
+        {
+          "name": "Sulphur Springs",
+          "slug": "sulphur-springs",
+          "market_count": 1,
+          "market_slugs": [
+            "main-street-farmers-market-sulphur-springs"
+          ]
+        },
+        {
+          "name": "Texarkana",
+          "slug": "texarkana",
+          "market_count": 1,
+          "market_slugs": [
+            "texarkana-texas-farmers-market-texarkana"
+          ]
+        },
+        {
+          "name": "The Woodlands",
+          "slug": "the-woodlands",
+          "market_count": 1,
+          "market_slugs": [
+            "the-woodlands-farmers-market-at-gogans-mill-the-woodlands"
+          ]
+        },
+        {
+          "name": "Tomball",
+          "slug": "tomball",
+          "market_count": 1,
+          "market_slugs": [
+            "tomball-farmers-market"
+          ]
+        },
+        {
+          "name": "Victoria",
+          "slug": "victoria",
+          "market_count": 1,
+          "market_slugs": [
+            "victoria-farmers-market-victoria"
+          ]
+        },
+        {
+          "name": "Waco",
+          "slug": "waco",
+          "market_count": 1,
+          "market_slugs": [
+            "waco-downtown-farmers-market-waco"
+          ]
+        },
+        {
+          "name": "Washington",
+          "slug": "washington",
+          "market_count": 1,
+          "market_slugs": [
+            "washington-on-the-brazos-farmers-market-washington"
+          ]
+        },
+        {
+          "name": "Weimar",
+          "slug": "weimar",
+          "market_count": 1,
+          "market_slugs": [
+            "weimar-farmers-market-weimar"
+          ]
+        },
+        {
+          "name": "Wharton",
+          "slug": "wharton",
+          "market_count": 1,
+          "market_slugs": [
+            "wharton-county-farmers-market-wharton"
+          ]
+        },
+        {
+          "name": "Worth",
+          "slug": "worth",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-farmers-market-i-worth"
+          ]
+        }
+      ],
+      "uncategorized_slugs": []
+    },
+    {
       "code": "GA",
       "name": "Georgia",
       "country_code": "US",
@@ -20417,1100 +21513,6 @@
       "uncategorized_slugs": [
         "oak-creek-winter-farmers-market-wi"
       ]
-    },
-    {
-      "code": "TX",
-      "name": "Texas",
-      "country_code": "US",
-      "slug": "texas",
-      "market_count": 236,
-      "city_count": 121,
-      "cities": [
-        {
-          "name": "San Antonio",
-          "slug": "san-antonio",
-          "market_count": 33,
-          "market_slugs": [
-            "collins-garden-park-farmers-market",
-            "dignowity-hill-farmers-market",
-            "ella-austin-community-center-farmers-market",
-            "hill-country-farmers-market",
-            "hill-country-farmers-market-association-san-antonio",
-            "main-plaza-farmers-market-san-antonio",
-            "mission-marquee-plaza-farmers-market-san-antonio",
-            "pearl-brewery-farmers-market-association-san-antonio",
-            "pearl-farmers-market-san-antonio",
-            "pica-pica-plaza-farmers-market-san-antonio",
-            "saha-farmers-market",
-            "sam-houston-high-school-farmers-market",
-            "san-antonio-farmers-market-association-ii-san-antonio",
-            "san-antonio-farmers-market-association-iii-san-antonio",
-            "san-antonio-farmers-market-association-iv-san-antonio",
-            "san-antonio-farmers-market-association-vi-san-antonio",
-            "san-antonio-farmers-market-association-viii-san-antonio",
-            "san-antonio-food-bank-farmers-market-san-antonio",
-            "south-texas-farmers-market-association-i-san-antonio",
-            "south-texas-farmers-market-association-ii-san-antonio",
-            "south-texas-farmers-market-association-iv-san-antonio",
-            "south-texas-farmers-market-association-v-san-antonio",
-            "south-texas-farmers-market-association-vi-san-antonio",
-            "tri-county-farmers-market-association-i-san-antonio",
-            "tri-county-farmers-market-association-ii-san-antonio",
-            "tri-county-farmers-market-association-iii-san-antonio",
-            "tri-county-farmers-market-association-iv-san-antonio",
-            "tri-county-farmers-market-association-v-san-antonio",
-            "tri-county-farmers-market-association-vi-at-marbach-plaza-san-antonio",
-            "wic-clinic-callaghan-farmers-market-san-antonio",
-            "wic-clinic-naco-perrin-farmers-market-san-antonio",
-            "wic-clinic-pecan-valley-farmers-market-san-antonio",
-            "wic-clinic-salinas-farmers-market-san-antonio"
-          ]
-        },
-        {
-          "name": "Austin",
-          "slug": "austin",
-          "market_count": 13,
-          "market_slugs": [
-            "6701-burnet-road-market-market-austin",
-            "austin-farmers-market-association-i-austin",
-            "austin-farmers-market-association-iii-austin",
-            "austin-farmers-market-association-vi-austin",
-            "austin-farmers-market-austin",
-            "barton-creek-farmers-market-austin",
-            "chaparral-crossing-farmers-market-tx",
-            "hope-farmers-market-austin",
-            "sfc-farmers-market-at-sunset-valley",
-            "sfc-farmers-market-east-austin",
-            "sustainable-food-center-farmers-market-downtown-austin",
-            "sustainable-food-center-farmers-market-sunset-valley-austin",
-            "texas-farmers-market-at-mueller-austin"
-          ]
-        },
-        {
-          "name": "Dallas",
-          "slug": "dallas",
-          "market_count": 11,
-          "market_slugs": [
-            "dallas-farmers-market-1",
-            "dallas-farmers-market-dallas",
-            "for-oak-cliff-farmers-market",
-            "for-oak-cliff-farmers-market-dallas",
-            "good-local-market-white-rock-farmers-market-tx",
-            "good-local-markets-lakewood-tower-farmers-market-tx",
-            "good-local-markets-white-rock-farmers-market-dallas",
-            "lakewood-village-farmers-market-dallas",
-            "saint-michaels-farmers-market-dallas",
-            "west-village-farm-to-market-dallas",
-            "white-rock-local-market"
-          ]
-        },
-        {
-          "name": "Houston",
-          "slug": "houston",
-          "market_count": 11,
-          "market_slugs": [
-            "bayou-city-farmers-market-houston",
-            "braeswood-farmers-market-houston",
-            "city-hall-farmers-market-houston",
-            "heights-epicurean-farmers-market-houston",
-            "hope-farms-first-wednesday-market",
-            "memorial-villages-farmers-market-tx",
-            "midtown-farmers-market-houston",
-            "natural-living-farmers-market-houston",
-            "urban-harvest-farmers-market-houston",
-            "westchase-district-farmers-market",
-            "white-oak-farmers-market-houston"
-          ]
-        },
-        {
-          "name": "Fort Worth",
-          "slug": "fort-worth",
-          "market_count": 6,
-          "market_slugs": [
-            "arlington-foodies-farmers-market",
-            "beach-street-local-market-fort-worth",
-            "cowtown-farmers-market-fort-worth",
-            "downtown-farmers-market-5",
-            "efwmas-fresh-food-market-fort-worth",
-            "farmers-market-fort-worth-inc-fort-worth"
-          ]
-        },
-        {
-          "name": "Tyler",
-          "slug": "tyler",
-          "market_count": 6,
-          "market_slugs": [
-            "east-texas-fresh-farmers-market-tyler",
-            "east-texas-state-fair-farmers-market-tyler",
-            "rose-city-farmers-market",
-            "rose-city-farmers-market-tx",
-            "tyler-farmers-market",
-            "tyler-farmers-market-association-tyler"
-          ]
-        },
-        {
-          "name": "Troy",
-          "slug": "troy",
-          "market_count": 4,
-          "market_slugs": [
-            "an-evening-market-at-troy-tx-tx",
-            "evening-market-at-troy-tx",
-            "troy-farmers-market-arts-crafts",
-            "troy-farmers-market-arts-crafts-1"
-          ]
-        },
-        {
-          "name": "Athens",
-          "slug": "athens",
-          "market_count": 3,
-          "market_slugs": [
-            "athens-farmers-market-athens-3",
-            "athens-tx-farmers-market-tx",
-            "downtown-canton-farmers-market"
-          ]
-        },
-        {
-          "name": "Corpus Christi",
-          "slug": "corpus-christi",
-          "market_count": 3,
-          "market_slugs": [
-            "area-farmers-market-corpus-christi",
-            "corpus-christi-downtown-farmers-market",
-            "corpus-christi-southside-farmers-market"
-          ]
-        },
-        {
-          "name": "Friendswood",
-          "slug": "friendswood",
-          "market_count": 3,
-          "market_slugs": [
-            "bay-area-farmers-market-friendswood",
-            "friendswood-farmers-market-friendswood",
-            "friendswood-farmers-market-friendswood-1"
-          ]
-        },
-        {
-          "name": "Grapevine",
-          "slug": "grapevine",
-          "market_count": 3,
-          "market_slugs": [
-            "farmers-market-of-grapevine-grapevine",
-            "grapevine-farmers-market",
-            "north-central-texas-farmers-market-corporation-iii-grapevine"
-          ]
-        },
-        {
-          "name": "Harlingen",
-          "slug": "harlingen",
-          "market_count": 3,
-          "market_slugs": [
-            "all-natural-and-certified-organic-farmers-market-hope-farm-harlingen",
-            "harlingen-farmers-market-harlingen",
-            "hope-farm-farmers-market-harlingen"
-          ]
-        },
-        {
-          "name": "Wichita Falls",
-          "slug": "wichita-falls",
-          "market_count": 3,
-          "market_slugs": [
-            "charlie-thornberry-certified-farmers-market-association-wichita-falls",
-            "charlie-thornberry-farmers-market-wichita-falls",
-            "red-river-farmers-market-wichita-falls"
-          ]
-        },
-        {
-          "name": "Atascocita",
-          "slug": "atascocita",
-          "market_count": 2,
-          "market_slugs": [
-            "eagle-springs-farmers-market-atascocita",
-            "the-groves-marketplace-atascocita"
-          ]
-        },
-        {
-          "name": "Bastrop",
-          "slug": "bastrop",
-          "market_count": 2,
-          "market_slugs": [
-            "bastrop-1832-farmers-market-bastrop",
-            "river-valley-farmers-market-bastrop"
-          ]
-        },
-        {
-          "name": "Brenham",
-          "slug": "brenham",
-          "market_count": 2,
-          "market_slugs": [
-            "downtown-brenham-first-fridays-farmer-artisan-market-brenham",
-            "home-sweet-farm-market-brenham"
-          ]
-        },
-        {
-          "name": "Bryan",
-          "slug": "bryan",
-          "market_count": 2,
-          "market_slugs": [
-            "brazos-valley-farmers-market-bryan",
-            "independent-growers-market-bryan"
-          ]
-        },
-        {
-          "name": "Clarksville City",
-          "slug": "clarksville-city",
-          "market_count": 2,
-          "market_slugs": [
-            "grass-roots-farmers-market",
-            "hwy-80-produce-clarksville-city"
-          ]
-        },
-        {
-          "name": "Clear Lake Shores",
-          "slug": "clear-lake-shores",
-          "market_count": 2,
-          "market_slugs": [
-            "baytown-farmers-market",
-            "clear-lake-shores-farmers-market"
-          ]
-        },
-        {
-          "name": "College Station",
-          "slug": "college-station",
-          "market_count": 2,
-          "market_slugs": [
-            "aggieland-farmers-market-tx",
-            "community-fresh-farmers-market"
-          ]
-        },
-        {
-          "name": "Corsicana",
-          "slug": "corsicana",
-          "market_count": 2,
-          "market_slugs": [
-            "navarro-county-farmers-market",
-            "richland-chambers-lake-farmers-market-385a-fm-416-streetman"
-          ]
-        },
-        {
-          "name": "Denton",
-          "slug": "denton",
-          "market_count": 2,
-          "market_slugs": [
-            "denton-community-market-denton",
-            "denton-county-farmers-market"
-          ]
-        },
-        {
-          "name": "Elgin",
-          "slug": "elgin",
-          "market_count": 2,
-          "market_slugs": [
-            "elgin-farmers-market-elgin",
-            "river-valley-farmers-market"
-          ]
-        },
-        {
-          "name": "Galveston",
-          "slug": "galveston",
-          "market_count": 2,
-          "market_slugs": [
-            "galveston-west-end-farmers-market-galveston",
-            "west-island-farmers-market-galveston"
-          ]
-        },
-        {
-          "name": "Grand Prairie",
-          "slug": "grand-prairie",
-          "market_count": 2,
-          "market_slugs": [
-            "grand-prairie-farmers-market-grand-prairie",
-            "north-central-texas-farmers-market-corporation-i-grand-prairie"
-          ]
-        },
-        {
-          "name": "Humble",
-          "slug": "humble",
-          "market_count": 2,
-          "market_slugs": [
-            "buy-local-farmers-market-fall-creek-humble",
-            "fall-creek-farmers-market-humble"
-          ]
-        },
-        {
-          "name": "Katy",
-          "slug": "katy",
-          "market_count": 2,
-          "market_slugs": [
-            "farmers-market-on-grand-parkway-katy",
-            "katy-farmers-market-katy"
-          ]
-        },
-        {
-          "name": "Killeen",
-          "slug": "killeen",
-          "market_count": 2,
-          "market_slugs": [
-            "green-avenue-farmers-market-killeen",
-            "killeen-farmers-market"
-          ]
-        },
-        {
-          "name": "Lubbock",
-          "slug": "lubbock",
-          "market_count": 2,
-          "market_slugs": [
-            "apple-country-farmers-market-ii-lubbock",
-            "lubbock-farmers-market"
-          ]
-        },
-        {
-          "name": "Midland",
-          "slug": "midland",
-          "market_count": 2,
-          "market_slugs": [
-            "midland-downtown-farmers-market",
-            "permian-basin-farmers-market-midland"
-          ]
-        },
-        {
-          "name": "New Braunfels",
-          "slug": "new-braunfels",
-          "market_count": 2,
-          "market_slugs": [
-            "new-braunfels-farmers-market-tx",
-            "new-braunfels-food-bank-farmers-market-new-braunfels"
-          ]
-        },
-        {
-          "name": "Pflugerville",
-          "slug": "pflugerville",
-          "market_count": 2,
-          "market_slugs": [
-            "manor-farmers-market",
-            "pflugerville-pfarmers-market"
-          ]
-        },
-        {
-          "name": "Round Top",
-          "slug": "round-top",
-          "market_count": 2,
-          "market_slugs": [
-            "burton-farmers-and-artisans-market",
-            "round-top-farmers-market-round-top"
-          ]
-        },
-        {
-          "name": "San Angelo",
-          "slug": "san-angelo",
-          "market_count": 2,
-          "market_slugs": [
-            "concho-valley-farmers-market",
-            "san-angelo-farmers-market"
-          ]
-        },
-        {
-          "name": "San Marcos",
-          "slug": "san-marcos",
-          "market_count": 2,
-          "market_slugs": [
-            "san-marcos-farmers-market",
-            "san-marcosnew-braunfels-farmers-market-association-san-marcos"
-          ]
-        },
-        {
-          "name": "Seguin",
-          "slug": "seguin",
-          "market_count": 2,
-          "market_slugs": [
-            "guadalupe-valley-gardeners-market-seguin",
-            "seguin-farmers-market-association-seguin"
-          ]
-        },
-        {
-          "name": "Temple",
-          "slug": "temple",
-          "market_count": 2,
-          "market_slugs": [
-            "bell-county-farmers-market-association-ii-temple",
-            "temple-farmers-market"
-          ]
-        },
-        {
-          "name": "Waxahachie",
-          "slug": "waxahachie",
-          "market_count": 2,
-          "market_slugs": [
-            "hometown-farmers-market-waxahachie",
-            "waxahachie-downtown-farmers-market-waxahachie"
-          ]
-        },
-        {
-          "name": "Winnsboro",
-          "slug": "winnsboro",
-          "market_count": 2,
-          "market_slugs": [
-            "mineola-farmers-market",
-            "winnsboro-farmers-market-tx"
-          ]
-        },
-        {
-          "name": "A Lubbock",
-          "slug": "a-lubbock",
-          "market_count": 1,
-          "market_slugs": [
-            "apple-country-farmers-market-a-lubbock"
-          ]
-        },
-        {
-          "name": "Abilene",
-          "slug": "abilene",
-          "market_count": 1,
-          "market_slugs": [
-            "abilene-farmers-market-tx"
-          ]
-        },
-        {
-          "name": "Amarillo",
-          "slug": "amarillo",
-          "market_count": 1,
-          "market_slugs": [
-            "amarillo-community-market-amarillo"
-          ]
-        },
-        {
-          "name": "Annetta",
-          "slug": "annetta",
-          "market_count": 1,
-          "market_slugs": [
-            "annetta-valley-farmers-market-annetta"
-          ]
-        },
-        {
-          "name": "Augustine San Antonio",
-          "slug": "augustine-san-antonio",
-          "market_count": 1,
-          "market_slugs": [
-            "san-antonio-farmers-market-association-v-augustine-san-antonio"
-          ]
-        },
-        {
-          "name": "Bangs",
-          "slug": "bangs",
-          "market_count": 1,
-          "market_slugs": [
-            "bangs-farmers-market-bangs"
-          ]
-        },
-        {
-          "name": "Bay City",
-          "slug": "bay-city",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-farmers-market-bay-city-bay-city"
-          ]
-        },
-        {
-          "name": "Beaumont",
-          "slug": "beaumont",
-          "market_count": 1,
-          "market_slugs": [
-            "beaumont-farmers-market"
-          ]
-        },
-        {
-          "name": "Bedford",
-          "slug": "bedford",
-          "market_count": 1,
-          "market_slugs": [
-            "bedford-farmers-market-bedford-2"
-          ]
-        },
-        {
-          "name": "Boerne",
-          "slug": "boerne",
-          "market_count": 1,
-          "market_slugs": [
-            "farmers-market-at-the-cibolo-boerne"
-          ]
-        },
-        {
-          "name": "Buda",
-          "slug": "buda",
-          "market_count": 1,
-          "market_slugs": [
-            "san-marcosnew-braunfeis-farmers-market-assoc-ii-buda"
-          ]
-        },
-        {
-          "name": "Burleson",
-          "slug": "burleson",
-          "market_count": 1,
-          "market_slugs": [
-            "burleson-farmers-market-burleson"
-          ]
-        },
-        {
-          "name": "Canton",
-          "slug": "canton",
-          "market_count": 1,
-          "market_slugs": [
-            "canton-farmers-market-canton-6"
-          ]
-        },
-        {
-          "name": "Cedar Park",
-          "slug": "cedar-park",
-          "market_count": 1,
-          "market_slugs": [
-            "texas-farmers-market-at-lakeline-cedar-park"
-          ]
-        },
-        {
-          "name": "Celina",
-          "slug": "celina",
-          "market_count": 1,
-          "market_slugs": [
-            "celinas-friday-night-market-celina"
-          ]
-        },
-        {
-          "name": "Centerville",
-          "slug": "centerville",
-          "market_count": 1,
-          "market_slugs": [
-            "farmers-market-centerville-texas"
-          ]
-        },
-        {
-          "name": "Coppell",
-          "slug": "coppell",
-          "market_count": 1,
-          "market_slugs": [
-            "coppell-farmers-market-coppell"
-          ]
-        },
-        {
-          "name": "Coupland",
-          "slug": "coupland",
-          "market_count": 1,
-          "market_slugs": [
-            "the-coupland-farmers-artisan-market-coupland"
-          ]
-        },
-        {
-          "name": "Decatur",
-          "slug": "decatur",
-          "market_count": 1,
-          "market_slugs": [
-            "decatur-community-market-decatur"
-          ]
-        },
-        {
-          "name": "Downtown Denison",
-          "slug": "downtown-denison",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-denison-farmers-market-downtown-denison"
-          ]
-        },
-        {
-          "name": "Edinburg",
-          "slug": "edinburg",
-          "market_count": 1,
-          "market_slugs": [
-            "grown-growers-farmers-market-edinburg"
-          ]
-        },
-        {
-          "name": "Ennis",
-          "slug": "ennis",
-          "market_count": 1,
-          "market_slugs": [
-            "ennis-farmers-market"
-          ]
-        },
-        {
-          "name": "Fulshear",
-          "slug": "fulshear",
-          "market_count": 1,
-          "market_slugs": [
-            "fulshear-farmers-market-fulshear"
-          ]
-        },
-        {
-          "name": "Garden Ridge",
-          "slug": "garden-ridge",
-          "market_count": 1,
-          "market_slugs": [
-            "garden-ridge-farmers-market-garden-ridge"
-          ]
-        },
-        {
-          "name": "Georgetown",
-          "slug": "georgetown",
-          "market_count": 1,
-          "market_slugs": [
-            "day-star-organic-farmers-market"
-          ]
-        },
-        {
-          "name": "Glen Rose",
-          "slug": "glen-rose",
-          "market_count": 1,
-          "market_slugs": [
-            "sweet-magnolia-market-glen-rose"
-          ]
-        },
-        {
-          "name": "Hereford",
-          "slug": "hereford",
-          "market_count": 1,
-          "market_slugs": [
-            "deaf-smith-chamber-of-commerce-farmers-market-hereford"
-          ]
-        },
-        {
-          "name": "Huntsville",
-          "slug": "huntsville",
-          "market_count": 1,
-          "market_slugs": [
-            "huntsville-downtown-farmers-market-huntsville"
-          ]
-        },
-        {
-          "name": "Hutto",
-          "slug": "hutto",
-          "market_count": 1,
-          "market_slugs": [
-            "hutto-silos-farmers-market"
-          ]
-        },
-        {
-          "name": "Jacksonville",
-          "slug": "jacksonville",
-          "market_count": 1,
-          "market_slugs": [
-            "east-texas-farmers-market-jacksonville"
-          ]
-        },
-        {
-          "name": "Jefferson",
-          "slug": "jefferson",
-          "market_count": 1,
-          "market_slugs": [
-            "jefferson-farmers-market-jefferson-1"
-          ]
-        },
-        {
-          "name": "Justin",
-          "slug": "justin",
-          "market_count": 1,
-          "market_slugs": [
-            "justin-farmers-market-tx"
-          ]
-        },
-        {
-          "name": "Keller",
-          "slug": "keller",
-          "market_count": 1,
-          "market_slugs": [
-            "keller-farmers-market-keller"
-          ]
-        },
-        {
-          "name": "Kerrville",
-          "slug": "kerrville",
-          "market_count": 1,
-          "market_slugs": [
-            "local-kerrville-farmers-market-kerrville"
-          ]
-        },
-        {
-          "name": "Kilgore",
-          "slug": "kilgore",
-          "market_count": 1,
-          "market_slugs": [
-            "iron-farm-farmers-market-kilgore"
-          ]
-        },
-        {
-          "name": "Kingwood",
-          "slug": "kingwood",
-          "market_count": 1,
-          "market_slugs": [
-            "kingwood-farmers-market-kingwood"
-          ]
-        },
-        {
-          "name": "League City",
-          "slug": "league-city",
-          "market_count": 1,
-          "market_slugs": [
-            "market-on-the-bayou-certified-farmers-market-tx"
-          ]
-        },
-        {
-          "name": "Leon Valley",
-          "slug": "leon-valley",
-          "market_count": 1,
-          "market_slugs": [
-            "san-antonio-farmers-market-association-leon-valley"
-          ]
-        },
-        {
-          "name": "Little Elm",
-          "slug": "little-elm",
-          "market_count": 1,
-          "market_slugs": [
-            "little-elm-farmers-market-little-elm"
-          ]
-        },
-        {
-          "name": "Longview",
-          "slug": "longview",
-          "market_count": 1,
-          "market_slugs": [
-            "historic-longview-farmers-market-longview"
-          ]
-        },
-        {
-          "name": "Lucas",
-          "slug": "lucas",
-          "market_count": 1,
-          "market_slugs": [
-            "lucas-farmers-market-lucas"
-          ]
-        },
-        {
-          "name": "Lufkin",
-          "slug": "lufkin",
-          "market_count": 1,
-          "market_slugs": [
-            "angelina-county-farmers-market"
-          ]
-        },
-        {
-          "name": "Maltsberger San Antonio",
-          "slug": "maltsberger-san-antonio",
-          "market_count": 1,
-          "market_slugs": [
-            "tri-county-farmers-market-association-vii-maltsberger-san-antonio"
-          ]
-        },
-        {
-          "name": "Martindale",
-          "slug": "martindale",
-          "market_count": 1,
-          "market_slugs": [
-            "martindale-market-martindale"
-          ]
-        },
-        {
-          "name": "Mcallen",
-          "slug": "mcallen",
-          "market_count": 1,
-          "market_slugs": [
-            "the-market-at-alhambra-mcallen"
-          ]
-        },
-        {
-          "name": "Mckinney",
-          "slug": "mckinney",
-          "market_count": 1,
-          "market_slugs": [
-            "historic-mckinney-farmers-market-at-chestnut-square-historic-village-mckinney"
-          ]
-        },
-        {
-          "name": "Melissa",
-          "slug": "melissa",
-          "market_count": 1,
-          "market_slugs": [
-            "melissa-farmers-market-tx-75454"
-          ]
-        },
-        {
-          "name": "Mesquite",
-          "slug": "mesquite",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-mesquite-farmers-market"
-          ]
-        },
-        {
-          "name": "Mineral Wells",
-          "slug": "mineral-wells",
-          "market_count": 1,
-          "market_slugs": [
-            "let-s-grow-crazy-mineral-wells"
-          ]
-        },
-        {
-          "name": "Missorui City",
-          "slug": "missorui-city",
-          "market_count": 1,
-          "market_slugs": [
-            "farmers-market-partners-missorui-city"
-          ]
-        },
-        {
-          "name": "Murphy",
-          "slug": "murphy",
-          "market_count": 1,
-          "market_slugs": [
-            "collin-county-farmers-market"
-          ]
-        },
-        {
-          "name": "Nacogdoches",
-          "slug": "nacogdoches",
-          "market_count": 1,
-          "market_slugs": [
-            "nacogdoches-farmers-market-nacogdoches"
-          ]
-        },
-        {
-          "name": "Natalia",
-          "slug": "natalia",
-          "market_count": 1,
-          "market_slugs": [
-            "tri-county-farmers-market-association-natalia"
-          ]
-        },
-        {
-          "name": "North Texas City",
-          "slug": "north-texas-city",
-          "market_count": 1,
-          "market_slugs": [
-            "coastal-community-farmers-market-north-texas-city"
-          ]
-        },
-        {
-          "name": "Oaks San Antonio",
-          "slug": "oaks-san-antonio",
-          "market_count": 1,
-          "market_slugs": [
-            "south-texas-farmers-market-association-oaks-san-antonio"
-          ]
-        },
-        {
-          "name": "Office Galveston",
-          "slug": "office-galveston",
-          "market_count": 1,
-          "market_slugs": [
-            "galvestons-own-farmers-market-office-galveston"
-          ]
-        },
-        {
-          "name": "Orange",
-          "slug": "orange",
-          "market_count": 1,
-          "market_slugs": [
-            "the-artisan-farmers-market-tx"
-          ]
-        },
-        {
-          "name": "Pearland",
-          "slug": "pearland",
-          "market_count": 1,
-          "market_slugs": [
-            "pearland-old-townsite-farmers-market-pearland"
-          ]
-        },
-        {
-          "name": "Pharr",
-          "slug": "pharr",
-          "market_count": 1,
-          "market_slugs": [
-            "pharrmers-market-farmers-market-pharr"
-          ]
-        },
-        {
-          "name": "Raymondville",
-          "slug": "raymondville",
-          "market_count": 1,
-          "market_slugs": [
-            "studebaker-farmers-market-raymondville"
-          ]
-        },
-        {
-          "name": "Richardson",
-          "slug": "richardson",
-          "market_count": 1,
-          "market_slugs": [
-            "richardson-farmers-market-richardson"
-          ]
-        },
-        {
-          "name": "Richland Hills",
-          "slug": "richland-hills",
-          "market_count": 1,
-          "market_slugs": [
-            "richland-hills-farmers-market-richland-hills"
-          ]
-        },
-        {
-          "name": "Rockdale",
-          "slug": "rockdale",
-          "market_count": 1,
-          "market_slugs": [
-            "star-farmers-market-rockdale"
-          ]
-        },
-        {
-          "name": "Rosenberg",
-          "slug": "rosenberg",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-rosenberg-farmers-market-rosenberg"
-          ]
-        },
-        {
-          "name": "Round Rock",
-          "slug": "round-rock",
-          "market_count": 1,
-          "market_slugs": [
-            "round-rock-farmers-market-round-rock"
-          ]
-        },
-        {
-          "name": "Sage Garland",
-          "slug": "sage-garland",
-          "market_count": 1,
-          "market_slugs": [
-            "four-seasons-markets-at-firewheel-sage-garland"
-          ]
-        },
-        {
-          "name": "Salado",
-          "slug": "salado",
-          "market_count": 1,
-          "market_slugs": [
-            "salado-farmers-market"
-          ]
-        },
-        {
-          "name": "San Juan",
-          "slug": "san-juan",
-          "market_count": 1,
-          "market_slugs": [
-            "grown-growers-farmers-market-san-juan"
-          ]
-        },
-        {
-          "name": "Sanger",
-          "slug": "sanger",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-sanger-farmers-market-tx-76266"
-          ]
-        },
-        {
-          "name": "Sealy",
-          "slug": "sealy",
-          "market_count": 1,
-          "market_slugs": [
-            "sealy-farmers-market-sealy"
-          ]
-        },
-        {
-          "name": "Sherman",
-          "slug": "sherman",
-          "market_count": 1,
-          "market_slugs": [
-            "sherman-farmers-market-tx"
-          ]
-        },
-        {
-          "name": "Sugar Land",
-          "slug": "sugar-land",
-          "market_count": 1,
-          "market_slugs": [
-            "farmers-market-at-imperial-sugar-land"
-          ]
-        },
-        {
-          "name": "Sulphur Springs",
-          "slug": "sulphur-springs",
-          "market_count": 1,
-          "market_slugs": [
-            "main-street-farmers-market-sulphur-springs"
-          ]
-        },
-        {
-          "name": "Texarkana",
-          "slug": "texarkana",
-          "market_count": 1,
-          "market_slugs": [
-            "texarkana-texas-farmers-market-texarkana"
-          ]
-        },
-        {
-          "name": "The Woodlands",
-          "slug": "the-woodlands",
-          "market_count": 1,
-          "market_slugs": [
-            "the-woodlands-farmers-market-at-gogans-mill-the-woodlands"
-          ]
-        },
-        {
-          "name": "Tomball",
-          "slug": "tomball",
-          "market_count": 1,
-          "market_slugs": [
-            "tomball-farmers-market"
-          ]
-        },
-        {
-          "name": "Victoria",
-          "slug": "victoria",
-          "market_count": 1,
-          "market_slugs": [
-            "victoria-farmers-market-victoria"
-          ]
-        },
-        {
-          "name": "Waco",
-          "slug": "waco",
-          "market_count": 1,
-          "market_slugs": [
-            "waco-downtown-farmers-market-waco"
-          ]
-        },
-        {
-          "name": "Washington",
-          "slug": "washington",
-          "market_count": 1,
-          "market_slugs": [
-            "washington-on-the-brazos-farmers-market-washington"
-          ]
-        },
-        {
-          "name": "Weimar",
-          "slug": "weimar",
-          "market_count": 1,
-          "market_slugs": [
-            "weimar-farmers-market-weimar"
-          ]
-        },
-        {
-          "name": "Wharton",
-          "slug": "wharton",
-          "market_count": 1,
-          "market_slugs": [
-            "wharton-county-farmers-market-wharton"
-          ]
-        },
-        {
-          "name": "Worth",
-          "slug": "worth",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-farmers-market-i-worth"
-          ]
-        }
-      ],
-      "uncategorized_slugs": []
     },
     {
       "code": "FL",

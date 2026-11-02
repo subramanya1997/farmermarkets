@@ -57,6 +57,42 @@
       "market": "northeast-minneapolis-farmers-market-winter-minneapolis",
       "issue": "Dataset puts the Northeast winter market at 629 NE 2nd St (the summer lot). The market's site (northeastmarket.org/visit, checked 2026-10-26) says winter markets are at East Side Neighborhood Services, 1700 2nd St NE.",
       "status": "open"
+    },
+    {
+      "city": "texas/houston",
+      "market": "urban-harvest-farmers-market-houston",
+      "issue": "Dataset puts Urban Harvest at 3000 Richmond Ave. The official market page (urbanharvest.org/urban-harvest-farmers-market, checked 2026-11-01) gives 2752 Buffalo Speedway, Saturdays 8am-12pm year-round. Its FAQ page still shows an older address, 1911 W. 34th St.",
+      "status": "open"
+    },
+    {
+      "city": "texas/houston",
+      "market": "bayou-city-farmers-market-houston",
+      "issue": "Bayou City Farmers Market shares the old Urban Harvest address (3000 Richmond Ave) and has no website or schedule. Likely a stale duplicate or closed market; not confirmed.",
+      "status": "open"
+    },
+    {
+      "city": "texas/houston",
+      "market": "braeswood-farmers-market-houston",
+      "issue": "braeswoodfarmersmarket.com (checked 2026-11-01) now lists rotating pop-up markets at Memorial Hermann hospitals and La Centerra in Katy, not a fixed market at 5401 S Braeswood.",
+      "status": "open"
+    },
+    {
+      "city": "texas/houston",
+      "market": "hope-farms-first-wednesday-market",
+      "issue": "Dataset lists Monday and Wednesday. hopefarmshtx.org/market-days (checked 2026-11-01) says the market is every 1st Saturday, 9am-2pm, at 10401 Scott St.",
+      "status": "open"
+    },
+    {
+      "city": "texas/houston",
+      "market": "white-oak-farmers-market-houston",
+      "issue": "The listed website whiteoakfarmersmarket.com does not resolve (DNS lookup fails, 2026-11-01). The market may have closed.",
+      "status": "open"
+    },
+    {
+      "city": "texas/houston",
+      "market": "westchase-district-farmers-market",
+      "issue": "The Westchase District site no longer has a farmers market page (old page 404s and the events page does not list it, 2026-11-01). Thursday schedule is unconfirmed.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -132,8 +168,15 @@
       "keyword": "farmers market houston",
       "volume": 18100,
       "difficulty": 21,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-01",
+          "changes": "First guide: 6 sourced tips (Urban Harvest Saturday year-round hours, free garage parking, Double Up SNAP match up to $40/day, Houston Farmers Market on Airline open daily and cash-preferred, Heights Mercantile 2nd/4th Sunday market, Hope Farms first Saturday market), 4 FAQs (pet rules, Urban Harvest 180-mile sourcing, Airline market history, other Double Up markets), title and description override. Added two missing markets to data/enrichment/added-markets.json: Houston Farmers Market (2520 Airline Dr) and Heights Mercantile Farmers Market (714 Yale St); Houston goes from 11 to 13 markets.",
+          "baseline": "No settled GSC baseline yet; city URL moved to /texas/houston on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-11-29"
     },
     {
       "priority": 5,
