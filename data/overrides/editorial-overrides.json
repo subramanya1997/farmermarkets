@@ -14134,6 +14134,72 @@
           ]
         }
       ]
+    },
+    {
+      "index": 4972,
+      "id": 311804,
+      "path": "location.address",
+      "value": "13140 Main St., Alden, NY, 14004"
+    },
+    {
+      "index": 4972,
+      "id": 311804,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -78.4982941,
+        "latitude": 42.9005102
+      }
+    },
+    {
+      "index": 4972,
+      "id": 311804,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=42.9005102%2C-78.4982941"
+    },
+    {
+      "index": 4972,
+      "id": 311804,
+      "path": "operations.days",
+      "value": [
+        "Mondays, 4:30pm to 7pm"
+      ]
+    },
+    {
+      "index": 4972,
+      "id": 311804,
+      "path": "operations.season",
+      "value": "June 1 to September 28, 2026"
+    },
+    {
+      "index": 4972,
+      "id": 311804,
+      "path": "contact.emails",
+      "value": [
+        "secretary@aldenny.org"
+      ]
+    },
+    {
+      "index": 4972,
+      "id": 311804,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Alden Farmers Market, Erie Grown (Erie County)",
+          "url": "https://www3.erie.gov/eriegrown/growers/alden-farmers-market",
+          "fields": [
+            "operations.days",
+            "operations.season",
+            "contact.emails"
+          ]
+        },
+        {
+          "title": "Alden Town Park, Alden Chamber of Commerce",
+          "url": "https://aldenny.org/locations/alden-town-park",
+          "fields": [
+            "location.address"
+          ]
+        }
+      ]
     }
   ]
 }

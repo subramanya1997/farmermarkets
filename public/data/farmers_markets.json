@@ -508128,13 +508128,13 @@
     "name": "Alden Farmers’ Market",
     "last_updated": "2023-03-27T10:29:46",
     "location": {
-      "address": "13119 Broadway St., Alden, NY, 14004",
+      "address": "13140 Main St., Alden, NY, 14004",
       "city": "Alden",
       "state": "New York",
       "zip_code": "14004",
       "coordinates": {
-        "longitude": -78.49918328338123,
-        "latitude": 42.89910978779576
+        "longitude": -78.4982941,
+        "latitude": 42.9005102
       },
       "description": "",
       "site_type": "",
@@ -508148,7 +508148,9 @@
       "phone_numbers": [
         "(716) 937-6177"
       ],
-      "emails": [],
+      "emails": [
+        "secretary@aldenny.org"
+      ],
       "websites": [
         "https://aldenny.org/farmers-market"
       ],
@@ -508157,9 +508159,9 @@
       ]
     },
     "operations": {
-      "season": "June 1 through September 28, 2026",
+      "season": "June 1 to September 28, 2026",
       "days": [
-        "Every Monday, 4:00pm–7:30pm"
+        "Mondays, 4:30pm to 7pm"
       ],
       "vendor_count": null
     },
@@ -508196,20 +508198,154 @@
     "slug": "alden-farmers-market",
     "country": "United States",
     "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=42.89910978779576%2C-78.49918328338123",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Alden Chamber of Commerce",
+          "source_ids": [
+            "chamber-market"
+          ],
+          "verified_at": "2026-11-01"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "erie-grown"
+          ],
+          "verified_at": "2026-11-01"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-06-01",
+            "end_date": "2026-09-28"
+          },
+          "source_ids": [
+            "erie-grown",
+            "town-agenda"
+          ],
+          "verified_at": "2026-11-01"
+        },
+        "schedules": [
+          {
+            "id": "monday-evening",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "monday"
+                ]
+              },
+              "opens": "16:30",
+              "closes": "19:00",
+              "start_date": "2026-06-01",
+              "end_date": "2026-09-28",
+              "location_note": "Alden Town Park, across from the Village Triangle"
+            },
+            "source_ids": [
+              "erie-grown",
+              "chamber-market"
+            ],
+            "verified_at": "2026-11-01"
+          }
+        ]
+      },
+      "amenities": [
+        {
+          "id": "restrooms",
+          "value": {
+            "code": "restrooms",
+            "availability": "yes",
+            "note": "Fixed restrooms at Alden Town Park"
+          },
+          "source_ids": [
+            "chamber-market"
+          ],
+          "verified_at": "2026-11-01"
+        },
+        {
+          "id": "pavilion-seating",
+          "value": {
+            "code": "seating",
+            "availability": "yes",
+            "note": "A covered pavilion to sit, eat and watch the entertainment, next to the park's concession stand"
+          },
+          "source_ids": [
+            "chamber-market"
+          ],
+          "verified_at": "2026-11-01"
+        },
+        {
+          "id": "entertainment",
+          "value": {
+            "code": "live_music",
+            "availability": "yes",
+            "note": "Entertainment acts on market nights"
+          },
+          "source_ids": [
+            "chamber-market"
+          ],
+          "verified_at": "2026-11-01"
+        }
+      ],
+      "faq_facts": [
+        {
+          "id": "where-and-when",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market moved to Alden Town Park, 13140 Main St, across from the Village Triangle. It runs Mondays alongside the Alden Car Cruise, with a concession stand and live entertainment. The 2026 season ran 4:30pm to 7pm, June 1 to September 28."
+          },
+          "source_ids": [
+            "erie-grown",
+            "town-park",
+            "chamber-market"
+          ],
+          "verified_at": "2026-11-01"
+        },
+        {
+          "id": "what-is-sold",
+          "value": {
+            "topic": "products",
+            "answer": "The market does not publish a vendor list. The Chamber has been recruiting more produce and meat vendors, so call (716) 937-6177 or email secretary@aldenny.org to ask who is coming that week."
+          },
+          "source_ids": [
+            "chamber-market",
+            "erie-grown"
+          ],
+          "verified_at": "2026-11-01"
+        }
+      ]
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=42.9005102%2C-78.4982941",
     "amenities": {
-      "features": []
+      "features": [
+        "Fixed restrooms at Alden Town Park",
+        "A covered pavilion to sit, eat and watch the entertainment, next to the park's concession stand",
+        "Entertainment acts on market nights"
+      ],
+      "restrooms": true
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-01",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Farmers Market - Alden Chamber of Commerce",
+          "title": "Farmers Market, Alden Chamber of Commerce",
           "url": "https://aldenny.org/farmers-market",
           "fields": [
-            "contact.websites"
-          ]
+            "contact.websites",
+            "first_party.identity",
+            "first_party.operations",
+            "first_party.amenities",
+            "first_party.faq_facts"
+          ],
+          "id": "chamber-market",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-01"
         },
         {
           "title": "Alden Farmers Market | Alden NY | Facebook",
@@ -508226,6 +508362,44 @@
             "operations.days",
             "operations.season"
           ]
+        },
+        {
+          "id": "erie-grown",
+          "title": "Alden Farmers Market, Erie Grown (Erie County)",
+          "url": "https://www3.erie.gov/eriegrown/growers/alden-farmers-market",
+          "fields": [
+            "first_party.operations",
+            "first_party.faq_facts",
+            "operations.days",
+            "operations.season",
+            "contact.emails"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-01"
+        },
+        {
+          "id": "town-park",
+          "title": "Alden Town Park, Alden Chamber of Commerce",
+          "url": "https://aldenny.org/locations/alden-town-park",
+          "fields": [
+            "first_party.faq_facts",
+            "location.address"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-01"
+        },
+        {
+          "id": "town-agenda",
+          "title": "Town of Alden work session agenda, April 27, 2026",
+          "url": "https://www4.erie.gov/alden/sites/www4.erie.gov.alden/files/2026-04/04272026-work-session-agenda.pdf",
+          "fields": [
+            "first_party.operations"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-01"
         }
       ]
     },
