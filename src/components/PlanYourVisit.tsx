@@ -157,11 +157,16 @@ export function PlanYourVisit({ view, timezone, openStatus, analyticsProperties 
   );
 
   const hasHours = Boolean(view.week?.length || view.scheduleLines.length);
-  const hasPay = view.pay.length > 0 || view.perks.length > 0;
+  // Payment methods and house rules moved to "What this market offers"; the
+  // card keeps the incentives, which need their amounts and links.
+  const hasPay = view.perks.length > 0;
+  // Counted as before, though the offers section draws pay and rules now: the
+  // page skips its glance card whenever it has a visit view, so this card must
+  // keep rendering on exactly the pages it did, or the hours would vanish.
   const sections = [
     hasHours,
     view.tiles.length > 0,
-    hasPay,
+    view.pay.length > 0 || hasPay,
     view.products.length > 0,
     view.rules.length > 0,
   ].filter(Boolean).length;
@@ -292,10 +297,9 @@ export function PlanYourVisit({ view, timezone, openStatus, analyticsProperties 
 
         {hasPay && (
           <div className="p-4 sm:p-5">
-            <SectionLabel>Pay with</SectionLabel>
-            {view.pay.length > 0 && <ChipList chips={view.pay} />}
+            <SectionLabel>Save with</SectionLabel>
             {view.perks.length > 0 && (
-              <ul className="mt-3 space-y-2">
+              <ul className="space-y-2">
                 {view.perks.map((perk) => (
                   <li
                     key={perk.name}
@@ -340,13 +344,6 @@ export function PlanYourVisit({ view, timezone, openStatus, analyticsProperties 
                 <span>{view.inSeason}</span>
               </p>
             )}
-          </div>
-        )}
-
-        {view.rules.length > 0 && (
-          <div className="p-4 sm:p-5">
-            <SectionLabel>Good to know</SectionLabel>
-            <ChipList chips={view.rules} />
           </div>
         )}
 

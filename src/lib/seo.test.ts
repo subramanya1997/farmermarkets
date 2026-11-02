@@ -60,7 +60,7 @@ const durham = {
 test('full record: title keeps name and abbreviated location, description names place, hours, season and programs', () => {
   const title = marketTitle(durham);
   assertWellFormedTitle(title);
-  assert.equal(title, "Durham Farmers' Market - Durham, NC");
+  assert.equal(title, "Durham Farmers' Market - Durham, NC: Saturdays");
 
   const description = marketDescription(durham);
   assertWellFormedDescription(description);
@@ -734,4 +734,42 @@ test('addresses: a city is a town, never a note longer than four words', () => {
   );
   // A field pasted twice collapses.
   assert.equal(resolveLocation({ address: '750 Aurora Avenue 750 Aurora Avenue Naperville', city: '750 Aurora Avenue 750 Aurora Avenue Naperville', state: 'Illinois' }).street, '750 Aurora Avenue Naperville');
+});
+
+test('title names the market days, the hours and a year-round season when they fit', () => {
+  const base = { name: 'Savage Farmers Market', city: 'Savage', state: 'MN', country_code: 'US' };
+  assert.equal(
+    marketTitle({ ...base, days: ['Saturday 8:00 AM - 1:00 PM'] }),
+    'Savage Farmers Market - Savage, MN: Saturdays 8am-1pm'
+  );
+  assert.equal(
+    marketTitle({ ...base, days: ['Saturday'], season: 'Year-round' }),
+    'Savage Farmers Market - Savage, MN: Saturdays, Year-Round'
+  );
+  assert.equal(
+    marketTitle({ ...base, season: 'Year-round' }),
+    'Savage Farmers Market - Savage, MN: Open Year-Round'
+  );
+  // Five market days say nothing a searcher can scan; the bare title stays.
+  assert.equal(
+    marketTitle({ ...base, days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] }),
+    'Savage Farmers Market - Savage, MN'
+  );
+  // Three days use the short weekday names.
+  assert.match(
+    marketTitle({ ...base, days: ['Tuesday', 'Thursday', 'Saturday'] }),
+    /: Tue, Thu & Sat$/
+  );
+});
+
+test('title schedule clause is dropped rather than truncated when it does not fit', () => {
+  const title = marketTitle({
+    name: 'Downtown Downers Grove Farmers Market',
+    city: 'Downers Grove',
+    state: 'IL',
+    country_code: 'US',
+    days: ['Saturday 7:00 AM - 12:00 PM'],
+  });
+  assert.ok(title.length <= 60, title);
+  assert.doesNotMatch(title, /…/);
 });

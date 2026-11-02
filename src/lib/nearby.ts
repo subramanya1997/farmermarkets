@@ -18,6 +18,7 @@ import 'server-only';
 import { getMarkets } from './data';
 import { haversineKm } from './geo';
 import { displayName, marketLocationLine } from './seo';
+import { isYearRoundMarket } from './marketWinter';
 
 /** Grid resolution. Half a degree is ~56 km of latitude. */
 const CELL_DEGREES = 0.5;
@@ -34,6 +35,8 @@ interface GridEntry {
   locationLine?: string;
   lat: number;
   lon: number;
+  /** States a year-round season, for the winter block's filter. */
+  yearRound: boolean;
 }
 
 /** One entry of the nearby block. */
@@ -45,6 +48,18 @@ export interface NearbyMarket {
   /** "Durham, North Carolina", when the record resolves to a place. */
   locationLine?: string;
   distanceKm: number;
+}
+
+/**
+ * Some feeds list one market once per market day ("Clinton Bailey Thu
+ * Farmers' Market", "... Sun ..."); the weekday is not part of its name.
+ */
+function nameKeyOf(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/\b(mon|tue|tues|wed|thu|thur|thurs|fri|sat|sun)(day)?\b\.?/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function cellKey(latIndex: number, lonIndex: number): string {
@@ -88,6 +103,7 @@ function getGrid(): Promise<Map<string, GridEntry[]>> {
             locationLine: marketLocationLine(market),
             lat: lat as number,
             lon: lon as number,
+            yearRound: isYearRoundMarket(market),
           };
           const key = cellKey(
             Math.floor(entry.lat / CELL_DEGREES),
@@ -129,13 +145,19 @@ export interface NearbyOrigin {
   location?: { lat?: number | null; lon?: number | null } | null;
 }
 
+export interface NearbyOptions {
+  /** Only markets that state a year-round season. */
+  yearRoundOnly?: boolean;
+}
+
 /**
  * The `limit` markets nearest to `origin`, closest first, excluding itself and
  * anything past `MAX_DISTANCE_KM`.
  */
 export async function getNearbyMarkets(
   origin: NearbyOrigin,
-  limit = 5
+  limit = 5,
+  options: NearbyOptions = {}
 ): Promise<NearbyMarket[]> {
   const lat = origin.location?.lat;
   const lon = origin.location?.lon;
@@ -151,6 +173,7 @@ export async function getNearbyMarkets(
   const best: NearbyMarket[] = [];
   const consider = (entry: GridEntry) => {
     if (entry.slug === origin.slug) return;
+    if (options.yearRoundOnly && !entry.yearRound) return;
     const distanceKm = haversineKm(originLat, originLon, entry.lat, entry.lon);
     if (distanceKm > MAX_DISTANCE_KM) return;
     if (best.length === limit && distanceKm >= best[best.length - 1].distanceKm) return;
@@ -158,8 +181,8 @@ export async function getNearbyMarkets(
     // Both snapshots hold the same market twice under different slugs in a few
     // places. Listing "For Oak Cliff Farmers Market — 27 mi away" twice in a
     // row looks broken, so the nearer copy of a name replaces the other.
-    const nameKey = entry.name.toLowerCase();
-    const duplicate = best.findIndex((candidate) => candidate.name.toLowerCase() === nameKey);
+    const nameKey = nameKeyOf(entry.name);
+    const duplicate = best.findIndex((candidate) => nameKeyOf(candidate.name) === nameKey);
     if (duplicate !== -1) {
       if (best[duplicate].distanceKm <= distanceKm) return;
       best.splice(duplicate, 1);

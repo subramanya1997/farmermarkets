@@ -32,6 +32,10 @@ import { planVisitCoveredTerms, planVisitSummary } from "@/lib/planVisit";
 import { planVisitView } from "@/lib/planVisitView";
 import { openStatusInput } from "@/lib/openStatus";
 import { PlanYourVisit } from "@/components/PlanYourVisit";
+import { MarketOffers } from "@/components/MarketOffers";
+import { MarketWinter } from "@/components/MarketWinter";
+import { OFFER_COVERED_TERMS, marketOffers } from "@/lib/marketOffers";
+import { marketWinterAnswer } from "@/lib/marketWinter";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -270,6 +274,17 @@ export default async function MarketDetailPage({
   const coveredTerms = planView
     ? planVisitCoveredTerms(planRows)
     : new Set(glance ? GLANCE_COVERED_TERMS : []);
+  // Amenities, house rules, payment and ordering as icon rows; the facts list
+  // then skips the rows they answer.
+  const offers = marketOffers(market);
+  if (offers.length) for (const term of OFFER_COVERED_TERMS) coveredTerms.add(term);
+
+  // "Open in winter?" from the record's own season, and the nearest markets
+  // that run year-round for a reader whose market is closed.
+  const winterAnswer = marketWinterAnswer(market);
+  const yearRoundNearby = winterAnswer?.status === 'year_round'
+    ? []
+    : await getNearbyMarkets(market, 4, { yearRoundOnly: true });
   const firstPartyStatus = market.first_party?.operations?.status?.value;
   const firstPartyStatusLabel = firstPartyStatus?.value === 'seasonal_break'
     ? 'This market is currently between seasons.'
@@ -429,7 +444,9 @@ export default async function MarketDetailPage({
                   {/* The rows this record can fill that nothing above has
                       answered, then one contact row. */}
                   <MarketFacts market={market} analyticsProperties={analyticsProperties} omitTerms={coveredTerms} hasPlanCard={Boolean(planView)} />
+                  <MarketOffers offers={offers} />
                   <MarketHighlights market={market} analyticsProperties={analyticsProperties} />
+                  <MarketWinter answer={winterAnswer} yearRound={yearRoundNearby} />
 
                   {/* Answers in the words searchers type, in the HTML itself:
                       AI answer engines extract visible text on a direct fetch

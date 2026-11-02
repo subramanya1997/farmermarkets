@@ -322,7 +322,7 @@ function tiles(market: MarketFactsRecord): Tile[] {
   return result;
 }
 
-function payChips(market: MarketFactsRecord): Chip[] {
+export function payChips(market: MarketFactsRecord): Chip[] {
   return paymentLabels(market).map((label): Chip => {
     const lower = label.toLowerCase();
     const icon: ChipIcon = /snap|ebt|bridge/.test(lower)

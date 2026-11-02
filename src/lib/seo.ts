@@ -212,6 +212,35 @@ function topicPhrase(topics: string[]): string {
   return `${topics.slice(0, -1).join(', ')} & ${topics[topics.length - 1]}`;
 }
 
+/**
+ * When the market runs, for the title suffix of a record without visit
+ * topics: "Saturdays 8am-1pm", "Tue, Thu & Sat", "Open Year-Round". The day
+ * and the year-round flag are what a searcher scanning the results is deciding
+ * on, so they earn the space a bare "Name - City, ST" leaves empty. Longest
+ * first; the caller keeps the first that fits. Empty when the record states
+ * neither weekdays nor a year-round season.
+ */
+function whenPhrases(market: MarketSeoRecord): string[] {
+  const days = marketWeekdays(market);
+  const hours = marketHours(market);
+  const yearRound = marketSeasonLabel(market) === 'Year-round';
+  const dayPhrase =
+    days.length === 1
+      ? `${days[0]}s`
+      : days.length === 2
+        ? `${days[0]}s & ${days[1]}s`
+        : days.length <= 4 && days.length > 0
+          ? `${days.slice(0, -1).map((day) => day.slice(0, 3)).join(', ')} & ${days[days.length - 1].slice(0, 3)}`
+          : undefined;
+  return [
+    yearRound && dayPhrase && hours ? `${dayPhrase} ${hours}, Year-Round` : undefined,
+    yearRound && dayPhrase ? `${dayPhrase}, Year-Round` : undefined,
+    dayPhrase && hours ? `${dayPhrase} ${hours}` : undefined,
+    dayPhrase,
+    yearRound ? 'Open Year-Round' : undefined,
+  ].filter((phrase): phrase is string => Boolean(phrase));
+}
+
 export function marketTitle(market: MarketSeoRecord): string {
   const name = displayName(market.name);
   if (!name) return 'Farmers Market';
@@ -226,8 +255,13 @@ export function marketTitle(market: MarketSeoRecord): string {
     ? topics.map((_topic, index) => `${name} - ${label}: ${topicPhrase(topics.slice(0, topics.length - index))}`)
     : [];
 
+  const whenCandidates = label && !needsKeyword && !topics.length
+    ? whenPhrases(market).map((phrase) => `${name} - ${label}: ${phrase}`)
+    : [];
+
   const candidates = [
     ...visitCandidates,
+    ...whenCandidates,
     label && needsKeyword ? `${name} - ${label} Farmers Market` : undefined,
     label ? `${name} - ${label}` : undefined,
     needsKeyword ? `${name} - Farmers Market` : undefined,

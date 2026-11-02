@@ -48,7 +48,7 @@
     "test:topic-copy": "node --test --experimental-strip-types src/lib/topicCopy.test.ts",
     "test:schema": "node --test --experimental-strip-types src/lib/schema.test.ts",
     "test:market-highlights": "node --test --experimental-strip-types src/lib/marketHighlights.test.ts",
-    "test:market-facts": "node --test --experimental-strip-types src/lib/marketFacts.test.ts",
+    "test:market-facts": "node --test --experimental-strip-types src/lib/marketFacts.test.ts src/lib/marketOffers.test.ts",
     "test:plan-visit": "node --test --experimental-strip-types src/lib/planVisit.test.ts",
     "test:market-display": "node --test --experimental-strip-types src/lib/marketDisplay.test.ts",
     "test:city-guides": "node --test --experimental-strip-types src/lib/cityGuide.test.ts src/lib/cityPageView.test.ts",
