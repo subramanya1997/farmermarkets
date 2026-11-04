@@ -365,6 +365,107 @@
           "url": "https://hopefarmshtx.org/market-days/"
         }
       ]
+    },
+    "california/los-angeles": {
+      "verified_at": "2026-11-03",
+      "title": "Los Angeles Farmers Markets: Year-Round Days and Hours",
+      "description": "Los Angeles farmers markets with days, hours and parking. Hollywood runs Sundays 8am-1pm with 150+ vendors, plus weeknight markets Tuesday to Friday.",
+      "tips": [
+        {
+          "label": "Biggest market",
+          "text": "Hollywood Farmers' Market, 1600 Ivar Ave at Selma Ave, runs Sundays 8am-1pm with over 150 farmers, producers and food vendors. It has been going since 1991.",
+          "source_ids": ["fala-hollywood"]
+        },
+        {
+          "label": "Parking",
+          "text": "Get Hollywood market parking validated at the info booth: $6 at the Sunset & Vine garage (enter from Morningside Ct) or $7 at Sunset and Ivar.",
+          "source_ids": ["fala-hollywood"]
+        },
+        {
+          "label": "By Metro",
+          "text": "Hollywood is a 2-block walk from the B Line's Hollywood/Vine stop. The Thursday LA River market sits next to the A Line's Chinatown station.",
+          "source_ids": ["fala-hollywood", "fala-la-river"]
+        },
+        {
+          "label": "SNAP match",
+          "text": "Market Match adds to CalFresh EBT: up to $25 a day at LA River, $15 a day at Echo Park, and $15 a week at Hollywood and Atwater Village.",
+          "source_ids": ["fala-la-river", "fala-echo-park", "fala-hollywood", "fala-atwater"]
+        },
+        {
+          "label": "After work",
+          "text": "Old LA in Highland Park runs Tuesdays 3pm-8pm (3pm-7pm in winter), LA River on Thursdays 3pm-7:30pm with free parking, and Echo Park on Fridays 3pm-7:30pm.",
+          "source_ids": ["oldla-market", "fala-la-river", "fala-echo-park"]
+        },
+        {
+          "label": "Holidays",
+          "text": "Food Access LA markets stay open most holidays but close Thursday and Friday of Thanksgiving weekend (Nov 26-27, 2026) and on Christmas.",
+          "source_ids": ["fala-faq"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I bring my dog to a Los Angeles farmers market?",
+          "answer": "Usually not. Food Access LA markets, including Hollywood, Atwater Village and Echo Park, allow only service animals, and Larchmont Village posts a no-dogs sign.",
+          "source_ids": ["fala-faq", "larchmont-market"]
+        },
+        {
+          "question": "Do LA farmers market vendors take cards?",
+          "answer": "At Food Access LA markets most vendors take debit or credit cards and apps like Venmo, and Hollywood and Atwater Village have ATMs. At Larchmont Village most vendors want cash, so bring small bills.",
+          "source_ids": ["fala-faq", "larchmont-market"]
+        },
+        {
+          "question": "Is there a farmers market in Larchmont Village?",
+          "answer": "Yes, at 209 N Larchmont Blvd on Wednesdays 12:30pm-4:30pm and Sundays 10am-2pm. There is free underground parking by the Rite Aid across the street.",
+          "source_ids": ["larchmont-market"]
+        },
+        {
+          "question": "Is there a Sunday farmers market in downtown LA?",
+          "answer": "Historic Downtown LA Farmers Market sets up every Sunday from 10am-3pm on 5th St, between Broadway and Main St.",
+          "source_ids": ["sfma-dtla"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "fala-hollywood",
+          "title": "Hollywood Farmers' Market, Food Access LA",
+          "url": "https://foodaccessla.org/hollywood"
+        },
+        {
+          "id": "fala-la-river",
+          "title": "LA River Farmers' Market, Food Access LA",
+          "url": "https://foodaccessla.org/la-river"
+        },
+        {
+          "id": "fala-echo-park",
+          "title": "Echo Park Farmers' Market, Food Access LA",
+          "url": "https://foodaccessla.org/echo-park"
+        },
+        {
+          "id": "fala-atwater",
+          "title": "Atwater Village Farmers' Market, Food Access LA",
+          "url": "https://foodaccessla.org/atwater-village"
+        },
+        {
+          "id": "fala-faq",
+          "title": "Market FAQ, Food Access LA",
+          "url": "https://foodaccessla.org/faq"
+        },
+        {
+          "id": "oldla-market",
+          "title": "Old LA Farmers Market, Highland Park",
+          "url": "https://www.oldla.org/farmers-market.html"
+        },
+        {
+          "id": "larchmont-market",
+          "title": "Larchmont Village Farmers' Market",
+          "url": "https://larchmontla.com/larchmont-village-farmers-market/"
+        },
+        {
+          "id": "sfma-dtla",
+          "title": "Historic Downtown LA Farmers Market, SFMA",
+          "url": "https://www.sfma.net/dtla"
+        }
+      ]
     }
   }
 }

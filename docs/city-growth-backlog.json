@@ -93,6 +93,36 @@
       "market": "westchase-district-farmers-market",
       "issue": "The Westchase District site no longer has a farmers market page (old page 404s and the events page does not list it, 2026-11-01). Thursday schedule is unconfirmed.",
       "status": "open"
+    },
+    {
+      "city": "california/los-angeles",
+      "market": null,
+      "issue": "The city lists 64 markets but many are duplicates of the same market from different sources: Hollywood (hollywood-farmers-market-los-angeles, hollywood-fm-los-angeles-3ab61fcb), Old LA (old-la-certified-farmers-market-los-angeles and -1), Lincoln Heights (3 entries), Atwater Village, Echo Park, Mar Vista, Miracle Mile, Melrose Place, Larchmont, Adams/Vermont, Central Ave, Crenshaw/Harambee (5730 Crenshaw Blvd), Westwood Village, East Hollywood, LA Cienega, Fig at 7th, Bank of America/Bunker Hill (333 S Hope St). Inflates the count shown on the page.",
+      "status": "open"
+    },
+    {
+      "city": "california/los-angeles",
+      "market": "brea-certified-farmers-market-los-angeles",
+      "issue": "Brea Certified Farmers' Market is in Brea (Orange County), per its website breachamber.com; the dataset files it under Los Angeles with a downtown LA mailing address (1308 Factory Place).",
+      "status": "open"
+    },
+    {
+      "city": "california/los-angeles",
+      "market": "wellington-square-farmers-market",
+      "issue": "Listed website wellingtonsquarefarmersmarket.com now serves casino spam (checked 2026-11-03). The link should be removed.",
+      "status": "open"
+    },
+    {
+      "city": "california/los-angeles",
+      "market": "westchester-farmers-market",
+      "issue": "Dataset address is 7000 W Manchester Ave; the market's site (westchesterfarmersmkt.com, checked 2026-11-03) says Sundays 9am-1pm at 6200 W 87th St, in Westchester's Downtown Triangle.",
+      "status": "open"
+    },
+    {
+      "city": "california/los-angeles",
+      "market": "historic-downtown-la-certified-farmers-market",
+      "issue": "Dataset says 5th St and Spring St; SFMA (sfma.net/dtla, checked 2026-11-03) gives 209 W 5th St, from Broadway to Main St, Sundays 10am-3pm.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -185,8 +215,15 @@
       "keyword": "farmers market los angeles",
       "volume": 18100,
       "difficulty": 21,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-03",
+          "changes": "First guide: 6 sourced tips (Hollywood Sunday market 150+ vendors since 1991, validated Hollywood parking $6/$7, Metro B Line and A Line stops, Market Match amounts by market, weeknight markets Tue/Thu/Fri, Food Access LA Thanksgiving and Christmas closures), 4 FAQs (no dogs, cards vs cash, Larchmont Village days and parking, Historic Downtown LA Sunday market), title and description override without {count} because the city's 64-market count includes duplicates.",
+          "baseline": "No settled GSC baseline yet; city URL moved to /california/los-angeles on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-12-01"
     },
     {
       "priority": 6,
