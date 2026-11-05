@@ -78,7 +78,9 @@
       "monthlySearches": 5400,
       "difficulty": 0,
       "cluster": "storage",
-      "status": "todo"
+      "status": "published",
+      "slug": "how-to-store-green-onions",
+      "publishedAt": "2026-11-05"
     },
     {
       "keyword": "farmers market vs grocery store",
