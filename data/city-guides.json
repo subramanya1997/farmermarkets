@@ -466,6 +466,122 @@
           "url": "https://www.sfma.net/dtla"
         }
       ]
+    },
+    "pennsylvania/allentown": {
+      "verified_at": "2026-11-05",
+      "title": "Allentown, PA Farmers Markets: Year-Round and Winter Markets",
+      "description": "Allentown, PA farmers markets with days and hours. The Fairgrounds market is open Thursday-Saturday all year, and Emmaus and Easton run into December.",
+      "tips": [
+        {
+          "label": "Year-round",
+          "text": "Allentown Fairgrounds Farmers Market, 1825 W Chew St, is open year-round: Thursday 9am-7pm, Friday 8am-7pm and Saturday 8am-6pm.",
+          "source_ids": ["afm-contact", "dlv-afm"]
+        },
+        {
+          "label": "Indoors",
+          "text": "The Fairgrounds market is indoors, with over 50 local merchants selling produce, butcher meats, poultry, seafood and sushi, baked goods, deli and hot food to eat in or take out.",
+          "source_ids": ["afm-home", "afm-merchants"]
+        },
+        {
+          "label": "Parking",
+          "text": "The Fairgrounds market has free parking on site, with room for motorcoaches too.",
+          "source_ids": ["dlv-afm"]
+        },
+        {
+          "label": "Sundays",
+          "text": "Emmaus Farmers' Market at Triangle Park, just south of Allentown, runs every Sunday 10am-1pm through November and 10am-12pm every Sunday in December.",
+          "source_ids": ["emmaus-home"]
+        },
+        {
+          "label": "Winter",
+          "text": "From January to April, Emmaus keeps its market outdoors at the Triangle on the 2nd and 4th Sundays, 10am-12pm, rain, snow or shine.",
+          "source_ids": ["emmaus-home", "emmaus-winter"]
+        },
+        {
+          "label": "Easton",
+          "text": "Easton Farmers' Market, going since 1752, sets up at Scott Park (128 Larry Holmes Dr) on Saturdays 9am-1pm through Dec 19, 2026, with 10am-12pm hours in December.",
+          "source_ids": ["easton-home", "easton-hours"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is there a farmers market near Allentown that doubles SNAP?",
+          "answer": "Easton Farmers' Market runs a Red EBT Tent for Pennsylvania and New Jersey cards, and matches SNAP purchases up to $10 with Fresh Food Bucks for fruits and vegetables.",
+          "source_ids": ["easton-ebt"]
+        },
+        {
+          "question": "Can I bring my dog to the Easton Farmers' Market?",
+          "answer": "Yes. Easton welcomes pets as long as owners follow state and city rules. Every vendor takes cash, while cards and mobile pay vary by stand.",
+          "source_ids": ["easton-hours"]
+        },
+        {
+          "question": "Where do I park for the Emmaus Farmers' Market?",
+          "answer": "Schantz Funeral Home lets shoppers use its Third Street lot for free on Sundays, and street parking around the Triangle is free. Accessible spaces are in front of Morty's Steaks.",
+          "source_ids": ["emmaus-directions"]
+        },
+        {
+          "question": "Where do I park for the Easton Farmers' Market?",
+          "answer": "Shoppers park free on Saturdays from 9am-1pm in the Riverstar Properties lots and at 101 Larry Holmes Drive, a short walk from Scott Park.",
+          "source_ids": ["easton-directions"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "afm-home",
+          "title": "Allentown Fairgrounds Farmers Market",
+          "url": "https://www.allentownfarmersmarket.com/"
+        },
+        {
+          "id": "afm-contact",
+          "title": "Hours and address, Allentown Farmers Market",
+          "url": "https://www.allentownfarmersmarket.com/contact-us"
+        },
+        {
+          "id": "afm-merchants",
+          "title": "Merchants, Allentown Farmers Market",
+          "url": "https://www.allentownfarmersmarket.com/merchants"
+        },
+        {
+          "id": "dlv-afm",
+          "title": "Allentown Fairgrounds market, Discover Lehigh Valley",
+          "url": "https://www.discoverlehighvalley.com/directory/allentown-fairgrounds-farmers-market/"
+        },
+        {
+          "id": "emmaus-home",
+          "title": "Emmaus Farmers' Market",
+          "url": "https://emmausmarket.com/"
+        },
+        {
+          "id": "emmaus-winter",
+          "title": "Winter Market, Emmaus Farmers' Market",
+          "url": "https://emmausmarket.com/winter-market-2/"
+        },
+        {
+          "id": "emmaus-directions",
+          "title": "Directions and parking, Emmaus market",
+          "url": "https://emmausmarket.com/directions/"
+        },
+        {
+          "id": "easton-home",
+          "title": "Easton Farmers' Market",
+          "url": "https://eastonfarmersmarket.com/"
+        },
+        {
+          "id": "easton-hours",
+          "title": "Hours and FAQ, Easton Farmers' Market",
+          "url": "https://eastonfarmersmarket.com/hours/"
+        },
+        {
+          "id": "easton-ebt",
+          "title": "Shop with EBT, Easton Farmers' Market",
+          "url": "https://eastonfarmersmarket.com/shop-with-ebt/"
+        },
+        {
+          "id": "easton-directions",
+          "title": "Directions and parking, Easton market",
+          "url": "https://eastonfarmersmarket.com/directions/"
+        }
+      ]
     }
   }
 }

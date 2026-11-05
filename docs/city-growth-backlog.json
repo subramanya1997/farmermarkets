@@ -123,12 +123,28 @@
       "market": "historic-downtown-la-certified-farmers-market",
       "issue": "Dataset says 5th St and Spring St; SFMA (sfma.net/dtla, checked 2026-11-03) gives 209 W 5th St, from Broadway to Main St, Sundays 10am-3pm.",
       "status": "open"
+    },
+    {
+      "city": "pennsylvania/allentown",
+      "market": "plaza-growers-market-in-allentown-allentown",
+      "issue": "No official site and no 2026 schedule found. Only undated listings (LocalHarvest) give Wednesdays 11:30am-1:30pm, June-Oct, at PPL Plaza, 821 Hamilton St. Dataset has no days and audit status identity_ambiguous; check whether it still runs.",
+      "status": "open"
+    },
+    {
+      "city": "pennsylvania/allentown",
+      "market": "allentown-fairgrounds-farmers-market",
+      "issue": "Official site (allentownfarmersmarket.com, checked 2026-11-05) gives Thu 9am-7pm, Fri 8am-7pm, Sat 8am-6pm, but Discover Lehigh Valley lists 8pm closings Thu/Fri and 65+ merchants vs the site's 50+. Dataset matches the official site; founding year also conflicts on the site (1953 home page vs 1955 About page), so it was left out of the guide.",
+      "status": "open"
     }
   ],
   "ideas": [
     {
       "city": "ohio/columbus",
       "idea": "Let a city guide name markets that are missing from the dataset (or show 'recently closed' on a market card), so pages like Columbus with stale USDA data still show the real lineup."
+    },
+    {
+      "city": "pennsylvania/allentown",
+      "idea": "Thin cities (2 markets) lean on nearby-town markets in the guide. A template slot for 'Nearby towns' tips (Emmaus, Easton) with distance would make it clear these are outside city limits."
     }
   ],
   "cities": [
@@ -232,8 +248,15 @@
       "keyword": "farmers market allentown",
       "volume": 18100,
       "difficulty": null,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-05",
+          "changes": "First guide: 6 sourced tips (Fairgrounds market year-round Thu-Sat hours from the official site, indoor with 50+ merchants, free on-site parking, Emmaus Sunday and Dec hours, Emmaus outdoor winter market Jan-Apr, Easton Saturdays through Dec 19, 2026), 4 FAQs (Easton Fresh Food Bucks SNAP match, Easton dogs and cash, Emmaus parking, Easton parking), title and description override without {count} because the city has only 2 dataset markets, one unverified.",
+          "baseline": "No settled GSC baseline yet; city URL moved to /pennsylvania/allentown on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-12-03"
     },
     {
       "priority": 7,
