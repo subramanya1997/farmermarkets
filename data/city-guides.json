@@ -582,6 +582,117 @@
           "url": "https://eastonfarmersmarket.com/directions/"
         }
       ]
+    },
+    "north-carolina/raleigh": {
+      "verified_at": "2026-11-06",
+      "title": "Raleigh, NC Farmers Markets: Open Daily and Winter Markets",
+      "description": "{count} farmers markets in Raleigh, NC with days and hours. The State Farmers Market is open 7 days a week all year, with free parking and indoor shops.",
+      "tips": [
+        {
+          "label": "Year-round",
+          "text": "The State Farmers Market, 1201 Agriculture St, is open all year: Monday-Saturday 5am-7pm and Sunday 8am-5pm.",
+          "source_ids": ["sfm-home", "sfm-contact"]
+        },
+        {
+          "label": "Indoors",
+          "text": "Its Market Shoppes is a climate-controlled building with meats, cheeses, bakery items, ice cream, coffee and N.C. wines, next to the 30,000 sq ft Farmers Building.",
+          "source_ids": ["sfm-shop"]
+        },
+        {
+          "label": "Parking",
+          "text": "Parking at the State Farmers Market is free and on site.",
+          "source_ids": ["sfm-home"]
+        },
+        {
+          "label": "Breakfast",
+          "text": "The State Farmers Market Restaurant serves breakfast and lunch Monday-Saturday 6am-3pm and Sunday 8am-3pm. The N.C. Seafood Restaurant stays open until 8pm Wednesday-Saturday.",
+          "source_ids": ["sfm-shop"]
+        },
+        {
+          "label": "Holiday",
+          "text": "Midtown Farmers Market at North Hills wrapped its Saturday season on Oct 31 and comes back for a holiday market on November 21, 2026.",
+          "source_ids": ["midtown-home", "midtown-holiday"]
+        },
+        {
+          "label": "Winter Saturdays",
+          "text": "For a Saturday market all winter, Cary (160 E Park St) and Wake Forest both stay open every Saturday, 9am-12pm from November to March.",
+          "source_ids": ["cary-home", "wf-home"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I bring my dog to the State Farmers Market?",
+          "answer": "Leashed pets are welcome in the outdoor areas if you clean up after them, but not inside the buildings, sheds or shops. Only service animals may enter the selling areas.",
+          "source_ids": ["sfm-home"]
+        },
+        {
+          "question": "Where do I park for the Midtown Farmers Market?",
+          "answer": "Use the free underground garage at North Hills: coming off Six Forks Road, stay in the inside lane and take the ramp down. Elevators and escalators bring you up at the market.",
+          "source_ids": ["midtown-directions"]
+        },
+        {
+          "question": "Is there a farmers market in downtown Raleigh?",
+          "answer": "Raleigh City Farm runs a farmstand at 800 N Blount St on Wednesdays, 4pm-7pm, from April to October. It takes SNAP, and SNAP shoppers can still use its pay-what-you-can pricing.",
+          "source_ids": ["rcf-farmstand"]
+        },
+        {
+          "question": "Where is the Black Farmers' Market in Raleigh?",
+          "answer": "It meets at Southeast Raleigh Magnet High School, 2600 Rock Quarry Rd, on the 2nd and 4th Sundays from 1-4pm. Parking in the school lot is free, it takes SNAP, and pets stay home.",
+          "source_ids": ["bfm-market"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "sfm-home",
+          "title": "State Farmers Market, NCDA&CS",
+          "url": "https://www.ncagr.gov/divisions/marketing/farmers-markets-agricultural-centers/state-farmers-market-raleigh"
+        },
+        {
+          "id": "sfm-contact",
+          "title": "Hours and address, State Farmers Market",
+          "url": "https://www.ncagr.gov/divisions/marketing/farmers-markets-agricultural-centers/state-farmers-market-raleigh/contact-us"
+        },
+        {
+          "id": "sfm-shop",
+          "title": "Shop the State Farmers Market",
+          "url": "https://www.ncagr.gov/divisions/marketing/farmers-markets-agricultural-centers/state-farmers-market-raleigh/shop-market"
+        },
+        {
+          "id": "midtown-home",
+          "title": "Midtown Farmers Market",
+          "url": "https://midtownfarmers.com/"
+        },
+        {
+          "id": "midtown-holiday",
+          "title": "Holiday market, Midtown Farmers Market",
+          "url": "https://midtownfarmers.com/holiday-market-november-222025/"
+        },
+        {
+          "id": "midtown-directions",
+          "title": "Directions and parking, Midtown market",
+          "url": "https://midtownfarmers.com/get-directions/"
+        },
+        {
+          "id": "cary-home",
+          "title": "Cary Farmers Market",
+          "url": "https://www.caryfarmersmarket.com/"
+        },
+        {
+          "id": "wf-home",
+          "title": "Wake Forest Farmers Market",
+          "url": "https://wakeforestmarket.org/"
+        },
+        {
+          "id": "rcf-farmstand",
+          "title": "Farmstand, Raleigh City Farm",
+          "url": "https://raleighcityfarm.org/farmstand"
+        },
+        {
+          "id": "bfm-market",
+          "title": "The Market, Black Farmers' Market",
+          "url": "https://blackfarmersmkt.org/the-market/"
+        }
+      ]
     }
   }
 }

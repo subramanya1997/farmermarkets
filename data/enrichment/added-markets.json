@@ -297,5 +297,95 @@
       "catalog_url": "https://www.heightsmercantile.com/heights-mercantile-markets",
       "retrieved_at": "2026-11-01"
     }
+  },
+  {
+    "id": "added:state-farmers-market-raleigh-nc",
+    "slug": "state-farmers-market-raleigh-nc",
+    "name": "State Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "1201 Agriculture Street, Raleigh, NC",
+      "city": "Raleigh",
+      "state": "North Carolina",
+      "zip_code": "27603",
+      "description": "Run by the NC Department of Agriculture. Free on-site parking. Leashed pets welcome in outdoor areas only."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Run by the N.C. Department of Agriculture and Consumer Services."
+    },
+    "contact": {
+      "websites": [
+        "https://www.ncagr.gov/divisions/marketing/farmers-markets-agricultural-centers/state-farmers-market-raleigh"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "Year-round",
+      "days": [
+        "Monday to Saturday 5am to 7pm",
+        "Sunday 8am to 5pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "N.C. Department of Agriculture and Consumer Services",
+      "dataset_name": "State Farmers Market - Raleigh",
+      "catalog_url": "https://www.ncagr.gov/divisions/marketing/farmers-markets-agricultural-centers/state-farmers-market-raleigh",
+      "retrieved_at": "2026-11-06"
+    }
+  },
+  {
+    "id": "added:black-farmers-market-raleigh-nc",
+    "slug": "black-farmers-market-raleigh-nc",
+    "name": "Black Farmers' Market Raleigh",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "2600 Rock Quarry Rd, Raleigh, NC",
+      "city": "Raleigh",
+      "state": "North Carolina",
+      "zip_code": "27610",
+      "description": "At Southeast Raleigh Magnet High School. Free parking in the school lot. No pets; service animals only."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Also runs a Durham market."
+    },
+    "contact": {
+      "websites": [
+        "https://blackfarmersmkt.org/the-market/"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "2nd and 4th Sundays 1pm to 4pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Black Farmers' Market",
+      "dataset_name": "The Market",
+      "catalog_url": "https://blackfarmersmkt.org/the-market/",
+      "retrieved_at": "2026-11-06"
+    },
+    "payment": {
+      "methods": [
+        "SNAP/EBT"
+      ],
+      "food_assistance": {
+        "snap": true,
+        "snap_option": "Accepts SNAP; Double Bucks program helps match SNAP dollars"
+      }
+    }
   }
 ]

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-02T01:01:56.976Z",
-  "market_count": 9139,
+  "generated_at": "2026-11-06T15:36:49.379Z",
+  "market_count": 9141,
   "states": [
     {
       "code": "NY",
@@ -23916,7 +23916,7 @@
       "name": "North Carolina",
       "country_code": "US",
       "slug": "north-carolina",
-      "market_count": 211,
+      "market_count": 213,
       "city_count": 142,
       "cities": [
         {
@@ -23980,6 +23980,17 @@
             "hammonds-grandsons-produce-fayetteville",
             "murchison-road-community-farmers-market-fayetteville",
             "the-fayetteville-farmers-market-fayetteville"
+          ]
+        },
+        {
+          "name": "Raleigh",
+          "slug": "raleigh",
+          "market_count": 4,
+          "market_slugs": [
+            "black-farmers-market-raleigh-nc",
+            "campus-farmers-market-at-ncsu-raleigh",
+            "midtown-farmers-market-1",
+            "state-farmers-market-raleigh-nc"
           ]
         },
         {
@@ -24258,15 +24269,6 @@
           "market_slugs": [
             "carolina-brewery-farmers-market-pittsboro",
             "chatham-mills-farmers-market-pittsboro"
-          ]
-        },
-        {
-          "name": "Raleigh",
-          "slug": "raleigh",
-          "market_count": 2,
-          "market_slugs": [
-            "campus-farmers-market-at-ncsu-raleigh",
-            "midtown-farmers-market-1"
           ]
         },
         {

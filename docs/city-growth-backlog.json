@@ -135,6 +135,18 @@
       "market": "allentown-fairgrounds-farmers-market",
       "issue": "Official site (allentownfarmersmarket.com, checked 2026-11-05) gives Thu 9am-7pm, Fri 8am-7pm, Sat 8am-6pm, but Discover Lehigh Valley lists 8pm closings Thu/Fri and 65+ merchants vs the site's 50+. Dataset matches the official site; founding year also conflicts on the site (1953 home page vs 1955 About page), so it was left out of the guide.",
       "status": "open"
+    },
+    {
+      "city": "north-carolina/raleigh",
+      "market": "midtown-farmers-market-1",
+      "issue": "Dataset has no city, days or season. Official site (midtownfarmers.com, checked 2026-11-06) says Saturdays 8am-Noon, Apr 11-Oct 31, at The Commons, 4191 Main at North Hills Street (dataset says 4150). Candidate for a research batch.",
+      "status": "open"
+    },
+    {
+      "city": "north-carolina/raleigh",
+      "market": "campus-farmers-market-at-ncsu-raleigh",
+      "issue": "No website, days or season; audit marked identity_ambiguous. Could not confirm the market still runs (not on 2026 Raleigh market roundups checked 2026-11-06).",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -145,6 +157,10 @@
     {
       "city": "pennsylvania/allentown",
       "idea": "Thin cities (2 markets) lean on nearby-town markets in the guide. A template slot for 'Nearby towns' tips (Emmaus, Easton) with distance would make it clear these are outside city limits."
+    },
+    {
+      "city": "north-carolina/raleigh",
+      "idea": "Raleigh's biggest draw is one daily state-run market with restaurants and a garden center. A 'What's inside' block for market halls (shops, restaurants with hours) would beat cramming them into tips."
     }
   ],
   "cities": [
@@ -265,8 +281,15 @@
       "keyword": "farmers market raleigh",
       "volume": 14800,
       "difficulty": 20,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-06",
+          "changes": "First guide: 6 sourced tips (State Farmers Market daily hours, Market Shoppes indoor building, free parking, on-site restaurants, Midtown holiday market Nov 21, 2026, Cary and Wake Forest winter Saturdays), 4 FAQs (State Farmers Market pet rule, Midtown garage parking, Raleigh City Farm downtown farmstand with SNAP, Black Farmers' Market Raleigh), title and description override. Added State Farmers Market and Black Farmers' Market Raleigh to added-markets.json (page goes from 2 to 4 markets).",
+          "baseline": "No settled GSC baseline yet; city URL moved to /north-carolina/raleigh on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-12-04"
     },
     {
       "priority": 8,

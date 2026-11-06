@@ -1,20 +1,20 @@
 Geo index build report
-generated_at            2026-11-02T01:01:56.976Z
+generated_at            2026-11-06T15:36:49.379Z
 
 Records
-  total                 9139
-  indexed               9134
+  total                 9141
+  indexed               9136
   unresolved            5
-  without coordinates   390
+  without coordinates   392
 
 Resolution method (weakest source a record needed)
-  from fields           8793
+  from fields           8795
   from address          77
   from coordinates      224
   corrupt combos fixed  1
 
 State resolution
-  from fields           8627
+  from fields           8629
   from address          2
   from coordinates      2
   missing before        511
@@ -22,7 +22,7 @@ State resolution
     of those, outside US/CA (grouped by country instead)  503
 
 City resolution
-  from fields           8778
+  from fields           8780
   from address          77
   from coordinates      224
   missing before        132
@@ -31,7 +31,7 @@ City resolution
 Index
   top-level entries     60 (53 US states/territories)
   cities                5019
-  cities with 3+ markets 585
+  cities with 3+ markets 586
 
 Top 10 entries by market count
    1. New York                  1085 markets   466 cities
