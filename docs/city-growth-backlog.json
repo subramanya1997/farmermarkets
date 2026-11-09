@@ -147,6 +147,36 @@
       "market": "campus-farmers-market-at-ncsu-raleigh",
       "issue": "No website, days or season; audit marked identity_ambiguous. Could not confirm the market still runs (not on 2026 Raleigh market roundups checked 2026-11-06).",
       "status": "open"
+    },
+    {
+      "city": "california/san-diego",
+      "market": "tuna-harbor-dockside-market",
+      "issue": "Dataset address is 879 W. Harbor Dr.; the market's own site gives 598 Harbor Lane, San Diego, CA 92101 (checked 2026-11-09).",
+      "status": "open"
+    },
+    {
+      "city": "california/san-diego",
+      "market": "hillcrest-cfm-san-diego-6c461b34",
+      "issue": "Duplicate of hillcrest-farmers-market-san-diego at the old 3960 Normal St location. The market moved to 1601 University Ave in January 2025 per hillcrestfarmersmarket.com (checked 2026-11-09).",
+      "status": "open"
+    },
+    {
+      "city": "california/san-diego",
+      "market": "little-italy-mercato-cfm-san-diego",
+      "issue": "Two rows for Little Italy Mercato (this one has no days; little-italy-mercato-cfm-san-diego-bb7a6878 has Saturday 8am-2pm and Wednesday 9:30am-1:30pm, which matches littleitalysd.com/events/mercato).",
+      "status": "open"
+    },
+    {
+      "city": "california/san-diego",
+      "market": "ascendkemet-cfm-san-diego-8b7564ea",
+      "issue": "Looks like a duplicate of ascendkemet-cfm-marina-district-san-diego-de204781 (21 W Island Ave vs 201 W Island Ave, both Friday 3pm-7pm). No official site found to confirm.",
+      "status": "open"
+    },
+    {
+      "city": "california/san-diego",
+      "market": "rancho-bernardo-farmers-market-san-diego",
+      "issue": "Address spells the street 'Paseo Del Verno Norte'; San Diego County Farm Bureau lists 13330 Paseo Del Verano Norte.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -161,6 +191,10 @@
     {
       "city": "north-carolina/raleigh",
       "idea": "Raleigh's biggest draw is one daily state-run market with restaurants and a garden center. A 'What's inside' block for market halls (shops, restaurants with hours) would beat cramming them into tips."
+    },
+    {
+      "city": "california/san-diego",
+      "idea": "San Diego has a fishermen's market (Tuna Harbor Dockside) that is not a produce market. A 'Seafood market' tag or badge on market cards would help visitors find it, like night or winter markets."
     }
   ],
   "cities": [
@@ -298,8 +332,15 @@
       "keyword": "farmers market san diego",
       "volume": 14800,
       "difficulty": 31,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-09",
+          "changes": "First guide: 6 sourced tips (Little Italy Mercato Saturday and Wednesday hours, Mercato parking lot and garage rates, Hillcrest's temporary University Ave location, Hillcrest free parking and MTS buses, Tuna Harbor Dockside Market fish and cash note, Pacific Beach EBT Market Bucks and Market Match), 4 FAQs (evening markets in Ocean Beach and North Park, Hillcrest pet rule, Hillcrest EBT and WIC, Bernardo Winery Friday market), title and description override. Added Ocean Beach and North Park Thursday markets to added-markets.json (page goes from 26 to 28 markets).",
+          "baseline": "No settled GSC baseline yet; city URL moved to /california/san-diego on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-12-07"
     },
     {
       "priority": 9,

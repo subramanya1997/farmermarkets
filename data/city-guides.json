@@ -693,6 +693,117 @@
           "url": "https://blackfarmersmkt.org/the-market/"
         }
       ]
+    },
+    "california/san-diego": {
+      "verified_at": "2026-11-09",
+      "title": "San Diego Farmers Markets: Open Year-Round, Days and Hours",
+      "description": "{count} farmers markets in San Diego, CA with days and hours. Little Italy Mercato runs Saturdays and Wednesdays all year, and Hillcrest is every Sunday.",
+      "tips": [
+        {
+          "label": "Biggest",
+          "text": "Little Italy Mercato fills six blocks of W Date St (Kettner Blvd to Front St) every Saturday, 8am-2pm, rain or shine. A smaller Wednesday market runs 9:30am-1:30pm.",
+          "source_ids": ["li-mercato"]
+        },
+        {
+          "label": "Parking",
+          "text": "On Saturdays the Washington Elementary lots near the Mercato charge $15 (248 W Date St) or $20 (400 W Fir St). The Waterfront garage at 1600 Pacific Hwy is $15 flat on weekends.",
+          "source_ids": ["li-parking"]
+        },
+        {
+          "label": "Sunday",
+          "text": "Hillcrest's Sunday market (9am-2pm, over 175 vendors) has moved to 1601 University Ave, between Herbert St and Park Blvd, while the Normal St promenade is built.",
+          "source_ids": ["hc-home"]
+        },
+        {
+          "label": "Free parking",
+          "text": "Street parking in Hillcrest is free on Sundays, and so is the DMV lot at Normal St and Lincoln Ave. MTS buses 1, 7, 10, 11 and 215 also stop near the market.",
+          "source_ids": ["hc-home"]
+        },
+        {
+          "label": "Fresh fish",
+          "text": "Tuna Harbor Dockside Market sells fish off the boats Saturdays 8am-1pm or until sold out, at 598 Harbor Lane. Cutters will clean a whole fish, and some vendors take cash only.",
+          "source_ids": ["thdm-home", "thdm-faq"]
+        },
+        {
+          "label": "EBT",
+          "text": "At the Pacific Beach Tuesday market (2pm-7pm, 901 Hornblend St), swap EBT for Market Bucks at the info booth at Hornblend and Bayard, and ask about up to $15 in Market Match.",
+          "source_ids": ["pb-home"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is there an evening farmers market in San Diego?",
+          "answer": "Ocean Beach runs every Wednesday, 4pm-8pm, rain or shine, on the 4900 block of Newport Ave. North Park's Thursday market runs 3pm-7:30pm on North Park Way between Ray St and Granada Ave.",
+          "source_ids": ["ob-city", "ob-main", "np-city"]
+        },
+        {
+          "question": "Can I bring my dog to the Hillcrest Farmers Market?",
+          "answer": "No. Pets are not allowed under the California Health and Safety Code, though service animals are welcome.",
+          "source_ids": ["hc-home"]
+        },
+        {
+          "question": "Does the Hillcrest market take EBT?",
+          "answer": "Not at this time. Four farms there do take WIC checks: Smit Farms, Valley Center Growers, Ken's Top Notch and Heritage Family Farms.",
+          "source_ids": ["hc-home"]
+        },
+        {
+          "question": "Is there a farmers market at a winery in San Diego?",
+          "answer": "Yes. Bernardo Winery in Rancho Bernardo hosts a market in its lower courtyard every Friday morning, 9am-1pm, with produce, artisan goods and food vendors.",
+          "source_ids": ["bw-market"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "li-mercato",
+          "title": "Little Italy Mercato",
+          "url": "https://www.littleitalysd.com/events/mercato"
+        },
+        {
+          "id": "li-parking",
+          "title": "Self parking, Little Italy",
+          "url": "https://www.littleitalysd.com/parking/self-parking"
+        },
+        {
+          "id": "hc-home",
+          "title": "Hillcrest Farmers Market",
+          "url": "https://hillcrestfarmersmarket.com/"
+        },
+        {
+          "id": "thdm-home",
+          "title": "Tuna Harbor Dockside Market",
+          "url": "https://www.thdocksidemarket.com/"
+        },
+        {
+          "id": "thdm-faq",
+          "title": "FAQs, Tuna Harbor Dockside Market",
+          "url": "https://www.thdocksidemarket.com/faqs"
+        },
+        {
+          "id": "pb-home",
+          "title": "Pacific Beach Tuesday market",
+          "url": "http://www.pacificbeachmarket.com/"
+        },
+        {
+          "id": "ob-city",
+          "title": "Ocean Beach market, City of San Diego",
+          "url": "https://www.sandiego.gov/event/ocean-beach-certified-farmers-market-2026-20"
+        },
+        {
+          "id": "ob-main",
+          "title": "OB Farmers Market, OB MainStreet",
+          "url": "https://oceanbeachsandiego.com/node/4464"
+        },
+        {
+          "id": "np-city",
+          "title": "North Park market, City of San Diego",
+          "url": "https://www.sandiego.gov/event/north-park-farmers-market-2026"
+        },
+        {
+          "id": "bw-market",
+          "title": "Friday market, Bernardo Winery",
+          "url": "https://www.bernardowinery.com/pages/friday-farmers-market"
+        }
+      ]
     }
   }
 }

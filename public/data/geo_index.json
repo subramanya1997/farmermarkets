@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-06T15:36:49.379Z",
-  "market_count": 9141,
+  "generated_at": "2026-11-09T20:35:51.683Z",
+  "market_count": 9143,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 965,
+      "market_count": 967,
       "city_count": 406,
       "cities": [
         {
@@ -4516,7 +4516,7 @@
         {
           "name": "San Diego",
           "slug": "san-diego",
-          "market_count": 26,
+          "market_count": 28,
           "market_slugs": [
             "3rd-avenue-farmers-market-and-asian",
             "7th-district-certified-farmers-market",
@@ -4535,7 +4535,9 @@
             "little-italy-mercato-cfm-san-diego",
             "little-italy-mercato-cfm-san-diego-bb7a6878",
             "mira-mesa-farmers-market",
+            "north-park-farmers-market-san-diego-ca",
             "oak-park-farmers-market-sd-san-diego-56d28352",
+            "ocean-beach-farmers-market-san-diego-ca",
             "pacific-beach-tuesday-cfm-san-diego-73eba548",
             "pacific-beach-tuesday-market-san-diego",
             "peoples-produce-farmers-market-san-diego",

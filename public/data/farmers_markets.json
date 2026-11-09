@@ -828985,5 +828985,85 @@
       }
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Black%20Farmers'%20Market%20Raleigh%2C%202600%20Rock%20Quarry%20Rd%2C%20Raleigh%2C%20NC"
+  },
+  {
+    "id": "added:ocean-beach-farmers-market-san-diego-ca",
+    "slug": "ocean-beach-farmers-market-san-diego-ca",
+    "name": "Ocean Beach Certified Farmers' Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "4900 Newport Avenue, San Diego, CA",
+      "city": "San Diego",
+      "state": "California",
+      "description": "Street market along the 4900 block of Newport Avenue, plus nearby lots at Newport Ave and Cable St and near Bacon St."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "websites": [
+        "https://www.sandiego.gov/event/ocean-beach-certified-farmers-market-2026-20"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "Wednesdays 4pm to 8pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "City of San Diego",
+      "dataset_name": "Ocean Beach Certified Farmers' Market 2026",
+      "catalog_url": "https://www.sandiego.gov/event/ocean-beach-certified-farmers-market-2026-20",
+      "retrieved_at": "2026-11-09"
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Ocean%20Beach%20Certified%20Farmers'%20Market%2C%204900%20Newport%20Avenue%2C%20San%20Diego%2C%20CA"
+  },
+  {
+    "id": "added:north-park-farmers-market-san-diego-ca",
+    "slug": "north-park-farmers-market-san-diego-ca",
+    "name": "North Park Thursday Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "2901 North Park Way, San Diego, CA",
+      "city": "San Diego",
+      "state": "California",
+      "description": "Along North Park Way from Ray Street to Granada Avenue, including 29th Street and North Park Way."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "websites": [
+        "https://www.sandiego.gov/event/north-park-farmers-market-2026"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "Thursdays 3pm to 7:30pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "City of San Diego",
+      "dataset_name": "North Park Farmers Market 2026",
+      "catalog_url": "https://www.sandiego.gov/event/north-park-farmers-market-2026",
+      "retrieved_at": "2026-11-09"
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=North%20Park%20Thursday%20Market%2C%202901%20North%20Park%20Way%2C%20San%20Diego%2C%20CA"
   }
 ]
