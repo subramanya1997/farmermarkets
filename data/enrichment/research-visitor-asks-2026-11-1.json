@@ -1,0 +1,2060 @@
+[
+ {
+  "id": 309823,
+  "market_name": "Heritage Farmers’ Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "operations": {
+    "season": {
+     "value": {
+      "kind": "year_round"
+     },
+     "source_ids": [
+      "home"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "products": {
+    "categories": [
+     {
+      "value": {
+       "code": "meat",
+       "label": "Angus beef, pork and chicken"
+      },
+      "source_ids": [
+       "home"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "meat"
+     },
+     {
+      "value": {
+       "code": "dairy",
+       "label": "Farm fresh milk"
+      },
+      "source_ids": [
+       "home"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dairy"
+     },
+     {
+      "value": {
+       "code": "prepared_food",
+       "label": "Heat and eat meals"
+      },
+      "source_ids": [
+       "pre-made-meals"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "prepared-food"
+     }
+    ],
+    "items": [
+     {
+      "value": "Farm fresh milk",
+      "source_ids": [
+       "home"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "farm-fresh-milk"
+     },
+     {
+      "value": "Angus beef",
+      "source_ids": [
+       "home"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "angus-beef"
+     },
+     {
+      "value": "Pork",
+      "source_ids": [
+       "home"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "pork"
+     },
+     {
+      "value": "Chicken",
+      "source_ids": [
+       "home"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "chicken"
+     },
+     {
+      "value": "Heat and eat meals such as meatloaf, beef and bean burritos, beef enchiladas, BBQ rib meals, chicken and noodles, chili and fajitas",
+      "source_ids": [
+       "pre-made-meals"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "heat-and-eat-meals"
+     },
+     {
+      "value": "Spring mix and chef salads",
+      "source_ids": [
+       "pre-made-meals"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "salads"
+     },
+     {
+      "value": "Bittner's Meats, Uncle Bob's Ice Cream, Swanee's Pretzels, Boar's Head, old time soda and blended coffee",
+      "source_ids": [
+       "other-products"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "other-brands"
+     }
+    ]
+   },
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "products",
+      "answer": "Heritage Farmers Market is open all year and sells Illinois farm products: farm fresh milk, Angus beef, pork and chicken, plus heat and eat meals made with its own beef and pork."
+     },
+     "source_ids": [
+      "home",
+      "pre-made-meals"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-products"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "home",
+    "url": "https://www.heritagefarmersmark.com/",
+    "title": "Home | Heritage Farmers Market",
+    "fields": [
+     "first_party.operations",
+     "first_party.products",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   },
+   {
+    "id": "pre-made-meals",
+    "url": "https://www.heritagefarmersmark.com/pre-made-meals",
+    "title": "Pre-Made Meals | Heritage Farmers Market",
+    "fields": [
+     "first_party.products",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   },
+   {
+    "id": "other-products",
+    "url": "https://www.heritagefarmersmark.com/about-3",
+    "title": "Other Products | Heritage Farmers Market",
+    "fields": [
+     "first_party.products"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ },
+ {
+  "id": 309204,
+  "market_name": "Middletown Farmers’ Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "operations": {
+    "season": {
+     "value": {
+      "kind": "dated_range",
+      "start_date": "2026-06-26",
+      "end_date": "2026-10-30"
+     },
+     "source_ids": [
+      "city-page"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "payments": {
+    "methods": [
+     {
+      "value": {
+       "code": "cash"
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cash"
+     },
+     {
+      "value": {
+       "code": "credit_card"
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "credit-card"
+     },
+     {
+      "value": {
+       "code": "debit_card"
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "debit-card"
+     }
+    ],
+    "assistance": [
+     {
+      "value": {
+       "code": "snap_ebt",
+       "name": "SNAP"
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "snap"
+     },
+     {
+      "value": {
+       "code": "wic",
+       "name": "WIC"
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "wic"
+     },
+     {
+      "value": {
+       "code": "fmnp",
+       "name": "WIC Farmers Market Nutrition Program (FMNP)",
+       "redemption_instructions": "FMNP benefits buy only CT Grown fresh fruits and vegetables, cut herbs and eggs."
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "fmnp"
+     },
+     {
+      "value": {
+       "code": "sfmnp",
+       "name": "Senior Farmers Market Nutrition Program (S/FMNP)"
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sfmnp"
+     }
+    ],
+    "incentives": [
+     {
+      "value": {
+       "name": "Double Dollars (CT Fresh Match)",
+       "kind": "match",
+       "eligibility": "SNAP and WIC shoppers",
+       "note": "Double Dollars are handed out at the market with a SNAP purchase. Register for the program before the market."
+      },
+      "source_ids": [
+       "city-page"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "double-dollars"
+     }
+    ]
+   },
+   "programs": [
+    {
+     "value": {
+      "name": "Rx produce program",
+      "kind": "food_access",
+      "description": "Produce prescriptions from Middlesex Hospital and Community Health Center can be used at the market."
+     },
+     "source_ids": [
+      "city-page"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "rx-produce"
+    }
+   ],
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "arrival",
+      "answer": "The 2026 season ran Fridays 10am to 2pm, June 26 to October 30, on the Union Green at the corner of Main and Pleasant Street."
+     },
+     "source_ids": [
+      "city-page"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-season"
+    },
+    {
+     "value": {
+      "topic": "payments",
+      "answer": "The market takes cash, credit and debit, SNAP, WIC, FMNP and senior FMNP benefits, and produce prescriptions. SNAP purchases earn Double Dollars."
+     },
+     "source_ids": [
+      "city-page"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-payments"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "city-page",
+    "url": "https://www.middletownct.gov/1198/Middletown-Farmers-Market",
+    "title": "Middletown Farmers Market | Middletown, CT",
+    "fields": [
+     "first_party.operations",
+     "first_party.payments",
+     "first_party.programs",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ },
+ {
+  "id": 309773,
+  "market_name": "Downtown Downers Grove Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "identity": {
+    "operator_name": {
+     "value": "Indian Boundary YMCA",
+     "source_ids": [
+      "ymca"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "operations": {
+    "season": {
+     "value": {
+      "kind": "dated_range",
+      "start_date": "2026-05-09",
+      "end_date": "2026-10-17"
+     },
+     "source_ids": [
+      "ymca"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "access": {
+    "entrance_note": {
+     "value": "The market sets up in the parking lot outside the Main Street Train Station.",
+     "source_ids": [
+      "ymca"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "vendors": {
+    "count": {
+     "value": {
+      "value": 60,
+      "qualifier": "more than"
+     },
+     "source_ids": [
+      "ymca"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "roster_context": {
+     "value": {
+      "label": "2026 Market Vendors",
+      "start_date": "2026-05-09",
+      "end_date": "2026-10-17"
+     },
+     "source_ids": [
+      "ymca"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "roster": [
+     {
+      "value": {
+       "name": "Apothecarri and Teas"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "apothecarri-and-teas"
+     },
+     {
+      "value": {
+       "name": "Ari's Flowers"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "ari-s-flowers"
+     },
+     {
+      "value": {
+       "name": "Bennett Farms"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "bennett-farms"
+     },
+     {
+      "value": {
+       "name": "Blue Moon Orchards"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "blue-moon-orchards"
+     },
+     {
+      "value": {
+       "name": "Cadence Kitchen & Co."
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cadence-kitchen-co"
+     },
+     {
+      "value": {
+       "name": "Cindy's Rock Starz"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cindy-s-rock-starz"
+     },
+     {
+      "value": {
+       "name": "Designing Desiree"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "designing-desiree"
+     },
+     {
+      "value": {
+       "name": "Door County Coffee"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "door-county-coffee"
+     },
+     {
+      "value": {
+       "name": "Dorothy's Chicago"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dorothy-s-chicago"
+     },
+     {
+      "value": {
+       "name": "Dragonfly Bath & Body"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dragonfly-bath-body"
+     },
+     {
+      "value": {
+       "name": "Dulce Luna Bakery"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dulce-luna-bakery"
+     },
+     {
+      "value": {
+       "name": "Elena's Cucina"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "elena-s-cucina"
+     },
+     {
+      "value": {
+       "name": "EZ Fusion"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "ez-fusion"
+     },
+     {
+      "value": {
+       "name": "Farmin Local"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "farmin-local"
+     },
+     {
+      "value": {
+       "name": "Fern"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "fern"
+     },
+     {
+      "value": {
+       "name": "Fraternite Notre Dame"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "fraternite-notre-dame"
+     },
+     {
+      "value": {
+       "name": "Frogtown Juice Co"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "frogtown-juice-co"
+     },
+     {
+      "value": {
+       "name": "Gladis Provisions"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "gladis-provisions"
+     },
+     {
+      "value": {
+       "name": "Great Harvest Bread Company"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "great-harvest-bread-company"
+     },
+     {
+      "value": {
+       "name": "Ina's Natural Soap"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "ina-s-natural-soap"
+     },
+     {
+      "value": {
+       "name": "Jake Country Meats"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "jake-country-meats"
+     },
+     {
+      "value": {
+       "name": "Jenna Guarderas Designs"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "jenna-guarderas-designs"
+     },
+     {
+      "value": {
+       "name": "JMK Woodworking"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "jmk-woodworking"
+     },
+     {
+      "value": {
+       "name": "JoDoRo Designs"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "jodoro-designs"
+     },
+     {
+      "value": {
+       "name": "June Gloom Cafe"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "june-gloom-cafe"
+     },
+     {
+      "value": {
+       "name": "Kaizen Baby"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "kaizen-baby"
+     },
+     {
+      "value": {
+       "name": "Karen Bray"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "karen-bray"
+     },
+     {
+      "value": {
+       "name": "Knights of Columbus"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "knights-of-columbus"
+     },
+     {
+      "value": {
+       "name": "LaVanway Farm Markets"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "lavanway-farm-markets"
+     },
+     {
+      "value": {
+       "name": "Lilly & Bea"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "lilly-bea"
+     },
+     {
+      "value": {
+       "name": "Little Love Tees"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "little-love-tees"
+     },
+     {
+      "value": {
+       "name": "Marga's Lil Cakes, LLC"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "marga-s-lil-cakes-llc"
+     },
+     {
+      "value": {
+       "name": "Meryl's Sweets"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "meryl-s-sweets"
+     },
+     {
+      "value": {
+       "name": "Mini Donauts"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "mini-donauts"
+     },
+     {
+      "value": {
+       "name": "Nuts To Go Corp"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "nuts-to-go-corp"
+     },
+     {
+      "value": {
+       "name": "Oertel Roots Family Farm"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "oertel-roots-family-farm"
+     },
+     {
+      "value": {
+       "name": "Opas Small Batch"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "opas-small-batch"
+     },
+     {
+      "value": {
+       "name": "Papa's Natural Honey"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "papa-s-natural-honey"
+     },
+     {
+      "value": {
+       "name": "PaperPie (formerly Usborne Books & More)"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "paperpie-formerly-usborne-books-more"
+     },
+     {
+      "value": {
+       "name": "Pet Wants Naperville"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "pet-wants-naperville"
+     },
+     {
+      "value": {
+       "name": "Pleasant Hill Produce"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "pleasant-hill-produce"
+     },
+     {
+      "value": {
+       "name": "Prime n Tender Meats"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "prime-n-tender-meats"
+     },
+     {
+      "value": {
+       "name": "Recipes From the Firehouse"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "recipes-from-the-firehouse"
+     },
+     {
+      "value": {
+       "name": "Rolla Farms Microgreens"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "rolla-farms-microgreens"
+     },
+     {
+      "value": {
+       "name": "Sabor a Mexico"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sabor-a-mexico"
+     },
+     {
+      "value": {
+       "name": "Sky Hotdogs"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sky-hotdogs"
+     },
+     {
+      "value": {
+       "name": "St Brigid's Balms"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "st-brigid-s-balms"
+     },
+     {
+      "value": {
+       "name": "Staff of Life Bakery and Farms"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "staff-of-life-bakery-and-farms"
+     },
+     {
+      "value": {
+       "name": "That Pickle Guy"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "that-pickle-guy"
+     },
+     {
+      "value": {
+       "name": "The Cheese People"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "the-cheese-people"
+     },
+     {
+      "value": {
+       "name": "The Great Sandeenie"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "the-great-sandeenie"
+     },
+     {
+      "value": {
+       "name": "The Wood Crafters"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "the-wood-crafters"
+     },
+     {
+      "value": {
+       "name": "Theis Farm Markets"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "theis-farm-markets"
+     },
+     {
+      "value": {
+       "name": "Trillo Coffee"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "trillo-coffee"
+     },
+     {
+      "value": {
+       "name": "Turn lemons Corp"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "turn-lemons-corp"
+     },
+     {
+      "value": {
+       "name": "Twisted Olive Imports"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "twisted-olive-imports"
+     },
+     {
+      "value": {
+       "name": "Umbrella Azul Peruvian Empanadas"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "umbrella-azul-peruvian-empanadas"
+     },
+     {
+      "value": {
+       "name": "Verbena Soap & Apothecary"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "verbena-soap-apothecary"
+     },
+     {
+      "value": {
+       "name": "Whimsy Little Things"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "whimsy-little-things"
+     },
+     {
+      "value": {
+       "name": "Yalla Tizers"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "yalla-tizers"
+     }
+    ]
+   },
+   "products": {
+    "categories": [
+     {
+      "value": {
+       "code": "fresh_produce",
+       "label": "Locally grown produce"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "produce"
+     },
+     {
+      "value": {
+       "code": "baked_goods"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "baked-goods"
+     },
+     {
+      "value": {
+       "code": "dairy",
+       "label": "Artisanal cheeses"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dairy"
+     },
+     {
+      "value": {
+       "code": "flowers",
+       "label": "Floral arrangements"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "flowers"
+     },
+     {
+      "value": {
+       "code": "prepared_food",
+       "label": "Prepared food and beverage"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "prepared-food"
+     },
+     {
+      "value": {
+       "code": "crafts",
+       "label": "Crafts and handmade soaps"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "crafts"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Home goods"
+      },
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "home-goods"
+     }
+    ],
+    "items": [
+     {
+      "value": "Locally grown produce",
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "locally-grown-produce"
+     },
+     {
+      "value": "Fresh baked goods",
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "fresh-baked-goods"
+     },
+     {
+      "value": "Handmade soaps",
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "handmade-soaps"
+     },
+     {
+      "value": "Curated floral arrangements",
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "floral-arrangements"
+     },
+     {
+      "value": "Handcrafted coffee beverages",
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "coffee-beverages"
+     },
+     {
+      "value": "Artisanal cheeses",
+      "source_ids": [
+       "ymca"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "artisanal-cheeses"
+     }
+    ]
+   },
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "arrival",
+      "answer": "The 2026 market ran Saturdays 7am to 12:30pm, May 9 to October 17, in the parking lot outside the Main Street Train Station."
+     },
+     "source_ids": [
+      "ymca"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-season"
+    },
+    {
+     "value": {
+      "topic": "products",
+      "answer": "More than 60 vendors sell locally grown produce, baked goods, cheeses, flowers, coffee, prepared food, crafts and home goods."
+     },
+     "source_ids": [
+      "ymca"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-products"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "ymca",
+    "url": "https://www.ymcachicago.org/indian-boundary/downtown-downers-grove-market/",
+    "title": "Downtown Downers Grove Market | YMCA",
+    "fields": [
+     "first_party.identity",
+     "first_party.operations",
+     "first_party.access",
+     "first_party.vendors",
+     "first_party.products",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ },
+ {
+  "id": 310652,
+  "market_name": "Lenox Farmers Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "operations": {
+    "season": {
+     "value": {
+      "kind": "dated_range",
+      "start_date": "2026-05-22",
+      "end_date": "2026-09-11"
+     },
+     "source_ids": [
+      "lenox"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "access": {
+    "entrance_note": {
+     "value": "The market is at St. Ann's Parish, 134 Main St. Shoppers come in from the Main Street sidewalk or from the parking lot in the back.",
+     "source_ids": [
+      "lenox"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "amenities": [
+    {
+     "value": {
+      "code": "restrooms",
+      "availability": "yes",
+      "note": "Portable toilet at the start of the parking lot, behind the stone wall."
+     },
+     "source_ids": [
+      "lenox"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "restrooms"
+    }
+   ],
+   "policies": [
+    {
+     "value": {
+      "code": "weather",
+      "rule": "rain_or_shine"
+     },
+     "source_ids": [
+      "lenox"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "weather"
+    }
+   ],
+   "vendors": {
+    "roster_context": {
+     "value": {
+      "label": "Meet the Vendors, 2026 season",
+      "start_date": "2026-05-22",
+      "end_date": "2026-09-11"
+     },
+     "source_ids": [
+      "lenox"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "roster": [
+     {
+      "value": {
+       "name": "Common Hands Farm",
+       "categories": [
+        "Produce and dairy"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "common-hands-farm"
+     },
+     {
+      "value": {
+       "name": "Mulholland Farms",
+       "categories": [
+        "Produce and dairy"
+       ],
+       "attendance_note": "July 3 to Sept 4"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "mulholland-farms"
+     },
+     {
+      "value": {
+       "name": "Hickory Creek Farm",
+       "categories": [
+        "Produce and dairy"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "hickory-creek-farm"
+     },
+     {
+      "value": {
+       "name": "Cure for Boredom Farm",
+       "categories": [
+        "Produce and dairy"
+       ],
+       "attendance_note": "July 31 to Sept 11"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cure-for-boredom-farm"
+     },
+     {
+      "value": {
+       "name": "Livingstone Mycology",
+       "categories": [
+        "Produce and dairy"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "livingstone-mycology"
+     },
+     {
+      "value": {
+       "name": "High Lawn Farms",
+       "categories": [
+        "Produce and dairy"
+       ],
+       "attendance_note": "Every other week"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "high-lawn-farms"
+     },
+     {
+      "value": {
+       "name": "Baked! Pastries & More",
+       "categories": [
+        "Bread and pastries"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "baked-pastries-more"
+     },
+     {
+      "value": {
+       "name": "Found Bread",
+       "categories": [
+        "Bread and pastries"
+       ],
+       "attendance_note": "July 3 and July 17"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "found-bread"
+     },
+     {
+      "value": {
+       "name": "Auntie Elsie's Oatmeal Crisps",
+       "categories": [
+        "Bread and pastries"
+       ],
+       "attendance_note": "May 22, June 5 to 19, July 3, July 17, Aug 14, Aug 28 to Sept 4"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "auntie-elsie-s-oatmeal-crisps"
+     },
+     {
+      "value": {
+       "name": "Hot Plate Brewing Co.",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "hot-plate-brewing-co"
+     },
+     {
+      "value": {
+       "name": "BerkshireSci Biscuit Co.",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "berkshiresci-biscuit-co"
+     },
+     {
+      "value": {
+       "name": "The Wee Chickpea",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "the-wee-chickpea"
+     },
+     {
+      "value": {
+       "name": "Les Collines",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "les-collines"
+     },
+     {
+      "value": {
+       "name": "La Chalupa y La Enchilada",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "la-chalupa-y-la-enchilada"
+     },
+     {
+      "value": {
+       "name": "Grampie Dog House",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "grampie-dog-house"
+     },
+     {
+      "value": {
+       "name": "Mill Brook Sugarhouse",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "mill-brook-sugarhouse"
+     },
+     {
+      "value": {
+       "name": "Naji's Mediterranean",
+       "categories": [
+        "Prepared foods and ready to eat"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "naji-s-mediterranean"
+     },
+     {
+      "value": {
+       "name": "Boulder Patch Farm",
+       "categories": [
+        "Wellness"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "boulder-patch-farm"
+     },
+     {
+      "value": {
+       "name": "Calcite & Comfrey",
+       "categories": [
+        "Wellness"
+       ],
+       "attendance_note": "May 22, June 26, July 17, Aug 14 and Sept 11"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "calcite-comfrey"
+     },
+     {
+      "value": {
+       "name": "Dr. Bob's Elixir",
+       "categories": [
+        "Wellness"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dr-bob-s-elixir"
+     },
+     {
+      "value": {
+       "name": "Veros Apothecary",
+       "categories": [
+        "Wellness"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "veros-apothecary"
+     },
+     {
+      "value": {
+       "name": "JK Custom Furniture",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "jk-custom-furniture"
+     },
+     {
+      "value": {
+       "name": "Dagu Woodcraft",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "May 22 to July 5"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dagu-woodcraft"
+     },
+     {
+      "value": {
+       "name": "Herzfeld Pottery Studio",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "herzfeld-pottery-studio"
+     },
+     {
+      "value": {
+       "name": "Funky Sharky",
+       "categories": [
+        "Artisans"
+       ]
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "funky-sharky"
+     },
+     {
+      "value": {
+       "name": "Just Nice Wood",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "May 22, July 3 and Sept 4"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "just-nice-wood"
+     },
+     {
+      "value": {
+       "name": "Shire Flowers",
+       "categories": [
+        "Flowers"
+       ],
+       "attendance_note": "Full season"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "shire-flowers"
+     },
+     {
+      "value": {
+       "name": "Beetle Buds Native Gardens",
+       "categories": [
+        "Native plants"
+       ],
+       "attendance_note": "May 29, June 12, July 3 and Sept 3"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "beetle-buds-native-gardens"
+     },
+     {
+      "value": {
+       "name": "Second Chance Composting",
+       "categories": [
+        "Compost"
+       ],
+       "attendance_note": "May 29, June 5, June 26, July 3, July 31, Aug 7, Aug 28 and Sept 4"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "second-chance-composting"
+     },
+     {
+      "value": {
+       "name": "Aaron Meshan",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "May 22, July 3, July 17, July 24, Aug 7 and Aug 28"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "aaron-meshan"
+     },
+     {
+      "value": {
+       "name": "Ellen Miller-Wolfe",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "Aug 14, 21 and 28"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "ellen-miller-wolfe"
+     },
+     {
+      "value": {
+       "name": "Gina Amoroso (Hettle)",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "June 19, July 3, July 17 and Aug 14"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "gina-amoroso-hettle"
+     },
+     {
+      "value": {
+       "name": "K's Kreations",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "June 12, July 10 and Aug 21"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "k-s-kreations"
+     },
+     {
+      "value": {
+       "name": "Mary Angela Talbot",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "July 24, Aug 14 and Aug 21"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "mary-angela-talbot"
+     },
+     {
+      "value": {
+       "name": "Wendling Willows Basketry",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "June 12, July 31 and Aug 28"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "wendling-willows-basketry"
+     },
+     {
+      "value": {
+       "name": "Berkshire Magnets and Ornaments",
+       "categories": [
+        "Artisans"
+       ],
+       "attendance_note": "July 10 and Aug 7"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "berkshire-magnets-and-ornaments"
+     }
+    ]
+   },
+   "products": {
+    "categories": [
+     {
+      "value": {
+       "code": "fresh_produce"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "produce"
+     },
+     {
+      "value": {
+       "code": "dairy",
+       "label": "Milk, cream, butter, cheese and ice cream"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dairy"
+     },
+     {
+      "value": {
+       "code": "eggs"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "eggs"
+     },
+     {
+      "value": {
+       "code": "baked_goods",
+       "label": "Bread and pastries"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "baked-goods"
+     },
+     {
+      "value": {
+       "code": "prepared_food"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "prepared-food"
+     },
+     {
+      "value": {
+       "code": "preserves",
+       "label": "Jams, jellies and preserves"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "preserves"
+     },
+     {
+      "value": {
+       "code": "flowers",
+       "label": "Cut flower bouquets"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "flowers"
+     },
+     {
+      "value": {
+       "code": "crafts"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "crafts"
+     },
+     {
+      "value": {
+       "code": "honey"
+      },
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "honey"
+     }
+    ],
+    "items": [
+     {
+      "value": "Vegetables and herbs",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "vegetables-and-herbs"
+     },
+     {
+      "value": "Gourmet mushrooms",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "gourmet-mushrooms"
+     },
+     {
+      "value": "Cheese",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cheese"
+     },
+     {
+      "value": "Milk, cream, butter and ice cream",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "milk-cream-butter-ice-cream"
+     },
+     {
+      "value": "Dry beans, small-batch tofu and ferments",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dry-beans-tofu-ferments"
+     },
+     {
+      "value": "Sourdough, focaccia and challah",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sourdough-focaccia"
+     },
+     {
+      "value": "Maple syrup, maple sugar and maple granola",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "maple"
+     },
+     {
+      "value": "Beer and seltzer 4-packs",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "beer-and-seltzer"
+     },
+     {
+      "value": "Dog biscuits and jerky",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dog-treats"
+     },
+     {
+      "value": "Lebanese dishes and baklava",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "lebanese-food"
+     },
+     {
+      "value": "Mexican food",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "mexican-food"
+     },
+     {
+      "value": "Falafel sandwiches and homemade pita",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "falafel"
+     },
+     {
+      "value": "Native perennials, shrubs, trees and seed packs",
+      "source_ids": [
+       "lenox"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "native-plants"
+     }
+    ]
+   },
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "arrival",
+      "answer": "The 2026 market ran Fridays 11am to 3pm, May 22 to September 11, at St. Ann's Parish, 134 Main St., rain or shine."
+     },
+     "source_ids": [
+      "lenox"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-season"
+    },
+    {
+     "value": {
+      "topic": "products",
+      "answer": "Farms bring vegetables, herbs, mushrooms, eggs, cheese and dairy. Other vendors sell bread and pastries, maple syrup, preserves, prepared food, flowers, body care and crafts."
+     },
+     "source_ids": [
+      "lenox"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-products"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "lenox",
+    "url": "https://lenox.org/lenox-farmers-market/",
+    "title": "Lenox Farmers Market",
+    "fields": [
+     "first_party.operations",
+     "first_party.access",
+     "first_party.amenities",
+     "first_party.policies",
+     "first_party.vendors",
+     "first_party.products",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ },
+ {
+  "id": "gov:ca_on_farmers_markets:282",
+  "market_name": "Goderich Sunday Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "products": {
+    "categories": [
+     {
+      "value": {
+       "code": "crafts",
+       "label": "Artisan products and homemade crafts"
+      },
+      "source_ids": [
+       "explore-goderich"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "crafts"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Antiques and collectibles"
+      },
+      "source_ids": [
+       "explore-goderich"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "antiques"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Homemade treats"
+      },
+      "source_ids": [
+       "explore-goderich"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "treats"
+     }
+    ]
+   }
+  },
+  "sources": [
+   {
+    "id": "explore-goderich",
+    "url": "https://www.exploregoderich.ca/what-s-happening/markets/sunday-markets/",
+    "title": "Sunday Markets | Explore Goderich",
+    "fields": [
+     "first_party.products"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ }
+]

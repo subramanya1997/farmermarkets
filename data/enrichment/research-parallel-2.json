@@ -53401,21 +53401,11 @@
     "verified_at": "2026-08-30",
     "verification_scope": "partial",
     "contact": {
-      "websites": [
-        "http://www.farmersmarketsjc.com/"
-      ],
       "phone_numbers": [
         "949-493-4700"
       ]
     },
     "sources": [
-      {
-        "title": "Old Capistrano Certified Farmers Market (2026) - San Juan Capistrano, CA",
-        "url": "https://nfmd.org/ca/san-juan-capistrano/1011533/",
-        "fields": [
-          "contact.websites"
-        ]
-      },
       {
         "title": "Old Capistrano Certified Farmers’ Market - homesteading.com",
         "url": "https://homesteading.com/directory/farmers-markets/old-capistrano-certified-farmers-market/",
@@ -100822,9 +100812,9 @@
     },
     "operations": {
       "days": [
-        "Every Friday, May 22 through October 2, 2026, 11am-3pm"
+        "Every Friday, May 22 through September 11, 2026, 11am-3pm"
       ],
-      "season": "May 22 through October 2, 2026"
+      "season": "May 22 through September 11, 2026"
     },
     "sources": [
       {
@@ -115635,9 +115625,6 @@
       "websites": [
         "https://www.roseparkdc.org/farmers-market-2026/"
       ],
-      "phone_numbers": [
-        "(202) 999 - 9999"
-      ],
       "social_media": [
         "https://www.facebook.com/RoseParkFarmersMarket",
         "https://www.instagram.com/roseparkfarmersmarket"
@@ -115654,8 +115641,7 @@
         "title": "Farmers Market! - Friends of Rose Park, Washington DC",
         "url": "https://www.roseparkdc.org/farmers-market-2026/",
         "fields": [
-          "contact.websites",
-          "contact.phone_numbers"
+          "contact.websites"
         ]
       },
       {
@@ -142029,50 +142015,6 @@
     ]
   },
   {
-    "id": "312490",
-    "market_name": "Troutdale Farmers’ & Artists’ Market",
-    "verified_at": "2026-08-30",
-    "verification_scope": "partial",
-    "contact": {
-      "websites": [
-        "https://troutdalefarmmarket.com/"
-      ],
-      "phone_numbers": [
-        "503-433-5388"
-      ],
-      "social_media": [
-        "https://www.instagram.com/troutdalefarmmarket/"
-      ]
-    },
-    "operations": {
-      "days": [
-        "Friday: 2:00 PM – 7:00 PM",
-        "Saturday: 10:00 AM – 4:00 PM",
-        "Sunday: 10:00 AM – 4:00 PM"
-      ],
-      "season": "Year-round"
-    },
-    "sources": [
-      {
-        "title": "Troutdale Farm Market - Travel Oregon",
-        "url": "https://traveloregon.com/things-to-do/oregon-attractions/shopping/troutdale-farm-market",
-        "fields": [
-          "contact.websites",
-          "operations.season"
-        ]
-      },
-      {
-        "title": "troutdalefarmmarket.com",
-        "url": "https://troutdalefarmmarket.com/",
-        "fields": [
-          "contact.phone_numbers",
-          "contact.social_media",
-          "operations.days"
-        ]
-      }
-    ]
-  },
-  {
     "id": "312494",
     "market_name": "Wallowa County Farmers’ Market",
     "verified_at": "2026-08-30",
@@ -142203,9 +142145,6 @@
     "verified_at": "2026-08-30",
     "verification_scope": "partial",
     "contact": {
-      "websites": [
-        "http://www.abingdonfarmersmarket.com/"
-      ],
       "phone_numbers": [
         "570-618-3877"
       ],
@@ -142221,7 +142160,6 @@
         "title": "Abington Winter Farm Market - Homesteading.com",
         "url": "https://homesteading.com/directory/farmers-markets/abington-winter-farm-market/",
         "fields": [
-          "contact.websites",
           "contact.phone_numbers"
         ]
       },

@@ -14200,6 +14200,78 @@
           ]
         }
       ]
+    },
+    {
+      "index": 3820,
+      "id": 310652,
+      "path": "location.address",
+      "value": "St. Ann's Parish, 134 Main St, Lenox, MA 01240"
+    },
+    {
+      "index": 3820,
+      "id": 310652,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -73.2826221,
+        "latitude": 42.3613072
+      }
+    },
+    {
+      "index": 2152,
+      "id": 308984,
+      "path": "location.address",
+      "value": "Creekwalk Plaza, Andrews Park, Vacaville, CA 95688"
+    },
+    {
+      "index": 2152,
+      "id": 308984,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -121.9860064,
+        "latitude": 38.3577473
+      }
+    },
+    {
+      "index": 8685,
+      "id": "gov:us_ny_farmers_markets:4fb37cc5b851e135",
+      "path": "location.address",
+      "value": "2046-2050 Fulton Street"
+    },
+    {
+      "index": 8685,
+      "id": "gov:us_ny_farmers_markets:4fb37cc5b851e135",
+      "path": "location.description",
+      "value": "2046-2050 Fulton St Brooklyn"
+    },
+    {
+      "index": 1614,
+      "id": 308444,
+      "path": "location.address",
+      "value": "1 Sundial Circle, Carefree, AZ 85377"
+    },
+    {
+      "index": 1676,
+      "id": 308507,
+      "path": "location.address",
+      "value": "3502 East Cactus Road Phoenix, AZ 85032"
+    },
+    {
+      "index": 8449,
+      "id": "gov:us_dc_farmers_markets:{9CD2DC31-96B4-4DDD-9399-749D45A33EA3}",
+      "path": "location.address",
+      "value": "3400 Connecticut Ave NW, Washington, DC 20008"
+    },
+    {
+      "index": 3077,
+      "id": 309909,
+      "path": "location.address",
+      "value": "460 Lake St., Oak Park, IL 60302"
+    },
+    {
+      "index": 3077,
+      "id": 309909,
+      "path": "location.city",
+      "value": "Oak Park"
     }
   ]
 }

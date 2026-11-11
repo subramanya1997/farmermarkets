@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { CalendarHeart, Check, MessageCircleQuestion, SearchX, X } from "lucide-react";
 import { posthogRequestHeaders, trackEvent } from "@/lib/analytics";
+import { newsletterAskVariant } from "@/lib/experiments";
 import { displaySerif } from "@/lib/fonts";
 import { canShowPrompt, markPromptOutcome, markPromptShown } from "@/lib/promptBudget";
 import {
@@ -16,6 +17,8 @@ import {
   type PromptContext,
   type SignalDetail,
 } from "@/lib/visitSignals";
+import { CITY_NEEDS, MARKET_NEEDS, type VisitorNeed } from "@/lib/visitorNeeds";
+import { PromptSubscribe } from "./PromptSubscribe";
 
 /**
  * Small questions that appear only after a visitor has shown why they came,
@@ -29,8 +32,12 @@ import {
  *   Ask if the listing was right; a "no" becomes a correction to review.
  * - trip_planner: 3+ markets viewed, or 2+ acted on. Offer the newsletter,
  *   unless the page already shows its own signup (two asks is the cap).
- * - unmet_need: 35s of reading, scrolled to the end, no action. Ask what
- *   was missing.
+ * - unmet_need: 20s of reading, scrolled halfway, no action. Ask what was
+ *   missing. The same question also sits in the page (PageQuestion.tsx).
+ *
+ * The newsletter ask is under test (src/lib/experiments.ts): one arm offers
+ * it after a Website / Directions / Phone tap in place of listing_check,
+ * another offers it right after an unmet_need answer.
  *
  * Frequency rules live in src/lib/promptBudget.ts. Every prompt reports
  * "Prompt Shown", "Prompt Answered" or "Prompt Dismissed" with a `prompt`
@@ -41,16 +48,18 @@ import {
 const LISTING_CHECK_FALLBACK_MS = 15_000;
 const LISTING_CHECK_MIN_AWAY_MS = 3_000;
 const TRIP_PLANNER_DELAY_MS = 5_000;
-const UNMET_NEED_DWELL_S = 35;
-const UNMET_NEED_SCROLL = 0.7;
+// Search visitors read for about 20 seconds; the old 35s / 70% bar meant the
+// question reached roughly 50 people in three weeks.
+const UNMET_NEED_DWELL_S = 20;
+const UNMET_NEED_SCROLL = 0.5;
 
 type Active =
   | { id: "search_miss"; query: string; searchSource: string }
   | { id: "listing_check"; slug: string; name: string }
-  | { id: "trip_planner"; place?: string }
+  | { id: "trip_planner"; place?: string; placement: "prompt" | "after_action" }
   | { id: "unmet_need"; context: PromptContext };
 
-type Step = "ask" | "detail" | "done";
+type Step = "ask" | "detail" | "subscribe" | "done";
 
 const LISTING_ISSUES = [
   { id: "accurate", label: "Yes, all good" },
@@ -59,21 +68,10 @@ const LISTING_ISSUES = [
   { id: "other", label: "Something else" },
 ] as const;
 
-const MARKET_NEEDS = [
-  { id: "open_this_week", label: "If it's open this week" },
-  { id: "vendors", label: "What the vendors sell" },
-  { id: "payment", label: "SNAP/EBT or payment" },
-  { id: "getting_there", label: "Parking or getting there" },
-  { id: "other", label: "Something else" },
-] as const;
-
-const CITY_NEEDS = [
-  { id: "open_today", label: "A market open today" },
-  { id: "snap", label: "Markets taking SNAP/EBT" },
-  { id: "winter", label: "Winter or indoor markets" },
-  { id: "produce", label: "Specific produce" },
-  { id: "other", label: "Something else" },
-] as const;
+/** True while the in-page version of the question is on screen. */
+function pageQuestionInView(): boolean {
+  return typeof document !== "undefined" && document.querySelector('[data-page-question][data-in-view="true"]') !== null;
+}
 
 /** True when the page on screen already renders a NewsletterSignup. */
 function pageHasSignup(): boolean {
@@ -97,9 +95,8 @@ export function VisitorPrompts() {
   const [active, setActive] = useState<Active | null>(null);
   const [step, setStep] = useState<Step>("ask");
   const [note, setNote] = useState("");
-  const [email, setEmail] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [need, setNeed] = useState<VisitorNeed | null>(null);
+  const [subscribed, setSubscribed] = useState(false);
 
   const activeRef = useRef<Active | null>(null);
   const pendingCheck = useRef<{ slug: string; name: string } | null>(null);
@@ -113,7 +110,8 @@ export function VisitorPrompts() {
     setActive(next);
     setStep("ask");
     setNote("");
-    setError(null);
+    setNeed(null);
+    setSubscribed(false);
     trackEvent("Prompt Shown", { prompt: next.id, trigger });
   }, []);
 
@@ -131,6 +129,11 @@ export function VisitorPrompts() {
     if (!current) return;
     markPromptOutcome(current.id, "answered");
     trackEvent("Prompt Answered", { prompt: current.id, answer: value, ...extra });
+  }, []);
+
+  // Put this browser in its newsletter-ask arm before any event is sent.
+  useEffect(() => {
+    newsletterAskVariant();
   }, []);
 
   // A new page starts fresh: drop a prompt that belonged to the old one.
@@ -166,7 +169,7 @@ export function VisitorPrompts() {
             if (pendingCheck.current && hiddenAt.current === null) {
               const target = pendingCheck.current;
               pendingCheck.current = null;
-              show({ id: "listing_check", ...target }, "outcome_no_return");
+              showAfterOutcome(target, "outcome_no_return");
             }
           }, LISTING_CHECK_FALLBACK_MS);
         }
@@ -174,6 +177,14 @@ export function VisitorPrompts() {
 
       if (name === "Market Detail Viewed" || OUTCOME_EVENTS.has(name)) considerTripPlanner();
     };
+
+    // They just got what they came for. Most arms ask if the listing was
+    // right; the after_action arm offers the newsletter instead.
+    function showAfterOutcome(target: { slug: string; name: string }, trigger: string) {
+      if (newsletterAskVariant() !== "after_action") return show({ id: "listing_check", ...target }, trigger);
+      const now = currentContext();
+      show({ id: "trip_planner", place: now?.kind === "market" ? now.cityName : undefined, placement: "after_action" }, trigger);
+    }
 
     function considerTripPlanner() {
       const visit = visitState();
@@ -184,7 +195,7 @@ export function VisitorPrompts() {
         if (pageHasSignup()) return; // one newsletter ask per page is enough
         const now = currentContext();
         const place = now?.kind === "market" ? now.cityName : now?.kind === "city" ? now.name : undefined;
-        show({ id: "trip_planner", place }, visit.outcomeMarkets.length >= 2 ? "two_outcomes" : "three_markets");
+        show({ id: "trip_planner", place, placement: "prompt" }, visit.outcomeMarkets.length >= 2 ? "two_outcomes" : "three_markets");
       }, TRIP_PLANNER_DELAY_MS);
     }
 
@@ -199,7 +210,7 @@ export function VisitorPrompts() {
         const target = pendingCheck.current;
         pendingCheck.current = null;
         window.clearTimeout(fallbackTimer);
-        show({ id: "listing_check", ...target }, "returned_after_outcome");
+        showAfterOutcome(target, "returned_after_outcome");
       }
     };
 
@@ -232,7 +243,8 @@ export function VisitorPrompts() {
     const tick = window.setInterval(() => {
       if (document.visibilityState !== "visible" || !context) return;
       dwell += 1;
-      if (dwell >= UNMET_NEED_DWELL_S && maxScroll >= UNMET_NEED_SCROLL && !actedOnPage.current) {
+      // Wait while the in-page question is on screen: one ask at a time.
+      if (dwell >= UNMET_NEED_DWELL_S && maxScroll >= UNMET_NEED_SCROLL && !actedOnPage.current && !pageQuestionInView()) {
         window.clearInterval(tick);
         show({ id: "unmet_need", context }, "read_without_action");
       }
@@ -251,7 +263,7 @@ export function VisitorPrompts() {
   useEffect(() => {
     if (!active) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") close(step === "done" ? "silent" : "dismissed");
+      if (event.key === "Escape") close(step === "done" || step === "subscribe" ? "silent" : "dismissed");
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -266,34 +278,9 @@ export function VisitorPrompts() {
 
   if (!active) return null;
 
-  const finish = () => {
-    setBusy(false);
-    setStep("done");
-  };
-
-  async function onSubscribe(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (busy) return;
-    setBusy(true);
-    setError(null);
-    try {
-      const response = await fetch("/api/newsletter/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "prompt", path: window.location.pathname }),
-      });
-      if (!response.ok) {
-        const body = (await response.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(body?.error || "Something went wrong. Please try again.");
-      }
-      answer("subscribed");
-      trackEvent("Newsletter Signup Submitted", { source: "prompt", has_zip: false });
-      finish();
-    } catch (caught) {
-      setBusy(false);
-      setError((caught as Error).message);
-    }
-  }
+  const finish = () => setStep("done");
+  // After an unmet_need answer, the after_answer arm offers the newsletter.
+  const finishNeed = () => setStep(newsletterAskVariant() === "after_answer" ? "subscribe" : "done");
 
   let icon: ReactNode;
   let eyebrow: string;
@@ -387,49 +374,48 @@ export function VisitorPrompts() {
       step === "done" ? (
         <Done>Check your inbox for a confirmation link.</Done>
       ) : (
-        <form onSubmit={onSubscribe}>
-          <p className="mb-3 text-sm text-zinc-600 dark:text-zinc-400">
-            Market days near {active.place ?? "you"} and what&apos;s in season, at most once a week.
-          </p>
-          <div className="flex gap-2">
-            <label className="sr-only" htmlFor="prompt-email">Email address</label>
-            <input
-              id="prompt-email"
-              type="email"
-              required
-              autoComplete="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="h-11 min-w-0 flex-1 rounded-xl border border-zinc-300 bg-white px-3 text-sm outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
-            />
-            <Primary type="submit" disabled={busy}>{busy ? "Sending" : "Subscribe"}</Primary>
-          </div>
-          {error && <p role="alert" className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
-        </form>
+        <PromptSubscribe
+          place={active.place}
+          placement={active.placement}
+          onSubscribed={() => {
+            answer("subscribed");
+            finish();
+          }}
+        />
       );
   } else {
     const isMarket = active.context.kind === "market";
     const needs = isMarket ? MARKET_NEEDS : CITY_NEEDS;
+    const place = active.context.kind === "market" ? active.context.cityName : active.context.name;
     icon = <MessageCircleQuestion className="h-4 w-4" />;
     eyebrow = "Help us improve this page";
-    title = "What were you hoping to find?";
+    title = step === "subscribe" ? "Thanks, noted" : step === "detail" && need?.followUp ? need.followUp : "What were you hoping to find?";
     body =
       step === "done" ? (
-        <Done>Thanks. We read every answer.</Done>
+        <Done>{subscribed ? "Check your inbox for a confirmation link." : "Thanks. We read every answer."}</Done>
+      ) : step === "subscribe" ? (
+        <PromptSubscribe
+          place={place}
+          placement="after_answer"
+          onSubscribed={() => {
+            setSubscribed(true);
+            finish();
+          }}
+        />
       ) : step === "detail" ? (
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            answer("other", { has_note: note.trim() ? "yes" : "no" });
+            // A follow-up chip was already recorded when it was tapped.
+            if (!need?.followUp) answer("other", { has_note: note.trim() ? "yes" : "no" });
             if (note.trim()) {
               void postSubmission({
                 type: "contact",
                 ...(active.context.kind === "market" ? { market_slug: active.context.slug } : {}),
-                payload: { source: "unmet_need", page_path: window.location.pathname, note: note.trim().slice(0, 500) },
+                payload: { source: "unmet_need", need: need?.id ?? "other", page_path: window.location.pathname, note: note.trim().slice(0, 500) },
               });
             }
-            finish();
+            finishNeed();
           }}
         >
           <textarea
@@ -438,7 +424,7 @@ export function VisitorPrompts() {
             maxLength={500}
             rows={3}
             autoFocus
-            placeholder="Tell us in a few words"
+            placeholder={need?.followUp ? "For example: eggs, tomatoes, a bakery" : "Tell us in a few words"}
             className="w-full resize-none rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
           />
           <Actions>
@@ -447,16 +433,18 @@ export function VisitorPrompts() {
         </form>
       ) : (
         <div className="flex flex-wrap gap-2">
-          {needs.map((need) => (
+          {needs.map((option) => (
             <Chip
-              key={need.id}
+              key={option.id}
               onClick={() => {
-                if (need.id === "other") return setStep("detail");
-                answer(need.id);
-                finish();
+                setNeed(option);
+                if (option.id === "other") return setStep("detail");
+                answer(option.id);
+                if (option.followUp) return setStep("detail");
+                finishNeed();
               }}
             >
-              {need.label}
+              {option.label}
             </Chip>
           ))}
         </div>
@@ -471,7 +459,7 @@ export function VisitorPrompts() {
     >
       <button
         type="button"
-        onClick={() => close(step === "done" ? "silent" : "dismissed")}
+        onClick={() => close(step === "done" || step === "subscribe" ? "silent" : "dismissed")}
         className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
       >
         <X className="h-4 w-4" />

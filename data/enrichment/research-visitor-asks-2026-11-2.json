@@ -1,0 +1,899 @@
+[
+  {
+    "id": "gov:us_ny_farmers_markets:4fb37cc5b851e135",
+    "market_name": "Saratoga Farm Stand",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "The Campaign Against Hunger",
+          "source_ids": [
+            "tcah-markets"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "season": {
+          "value": {
+            "kind": "annual_range",
+            "start": {
+              "month": 8
+            },
+            "end": {
+              "month": 11
+            }
+          },
+          "source_ids": [
+            "tcah-markets"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "payments": {
+        "methods": [
+          {
+            "value": {
+              "code": "cash"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "cash"
+          },
+          {
+            "value": {
+              "code": "credit_card",
+              "label": "Credit cards"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "credit-card"
+          },
+          {
+            "value": {
+              "code": "debit_card",
+              "label": "Debit cards"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "debit-card"
+          },
+          {
+            "value": {
+              "code": "market_token",
+              "label": "Market tokens"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "market-tokens"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Cash App"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "cash-app"
+          }
+        ],
+        "assistance": [
+          {
+            "value": {
+              "code": "snap_ebt",
+              "name": "EBT / SNAP"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "snap-ebt"
+          },
+          {
+            "value": {
+              "code": "fmnp",
+              "name": "FMNP (Farmers Market Nutrition Program)"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "fmnp"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce",
+              "label": "Fresh, seasonal fruits and vegetables"
+            },
+            "source_ids": [
+              "tcah-markets"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "The Saratoga Farm market runs every Saturday from 10am to 2pm, August through November, at 2046-2050 Fulton St, Brooklyn."
+          },
+          "source_ids": [
+            "tcah-markets"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-hours"
+        },
+        {
+          "value": {
+            "topic": "payments",
+            "answer": "The market is SNAP approved and takes EBT/SNAP, FMNP checks, cash, credit and debit cards, market tokens and Cash App."
+          },
+          "source_ids": [
+            "tcah-markets"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-payments"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "tcah-markets",
+        "url": "https://www.tcahfarms.org/farmers-markets/",
+        "title": "Farmers Markets - TCAH Urban Agro-Ecological Centers",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": 308981,
+    "market_name": "VA Palo Alto Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-05-06",
+            "end_date": "2026-11-04"
+          },
+          "source_ids": [
+            "pcfma-va"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "vendors": {
+        "roster_context": {
+          "value": {
+            "label": "Farmers and producers listed on the market page for the 2026 season",
+            "as_of": "2026-11-10"
+          },
+          "source_ids": [
+            "pcfma-va"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster": [
+          {
+            "value": {
+              "name": "Barona Herb LLC"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "barona-herb-llc"
+          },
+          {
+            "value": {
+              "name": "Brothers products S.F."
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "brothers-products-s-f"
+          },
+          {
+            "value": {
+              "name": "Cabalen Sweet & Savory"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "cabalen-sweet-savory"
+          },
+          {
+            "value": {
+              "name": "California Bakeshop"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "california-bakeshop"
+          },
+          {
+            "value": {
+              "name": "Caro Corn and Family"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "caro-corn-and-family"
+          },
+          {
+            "value": {
+              "name": "Celio Farms",
+              "categories": [
+                "Raspberries",
+                "Blackberries",
+                "Strawberries",
+                "Figs",
+                "Blueberries"
+              ]
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "celio-farms"
+          },
+          {
+            "value": {
+              "name": "Dave's Backyard Bees",
+              "categories": [
+                "Honey"
+              ]
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "dave-s-backyard-bees"
+          },
+          {
+            "value": {
+              "name": "Donna's Tamales"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "donna-s-tamales"
+          },
+          {
+            "value": {
+              "name": "Dumpling King"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "dumpling-king"
+          },
+          {
+            "value": {
+              "name": "FlipFresh"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "flipfresh"
+          },
+          {
+            "value": {
+              "name": "Jaden's Kettle Corn"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "jaden-s-kettle-corn"
+          },
+          {
+            "value": {
+              "name": "Live Farm"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "live-farm"
+          },
+          {
+            "value": {
+              "name": "Napoli foods DBA Pane e Pomodoro"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "napoli-foods-dba-pane-e-pomodoro"
+          },
+          {
+            "value": {
+              "name": "Resendiz Farms",
+              "categories": [
+                "Oranges",
+                "Mandarin oranges",
+                "Tangerines",
+                "Limes",
+                "Lemons",
+                "Persimmons",
+                "Pears",
+                "Blackberries",
+                "Pomegranates",
+                "Tomatillos",
+                "Pluots",
+                "Onions",
+                "Watermelon",
+                "Grapes",
+                "Figs",
+                "Apricots",
+                "Almonds",
+                "Melons",
+                "Tomatoes",
+                "Plums",
+                "Peaches",
+                "Nectarines",
+                "Cherries"
+              ]
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "resendiz-farms"
+          },
+          {
+            "value": {
+              "name": "Salviricans"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "salviricans"
+          },
+          {
+            "value": {
+              "name": "The Fruit Tree"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "the-fruit-tree"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce",
+              "label": "Fruit and vegetables"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          },
+          {
+            "value": {
+              "code": "honey"
+            },
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "honey"
+          }
+        ],
+        "items": [
+          {
+            "value": "Strawberries",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "strawberries"
+          },
+          {
+            "value": "Raspberries",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "raspberries"
+          },
+          {
+            "value": "Blueberries",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "blueberries"
+          },
+          {
+            "value": "Figs",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "figs"
+          },
+          {
+            "value": "Citrus",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "citrus"
+          },
+          {
+            "value": "Persimmons",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "persimmons"
+          },
+          {
+            "value": "Pomegranates",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "pomegranates"
+          },
+          {
+            "value": "Stone fruit",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "stone-fruit"
+          },
+          {
+            "value": "Tomatoes",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "tomatoes"
+          },
+          {
+            "value": "Almonds",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "almonds"
+          },
+          {
+            "value": "Honey",
+            "source_ids": [
+              "pcfma-va"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "honey"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "updates",
+            "answer": "The 2026 season ran Wednesdays from 9:30am to 1:30pm, May 6 through November 4, at 3801 Miranda Ave."
+          },
+          "source_ids": [
+            "pcfma-va"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-season"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "pcfma-va",
+        "url": "https://www.pcfma.org/market/va-palo-alto-farmers-market",
+        "title": "VA Palo Alto Farmers' Market | PCFMA",
+        "fields": [
+          "first_party.operations",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": 309647,
+    "market_name": "Tifton Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-10-03",
+            "end_date": "2026-11-21"
+          },
+          "source_ids": [
+            "tifton-about"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce",
+              "label": "Seasonal produce"
+            },
+            "source_ids": [
+              "tifton-home"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          },
+          {
+            "value": {
+              "code": "meat",
+              "label": "Meats"
+            },
+            "source_ids": [
+              "tifton-home"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "meat"
+          },
+          {
+            "value": {
+              "code": "crafts",
+              "label": "Handmade crafts"
+            },
+            "source_ids": [
+              "tifton-home"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "crafts"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Natural beauty products"
+            },
+            "source_ids": [
+              "tifton-home"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "beauty"
+          }
+        ]
+      },
+      "events": [
+        {
+          "value": {
+            "name": "Tifton Farmers Market Holiday Market",
+            "kind": "special_market",
+            "start": "2026-11-21",
+            "local_hours": {
+              "opens": "09:00",
+              "closes": "12:00"
+            },
+            "venue": "Downtown Tifton on 1st Street Extension (GPS: 211 Main Street S)"
+          },
+          "source_ids": [
+            "tifton-holiday"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "holiday-market-2026"
+        }
+      ],
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "The fall market runs every Saturday from 9am to noon in Downtown Tifton on 1st Street Extension, October 3 through November 21, 2026."
+          },
+          "source_ids": [
+            "tifton-about"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-fall-season"
+        },
+        {
+          "value": {
+            "topic": "updates",
+            "answer": "The Holiday Market is Saturday, November 21, 2026, 9am to 12pm, in Downtown Tifton on 1st Street Extension."
+          },
+          "source_ids": [
+            "tifton-holiday"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-holiday-market"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "tifton-about",
+        "url": "https://tiftonfarmersmarket.com/about-us",
+        "title": "About Us | Tifton Farmers Market",
+        "fields": [
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "tifton-home",
+        "url": "https://tiftonfarmersmarket.com/",
+        "title": "Tifton Farmers Market",
+        "fields": [
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "tifton-holiday",
+        "url": "https://img1.wsimg.com/blobby/go/05df3e4b-aff8-4e3e-ab89-f505365668bd/downloads/3a4d08ea-388c-45e3-a921-a635815b69c1/2026%20Holiday%20Vendor%20app%20and%20guidelines.pdf?ver=1792116644295",
+        "title": "Tifton Farmers Market Holiday Market 2026 (vendor application and guidelines)",
+        "fields": [
+          "first_party.events",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": "gov:ca_on_farmers_markets:139",
+    "market_name": "Listowel Farm & Maker Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-05-30",
+            "end_date": "2026-10-03"
+          },
+          "source_ids": [
+            "listowel-home"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "events": [
+        {
+          "value": {
+            "name": "Listowel Night Market",
+            "kind": "special_market",
+            "start": "2026-08-14",
+            "local_hours": {
+              "opens": "16:00",
+              "closes": "20:00"
+            },
+            "venue": "Ward & Uptigrove Parking Lot, 145 Main Street E, Listowel",
+            "description": "40+ vendors, live music, food trucks, face painting and kids activities."
+          },
+          "source_ids": [
+            "listowel-events"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "night-market-2026"
+        },
+        {
+          "value": {
+            "name": "Listowel Spooktacular Night Market",
+            "kind": "special_market",
+            "start": "2026-10-30",
+            "local_hours": {
+              "opens": "16:00",
+              "closes": "21:00"
+            },
+            "venue": "Ward & Uptigrove Parking Lot, 145 Main Street E, Listowel",
+            "description": "Vendors, food trucks, live music and Halloween games and activities."
+          },
+          "source_ids": [
+            "listowel-events"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "spooktacular-night-market-2026"
+        },
+        {
+          "value": {
+            "name": "Listowel Christmas Market",
+            "kind": "special_market",
+            "start": "2026-11-08",
+            "local_hours": {
+              "opens": "10:00",
+              "closes": "14:00"
+            },
+            "venue": "Between the Lines Sports Complex, 275 Rocher Road, Listowel",
+            "description": "80+ vendors, food trucks and Santa."
+          },
+          "source_ids": [
+            "listowel-events"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "christmas-market-2026"
+        }
+      ],
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "The 2026 summer series ran every other Saturday, 9am to 1pm, May 30 to October 3, in the Ward & Uptigrove parking lot at 145 Main Street E."
+          },
+          "source_ids": [
+            "listowel-home"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-summer-series"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "listowel-home",
+        "url": "https://listowelmarket.wixsite.com/2024",
+        "title": "Home | Listowel Farm & Maker Market",
+        "fields": [
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "listowel-events",
+        "url": "https://listowelmarket.wixsite.com/2024/blank-2",
+        "title": "Events | Listowel Farm Market",
+        "fields": [
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": "gov:ca_on_farmers_markets:325",
+    "market_name": "Goderich Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Goderich BIA",
+          "source_ids": [
+            "goderich-faq"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-05-16",
+            "end_date": "2026-10-10"
+          },
+          "source_ids": [
+            "goderich-faq"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "vendors": {
+        "count": {
+          "value": {
+            "value": 50,
+            "qualifier": "approximately, each week"
+          },
+          "source_ids": [
+            "goderich-faq"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "The farmers market runs Saturdays from 8am to 2pm, May 16 through October 10."
+          },
+          "source_ids": [
+            "goderich-faq"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-hours"
+        },
+        {
+          "value": {
+            "topic": "arrival",
+            "answer": "During downtown construction the market sits mainly on the south side of the Square. On weekends with other town events, it moves to South Street to Elgin Street."
+          },
+          "source_ids": [
+            "goderich-faq"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-location"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "goderich-faq",
+        "url": "https://www.goderichbia.ca/markets-frequently-asked-questions/",
+        "title": "Markets Frequently Asked Questions | Goderich BIA",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.vendors",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1987 @@
+[
+ {
+  "id": 308507,
+  "market_name": "Roadrunner Park Farmers Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "identity": {
+    "canonical_name": {
+     "value": "Roadrunner Park Farmers Market",
+     "source_ids": [
+      "rr"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "operations": {
+    "timezone": {
+     "value": "America/Phoenix",
+     "source_ids": [
+      "rr"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "season": {
+     "value": {
+      "kind": "year_round"
+     },
+     "source_ids": [
+      "rr"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "schedules": [
+     {
+      "value": {
+       "label": "Winter hours (October to May)",
+       "recurrence": {
+        "kind": "weekly",
+        "weekdays": [
+         "saturday"
+        ]
+       },
+       "opens": "08:00",
+       "closes": "12:00",
+       "start_date": "2026-10-01",
+       "end_date": "2027-05-31"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "winter-saturday"
+     }
+    ]
+   },
+   "payments": {
+    "assistance": [
+     {
+      "value": {
+       "code": "snap_ebt",
+       "name": "EBT"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "snap-ebt"
+     },
+     {
+      "value": {
+       "code": "fmnp",
+       "name": "AZFMNP/WIC Farmers Market Nutrition Program"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "azfmnp-wic"
+     }
+    ],
+    "incentives": [
+     {
+      "value": {
+       "name": "DUFB (Double Up Food Bucks)",
+       "kind": "match",
+       "eligibility": "SNAP/EBT shoppers",
+       "url": "https://www.pinnacleprevention.org/"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dufb"
+     }
+    ]
+   },
+   "policies": [
+    {
+     "value": {
+      "code": "pets",
+      "rule": "allowed",
+      "note": "Canine \"Good Citizens\" are always welcome."
+     },
+     "source_ids": [
+      "rr"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "pets"
+    }
+   ],
+   "vendors": {
+    "roster_context": {
+     "value": {
+      "label": "Vendor list on the market page, with published return dates",
+      "as_of": "2026-11-10"
+     },
+     "source_ids": [
+      "rr"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "roster": [
+     {
+      "value": {
+       "name": "AREA Farms",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "area-farms"
+     },
+     {
+      "value": {
+       "name": "Arizona Farms Cheese",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "arizona-farms-cheese"
+     },
+     {
+      "value": {
+       "name": "Beetanical Garden",
+       "categories": [
+        "Agricultural",
+        "Local honey"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "beetanical-garden"
+     },
+     {
+      "value": {
+       "name": "BigDaddy's Produce",
+       "categories": [
+        "Agricultural"
+       ],
+       "attendance_note": "Returning July 2027"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "bigdaddy-s-produce"
+     },
+     {
+      "value": {
+       "name": "Black Orchard",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "black-orchard"
+     },
+     {
+      "value": {
+       "name": "Desert Willow Botanicals",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "desert-willow-botanicals"
+     },
+     {
+      "value": {
+       "name": "DuckHead, LLC",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "duckhead-llc"
+     },
+     {
+      "value": {
+       "name": "E & A Compost and Worm Farm",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "e-and-a-compost-and-worm-farm"
+     },
+     {
+      "value": {
+       "name": "Eliza Company Floral",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "eliza-company-floral"
+     },
+     {
+      "value": {
+       "name": "Fishhugger",
+       "categories": [
+        "Agricultural"
+       ],
+       "attendance_note": "Returning 11/14/26"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "fishhugger"
+     },
+     {
+      "value": {
+       "name": "Ginger Skye Farm",
+       "categories": [
+        "Agricultural"
+       ],
+       "attendance_note": "Returning fall 2026"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "ginger-skye-farm"
+     },
+     {
+      "value": {
+       "name": "Happy Valley Acres",
+       "categories": [
+        "Agricultural",
+        "Eggs",
+        "Local fruit"
+       ],
+       "attendance_note": "Returning fall 2026"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "happy-valley-acres"
+     },
+     {
+      "value": {
+       "name": "JH Grassfed Beef",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "jh-grassfed-beef"
+     },
+     {
+      "value": {
+       "name": "Running Waters Homestead",
+       "categories": [
+        "Agricultural"
+       ],
+       "attendance_note": "Returning 11/21/26"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "running-waters-homestead"
+     },
+     {
+      "value": {
+       "name": "Sam's Home",
+       "categories": [
+        "Agricultural",
+        "Seasonal veggies"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sam-s-home"
+     },
+     {
+      "value": {
+       "name": "Seed Soil and Water/Nurturing Nature",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "seed-soil-and-water-nurturing-nature"
+     },
+     {
+      "value": {
+       "name": "St. Anthony's Monastery",
+       "categories": [
+        "Agricultural"
+       ],
+       "attendance_note": "Returning July 2027"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "st-anthony-s-monastery"
+     },
+     {
+      "value": {
+       "name": "Sunnyside Greens",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sunnyside-greens"
+     },
+     {
+      "value": {
+       "name": "TJ's Farms",
+       "categories": [
+        "Agricultural",
+        "Seasonal veggies"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "tj-s-farms"
+     },
+     {
+      "value": {
+       "name": "U-Miao Garden",
+       "categories": [
+        "Agricultural",
+        "Seasonal veggies"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "u-miao-garden"
+     },
+     {
+      "value": {
+       "name": "Vilardi Gardens",
+       "categories": [
+        "Agricultural"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "vilardi-gardens"
+     },
+     {
+      "value": {
+       "name": "Wild Green Roots",
+       "categories": [
+        "Agricultural"
+       ],
+       "attendance_note": "Returning July 2027"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "wild-green-roots"
+     },
+     {
+      "value": {
+       "name": "Absolutely Delightful Honey",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "absolutely-delightful-honey"
+     },
+     {
+      "value": {
+       "name": "Az Bread Co",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "az-bread-co"
+     },
+     {
+      "value": {
+       "name": "Az Pasta Pasta",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Returning 11/21/26"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "az-pasta-pasta"
+     },
+     {
+      "value": {
+       "name": "B Naked Chocolates",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Returning TBD"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "b-naked-chocolates"
+     },
+     {
+      "value": {
+       "name": "Beebti Foods",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Joining 11/28/26"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "beebti-foods"
+     },
+     {
+      "value": {
+       "name": "Big Red's Hot Sauce",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "big-red-s-hot-sauce"
+     },
+     {
+      "value": {
+       "name": "Butter and Barrel",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "butter-and-barrel"
+     },
+     {
+      "value": {
+       "name": "Chandy's Candies",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "chandy-s-candies"
+     },
+     {
+      "value": {
+       "name": "Chews 4 Paws",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "chews-4-paws"
+     },
+     {
+      "value": {
+       "name": "Crafty Kneader",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Returning 11/14/26"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "crafty-kneader"
+     },
+     {
+      "value": {
+       "name": "de casa food crafters",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Returning TBD"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "de-casa-food-crafters"
+     },
+     {
+      "value": {
+       "name": "Dorota Botanical",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Returning TBD; orders can be picked up at the market"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dorota-botanical"
+     },
+     {
+      "value": {
+       "name": "Gabby's Fresh Juices",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "gabby-s-fresh-juices"
+     },
+     {
+      "value": {
+       "name": "Garden Goddess",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "garden-goddess"
+     },
+     {
+      "value": {
+       "name": "Gil's Taste of Taos",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "gil-s-taste-of-taos"
+     },
+     {
+      "value": {
+       "name": "Good Form Foods",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Joining 11/14/26"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "good-form-foods"
+     },
+     {
+      "value": {
+       "name": "Holmes Fruit Pies",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Returning TBD"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "holmes-fruit-pies"
+     },
+     {
+      "value": {
+       "name": "House of Vanilla",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Joining 12/7/26"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "house-of-vanilla"
+     },
+     {
+      "value": {
+       "name": "Kay's Bake Shop",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "kay-s-bake-shop"
+     },
+     {
+      "value": {
+       "name": "King of Tacos",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "king-of-tacos"
+     },
+     {
+      "value": {
+       "name": "Love's Jerky Co",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "love-s-jerky-co"
+     },
+     {
+      "value": {
+       "name": "Masa Mia Cocina",
+       "categories": [
+        "Food"
+       ],
+       "attendance_note": "Returning TBD"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "masa-mia-cocina"
+     },
+     {
+      "value": {
+       "name": "Mr. K's Cookies",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "mr-k-s-cookies"
+     },
+     {
+      "value": {
+       "name": "Noble Bread",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "noble-bread"
+     },
+     {
+      "value": {
+       "name": "Paawprints Dog Treats",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "paawprints-dog-treats"
+     },
+     {
+      "value": {
+       "name": "Paris Rendez-Vous",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "paris-rendez-vous"
+     },
+     {
+      "value": {
+       "name": "Paz Salsa",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "paz-salsa"
+     },
+     {
+      "value": {
+       "name": "RA Seasonings",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "ra-seasonings"
+     },
+     {
+      "value": {
+       "name": "Rae Dawn Jon's Tartar Sauce",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "rae-dawn-jon-s-tartar-sauce"
+     },
+     {
+      "value": {
+       "name": "Revived by Roots",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "revived-by-roots"
+     },
+     {
+      "value": {
+       "name": "Shaku Maku",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "shaku-maku"
+     },
+     {
+      "value": {
+       "name": "Shannon's Kitchen",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "shannon-s-kitchen"
+     },
+     {
+      "value": {
+       "name": "Shelter Dog Coffee",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "shelter-dog-coffee"
+     },
+     {
+      "value": {
+       "name": "Shut My Mouth Bakery",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "shut-my-mouth-bakery"
+     },
+     {
+      "value": {
+       "name": "Sunnyslope Bagels",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sunnyslope-bagels"
+     },
+     {
+      "value": {
+       "name": "TW Rub & Brine",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "tw-rub-and-brine"
+     },
+     {
+      "value": {
+       "name": "Yallatizers",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "yallatizers"
+     },
+     {
+      "value": {
+       "name": "Yvonella",
+       "categories": [
+        "Food"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "yvonella"
+     },
+     {
+      "value": {
+       "name": "Laundry Gal",
+       "categories": [
+        "Artisans"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "laundry-gal"
+     },
+     {
+      "value": {
+       "name": "Little Mama Products",
+       "categories": [
+        "Artisans"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "little-mama-products"
+     },
+     {
+      "value": {
+       "name": "Loretta Nez Navajo Jewelry",
+       "categories": [
+        "Artisans"
+       ]
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "loretta-nez-navajo-jewelry"
+     }
+    ]
+   },
+   "products": {
+    "categories": [
+     {
+      "value": {
+       "code": "fresh_produce",
+       "label": "Local fruit and vegetables"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "produce"
+     },
+     {
+      "value": {
+       "code": "baked_goods",
+       "label": "Baked goods and fresh bread"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "baked-goods"
+     },
+     {
+      "value": {
+       "code": "honey",
+       "label": "Raw local honey"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "honey"
+     },
+     {
+      "value": {
+       "code": "meat",
+       "label": "Grass-fed beef, natural pork and pasture-raised chicken"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "meat"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Fish"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "fish"
+     },
+     {
+      "value": {
+       "code": "eggs"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "eggs"
+     },
+     {
+      "value": {
+       "code": "flowers"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "flowers"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Nursery stock and cactus"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "nursery"
+     },
+     {
+      "value": {
+       "code": "crafts",
+       "label": "Handcrafted and artisan items"
+      },
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "crafts"
+     }
+    ],
+    "items": [
+     {
+      "value": "Alaska salmon (Fish Hugger)",
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "alaska-salmon"
+     },
+     {
+      "value": "Grass-fed beef",
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "grass-fed-beef"
+     },
+     {
+      "value": "Pasture-raised chicken",
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "pasture-raised-chicken"
+     },
+     {
+      "value": "Cactus",
+      "source_ids": [
+       "rr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cactus"
+     }
+    ]
+   },
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "arrival",
+      "answer": "The market is open Saturdays year round. Winter hours (October to May) are 8am to 12pm; summer hours (June to September) are 7am to 10am."
+     },
+     "source_ids": [
+      "rr"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-hours"
+    },
+    {
+     "value": {
+      "topic": "payments",
+      "answer": "The market accepts EBT and DUFB and is enrolled in the AZFMNP/WIC program."
+     },
+     "source_ids": [
+      "rr"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-payments"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "rr",
+    "url": "https://arizonacommunityfarmersmarkets.com/roadrunner-farmers-mkt",
+    "title": "Roadrunner Farmers Mkt | Arizona Community Farmers Markets",
+    "fields": [
+     "first_party.identity",
+     "first_party.operations",
+     "first_party.payments",
+     "first_party.policies",
+     "first_party.vendors",
+     "first_party.products",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ },
+ {
+  "id": 310611,
+  "market_name": "Church Green Farmers’ Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "operations": {
+    "timezone": {
+     "value": "America/New_York",
+     "source_ids": [
+      "cg"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "status": {
+     "value": {
+      "value": "seasonal_break",
+      "note": "The 2026 season ran June 21 to November 1. The market runs on the church lawn from mid June until early November each year."
+     },
+     "source_ids": [
+      "cg"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "season": {
+     "value": {
+      "kind": "dated_range",
+      "start_date": "2026-06-21",
+      "end_date": "2026-11-01"
+     },
+     "source_ids": [
+      "cg"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "schedules": [
+     {
+      "value": {
+       "recurrence": {
+        "kind": "weekly",
+        "weekdays": [
+         "sunday"
+        ]
+       },
+       "opens": "09:00",
+       "closes": "13:00",
+       "start_date": "2026-06-21",
+       "end_date": "2026-11-01",
+       "location_note": "Church lawn, First Parish Church"
+      },
+      "source_ids": [
+       "cg"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "sunday"
+     }
+    ]
+   },
+   "payments": {
+    "methods": [
+     {
+      "value": {
+       "code": "cash"
+      },
+      "source_ids": [
+       "cg"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cash"
+     },
+     {
+      "value": {
+       "code": "credit_card"
+      },
+      "source_ids": [
+       "cg"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "credit-card"
+     }
+    ],
+    "assistance": [
+     {
+      "value": {
+       "code": "snap_ebt"
+      },
+      "source_ids": [
+       "cg"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "snap-ebt"
+     },
+     {
+      "value": {
+       "code": "wic"
+      },
+      "source_ids": [
+       "cg"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "wic"
+     },
+     {
+      "value": {
+       "code": "sfmnp",
+       "name": "Senior coupons"
+      },
+      "source_ids": [
+       "cg"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "senior-coupons"
+     }
+    ],
+    "incentives": [
+     {
+      "value": {
+       "name": "HIP (Healthy Incentives Program)",
+       "kind": "bonus",
+       "applies_to": [
+        "fruits",
+        "vegetables"
+       ],
+       "eligibility": "SNAP shoppers",
+       "note": "HIP puts extra dollars back on your EBT card when you buy fruits and vegetables: $40, $60 or $80 depending on household size."
+      },
+      "source_ids": [
+       "cg"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "hip"
+     }
+    ]
+   },
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "updates",
+      "answer": "The 2026 season ran Sundays 9am to 1pm from June 21 to November 1. The market returns to the church lawn in mid June."
+     },
+     "source_ids": [
+      "cg"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-season"
+    },
+    {
+     "value": {
+      "topic": "payments",
+      "answer": "The market accepts SNAP, HIP, WIC and Senior coupons. Vendors also take cash and credit."
+     },
+     "source_ids": [
+      "cg"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-payments"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "cg",
+    "url": "https://www.firstparishtaunton.org/church-green-farmers-market.html",
+    "title": "Church Green Farmers Market - First Parish Church in Taunton",
+    "fields": [
+     "first_party.operations",
+     "first_party.payments",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ },
+ {
+  "id": 313993,
+  "market_name": "Lakewood Ranch Farmers’ Market",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "identity": {
+    "canonical_name": {
+     "value": "Farmers' Market at Lakewood Ranch",
+     "source_ids": [
+      "lwr"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "operations": {
+    "season": {
+     "value": {
+      "kind": "year_round"
+     },
+     "source_ids": [
+      "lwr"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "vendors": {
+    "count": {
+     "value": {
+      "value": 100,
+      "qualifier": "more than"
+     },
+     "source_ids": [
+      "lwr"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "products": {
+    "categories": [
+     {
+      "value": {
+       "code": "fresh_produce",
+       "label": "Fruits and veggies"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "produce"
+     },
+     {
+      "value": {
+       "code": "baked_goods"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "baked-goods"
+     },
+     {
+      "value": {
+       "code": "meat",
+       "label": "Meat and poultry"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "meat"
+     },
+     {
+      "value": {
+       "code": "flowers"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "flowers"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Spices, rubs and condiments"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "spices"
+     },
+     {
+      "value": {
+       "code": "honey",
+       "label": "Local honey"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "honey"
+     },
+     {
+      "value": {
+       "code": "prepared_food",
+       "label": "Ready-to-eat foods"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "prepared-food"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Coffee and teas"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "coffee-tea"
+     },
+     {
+      "value": {
+       "code": "other",
+       "label": "Pet products"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "pets"
+     },
+     {
+      "value": {
+       "code": "crafts",
+       "label": "Specialty gifts and trinkets"
+      },
+      "source_ids": [
+       "lwr"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "gifts"
+     }
+    ]
+   },
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "arrival",
+      "answer": "The market runs Sundays from 10am to 2pm year round at Waterside Place, 1561 Lakefront Dr, with over 100 vendors and live music."
+     },
+     "source_ids": [
+      "lwr"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-hours"
+    }
+   ],
+   "amenities": [
+    {
+     "value": {
+      "code": "live_music",
+      "availability": "yes",
+      "note": "Live music from local musicians."
+     },
+     "source_ids": [
+      "lwr"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "live-music"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "lwr",
+    "url": "https://lakewoodranch.com/life-on-the-ranch/themarket/",
+    "title": "Farmers' Market at Lakewood Ranch: Award-Winning Market",
+    "fields": [
+     "first_party.identity",
+     "first_party.operations",
+     "first_party.vendors",
+     "first_party.products",
+     "first_party.faq_facts",
+     "first_party.amenities"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ },
+ {
+  "id": "gov:us_dc_farmers_markets:{328F018E-574D-47B8-BB1A-E81C46FD0A63}",
+  "market_name": "FRESHFARM Foggy Bottom",
+  "schema_version": 2,
+  "verified_at": "2026-11-10",
+  "verification_scope": "partial",
+  "first_party": {
+   "identity": {
+    "operator_name": {
+     "value": "FRESHFARM",
+     "source_ids": [
+      "ff"
+     ],
+     "verified_at": "2026-11-10"
+    }
+   },
+   "operations": {
+    "timezone": {
+     "value": "America/New_York",
+     "source_ids": [
+      "ff"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "season": {
+     "value": {
+      "kind": "year_round"
+     },
+     "source_ids": [
+      "ff"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "schedules": [
+     {
+      "value": {
+       "label": "Main season hours",
+       "recurrence": {
+        "kind": "weekly",
+        "weekdays": [
+         "wednesday"
+        ]
+       },
+       "opens": "15:00",
+       "closes": "19:00",
+       "end_date": "2026-11-30",
+       "location_note": "I Street NW between 23rd and 24th Streets"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "main-season-wednesday"
+     },
+     {
+      "value": {
+       "label": "Winter season hours",
+       "recurrence": {
+        "kind": "weekly",
+        "weekdays": [
+         "wednesday"
+        ]
+       },
+       "opens": "14:00",
+       "closes": "18:00",
+       "start_date": "2026-12-01",
+       "end_date": "2027-03-31",
+       "location_note": "I Street NW between 23rd and 24th Streets"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "winter-wednesday"
+     }
+    ]
+   },
+   "payments": {
+    "methods": [
+     {
+      "value": {
+       "code": "other",
+       "label": "GWorld (GW student card)"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "gworld"
+     }
+    ],
+    "assistance": [
+     {
+      "value": {
+       "code": "snap_ebt",
+       "name": "SNAP/EBT"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "snap-ebt"
+     },
+     {
+      "value": {
+       "code": "wic"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "wic"
+     },
+     {
+      "value": {
+       "code": "sfmnp",
+       "name": "Senior FMNP checks"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "senior-fmnp"
+     }
+    ],
+    "incentives": [
+     {
+      "value": {
+       "name": "FreshMatch",
+       "kind": "match",
+       "eligibility": "Shoppers using federal food benefits",
+       "note": "Dollar-for-dollar match on all federal benefits spent at market."
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "freshmatch"
+     }
+    ]
+   },
+   "access": {
+    "transit": [
+     {
+      "value": {
+       "mode": "rail",
+       "stop_name": "Foggy Bottom",
+       "note": "The market is steps from the Foggy Bottom Metro stop."
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "metro"
+     }
+    ]
+   },
+   "vendors": {
+    "roster_context": {
+     "value": {
+      "label": "Vendors listed on the market page",
+      "as_of": "2026-11-10"
+     },
+     "source_ids": [
+      "ff"
+     ],
+     "verified_at": "2026-11-10"
+    },
+    "roster": [
+     {
+      "value": {
+       "name": "All Day Health Bar"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "all-day-health-bar"
+     },
+     {
+      "value": {
+       "name": "Atwater's"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "atwater-s"
+     },
+     {
+      "value": {
+       "name": "Barajas Produce"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "barajas-produce"
+     },
+     {
+      "value": {
+       "name": "Bouvardia Coffee"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "bouvardia-coffee"
+     },
+     {
+      "value": {
+       "name": "Bun'd Up"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "bun-d-up"
+     },
+     {
+      "value": {
+       "name": "Cucina Al Volo"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cucina-al-volo"
+     },
+     {
+      "value": {
+       "name": "DMV Empanadas"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "dmv-empanadas"
+     },
+     {
+      "value": {
+       "name": "Hidden Gems Farm"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "hidden-gems-farm"
+     },
+     {
+      "value": {
+       "name": "Layla's Lebanese Restaurant"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "layla-s-lebanese-restaurant"
+     },
+     {
+      "value": {
+       "name": "Quaker Valley Orchards"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "quaker-valley-orchards"
+     },
+     {
+      "value": {
+       "name": "Roggenart"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "roggenart"
+     },
+     {
+      "value": {
+       "name": "Taco Loco"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "taco-loco"
+     },
+     {
+      "value": {
+       "name": "Tae-Gu Kimchi"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "tae-gu-kimchi"
+     },
+     {
+      "value": {
+       "name": "The Preppy Pretzel"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "the-preppy-pretzel"
+     }
+    ]
+   },
+   "products": {
+    "categories": [
+     {
+      "value": {
+       "code": "fresh_produce",
+       "label": "Locally grown fruits and vegetables"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "produce"
+     },
+     {
+      "value": {
+       "code": "eggs",
+       "label": "Pastured eggs"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "eggs"
+     },
+     {
+      "value": {
+       "code": "meat",
+       "label": "Organic meats"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "meat"
+     },
+     {
+      "value": {
+       "code": "dairy",
+       "label": "Farmstead cheeses"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "cheese"
+     },
+     {
+      "value": {
+       "code": "baked_goods",
+       "label": "Sweet and savory baked goods"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "baked-goods"
+     },
+     {
+      "value": {
+       "code": "flowers",
+       "label": "Fresh-cut flowers"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "flowers"
+     },
+     {
+      "value": {
+       "code": "preserves",
+       "label": "Jams and jellies"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "preserves"
+     },
+     {
+      "value": {
+       "code": "prepared_food",
+       "label": "Empanadas, sandwiches and coffee"
+      },
+      "source_ids": [
+       "ff"
+      ],
+      "verified_at": "2026-11-10",
+      "id": "prepared-food"
+     }
+    ]
+   },
+   "events": [
+    {
+     "value": {
+      "name": "Fresh Food Drive at Foggy Bottom",
+      "kind": "other",
+      "start": "2026-11-18",
+      "description": "Make someone's Thanksgiving with the gift of local food."
+     },
+     "source_ids": [
+      "ff"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "fresh-food-drive-2026"
+    }
+   ],
+   "faq_facts": [
+    {
+     "value": {
+      "topic": "arrival",
+      "answer": "The market is open Wednesdays year round. Main season hours are 3pm to 7pm; winter hours are 2pm to 6pm from December 2026 through March 2027."
+     },
+     "source_ids": [
+      "ff"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-hours"
+    },
+    {
+     "value": {
+      "topic": "payments",
+      "answer": "The market accepts SNAP/EBT, WIC and Senior FMNP checks, with a FreshMatch dollar-for-dollar match on federal benefits. GW students can pay with GWorld."
+     },
+     "source_ids": [
+      "ff"
+     ],
+     "verified_at": "2026-11-10",
+     "id": "faq-payments"
+    }
+   ]
+  },
+  "sources": [
+   {
+    "id": "ff",
+    "url": "https://www.freshfarm.org/markets/foggy-bottom",
+    "title": "Foggy Bottom | FRESHFARM",
+    "fields": [
+     "first_party.identity",
+     "first_party.operations",
+     "first_party.payments",
+     "first_party.access",
+     "first_party.vendors",
+     "first_party.products",
+     "first_party.events",
+     "first_party.faq_facts"
+    ],
+    "kind": "first_party",
+    "scope": "market",
+    "accessed_at": "2026-11-10"
+   }
+  ]
+ }
+]

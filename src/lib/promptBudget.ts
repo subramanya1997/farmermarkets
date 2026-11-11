@@ -73,3 +73,47 @@ export function markPromptShown(id: PromptId) {
 export function markPromptOutcome(id: PromptId, outcome: "answered" | "dismissed") {
   set("local", promptKey(id), `${outcome}:${Date.now()}`);
 }
+
+/*
+ * The in-page question (src/components/PageQuestion.tsx) shares this budget so
+ * it never feels like it is on every page:
+ *
+ * - It appears on one page per visit: the first one where it is scrolled to.
+ * - Seeing it counts as the visit's one prompt, so no popup follows it.
+ * - Closed with its X, it stays away DISMISSED_DAYS, like the popup.
+ * - Scrolled past INLINE_MAX_IGNORED times without an answer, it rests for
+ *   DISMISSED_DAYS before trying again.
+ */
+const INLINE_MAX_IGNORED = 3;
+const INLINE_SESSION_KEY = "fm.pageq.session.v1";
+const INLINE_SEEN_KEY = "fm.pageq.seen.v1";
+
+function inlineSeen(): { count: number; at: string } {
+  const [count, at] = (get("local", INLINE_SEEN_KEY) ?? "").split(":");
+  return { count: Number(count) || 0, at: at ?? "" };
+}
+
+export function canShowInlineQuestion(path: string): boolean {
+  if (typeof window === "undefined") return false;
+  const [outcome, at] = (get("local", promptKey("unmet_need")) ?? "").split(":");
+  if (outcome === "answered" && within(at, ANSWERED_DAYS)) return false;
+  if (outcome === "dismissed" && within(at, DISMISSED_DAYS)) return false;
+
+  const sessionPath = get("session", INLINE_SESSION_KEY);
+  if (sessionPath) return sessionPath === path;
+  // A popup already had this visit's one ask.
+  if (get("session", SESSION_KEY)) return false;
+
+  const seen = inlineSeen();
+  return !(seen.count >= INLINE_MAX_IGNORED && within(seen.at, DISMISSED_DAYS));
+}
+
+/** Call when the in-page question first scrolls into view on a page. */
+export function markInlineQuestionSeen(path: string) {
+  if (get("session", INLINE_SESSION_KEY)) return;
+  set("session", INLINE_SESSION_KEY, path);
+  const seen = inlineSeen();
+  const count = within(seen.at, DISMISSED_DAYS) && seen.count < INLINE_MAX_IGNORED ? seen.count + 1 : 1;
+  set("local", INLINE_SEEN_KEY, `${count}:${Date.now()}`);
+  markPromptShown("unmet_need");
+}

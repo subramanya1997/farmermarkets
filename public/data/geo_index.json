@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-09T20:35:51.683Z",
+  "generated_at": "2026-11-11T05:45:09.366Z",
   "market_count": 9143,
   "states": [
     {
@@ -12843,12 +12843,12 @@
       "country_code": "US",
       "slug": "illinois",
       "market_count": 366,
-      "city_count": 195,
+      "city_count": 196,
       "cities": [
         {
           "name": "Chicago",
           "slug": "chicago",
-          "market_count": 71,
+          "market_count": 70,
           "market_slugs": [
             "4-veggies-3-fruits-farmers-market-chicago",
             "61st-street-farmers-market",
@@ -12897,7 +12897,6 @@
             "museum-of-contemporary-artstreeterville-chicago-farmers-market-chicago",
             "northcenter-farmers-market-chicago",
             "northwest-side-farmers-market-collective-chicago",
-            "oak-park-farmers-market",
             "pilsen-community-market-chicago",
             "plant-chicago-farmers-market-chicago",
             "portage-park-farmers-market-chicago",
@@ -14246,6 +14245,14 @@
           "market_count": 1,
           "market_slugs": [
             "oak-forest-farmers-market"
+          ]
+        },
+        {
+          "name": "Oak Park",
+          "slug": "oak-park",
+          "market_count": 1,
+          "market_slugs": [
+            "oak-park-farmers-market"
           ]
         },
         {

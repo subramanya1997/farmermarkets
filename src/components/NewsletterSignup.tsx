@@ -140,6 +140,8 @@ export function NewsletterSignup({
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
+          // The exposure count for the newsletter-ask test (src/lib/experiments.ts).
+          if (!navigator.webdriver) trackEvent("Newsletter Ask Shown", { placement: source });
           observer.disconnect();
         }
       },
@@ -147,7 +149,7 @@ export function NewsletterSignup({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
+  }, [source]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -175,7 +177,7 @@ export function NewsletterSignup({
         });
       }
       setStatus("sent");
-      trackEvent("Newsletter Signup Submitted", { source, has_zip: Boolean(zip.trim()) });
+      trackEvent("Newsletter Signup Submitted", { source, placement: source, has_zip: Boolean(zip.trim()) });
     } catch (caught) {
       setStatus("idle");
       const failure = caught as Error & { status?: number };

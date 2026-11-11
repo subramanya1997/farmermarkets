@@ -20,6 +20,7 @@ import { getNearbyMarkets } from "@/lib/nearby";
 import { getMarketProvenance } from "@/lib/provenance";
 import { marketFaqs, marketSchemaGraph } from "@/lib/schema";
 import { MarketFaq } from "@/components/MarketFaq";
+import { PageQuestion } from "@/components/PageQuestion";
 import { MarketFacts, MarketGlanceCard } from "@/components/MarketFacts";
 import { MarketHighlights } from "@/components/MarketHighlights";
 import { MarketFreshnessNotice } from "@/components/MarketFreshnessNotice";
@@ -452,6 +453,10 @@ export default async function MarketDetailPage({
                       AI answer engines extract visible text on a direct fetch
                       and never run the JSON-LD. */}
                   <MarketFaq faqs={faqs} />
+
+                  {/* Asked in the page, where everyone who reads this far
+                      sees it; the popup version reaches very few visitors. */}
+                  <PageQuestion kind="market" place={placement?.city.name} marketSlug={market.slug} />
 
                   <NearbyMarkets
                     markets={nearby}

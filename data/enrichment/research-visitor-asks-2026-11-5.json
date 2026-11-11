@@ -1,0 +1,1627 @@
+[
+  {
+    "id": 309290,
+    "market_name": "Celebration Sunday Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Celebration Farmers Market",
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "vendor-info"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "sunday"
+                ]
+              },
+              "opens": "10:00",
+              "closes": "14:00"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "sunday"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce"
+            },
+            "source_ids": [
+              "home",
+              "vendor-info"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          },
+          {
+            "value": {
+              "code": "flowers",
+              "label": "Plants and flowers"
+            },
+            "source_ids": [
+              "vendor-info"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "plants"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Specialty foods"
+            },
+            "source_ids": [
+              "vendor-info"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "specialty-foods"
+          },
+          {
+            "value": {
+              "code": "crafts",
+              "label": "Handmade local crafts"
+            },
+            "source_ids": [
+              "home",
+              "vendor-info"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "crafts"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "value": {
+            "topic": "products",
+            "answer": "The market centers on produce, plants and specialty foods, plus handmade local crafts. Its vendor rules exclude hot food, food trucks, resale goods and mass-produced products."
+          },
+          "source_ids": [
+            "vendor-info"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "faq-what-is-sold"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "home",
+        "url": "https://www.celebrationfarmersmarket.com/",
+        "title": "Farmers Market | Celebration Farmers Market",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "vendor-info",
+        "url": "https://www.celebrationfarmersmarket.com/vendor-information",
+        "title": "Vendor Information | Celebration Farmers Market",
+        "fields": [
+          "first_party.operations",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:cfe776735ceb0739",
+    "market_name": "Van Cortlandt Park Alliance Farm Stand",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Youth Run Farm Stand",
+          "source_ids": [
+            "event-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "operator_name": {
+          "value": "Van Cortlandt Park Alliance",
+          "source_ids": [
+            "event-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "market_type": {
+          "value": "farm_stand",
+          "source_ids": [
+            "event-2026"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "event-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-07-08",
+            "end_date": "2026-10-28"
+          },
+          "source_ids": [
+            "event-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "value": {
+              "label": "Youth Run Farm Stand",
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "wednesday"
+                ]
+              },
+              "opens": "14:00",
+              "closes": "19:00",
+              "start_date": "2026-07-08",
+              "end_date": "2026-10-28",
+              "location_note": "Train Park (Gale Place and Orloff Avenue)"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "wednesday-2026"
+          }
+        ]
+      },
+      "payments": {
+        "methods": [
+          {
+            "value": {
+              "code": "cash"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "cash"
+          },
+          {
+            "value": {
+              "code": "credit_card"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "credit-card"
+          },
+          {
+            "value": {
+              "code": "debit_card"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "debit-card"
+          }
+        ],
+        "assistance": [
+          {
+            "value": {
+              "code": "snap_ebt",
+              "name": "SNAP/EBT"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "snap-ebt"
+          },
+          {
+            "value": {
+              "code": "wic",
+              "name": "WIC"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "wic"
+          },
+          {
+            "value": {
+              "code": "fmnp",
+              "name": "FMNP checks"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "fmnp"
+          },
+          {
+            "value": {
+              "code": "other",
+              "name": "Fresh Connect checks"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "fresh-connect"
+          }
+        ]
+      },
+      "access": {
+        "entrance_note": {
+          "value": "The stand sets up in Train Park, at Gale Place and Orloff Avenue, not at the Alliance office on Van Cortlandt Park South.",
+          "source_ids": [
+            "event-2026"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce",
+              "label": "Fresh local produce"
+            },
+            "source_ids": [
+              "event-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "event-2026",
+        "url": "https://vancortlandt.org/event/youth-run-farm-stand-5/2026-07-15/",
+        "title": "Youth Run Farm Stand | Van Cortlandt Park Alliance",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.access",
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": 311231,
+    "market_name": "Georgetown Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Rose Park Farmers Market",
+          "source_ids": [
+            "events"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "operator_name": {
+          "value": "Friends of Rose Park",
+          "source_ids": [
+            "events"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "market-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "annual_range",
+            "start": {
+              "month": 5
+            },
+            "end": {
+              "month": 10
+            }
+          },
+          "source_ids": [
+            "market-2026",
+            "events"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "wednesday"
+                ]
+              },
+              "opens": "15:00",
+              "closes": "19:00",
+              "location_note": "Rose Park, 26th and O Streets NW"
+            },
+            "source_ids": [
+              "market-2026",
+              "events"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "wednesday"
+          }
+        ]
+      },
+      "vendors": {
+        "roster_context": {
+          "value": {
+            "label": "2026 season vendor list"
+          },
+          "source_ids": [
+            "market-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster": [
+          {
+            "value": {
+              "name": "Quaker Valley Orchard"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "quaker-valley-orchard"
+          },
+          {
+            "value": {
+              "name": "Fajardo’s Produce Farm",
+              "categories": [
+                "Produce"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "fajardos-produce-farm"
+          },
+          {
+            "value": {
+              "name": "Anchor Nursery & Produce",
+              "categories": [
+                "Nursery plants",
+                "Produce"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "anchor-nursery-produce"
+          },
+          {
+            "value": {
+              "name": "Country Vittles from Critter Hill Farm",
+              "attendance_note": "New vendor in 2026, listed as appearing 7/22 and 8/5."
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "country-vittles"
+          },
+          {
+            "value": {
+              "name": "Bread Furst"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "bread-furst"
+          },
+          {
+            "value": {
+              "name": "Lobster Maine-ia",
+              "categories": [
+                "Fresh seafood"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "lobster-maine-ia"
+          },
+          {
+            "value": {
+              "name": "Potomac Roasting Co.",
+              "categories": [
+                "Small-batch roasted coffee"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "potomac-roasting"
+          },
+          {
+            "value": {
+              "name": "District Farmacy",
+              "categories": [
+                "Freeze-dried fruits and treats"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "district-farmacy"
+          },
+          {
+            "value": {
+              "name": "The Covenant Bagels",
+              "categories": [
+                "Bagels"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "covenant-bagels"
+          },
+          {
+            "value": {
+              "name": "The Waterhole",
+              "categories": [
+                "Fresh juices"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "the-waterhole"
+          },
+          {
+            "value": {
+              "name": "ITSUMONO",
+              "categories": [
+                "Spice mixes"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "itsumono"
+          },
+          {
+            "value": {
+              "name": "Elif’s Table",
+              "categories": [
+                "Mediterranean specialties"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "elifs-table"
+          },
+          {
+            "value": {
+              "name": "Benchmark Sharpening",
+              "categories": [
+                "Knife sharpening"
+              ],
+              "attendance_note": "Listed as appearing 7/22, 8/26, 9/23 and 10/28."
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "benchmark-sharpening"
+          },
+          {
+            "value": {
+              "name": "El Jefe Wood Fired Pizza",
+              "categories": [
+                "Wood-fired pizza"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "el-jefe-pizza"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Fresh seafood"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "seafood"
+          },
+          {
+            "value": {
+              "code": "prepared_food",
+              "label": "Wood-fired pizza and Mediterranean specialties"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "prepared-food"
+          }
+        ],
+        "items": [
+          {
+            "value": "Small-batch roasted coffee",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "coffee"
+          },
+          {
+            "value": "Bagels",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "bagels"
+          },
+          {
+            "value": "Fresh juices",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "juices"
+          },
+          {
+            "value": "Spice mixes",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "spice-mixes"
+          },
+          {
+            "value": "Freeze-dried fruits and treats",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "freeze-dried-fruit"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "market-2026",
+        "url": "https://www.roseparkdc.org/farmers-market-2026/",
+        "title": "Farmers Market! | Friends of Rose Park",
+        "fields": [
+          "first_party.operations",
+          "first_party.vendors",
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "events",
+        "url": "https://www.roseparkdc.org/events/",
+        "title": "Events | Friends of Rose Park",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
+    "market_name": "Rose Park Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Rose Park Farmers Market",
+          "source_ids": [
+            "events"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "operator_name": {
+          "value": "Friends of Rose Park",
+          "source_ids": [
+            "events"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "market-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "annual_range",
+            "start": {
+              "month": 5
+            },
+            "end": {
+              "month": 10
+            }
+          },
+          "source_ids": [
+            "market-2026",
+            "events"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "wednesday"
+                ]
+              },
+              "opens": "15:00",
+              "closes": "19:00",
+              "location_note": "Rose Park, 26th and O Streets NW"
+            },
+            "source_ids": [
+              "market-2026",
+              "events"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "wednesday"
+          }
+        ]
+      },
+      "vendors": {
+        "roster_context": {
+          "value": {
+            "label": "2026 season vendor list"
+          },
+          "source_ids": [
+            "market-2026"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster": [
+          {
+            "value": {
+              "name": "Quaker Valley Orchard"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "quaker-valley-orchard"
+          },
+          {
+            "value": {
+              "name": "Fajardo’s Produce Farm",
+              "categories": [
+                "Produce"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "fajardos-produce-farm"
+          },
+          {
+            "value": {
+              "name": "Anchor Nursery & Produce",
+              "categories": [
+                "Nursery plants",
+                "Produce"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "anchor-nursery-produce"
+          },
+          {
+            "value": {
+              "name": "Country Vittles from Critter Hill Farm",
+              "attendance_note": "New vendor in 2026, listed as appearing 7/22 and 8/5."
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "country-vittles"
+          },
+          {
+            "value": {
+              "name": "Bread Furst"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "bread-furst"
+          },
+          {
+            "value": {
+              "name": "Lobster Maine-ia",
+              "categories": [
+                "Fresh seafood"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "lobster-maine-ia"
+          },
+          {
+            "value": {
+              "name": "Potomac Roasting Co.",
+              "categories": [
+                "Small-batch roasted coffee"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "potomac-roasting"
+          },
+          {
+            "value": {
+              "name": "District Farmacy",
+              "categories": [
+                "Freeze-dried fruits and treats"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "district-farmacy"
+          },
+          {
+            "value": {
+              "name": "The Covenant Bagels",
+              "categories": [
+                "Bagels"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "covenant-bagels"
+          },
+          {
+            "value": {
+              "name": "The Waterhole",
+              "categories": [
+                "Fresh juices"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "the-waterhole"
+          },
+          {
+            "value": {
+              "name": "ITSUMONO",
+              "categories": [
+                "Spice mixes"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "itsumono"
+          },
+          {
+            "value": {
+              "name": "Elif’s Table",
+              "categories": [
+                "Mediterranean specialties"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "elifs-table"
+          },
+          {
+            "value": {
+              "name": "Benchmark Sharpening",
+              "categories": [
+                "Knife sharpening"
+              ],
+              "attendance_note": "Listed as appearing 7/22, 8/26, 9/23 and 10/28."
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "benchmark-sharpening"
+          },
+          {
+            "value": {
+              "name": "El Jefe Wood Fired Pizza",
+              "categories": [
+                "Wood-fired pizza"
+              ]
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "el-jefe-pizza"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Fresh seafood"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "seafood"
+          },
+          {
+            "value": {
+              "code": "prepared_food",
+              "label": "Wood-fired pizza and Mediterranean specialties"
+            },
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "prepared-food"
+          }
+        ],
+        "items": [
+          {
+            "value": "Small-batch roasted coffee",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "coffee"
+          },
+          {
+            "value": "Bagels",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "bagels"
+          },
+          {
+            "value": "Fresh juices",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "juices"
+          },
+          {
+            "value": "Spice mixes",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "spice-mixes"
+          },
+          {
+            "value": "Freeze-dried fruits and treats",
+            "source_ids": [
+              "market-2026"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "freeze-dried-fruit"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "market-2026",
+        "url": "https://www.roseparkdc.org/farmers-market-2026/",
+        "title": "Farmers Market! | Friends of Rose Park",
+        "fields": [
+          "first_party.operations",
+          "first_party.vendors",
+          "first_party.products"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "events",
+        "url": "https://www.roseparkdc.org/events/",
+        "title": "Events | Friends of Rose Park",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": "gov:us_ny_farmers_markets:cefb893aed00a68c",
+    "market_name": "Sunnyside Greenmarket",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Sunnyside Greenmarket",
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "operator_name": {
+          "value": "GrowNYC",
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "15:00",
+              "location_note": "Skillman Avenue between 42nd and 43rd Streets"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "saturday"
+          }
+        ]
+      },
+      "payments": {
+        "methods": [
+          {
+            "value": {
+              "code": "cash"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "cash"
+          },
+          {
+            "value": {
+              "code": "debit_card"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "debit-card"
+          },
+          {
+            "value": {
+              "code": "credit_card"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "credit-card"
+          },
+          {
+            "value": {
+              "code": "market_token",
+              "label": "Greenmarket Bucks"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "greenmarket-bucks"
+          }
+        ],
+        "assistance": [
+          {
+            "value": {
+              "code": "snap_ebt",
+              "name": "SNAP/EBT"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "snap-ebt"
+          },
+          {
+            "value": {
+              "code": "fmnp",
+              "name": "Farmers Market Nutrition Program"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "fmnp"
+          },
+          {
+            "value": {
+              "code": "other",
+              "name": "FreshConnect Coupons"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "freshconnect"
+          },
+          {
+            "value": {
+              "code": "other",
+              "name": "Healthfirst OTC (select plans)"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "healthfirst-otc"
+          }
+        ],
+        "incentives": [
+          {
+            "value": {
+              "name": "Health Bucks",
+              "kind": "bonus",
+              "input_amount": 2,
+              "benefit_amount": 2,
+              "maximum_amount": 10,
+              "currency": "USD",
+              "eligibility": "SNAP/EBT and Summer EBT shoppers",
+              "note": "Spend $2 in SNAP/EBT or Summer EBT and get a bonus $2 Health Buck, up to $10 per day."
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "health-bucks"
+          }
+        ]
+      },
+      "access": {
+        "entrance_note": {
+          "value": "The market sets up on Skillman Avenue between 42nd and 43rd Streets, next to Lou Lodati Park.",
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "vendors": {
+        "attendance_is_dynamic": {
+          "value": true,
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster_context": {
+          "value": {
+            "label": "Producers expected this Saturday",
+            "as_of": "2026-11-10"
+          },
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster": [
+          {
+            "value": {
+              "name": "Abundance Acres Farm",
+              "categories": [
+                "Pasture-raised chicken, duck, turkey (Thanksgiving only)",
+                "Beef, pork, lamb (limited production)",
+                "Free-range eggs",
+                "Maple syrup"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "abundance-acres"
+          },
+          {
+            "value": {
+              "name": "Anti-Conquest Bread Co",
+              "categories": [
+                "Artisanal breads and bakery products"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "anti-conquest-bread"
+          },
+          {
+            "value": {
+              "name": "Ballard’s Honey",
+              "categories": [
+                "Honey"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "ballards-honey"
+          },
+          {
+            "value": {
+              "name": "Big Apple Fungi (formerly My Shrooms)",
+              "categories": [
+                "Mushrooms",
+                "Tinctures"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "big-apple-fungi"
+          },
+          {
+            "value": {
+              "name": "Breezy Hill Orchard and Knoll Krest Farm",
+              "categories": [
+                "Orchard and small fruit",
+                "Cider",
+                "Baked goods",
+                "Eggs",
+                "Pasta",
+                "Soups"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "breezy-hill-knoll-krest"
+          },
+          {
+            "value": {
+              "name": "Catch of the Hamptons",
+              "categories": [
+                "Seafood"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "catch-of-the-hamptons"
+          },
+          {
+            "value": {
+              "name": "Gajeski Produce",
+              "categories": [
+                "Vegetables",
+                "Small and field fruit"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "gajeski-produce"
+          },
+          {
+            "value": {
+              "name": "Meredith’s Country Bakery",
+              "categories": [
+                "Baked goods"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "merediths-country-bakery"
+          },
+          {
+            "value": {
+              "name": "Nolasco Farm",
+              "categories": [
+                "Vegetables",
+                "Mexican specialty produce",
+                "Herbs",
+                "Cut flowers"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "nolasco-farm"
+          },
+          {
+            "value": {
+              "name": "Terhune Orchards",
+              "categories": [
+                "Orchard fruit",
+                "Vegetables",
+                "Baked goods",
+                "Flowers"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "terhune-orchards"
+          },
+          {
+            "value": {
+              "name": "Toigo Orchards II",
+              "categories": [
+                "Orchard and small fruit",
+                "Greenhouse vegetables"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "toigo-orchards"
+          },
+          {
+            "value": {
+              "name": "Woodlawn Creamery and Farm",
+              "categories": [
+                "Artisan cheeses",
+                "Beef",
+                "Maple syrup"
+              ]
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "woodlawn-creamery"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "value": {
+              "code": "fresh_produce",
+              "label": "Vegetables and fruit"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "produce"
+          },
+          {
+            "value": {
+              "code": "meat",
+              "label": "Pasture-raised poultry, beef, pork and lamb"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "meat"
+          },
+          {
+            "value": {
+              "code": "eggs"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "eggs"
+          },
+          {
+            "value": {
+              "code": "dairy",
+              "label": "Artisan cheeses"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "dairy"
+          },
+          {
+            "value": {
+              "code": "baked_goods"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "baked-goods"
+          },
+          {
+            "value": {
+              "code": "honey"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "honey"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Seafood"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "seafood"
+          },
+          {
+            "value": {
+              "code": "other",
+              "label": "Mushrooms"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "mushrooms"
+          },
+          {
+            "value": {
+              "code": "flowers"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "flowers"
+          },
+          {
+            "value": {
+              "code": "herbs"
+            },
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "herbs"
+          }
+        ],
+        "items": [
+          {
+            "value": "Maple syrup",
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "maple-syrup"
+          },
+          {
+            "value": "Cider",
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "cider"
+          },
+          {
+            "value": "Turkey (Thanksgiving only)",
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "thanksgiving-turkey"
+          },
+          {
+            "value": "Mexican specialty produce",
+            "source_ids": [
+              "grownyc"
+            ],
+            "verified_at": "2026-11-10",
+            "id": "mexican-specialty-produce"
+          }
+        ]
+      },
+      "programs": [
+        {
+          "value": {
+            "name": "Clothing Collection",
+            "kind": "other",
+            "description": "GrowNYC clothing collection at the market on Saturdays, 9:30am to 12:30pm."
+          },
+          "source_ids": [
+            "grownyc"
+          ],
+          "verified_at": "2026-11-10",
+          "id": "clothing-collection"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "grownyc",
+        "url": "https://grownyc.org/locations/sunnyside-greenmarket/",
+        "title": "Sunnyside Greenmarket | GrowNYC",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.access",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.programs"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  }
+]

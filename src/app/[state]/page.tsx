@@ -250,7 +250,9 @@ export default async function StateHubPage({ params }: StatePageProps) {
               >
                 {data.mapPoints.length > 0 && (
                   <div>
-                    <h2 className="mb-4 text-xl font-bold tracking-tight sm:text-2xl">Map</h2>
+                    {/* The map needs no label to be recognised; the heading
+                        stays for screen readers and the page outline. */}
+                    <h2 className="sr-only">Map of farmers markets in {data.regionFull}</h2>
                     <div className="h-72 sm:h-96 lg:h-[30rem]">
                       <LazyPlacesMap
                         places={data.mapPoints}

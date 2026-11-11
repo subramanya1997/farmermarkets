@@ -1,0 +1,1747 @@
+[
+  {
+    "id": 310683,
+    "market_name": "Northampton Saturday Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-04-25",
+            "end_date": "2026-11-14"
+          },
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "13:00",
+              "start_date": "2026-04-25",
+              "end_date": "2026-11-14"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "payments": {
+        "methods": [
+          {
+            "id": "debit",
+            "value": {
+              "code": "debit_card"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "credit",
+            "value": {
+              "code": "credit_card"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ],
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt",
+              "name": "EBT"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic",
+              "name": "WIC",
+              "redemption_instructions": "Accepted by several vendors, not all."
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "senior-coupons",
+            "value": {
+              "code": "sfmnp",
+              "name": "Senior Coupons",
+              "redemption_instructions": "Accepted by several vendors, not all."
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ],
+        "incentives": [
+          {
+            "id": "hip",
+            "value": {
+              "name": "Healthy Incentives Program (HIP)",
+              "kind": "bonus",
+              "eligibility": "SNAP shoppers",
+              "note": "Several vendors accept HIP.",
+              "url": "http://www.mass.gov/agr/massgrown/hip.htm"
+            },
+            "source_ids": [
+              "home"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "policies": [
+        {
+          "id": "weather",
+          "value": {
+            "code": "weather",
+            "rule": "rain_or_shine"
+          },
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ],
+      "vendors": {
+        "directory_url": {
+          "value": "https://www.northamptonfarmersmarket.com/current-vendors.html",
+          "source_ids": [
+            "vendors"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "attendance_is_dynamic": {
+          "value": true,
+          "source_ids": [
+            "vendors"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster_context": {
+          "value": {
+            "label": "Current Vendors",
+            "as_of": "2026-11-10"
+          },
+          "source_ids": [
+            "vendors"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster": [
+          {
+            "id": "intervale-farm",
+            "value": {
+              "name": "Intervale Farm",
+              "categories": [
+                "eggs",
+                "plants",
+                "flower arrangements",
+                "produce"
+              ],
+              "website": "http://www.intervalefamilyfarm.com"
+            },
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "twin-oaks-farm",
+            "value": {
+              "name": "Twin Oaks Farm",
+              "categories": [
+                "fig trees",
+                "house plants",
+                "succulents",
+                "veggie starts",
+                "seasonal organic vegetables and figs"
+              ]
+            },
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "hobbit-hollow-herbals",
+            "value": {
+              "name": "Hobbit Hollow Herbals",
+              "categories": [
+                "herbal beauty and home products"
+              ],
+              "social_url": "https://www.instagram.com/Hobbithollowherbals/"
+            },
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "pepin-farm",
+            "value": {
+              "name": "Pepin Farm",
+              "categories": [
+                "vegetables",
+                "strawberries",
+                "asparagus",
+                "sweet corn"
+              ]
+            },
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "white-house-farm",
+            "value": {
+              "name": "White House Farm",
+              "categories": [
+                "plants",
+                "produce",
+                "flower arrangements"
+              ],
+              "website": "http://www.whitehousefarmma.com"
+            },
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "zawalick-s-sugar-house",
+            "value": {
+              "name": "Zawalick's Sugar House",
+              "categories": [
+                "maple syrup",
+                "maple candies",
+                "maple cream"
+              ]
+            },
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "id": "produce",
+            "value": {
+              "code": "fresh_produce",
+              "label": "Seasonal vegetables, greens and fruit"
+            },
+            "source_ids": [
+              "about"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "eggs",
+            "value": {
+              "code": "eggs"
+            },
+            "source_ids": [
+              "about"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "flowers",
+            "value": {
+              "code": "flowers",
+              "label": "Flower bouquets"
+            },
+            "source_ids": [
+              "about"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "bread",
+            "value": {
+              "code": "baked_goods",
+              "label": "Fresh baked bread"
+            },
+            "source_ids": [
+              "about"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "maple",
+            "value": {
+              "code": "other",
+              "label": "Maple syrup"
+            },
+            "source_ids": [
+              "about"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "herbal",
+            "value": {
+              "code": "other",
+              "label": "Herbal products"
+            },
+            "source_ids": [
+              "about"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "plants",
+            "value": {
+              "code": "other",
+              "label": "Garden and house plants, herbs and vegetable starts (spring)"
+            },
+            "source_ids": [
+              "about"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ],
+        "items": [
+          {
+            "id": "asparagus",
+            "value": "Asparagus",
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "sweet-corn",
+            "value": "Sweet corn",
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "strawberries",
+            "value": "Strawberries",
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "figs",
+            "value": "Figs and fig trees",
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "maple-cream",
+            "value": "Maple candies and maple cream",
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "succulents",
+            "value": "Succulents",
+            "source_ids": [
+              "vendors"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "season-2026",
+          "value": {
+            "topic": "arrival",
+            "answer": "The 2026 market runs every Saturday, 8am to 1pm, rain or shine, from April 25 through November 14. November 14 is the last Saturday listed on the market site, which does not list a winter market."
+          },
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        {
+          "id": "payments",
+          "value": {
+            "topic": "payments",
+            "answer": "The market accepts EBT, debit and credit cards. Several vendors also take WIC, Senior Coupons and the HIP program."
+          },
+          "source_ids": [
+            "home"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        {
+          "id": "what-is-sold",
+          "value": {
+            "topic": "products",
+            "answer": "Expect maple syrup, eggs, flower bouquets, fresh baked bread, seasonal vegetables, greens, fruit and herbal products. Farming is seasonal, so ask vendors when specific produce will be in."
+          },
+          "source_ids": [
+            "about",
+            "vendors"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "home",
+        "url": "https://www.northamptonfarmersmarket.com/",
+        "title": "Northampton Farmers' Market - Home",
+        "fields": [
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.policies",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "about",
+        "url": "https://www.northamptonfarmersmarket.com/about.html",
+        "title": "ABOUT - Northampton Farmers' Market",
+        "fields": [
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "vendors",
+        "url": "https://www.northamptonfarmersmarket.com/current-vendors.html",
+        "title": "Current Vendors - Northampton Farmers' Market",
+        "fields": [
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": 309909,
+    "market_name": "Oak Park Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Village of Oak Park",
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Chicago",
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-05-23",
+            "end_date": "2026-11-14"
+          },
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "07:00",
+              "closes": "13:00",
+              "start_date": "2026-05-23",
+              "end_date": "2026-11-14",
+              "location_note": "Pilgrim Church parking lot, 460 Lake St., one block west of Ridgeland Avenue"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "payments": {
+        "methods": [
+          {
+            "id": "cash",
+            "value": {
+              "code": "cash",
+              "label": "Cash (all vendors)"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "debit",
+            "value": {
+              "code": "debit_card",
+              "label": "Debit cards (nearly all vendors)"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "credit",
+            "value": {
+              "code": "credit_card",
+              "label": "Credit cards (nearly all vendors)"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ],
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt",
+              "name": "SNAP/Link",
+              "redemption_instructions": "Pay for your items with your Link card at the Market Information booth, get a stamped receipt, then collect your items from the vendor. All vendors selling SNAP-eligible items accept Link."
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "sfmnp",
+            "value": {
+              "code": "sfmnp",
+              "name": "Senior Farmers' Market Nutrition Program coupons"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic",
+              "name": "WIC",
+              "redemption_instructions": "Accepted by the vendors marked WIC in the vendor list."
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ],
+        "incentives": [
+          {
+            "id": "snap-match",
+            "value": {
+              "name": "SNAP matching coupons",
+              "kind": "match",
+              "eligibility": "SNAP/Link shoppers",
+              "note": "The market matches every dollar of SNAP benefits spent with a matching coupon."
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "access": {
+        "parking": {
+          "availability": {
+            "value": "yes",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          "cost": {
+            "value": "free",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          "accessible_spaces": {
+            "value": "yes",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          "location_note": {
+            "value": "Free parking in the Oak Park River Forest High School garage on Scoville Avenue, which has accessible spaces. Customer parking on the north side of Lake Street from Scoville to Elmwood is prohibited. Limited accessible street parking is on Lake Street just south of the market.",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        }
+      },
+      "amenities": [
+        {
+          "id": "live-music",
+          "value": {
+            "code": "live_music",
+            "availability": "yes",
+            "note": "Live bluegrass by local musicians, with tables where you can sit and eat donuts."
+          },
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ],
+      "policies": [
+        {
+          "id": "pets",
+          "value": {
+            "code": "pets",
+            "rule": "not_allowed",
+            "note": "State health codes prohibit pets of any kind on market premises during market hours."
+          },
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ],
+      "vendors": {
+        "roster_context": {
+          "value": {
+            "label": "2026 Market Vendor Information",
+            "as_of": "2026-11-10"
+          },
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster": [
+          {
+            "id": "barry-s-berries",
+            "value": {
+              "name": "Barry's Berries",
+              "categories": [
+                "fruit",
+                "vegetables"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "breadman-baking-co",
+            "value": {
+              "name": "Breadman Baking Co.",
+              "categories": [
+                "artisan bread",
+                "baked goods"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "brian-severson-farms",
+            "value": {
+              "name": "Brian Severson Farms",
+              "categories": [
+                "organic heirloom grains",
+                "flours",
+                "grits",
+                "oats"
+              ],
+              "attendance_note": "Sold at the Breadman Baking Co. booth."
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "brunkow-cheese",
+            "value": {
+              "name": "Brunkow Cheese",
+              "categories": [
+                "cheese",
+                "butter"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "chanticlare-farm",
+            "value": {
+              "name": "Chanticlare Farm",
+              "categories": [
+                "organically grown vegetables",
+                "flowers"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "chao-farm",
+            "value": {
+              "name": "Chao Farm",
+              "categories": [
+                "vegetables",
+                "flowers"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "finn-s-ranch",
+            "value": {
+              "name": "Finn's Ranch",
+              "categories": [
+                "pasture-raised meat",
+                "eggs"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "geneva-lakes-produce",
+            "value": {
+              "name": "Geneva Lakes Produce",
+              "categories": [
+                "fruit",
+                "vegetables",
+                "flowers",
+                "plants"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "hardin-farms",
+            "value": {
+              "name": "Hardin Farms",
+              "categories": [
+                "fruit",
+                "vegetables"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "hook-point-fisheries",
+            "value": {
+              "name": "Hook Point Fisheries",
+              "categories": [
+                "wild salmon"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "j2k-capraio-farmstead-dairy-and-artisan-creamery",
+            "value": {
+              "name": "J2K Capraio Farmstead Dairy & Artisan Creamery",
+              "categories": [
+                "goat and cow cheeses"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "jake-s-country-meats",
+            "value": {
+              "name": "Jake's Country Meats",
+              "categories": [
+                "heritage-breed meat",
+                "eggs"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "johanson-s-apple-world",
+            "value": {
+              "name": "Johanson's Apple World",
+              "categories": [
+                "fruit",
+                "vegetables",
+                "cider"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "katich-breads",
+            "value": {
+              "name": "Katich Breads",
+              "categories": [
+                "bread"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "khang-s-family-farm",
+            "value": {
+              "name": "Khang's Family Farm",
+              "categories": [
+                "vegetables",
+                "flowers"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "lyman-ave-bread",
+            "value": {
+              "name": "Lyman Ave. Bread",
+              "categories": [
+                "sourdough and seeded breads"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "nichols-farm-and-orchard",
+            "value": {
+              "name": "Nichols Farm & Orchard",
+              "categories": [
+                "fruit",
+                "vegetables",
+                "dry beans"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "old-gaffer-s-garden",
+            "value": {
+              "name": "Old Gaffer's Garden",
+              "categories": [
+                "lettuces",
+                "salads",
+                "microgreens"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "redleg-farms",
+            "value": {
+              "name": "Redleg Farms",
+              "categories": [
+                "fruit",
+                "vegetables",
+                "preserves",
+                "eggs",
+                "honey"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "river-valley-ranch",
+            "value": {
+              "name": "River Valley Ranch",
+              "categories": [
+                "organic mushrooms",
+                "salsa",
+                "pickles",
+                "spreads"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "sharpening-by-dave",
+            "value": {
+              "name": "Sharpening by Dave",
+              "categories": [
+                "knife, scissor and garden tool sharpening"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "skibbe-farms",
+            "value": {
+              "name": "Skibbe Farms",
+              "categories": [
+                "fruit",
+                "vegetables",
+                "cider",
+                "plants"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "r-smits-and-sons-the-farm",
+            "value": {
+              "name": "R. Smits & Sons \"The Farm\"",
+              "categories": [
+                "fruit",
+                "vegetables"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "smits-organics",
+            "value": {
+              "name": "Smits Organics",
+              "categories": [
+                "organic flowers",
+                "vegetables",
+                "potted plants"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "stovers-farm-market",
+            "value": {
+              "name": "Stovers Farm Market",
+              "categories": [
+                "fruit",
+                "vegetables",
+                "honey",
+                "dried fruit"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "sunny-ridge-farms",
+            "value": {
+              "name": "Sunny Ridge Farms",
+              "categories": [
+                "grass-fed lamb, beef, pork and chicken"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "three-bees",
+            "value": {
+              "name": "Three Bees",
+              "categories": [
+                "honey"
+              ]
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "id": "produce",
+            "value": {
+              "code": "fresh_produce"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "meat",
+            "value": {
+              "code": "meat"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "eggs",
+            "value": {
+              "code": "eggs"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "cheese",
+            "value": {
+              "code": "dairy",
+              "label": "Cheese and butter"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "bread",
+            "value": {
+              "code": "baked_goods",
+              "label": "Bread and baked goods"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "flowers",
+            "value": {
+              "code": "flowers"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "honey",
+            "value": {
+              "code": "honey"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "preserves",
+            "value": {
+              "code": "preserves"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "fish",
+            "value": {
+              "code": "other",
+              "label": "Wild salmon"
+            },
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ],
+        "items": [
+          {
+            "id": "donuts",
+            "value": "Donuts (often sell out before noon)",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "cider",
+            "value": "Apple cider",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "mushrooms",
+            "value": "Organic mushrooms",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "microgreens",
+            "value": "Microgreens",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "heirloom-grains",
+            "value": "Heirloom grains and flours",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "dry-beans",
+            "value": "Dry beans",
+            "source_ids": [
+              "village-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "season-2026",
+          "value": {
+            "topic": "arrival",
+            "answer": "The 2026 market runs Saturdays 7am to 1pm from May 23 through November 14, in the Pilgrim Church lot at 460 Lake St. November 14 is the last market of the season."
+          },
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        {
+          "id": "parking",
+          "value": {
+            "topic": "parking",
+            "answer": "Park free in the Oak Park River Forest High School garage on Scoville Avenue. Customer parking on the north side of Lake Street from Scoville to Elmwood is prohibited."
+          },
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        {
+          "id": "link",
+          "value": {
+            "topic": "payments",
+            "answer": "Pay with your Link card at the Market Information booth, get a stamped receipt, and pick up from the vendor. The market matches every SNAP dollar with a coupon."
+          },
+          "source_ids": [
+            "village-page"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "village-page",
+        "url": "https://www.oak-park.us/Community/Events-and-Activities/Oak-Park-Farmers-Market",
+        "title": "Oak Park Farmers' Market | Village of Oak Park",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.access",
+          "first_party.amenities",
+          "first_party.policies",
+          "first_party.vendors",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": "gov:us_dc_farmers_markets:{9CD2DC31-96B4-4DDD-9399-749D45A33EA3}",
+    "market_name": "FRESHFARM Cleveland Park",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "FRESHFARM",
+          "source_ids": [
+            "market-page"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/New_York",
+          "source_ids": [
+            "market-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2026-04-04",
+            "end_date": "2026-12-19"
+          },
+          "source_ids": [
+            "market-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "09:00",
+              "closes": "13:00",
+              "start_date": "2026-04-04",
+              "end_date": "2026-12-19",
+              "location_note": "3400 Connecticut Ave NW"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt",
+              "name": "SNAP/EBT"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic",
+              "name": "WIC"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "senior-fmnp",
+            "value": {
+              "code": "sfmnp",
+              "name": "Senior FMNP checks"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ],
+        "incentives": [
+          {
+            "id": "freshmatch",
+            "value": {
+              "name": "FreshMatch",
+              "kind": "match",
+              "input_amount": 1,
+              "benefit_amount": 1,
+              "currency": "USD",
+              "eligibility": "Shoppers using federal benefits",
+              "note": "A dollar-for-dollar match on all federal benefits spent at market."
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "vendors": {
+        "roster_context": {
+          "value": {
+            "label": "Market Farmers & Producers",
+            "as_of": "2026-11-10"
+          },
+          "source_ids": [
+            "market-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        "roster": [
+          {
+            "id": "atwater-s",
+            "value": {
+              "name": "Atwater's"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "bites-of-beirut",
+            "value": {
+              "name": "Bites of Beirut"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "cold-country-salmon",
+            "value": {
+              "name": "Cold Country Salmon"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "garner-s-produce",
+            "value": {
+              "name": "Garner's Produce"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "happy-vibes-farm",
+            "value": {
+              "name": "Happy Vibes Farm"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "kuhn-orchards",
+            "value": {
+              "name": "Kuhn Orchards"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "marcos-produce",
+            "value": {
+              "name": "Marcos' Produce"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "snarfies",
+            "value": {
+              "name": "Snarfies"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "stone-pillar-farm",
+            "value": {
+              "name": "Stone Pillar Farm"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "toimoi-bakery",
+            "value": {
+              "name": "TOIMOI Bakery"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "zeke-s-coffee",
+            "value": {
+              "name": "Zeke's Coffee"
+            },
+            "source_ids": [
+              "market-page"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "season-2026",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market is open Saturdays 9am to 1pm, April 4 through December 19, at 3400 Connecticut Ave NW. It stays open into December this year."
+          },
+          "source_ids": [
+            "market-page"
+          ],
+          "verified_at": "2026-11-10"
+        },
+        {
+          "id": "benefits",
+          "value": {
+            "topic": "payments",
+            "answer": "The market accepts SNAP/EBT, WIC and Senior FMNP checks. FreshMatch gives a dollar-for-dollar match on federal benefits spent at market."
+          },
+          "source_ids": [
+            "market-page"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "market-page",
+        "url": "https://www.freshfarm.org/markets/cleveland-park",
+        "title": "Cleveland Park - FRESHFARM",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.vendors",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": "gov:ca_on_farmers_markets:154",
+    "market_name": "Cobden Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "policies": [
+        {
+          "id": "weather",
+          "value": {
+            "code": "weather",
+            "rule": "rain_or_shine"
+          },
+          "source_ids": [
+            "township-event"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ],
+      "amenities": [
+        {
+          "id": "live-music",
+          "value": {
+            "code": "live_music",
+            "availability": "yes",
+            "note": "Live music most weeks."
+          },
+          "source_ids": [
+            "township-event"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ],
+      "products": {
+        "categories": [
+          {
+            "id": "produce",
+            "value": {
+              "code": "fresh_produce",
+              "label": "Garden produce (vendor on site every second week)"
+            },
+            "source_ids": [
+              "township-event"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "baked",
+            "value": {
+              "code": "baked_goods"
+            },
+            "source_ids": [
+              "township-event"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "meat",
+            "value": {
+              "code": "meat",
+              "label": "Frozen meats"
+            },
+            "source_ids": [
+              "township-event"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "preserves",
+            "value": {
+              "code": "preserves",
+              "label": "Jams and preserves"
+            },
+            "source_ids": [
+              "township-event"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "crafts",
+            "value": {
+              "code": "crafts",
+              "label": "Wood crafts and furniture, home decor, sewing and knitted items, jewelry, soaps, candles"
+            },
+            "source_ids": [
+              "township-event"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "plants",
+            "value": {
+              "code": "other",
+              "label": "Plants"
+            },
+            "source_ids": [
+              "township-event"
+            ],
+            "verified_at": "2026-11-10"
+          },
+          {
+            "id": "food",
+            "value": {
+              "code": "prepared_food",
+              "label": "Breakfast food and BBQ lunch"
+            },
+            "source_ids": [
+              "township-event"
+            ],
+            "verified_at": "2026-11-10"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "what-is-sold",
+          "value": {
+            "topic": "products",
+            "answer": "A garden produce vendor comes every second week. Other vendors, inside and out, bring baked goods, frozen meats, jams, plants and crafts, with breakfast and a BBQ lunch on site. This is from a township listing posted in August 2024."
+          },
+          "source_ids": [
+            "township-event"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "township-event",
+        "url": "https://www.whitewaterregion.ca/events/cobden-farmer-s-market-4807.html",
+        "title": "Cobden Farmer's Market, Township of Whitewater Region",
+        "fields": [
+          "first_party.policies",
+          "first_party.amenities",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  },
+  {
+    "id": 308442,
+    "market_name": "Asu Tempe Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-10",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "status": {
+          "value": {
+            "value": "permanently_closed",
+            "effective_date": "2017-03-13",
+            "note": "ASU News reported on March 13, 2017 that the Fresh and Local Market, held Thursdays outside the Sun Devil Fitness Complex, replaces the old farmers market at ASU."
+          },
+          "source_ids": [
+            "asu-news-2017"
+          ],
+          "verified_at": "2026-11-10"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "asu-news-2017",
+        "url": "https://news.asu.edu/20170313-fresh-and-local-market-now-open-asus-tempe-campus",
+        "title": "Fresh and Local Market now open on ASU's Tempe campus | ASU News",
+        "fields": [
+          "first_party.operations.status"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-10"
+      }
+    ]
+  }
+]

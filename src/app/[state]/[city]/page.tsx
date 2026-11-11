@@ -15,6 +15,7 @@ import { absoluteUrl } from '@/lib/site';
 import { SITE_FRAME } from "@/lib/ui";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { CityPromptContext } from "@/components/CityPromptContext";
+import { PageQuestion } from "@/components/PageQuestion";
 
 export const revalidate = 86400;
 // Only the cities in the geo index exist; see the note on the state hub for
@@ -226,7 +227,9 @@ export default async function CityPage({ params }: CityPageProps) {
         <section className="w-full bg-white py-6 sm:py-8 dark:bg-zinc-900">
           <div className={`${SITE_FRAME} space-y-12`}>
             <div id="markets" className="scroll-mt-24">
-              <h2 className="mb-4 text-xl font-bold tracking-tight sm:text-2xl">
+              {/* With one market the heading only repeats the page title, so
+                  it stays for screen readers and the outline but is not shown. */}
+              <h2 className={data.marketCount === 1 ? 'sr-only' : 'mb-4 text-xl font-bold tracking-tight sm:text-2xl'}>
                 {data.marketCount === 1
                   ? `The farmers market in ${data.city.name}`
                   : `All ${data.marketCount} farmers markets in ${data.city.name}`}
@@ -243,6 +246,8 @@ export default async function CityPage({ params }: CityPageProps) {
             {data.guide && <CityGuide guide={data.guide} />}
 
             <FaqSection items={data.faqs} />
+
+            <PageQuestion kind="city" place={data.city.name} />
 
             {data.nearby.length > 0 && (
               <NearbyMarkets
