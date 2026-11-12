@@ -1,4 +1,5 @@
 import type { FarmerMarket } from '@/lib/api';
+import { GoogleMapsIcon } from '@/components/GoogleMapsIcon';
 import { LazyPlacesMap } from '@/components/LazyPlacesMap';
 import { TrackedExternalLink } from '@/components/TrackedExternalLink';
 import { displayName, marketAddressParts } from '@/lib/seo';
@@ -58,10 +59,11 @@ export default function MarketLocationMap({ market, height = '300px' }: MarketLo
             href={directionsUrl(market, latitude, longitude)}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 rounded-full bg-green-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-green-800"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-green-700 py-2 pl-2.5 pr-4 text-sm font-semibold text-white transition-colors hover:bg-green-800"
             eventName="Market Directions Opened"
             eventProperties={{ market_slug: market.slug, destination: 'google-maps', placement: 'map-card' }}
           >
+            <GoogleMapsIcon />
             Directions
           </TrackedExternalLink>
         </div>

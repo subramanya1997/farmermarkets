@@ -58,6 +58,34 @@ When a source starts listing the same market (same name and city, ignoring
 id: delete the added row and move its research to that id. The scheduled
 refresh keeps the source row and skips the added one with a warning.
 
+## Register batches
+
+`register-*.json` files hold facts read in bulk from public registers and from
+each market's own home page. They are limited to contact links and the USDA
+SNAP flag, and unlike research batches they may name a market that already has
+research: the build only fills gaps, and a researched value always wins.
+
+| Batch | Source | Adds |
+| --- | --- | --- |
+| `register-snap.json` | USDA SNAP Retailer Locator, store type Farmers and Markets | `payment.food_assistance.snap` |
+| `register-overture.json` | Overture Maps places | Facebook page, phone, website (only when the listing has none) |
+| `register-market-websites.json` | The listing's own home page | the market's Facebook and Instagram profiles |
+
+```bash
+npm run data:register:snap
+npm run data:register:overture -- --input overture_us.json   # export with scripts/overture-places.sql
+npm run data:register:websites
+npm run data:enrichment
+```
+
+A register row is matched to a listing only when the distinctive words of both
+names are the same within 1 km, or mostly the same within 250 m, and each is
+the other's single best candidate. A profile found on a market's site is kept
+only when its handle reads as the market itself; a profile that appears on
+more than one listing is dropped as an operator's or a city's page. Each
+command rebuilds its batch from scratch, so rerun all three in the order
+above after a source refresh.
+
 ## Archived audit workspaces
 
 The completed `audit/` and `site-audit/` workspaces are compressed under

@@ -7,6 +7,7 @@ import { validateRichEnrichment } from './lib/rich-enrichment-validation.mjs';
 import { marketNamesEquivalent } from './lib/market-name-equivalence.mjs';
 import { readAddedMarkets } from './lib/added-markets.mjs';
 import { mergeRichRecords } from './lib/rich-enrichment-merge.mjs';
+import { mergeRegisterRecord, registerRecordProblems } from './lib/register-merge.mjs';
 import {
   hasConflictingUnqualifiedSeasonalHours,
   isCanonicalSocialProfileUrl,
@@ -362,12 +363,40 @@ export async function buildMarketEnrichment() {
     }
   }
 
+  // Register batches fill gaps (contact links, the USDA SNAP flag) from public
+  // registers. They may name a market that already has research; researched
+  // values win and the register only adds what is missing.
+  const registerFiles = names.filter((name) => /^register-.+\.json$/.test(name)).sort();
+  for (const file of registerFiles) {
+    const parsed = JSON.parse(await fs.readFile(path.join(enrichmentDir, file), 'utf8'));
+    if (!Array.isArray(parsed)) fail(`${file} must contain a top-level array`);
+    const seen = new Set();
+    for (const [index, record] of parsed.entries()) {
+      const label = `${file}[${index}]`;
+      if (skipStale && record && typeof record === 'object') {
+        const market = marketsById.get(String(record.id));
+        if (!market || !marketNamesEquivalent(record.market_name, market.name)) {
+          stale.push(`${label} ${record.id}: register names ${JSON.stringify(record.market_name)}, source now has ${market ? JSON.stringify(market.name) : 'no such market'}`);
+          continue;
+        }
+      }
+      const problems = registerRecordProblems(record);
+      if (problems.length) fail(`${label} is not a register record: ${problems.join('; ')}`);
+      validateRecord(record, label, marketsById);
+      const id = String(record.id);
+      if (seen.has(id)) fail(`${file} lists ${id} twice`);
+      seen.add(id);
+      const existing = recordsById.get(id);
+      recordsById.set(id, existing ? mergeRegisterRecord(existing, { ...record, id }) : { ...record, id, verification_scope: 'partial' });
+    }
+  }
+
   const records = [...recordsById.values()];
   records.sort((left, right) => left.id.localeCompare(right.id, 'en'));
   records.forEach((record, index) => validateRecord(record, `compiled[${index}]`, marketsById));
 
   for (const line of stale) console.warn(`enrichment: skipped stale record ${line}`);
-  console.log(`validated ${records.length} independently enriched markets from ${files.length} research batches${stale.length ? ` (${stale.length} stale skipped)` : ''}`);
+  console.log(`validated ${records.length} independently enriched markets from ${files.length} research and ${registerFiles.length} register batches${stale.length ? ` (${stale.length} stale skipped)` : ''}`);
   return records;
 }
 

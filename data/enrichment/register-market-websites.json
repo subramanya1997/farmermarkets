@@ -1,0 +1,6214 @@
+[
+ {
+  "id": "300010",
+  "market_name": "Bastrop 1832 Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/bastropfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Bastrop 1832 Farmers Market",
+    "url": "https://www.bastrop1832farmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300053",
+  "market_name": "Salamanca Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/salamancafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "CITY OF SALAMANCA, NY - Home",
+    "url": "https://www.salamancany.gov/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300109",
+  "market_name": "Solana Beach Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/SolanaBeachFarmersMarket",
+    "https://www.instagram.com/solanabeachfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "SBFM",
+    "url": "https://www.solanabeachfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300132",
+  "market_name": "Plymouth Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/PlymouthINFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Plymouth Farmers Market",
+    "url": "https://plymouthfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300145",
+  "market_name": "Saline Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/salinefarmersmarket",
+    "https://www.instagram.com/salinefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Saline, MI",
+    "url": "https://www.cityofsaline.org/departments/farmers_market/index.php",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300235",
+  "market_name": "Homer Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/homerakfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Homer Farmers Market in Homer, Alaska",
+    "url": "http://www.homerfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300290",
+  "market_name": "North Square Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/northsquarefarmersmarket",
+    "https://www.instagram.com/northsquarefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "North Square Farmers Market - Home",
+    "url": "http://www.northsquarefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300300",
+  "market_name": "Queen Anne Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/QAFarmersMkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Queen Anne Farmers Market",
+    "url": "https://qafm.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300319",
+  "market_name": "Northeast Washington (New) Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/newfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Northeast Washington Farmers Market in Colville, Washington",
+    "url": "https://www.newfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300543",
+  "market_name": "Portland Farmers Market - Lents International",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/portlandfarmers"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Lents International Farmers Market - Portland Farmers Market",
+    "url": "https://www.portlandfarmersmarket.org/our-markets/lents-international/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300554",
+  "market_name": "Bremerton Community Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/BremertonMarket",
+    "https://www.instagram.com/bremertonfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Fresh Local | Bremerton Community Farmers Market",
+    "url": "http://www.bremertoncommunityfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300562",
+  "market_name": "Downtown Novato Community Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/downtownnovatofarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Agricultural Community Events Farmers Markets | Sonoma & Marin County",
+    "url": "http://www.ilovefarmersmarkets.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300571",
+  "market_name": "Rohnert Park Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/rohnertparkfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Agricultural Community Events Farmers Markets | Sonoma & Marin County",
+    "url": "http://www.ilovefarmersmarkets.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300587",
+  "market_name": "Sedalia Area Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/sedalia_farmers_market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Sedalia Area Farmers' Market - Home",
+    "url": "http://www.sedaliaareafarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300859",
+  "market_name": "Glenwood Sunday Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/glenwoodsunday"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Glennwood Sunday Market Your Rogers Park Farmers Market",
+    "url": "https://glenwoodsundaymarket.rpba.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "300953",
+  "market_name": "Bay Area Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/bayareafarmersmarket",
+    "https://www.instagram.com/bayareafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Bay Area Farmers Market Group |True Farmers Market |Texas",
+    "url": "https://bayareafarmersmarketgroup.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301067",
+  "market_name": "Northside Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/northsidefm",
+    "https://www.instagram.com/northsidefm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Northside Farmers Market",
+    "url": "http://www.northsidefm.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301072",
+  "market_name": "Clinton Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/ClintonNYFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Clinton Farmers’ Market - Clinton Chamber of Commerce - Clinton Chamber of Commerce",
+    "url": "https://clintonnychamber.org/farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301084",
+  "market_name": "Montavilla Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/MontavillaMarket",
+    "https://www.instagram.com/montavillafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Montavilla Farmers Market",
+    "url": "http://www.montavillamarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301094",
+  "market_name": "Murrysville Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Murrysville-Farmers-Market-452857878198702"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers' Market | Murrysville, PA",
+    "url": "https://www.murrysville.com/190/Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301096",
+  "market_name": "Indiana County Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/indianafarmmarket",
+    "https://www.instagram.com/indianafarmmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Indiana County Farmers' Market OPEN 9AM 12PM SATURDAYS",
+    "url": "https://indianafarmmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301154",
+  "market_name": "Hillsboro Farmers’ Markets - Downtown Hillsboro",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/hillsboromarkets",
+    "https://www.instagram.com/hillsboromarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Hillsboro Farmers' Markets - Hillsboro, Oregon",
+    "url": "http://hillsboromarkets.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301167",
+  "market_name": "Shelby County Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/shelbycofarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market I Mainstreet Shelbyville, Indiana",
+    "url": "https://mainstreetshelbyville.org/farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301185",
+  "market_name": "Pittsfield Township Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/pittsfieldtwpfarmersmarket",
+    "https://www.instagram.com/pittsfieldtwpfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Pittsfield Township Farmers Market | Pittsfield Charter Township, MI - Official Website",
+    "url": "https://www.pittsfield-mi.gov/760/Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301221",
+  "market_name": "Andover Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/andovermafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Andover Farmers Market",
+    "url": "https://andoverfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301280",
+  "market_name": "East Hollywood Certified Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/ehfarmersmkt",
+    "https://www.instagram.com/ehfarmersmkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "East Hollywood Certified Farmers' Market",
+    "url": "http://www.ehfarmersmkt.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301308",
+  "market_name": "Phoenix Hill NuLu Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/PhoenixHillNuLuFarmersMarket",
+    "https://www.instagram.com/phoenixhillnulufarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Phoenix Hill Nulu Farmers Market",
+    "url": "https://phoenixhillnulufarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301320",
+  "market_name": "Beverly Hills Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/BHFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers' Market | Beverly Hills, CA",
+    "url": "https://www.beverlyhills.org/488/Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301334",
+  "market_name": "Brookline Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/brooklinefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Brookline Farmers Market",
+    "url": "https://www.brooklinefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301340",
+  "market_name": "Route One Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/route1farmersmarket",
+    "https://www.instagram.com/route1farmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Route One Farmers Market",
+    "url": "https://www.routeonefarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301413",
+  "market_name": "Southwest Plaza Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/denverfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Metro Denver Farmers Market Local Farmers Market",
+    "url": "https://www.denverfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301417",
+  "market_name": "Crawfordsville Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/crawfordsvilleinfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers' Market | Crawfordsville, IN",
+    "url": "https://www.crawfordsville.in.gov/334/Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301426",
+  "market_name": "Wallingford Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/sfmamarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Wallingford Farmers Market SFMA",
+    "url": "https://www.sfmamarkets.com/visit-wallingford-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301435",
+  "market_name": "Freight House Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/freighthousefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | Freight House Farmers' Market | United States",
+    "url": "https://www.freighthousefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301473",
+  "market_name": "Ohio Valley Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/ovfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Ohio Valley Farmers Market Established 1979",
+    "url": "http://ovfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301524",
+  "market_name": "Pretzel Park Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/pretzelparkfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Friends of Pretzel Park",
+    "url": "http://www.friendsofpretzelpark.org/farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301553",
+  "market_name": "Ft. Thomas Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/fortthomasfarmersmarket",
+    "https://www.instagram.com/fortthomasfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Fort Thomas Farmers Market",
+    "url": "https://www.fortthomasfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301568",
+  "market_name": "MT.Washington Farmer’s Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/mtwashingtonfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market",
+    "url": "https://www.mtwashingtonky.org/residents/farmers_market.php",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301586",
+  "market_name": "Farmers Market Partners",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/farmersmarketpartners"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market in Missouri City - Sugar Land, Texas",
+    "url": "http://farmersmarketpartners.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301595",
+  "market_name": "Salem Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/SalemMAFarmersMarket",
+    "https://www.instagram.com/salemmafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Salem Farmers' Market",
+    "url": "http://salemfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301598",
+  "market_name": "Texas Farmers’ Market at Mueller",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/texasfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Texas Farmers' Market at Mueller Texas Farmers Market",
+    "url": "http://texasfarmersmarket.org/mueller/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301603",
+  "market_name": "Rocky Butte Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/RockyButteFarmersMarket",
+    "https://www.instagram.com/rockybuttefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Rocky Butte Farmers Market",
+    "url": "https://www.rockybuttemarket.com/?utm_source=google-gmb-maps&utm_medium=gmb-website-button&utm_campaign=locl.io&utm_content=8ed46da2-1700-4efb-bd21-102a7ca0f6e8",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301606",
+  "market_name": "Berwick Winter Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/berwickmainefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Berwick Winter Farmers' Market farms, food, community",
+    "url": "http://berwickfarmersmarket.wordpress.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301607",
+  "market_name": "Beaverdale Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/beaverdalefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Homepage - Beaverdale Farmers Market",
+    "url": "http://beaverdalefarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301614",
+  "market_name": "Cornelius Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/adelantefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Cornelius Adelante Farmers Market",
+    "url": "https://www.adelantefarmersmarket.org/cornelius",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301619",
+  "market_name": "Santa Rosa Certified Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/santarosaoriginalfarmersmarket",
+    "https://www.instagram.com/santarosafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "SANTA ROSA ORIGINAL CERTIFIED FARMERS MARKET - THE SANTA ROSA ORIGINAL CERTIFIED FARMERS MARKET",
+    "url": "http://www.thesantarosafarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301646",
+  "market_name": "Albany Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/albanyorfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home - Corvallis-Albany Farmers' Markets",
+    "url": "https://locallygrown.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301694",
+  "market_name": "Brattleboro Winter Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/brattwintermarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Brattleboro Winter Farmers Market",
+    "url": "https://www.brattleborowinterfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301730",
+  "market_name": "Enumclaw Plateau Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/EnumclawPlateauFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Enumclaw Plateau Farmers’ Market Bringing Enumclaw area farmers’ products to Enumclaw residents and visitors",
+    "url": "https://www.enumclawplateaufarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301763",
+  "market_name": "Dexter Winter Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/dextermarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Dexter Winter Farmers Market",
+    "url": "http://www.dextermarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "301792",
+  "market_name": "Mineral Farmer’s Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/MineralMarketVA"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Mineral Farmer's Market",
+    "url": "http://www.mineralmarket.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "307451",
+  "market_name": "Two Harbors Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/two_harbors_farmers_market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Two Harbors Farmers Market for Unique Local Goods - Two Harbors Farmers Market",
+    "url": "https://twoharborsfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "307988",
+  "market_name": "HealthPartners Clinic Stillwater",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/healthpartners"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Make an appointment | HealthPartners & Park Nicollet",
+    "url": "https://www.healthpartners.com/care/appointments/?utm_campaign=primarycare_locallistings_20m1_care_&utm_source=googlemybusiness_&utm_medium=organic&utm_content=stillwater-medical-group-clinic_scheduling_conversion&utm_term=_v1__",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "307993",
+  "market_name": "Hopkins Farmers’ Market - Winter",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/hopkinsfarmersmarket",
+    "https://www.instagram.com/hopkinsfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Hopkins Farmers Market - HOME",
+    "url": "http://www.hopkinsfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308008",
+  "market_name": "Linden Hills Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/lindenhillsfarmmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Linden Hills Farmers Market",
+    "url": "http://www.lindenhillsfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308276",
+  "market_name": "Alabama Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/AlabamaFarmersMarket",
+    "https://www.instagram.com/alabamafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Alabama Farmers Market - Home",
+    "url": "http://alabamafarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308293",
+  "market_name": "Calera Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/calerafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Calera Strawberry Festival",
+    "url": "https://www.calerafarmersmarket.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308300",
+  "market_name": "Coastal Alabama Farmers and Fishermen Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/CoastalAlabamaMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Coastal Alabama Farmers and Fishermen Market, Foley Alabama",
+    "url": "http://coastalalabamamarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308349",
+  "market_name": "Morgan County/Decatur Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/mcdfmarket",
+    "https://www.instagram.com/mcdfmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "MC/DF Market",
+    "url": "https://mcdfmarket.com/home",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308351",
+  "market_name": "MT Laurel Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/mtlaurel"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home Page | The Town of Mt Laurel",
+    "url": "https://mtlaurel.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308374",
+  "market_name": "The Market at Pepper Place",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/pepperplacefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Pepper Place Farmers Market",
+    "url": "https://pepperplacemarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308419",
+  "market_name": "Little Rock River Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/LRRiverMarket",
+    "https://www.instagram.com/rivermarketlr"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Little Rock, AR | River Market",
+    "url": "https://www.littlerock.com/river-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308476",
+  "market_name": "Kingman Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/KingmanFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | kingman Farmers Market",
+    "url": "https://www.kingmansmarketinthepark.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308477",
+  "market_name": "Lake Havasu Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/lakehavasufarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | LHFM",
+    "url": "https://www.lakehavasufarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308509",
+  "market_name": "Santa Cruz River Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/SantaCruzRiverFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Local Food Programs | Community Food Bank",
+    "url": "https://www.communityfoodbank.org/how-we-help/local-food/?utm_source=gbp&utm_medium=profile",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308519",
+  "market_name": "Sunnyside Farmers Market/Market of Dreams",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/marketofdreamsflagstaff"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Flagstaff Market of Dreams | Creating a vibrant multicultural community in Flagstaff, AZ.",
+    "url": "https://marketofdreams.info/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308545",
+  "market_name": "Alemany Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/alemanyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Alemany Farmers Market : Foodwise",
+    "url": "http://foodwise.org/alemany",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308580",
+  "market_name": "Brownsville Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/brownsvillefarmers"
+   ]
+  },
+  "sources": [
+   {
+    "title": "HOME | Brownsville FM",
+    "url": "http://brownsvillefarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308629",
+  "market_name": "Downtown Napa Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/NapaFarmersMarket",
+    "https://www.instagram.com/napafarmersmkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Napa Farmers Market",
+    "url": "http://www.napafarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308646",
+  "market_name": "Elk Grove/Laguna Certified Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/elkgrovefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Elk Grove Certified Farmers Market Alchemist CDC",
+    "url": "https://alchemistcdc.org/elkgrove/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308668",
+  "market_name": "Gilroy Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/gilroyfarmersmarket1"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Gilroy downtown West Coast Farmers Markets",
+    "url": "https://www.wcfma.org/gilroy",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308688",
+  "market_name": "Hawthorne del Aire Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/hawthornecertifiedfarmersmarket",
+    "https://www.instagram.com/hawthornefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Our Markets | Hawthorne Certified Farmers' Market",
+    "url": "https://www.locallafarmersmarkets.com/hawthornecertifiedfarmersmarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308753",
+  "market_name": "Manhattan Beach Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/mbfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers' Market Downtown Manhattan Beach",
+    "url": "https://www.downtownmanhattanbeach.com/manhattan-beach-farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308794",
+  "market_name": "Orangevale Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/OrangevaleFarmersMarket",
+    "https://www.instagram.com/orangevalefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Sactown Farmers Markets",
+    "url": "https://www.sactownfarmersmarkets.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308813",
+  "market_name": "Quincy Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/quincyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Quincy Farmers Market Your Farmers Market In The Lost Sierra",
+    "url": "https://quincy-farmers-market.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308842",
+  "market_name": "Buena Park Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Localharvestfarmersmarkets",
+    "https://www.instagram.com/local_harvest_farmers_markets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Local Harvest Farmers Markets Home - Local Harvest Farmers Markets",
+    "url": "https://localharvestfarmersmarkets.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308857",
+  "market_name": "Downtown Palo Alto Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/paloaltofarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Downtown Palo Alto Farmers' Market | Serving the community every Saturday",
+    "url": "https://www.pafarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308872",
+  "market_name": "LA Mesa Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/LaMesaVillageFarmersMarket",
+    "https://www.instagram.com/officiallamesafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "La Mesa Village Farmers Market",
+    "url": "http://www.lamesavillageassociation.org/la-mesa-village-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308877",
+  "market_name": "Los Gatos Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/losgatosfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Los Gatos Certified Farmers' Market California Farmers' Markets Association",
+    "url": "https://www.cafarmersmkts.com/losgatos-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308909",
+  "market_name": "San Leandro Farmers’ Market at Bayfair..",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/BayfairFarmersMkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "San Leandro Farmers' Market at Bayfair Center California Farmers' Markets Association",
+    "url": "http://cafarmersmkts.com/bayfair.html",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308947",
+  "market_name": "Sunday Walnut Creek Certified Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/walnutcreekfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Walnut Creek Market - Contra Costa Farmers' Markets",
+    "url": "https://www.cccfm.org/walnut-creek-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308954",
+  "market_name": "Tahoe City Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/tahoecityfarmersmarket",
+    "https://www.instagram.com/tahoecityfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Tahoe City Farmers Market | Discover Local Freshness – Shop Now",
+    "url": "http://tahoecityfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308971",
+  "market_name": "Turlock Certified Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/turlockmarket",
+    "https://www.instagram.com/turlockfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Turlock Certified Farmers Market",
+    "url": "http://turlockmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308989",
+  "market_name": "Vineyard Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/vineyardfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Vineyard Farmers Market - Produce, Artisan Purveyors",
+    "url": "http://www.vineyardfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "308990",
+  "market_name": "Visalia Downtown Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/visaliafarmersmarket",
+    "https://www.instagram.com/visaliafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home",
+    "url": "http://visaliafarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309015",
+  "market_name": "Arvada Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/afarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Arvada Farmers Market",
+    "url": "https://www.arvadafarmersmarket.com/#/arvadafm/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309029",
+  "market_name": "Carbondale Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/CarbondaleCOFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Carbondale Farmers' Market",
+    "url": "http://www.carbondalefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309105",
+  "market_name": "Old Colorado City Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/oldcoloradocityfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Old Colorado City Farmers Market | Bancroft Park | 2408 West Colorado Avenue, Colorado Springs, CO, USA",
+    "url": "https://www.pikespeakfarmersmarkets.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309159",
+  "market_name": "Cromwell Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/townofcromwellfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Mysite",
+    "url": "https://recreation59.wixsite.com/townofcromwellmarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309284",
+  "market_name": "Beaches Green Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/beachesgreenmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Dig Local Network Creating a better food future.",
+    "url": "http://www.diglocal.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309295",
+  "market_name": "City Island Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/daytonafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Downtown Daytona Beach Farmers Market at City Island - Florida Department of Agriculture & Consumer Services",
+    "url": "https://www.fdacs.gov/Consumer-Resources/Buy-Fresh-From-Florida/Community-Farmers-Markets/Downtown-Daytona-Beach-Farmers-Market-at-City-Island",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309310",
+  "market_name": "Downtown Farmers’ Curb Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/lkldcurbmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Curb Market | Downtown Lakeland",
+    "url": "http://downtownfarmerscurbmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309320",
+  "market_name": "Eau Gallie Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/spacecoastfarmers"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Space Coast Farmers Market Keeping Friends Close and Farmers Closer",
+    "url": "https://www.spacecoastfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309324",
+  "market_name": "Farmers’ Market Oceanside",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/FarmersMarketVeroBeach",
+    "https://www.instagram.com/verobeachfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Vero Beach Farmers Market",
+    "url": "https://www.verobeachfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309391",
+  "market_name": "Mid-Week Madeira Beach Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/tampabaymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Madeira Beach Wednesday Market Tampa Bay Markets",
+    "url": "https://www.tampabaymarkets.com/madeira-beach-wednesday-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309413",
+  "market_name": "Plantation Community Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/farmersmarketfl"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | farmersmarketfl|barbecue",
+    "url": "https://www.farmersmarketfl.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309427",
+  "market_name": "Seaside Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/seasidefl"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Seaside Farmers Market | Seaside",
+    "url": "https://seasidefl.com/shopping/seaside-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309583",
+  "market_name": "Marietta Square Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/mariettasquarefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "ABOUT",
+    "url": "http://www.mariettasquarefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309625",
+  "market_name": "Snellville Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/snellvillefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Snellville Farmers Market Nourishing Our Community",
+    "url": "https://snellvillefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309634",
+  "market_name": "Stone Mountain Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/StoneMountainFarmersMarkets",
+    "https://www.instagram.com/stonemountainfarmersmarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Your Neighborhood Farmers Market",
+    "url": "https://stonemountainfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309667",
+  "market_name": "Keauhou Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/KeauhouFarmersMarket",
+    "https://www.instagram.com/keauhou_farmers_market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Keauhou Farmers Market by Kona County Farm Bureau",
+    "url": "https://keauhoufarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309702",
+  "market_name": "Teton Valley Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/tetonvalleyfarmers"
+   ]
+  },
+  "sources": [
+   {
+    "title": "TETON VALLEY FARMERS MARKET - Home",
+    "url": "https://www.tetonvalleyfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309706",
+  "market_name": "61st Street Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/61market",
+    "https://www.instagram.com/61market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "61st Street Farmers Market | Explore Fresh Local Food - Visit Now Experimental Station",
+    "url": "http://61market.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309716",
+  "market_name": "Arlington Heights Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/arlingtonheightsfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Arlington Heights 2",
+    "url": "https://www.arlingtonheightsfarmersmarket.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309738",
+  "market_name": "Brookfield Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/brookfieldilfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Brookfield Farmers Market - Home",
+    "url": "https://brookfieldfarmers.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "309833",
+  "market_name": "Independence Park Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/ipfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Independence Park Farmers Market 2023 GIPNA - Greater Independence Park Neighborhood Association",
+    "url": "https://gipna.org/farmersmarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310014",
+  "market_name": "Avon Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/AvonIndianaFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | Avon, IN",
+    "url": "https://www.avonindiana.gov/285/Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310025",
+  "market_name": "Broad Ripple Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/brfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Broad Ripple Farmers Market - Broad Ripple Cultural District",
+    "url": "https://www.broadrippleindy.org/farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310026",
+  "market_name": "Brown County Homegrown & Homemade Village Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/nashvilleindianafarmersmarket",
+    "https://www.instagram.com/nashville_in_farmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Nashville Indiana Farmers Market",
+    "url": "https://www.nashvilleindianafarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310038",
+  "market_name": "Community Farmers’ Market of Owen County",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/owencofarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Facebook",
+    "url": "https://owencountyfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310068",
+  "market_name": "Hoosier Harvest Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/HoosierHarvestMarket",
+    "https://www.instagram.com/hoosierharvestmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Indiana Local Food | hoosierharvestmarket",
+    "url": "https://www.hoosierharvestmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310130",
+  "market_name": "Syracuse Artisans & Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/syracusefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Welcome To Syracusein , IN",
+    "url": "http://www.syracusein.org/departments/parks/farmers_market.php",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310214",
+  "market_name": "Iowa City Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/iowacityfarmersmarket",
+    "https://www.instagram.com/icfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Iowa City Farmers Market | Iowa City, IA",
+    "url": "http://www.icgov.org/farmersmarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310266",
+  "market_name": "Pleasant Hill Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/PleasantHillIowaFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "The Community Farmers Market of Pleasant Hill | Farmers Market in Pleasant Hill | Iowa",
+    "url": "https://www.phcfarmers.market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310289",
+  "market_name": "The Mason City Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/masoncityfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Mason City Farmers Market",
+    "url": "http://masoncityfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310363",
+  "market_name": "Manhattan Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Downtown-Farmers-Market-of-Manhattan-115321431812597"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Manhattan Farmer's Market",
+    "url": "http://www.manhattanfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310411",
+  "market_name": "Bardstown Road Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/bardstownrdfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Bardstown Road Farmers' Market",
+    "url": "http://www.bardstownroadfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310455",
+  "market_name": "Hardin County Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/hardincountyfarmersmarket",
+    "https://www.instagram.com/hardincountyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Hardin County Farmers Market",
+    "url": "https://www.hardincountyfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310493",
+  "market_name": "Paris Bourbon County Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/BourbonCountyFarmersMarket",
+    "https://www.instagram.com/bourboncofarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Paris-Bourbon County Farmers' Market",
+    "url": "https://www.bourboncountyfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310523",
+  "market_name": "Abita Springs Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/abitasprings.farmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Abita Springs Art and Farmers Market",
+    "url": "https://www.townofabitasprings.com/farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310549",
+  "market_name": "Lafayette Farmers and Artisan Market at the Horse Farm",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/LafayetteFarmersAndArtisansMarketAtMoncusPark"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Lafayette Farmers & Artisans Market - Lafayette, LA",
+    "url": "http://www.marketatmoncuspark.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310631",
+  "market_name": "Florence Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Florence-Wednesday-Farmers-Market-187595167951608",
+    "https://www.instagram.com/florencefarmersmarketma"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Florence Farmers Market",
+    "url": "http://www.florencefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310666",
+  "market_name": "Medfield Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/medfieldcommunitymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Medfield Community Market",
+    "url": "https://medfieldcommunitymarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310686",
+  "market_name": "Northeastern University Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/massfarmersmarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Mass Farmers Markets",
+    "url": "http://massfarmersmarkets.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310690",
+  "market_name": "Oak Square Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/brightonfarmers"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Brighton Farmers Market | Brighton, NY - Official Website",
+    "url": "https://brightonfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310727",
+  "market_name": "South Boston Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/sbfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "South Boston NDC South Boston Farmers Market",
+    "url": "https://www.sbndc.org/south-boston-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310730",
+  "market_name": "Southbridge Farmer’s Market at Big Bunny Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/BigBunnyMkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Big Bunny Market | The Official Site of Big Bunny Market Southbridge, MA",
+    "url": "https://www.bigbunnymarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310813",
+  "market_name": "Main Street Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/gaithersburgmarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Main Street Farmers Market | Gaithersburg, MD",
+    "url": "https://www.gaithersburgmd.gov/recreation/farmers-markets/main-street-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310825",
+  "market_name": "Ocean Pines Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/OceanPinesFarmersArtisansMarketplace"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers & Artisans Market - Ocean Pines Association",
+    "url": "https://oceanpines.org/web/pages/farmers-artisans-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310844",
+  "market_name": "Blue Hill Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/bluehillfarmersmarket",
+    "https://www.instagram.com/bluehillfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Blue Hill Farmers' Market",
+    "url": "http://bluehillfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310853",
+  "market_name": "Eastport Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/mainefarmersmarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Eastport Farmers' Market - Maine Federation of Farmers' Markets - new",
+    "url": "https://mainefarmersmarkets.org/farmers-market-trail/eastport-farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310855",
+  "market_name": "Falmouth Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/cumberlandfalmouthfarmmarket",
+    "https://www.instagram.com/cumberlandfalmouthfarmmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Cumberland & Falmouth Farmers Market",
+    "url": "https://cumberlandfalmouthfarmmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310951",
+  "market_name": "Dixboro Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/DixboroFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Dixboro Farmers' Market - Home",
+    "url": "http://www.dixborofarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310961",
+  "market_name": "Downtown Saginaw Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/SaginawFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "DOWNTOWN SAGINAW FARMERS' MARKET - Downtown Saginaw Farmers' Market | Fresh Local Produce & EBT Matching",
+    "url": "http://www.saginawfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310963",
+  "market_name": "Downtown Ypsilanti Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/YpsilantiFarmersMarkets",
+    "https://www.instagram.com/ypsimarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Ypsilanti Farmers Market | Buy Local Michigan Produce",
+    "url": "http://www.ypsimarkets.info/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310965",
+  "market_name": "East Lansing Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/elfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | East Lansing, MI - Official Website",
+    "url": "https://www.cityofeastlansing.com/farmersmarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "310981",
+  "market_name": "Fulton Street Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/fultonstmarket",
+    "https://www.instagram.com/fultonstmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "FULTON STREET MARKET",
+    "url": "http://www.fultonstreetmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311026",
+  "market_name": "Kalamazoo Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/kzoofarmmarket",
+    "https://www.instagram.com/kzoofarmmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Kalamazoo Farmer",
+    "url": "https://www.kzoofarmmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311056",
+  "market_name": "Meridian Township Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/meridiantownshipfarmersmarket",
+    "https://www.instagram.com/meridianfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | Meridian Township",
+    "url": "https://www.meridian.mi.us/community/explore-meridian/meridian-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311114",
+  "market_name": "South Haven Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/South-Haven-Farm-Market-110492201638325"
+   ]
+  },
+  "sources": [
+   {
+    "title": "HOME | South Haven Farm Market",
+    "url": "http://www.southhavenfarmmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311161",
+  "market_name": "Westside Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/a2westsidefarmersmarket",
+    "https://www.instagram.com/westsidefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Westside Farmers' Market Your Neighborhood Farmers' Market!",
+    "url": "http://westsidefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311206",
+  "market_name": "Broad Branch (Chevy Chase) Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/chevychasefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Local Food | Chevy Chase Farmers Market | United States",
+    "url": "https://www.chevychasefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311293",
+  "market_name": "Farmers’ Market of Wildwood",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/WildwoodFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | Wildwood, MO - Official Website",
+    "url": "https://www.cityofwildwood.com/180/Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311297",
+  "market_name": "Fenton Community & Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/fentonmofarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Fenton Community and Farmers' Market | Fenton, MO - Official Website",
+    "url": "https://fentonmo.org/1116/Fenton-Community-Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311304",
+  "market_name": "Hermann Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/HermannFarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "HERMANN FARM",
+    "url": "https://hermannfarm.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311313",
+  "market_name": "Lawson Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/LawsonFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmer's Market - City of Lawson Missouri",
+    "url": "https://lawsonmo.gov/farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311327",
+  "market_name": "Overland Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/OverlandFarmersMarket",
+    "https://www.instagram.com/overlandfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Overland Farmer's Market",
+    "url": "http://www.overlandfm.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311411",
+  "market_name": "Clark Fork Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/clarkforkrivermarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Clark Fork Market - Saturday Farmer's Market - Missoula, Montana",
+    "url": "http://www.clarkforkmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311412",
+  "market_name": "Columbia Falls Community Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/cfcommunitymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Columbia Falls Community Market",
+    "url": "https://www.cfcommunitymarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311419",
+  "market_name": "Great Falls Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/farmersmarketgf",
+    "https://www.instagram.com/gf_farmers_market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Great Falls Farmers' Market",
+    "url": "http://www.farmersmarketgf.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311445",
+  "market_name": "Black Mountain Tailgate Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/blackmountainmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Black Mountain Tailgate Market",
+    "url": "https://blackmountainmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311454",
+  "market_name": "Carolina Brewery Farmer’s Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/carolinabrewery",
+    "https://www.instagram.com/carolinabrewery"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Pittsboro Brewpub Carolina Brewery",
+    "url": "https://www.carolinabrewery.com/pittsboro",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311468",
+  "market_name": "Dobson Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Surry-County-Farmers-Market-596405117037988"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Surry County Farmers Market - Mount Airy, Elkin, Pilot Mountain",
+    "url": "http://www.surrycountyfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311471",
+  "market_name": "Downtown Hickory Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/DowntownHickoryFarmersMarket",
+    "https://www.instagram.com/hickoryncfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Hickory Farmer's Market - Downtown Hickory Farmers Market - Union Square, Hickory, NC",
+    "url": "http://www.hickoryfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311490",
+  "market_name": "Greensboro Farmers Curb Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/gsocurbmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Market Home - GFCM Live",
+    "url": "https://gsofarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311493",
+  "market_name": "Guilford Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/nwguilfordfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Northwest Guilford Farmers Market - Vegetables, Fresh Farm Vegetables",
+    "url": "https://northwestguilfordfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311495",
+  "market_name": "Haywood’s Historic Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/haywoodmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Haywood's Historic Farmers Market",
+    "url": "http://waynesvillefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311519",
+  "market_name": "Mills River Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/MillsRiverFarmMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "www.millsriverfarmmarket.com",
+    "url": "http://www.millsriverfarmmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311534",
+  "market_name": "Piedmont Farmers Market/Concord",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/piedmontfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Piedmont Farmers Market | Home to Three Cabarrus County Farmers Markets",
+    "url": "https://piedmontfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311551",
+  "market_name": "South Durham Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/TheSouthDurhamFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Southdurhamfarmersmarket",
+    "url": "http://www.southdurhamfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311569",
+  "market_name": "Transylvania Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/TransylvaniaFarmersMarket",
+    "https://www.instagram.com/transylvaniafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "TRANSYLVANIA FARMERS' MARKET - Home",
+    "url": "http://transylvaniafarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311579",
+  "market_name": "Watauga County Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/wataugacountymarket",
+    "https://www.instagram.com/wataugacountyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "WCFM",
+    "url": "http://www.wataugacountyfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311582",
+  "market_name": "Weaverville Tailgate Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/WeavervilleTailgateMarket",
+    "https://www.instagram.com/weavervilletailgatemarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Weaverville Tailgate Market Proudly serving the Weaverville community since 2009",
+    "url": "http://weavervillemarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311584",
+  "market_name": "West Asheville Tailgate Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/westashevilletailgate",
+    "https://www.instagram.com/westashevilletailgate"
+   ]
+  },
+  "sources": [
+   {
+    "title": "HOME | WATM",
+    "url": "https://www.westashevilletailgatemarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311632",
+  "market_name": "Omaha Farmer’s Market - Old Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/omahafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Omaha Farmers Market – Home | Omaha Farmers Market",
+    "url": "http://omahafarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311638",
+  "market_name": "Sunday Farmers’ Market at College View",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/sundayfarmersmarket",
+    "https://www.instagram.com/sundayfarmersmkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | healthy food near me | 4801 Prescott Avenue, Lincoln, NE, USA",
+    "url": "http://sundayfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311722",
+  "market_name": "Pennsylvania Dutch Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/padutchfarmersmarket",
+    "https://www.instagram.com/padutchfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "PA Dutch Farmers Market in Princeton, NJ",
+    "url": "http://www.padutchfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311746",
+  "market_name": "Carlsbad Downtown Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/CarlsbadDowntownFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "FARMERS MARKET | MainStreet",
+    "url": "https://www.carlsbadmainstreet.com/farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311748",
+  "market_name": "Dixon Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/dixoncooperativemarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "DixonCoop",
+    "url": "https://www.dixonmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311782",
+  "market_name": "Fresh52 Farmers and Artisan Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/fresh52"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Fresh52 Farmers & Artisan Market",
+    "url": "http://www.fresh52.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311823",
+  "market_name": "Broadway Market Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/BroadwayMarketBuffalo",
+    "https://www.instagram.com/thebroadwaymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "The Broadway Market Buffalo's Public Market",
+    "url": "https://broadwaymarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311827",
+  "market_name": "Burnap’s Farm Market & Garden Cafe",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/burnapsfarmmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Burnap s Farm Market - Fresh Market, Produce, Restaurants Nearby",
+    "url": "http://www.burnapsfarm.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "311903",
+  "market_name": "Farm & Artisan Market at the Villa",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/KosCountyFarmersandArtisanMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmer's Market | Main Street Warsaw",
+    "url": "https://www.warsawcdc.org/farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312010",
+  "market_name": "Muscoot Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/muscootfarm",
+    "https://www.instagram.com/muscootfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home : Muscoot Farm",
+    "url": "http://www.muscootfarm.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312041",
+  "market_name": "Pennings Orchard & Farm Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/penningsfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Pennings Farm Market Warwick NY",
+    "url": "https://www.penningsfarmmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312123",
+  "market_name": "Victor Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/victornyfarmmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Victor Farmers' Market Buy Fresh, Buy Local",
+    "url": "https://victorfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312144",
+  "market_name": "West Point/Town of Highlands Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/wptohmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | West Point-Town of Highlands Farmers Market",
+    "url": "https://www.wptohmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312424",
+  "market_name": "Cave Junction Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/CJfarmersmarket",
+    "https://www.instagram.com/cj.farmers.market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Where Community Grows!",
+    "url": "https://www.cjfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312430",
+  "market_name": "Cully Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/thecullyfarmersmarket",
+    "https://www.instagram.com/cullyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Cully Farmers Market",
+    "url": "http://cullyfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312451",
+  "market_name": "Lane County Holiday Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/eugenesaturdaymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Holiday Market - The Saturday Market",
+    "url": "https://www.holidaymarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312469",
+  "market_name": "Rogue Valley Growers and Crafters Market Saturday Ashland Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/rvgrowersmarket",
+    "https://www.instagram.com/rvgrowersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "www.rvgrowersmarket.com",
+    "url": "https://www.rvgrowersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312484",
+  "market_name": "Springfield Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/lanecountyfarmers",
+    "https://www.instagram.com/lanecountyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Lane County Farmers Market | Shop & Eat Local",
+    "url": "https://www.lanecountyfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312489",
+  "market_name": "Tigard Area Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/tigardfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Tigard Farmers Market - Grow, Gather, Give!",
+    "url": "https://www.tigardfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312491",
+  "market_name": "Umpqua Valley Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/UmpquaValleyFarmersMarket",
+    "https://www.instagram.com/umpquavalleyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Umpqua Valley Farmers Market",
+    "url": "https://www.uvfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312573",
+  "market_name": "Lebanon Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/farmersmarketlebanon"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Lebanon Farmers Market - Lebanon, PA",
+    "url": "https://www.lebanonfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312574",
+  "market_name": "Leesport Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/leesportfarmersmarket",
+    "https://www.instagram.com/leesportfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Leesport Farmers Market",
+    "url": "http://www.leesportmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312604",
+  "market_name": "Oakmont Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/OakmontFarmersMarket",
+    "https://www.instagram.com/oakmontfarmmkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Oakmont Farmers Market",
+    "url": "http://www.oakmontfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312620",
+  "market_name": "Pottstown Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/PottstownFARM",
+    "https://www.instagram.com/pottstownfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Pottstown FARM - Farm & Artisan Regional Market",
+    "url": "https://pottstownfarm.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312623",
+  "market_name": "Root’s Country Market & Auction",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/RootsMarket",
+    "https://www.instagram.com/rootscountrymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Root’s Country Market | Manheim, PA",
+    "url": "http://www.rootsmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312646",
+  "market_name": "Upper Merion Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/UMFarmersMarket",
+    "https://www.instagram.com/umfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | Upper Merion Township, PA",
+    "url": "https://www.umtownship.org/township-information/farmers-market-2/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312652",
+  "market_name": "West Reading Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/westreadingfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "West Reading Farmers Market",
+    "url": "https://westreadingfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312653",
+  "market_name": "West Shore Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/westshorefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "West Shore Farmers Market",
+    "url": "http://www.westshorefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312692",
+  "market_name": "Hilton Head Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/hhicommunitymarket",
+    "https://www.instagram.com/hhicommunitymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Hilton Head Community Market",
+    "url": "http://hhicommunitymarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312727",
+  "market_name": "Sumter Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/sumterfarmers"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Locally grown | Sumter Farmers Market",
+    "url": "https://www.sumterfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312743",
+  "market_name": "Brookings Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/brookingsfarmersmarket",
+    "https://www.instagram.com/brookingsfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Brookings Farmers Market | Home",
+    "url": "http://www.brookingsfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312770",
+  "market_name": "Cooper-Young Community Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/cycfarmersmarket",
+    "https://www.instagram.com/cyfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Cooper-Young Community Farmers Market | Memphis, TN",
+    "url": "http://www.cycfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312793",
+  "market_name": "Hip Donelson Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/HipDonelsonFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Hip Donelson Farmers Market",
+    "url": "http://www.hipdonelsonfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312802",
+  "market_name": "Main Street Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/mainstfarmersmarket",
+    "https://www.instagram.com/mainstfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home - Main Street Farmers Market",
+    "url": "http://www.mainstfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312809",
+  "market_name": "Nashville Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/nashvillefarmersmarket",
+    "https://www.instagram.com/nashvillefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Nashville Farmers Market",
+    "url": "https://www.nashvillefarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312812",
+  "market_name": "Nolensville Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/nolensvillefarmersmarket",
+    "https://www.instagram.com/nolensvillefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Nolensville FM WilCo Events",
+    "url": "http://www.nolensvillefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312830",
+  "market_name": "West Tennessee Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/WestTNFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers' Market - City of Jackson, TN",
+    "url": "https://www.jacksontn.gov/residents/arts_entertainment/farmers__market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312897",
+  "market_name": "Grand Prairie Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/farmersmarketgp"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market - City of Grand Prairie",
+    "url": "https://www.gptx.org/About-Grand-Prairie/Downtown-Grand-Prairie/Farmers-Market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "312898",
+  "market_name": "Grapevine Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/farmersmarketgrapevine"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market of Grapevine",
+    "url": "http://www.farmersmarketofgrapevine.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313000",
+  "market_name": "White Rock Local Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/goodlocalmarkets",
+    "https://www.instagram.com/goodlocalmarkets"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Good Local Markets",
+    "url": "https://www.goodlocalmarkets.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313028",
+  "market_name": "Albemarle Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Albemarlefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "The Albemarle Farmers & Artisans Market - Albemarle Farmers Market",
+    "url": "http://albemarlefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313043",
+  "market_name": "Broadway Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/BroadwayCommunityMarket",
+    "https://www.instagram.com/BroadwayCommunityMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Community Market - Town of Broadway Virginia",
+    "url": "https://broadwayva.gov/community-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313067",
+  "market_name": "City of Manassas Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/manassasfarmersmarket",
+    "https://www.instagram.com/manassasfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market - Historic Manassas, Inc",
+    "url": "https://historicmanassas.org/farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313081",
+  "market_name": "Damascus Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/DamascusVAFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Damascus Farmers Market - Visit Damascus",
+    "url": "https://www.visitdamascus.org/farmersmarket.html",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313084",
+  "market_name": "Dayton Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/thedaytonmarket",
+    "https://www.instagram.com/thedaytonmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | The Dayton Market",
+    "url": "http://thedaytonmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313106",
+  "market_name": "Four Mile Run Farmers and Artisans Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/4MRMarket",
+    "https://www.instagram.com/4MRMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Four Mile Run Farmers & Artisans Market",
+    "url": "https://4mrmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313118",
+  "market_name": "Ghent Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/ghentfarmersmarketnorfolkva",
+    "https://www.instagram.com/ghentfarmersmarketnorfolkva"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Ghent Holiday Market",
+    "url": "http://www.ghentfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313139",
+  "market_name": "Lakeside Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/LakesideMarketRVA"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home",
+    "url": "http://www.lakesidefarmersmarket.net/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313175",
+  "market_name": "Old Town Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/OldTownFarmersMarketAlexandriaVA",
+    "https://www.instagram.com/oldtownfarmersmarketalx"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Old Town Farmers' Market | City of Alexandria, VA",
+    "url": "http://alexandriava.gov/OldTownFarmersMarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313194",
+  "market_name": "River Street Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/RiverStreetFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "River Street Market",
+    "url": "http://www.riverstreetmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313221",
+  "market_name": "Southwest Virginia Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/swvafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Southwest VA Farmers' Market 497 Farmers Market Dr ~ Hillsville VA~ I-77 Exit 14",
+    "url": "https://swvafarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313238",
+  "market_name": "The Community Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/FairfaxSaturdayMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Fairfax Farmers' Market",
+    "url": "http://www.fairfaxsaturdaymarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313280",
+  "market_name": "Woodbine Farm Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Woodbine-Farm-Market-289806077760"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | woodbine",
+    "url": "https://www.woodbinefarmmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313293",
+  "market_name": "Capital City Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/montpelierfarmersmarket",
+    "https://www.instagram.com/montpelierfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Capital City Farmers Market | Support Local Farmers: Shop Now",
+    "url": "https://www.capitalcityfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313319",
+  "market_name": "Lyndon Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/lyndonmarket",
+    "https://www.instagram.com/lyndonfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Lyndon Farmer's Market Vermont",
+    "url": "http://lyndonfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313352",
+  "market_name": "Bayview Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/bayviewfarmersmarket",
+    "https://www.instagram.com/bayviewfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Bayview Farmers Market - Whidbey Island",
+    "url": "https://www.bayviewfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313355",
+  "market_name": "Bellingham Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/bellinghamfarmers"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Bellingham Farmers Market",
+    "url": "http://www.bellinghamfarmers.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313369",
+  "market_name": "Downtown Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/farmersmarketdowntown"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Downtown Walla Walla Foundation",
+    "url": "http://downtownwallawalla.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313402",
+  "market_name": "Okanogan Valley Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/OkanoganValleyFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Okanogan Valley Farmers Market | Home Grown ~ Hand Made",
+    "url": "https://okanoganfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313411",
+  "market_name": "Port Angeles Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/PAFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Port Angeles Farmers Market",
+    "url": "https://www.portangelesfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313415",
+  "market_name": "Redmond Saturday Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/RedmondSaturdayMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Redmond Saturday Market — Local Farms, Food & Craft",
+    "url": "http://redmondsaturdaymarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313426",
+  "market_name": "South Whidbey Tilth Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/SouthWhidbeyTilth"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market South Whidbey Tilth",
+    "url": "https://www.southwhidbeytilth.org/market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313483",
+  "market_name": "Downtown West Bend Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/WestBendFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "West Bend Farmers' Market",
+    "url": "http://www.westbendfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313488",
+  "market_name": "Eastside Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/madison_eastside_market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Madison Eastside Farmers' Market",
+    "url": "http://www.eastsidefarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313507",
+  "market_name": "Fitchburg Center Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/FitchburgCenterFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Fitchburg Center Farmers Market",
+    "url": "https://fitchburgmarket.wordpress.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313510",
+  "market_name": "Fox Point Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/foxpointfarmersmarket",
+    "https://www.instagram.com/fox_point_farmers_market"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Fox Point Farmers' Market",
+    "url": "https://foxpointfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313519",
+  "market_name": "Greenfield Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/greenfieldwifarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Greenfield Farmers Market | Greenfield, WI",
+    "url": "https://www.greenfieldwifarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313550",
+  "market_name": "Menomonee Falls Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/FallsFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Menomonee Falls Farmers Market | Wisconsin",
+    "url": "https://fallsfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313632",
+  "market_name": "Waukesha Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/FarmersMarketWaukesha"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers' Market | WaukeshaDBA",
+    "url": "https://www.waukeshadba.com/farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313642",
+  "market_name": "Barbour County Community Garden Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/bccgardenmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Garden Market | Heart and Hand House",
+    "url": "http://www.heartandhandhouse.org/content/garden-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313672",
+  "market_name": "Morgantown Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/MorgantownFarmersMarket",
+    "https://www.instagram.com/morgantownmkt"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home",
+    "url": "http://www.morgantownfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313699",
+  "market_name": "Cheyenne Winter Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Cheyennewintermarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Cheyenne Winter Farmers' Market",
+    "url": "https://www.cheyennewinterfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313755",
+  "market_name": "Forks Farm",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/ForksFarm",
+    "https://www.instagram.com/forks_farm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "HOME | forksfarmmarket",
+    "url": "http://www.forksfarmmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313808",
+  "market_name": "Port Henry Waterfront Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/porthenrymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Port Henry Waterfront Farmers' Market on Lake Champlain",
+    "url": "https://www.porthenrymarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "313878",
+  "market_name": "International Market World Flea and Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/intlmarketworld",
+    "https://www.instagram.com/internationalmarketworld"
+   ]
+  },
+  "sources": [
+   {
+    "title": "International Market World Flea Market",
+    "url": "https://internationalmarketworld.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "314054",
+  "market_name": "Monroe Street Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/monroestreetfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Monroe Street Farmers' Market",
+    "url": "https://www.monroestreetfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "314078",
+  "market_name": "Old Town Farm & Art Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/oldtownfarmandartmarketwichita",
+    "https://www.instagram.com/oldtownfarmandartmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Old Town Farm and Art Market",
+    "url": "https://oldtownfarmandartmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "314253",
+  "market_name": "Old Town Orcutt Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/otownfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "General 2 - Old Town Orcutt",
+    "url": "https://www.oldtownorcutt.org/otora-farmers-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "added:black-farmers-market-raleigh-nc",
+  "market_name": "Black Farmers' Market Raleigh",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/TheBlackMarketNC",
+    "https://www.instagram.com/theblackfarmersmarketnc"
+   ]
+  },
+  "sources": [
+   {
+    "title": "The Market - Black Farmers Market",
+    "url": "https://blackfarmersmkt.org/the-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "added:bronzeville-growers-market-columbus-oh",
+  "market_name": "Bronzeville Growers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/bronzevillegrowersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home",
+    "url": "https://www.bronzevillegrowersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "added:clintonville-farmers-market-columbus-oh",
+  "market_name": "Clintonville Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/clintonvillefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Clintonville - Common Greens Farmers Markets",
+    "url": "https://www.commongreensohio.org/clintonville/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "added:conservatory-farmers-market-columbus-oh",
+  "market_name": "Conservatory Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/FPConservatory",
+    "https://www.instagram.com/fpconservatory"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | Franklin Park Conservatory and Botanical GardensFranklin Park Conservatory and Botanical Gardens",
+    "url": "https://www.fpconservatory.org/education-programs/outreach-programs/farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "added:houston-farmers-market-houston-tx",
+  "market_name": "Houston Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/TheHoustonFarmersMkt",
+    "https://www.instagram.com/houstonfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Houston Farmers Market | Fresh Produce Daily Since 1941",
+    "url": "https://thehoustonfarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "added:state-farmers-market-raleigh-nc",
+  "market_name": "State Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/StateFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "State Farmers Market - Raleigh | NC Agriculture",
+    "url": "https://www.ncagr.gov/divisions/marketing/farmers-markets-agricultural-centers/state-farmers-market-raleigh",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "added:westgate-farmers-market-columbus-oh",
+  "market_name": "Westgate Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/WestgateFarmersMarket",
+    "https://www.instagram.com/westgatefarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Westgate Farmers Market",
+    "url": "https://www.westgatefarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ca_wic_farmers_markets:d66bbdc62b520192",
+  "market_name": "Adventist Health White Memorial Fm",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/adventisthealth"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Amenities - White Memorial - Adventist Health",
+    "url": "https://www.adventisthealth.org/white-memorial/patients-and-visitors/amenities",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ca_wic_farmers_markets:f7fbe9adf65fb784",
+  "market_name": "Farm House Collective CFM",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/farmhousecollective",
+    "https://www.instagram.com/farmhousecollective"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farm House Collective - Farm House Collective",
+    "url": "https://farmhousecollective.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_dc_farmers_markets:{17E39C62-9A79-45AF-8211-9E07FDF837FD}",
+  "market_name": "Common Good City Farm",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/CommonGoodCityFarm",
+    "https://www.instagram.com/commongoodcityfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Common Good City Farm",
+    "url": "https://www.commongoodcityfarm.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_dc_farmers_markets:{44FDA8A0-14A8-4B27-A380-E33E16CA41EE}",
+  "market_name": "Takoma Park Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/takomaparkfarmersmarket",
+    "https://www.instagram.com/tpfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home - Takoma Park Farmers Market",
+    "url": "https://www.takomaparkmarket.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_dc_farmers_markets:{7BA72626-9092-4A4B-8998-C021F8C1C28A}",
+  "market_name": "Eastern Market (Sat & Sun)",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/easternmarket_dc"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Eastern Market DC",
+    "url": "https://www.easternmarket-dc.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_dc_farmers_markets:{A4F52EEE-EDD4-419A-849F-AA32FF48CC1F}",
+  "market_name": "Petworth Community Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/petworthmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Petworth Community Market",
+    "url": "https://www.petworthcommunitymarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_dc_farmers_markets:{F6BF8CC5-34E9-4701-8FF4-15C44709C3F0}",
+  "market_name": "Palisades Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/palisadesdc",
+    "https://www.instagram.com/palisadesdc"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Palisades Farmers Market - Palisades Community Association",
+    "url": "https://palisadesdc.org/farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:07ad62a9b0dd0f5d",
+  "market_name": "Lansing Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/LansingFarmMarket",
+    "https://www.instagram.com/lansingfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Lansing's Farm Market and Greenhouses",
+    "url": "http://www.lansingfarmmarket.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:0bfe0c2359b18018",
+  "market_name": "5 Loaves Farm Stand-Delavan Ave",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/5LoavesFarm",
+    "https://www.instagram.com/5loavesfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "5 Loaves Farm",
+    "url": "https://5loavesfarm.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:151535e684d6e853",
+  "market_name": "Urbanowicz Acres Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/urbanowiczacres"
+   ]
+  },
+  "sources": [
+   {
+    "title": "urbanowiczacres.com",
+    "url": "https://urbanowiczacres.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:15aef50445cdeca8",
+  "market_name": "Dykeman Farm Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/dykemanfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | dykemanfarm.com",
+    "url": "https://www.dykemanfarm.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:16e29db094937155",
+  "market_name": "Soons Orchards Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/SoonsOrchards",
+    "https://www.instagram.com/soonsorchards"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farm Market | Soons Orchards | New Hampton",
+    "url": "https://www.soonsorchards.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:251dcc63afd754ac",
+  "market_name": "Great Valley Berry Patch Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/GreatValleyBerryPatch"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home",
+    "url": "https://www.greatvalleyberrypatch.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:28060b46d834d708",
+  "market_name": "Hastings Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/hastingsfarmersmarket",
+    "https://www.instagram.com/hastingsfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "hastings farmers market",
+    "url": "http://www.hastingsfarmersmarket.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:291dcebd62fa00fe",
+  "market_name": "Hilltop Hanover Farm Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/hilltophanoverfarm",
+    "https://www.instagram.com/hilltophanoverfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home : The Friends of Hilltop Hanover Farm",
+    "url": "http://www.hilltophanoverfarm.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:3006a50bad8433a7",
+  "market_name": "Oatka Creek Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/oatkacreekfarm",
+    "https://www.instagram.com/oatkacreekfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Oatka Creek Farm",
+    "url": "https://www.oatkacreekfarm.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:37e75ea4bf41909c",
+  "market_name": "Plattsburgh Farmers’ and Craft Sat Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/PlattsburghFarmersCraftersMarket",
+    "https://www.instagram.com/plattsburghfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "HOME | Plattsburgh Farmers",
+    "url": "http://plattsburghfarmerscraftersmarket.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:39ba1d143a400477",
+  "market_name": "Dizzy Lizzie’s Farm Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/dizzylizziesfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Dizzy Lizzie's Farm",
+    "url": "https://dizzylizziesfarm.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:3a87c7c4c50130c9",
+  "market_name": "Elmwood Village Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/evfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Elmwood Village Farmers Market producer-only market on Elmwood & Bidwell in Buffalo!",
+    "url": "http://www.elmwoodmarket.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:3bc77d161764e0bb",
+  "market_name": "Rock Hill Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/rhfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Rock Hill Farmers Market - Fresh Local Farm Goods Every Saturday",
+    "url": "https://rockhillfarmersmarket.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:3e4ce1f0a0738dc5",
+  "market_name": "Woodstock Farm Festival Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/woodstockfarmfestival",
+    "https://www.instagram.com/woodstockfarmfestival"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Woodstock Farm Festival",
+    "url": "http://www.woodstockfarmfestival.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:42dd01674094184c",
+  "market_name": "Rulfs Orchard Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/rulfsorchard",
+    "https://www.instagram.com/rulfsorchard"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market & Bakery in Peru, NY | Rulfs Orchard",
+    "url": "http://www.rulfsorchard.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:44b2243dd3780e09",
+  "market_name": "Andrews Family Farm Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/AndrewsFamilyFarm",
+    "https://www.instagram.com/andrewsfamilyfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Andrews Family Farm",
+    "url": "https://www.andrewsfamilyfarm.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:44e14147b8ddb2e4",
+  "market_name": "Bayberry Plaza Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/bayberryplaza"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Welcome - Bayberry Plaza",
+    "url": "http://www.bayberryplaza.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:4689057053aecf8b",
+  "market_name": "Two Bridges Youth Market Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/fultonstallmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "SEAPORT PUBLIC MARKET",
+    "url": "http://fultonstallmarket.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:4a9b9201e92d611d",
+  "market_name": "Cess Farms Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/cessfarms"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home - CESS FARMS LLC",
+    "url": "http://cessfarms.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:4b8b438397981ce2",
+  "market_name": "Queens County Farm Museum Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/queensfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Queens County Farm Museum - Home - Queens County Farm Museum",
+    "url": "http://www.queensfarm.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:50aab9fceea98f23",
+  "market_name": "Edgemere Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/edgemerefarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Edgemere Farm",
+    "url": "http://www.edgemerefarm.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:59efda2dde169156",
+  "market_name": "Gade Farm Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/gadefarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Gadefarm",
+    "url": "http://www.gadefarm.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:5d2d2b92d6616b68",
+  "market_name": "Middlefield Orchard Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/middlefieldorchard"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Middlefield Orchard Apple Orchard & Farmers Market in Cooperstown, NY | Middlefield Orchard",
+    "url": "http://www.middlefieldorchard.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:5ec7a003a75dc8da",
+  "market_name": "Broome CO Regional Sat Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/broomecountyregionalfarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Broome County Regional Farmers Market",
+    "url": "https://www.broomecountyregionalmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:612a2b08b3c25d54",
+  "market_name": "Kingston YMCA Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/KingstonYMCAFarmProject"
+   ]
+  },
+  "sources": [
+   {
+    "title": "kingston ymca farm project",
+    "url": "https://www.kingstonymcafarmproject.org/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:66272b57a86a5165",
+  "market_name": "Schneider’s Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/schneidersfarmmelville"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Schneider's Farm - Melville, NY",
+    "url": "http://www.schneidersfarmmelville.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:679923b4b10bd64f",
+  "market_name": "Lyons Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/LyonsFarmersMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market | Lyons Main Street",
+    "url": "https://www.lyonsny.org/farmersmarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:6b3d8673d1fd8888",
+  "market_name": "Phoenicia Winter Farmers Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/phoeniciafarmersmarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Phoenicia Farmers Market",
+    "url": "http://www.phoeniciafarmersmarket.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:71c3cc3ac3de6760",
+  "market_name": "The Napolitano Family Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/napolitanofamilyfarm",
+    "https://www.instagram.com/napolitanofamilyfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Long Island Farm | Napolitano Family Farm | Long Island, NY",
+    "url": "https://www.napolitanofamilyfarm.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:77faa9e86d2b6085",
+  "market_name": "Kauneonga Lake Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/kauneongalakefarmersmarket",
+    "https://www.instagram.com/kauneongalakemarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home",
+    "url": "http://www.kauneongalakefarmersmarket.org",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:821808c33f2a347d",
+  "market_name": "Providence Farm Collective Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/providencefarmcollective"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farmers Market Providence Farm Collective",
+    "url": "https://providencefarmcollective.org/farmersmarket/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:8aeefc98c7610f4e",
+  "market_name": "Lowery Family Farm Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/loweryfamilyfarms"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Lowery Family Farms | We Grow Non-GMO Foods in Campbell, NY | Local Family Farm",
+    "url": "http://www.loweryfamilyfarms.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:915a819e3b1e0d0c",
+  "market_name": "Kirby’s Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Kirbys-Farm-Market-299737135252"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Kirby's Farm Market",
+    "url": "http://www.kirbysfm.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:96e17fdeedfa1d53",
+  "market_name": "Slateville Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/slateville"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Farm, Secluded Campsites, Fire Tower & Cabin Rental in Upstate New York",
+    "url": "http://www.slateville.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:98d023ec0839e3d3",
+  "market_name": "Abers Acres Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/abersacres"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Abers Acres Organic Fruits and Vegetables - Abers Acres",
+    "url": "http://www.abersacres.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:ae137cc7064d1046",
+  "market_name": "Downtown Country Thu Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/downtowncountrymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Our Events - Buffalo Place",
+    "url": "https://buffaloplace.com/play/our-events/#countrymarket",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:c101d1dbb056f0e3",
+  "market_name": "Heart of the Hudson Valley Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/Heart-of-the-Hudson-Valley-Farmers-Market-Milton-NY-141460912532000"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Heart of the Hudson Valley Farmers Market Milton NY",
+    "url": "http://www.hhvfarmersmarket.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:c13bdd2fc1b0606e",
+  "market_name": "Perez Farm Stand-Jamaica Hospital",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/JamaicaHospital",
+    "https://www.instagram.com/JamaicaHospital"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Weekly Farmers Market - Jamaica Hospital Medical Center",
+    "url": "https://jamaicahospital.org/community/weekly-farmers-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:c39fd124f4d6c988",
+  "market_name": "Whitten Family Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/WhittenFamilyFarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Whitten Family Farm - Winthrop NY",
+    "url": "http://www.whittenfamilyfarm.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:c9951241eb5f9414",
+  "market_name": "Bellinger’s Orchard Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/bellingersorchard"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Bellinger s Orchard LLC - Orchard, Bakery, Family Fun",
+    "url": "http://www.bellingersorchard.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:d2e0fa83f7a37441",
+  "market_name": "North Tonawanda City Thu Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/NTcitymarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "City Market | City of North Tonawanda | City of North Tonawanda",
+    "url": "https://www.northtonawanda.gov/city-market",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:d2e1d368c78be284",
+  "market_name": "Obercreek Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/obercreekfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Obercreek Farm",
+    "url": "http://www.obercreekfarm.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:d551683e48f0e487",
+  "market_name": "Niagara Falls City Friday Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/NFCityMarket"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Niagara Falls City Market | Niagara Falls USA",
+    "url": "https://www.niagarafallsusa.com/directory/niagara-falls-city-market/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:d721ef72b18bb724",
+  "market_name": "Watertown Farm & Craft Farmers’ Market",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/watertownfarmandcraft",
+    "https://www.instagram.com/watertownfarmandcraft"
+   ]
+  },
+  "sources": [
+   {
+    "title": "WATERTOWN FARM & CRAFT MARKET - Watertown Farmers Market",
+    "url": "http://www.watertownfarmandcraft.com/",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:f01d85c9e950023f",
+  "market_name": "Jasper Meadows Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/jaspermeadowsfarm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Certified Organic Produce | Jasper Meadows Farm",
+    "url": "https://www.jaspermeadowsfarm.com/?utm_source=google&utm_medium=wix_google_business_profile&utm_campaign=1006973109968798213",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:f3dedb7e9d347745",
+  "market_name": "LaMora Farms Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/lamorafarms"
+   ]
+  },
+  "sources": [
+   {
+    "title": "LaMora Farms",
+    "url": "http://www.lamorafarms.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:f4e12fc1d6f95ed8",
+  "market_name": "Roberts Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/RobertsFarmMarketMedina"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Roberts Farm Market: Produce Market, Garden Center & U-Pick",
+    "url": "http://www.robertsfarmmarket.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:f82ebe633a5964ae",
+  "market_name": "Morgan’s Half Acre Produce Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.instagram.com/morganshalfacreproduce"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Morgan's Half Acre Produce",
+    "url": "http://www.morganshalfacreproduce.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "gov:us_ny_farmers_markets:fe274f5ec0c89fc7",
+  "market_name": "Barber Family Farm Stand",
+  "verified_at": "2026-11-12",
+  "verification_scope": "partial",
+  "contact": {
+   "social_media": [
+    "https://www.facebook.com/barbersfarm",
+    "https://www.instagram.com/barbers_farm"
+   ]
+  },
+  "sources": [
+   {
+    "title": "Home | Barbers Farm",
+    "url": "http://www.barbersfarm.com",
+    "fields": [
+     "contact.social_media"
+    ]
+   }
+  ]
+ }
+]

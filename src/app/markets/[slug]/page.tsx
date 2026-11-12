@@ -3,6 +3,7 @@ import { getMarketAddress } from "@/lib/api";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound, permanentRedirect } from "next/navigation";
 import MarketLocationMap from "@/components/MarketLocationMap";
+import { GoogleMapsIcon } from "@/components/GoogleMapsIcon";
 import { MarketDetailAnalytics } from "@/components/MarketDetailAnalytics";
 import { TrackedExternalLink } from "@/components/TrackedExternalLink";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
@@ -375,8 +376,9 @@ export default async function MarketDetailPage({
                 <div className="flex flex-wrap gap-3 lg:hidden">
                   {mapActionUrl && (
                     <TrackedExternalLink href={mapActionUrl} target="_blank" rel="noopener noreferrer"
-                      className="rounded-full bg-green-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-green-700"
+                      className="inline-flex items-center gap-2 rounded-full bg-green-600 py-2.5 pl-3 pr-4 text-sm font-medium text-white hover:bg-green-700"
                       eventName="Market Directions Opened" eventProperties={{ ...analyticsProperties, destination: 'google-maps', placement: 'mobile-header' }}>
+                      <GoogleMapsIcon />
                       {market.google_maps_url ? 'View on Google Maps' : 'Get directions'}
                     </TrackedExternalLink>
                   )}
