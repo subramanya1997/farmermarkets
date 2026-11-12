@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { createRateLimiter, requestOriginAllowed, requestTooLarge } from "@/lib/formGuards";
 import { getPostHogServer } from "@/lib/posthogServer";
+import { acknowledgementEmail, type AcknowledgementKind } from "@/lib/submissionEmails";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -218,10 +219,48 @@ export async function POST(request: NextRequest) {
   posthog?.metrics.count("discovery.requests.delivered", 1, {
     attributes: { intent: submission.intent },
   });
+
+  // Tell the visitor it arrived. Only when they left an address and said we
+  // may use it, and only after the team email went out, so the note never
+  // promises a request we did not receive. Best effort: a failure here is
+  // reported to the form as `confirmationSent: false`, not as an error.
+  let confirmationSent = false;
+  if (submission.email && submission.contactPermission) {
+    const kind: AcknowledgementKind = submission.helpTopics.includes("get_listed")
+      ? "get_listed"
+      : submission.helpTopics.includes("update_listing")
+        ? "update_listing"
+        : "feedback";
+    const acknowledgementStartedAt = Date.now();
+    try {
+      const acknowledgement = await resend.emails.send({
+        from,
+        to: [submission.email],
+        ...acknowledgementEmail(kind),
+      });
+      confirmationSent = !acknowledgement.error;
+      if (acknowledgement.error) {
+        console.error("Resend submission acknowledgement failed", acknowledgement.error.name);
+      }
+    } catch (acknowledgementError) {
+      console.error(
+        "Resend submission acknowledgement failed",
+        acknowledgementError instanceof Error ? acknowledgementError.message : "unknown"
+      );
+    }
+    const outcome = confirmationSent ? "success" : "error";
+    posthog?.metrics.count("external.requests", 1, {
+      attributes: { dependency: "resend", outcome },
+    });
+    posthog?.metrics.histogram("external.request.duration", Date.now() - acknowledgementStartedAt, {
+      unit: "ms",
+      attributes: { dependency: "resend", outcome },
+    });
+  }
   await flushMetrics(posthog);
 
   return NextResponse.json(
-    { ok: true, id: data?.id },
+    { ok: true, id: data?.id, confirmationSent },
     { headers: { "Cache-Control": "no-store" } }
   );
 }

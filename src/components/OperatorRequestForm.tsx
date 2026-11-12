@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { posthogRequestHeaders, trackEvent } from '@/lib/analytics';
@@ -42,6 +43,17 @@ export function OperatorRequestForm() {
   const [marketSlug, setMarketSlug] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
   const [error, setError] = useState<string | null>(null);
+  const [confirmationSent, setConfirmationSent] = useState(false);
+  const sentRef = useRef<HTMLDivElement>(null);
+
+  // The form is replaced by a much shorter notice; bring it into view and
+  // move focus to it so the result is seen (and announced) wherever the
+  // visitor had scrolled to.
+  useEffect(() => {
+    if (status !== 'sent') return;
+    sentRef.current?.focus({ preventScroll: true });
+    sentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [status]);
 
   useEffect(() => {
     const slug = new URLSearchParams(window.location.search).get('market');
@@ -91,6 +103,8 @@ export function OperatorRequestForm() {
       if (!response.ok) {
         throw new Error(`Request failed (${response.status})`);
       }
+      const result = (await response.json().catch(() => null)) as { confirmationSent?: boolean } | null;
+      setConfirmationSent(Boolean(result?.confirmationSent));
 
       // Also record a durable submission row for the review queue. The email
       // above already delivered the request, so the visitor still sees
@@ -132,11 +146,34 @@ export function OperatorRequestForm() {
 
   if (status === 'sent') {
     return (
-      <div className="rounded-xl border border-green-600/30 bg-green-50 p-6 text-center dark:border-green-500/30 dark:bg-green-900/20">
-        <p className="font-semibold text-green-800 dark:text-green-300">Request sent</p>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Thanks. We will follow up at the email address you provided.
+      <div
+        ref={sentRef}
+        role="status"
+        tabIndex={-1}
+        className="flex flex-col items-center rounded-xl border border-green-600/30 bg-green-50 px-6 py-8 text-center outline-none dark:border-green-500/30 dark:bg-green-900/20"
+      >
+        <CheckCircle2 aria-hidden="true" className="h-10 w-10 text-green-700 dark:text-green-400" />
+        <p className="mt-3 text-lg font-semibold text-green-800 dark:text-green-300">Request sent</p>
+        <p className="mt-1 max-w-md text-sm text-zinc-600 dark:text-zinc-400">
+          {confirmationSent ? (
+            <>
+              Thanks. We emailed a confirmation to{' '}
+              <span className="break-all font-medium text-zinc-800 dark:text-zinc-200">{email.trim()}</span> and will
+              follow up there once we have reviewed it.
+            </>
+          ) : (
+            <>
+              Thanks. We will follow up at{' '}
+              <span className="break-all font-medium text-zinc-800 dark:text-zinc-200">{email.trim()}</span> once we
+              have reviewed it.
+            </>
+          )}
         </p>
+        {confirmationSent ? (
+          <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+            Nothing in your inbox after a few minutes? Check the spam folder.
+          </p>
+        ) : null}
       </div>
     );
   }

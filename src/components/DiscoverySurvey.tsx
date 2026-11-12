@@ -31,6 +31,7 @@ export function DiscoverySurvey() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [sent, setSent] = useState(false);
+  const [confirmationSent, setConfirmationSent] = useState(false);
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
@@ -85,6 +86,8 @@ export function DiscoverySurvey() {
         throw new Error(result?.error || "Your feedback could not be sent. Please try again.");
       }
 
+      const result = (await response.json().catch(() => null)) as { confirmationSent?: boolean } | null;
+      setConfirmationSent(Boolean(result?.confirmationSent));
       setSent(true);
       setMessage("");
       trackEvent("Feedback Sent", { has_email: Boolean(replyTo) });
@@ -104,11 +107,15 @@ export function DiscoverySurvey() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-h-[90vh] overflow-y-auto rounded-2xl sm:max-w-md">
         {sent ? (
-          <div className="flex flex-col items-center gap-3 py-4 text-center">
+          <div role="status" className="flex flex-col items-center gap-3 py-4 text-center">
             <CheckCircle2 className="h-10 w-10 text-green-700" aria-hidden="true" />
             <DialogTitle className="text-lg">Thanks, it&apos;s sent</DialogTitle>
             <DialogDescription>
-              {email.trim() ? "We'll reply by email if there's anything to follow up." : "We read every message."}
+              {confirmationSent
+                ? "We emailed you a confirmation and will reply there if there's anything to follow up."
+                : email.trim()
+                  ? "We'll reply by email if there's anything to follow up."
+                  : "We read every message."}
             </DialogDescription>
             <button
               type="button"

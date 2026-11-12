@@ -79,7 +79,7 @@ interface EmailContent {
 }
 
 /** The shared card layout; `body` is trusted HTML built in this file. */
-function emailLayout({ heading, body, footer }: { heading: string; body: string; footer: string }): string {
+export function emailLayout({ heading, body, footer }: { heading: string; body: string; footer: string }): string {
   return `<!doctype html>
 <html><body style="margin:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#18181b">
   <div style="max-width:480px;margin:0 auto;padding:32px 20px">
@@ -93,7 +93,7 @@ function emailLayout({ heading, body, footer }: { heading: string; body: string;
 </body></html>`;
 }
 
-const P = 'style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#3f3f46"';
+export const EMAIL_P = 'style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#3f3f46"';
 const BUTTON = 'style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 22px;border-radius:999px"';
 const LINK = 'style="color:#15803d"';
 
@@ -112,7 +112,7 @@ export function confirmationEmail({ confirm, unsubscribe }: { confirm: string; u
     ].join('\n'),
     html: emailLayout({
       heading: 'Confirm your subscription',
-      body: `<p ${P}>You asked to get markets near you and what is in season, no more than once a week. Tap the button to confirm.</p>
+      body: `<p ${EMAIL_P}>You asked to get markets near you and what is in season, no more than once a week. Tap the button to confirm.</p>
       <a href="${confirm}" ${BUTTON}>Confirm my subscription</a>
       <p style="margin:24px 0 0;font-size:13px;line-height:1.6;color:#71717a">The link works for 7 days. If you did not sign up, ignore this email and you will not hear from us again.</p>`,
       footer: `<a href="${unsubscribe}" style="color:#a1a1aa">Never email this address</a>`,
@@ -141,8 +141,8 @@ export function welcomeEmail({ unsubscribe, zip }: { unsubscribe: string; zip?: 
     ].join('\n'),
     html: emailLayout({
       heading: "You're subscribed",
-      body: `<p ${P}>Thanks for confirming. Once a week at most, we will send ${near} and what is in season.</p>
-      <p ${P}>While you wait for the first one:</p>
+      body: `<p ${EMAIL_P}>Thanks for confirming. Once a week at most, we will send ${near} and what is in season.</p>
+      <p ${EMAIL_P}>While you wait for the first one:</p>
       <ul style="margin:0 0 24px;padding-left:20px;font-size:15px;line-height:1.9;color:#3f3f46">
         <li><a href="${inSeason}" ${LINK}>What produce is in season right now</a></li>
         <li><a href="${snap}" ${LINK}>Markets that take SNAP and EBT</a></li>
