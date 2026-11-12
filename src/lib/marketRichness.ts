@@ -9,6 +9,10 @@
  * the reader's own area. Distance still decides between areas: richness can
  * move a market ahead by at most `RICHNESS_REACH_MILES`.
  *
+ * Recent visits add a little on top (`listingStrength`): a market people
+ * keep opening is one worth showing first, but the bonus is small and grows
+ * slowly so a few clicks never outweigh what the listing actually says.
+ *
  * Pure functions of the record, unit tested in `marketRichness.test.ts`.
  */
 
@@ -99,6 +103,31 @@ export function marketRichness(market: RichnessRecord, schedule: RichnessSchedul
   const score = Math.round((points / RICHNESS_TOTAL) * 100);
   // A record the upstream directory dropped may no longer exist, whatever it lists.
   return market.unverified ? Math.round(score * 0.3) : score;
+}
+
+/** The most recent visits can add to a listing's strength, in points. */
+export const POPULARITY_POINTS = 20;
+/** Visits in the window that earn the whole bonus. */
+const POPULARITY_FULL_VISITS = 16;
+
+/**
+ * 0 to `POPULARITY_POINTS` for human visits to the market's page in the last
+ * 30 days (`data/market-popularity.json`). Logarithmic: the first few visits
+ * count most and the bonus tops out at 16, so the markets already on top do
+ * not keep pulling away just because they are seen more.
+ */
+export function popularityBonus(visits: number | undefined): number {
+  if (!visits || !Number.isFinite(visits) || visits <= 0) return 0;
+  const share = Math.min(1, Math.log2(1 + visits) / Math.log2(1 + POPULARITY_FULL_VISITS));
+  return Math.round(share * POPULARITY_POINTS);
+}
+
+/**
+ * The number every ordering on the site reads: richness plus the popularity
+ * bonus, capped at 100. A dropped record earns no bonus.
+ */
+export function listingStrength(richness: number, visits: number | undefined, unverified?: boolean): number {
+  return Math.min(100, richness + (unverified ? 0 : popularityBonus(visits)));
 }
 
 /**

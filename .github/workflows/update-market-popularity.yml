@@ -1,0 +1,52 @@
+name: Refresh market popularity
+
+# Daily: human visits per market page over the last 30 days, read from
+# PostHog and committed as data/market-popularity.json. The ranking adds a
+# small bonus for recently visited markets (src/lib/marketRichness.ts). The
+# file carries no timestamp, so a day with the same tally commits nothing and
+# triggers no deploy.
+on:
+  schedule:
+    - cron: '41 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-popularity
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Read visits from PostHog
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
+          POSTHOG_PROJECT_ID: ${{ secrets.POSTHOG_PROJECT_ID }}
+          POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
+        run: node scripts/build-market-popularity.mjs
+
+      - run: node --test scripts/build-market-popularity.test.mjs
+
+      - run: node --test --experimental-strip-types src/lib/marketSearch.test.ts src/lib/marketRichness.test.ts
+
+      - name: Commit the new tally
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market-popularity.json
+          if git diff --cached --quiet; then
+            echo "No change in market visits"
+          else
+            git commit -m "data: refresh market popularity"
+            git push
+          fi

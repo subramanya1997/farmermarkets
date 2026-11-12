@@ -58,3 +58,17 @@ test('effective distance: a full listing keeps its distance, an empty one is pus
   assert.ok(effectiveDistance(8, 90) < effectiveDistance(0.5, 20));
   assert.ok(effectiveDistance(40, 100) > effectiveDistance(10, 0));
 });
+
+test('popularity bonus grows slowly and tops out', async () => {
+  const { popularityBonus, listingStrength, POPULARITY_POINTS } = await import('./marketRichness.ts');
+  assert.equal(popularityBonus(undefined), 0);
+  assert.equal(popularityBonus(0), 0);
+  assert.ok(popularityBonus(1) > 0);
+  assert.ok(popularityBonus(1) < popularityBonus(4));
+  assert.ok(popularityBonus(4) < popularityBonus(16));
+  assert.equal(popularityBonus(16), POPULARITY_POINTS);
+  assert.equal(popularityBonus(5000), POPULARITY_POINTS);
+  assert.equal(listingStrength(40, undefined), 40);
+  assert.equal(listingStrength(95, 16), 100);
+  assert.equal(listingStrength(10, 16, true), 10);
+});

@@ -129,3 +129,25 @@ test('without distances the listing orders verified, unconfirmed, unverified', (
   ];
   assert.deepEqual([...keys].sort((a, b) => a - b), keys);
 });
+
+test('a generic query stays local: a near word match beats a far name-prefix match', () => {
+  const results = searchMarkets(
+    [
+      market({ id: 'far', name: 'Downtown Farmers Market', distance: 300, richness: 90 }),
+      market({ id: 'near', name: 'Riverside Downtown Market', distance: 4, richness: 40 }),
+    ],
+    'downtown'
+  );
+  assert.deepEqual(results.map((m) => m.id), ['near', 'far']);
+});
+
+test('searching another place is still decided by the text', () => {
+  const results = searchMarkets(
+    [
+      market({ id: 'street', name: 'Green Market', address: '12 Portland Ave', distance: 3 }),
+      market({ id: 'city', name: 'Saturday Market', city: 'Portland', distance: 600 }),
+    ],
+    'portland'
+  );
+  assert.equal(results[0].id, 'city');
+});

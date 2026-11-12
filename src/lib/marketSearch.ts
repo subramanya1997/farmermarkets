@@ -10,10 +10,12 @@
  *  - Verification: records recently supported by verified research or a
  *    current official source rank above unconfirmed ones; records the
  *    upstream directory dropped rank below them.
- *  - Distance: closer markets get a bounded boost, so proximity breaks ties
- *    between comparable text matches without drowning out a much better one.
+ *  - Distance: nearness multiplies the text match, strongly inside the
+ *    reader's area and fading with distance, so a generic query stays local
+ *    while a search for another place is still decided by the text.
  *  - Richness: listings that tell a visitor more (hours, website, phone,
- *    social pages; see `marketRichness.ts`) get a bounded boost too.
+ *    social pages) and that people have recently opened get a bounded boost
+ *    too; see `marketRichness.ts`.
  */
 
 import type { FarmerMarket } from '@/lib/api';
@@ -100,15 +102,22 @@ export function verificationBoost(market: Pick<FarmerMarket, 'verified' | 'unver
 }
 
 /**
- * Bounded proximity boost: 30 points at the reader's doorstep, half that at
- * 50 miles, approaching 0 far away. Missing distances contribute nothing.
- * Sized above the verification boost so a same-name market 30 miles away
- * outranks a verified namesake 700 miles away, while a distinctly better
- * text match still wins overall.
+ * How much nearness multiplies a text match: up to 3 (quadrupling the match)
+ * at the reader's doorstep, still about 2 at 25 miles, half strength at 40,
+ * about 0.4 at 100 miles and nothing across the country. It holds up across
+ * a metro area and then falls away quickly. Missing distances contribute
+ * nothing.
+ *
+ * A multiplier, not added points, for two reasons. A generic query
+ * ("downtown", "saturday") stays local: a market in the reader's area beats
+ * a slightly tidier name match several states away, and the richness boost
+ * cannot pull a far market over a near one. And a weak match cannot ride on
+ * nearness alone: searching "portland" from elsewhere still ranks markets in
+ * Portland above a nearby one that merely sits on Portland Avenue.
  */
 export function proximityBoost(distance: number | undefined): number {
   if (distance === undefined || !Number.isFinite(distance)) return 0;
-  return 30 / (1 + distance / 50);
+  return 3 / (1 + (distance / 40) ** 2);
 }
 
 /**
@@ -138,9 +147,8 @@ export function searchMarkets(markets: FarmerMarket[], query: string): FarmerMar
     scored.push({
       market,
       score:
-        relevance +
+        relevance * (1 + proximityBoost(market.distance)) +
         verificationBoost(market) +
-        proximityBoost(market.distance) +
         richnessBoost(market.richness),
     });
   }

@@ -17,7 +17,7 @@ export interface FarmerMarket {
   unverified?: boolean;
   /** Recently supported by verified research or a current official source. */
   verified?: boolean;
-  /** 0 to 100: how much the listing can tell a visitor (`marketRichness.ts`). */
+  /** 0 to 100 ranking strength: how much the listing can tell a visitor, plus a small bonus for recent visits (`marketRichness.ts`). */
   richness?: number;
   country?: string;
   country_code?: string;

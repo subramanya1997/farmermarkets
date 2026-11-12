@@ -10,8 +10,12 @@ import type {
 } from '@/lib/enrichment';
 import { mergeEnrichment } from '@/lib/enrichment';
 import { marketHours, marketWeekdays } from '@/lib/seo';
-import { effectiveDistance, marketRichness } from '@/lib/marketRichness';
+import { effectiveDistance, listingStrength, marketRichness } from '@/lib/marketRichness';
+import marketPopularity from '../../../../data/market-popularity.json';
 export { mergeEnrichment };
+
+/** Human visits per market page in the last 30 days, refreshed daily by `scripts/build-market-popularity.mjs`. */
+const RECENT_VISITS: Record<string, number> = marketPopularity.markets;
 
 // FarmerMarket interface for TypeScript typing
 export interface FarmerMarket {
@@ -27,7 +31,7 @@ export interface FarmerMarket {
    * `already_enriched`. Derived here so ranking never ships audit blobs.
    */
   verified?: boolean;
-  /** 0 to 100: how much the listing can tell a visitor (`marketRichness.ts`). */
+  /** 0 to 100 ranking strength: how much the listing can tell a visitor, plus a small bonus for recent visits (`marketRichness.ts`). */
   richness?: number;
   country?: string;
   country_code?: string;
@@ -462,9 +466,10 @@ async function readMarketsData(): Promise<FarmerMarket[]> {
       }).map((market) => {
         // Scored once here so every ordering on the site reads the same number.
         const hasDays = marketWeekdays(market).length > 0;
+        const richness = marketRichness(market, { hasDays, hasHours: hasDays && Boolean(marketHours(market)) });
         return {
           ...market,
-          richness: marketRichness(market, { hasDays, hasHours: hasDays && Boolean(marketHours(market)) }),
+          richness: listingStrength(richness, RECENT_VISITS[market.slug], market.unverified),
         };
       });
     } catch (error) {
