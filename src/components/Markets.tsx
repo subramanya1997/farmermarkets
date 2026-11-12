@@ -29,7 +29,7 @@ import { settledMarketSearchEvent } from '@/lib/searchAnalytics';
 import { SITE_FRAME } from "@/lib/ui";
 
 /**
- * Must stay a multiple of 12: the results grid renders 2, 3, 4, or 6 columns
+ * Must stay a multiple of 12: the results grid renders 2, 3, or 4 columns
  * depending on viewport, and 12 is the smallest count they all divide, so a
  * full page never ends on a ragged row (30 left a 2-card row at 4 columns).
  */
@@ -449,7 +449,7 @@ export function Markets() {
           </p>
           {view === 'grid' ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                 {currentMarkets.map((market) => (
                   <MarketCard key={market.id} market={market} />
                 ))}

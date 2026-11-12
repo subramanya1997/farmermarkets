@@ -88,7 +88,7 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
                   {result.total.toLocaleString()}, A to Z
                 </p>
               </div>
-              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
                 {result.markets.map((market) => (
                   <li key={market.id}>
                     <MarketSummaryCard market={market} />
