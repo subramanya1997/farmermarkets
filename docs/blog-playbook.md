@@ -83,9 +83,9 @@ The body:
   `public/data/geo_index.json` with a short script and quote what it prints.
 - At least three internal links, written as root-relative paths, each placed
   in the sentence it helps, not stacked in a closing paragraph. Useful
-  targets: `/markets`, the topic pages (`/farmers-markets/snap-ebt`,
-  `/farmers-markets/hours`, `/farmers-markets/saturday`,
-  `/farmers-markets/online`), state pages (`/california`), city pages
+  targets: `/markets`, the topic pages (`/markets/near-me`,
+  `/markets/year-round`, `/markets/snap-ebt`, `/markets/hours`,
+  `/markets/online`, and one per weekday such as `/markets/saturday`), state pages (`/california`), city pages
   (`/new-york/brooklyn`) and other posts (`/blog/<slug>`). State and city
   slugs must exist in `geo_index.json`; the test checks every link.
 - No inline images in the body. The cover photo is the post's picture.

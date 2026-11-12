@@ -6,7 +6,7 @@ import { OrderingMarkets } from './OrderingMarkets';
 export const revalidate = 86400;
 
 /**
- * `/farmers-markets/online`: the markets that sell beyond the stall (online
+ * `/markets/online`: the markets that sell beyond the stall (online
  * ordering, delivery or a CSA share), listed in full by state with a filter.
  */
 export async function generateMetadata(): Promise<Metadata> {

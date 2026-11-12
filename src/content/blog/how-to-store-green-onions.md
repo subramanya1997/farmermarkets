@@ -60,7 +60,7 @@ The longest life starts at the stand. The California guide describes good green 
 
 For when they and everything else are at their best where you live, see [what produce is in season](/blog/what-produce-is-in-season). If you get them in a weekly box, the same rules apply; our guide to a [CSA farm share](/blog/csa-farm-share) covers how to handle a share that arrives all at once.
 
-If you shop a [Saturday market](/farmers-markets/saturday) and want green onions all week, put them on top of the bag, not under the squash, and get them into the fridge as soon as you are home.
+If you shop a [Saturday market](/markets/saturday) and want green onions all week, put them on top of the bag, not under the squash, and get them into the fridge as soon as you are home.
 
 ## Washing and Trimming
 

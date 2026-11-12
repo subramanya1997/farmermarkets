@@ -60,7 +60,7 @@
     "test:markdown": "node --test --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --experimental-strip-types src/lib/markdown.test.ts",
     "test:freshness": "node --test --experimental-strip-types src/lib/freshness.test.ts",
     "test:site": "node --test --experimental-strip-types src/lib/site.test.ts",
-    "test:page-context": "node --test --experimental-strip-types src/lib/pageContext.test.ts",
+    "test:page-context": "node --test --experimental-strip-types src/lib/pageContext.test.ts src/lib/topicSlugs.test.ts src/lib/nearMeFilter.test.ts",
     "test:seo": "node --test scripts/seo-smoke.mjs",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

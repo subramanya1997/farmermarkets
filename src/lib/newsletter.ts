@@ -123,7 +123,7 @@ export function confirmationEmail({ confirm, unsubscribe }: { confirm: string; u
 export function welcomeEmail({ unsubscribe, zip }: { unsubscribe: string; zip?: string | null }): EmailContent {
   const home = absoluteUrl('/');
   const inSeason = absoluteUrl('/blog/what-produce-is-in-season');
-  const snap = absoluteUrl('/farmers-markets/snap-ebt');
+  const snap = absoluteUrl('/markets/snap-ebt');
   const near = zip ? `markets near ${zip}` : 'markets near you';
   return {
     subject: "You're subscribed to Farmer Markets",

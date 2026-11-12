@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getStateHubSummaries } from "@/lib/statePage";
-import { TOPIC_LABELS, TOPIC_SLUGS, topicPath } from "@/lib/topicPage";
+import { NAV_TOPIC_SLUGS, TOPIC_LABELS, topicPath } from "@/lib/topicPage";
 import { SITE_FRAME } from "@/lib/ui";
 import { FeedbackLink } from "@/components/FeedbackLink";
 
@@ -43,7 +43,7 @@ export async function Footer() {
                     All markets
                   </Link>
                 </li>
-                {TOPIC_SLUGS.map((slug) => (
+                {NAV_TOPIC_SLUGS.map((slug) => (
                   <li key={slug}>
                     <Link
                       href={topicPath(slug)}

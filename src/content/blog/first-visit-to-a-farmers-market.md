@@ -14,7 +14,7 @@ A farmers market is not a smaller grocery store. The stock changes week to week,
 
 ## Before You Go
 
-Look up the market first. Market days and hours shift with the season, so a market that ran until one o'clock in July may pack up at eleven in October. Listings in the directory show the market day and hours when the source data has them, along with which payment and food assistance programs a market takes and what it sells. You can also browse [opening days and hours across the directory](/farmers-markets/hours) if your own schedule is what decides it.
+Look up the market first. Market days and hours shift with the season, so a market that ran until one o'clock in July may pack up at eleven in October. Listings in the directory show the market day and hours when the source data has them, along with which payment and food assistance programs a market takes and what it sells. You can also browse [opening days and hours across the directory](/markets/hours) if your own schedule is what decides it.
 
 Bring a bag, and then bring a second one. Vendors usually have plastic bags, but they run out by mid-morning and a single bag full of tomatoes does not survive the walk to the car.
 
@@ -51,4 +51,4 @@ Do not haggle hard. This is not a flea market, and the margin on a bunch of carr
 
 ## If You Use SNAP, WIC, or FMNP
 
-Many markets take SNAP through a central booth that swipes your card and hands you tokens to spend at the stands, and some markets add matching dollars for fruit and vegetables. Our guide to [using SNAP and EBT at farmers markets](/blog/how-to-use-snap-ebt-at-farmers-markets) walks through how that works, and you can see [every market that accepts SNAP, WIC, or FMNP](/farmers-markets/snap-ebt) in one list.
+Many markets take SNAP through a central booth that swipes your card and hands you tokens to spend at the stands, and some markets add matching dollars for fruit and vegetables. Our guide to [using SNAP and EBT at farmers markets](/blog/how-to-use-snap-ebt-at-farmers-markets) walks through how that works, and you can see [every market that accepts SNAP, WIC, or FMNP](/markets/snap-ebt) in one list.

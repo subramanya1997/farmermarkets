@@ -22,9 +22,17 @@ test('detail pages carry their slug', () => {
     page_type: 'blog_post',
     page_blog_post: 'how-to-store-garlic',
   });
-  assert.deepEqual(pageContextForPath('/farmers-markets/snap-ebt'), {
+  assert.deepEqual(pageContextForPath('/markets/snap-ebt'), {
     page_type: 'topic',
     page_topic: 'snap-ebt',
+  });
+  assert.deepEqual(pageContextForPath('/markets/near-me'), {
+    page_type: 'topic',
+    page_topic: 'near-me',
+  });
+  assert.deepEqual(pageContextForPath('/markets/sunday'), {
+    page_type: 'topic',
+    page_topic: 'sunday',
   });
   assert.deepEqual(pageContextForPath('/markets/state/new-york'), {
     page_type: 'markets_index',

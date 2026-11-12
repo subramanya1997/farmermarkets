@@ -1,20 +1,22 @@
 import Link from 'next/link';
-import { CalendarDays, Clock, HandCoins, Laptop, MapPin } from 'lucide-react';
-import type { TopicSummary } from '@/lib/topicPage';
+import { CalendarDays, Clock, HandCoins, Laptop, LocateFixed, MapPin, Snowflake, type LucideIcon } from 'lucide-react';
+import type { TopicSlug, TopicSummary } from '@/lib/topicPage';
 import { SITE_FRAME } from '@/lib/ui';
 
 interface BrowseByTopicProps {
   topics: TopicSummary[];
 }
 
-const TOPIC_ICONS = {
+const TOPIC_ICONS: Partial<Record<TopicSlug, LucideIcon>> = {
+  'near-me': LocateFixed,
+  'year-round': Snowflake,
   saturday: CalendarDays,
   'snap-ebt': HandCoins,
   hours: Clock,
   online: Laptop,
-} as const;
+};
 
-/** Server-rendered links to the four topic pages, as a row of icon chips. */
+/** Server-rendered links to the advertised topic pages, as a row of icon chips. */
 export function BrowseByTopic({ topics }: BrowseByTopicProps) {
   if (topics.length === 0) return null;
 

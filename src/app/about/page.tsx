@@ -36,7 +36,7 @@ export default function AboutPage() {
           </p>
           <p>
             It is for anyone deciding where to shop this week, paying with{' '}
-            <Link href="/farmers-markets/snap-ebt" className={LINK}>
+            <Link href="/markets/snap-ebt" className={LINK}>
               SNAP, WIC or FMNP
             </Link>
             , or looking for a market in a new city. If you run a market, you can{' '}

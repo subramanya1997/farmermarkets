@@ -11,11 +11,10 @@ import { getSnapTopicPage, topicMetadata } from '@/lib/topicPage';
 export const revalidate = 86400;
 
 /**
- * `/farmers-markets/snap-ebt`: every market in the data that takes SNAP/EBT.
+ * `/markets/snap-ebt`: every market in the data that takes SNAP/EBT.
  *
- * A static segment, so Next matches it ahead of the sibling `[state]` route;
- * `snap-ebt` is not a state slug in the geo index, so nothing is shadowed in
- * the other direction either.
+ * A static segment, so Next matches it ahead of the sibling `[slug]` market
+ * route; `topicSlugs.test.ts` keeps any market from taking the name.
  */
 export async function generateMetadata(): Promise<Metadata> {
   return topicMetadata(await getSnapTopicPage());

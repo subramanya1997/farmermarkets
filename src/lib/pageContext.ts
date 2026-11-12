@@ -6,6 +6,8 @@
  * page type, state or city without regexing `$current_url`.
  */
 
+import { isTopicSlug } from './topicSlugs.ts';
+
 export type PageType =
   | 'home'
   | 'markets_index'
@@ -53,10 +55,12 @@ export function pageContextForPath(pathname: string): PageContext {
 
   const section = STATIC_SECTIONS[first];
   if (section === 'markets_index') {
-    // /markets, /markets/page/2 and /markets/state/ny are listings; anything
-    // else under /markets is one market's detail page.
+    // /markets, /markets/page/2 and /markets/state/ny are listings and
+    // /markets/hours is a topic page; anything else under /markets is one
+    // market's detail page.
     if (!second || second === 'page') return { page_type: 'markets_index' };
     if (second === 'state') return { page_type: 'markets_index', ...(third ? { page_state: third } : {}) };
+    if (isTopicSlug(second)) return { page_type: 'topic', page_topic: second };
     return { page_type: 'market', page_market: second };
   }
   if (section === 'topic') return second ? { page_type: 'topic', page_topic: second } : { page_type: 'other' };

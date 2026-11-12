@@ -9,15 +9,17 @@ import {
   MapPin,
   MousePointerClick,
   ShoppingBasket,
+  Store,
   Truck,
+  Warehouse,
 } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FaqSection } from '@/components/FaqSection';
-import { TopicMarketCard } from '@/app/farmers-markets/_components/TopicMarketRow';
+import { TopicMarketCard } from '@/app/markets/_components/TopicMarketRow';
 import { absoluteUrl } from '@/lib/site';
 import {
+  NAV_TOPIC_SLUGS,
   TOPIC_LABELS,
-  TOPIC_SLUGS,
   topicPath,
   type TopicDayRow,
   type TopicMarketRow,
@@ -28,13 +30,13 @@ import {
 import { SITE_FRAME } from '@/lib/ui';
 
 /**
- * The one layout the four topic pages share.
+ * The one layout the topic pages share.
  *
  * Each page supplies its view model from `src/lib/topicPage.ts` plus its own
- * sections as children; everything the four have in common (breadcrumbs, the
+ * sections as children; everything they have in common (breadcrumbs, the
  * answer sentence and headline numbers, the FAQ block, the
  * CollectionPage/ItemList/FAQPage JSON-LD and the cross-links to the other
- * topics) lives here once, so the pages cannot drift into four slightly
+ * topics) lives here once, so the pages cannot drift into slightly
  * different templates.
  *
  * Built to be scanned, not read, in the same visual language as the market
@@ -104,6 +106,8 @@ const STAT_ICONS: Record<TopicStatIcon, Icon> = {
   online: MousePointerClick,
   delivery: Truck,
   csa: ShoppingBasket,
+  indoor: Warehouse,
+  market: Store,
 };
 
 const HEADING = 'text-xl font-bold tracking-tight sm:text-2xl';
@@ -274,10 +278,10 @@ function TopicFaqs({ data }: { data: TopicPageData }) {
   return <FaqSection items={data.faqs} />;
 }
 
-/** Links to the other three topic pages and back to the directory. */
+/** Links to the other advertised topic pages and back to the directory. */
 function TopicCrossLinks({ current }: { current: TopicPageData['slug'] }) {
   const items: TopicChip[] = [
-    ...TOPIC_SLUGS.filter((slug) => slug !== current).map((slug) => ({
+    ...NAV_TOPIC_SLUGS.filter((slug) => slug !== current).map((slug) => ({
       label: TOPIC_LABELS[slug],
       href: topicPath(slug),
     })),

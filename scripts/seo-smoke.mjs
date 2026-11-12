@@ -281,14 +281,14 @@ const SAMPLE = [
 
   /* --- Two topic pages ---------------------------------------------- */
   {
-    path: '/farmers-markets/snap-ebt',
+    path: '/markets/snap-ebt',
     kind: 'topic page',
     minInternalLinks: 40, // renders 77
     robots: 'indexable',
     expectDateModified: true,
   },
   {
-    path: '/farmers-markets/saturday',
+    path: '/markets/saturday',
     kind: 'topic page',
     minInternalLinks: 40, // renders 77
     robots: 'indexable',
@@ -341,6 +341,12 @@ const NEGATIVE_CASES = [
     path: '/farmers-markets/texas',
     status: 308,
     location: '/texas',
+  },
+  {
+    name: 'old /farmers-markets/{topic} 308s to /markets/{topic}',
+    path: '/farmers-markets/hours',
+    status: 308,
+    location: '/markets/hours',
   },
   {
     name: 'old /farmers-markets/{code} 308s straight to the state slug',

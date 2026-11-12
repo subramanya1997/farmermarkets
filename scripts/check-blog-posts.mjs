@@ -26,10 +26,18 @@ const STATIC_PATHS = new Set([
   '/about',
   '/about-the-data',
   '/for-market-operators',
-  '/farmers-markets/snap-ebt',
-  '/farmers-markets/online',
-  '/farmers-markets/hours',
-  '/farmers-markets/saturday',
+  '/markets/near-me',
+  '/markets/year-round',
+  '/markets/snap-ebt',
+  '/markets/online',
+  '/markets/hours',
+  '/markets/monday',
+  '/markets/tuesday',
+  '/markets/wednesday',
+  '/markets/thursday',
+  '/markets/friday',
+  '/markets/saturday',
+  '/markets/sunday',
 ]);
 const states = new Map(geoIndex.states.map((state) => [state.slug, state]));
 

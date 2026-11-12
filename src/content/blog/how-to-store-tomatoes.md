@@ -60,7 +60,7 @@ Good storage starts with sound fruit. Iowa State says to choose tomatoes that ar
 
 Because ripe color varies by variety, the squeeze tells you more than the color on an unfamiliar tomato, and the grower can tell you what a ripe one of that variety looks like. For when tomatoes are at their best where you live, see our guide to [what produce is in season](/blog/what-produce-is-in-season).
 
-Carry them home on top of the bag, not under the potatoes. The Texas A&M guide notes that damaged tomatoes spoil quickly and could carry pathogens that cause foodborne illness. If you shop a [Saturday market](/farmers-markets/saturday) and eat through the week, sort them as you unpack: soft ones to eat first, firm ones to hold.
+Carry them home on top of the bag, not under the potatoes. The Texas A&M guide notes that damaged tomatoes spoil quickly and could carry pathogens that cause foodborne illness. If you shop a [Saturday market](/markets/saturday) and eat through the week, sort them as you unpack: soft ones to eat first, firm ones to hold.
 
 ## Washing and Storing Cut Tomatoes
 

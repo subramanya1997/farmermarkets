@@ -85,4 +85,4 @@ Bigger is not better for keeping. The Cornell article notes that small and mediu
 
 Ask the grower two things: whether it is softneck or hardneck, and whether it has been cured. Curing is the drying after harvest. California says it takes about 2 to 3 weeks for the outer skins to turn papery, and that the point of it is to keep the bulbs from rotting in storage.
 
-[California](/california) grows more than 90 percent of the country's commercial garlic, by that same guide's count. Garlic keeps on the same kind of shelf as [storage onions](/blog/how-to-store-onions), so one dry corner can hold both. Many outdoor markets close for the winter, so [check the day and hours](/farmers-markets/hours) before a late-season trip.
+[California](/california) grows more than 90 percent of the country's commercial garlic, by that same guide's count. Garlic keeps on the same kind of shelf as [storage onions](/blog/how-to-store-onions), so one dry corner can hold both. Many outdoor markets close for the winter, so [check the day and hours](/markets/hours) before a late-season trip.

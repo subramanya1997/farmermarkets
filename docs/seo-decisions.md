@@ -265,7 +265,8 @@ land in `clean()` with a test, not in an individual page.
 State hubs are `/{state}` (`/new-york`) and city pages are `/{state}/{city}`
 (`/new-york/brooklyn`). Until October 2026 both sat under `/farmers-markets/`.
 The four topic pages (`/farmers-markets/snap-ebt`, `/online`, `/hours`,
-`/saturday`) did not move.
+`/saturday`) stayed there until November 2026, then moved to `/markets/`
+(section 13).
 
 Every old URL 308s to its new one in a single hop from `next.config.ts`,
 including the 2-letter code form (`/farmers-markets/ny` goes to `/new-york`).
@@ -284,8 +285,7 @@ right. The owner asked for the short form.
 
 **Guard rails.** A static route always beats `[state]`, so a state slug equal
 to a top-level route would silently lose its page; `test:geo` fails if one
-ever collides. A new topic page under `/farmers-markets/` must be added to
-`TOPIC_SLUGS` in `next.config.ts` or the state redirect will swallow it.
+ever collides.
 
 **Revisit when.** Never casually: this was the second move for these URLs in
 two months, and each move costs a recrawl of about 5,000 pages.
@@ -313,3 +313,34 @@ page that names its dataset of origin is useful to the few who land on it.
 with its own hours): remove the entry. If the dataset builder ever learns to
 merge rows itself, this map becomes its input rather than a second mechanism.
 
+## 13. Topic pages live under /markets/
+
+The topic pages are `/markets/{topic}`: `near-me`, `year-round`, `snap-ebt`,
+`online`, `hours` and one page per weekday (`/markets/monday` to
+`/markets/sunday`). The four that existed before November 2026 sat under
+`/farmers-markets/`; each 308s to its new address from `next.config.ts`, and
+bare `/farmers-markets` goes to `/markets`. Nothing is served under
+`/farmers-markets/` any more.
+
+The slugs, paths and labels are one list in `src/lib/topicSlugs.ts`, read by
+the redirects, the analytics page type, the sitemap, the header and the footer.
+The header, footer and `/markets` advertise six of them (`NAV_TOPIC_SLUGS`);
+the other weekday pages are linked from the hours page and from each other.
+
+`/markets/near-me` is static like the rest. Its list of nearby markets is
+filled in by the browser from `/api/near-me`, using the same approximate
+IP-based location as the homepage, or the device's position if the reader asks
+for it. "Open today" means the record lists today's weekday and its season
+covers today's date (or it says year-round). It never says "open now": almost
+no record has verified hours with a timezone.
+
+**Why.** The owner wanted nothing left under `/farmers-markets/`, and the
+winter drop in search demand (November 2026) called for pages that answer
+"what is open near me, today, this weekend, in winter".
+
+**Guard rails.** A static segment beats `/markets/[slug]`, so a market whose
+slug equalled a topic would lose its page. `topicSlugs.test.ts` (in
+`test:page-context`) and `test:topic-routes` both fail if one ever collides.
+
+**Revisit when.** A topic gets no impressions after a full season: fold it into
+the hours page and redirect it, since thin near-duplicates dilute the rest.

@@ -11,7 +11,7 @@ import { getHoursTopicPage, topicMetadata } from '@/lib/topicPage';
 export const revalidate = 86400;
 
 /**
- * `/farmers-markets/hours`: the hours-intent page. Which days markets open,
+ * `/markets/hours`: the hours-intent page. Which days markets open,
  * the most common times, and where to check the times for one city.
  */
 export async function generateMetadata(): Promise<Metadata> {

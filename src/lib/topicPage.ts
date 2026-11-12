@@ -1,6 +1,6 @@
 /**
- * View models for the four topic pages under `/farmers-markets/`:
- * `snap-ebt`, `online`, `hours` and `saturday`.
+ * View models for the topic pages under `/markets/`: `near-me`, `year-round`,
+ * `snap-ebt`, `online`, `hours` and one page per weekday.
  *
  * Each page leads with one answer sentence and a row of headline numbers,
  * then shows its data visually (a state grid, day bars, market rows with
@@ -14,15 +14,14 @@
  * written into the copy, and a sentence whose input is missing is dropped
  * instead of guessed at.
  *
- * The four topics share one pass over the dataset (`getTopicEntries`), which
- * is memoized per server process: each entry carries the market's weekdays,
+ * The topics share one pass over the dataset (`getTopicEntries`), which is
+ * memoized per server process: each entry carries the market's weekdays,
  * hours and place, so a topic builder only filters and counts.
  *
- * Routing note: state hubs and city pages moved to the site root (`/texas`,
- * `/texas/austin`) in October 2026, so these four are now the only pages under
- * `/farmers-markets/`. The redirect that forwards the old state URLs
- * (`next.config.ts`) carves these slugs out by name; a fifth topic has to be
- * added to that list too.
+ * Routing note: the slugs, paths and labels live in `topicSlugs.ts`. The pages
+ * sat under `/farmers-markets/` until November 2026; `next.config.ts` 308s the
+ * four addresses that existed there. A new topic needs a slug in that file and
+ * a page folder under `src/app/markets/`.
  */
 
 import 'server-only';
@@ -32,6 +31,8 @@ import { getGeoIndex, type GeoState } from './geoIndex';
 import { cityPath } from './cityPage';
 import { statePath } from './statePage';
 import { newerInstant, toIsoInstant } from './dates';
+import { isYearRoundMarket } from './marketWinter';
+import { settingLabel } from './marketFacts';
 import {
   WEEKDAY_NAMES,
   displayName,
@@ -54,21 +55,23 @@ import {
  * Slugs and paths
  * ------------------------------------------------------------------ */
 
-export const TOPIC_SLUGS = ['snap-ebt', 'online', 'hours', 'saturday'] as const;
-export type TopicSlug = (typeof TOPIC_SLUGS)[number];
-
-/** Canonical path for a topic page. */
-export function topicPath(slug: TopicSlug): string {
-  return `/farmers-markets/${slug}`;
-}
-
-/** Breadcrumb/footer label for each topic. */
-export const TOPIC_LABELS: Record<TopicSlug, string> = {
-  'snap-ebt': 'SNAP/EBT markets',
-  online: 'Online ordering & delivery',
-  hours: 'Market hours',
-  saturday: 'Saturday markets',
-};
+export {
+  DAY_TOPIC_SLUGS,
+  NAV_TOPIC_SLUGS,
+  TOPIC_LABELS,
+  TOPIC_SLUGS,
+  topicPath,
+  type DayTopicSlug,
+  type TopicSlug,
+} from './topicSlugs';
+import {
+  DAY_TOPIC_SLUGS,
+  NAV_TOPIC_SLUGS,
+  TOPIC_LABELS,
+  topicPath,
+  type DayTopicSlug,
+  type TopicSlug,
+} from './topicSlugs';
 
 /* ------------------------------------------------------------------ *
  * Shared view-model types
@@ -86,7 +89,17 @@ export interface TopicStateRow {
 }
 
 /** The icon a headline number is drawn with (mapped in `TopicPage.tsx`). */
-export type TopicStatIcon = 'snap' | 'map' | 'wic' | 'calendar' | 'clock' | 'online' | 'delivery' | 'csa';
+export type TopicStatIcon =
+  | 'snap'
+  | 'map'
+  | 'wic'
+  | 'calendar'
+  | 'clock'
+  | 'online'
+  | 'delivery'
+  | 'csa'
+  | 'indoor'
+  | 'market';
 
 /** One headline number under the answer sentence. */
 export interface TopicStat {
@@ -393,7 +406,7 @@ function isDefined<T>(value: T | undefined | false): value is T {
 }
 
 /* ------------------------------------------------------------------ *
- * /farmers-markets/snap-ebt
+ * /markets/snap-ebt
  * ------------------------------------------------------------------ */
 
 export async function getSnapTopicPage(): Promise<TopicPageData> {
@@ -463,7 +476,7 @@ export async function getSnapTopicPage(): Promise<TopicPageData> {
 }
 
 /* ------------------------------------------------------------------ *
- * /farmers-markets/online
+ * /markets/online
  * ------------------------------------------------------------------ */
 
 /**
@@ -568,7 +581,7 @@ export async function getOnlineTopicPage(): Promise<OnlineTopicPageData> {
 }
 
 /* ------------------------------------------------------------------ *
- * /farmers-markets/hours
+ * /markets/hours
  * ------------------------------------------------------------------ */
 
 /** One day in a day-of-week chart. */
@@ -607,7 +620,7 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
   const dayRows: TopicDayRow[] = WEEKDAY_NAMES.map((day) => ({
     day,
     count: countMatching(entries, (entry) => entry.days.includes(day)),
-    href: day === 'Saturday' ? topicPath('saturday') : undefined,
+    href: topicPath(daySlug(day)),
   })).filter((row) => row.count > 0);
 
   const busiest = rankDays(dayRows)[0];
@@ -687,75 +700,92 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
 }
 
 /* ------------------------------------------------------------------ *
- * /farmers-markets/saturday
+ * /markets/{weekday}
  * ------------------------------------------------------------------ */
 
-export interface SaturdayTopicPageData extends TopicPageData {
+function daySlug(day: Weekday): DayTopicSlug {
+  return day.toLowerCase() as DayTopicSlug;
+}
+
+/** "Saturday" for `saturday`. */
+export function dayForSlug(slug: DayTopicSlug): Weekday {
+  return WEEKDAY_NAMES[DAY_TOPIC_SLUGS.indexOf(slug)];
+}
+
+export interface DayTopicPageData extends TopicPageData {
+  day: Weekday;
   /** Every other weekday with its own count, in week order. */
   otherDays: TopicDayRow[];
   commonHours?: { hours: string; count: number };
 }
 
-export async function getSaturdayTopicPage(): Promise<SaturdayTopicPageData> {
+/** One weekday's page: who opens that day, state by state. */
+export async function getDayTopicPage(day: Weekday): Promise<DayTopicPageData> {
   const all = await getTopicEntries();
   const withDays = all.filter((entry) => entry.days.length > 0);
-  const entries = all.filter((entry) => entry.days.includes('Saturday'));
+  const entries = all.filter((entry) => entry.days.includes(day));
+  const slug = daySlug(day);
 
   const states = stateRows(entries);
   const count = entries.length;
   const hours = commonHours(entries);
   const alsoOtherDayCount = countMatching(entries, (entry) => entry.days.length > 1);
   const snapCount = countMatching(entries, (entry) => entry.market.snap === true);
+  const yearRoundCount = countMatching(entries, (entry) => isYearRoundMarket(entry.market));
   const where = states.length > 0 ? ` across ${statesPhrase(states)}` : '';
 
-  const otherDays: TopicDayRow[] = WEEKDAY_NAMES.filter((day) => day !== 'Saturday')
-    .map((day) => ({
-      day,
-      count: countMatching(withDays, (entry) => entry.days.includes(day)),
-      href: topicPath('hours'),
+  const otherDays: TopicDayRow[] = WEEKDAY_NAMES.filter((other) => other !== day)
+    .map((other) => ({
+      day: other,
+      count: countMatching(withDays, (entry) => entry.days.includes(other)),
+      href: topicPath(daySlug(other)),
     }))
     .filter((row) => row.count > 0);
 
-  // Of the Saturday markets that also open another day, which day that most
+  // Of this day's markets that also open another day, which day that most
   // often is.
   const [topOtherDay] = rankDays(
-    WEEKDAY_NAMES.filter((day) => day !== 'Saturday').map((day) => ({
-      day,
-      count: countMatching(entries, (entry) => entry.days.includes(day)),
+    WEEKDAY_NAMES.filter((other) => other !== day).map((other) => ({
+      day: other,
+      count: countMatching(entries, (entry) => entry.days.includes(other)),
     }))
   ).filter((row) => row.count > 0);
 
   const faqs: TopicFaq[] = [
     alsoOtherDayCount > 0 && {
-      question: 'Are Saturday farmers markets open on other days too?',
+      question: `Are ${day} farmers markets open on other days too?`,
       answer: `${formatCount(alsoOtherDayCount)} of them are${
         topOtherDay ? `, most often on ${topOtherDay.day}` : ''
       }.`,
     },
     snapCount > 0 && {
-      question: 'Do Saturday farmers markets take SNAP/EBT?',
+      question: `Do ${day} farmers markets take SNAP/EBT?`,
       answer: `${formatCount(snapCount)} of them do.`,
+    },
+    yearRoundCount > 0 && {
+      question: `Are ${day} farmers markets open in winter?`,
+      answer: `${formatCount(yearRoundCount)} of them run year-round. The rest follow a season, so check the market's page before you go.`,
     },
   ].filter(isDefined);
 
   return {
-    slug: 'saturday',
-    path: topicPath('saturday'),
-    heading: 'Saturday Farmers Markets',
+    slug,
+    path: topicPath(slug),
+    heading: `${day} Farmers Markets`,
     title: fitTitle([
-      `${formatCount(count)} Saturday Farmers Markets by State`,
-      `Saturday Farmers Markets: ${formatCount(count)} by State`,
-      'Saturday Farmers Markets by State',
+      `${formatCount(count)} ${day} Farmers Markets by State`,
+      `${day} Farmers Markets: ${formatCount(count)} by State`,
+      `${day} Farmers Markets by State`,
     ]),
-    description: fitDescription(`${pluralMarkets(count)} open on Saturday${where}.`, [
+    description: fitDescription(`${pluralMarkets(count)} open on ${day}${where}.`, [
       hours ? `The most common hours are ${hours.hours}.` : undefined,
       states.length > 0
         ? `Browse by state, starting with ${states[0].name} (${formatCount(states[0].count)}).`
         : undefined,
     ]),
-    answer: `${pluralMarkets(count)} open on Saturday${where}.`,
+    answer: `${pluralMarkets(count)} open on ${day}${where}.`,
     stats: [
-      { value: formatCount(count), label: 'Open Saturdays', icon: 'calendar' as const },
+      { value: formatCount(count), label: `Open ${day}s`, icon: 'calendar' as const },
       states.length > 0 && statesStat(states),
       hours && { value: hours.hours, label: 'Most common hours', icon: 'clock' as const },
     ].filter(isDefined),
@@ -764,8 +794,211 @@ export async function getSaturdayTopicPage(): Promise<SaturdayTopicPageData> {
     topMarkets: sampleByState(entries, states),
     faqs,
     lastModified: lastModifiedOf(entries),
+    day,
     otherDays,
     commonHours: hours,
+  };
+}
+
+/* ------------------------------------------------------------------ *
+ * /markets/year-round
+ * ------------------------------------------------------------------ */
+
+export interface YearRoundTopicPageData extends TopicPageData {
+  /** The cities with the most year-round markets. */
+  topCities: { name: string; href: string; count: number }[];
+  /** Which days the year-round markets open, in week order. */
+  dayRows: TopicDayRow[];
+}
+
+/**
+ * Held indoors for all or part of the year, by the record's own setting. The
+ * consolidated dataset stores the label itself ("Indoor"); `settingLabel`
+ * covers a record that still carries the raw USDA wording.
+ */
+function isIndoorMarket(market: FarmerMarket): boolean {
+  const raw = (market.indoor_outdoor ?? '').trim();
+  const setting = raw === 'Indoor' || raw === 'Indoor and outdoor' ? raw : settingLabel(raw);
+  return setting === 'Indoor' || setting === 'Indoor and outdoor';
+}
+
+function cityRows(entries: TopicEntry[], limit: number) {
+  const counts = new Map<string, { name: string; href: string; count: number }>();
+  for (const entry of entries) {
+    if (!entry.cityName || !entry.cityHref) continue;
+    const row = counts.get(entry.cityHref) ?? {
+      name: `${entry.cityName}, ${entry.stateCode}`,
+      href: entry.cityHref,
+      count: 0,
+    };
+    row.count += 1;
+    counts.set(entry.cityHref, row);
+  }
+  return [...counts.values()]
+    .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name, 'en'))
+    .slice(0, limit);
+}
+
+export async function getYearRoundTopicPage(): Promise<YearRoundTopicPageData> {
+  const all = await getTopicEntries();
+  const entries = all.filter((entry) => isYearRoundMarket(entry.market));
+
+  const states = stateRows(entries);
+  const count = entries.length;
+  const indoorCount = countMatching(entries, (entry) => isIndoorMarket(entry.market));
+  const saturdayCount = countMatching(entries, (entry) => entry.days.includes('Saturday'));
+  const sundayCount = countMatching(entries, (entry) => entry.days.includes('Sunday'));
+  const where = states.length > 0 ? ` across ${statesPhrase(states)}` : '';
+
+  const dayRows: TopicDayRow[] = WEEKDAY_NAMES.map((day) => ({
+    day,
+    count: countMatching(entries, (entry) => entry.days.includes(day)),
+    href: topicPath(daySlug(day)),
+  })).filter((row) => row.count > 0);
+
+  const [first, second, third] = states;
+  const faqs: TopicFaq[] = [
+    count > 0 && {
+      question: 'Are farmers markets open in winter?',
+      answer: `Many are. ${pluralMarkets(count)} run year-round${where}${
+        indoorCount > 0 ? `, and ${formatCount(indoorCount)} of them are held at least partly indoors` : ''
+      }. Most other markets close for the season in October or November.`,
+    },
+    first && {
+      question: 'Which states have the most year-round farmers markets?',
+      answer: `${first.name} has the most, with ${formatCount(first.count)}${
+        second
+          ? `, followed by ${joinWithAnd(
+              [second, third].filter(isDefined).map((state) => `${state.name} (${formatCount(state.count)})`)
+            )}`
+          : ''
+      }.`,
+    },
+    saturdayCount > 0 && {
+      question: 'Are year-round farmers markets open on weekends?',
+      answer: `Yes. ${formatCount(saturdayCount)} open on Saturday${
+        sundayCount > 0 ? ` and ${formatCount(sundayCount)} on Sunday` : ''
+      }.`,
+    },
+  ].filter(isDefined);
+
+  const answer = `${pluralMarkets(count)} stay open year-round${where}, so they are open in winter too.`;
+
+  return {
+    slug: 'year-round',
+    path: topicPath('year-round'),
+    heading: 'Year-Round Farmers Markets',
+    title: fitTitle([
+      `${formatCount(count)} Year-Round Farmers Markets Open in Winter`,
+      `${formatCount(count)} Year-Round Farmers Markets by State`,
+      'Year-Round Farmers Markets Open in Winter',
+    ]),
+    description: fitDescription(answer, [
+      first ? `${first.name} has the most (${formatCount(first.count)}).` : undefined,
+      'Find one in your state, with days and hours.',
+    ]),
+    answer,
+    stats: [
+      { value: formatCount(count), label: 'Open year-round', icon: 'calendar' as const },
+      states.length > 0 && statesStat(states),
+      indoorCount > 0 && { value: formatCount(indoorCount), label: 'Held indoors', icon: 'indoor' as const },
+      saturdayCount > 0 && {
+        value: formatCount(saturdayCount),
+        label: 'Open Saturdays',
+        icon: 'calendar' as const,
+      },
+    ].filter(isDefined),
+    marketCount: count,
+    states,
+    topMarkets: sampleByState(entries, states),
+    faqs,
+    lastModified: lastModifiedOf(entries),
+    topCities: cityRows(entries, TOP_CITY_LIMIT),
+    dayRows,
+  };
+}
+
+/* ------------------------------------------------------------------ *
+ * /markets/near-me
+ * ------------------------------------------------------------------ */
+
+export interface NearMeTopicPageData extends TopicPageData {
+  dayRows: TopicDayRow[];
+}
+
+/**
+ * The near-me page. Its static half (what a crawler and a no-JS reader get)
+ * is the national picture: every state, the days markets open and how many
+ * run year-round. The list of markets near the reader is filled in by the
+ * browser (`NearMeMarkets`), because only the browser knows where they are.
+ */
+export async function getNearMeTopicPage(): Promise<NearMeTopicPageData> {
+  const all = await getTopicEntries();
+  const withDays = all.filter((entry) => entry.days.length > 0);
+
+  const states = stateRows(all);
+  const count = all.length;
+  const yearRoundCount = countMatching(all, (entry) => isYearRoundMarket(entry.market));
+
+  const dayRows: TopicDayRow[] = WEEKDAY_NAMES.map((day) => ({
+    day,
+    count: countMatching(withDays, (entry) => entry.days.includes(day)),
+    href: topicPath(daySlug(day)),
+  })).filter((row) => row.count > 0);
+  const busiest = rankDays(dayRows)[0];
+  const saturday = dayRows.find((row) => row.day === 'Saturday');
+  const where = states.length > 0 ? ` across ${statesPhrase(states)}` : '';
+
+  const faqs: TopicFaq[] = [
+    {
+      question: 'How do I find a farmers market near me?',
+      answer:
+        'This page lists the markets closest to your approximate location, nearest first. You can also pick your state, then your city, to see every market there with its days and hours.',
+    },
+    busiest && {
+      question: 'Which farmers markets near me are open today?',
+      answer: `It depends on the day. ${busiest.day} is the busiest, with ${pluralShort(
+        busiest.count
+      )} open. The Today tab shows the markets near you that list today as a market day and are in season.`,
+    },
+    yearRoundCount > 0 && {
+      question: 'Are farmers markets near me open in winter?',
+      answer: `${pluralMarkets(yearRoundCount)} run year-round. The Year-round tab shows the ones closest to you.`,
+    },
+  ].filter(isDefined);
+
+  const answer = `Find the closest of ${pluralMarkets(count)}${where}, and see which are open today, this weekend or year-round.`;
+
+  return {
+    slug: 'near-me',
+    path: topicPath('near-me'),
+    heading: 'Farmers Markets Near Me',
+    title: fitTitle([
+      'Farmers Markets Near Me: Open Today and This Weekend',
+      'Farmers Markets Near Me: Open Today',
+      'Farmers Markets Near Me',
+    ]),
+    description: fitDescription(
+      `See the farmers markets closest to you, out of ${formatCount(count)}${where}.`,
+      ['Check which are open today, this weekend or year-round, with days and hours.']
+    ),
+    answer,
+    stats: [
+      { value: formatCount(count), label: 'Farmers markets', icon: 'market' as const },
+      states.length > 0 && statesStat(states),
+      saturday && { value: formatCount(saturday.count), label: 'Open Saturdays', icon: 'calendar' as const },
+      yearRoundCount > 0 && {
+        value: formatCount(yearRoundCount),
+        label: 'Open year-round',
+        icon: 'calendar' as const,
+      },
+    ].filter(isDefined),
+    marketCount: count,
+    states,
+    topMarkets: sampleByState(all, states),
+    faqs,
+    lastModified: lastModifiedOf(all),
+    dayRows,
   };
 }
 
@@ -785,14 +1018,24 @@ export interface TopicSummary {
   blurb: string;
 }
 
-/** All four topic pages with their live counts, in publication order. */
+const TOPIC_BUILDERS: Record<TopicSlug, () => Promise<TopicPageData>> = {
+  'near-me': getNearMeTopicPage,
+  'year-round': getYearRoundTopicPage,
+  'snap-ebt': getSnapTopicPage,
+  online: getOnlineTopicPage,
+  hours: getHoursTopicPage,
+  monday: () => getDayTopicPage('Monday'),
+  tuesday: () => getDayTopicPage('Tuesday'),
+  wednesday: () => getDayTopicPage('Wednesday'),
+  thursday: () => getDayTopicPage('Thursday'),
+  friday: () => getDayTopicPage('Friday'),
+  saturday: () => getDayTopicPage('Saturday'),
+  sunday: () => getDayTopicPage('Sunday'),
+};
+
+/** The topic pages `/markets` advertises, with their live counts. */
 export async function getTopicSummaries(): Promise<TopicSummary[]> {
-  const pages = await Promise.all([
-    getSnapTopicPage(),
-    getOnlineTopicPage(),
-    getHoursTopicPage(),
-    getSaturdayTopicPage(),
-  ]);
+  const pages = await Promise.all(NAV_TOPIC_SLUGS.map((slug) => TOPIC_BUILDERS[slug]()));
 
   return pages.map((page) => ({
     slug: page.slug,
@@ -809,7 +1052,7 @@ export async function getTopicSummaries(): Promise<TopicSummary[]> {
  * ------------------------------------------------------------------ */
 
 /**
- * The metadata block all four topic pages emit: self-canonical, with the
+ * The metadata block every topic page emits: self-canonical, with the
  * layout's "%s | Farmer Markets" suffix skipped so the count-bearing title
  * survives SERP truncation.
  */
@@ -833,19 +1076,14 @@ export function topicMetadata(data: TopicPageData): Metadata {
  * ------------------------------------------------------------------ */
 
 /**
- * The four topic URLs with the `lastmod` the sitemap publishes: the newest
+ * Every topic URL with the `lastmod` the sitemap publishes: the newest
  * `last_updated` among the markets the page lists, which is the same policy
  * the city pages and state hubs follow.
  */
 export async function getTopicSitemapEntries(): Promise<
   { path: string; lastModified?: string }[]
 > {
-  const pages = await Promise.all([
-    getSnapTopicPage(),
-    getOnlineTopicPage(),
-    getHoursTopicPage(),
-    getSaturdayTopicPage(),
-  ]);
+  const pages = await Promise.all(Object.values(TOPIC_BUILDERS).map((build) => build()));
 
   return pages.map((page) => ({ path: page.path, lastModified: page.lastModified }));
 }

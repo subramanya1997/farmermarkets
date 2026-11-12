@@ -43,7 +43,7 @@ Some farms offer working shares: a lower price in exchange for a set number of h
 
 SNAP benefits can be used for a CSA share, with one important difference. According to USDA's [notice to SNAP retailers](https://www.fna.usda.gov/snap/retailer/training/notice/ag-act-2014) on the 2014 farm bill, farmers markets and direct marketing farmers running a CSA, both non-profit and for-profit, may accept SNAP payment up to 14 days before they deliver the food or make it available for pickup.
 
-In practice, that means paying in two-week pieces through the season rather than all at once in spring. The farm has to be authorized to accept SNAP, so ask before you join. Our [list of markets that accept SNAP and EBT](/farmers-markets/snap-ebt) is a starting point, and [this guide](/blog/how-to-use-snap-ebt-at-farmers-markets) explains how EBT works at a market.
+In practice, that means paying in two-week pieces through the season rather than all at once in spring. The farm has to be authorized to accept SNAP, so ask before you join. Our [list of markets that accept SNAP and EBT](/markets/snap-ebt) is a starting point, and [this guide](/blog/how-to-use-snap-ebt-at-farmers-markets) explains how EBT works at a market.
 
 ## Questions to Ask Before You Sign Up
 
@@ -59,7 +59,7 @@ Penn State's guide is written for farmers, but the things it tells them to spell
 
 ## Where to Find a Farm Share
 
-The USDA directory linked above is one place to look. Farmers markets are the other easy route: many CSA farms sell at a market, and some use it as their pickup site. Our page of [markets with online ordering, delivery or a CSA](/farmers-markets/online) can be filtered to show markets that list a CSA. Coverage there is incomplete, because few markets report it, so browse the [market directory](/markets) for markets near you and ask the farmers at their stands whether they run one.
+The USDA directory linked above is one place to look. Farmers markets are the other easy route: many CSA farms sell at a market, and some use it as their pickup site. Our page of [markets with online ordering, delivery or a CSA](/markets/online) can be filtered to show markets that list a CSA. Coverage there is incomplete, because few markets report it, so browse the [market directory](/markets) for markets near you and ask the farmers at their stands whether they run one.
 
 ## Getting Through a Full Box Every Week
 

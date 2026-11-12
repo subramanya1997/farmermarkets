@@ -1,5 +1,5 @@
 /**
- * Route checks for the four topic pages (`/farmers-markets/{topic}`).
+ * Route checks for the topic pages (`/markets/{topic}`).
  *
  * Every number the pages publish is recomputed here straight from the two
  * market snapshots — a second implementation of the same counts — so a page
@@ -13,6 +13,14 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { marketWeekdays, marketHours } from '../src/lib/seo.ts';
+import { isYearRoundMarket } from '../src/lib/marketWinter.ts';
+import {
+  LEGACY_TOPIC_SLUGS,
+  NAV_TOPIC_SLUGS,
+  RESERVED_MARKET_SLUGS,
+  TOPIC_SLUGS,
+  topicPath as pathForTopic,
+} from '../src/lib/topicSlugs.ts';
 
 const baseUrl = process.env.MARKET_BASE_URL || 'http://localhost:3000';
 
@@ -65,8 +73,10 @@ const records = coveredMarkets.map((market) => {
     online: channels.online_ordering?.available === true,
     delivery: channels.delivery?.available === true,
     csa: channels.csa?.available === true,
+    indoor_outdoor: market.location?.indoor_outdoor,
   };
   record.weekdays = marketWeekdays(record);
+  record.yearRound = isYearRoundMarket(record);
   record.hours = marketHours(record);
   return record;
 });
@@ -84,13 +94,17 @@ const expected = {
   withDays: records.filter((record) => record.weekdays.length > 0).length,
   withHours: records.filter((record) => Boolean(record.hours)).length,
   saturday: records.filter((record) => record.weekdays.includes('Saturday')).length,
+  yearRound: records.filter((record) => record.yearRound).length,
 };
 
-// The topic slugs must not collide with a state slug, or the static segment
-// would shadow a real state hub.
-const stateSlugs = new Set(geoIndex.states.map((state) => state.slug));
-for (const slug of ['snap-ebt', 'online', 'hours', 'saturday']) {
-  assert(!stateSlugs.has(slug), `topic slug "${slug}" collides with a state slug in the geo index`);
+// The topic pages share `/markets/` with the market detail pages, and a static
+// segment wins over `[slug]`: a market slug that matched one would be shadowed.
+const reservedSlugs = new Set(RESERVED_MARKET_SLUGS);
+for (const market of markets) {
+  assert(
+    !reservedSlugs.has(market.slug),
+    `market slug "${market.slug}" collides with a reserved /markets segment`
+  );
 }
 
 async function fetchPage(pathname, expectedStatus = 200) {
@@ -228,7 +242,7 @@ async function checkTopicPage({ pathname, title, mustContain, stateTable }) {
 }
 
 /* ---------------------------------------------------------------- *
- * The four pages
+ * The pages
  * ---------------------------------------------------------------- */
 
 // The states with the most matching markets, recomputed from the geo index so
@@ -249,14 +263,14 @@ function topStateSlugs(predicate, limit = 3) {
 }
 
 await checkTopicPage({
-  pathname: '/farmers-markets/snap-ebt',
+  pathname: '/markets/snap-ebt',
   title: `${format(expected.snap)} Farmers Markets That Accept SNAP/EBT`,
   mustContain: [`${format(expected.snap)} farmers markets accept SNAP/EBT across`],
   stateTable: topStateSlugs((market) => market.payment?.food_assistance?.snap === true),
 });
 
 await checkTopicPage({
-  pathname: '/farmers-markets/online',
+  pathname: '/markets/online',
   title: `${format(expected.online)} Farmers Markets With Online Ordering & Delivery`,
   mustContain: [
     `${format(expected.online)} farmers markets let you order online, get delivery or join a CSA`,
@@ -276,7 +290,7 @@ await checkTopicPage({
 });
 
 const hoursPage = await checkTopicPage({
-  pathname: '/farmers-markets/hours',
+  pathname: '/markets/hours',
   title: `Farmers Market Hours: Opening Days for ${format(expected.withDays)} Markets`,
   mustContain: ['is the busiest farmers market day', 'Busiest day', 'Most common hours'],
 
@@ -287,16 +301,16 @@ for (const day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Satu
   const count = records.filter((record) => record.weekdays.includes(day)).length;
   assert(
     hoursPage.text.includes(`${day}`) && hoursPage.text.includes(format(count)),
-    `/farmers-markets/hours is missing the ${day} count (${format(count)})`
+    `/markets/hours is missing the ${day} count (${format(count)})`
   );
 }
 assert(
-  hoursPage.html.includes('href="/farmers-markets/saturday"'),
-  '/farmers-markets/hours does not link the Saturday page from its day table'
+  hoursPage.html.includes('href="/markets/saturday"'),
+  '/markets/hours does not link the Saturday page from its day table'
 );
 
 await checkTopicPage({
-  pathname: '/farmers-markets/saturday',
+  pathname: '/markets/saturday',
   title: `${format(expected.saturday)} Saturday Farmers Markets by State`,
   mustContain: [`${format(expected.saturday)} farmers markets open on Saturday across`],
   stateTable: topStateSlugs((market) =>
@@ -308,6 +322,61 @@ await checkTopicPage({
     }).includes('Saturday')
   ),
 });
+
+// Every weekday has the same page; Saturday above carries the state table
+// check, the other six are checked for their count and copy.
+for (const day of ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sunday']) {
+  const count = records.filter((record) => record.weekdays.includes(day)).length;
+  await checkTopicPage({
+    pathname: `/markets/${day.toLowerCase()}`,
+    title: `${format(count)} ${day} Farmers Markets by State`,
+    mustContain: [`${format(count)} farmers markets open on ${day} across`, 'Markets on other days'],
+  });
+}
+
+await checkTopicPage({
+  pathname: '/markets/year-round',
+  title: `${format(expected.yearRound)} Year-Round Farmers Markets Open in Winter`,
+  mustContain: [
+    `${format(expected.yearRound)} farmers markets stay open year-round across`,
+    'Are farmers markets open in winter?',
+  ],
+  stateTable: topStateSlugs((market) =>
+    isYearRoundMarket({
+      name: market.name,
+      days: market.operations?.days,
+      season: market.operations?.season,
+      first_party: market.first_party,
+    })
+  ),
+});
+
+await checkTopicPage({
+  pathname: '/markets/near-me',
+  title: 'Farmers Markets Near Me: Open Today and This Weekend',
+  mustContain: [
+    `Find the closest of ${format(records.length)} farmers markets across`,
+    'Markets closest to you',
+    'Browse by state',
+  ],
+  stateTable: topStateSlugs(() => true),
+});
+
+// The nearby list is filled in by the browser from this endpoint.
+const nearResponse = await fetch(`${baseUrl}/api/near-me?lat=40.71&lon=-74.01`);
+assert(nearResponse.status === 200, `/api/near-me returned ${nearResponse.status}`);
+const nearBody = await nearResponse.json();
+assert(nearBody.markets.length > 0, '/api/near-me found no markets near New York City');
+for (let index = 1; index < nearBody.markets.length; index += 1) {
+  assert(
+    nearBody.markets[index].distanceMiles <= 60,
+    `/api/near-me returned a market ${nearBody.markets[index].distanceMiles} miles away`
+  );
+}
+assert(
+  (await fetch(`${baseUrl}/api/near-me?lat=abc&lon=1`)).status === 400,
+  '/api/near-me accepted a non-numeric latitude'
+);
 
 /* ---------------------------------------------------------------- *
  * Routing precedence, sitemap and site-wide links
@@ -324,15 +393,21 @@ assert(headingOf(cityPage).includes('Durham'), '/north-carolina/durham broke');
 
 await fetchPage('/not-a-real-state', 404);
 
-const topicPaths = [
-  '/farmers-markets/snap-ebt',
-  '/farmers-markets/online',
-  '/farmers-markets/hours',
-  '/farmers-markets/saturday',
-];
+const topicPaths = NAV_TOPIC_SLUGS.map(pathForTopic);
+
+// The four addresses that lived under /farmers-markets/ until November 2026
+// must 308 to their new home in one hop.
+for (const slug of LEGACY_TOPIC_SLUGS) {
+  const response = await fetch(`${baseUrl}/farmers-markets/${slug}`, { redirect: 'manual' });
+  assert(
+    response.status === 308 && new URL(response.headers.get('location'), baseUrl).pathname === pathForTopic(slug),
+    `/farmers-markets/${slug} does not 308 to ${pathForTopic(slug)}`
+  );
+}
 
 const sitemapChunk = await fetchPage('/sitemap/0.xml');
-for (const topicPath of topicPaths) {
+assert(!sitemapChunk.includes('/farmers-markets/'), 'the sitemap still lists a /farmers-markets/ URL');
+for (const topicPath of TOPIC_SLUGS.map(pathForTopic)) {
   assert(
     sitemapChunk.includes(`${topicPath}</loc>`),
     `the sitemap does not list ${topicPath}`
@@ -340,7 +415,7 @@ for (const topicPath of topicPaths) {
 }
 
 // The footer is server-rendered site-wide, so an unrelated static page must
-// carry all four topic links without any JavaScript running.
+// carry the advertised topic links without any JavaScript running.
 const about = await fetchPage('/about');
 for (const topicPath of topicPaths) {
   assert(
@@ -360,5 +435,7 @@ for (const topicPath of topicPaths) {
 console.log(
   `Topic pages OK — SNAP ${format(expected.snap)}, ordering ${format(
     expected.online
-  )}, day data ${format(expected.withDays)}, Saturday ${format(expected.saturday)}`
+  )}, day data ${format(expected.withDays)}, Saturday ${format(expected.saturday)}, year-round ${format(
+    expected.yearRound
+  )}`
 );

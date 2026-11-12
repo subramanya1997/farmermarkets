@@ -22,7 +22,7 @@ A typical market picks a weekday and keeps it. Every Wednesday, every Saturday, 
 
 Hours usually fall between mid-morning and early afternoon, something like 8am to 1pm or 9am to 2pm. Vendors have been loading trucks since before dawn, so afternoons are for driving home. Evening markets exist too, often on a summer weeknight, running something like 4pm to 7pm.
 
-Saturday morning is the classic slot and by far the most common one. If that is the morning you have free, you can [browse Saturday markets by state](/farmers-markets/saturday) and work from there.
+Saturday morning is the classic slot and by far the most common one. If that is the morning you have free, you can [browse Saturday markets by state](/markets/saturday) and work from there.
 
 ## Winter Markets Are Their Own Thing
 
@@ -36,7 +36,7 @@ Holiday weeks are the other regular exception. When a market day lands on Thanks
 
 ## Check the Week You Plan to Go
 
-Look up the market close to your visit, not months ahead. Each [market listing](/) shows its days and hours where the source has them, and you can compare [opening days and hours](/farmers-markets/hours) when you are lining up a few markets in one week.
+Look up the market close to your visit, not months ahead. Each [market listing](/) shows its days and hours where the source has them, and you can compare [opening days and hours](/markets/hours) when you are lining up a few markets in one week.
 
 For the exact date you are going, the market's own website or social account is the last word. That is where cancellations and season opening dates get posted first, usually days before anything else catches up.
 

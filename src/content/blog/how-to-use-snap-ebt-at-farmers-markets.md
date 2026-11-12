@@ -45,6 +45,6 @@ Two other programs turn up at markets. In states that run it, the WIC Farmers Ma
 - Check the listing first. Acceptance and match programs change from season to season, and the market's own website or phone number is the fastest way to confirm what is running this year.
 - Stop at the information booth before you shop, not after. That is where the terminal, the tokens, and the person who knows the answers all are.
 - Ask about token expiration. Many markets let SNAP tokens carry over with no expiration date, though some clear them at the end of the season, and match tokens often expire sooner than SNAP tokens.
-- Confirm the day and time before you make the trip, especially if you are working around a shift or a bus schedule. You can compare [opening days and hours across the directory](/farmers-markets/hours).
+- Confirm the day and time before you make the trip, especially if you are working around a shift or a bus schedule. You can compare [opening days and hours across the directory](/markets/hours).
 
-To find one near you, the [list of markets that accept SNAP, WIC, or FMNP](/farmers-markets/snap-ebt) is sorted by state.
+To find one near you, the [list of markets that accept SNAP, WIC, or FMNP](/markets/snap-ebt) is sorted by state.

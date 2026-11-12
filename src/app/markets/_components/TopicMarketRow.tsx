@@ -9,7 +9,7 @@ import type { TopicMarketRow as TopicMarketRowData } from '@/lib/topicPage';
  * answer "where, and when".
  *
  * Kept free of server-only imports (the view-model import is type-only) so the
- * client-side filter on `/farmers-markets/online` can render the same row.
+ * client-side filter on `/markets/online` can render the same row.
  */
 
 const SHORT_DAYS: Record<string, string> = {

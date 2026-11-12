@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import {
   TopicChipGrid,
   TopicChipRow,
@@ -6,24 +5,20 @@ import {
   TopicPageShell,
   TopicSection,
 } from '@/components/TopicPage';
-import { getSaturdayTopicPage, topicMetadata } from '@/lib/topicPage';
-
-export const revalidate = 86400;
+import { getDayTopicPage } from '@/lib/topicPage';
+import type { Weekday } from '@/lib/seo';
 
 /**
- * `/farmers-markets/saturday`: the busiest market day, state by state.
+ * The page the seven weekday routes (`/markets/monday` to `/markets/sunday`)
+ * share: who opens that day, state by state, and the other days to try.
  */
-export async function generateMetadata(): Promise<Metadata> {
-  return topicMetadata(await getSaturdayTopicPage());
-}
-
-export default async function SaturdayTopicPage() {
-  const data = await getSaturdayTopicPage();
+export async function DayTopicPage({ day }: { day: Weekday }) {
+  const data = await getDayTopicPage(day);
 
   return (
     <TopicPageShell data={data}>
       {data.states.length > 0 && (
-        <TopicSection heading="Saturday markets by state">
+        <TopicSection heading={`${day} markets by state`}>
           <TopicChipGrid
             items={data.states.map((state) => ({
               label: state.name,
@@ -31,7 +26,7 @@ export default async function SaturdayTopicPage() {
               count: state.count,
             }))}
             highlight={5}
-            countLabel="Saturday markets"
+            countLabel={`${day} markets`}
           />
         </TopicSection>
       )}
@@ -47,7 +42,7 @@ export default async function SaturdayTopicPage() {
           <TopicChipRow
             items={data.otherDays.map((row) => ({
               label: row.day,
-              href: row.href ?? '/farmers-markets/hours',
+              href: row.href ?? '/markets/hours',
               count: row.count,
             }))}
           />

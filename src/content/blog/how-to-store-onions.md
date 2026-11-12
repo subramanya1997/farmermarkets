@@ -75,4 +75,4 @@ Stored onions do not announce when one has gone bad until the smell does it for 
 
 Cured storage onions are a fall and winter crop at most markets, and if you have a dry shelf to spare it is worth buying more than a week's worth. [Garlic](/blog/how-to-store-garlic) keeps on the same kind of shelf, so one dry corner can hold both.
 
-Market schedules change at the end of the outdoor season, so [check the day and hours](/farmers-markets/hours) before you make the trip. Our guide to [market seasons and hours](/blog/farmers-market-seasons-and-hours) explains how winter schedules usually work.
+Market schedules change at the end of the outdoor season, so [check the day and hours](/markets/hours) before you make the trip. Our guide to [market seasons and hours](/blog/farmers-market-seasons-and-hours) explains how winter schedules usually work.

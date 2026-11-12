@@ -10,10 +10,12 @@ import {
   Clock,
   CreditCard,
   Info,
+  LocateFixed,
   MapPin,
   Menu,
   Search,
   ShoppingBag,
+  Snowflake,
   Store,
   X,
   type LucideIcon,
@@ -45,6 +47,8 @@ const MENU_NAV: { name: string; hint: string; href: string; icon: LucideIcon }[]
 ];
 
 const TOPIC_ICONS: Record<string, LucideIcon> = {
+  "near-me": LocateFixed,
+  "year-round": Snowflake,
   "snap-ebt": CreditCard,
   online: ShoppingBag,
   hours: Clock,
