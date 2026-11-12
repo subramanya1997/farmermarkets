@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, statSync } from "node:fs";
 import { cpus } from "node:os";
 import { join } from "node:path";
 import { POSTHOG_ASSETS_HOST, POSTHOG_HOST, POSTHOG_PROXY_PATH } from "./src/lib/posthogConfig";
-import { LEGACY_TOPIC_SLUGS, topicPath } from "./src/lib/topicSlugs";
+import { TOPIC_SLUGS, topicPath, topicRedirectSources } from "./src/lib/topicSlugs";
 
 /**
  * Deterministic build id, derived from the application source (not the data).
@@ -46,13 +46,15 @@ function hashAppSource(): string {
  * URL 308s to its new one in a single hop, here rather than in a route so the
  * redirect never costs a render.
  *
- * The four topic pages that lived under `/farmers-markets/` moved to
- * `/markets/{topic}` in November 2026. They get explicit entries and are
- * carved out of the state pattern, so `/farmers-markets/hours` lands on
- * `/markets/hours` and not on a root-level `/hours` that does not exist. The
- * old route also accepted a state's 2-letter code (`/farmers-markets/ny`);
- * those get explicit entries so they land on the slug directly instead of on a
- * root-level `/ny`.
+ * Topic pages live at `/markets/{topic}`. The four that existed before
+ * November 2026 were at `/farmers-markets/{topic}`; the move also added
+ * `near-me`, `year-round` and the other weekdays, which the state pattern
+ * below would otherwise send to a root path (`/near-me`) that 404s. Every
+ * topic slug therefore 308s from both `/farmers-markets/{topic}` and
+ * `/{topic}` straight to `/markets/{topic}`, and those slugs are carved out
+ * of the state pattern. The old route also accepted a state's 2-letter code
+ * (`/farmers-markets/ny`); those get explicit entries so they land on the
+ * slug directly instead of on a root-level `/ny`.
  */
 
 function geoPageRedirects() {
@@ -67,18 +69,20 @@ function geoPageRedirects() {
       permanent: true,
     }));
 
-  const topicRedirects = LEGACY_TOPIC_SLUGS.map((slug) => ({
-    source: `/farmers-markets/${slug}`,
-    destination: topicPath(slug),
-    permanent: true,
-  }));
+  const topicRedirects = TOPIC_SLUGS.flatMap((slug) =>
+    topicRedirectSources(slug).map((source) => ({
+      source,
+      destination: topicPath(slug),
+      permanent: true,
+    }))
+  );
 
   return [
     ...topicRedirects,
     { source: "/farmers-markets", destination: "/markets", permanent: true },
     ...codeRedirects,
     {
-      source: `/farmers-markets/:state((?!(?:${LEGACY_TOPIC_SLUGS.join("|")})$)[^/]+)`,
+      source: `/farmers-markets/:state((?!(?:${TOPIC_SLUGS.join("|")})$)[^/]+)`,
       destination: "/:state",
       permanent: true,
     },

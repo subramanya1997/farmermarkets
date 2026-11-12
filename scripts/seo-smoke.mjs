@@ -22,7 +22,8 @@
  *   - `noindex` appearing where it must not, or disappearing from where it
  *     must be: 404s, and the deliberately thin single-market city pages;
  *   - the legacy redirects (numeric market IDs, `/markets/state/*`, uppercase
- *     paths) degrading into 404s and dropping their accumulated equity;
+ *     paths, root topic paths, `/farmers-markets/{topic}`) degrading into 404s
+ *     and dropping their accumulated equity;
  *   - a sitemap chunk that grew past the 5,000-URL cap, started advertising a
  *     retired route, or gained a fetch-time `lastmod`;
  *   - a page with no H1, more than one H1, or an H1 that stopped naming what
@@ -347,6 +348,36 @@ const NEGATIVE_CASES = [
     path: '/farmers-markets/hours',
     status: 308,
     location: '/markets/hours',
+  },
+  {
+    name: 'root topic path 308s to /markets/{topic}',
+    path: '/snap-ebt',
+    status: 308,
+    location: '/markets/snap-ebt',
+  },
+  {
+    name: 'root topic path keeps the query string',
+    path: '/near-me?q=1',
+    status: 308,
+    location: '/markets/near-me?q=1',
+  },
+  {
+    name: 'uppercase root topic path 308s in one hop',
+    path: '/HOURS',
+    status: 308,
+    location: '/markets/hours',
+  },
+  {
+    name: 'trailing-slash root topic path 308s in one hop',
+    path: '/saturday/',
+    status: 308,
+    location: '/markets/saturday',
+  },
+  {
+    name: '/farmers-markets/near-me 308s to the topic page',
+    path: '/farmers-markets/near-me',
+    status: 308,
+    location: '/markets/near-me',
   },
   {
     name: 'old /farmers-markets/{code} 308s straight to the state slug',

@@ -10,8 +10,11 @@
  * is reserved: a market whose slug matched one would be unreachable.
  * `topicSlugs.test.ts` fails the data checks if that ever happens.
  *
- * They lived under `/farmers-markets/` until November 2026; `next.config.ts`
- * 308s the four addresses that existed there.
+ * The four in `LEGACY_TOPIC_SLUGS` lived under `/farmers-markets/` until
+ * November 2026. `next.config.ts` 308s every topic from that prefix and from
+ * the site root (`/hours` → `/markets/hours`). The root paths were never
+ * pages; the state catch-all used to send the newer topics there, and those
+ * requests 404ed.
  */
 
 export const DAY_TOPIC_SLUGS = [
@@ -55,6 +58,19 @@ export const LEGACY_TOPIC_SLUGS: readonly TopicSlug[] = ['snap-ebt', 'online', '
 /** Canonical path for a topic page. */
 export function topicPath(slug: TopicSlug): string {
   return `/markets/${slug}`;
+}
+
+/**
+ * Non-canonical paths that 308 to `topicPath(slug)`.
+ *
+ * `/farmers-markets/{topic}` is where `LEGACY_TOPIC_SLUGS` were served until
+ * November 2026. For every other topic, that same prefix was caught by the
+ * state rule and sent to `/{topic}`, which 404ed. Both forms 308 here. Next matches
+ * these sources case-insensitively and with one optional trailing slash, and
+ * it keeps the query string, same as the other redirects in `next.config.ts`.
+ */
+export function topicRedirectSources(slug: TopicSlug): readonly string[] {
+  return [`/${slug}`, `/farmers-markets/${slug}`];
 }
 
 export function isTopicSlug(value: string): value is TopicSlug {
