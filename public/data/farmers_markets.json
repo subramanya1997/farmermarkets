@@ -397063,16 +397063,16 @@
   },
   {
     "id": 310526,
-    "name": "Barcelo Gardens and Market",
+    "name": "Barcelo Gardens Fresh Market",
     "last_updated": "2023-03-21T22:30:10",
     "location": {
-      "address": "2301 Gallier St. New Orleans, LA 70117",
+      "address": "3440 Piety St, New Orleans, LA 70126",
       "city": "New Orleans",
       "state": "Louisiana",
-      "zip_code": "70117",
+      "zip_code": "70126",
       "coordinates": {
-        "longitude": -90.03588606507901,
-        "latitude": 29.97903416740828
+        "longitude": -90.034032728395,
+        "latitude": 29.992270164789
       },
       "description": "",
       "site_type": "",
@@ -397080,13 +397080,15 @@
     },
     "organization": {
       "types": [],
-      "description": ""
+      "description": "Barcelo Gardens is a year-round neighborhood fresh market in New Orleans, with fruits, veggies and herbs from here and our network of local farmers, plus local honey, jams, butters, pepper jelly, sourdough, hot sauce, grits and homemade lemonade."
     },
     "contact": {
       "phone_numbers": [
-        "(281) 236-0073"
+        "(713) 882-8314"
       ],
-      "emails": [],
+      "emails": [
+        "barcelo.webb@gmail.com"
+      ],
       "websites": [
         "https://d-s-lemonade-stand.company.site/"
       ],
@@ -397096,23 +397098,40 @@
       ]
     },
     "operations": {
-      "season": null,
+      "season": "Year-round",
       "days": [
-        "Every Saturday"
+        "Sunday to Thursday, 10am to 4pm, main store at 3440 Piety St",
+        "Saturdays, 10am to 1pm, 2301 Gallier St, New Orleans",
+        "Fridays, 11am to 2pm, 211 Franklin Ave, Napoleonville"
       ],
       "vendor_count": null
     },
     "products": {
-      "items": [],
+      "items": [
+        "Local honey",
+        "Jams",
+        "Butters",
+        "Pepper jelly",
+        "Sourdough",
+        "Hot sauce",
+        "Grits",
+        "Homemade lemonade"
+      ],
       "production_methods": [],
-      "categories": {}
+      "categories": {
+        "fresh_produce": true,
+        "herbs": true,
+        "honey": true,
+        "baked_goods": true,
+        "jams": true
+      }
     },
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
+        "wic": true,
         "sfmnp": false,
-        "fmnp": false,
+        "fmnp": true,
         "snap": false,
         "snap_option": null
       }
@@ -397128,19 +397147,281 @@
         "description": null
       },
       "delivery": {
-        "available": false,
-        "methods": null
+        "available": true,
+        "methods": "Delivery through Uber Eats"
       }
     },
     "slug": "barcelo-gardens-and-market-new-orleans",
     "country": "United States",
     "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.97903416740828%2C-90.03588606507901",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Barcelo Gardens Fresh Market",
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Chicago",
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        "schedules": [
+          {
+            "id": "piety-main-store",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "sunday",
+                  "monday",
+                  "tuesday",
+                  "wednesday",
+                  "thursday"
+                ]
+              },
+              "opens": "10:00",
+              "closes": "16:00",
+              "location_note": "Main store, 3440 Piety St, New Orleans"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "fmnp",
+            "value": {
+              "code": "fmnp"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ],
+        "incentives": [
+          {
+            "id": "greaux-the-good-match",
+            "value": {
+              "name": "Greaux the Good Match",
+              "kind": "match"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "id": "produce",
+            "value": {
+              "code": "fresh_produce",
+              "label": "Fruits and vegetables from the garden and local farmers"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "herbs",
+            "value": {
+              "code": "herbs"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "honey",
+            "value": {
+              "code": "honey",
+              "label": "Local honey"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "preserves",
+            "value": {
+              "code": "preserves",
+              "label": "Jams, butters and pepper jelly"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "baked-goods",
+            "value": {
+              "code": "baked_goods",
+              "label": "Sourdough"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "pantry",
+            "value": {
+              "code": "other",
+              "label": "Hot sauce, grits and homemade lemonade"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ],
+        "items": [
+          {
+            "id": "local-honey",
+            "value": "Local honey",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "jams",
+            "value": "Jams",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "butters",
+            "value": "Butters",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "pepper-jelly",
+            "value": "Pepper jelly",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "sourdough",
+            "value": "Sourdough",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "hot-sauce",
+            "value": "Hot sauce",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "grits",
+            "value": "Grits",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "homemade-lemonade",
+            "value": "Homemade lemonade",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where-and-when",
+          "value": {
+            "topic": "arrival",
+            "answer": "The main store is at 3440 Piety St, New Orleans, open Sunday to Thursday, 10am to 4pm, all year. Barcelo Gardens also sets up at 2301 Gallier St in New Orleans on Saturdays, 10am to 1pm, and at 211 Franklin Ave in Napoleonville on Fridays, 11am to 2pm."
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        {
+          "id": "what-is-sold",
+          "value": {
+            "topic": "products",
+            "answer": "Fruits, vegetables and herbs from the garden and a network of local farmers, plus local honey, jams, butters, pepper jelly, sourdough, hot sauce, grits and homemade lemonade."
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        {
+          "id": "benefits",
+          "value": {
+            "topic": "payments",
+            "answer": "The market accepts WIC and Farmers Market Nutrition Program benefits and takes part in Greaux the Good Match. Orders can also be delivered through Uber Eats."
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        }
+      ]
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.992270164789%2C-90.034032728395",
+    "visitor_note": "These hours are for the main store at 3440 Piety St. Barcelo Gardens also sets up at 2301 Gallier St, New Orleans, LA 70117 on Saturdays, 10am to 1pm, and at 211 Franklin Ave, Napoleonville, LA on Fridays, 11am to 2pm.",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-12",
       "verification_scope": "partial",
       "sources": [
         {
@@ -397164,6 +397445,28 @@
           "fields": [
             "operations.days"
           ]
+        },
+        {
+          "id": "owner-facebook",
+          "title": "Barcelo Gardens on Facebook, with details confirmed by the owner on November 12, 2026",
+          "url": "https://www.facebook.com/barcelogardens",
+          "fields": [
+            "first_party.identity",
+            "first_party.operations",
+            "first_party.payments",
+            "first_party.products",
+            "first_party.faq_facts",
+            "location.address",
+            "contact.phone_numbers",
+            "contact.emails",
+            "operations.days",
+            "operations.season",
+            "payment.food_assistance.wic",
+            "payment.food_assistance.fmnp"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-12"
         },
         {
           "title": "Overture Maps places, release 2026-10-21.0",
@@ -869354,5 +869657,107 @@
       "retrieved_at": "2026-11-09"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=North%20Park%20Thursday%20Market%2C%202901%20North%20Park%20Way%2C%20San%20Diego%2C%20CA"
+  },
+  {
+    "id": "added:barcelo-gardens-gallier-street-market-new-orleans-la",
+    "slug": "barcelo-gardens-gallier-street-market-new-orleans-la",
+    "name": "Barcelo Gardens Gallier Street Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "2301 Gallier St, New Orleans, LA 70117",
+      "city": "New Orleans",
+      "state": "Louisiana",
+      "zip_code": "70117",
+      "coordinates": {
+        "longitude": -90.035836012407,
+        "latitude": 29.978991999148
+      },
+      "description": "The Saturday market run by Barcelo Gardens Fresh Market at its garden in the Upper 9th Ward. The main store is at 3440 Piety St, open Sunday to Thursday."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "phone_numbers": [
+        "(713) 882-8314"
+      ],
+      "emails": [
+        "barcelo.webb@gmail.com"
+      ],
+      "websites": [],
+      "social_media": [
+        "https://www.facebook.com/barcelogardens"
+      ]
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "Saturdays 10am to 1pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Barcelo Gardens",
+      "dataset_name": "Barcelo Gardens on Facebook, with details confirmed by the owner on November 12, 2026",
+      "catalog_url": "https://www.facebook.com/barcelogardens",
+      "retrieved_at": "2026-11-12"
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.978991999148%2C-90.035836012407"
+  },
+  {
+    "id": "added:barcelo-gardens-napoleonville-market-napoleonville-la",
+    "slug": "barcelo-gardens-napoleonville-market-napoleonville-la",
+    "name": "Barcelo Gardens Napoleonville Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "211 Franklin Ave, Napoleonville, LA 70390",
+      "city": "Napoleonville",
+      "state": "Louisiana",
+      "zip_code": "70390",
+      "coordinates": {
+        "longitude": -91.024640081347,
+        "latitude": 29.94031744927
+      },
+      "description": "A weekly Friday stop run by Barcelo Gardens Fresh Market of New Orleans, whose main store is at 3440 Piety St."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "phone_numbers": [
+        "(713) 882-8314"
+      ],
+      "emails": [
+        "barcelo.webb@gmail.com"
+      ],
+      "websites": [],
+      "social_media": [
+        "https://www.facebook.com/barcelogardens"
+      ]
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "Fridays 11am to 2pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Barcelo Gardens",
+      "dataset_name": "Barcelo Gardens on Facebook, with details confirmed by the owner on November 12, 2026",
+      "catalog_url": "https://www.facebook.com/barcelogardens",
+      "retrieved_at": "2026-11-12"
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.94031744927%2C-91.024640081347"
   }
 ]

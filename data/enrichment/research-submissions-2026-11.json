@@ -175,5 +175,289 @@
         "accessed_at": "2026-11-01"
       }
     ]
+  },
+  {
+    "id": "310526",
+    "market_name": "Barcelo Gardens and Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-12",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Barcelo Gardens Fresh Market",
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Chicago",
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        "schedules": [
+          {
+            "id": "piety-main-store",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "sunday",
+                  "monday",
+                  "tuesday",
+                  "wednesday",
+                  "thursday"
+                ]
+              },
+              "opens": "10:00",
+              "closes": "16:00",
+              "location_note": "Main store, 3440 Piety St, New Orleans"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "fmnp",
+            "value": {
+              "code": "fmnp"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ],
+        "incentives": [
+          {
+            "id": "greaux-the-good-match",
+            "value": {
+              "name": "Greaux the Good Match",
+              "kind": "match"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ]
+      },
+      "products": {
+        "categories": [
+          {
+            "id": "produce",
+            "value": {
+              "code": "fresh_produce",
+              "label": "Fruits and vegetables from the garden and local farmers"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "herbs",
+            "value": {
+              "code": "herbs"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "honey",
+            "value": {
+              "code": "honey",
+              "label": "Local honey"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "preserves",
+            "value": {
+              "code": "preserves",
+              "label": "Jams, butters and pepper jelly"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "baked-goods",
+            "value": {
+              "code": "baked_goods",
+              "label": "Sourdough"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "pantry",
+            "value": {
+              "code": "other",
+              "label": "Hot sauce, grits and homemade lemonade"
+            },
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ],
+        "items": [
+          {
+            "id": "local-honey",
+            "value": "Local honey",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "jams",
+            "value": "Jams",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "butters",
+            "value": "Butters",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "pepper-jelly",
+            "value": "Pepper jelly",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "sourdough",
+            "value": "Sourdough",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "hot-sauce",
+            "value": "Hot sauce",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "grits",
+            "value": "Grits",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          },
+          {
+            "id": "homemade-lemonade",
+            "value": "Homemade lemonade",
+            "source_ids": [
+              "owner-facebook"
+            ],
+            "verified_at": "2026-11-12"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where-and-when",
+          "value": {
+            "topic": "arrival",
+            "answer": "The main store is at 3440 Piety St, New Orleans, open Sunday to Thursday, 10am to 4pm, all year. Barcelo Gardens also sets up at 2301 Gallier St in New Orleans on Saturdays, 10am to 1pm, and at 211 Franklin Ave in Napoleonville on Fridays, 11am to 2pm."
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        {
+          "id": "what-is-sold",
+          "value": {
+            "topic": "products",
+            "answer": "Fruits, vegetables and herbs from the garden and a network of local farmers, plus local honey, jams, butters, pepper jelly, sourdough, hot sauce, grits and homemade lemonade."
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        },
+        {
+          "id": "benefits",
+          "value": {
+            "topic": "payments",
+            "answer": "The market accepts WIC and Farmers Market Nutrition Program benefits and takes part in Greaux the Good Match. Orders can also be delivered through Uber Eats."
+          },
+          "source_ids": [
+            "owner-facebook"
+          ],
+          "verified_at": "2026-11-12"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "owner-facebook",
+        "title": "Barcelo Gardens on Facebook, with details confirmed by the owner on November 12, 2026",
+        "url": "https://www.facebook.com/barcelogardens",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.products",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-12"
+      }
+    ]
   }
 ]

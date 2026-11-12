@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-11T05:45:09.366Z",
-  "market_count": 9143,
+  "generated_at": "2026-11-12T21:13:35.109Z",
+  "market_count": 9145,
   "states": [
     {
       "code": "NY",
@@ -38843,6 +38843,432 @@
       "uncategorized_slugs": []
     },
     {
+      "code": "LA",
+      "name": "Louisiana",
+      "country_code": "US",
+      "slug": "louisiana",
+      "market_count": 79,
+      "city_count": 48,
+      "cities": [
+        {
+          "name": "New Orleans",
+          "slug": "new-orleans",
+          "market_count": 11,
+          "market_slugs": [
+            "barcelo-gardens-and-market-new-orleans",
+            "barcelo-gardens-gallier-street-market-new-orleans-la",
+            "bounyful-green-market-new-orleans",
+            "crescent-city-farmers-market-i-new-orleans",
+            "crescent-city-farmers-market-iii-new-orleans",
+            "crescent-city-farmers-market-new-orleans",
+            "new-orleans-east-hospital-farmers-market-new-orleans",
+            "old-algiers-harvest-fresh-market-new-orleans",
+            "our-school-at-blair-grocery-farmers-market-new-orleans",
+            "refresh-farmers-market-new-orleans",
+            "sankofa-farmers-market-new-orleans"
+          ]
+        },
+        {
+          "name": "Lafayette",
+          "slug": "lafayette",
+          "market_count": 7,
+          "market_slugs": [
+            "acadiana-farmers-market-lafayette",
+            "fightingville-fresh-lafayette",
+            "hub-city-farmers-market",
+            "lafayette-farmers-and-artisan-market-at-the-horse-farm-lafayette",
+            "lafayette-farmers-and-artisans-market",
+            "lafayettes-hub-city-farmers-market-lafayette",
+            "open-air-farmers-market-lafayette"
+          ]
+        },
+        {
+          "name": "Baton Rouge",
+          "slug": "baton-rouge",
+          "market_count": 5,
+          "market_slugs": [
+            "red-stick-farmers-market-ii-baton-rouge",
+            "red-stick-farmers-market-iii-baton-rouge",
+            "red-stick-farmers-market-saturday-downtown-year-round-baton-rouge",
+            "red-stick-farmers-market-seasonal-tuesdays-baton-rouge",
+            "red-stick-farmers-market-thursday-year-round-baton-rouge"
+          ]
+        },
+        {
+          "name": "Alexandria",
+          "slug": "alexandria",
+          "market_count": 3,
+          "market_slugs": [
+            "alexandria-farmers-market-alexandria",
+            "boyce-farmers-market",
+            "inglewood-harvest-barn-market-alexandria"
+          ]
+        },
+        {
+          "name": "Shreveport",
+          "slug": "shreveport",
+          "market_count": 3,
+          "market_slugs": [
+            "provenance-fall-farmers-market-shreveport",
+            "shreveport-farmers-market-shreveport",
+            "the-market-nhumc-shreveport"
+          ]
+        },
+        {
+          "name": "Bossier City",
+          "slug": "bossier-city",
+          "market_count": 2,
+          "market_slugs": [
+            "bossier-city-farmers-market-bossier-city",
+            "bossier-city-farmers-market-la"
+          ]
+        },
+        {
+          "name": "Greenwood",
+          "slug": "greenwood",
+          "market_count": 2,
+          "market_slugs": [
+            "greenwood-farmers-market-greenwood-1",
+            "town-of-greenwood-farmers-market"
+          ]
+        },
+        {
+          "name": "Hammond",
+          "slug": "hammond",
+          "market_count": 2,
+          "market_slugs": [
+            "hammond-farmers-artisans-market-la-70401",
+            "hammond-farmers-market-hammond"
+          ]
+        },
+        {
+          "name": "Lake Charles",
+          "slug": "lake-charles",
+          "market_count": 2,
+          "market_slugs": [
+            "cash-carry-market",
+            "charlestown-farmers-market-lake-charles"
+          ]
+        },
+        {
+          "name": "Opelousas",
+          "slug": "opelousas",
+          "market_count": 2,
+          "market_slugs": [
+            "opelousas-farmers-market",
+            "st-landry-farmers-market-opelousas"
+          ]
+        },
+        {
+          "name": "Thibodaux",
+          "slug": "thibodaux",
+          "market_count": 2,
+          "market_slugs": [
+            "thibidoux-main-st-farmers-market-thibodaux",
+            "thibodaux-main-street-farmers-market"
+          ]
+        },
+        {
+          "name": "Ville Platte",
+          "slug": "ville-platte",
+          "market_count": 2,
+          "market_slugs": [
+            "oakdale-farmers-market-1",
+            "ville-platte-farmers-market-ville-platte"
+          ]
+        },
+        {
+          "name": "Abbeville",
+          "slug": "abbeville",
+          "market_count": 1,
+          "market_slugs": [
+            "abbeville-farmers-market"
+          ]
+        },
+        {
+          "name": "Abita Springs",
+          "slug": "abita-springs",
+          "market_count": 1,
+          "market_slugs": [
+            "abita-springs-farmers-market-abita-springs-1"
+          ]
+        },
+        {
+          "name": "Arabi",
+          "slug": "arabi",
+          "market_count": 1,
+          "market_slugs": [
+            "st-bernard-seafood-farmers-market-arabi"
+          ]
+        },
+        {
+          "name": "Bastrop",
+          "slug": "bastrop",
+          "market_count": 1,
+          "market_slugs": [
+            "morehouse-farmers-market-bastrop"
+          ]
+        },
+        {
+          "name": "Belle Chasse",
+          "slug": "belle-chasse",
+          "market_count": 1,
+          "market_slugs": [
+            "george-brooks-farmers-market-belle-chasse"
+          ]
+        },
+        {
+          "name": "Covington",
+          "slug": "covington",
+          "market_count": 1,
+          "market_slugs": [
+            "covington-farmers-market-covington-city-hall-covington"
+          ]
+        },
+        {
+          "name": "Delcambre",
+          "slug": "delcambre",
+          "market_count": 1,
+          "market_slugs": [
+            "delcambre-seafood-farmers-market-delcambre"
+          ]
+        },
+        {
+          "name": "Deridder",
+          "slug": "deridder",
+          "market_count": 1,
+          "market_slugs": [
+            "azalea-street-marketplace-deridder"
+          ]
+        },
+        {
+          "name": "Destrehan",
+          "slug": "destrehan",
+          "market_count": 1,
+          "market_slugs": [
+            "german-coast-farmers-market-destrehan"
+          ]
+        },
+        {
+          "name": "Elm Grove",
+          "slug": "elm-grove",
+          "market_count": 1,
+          "market_slugs": [
+            "south-bossier-farmers-market-elm-grove"
+          ]
+        },
+        {
+          "name": "Eunice",
+          "slug": "eunice",
+          "market_count": 1,
+          "market_slugs": [
+            "eunice-farmers-market"
+          ]
+        },
+        {
+          "name": "Franklin",
+          "slug": "franklin",
+          "market_count": 1,
+          "market_slugs": [
+            "franklin-farmers-market-franklin"
+          ]
+        },
+        {
+          "name": "Harahan",
+          "slug": "harahan",
+          "market_count": 1,
+          "market_slugs": [
+            "harahan-framers-market-harahan"
+          ]
+        },
+        {
+          "name": "Haughton",
+          "slug": "haughton",
+          "market_count": 1,
+          "market_slugs": [
+            "haughton-farmers-market-artisan-fair"
+          ]
+        },
+        {
+          "name": "Houma",
+          "slug": "houma",
+          "market_count": 1,
+          "market_slugs": [
+            "cajun-farmers-market-of-houma-terrebonne-houma"
+          ]
+        },
+        {
+          "name": "Jena",
+          "slug": "jena",
+          "market_count": 1,
+          "market_slugs": [
+            "farmers-market-gardening-gift-shop-jena"
+          ]
+        },
+        {
+          "name": "Jennings",
+          "slug": "jennings",
+          "market_count": 1,
+          "market_slugs": [
+            "main-street-farmers-market-jennings"
+          ]
+        },
+        {
+          "name": "Kenner",
+          "slug": "kenner",
+          "market_count": 1,
+          "market_slugs": [
+            "rivertown-farmers-market"
+          ]
+        },
+        {
+          "name": "Lacombe",
+          "slug": "lacombe",
+          "market_count": 1,
+          "market_slugs": [
+            "the-market-at-saint-thomas-lacombe"
+          ]
+        },
+        {
+          "name": "Leesville",
+          "slug": "leesville",
+          "market_count": 1,
+          "market_slugs": [
+            "third-street-market-leesville"
+          ]
+        },
+        {
+          "name": "Mandeville",
+          "slug": "mandeville",
+          "market_count": 1,
+          "market_slugs": [
+            "mandeville-trailhead-community-farmers-market-mandeville"
+          ]
+        },
+        {
+          "name": "Marksville",
+          "slug": "marksville",
+          "market_count": 1,
+          "market_slugs": [
+            "marksville-main-street-fresh-market-marksville"
+          ]
+        },
+        {
+          "name": "Metairie",
+          "slug": "metairie",
+          "market_count": 1,
+          "market_slugs": [
+            "lafreniere-park-farmers-arts-market-la"
+          ]
+        },
+        {
+          "name": "Napoleonville",
+          "slug": "napoleonville",
+          "market_count": 1,
+          "market_slugs": [
+            "barcelo-gardens-napoleonville-market-napoleonville-la"
+          ]
+        },
+        {
+          "name": "Natchitoches",
+          "slug": "natchitoches",
+          "market_count": 1,
+          "market_slugs": [
+            "cane-river-green-market-natchitoches"
+          ]
+        },
+        {
+          "name": "New Iberia",
+          "slug": "new-iberia",
+          "market_count": 1,
+          "market_slugs": [
+            "tech-area-farmers-market-new-iberia"
+          ]
+        },
+        {
+          "name": "Olde Towne Slidell",
+          "slug": "olde-towne-slidell",
+          "market_count": 1,
+          "market_slugs": [
+            "camellia-city-farmers-market-olde-towne-slidell"
+          ]
+        },
+        {
+          "name": "Prairieville",
+          "slug": "prairieville",
+          "market_count": 1,
+          "market_slugs": [
+            "harvest-moon-marketplace-prairieville"
+          ]
+        },
+        {
+          "name": "Raceland",
+          "slug": "raceland",
+          "market_count": 1,
+          "market_slugs": [
+            "lafourche-central-market"
+          ]
+        },
+        {
+          "name": "Ruston",
+          "slug": "ruston",
+          "market_count": 1,
+          "market_slugs": [
+            "ruston-farmers-market-ruston"
+          ]
+        },
+        {
+          "name": "Welsh",
+          "slug": "welsh",
+          "market_count": 1,
+          "market_slugs": [
+            "welsh-farmers-market"
+          ]
+        },
+        {
+          "name": "West Merryville",
+          "slug": "west-merryville",
+          "market_count": 1,
+          "market_slugs": [
+            "merryville-fresh-produce-market-west-merryville"
+          ]
+        },
+        {
+          "name": "West Monroe",
+          "slug": "west-monroe",
+          "market_count": 1,
+          "market_slugs": [
+            "west-monroe-farmers-market-west-monroe"
+          ]
+        },
+        {
+          "name": "Westwego",
+          "slug": "westwego",
+          "market_count": 1,
+          "market_slugs": [
+            "westwego-farmers-fisheries-market-westwego"
+          ]
+        },
+        {
+          "name": "Winnfield",
+          "slug": "winnfield",
+          "market_count": 1,
+          "market_slugs": [
+            "winn-farmers-market"
+          ]
+        },
+        {
+          "name": "Zachary",
+          "slug": "zachary",
+          "market_count": 1,
+          "market_slugs": [
+            "zachary-farmers-market"
+          ]
+        }
+      ],
+      "uncategorized_slugs": []
+    },
+    {
       "code": "VT",
       "name": "Vermont",
       "country_code": "US",
@@ -39318,423 +39744,6 @@
           "market_count": 1,
           "market_slugs": [
             "market-on-the-green-woodstock-woodstock"
-          ]
-        }
-      ],
-      "uncategorized_slugs": []
-    },
-    {
-      "code": "LA",
-      "name": "Louisiana",
-      "country_code": "US",
-      "slug": "louisiana",
-      "market_count": 77,
-      "city_count": 47,
-      "cities": [
-        {
-          "name": "New Orleans",
-          "slug": "new-orleans",
-          "market_count": 10,
-          "market_slugs": [
-            "barcelo-gardens-and-market-new-orleans",
-            "bounyful-green-market-new-orleans",
-            "crescent-city-farmers-market-i-new-orleans",
-            "crescent-city-farmers-market-iii-new-orleans",
-            "crescent-city-farmers-market-new-orleans",
-            "new-orleans-east-hospital-farmers-market-new-orleans",
-            "old-algiers-harvest-fresh-market-new-orleans",
-            "our-school-at-blair-grocery-farmers-market-new-orleans",
-            "refresh-farmers-market-new-orleans",
-            "sankofa-farmers-market-new-orleans"
-          ]
-        },
-        {
-          "name": "Lafayette",
-          "slug": "lafayette",
-          "market_count": 7,
-          "market_slugs": [
-            "acadiana-farmers-market-lafayette",
-            "fightingville-fresh-lafayette",
-            "hub-city-farmers-market",
-            "lafayette-farmers-and-artisan-market-at-the-horse-farm-lafayette",
-            "lafayette-farmers-and-artisans-market",
-            "lafayettes-hub-city-farmers-market-lafayette",
-            "open-air-farmers-market-lafayette"
-          ]
-        },
-        {
-          "name": "Baton Rouge",
-          "slug": "baton-rouge",
-          "market_count": 5,
-          "market_slugs": [
-            "red-stick-farmers-market-ii-baton-rouge",
-            "red-stick-farmers-market-iii-baton-rouge",
-            "red-stick-farmers-market-saturday-downtown-year-round-baton-rouge",
-            "red-stick-farmers-market-seasonal-tuesdays-baton-rouge",
-            "red-stick-farmers-market-thursday-year-round-baton-rouge"
-          ]
-        },
-        {
-          "name": "Alexandria",
-          "slug": "alexandria",
-          "market_count": 3,
-          "market_slugs": [
-            "alexandria-farmers-market-alexandria",
-            "boyce-farmers-market",
-            "inglewood-harvest-barn-market-alexandria"
-          ]
-        },
-        {
-          "name": "Shreveport",
-          "slug": "shreveport",
-          "market_count": 3,
-          "market_slugs": [
-            "provenance-fall-farmers-market-shreveport",
-            "shreveport-farmers-market-shreveport",
-            "the-market-nhumc-shreveport"
-          ]
-        },
-        {
-          "name": "Bossier City",
-          "slug": "bossier-city",
-          "market_count": 2,
-          "market_slugs": [
-            "bossier-city-farmers-market-bossier-city",
-            "bossier-city-farmers-market-la"
-          ]
-        },
-        {
-          "name": "Greenwood",
-          "slug": "greenwood",
-          "market_count": 2,
-          "market_slugs": [
-            "greenwood-farmers-market-greenwood-1",
-            "town-of-greenwood-farmers-market"
-          ]
-        },
-        {
-          "name": "Hammond",
-          "slug": "hammond",
-          "market_count": 2,
-          "market_slugs": [
-            "hammond-farmers-artisans-market-la-70401",
-            "hammond-farmers-market-hammond"
-          ]
-        },
-        {
-          "name": "Lake Charles",
-          "slug": "lake-charles",
-          "market_count": 2,
-          "market_slugs": [
-            "cash-carry-market",
-            "charlestown-farmers-market-lake-charles"
-          ]
-        },
-        {
-          "name": "Opelousas",
-          "slug": "opelousas",
-          "market_count": 2,
-          "market_slugs": [
-            "opelousas-farmers-market",
-            "st-landry-farmers-market-opelousas"
-          ]
-        },
-        {
-          "name": "Thibodaux",
-          "slug": "thibodaux",
-          "market_count": 2,
-          "market_slugs": [
-            "thibidoux-main-st-farmers-market-thibodaux",
-            "thibodaux-main-street-farmers-market"
-          ]
-        },
-        {
-          "name": "Ville Platte",
-          "slug": "ville-platte",
-          "market_count": 2,
-          "market_slugs": [
-            "oakdale-farmers-market-1",
-            "ville-platte-farmers-market-ville-platte"
-          ]
-        },
-        {
-          "name": "Abbeville",
-          "slug": "abbeville",
-          "market_count": 1,
-          "market_slugs": [
-            "abbeville-farmers-market"
-          ]
-        },
-        {
-          "name": "Abita Springs",
-          "slug": "abita-springs",
-          "market_count": 1,
-          "market_slugs": [
-            "abita-springs-farmers-market-abita-springs-1"
-          ]
-        },
-        {
-          "name": "Arabi",
-          "slug": "arabi",
-          "market_count": 1,
-          "market_slugs": [
-            "st-bernard-seafood-farmers-market-arabi"
-          ]
-        },
-        {
-          "name": "Bastrop",
-          "slug": "bastrop",
-          "market_count": 1,
-          "market_slugs": [
-            "morehouse-farmers-market-bastrop"
-          ]
-        },
-        {
-          "name": "Belle Chasse",
-          "slug": "belle-chasse",
-          "market_count": 1,
-          "market_slugs": [
-            "george-brooks-farmers-market-belle-chasse"
-          ]
-        },
-        {
-          "name": "Covington",
-          "slug": "covington",
-          "market_count": 1,
-          "market_slugs": [
-            "covington-farmers-market-covington-city-hall-covington"
-          ]
-        },
-        {
-          "name": "Delcambre",
-          "slug": "delcambre",
-          "market_count": 1,
-          "market_slugs": [
-            "delcambre-seafood-farmers-market-delcambre"
-          ]
-        },
-        {
-          "name": "Deridder",
-          "slug": "deridder",
-          "market_count": 1,
-          "market_slugs": [
-            "azalea-street-marketplace-deridder"
-          ]
-        },
-        {
-          "name": "Destrehan",
-          "slug": "destrehan",
-          "market_count": 1,
-          "market_slugs": [
-            "german-coast-farmers-market-destrehan"
-          ]
-        },
-        {
-          "name": "Elm Grove",
-          "slug": "elm-grove",
-          "market_count": 1,
-          "market_slugs": [
-            "south-bossier-farmers-market-elm-grove"
-          ]
-        },
-        {
-          "name": "Eunice",
-          "slug": "eunice",
-          "market_count": 1,
-          "market_slugs": [
-            "eunice-farmers-market"
-          ]
-        },
-        {
-          "name": "Franklin",
-          "slug": "franklin",
-          "market_count": 1,
-          "market_slugs": [
-            "franklin-farmers-market-franklin"
-          ]
-        },
-        {
-          "name": "Harahan",
-          "slug": "harahan",
-          "market_count": 1,
-          "market_slugs": [
-            "harahan-framers-market-harahan"
-          ]
-        },
-        {
-          "name": "Haughton",
-          "slug": "haughton",
-          "market_count": 1,
-          "market_slugs": [
-            "haughton-farmers-market-artisan-fair"
-          ]
-        },
-        {
-          "name": "Houma",
-          "slug": "houma",
-          "market_count": 1,
-          "market_slugs": [
-            "cajun-farmers-market-of-houma-terrebonne-houma"
-          ]
-        },
-        {
-          "name": "Jena",
-          "slug": "jena",
-          "market_count": 1,
-          "market_slugs": [
-            "farmers-market-gardening-gift-shop-jena"
-          ]
-        },
-        {
-          "name": "Jennings",
-          "slug": "jennings",
-          "market_count": 1,
-          "market_slugs": [
-            "main-street-farmers-market-jennings"
-          ]
-        },
-        {
-          "name": "Kenner",
-          "slug": "kenner",
-          "market_count": 1,
-          "market_slugs": [
-            "rivertown-farmers-market"
-          ]
-        },
-        {
-          "name": "Lacombe",
-          "slug": "lacombe",
-          "market_count": 1,
-          "market_slugs": [
-            "the-market-at-saint-thomas-lacombe"
-          ]
-        },
-        {
-          "name": "Leesville",
-          "slug": "leesville",
-          "market_count": 1,
-          "market_slugs": [
-            "third-street-market-leesville"
-          ]
-        },
-        {
-          "name": "Mandeville",
-          "slug": "mandeville",
-          "market_count": 1,
-          "market_slugs": [
-            "mandeville-trailhead-community-farmers-market-mandeville"
-          ]
-        },
-        {
-          "name": "Marksville",
-          "slug": "marksville",
-          "market_count": 1,
-          "market_slugs": [
-            "marksville-main-street-fresh-market-marksville"
-          ]
-        },
-        {
-          "name": "Metairie",
-          "slug": "metairie",
-          "market_count": 1,
-          "market_slugs": [
-            "lafreniere-park-farmers-arts-market-la"
-          ]
-        },
-        {
-          "name": "Natchitoches",
-          "slug": "natchitoches",
-          "market_count": 1,
-          "market_slugs": [
-            "cane-river-green-market-natchitoches"
-          ]
-        },
-        {
-          "name": "New Iberia",
-          "slug": "new-iberia",
-          "market_count": 1,
-          "market_slugs": [
-            "tech-area-farmers-market-new-iberia"
-          ]
-        },
-        {
-          "name": "Olde Towne Slidell",
-          "slug": "olde-towne-slidell",
-          "market_count": 1,
-          "market_slugs": [
-            "camellia-city-farmers-market-olde-towne-slidell"
-          ]
-        },
-        {
-          "name": "Prairieville",
-          "slug": "prairieville",
-          "market_count": 1,
-          "market_slugs": [
-            "harvest-moon-marketplace-prairieville"
-          ]
-        },
-        {
-          "name": "Raceland",
-          "slug": "raceland",
-          "market_count": 1,
-          "market_slugs": [
-            "lafourche-central-market"
-          ]
-        },
-        {
-          "name": "Ruston",
-          "slug": "ruston",
-          "market_count": 1,
-          "market_slugs": [
-            "ruston-farmers-market-ruston"
-          ]
-        },
-        {
-          "name": "Welsh",
-          "slug": "welsh",
-          "market_count": 1,
-          "market_slugs": [
-            "welsh-farmers-market"
-          ]
-        },
-        {
-          "name": "West Merryville",
-          "slug": "west-merryville",
-          "market_count": 1,
-          "market_slugs": [
-            "merryville-fresh-produce-market-west-merryville"
-          ]
-        },
-        {
-          "name": "West Monroe",
-          "slug": "west-monroe",
-          "market_count": 1,
-          "market_slugs": [
-            "west-monroe-farmers-market-west-monroe"
-          ]
-        },
-        {
-          "name": "Westwego",
-          "slug": "westwego",
-          "market_count": 1,
-          "market_slugs": [
-            "westwego-farmers-fisheries-market-westwego"
-          ]
-        },
-        {
-          "name": "Winnfield",
-          "slug": "winnfield",
-          "market_count": 1,
-          "market_slugs": [
-            "winn-farmers-market"
-          ]
-        },
-        {
-          "name": "Zachary",
-          "slug": "zachary",
-          "market_count": 1,
-          "market_slugs": [
-            "zachary-farmers-market"
           ]
         }
       ],

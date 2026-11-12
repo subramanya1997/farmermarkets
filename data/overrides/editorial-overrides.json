@@ -14272,6 +14272,124 @@
       "id": 309909,
       "path": "location.city",
       "value": "Oak Park"
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "name",
+      "value": "Barcelo Gardens Fresh Market"
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "location.address",
+      "value": "3440 Piety St, New Orleans, LA 70126"
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "location.zip_code",
+      "value": "70126"
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -90.034032728395,
+        "latitude": 29.992270164789
+      }
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=29.992270164789%2C-90.034032728395"
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "organization.description",
+      "value": "Barcelo Gardens is a year-round neighborhood fresh market in New Orleans, with fruits, veggies and herbs from here and our network of local farmers, plus local honey, jams, butters, pepper jelly, sourdough, hot sauce, grits and homemade lemonade."
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "contact.phone_numbers",
+      "value": [
+        "(713) 882-8314"
+      ]
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "contact.emails",
+      "value": [
+        "barcelo.webb@gmail.com"
+      ]
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "operations.days",
+      "value": [
+        "Sunday to Thursday, 10am to 4pm, main store at 3440 Piety St",
+        "Saturdays, 10am to 1pm, 2301 Gallier St, New Orleans",
+        "Fridays, 11am to 2pm, 211 Franklin Ave, Napoleonville"
+      ]
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "operations.season",
+      "value": "Year-round"
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "payment.food_assistance.wic",
+      "value": true
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "payment.food_assistance.fmnp",
+      "value": true
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "sales_channels.delivery",
+      "value": {
+        "available": true,
+        "methods": "Delivery through Uber Eats"
+      }
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Barcelo Gardens on Facebook, with details confirmed by the owner on November 12, 2026",
+          "url": "https://www.facebook.com/barcelogardens",
+          "fields": [
+            "location.address",
+            "contact.phone_numbers",
+            "contact.emails",
+            "operations.days",
+            "operations.season",
+            "payment.food_assistance.wic",
+            "payment.food_assistance.fmnp"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 3694,
+      "id": 310526,
+      "path": "visitor_note",
+      "value": "These hours are for the main store at 3440 Piety St. Barcelo Gardens also sets up at 2301 Gallier St, New Orleans, LA 70117 on Saturdays, 10am to 1pm, and at 211 Franklin Ave, Napoleonville, LA on Fridays, 11am to 2pm."
     }
   ]
 }

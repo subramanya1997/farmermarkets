@@ -465,5 +465,105 @@
       "catalog_url": "https://www.sandiego.gov/event/north-park-farmers-market-2026",
       "retrieved_at": "2026-11-09"
     }
+  },
+  {
+    "id": "added:barcelo-gardens-gallier-street-market-new-orleans-la",
+    "slug": "barcelo-gardens-gallier-street-market-new-orleans-la",
+    "name": "Barcelo Gardens Gallier Street Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "2301 Gallier St, New Orleans, LA 70117",
+      "city": "New Orleans",
+      "state": "Louisiana",
+      "zip_code": "70117",
+      "coordinates": {
+        "longitude": -90.035836012407,
+        "latitude": 29.978991999148
+      },
+      "description": "The Saturday market run by Barcelo Gardens Fresh Market at its garden in the Upper 9th Ward. The main store is at 3440 Piety St, open Sunday to Thursday."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "phone_numbers": [
+        "(713) 882-8314"
+      ],
+      "emails": [
+        "barcelo.webb@gmail.com"
+      ],
+      "websites": [],
+      "social_media": [
+        "https://www.facebook.com/barcelogardens"
+      ]
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "Saturdays 10am to 1pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Barcelo Gardens",
+      "dataset_name": "Barcelo Gardens on Facebook, with details confirmed by the owner on November 12, 2026",
+      "catalog_url": "https://www.facebook.com/barcelogardens",
+      "retrieved_at": "2026-11-12"
+    }
+  },
+  {
+    "id": "added:barcelo-gardens-napoleonville-market-napoleonville-la",
+    "slug": "barcelo-gardens-napoleonville-market-napoleonville-la",
+    "name": "Barcelo Gardens Napoleonville Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "211 Franklin Ave, Napoleonville, LA 70390",
+      "city": "Napoleonville",
+      "state": "Louisiana",
+      "zip_code": "70390",
+      "coordinates": {
+        "longitude": -91.024640081347,
+        "latitude": 29.94031744927
+      },
+      "description": "A weekly Friday stop run by Barcelo Gardens Fresh Market of New Orleans, whose main store is at 3440 Piety St."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": ""
+    },
+    "contact": {
+      "phone_numbers": [
+        "(713) 882-8314"
+      ],
+      "emails": [
+        "barcelo.webb@gmail.com"
+      ],
+      "websites": [],
+      "social_media": [
+        "https://www.facebook.com/barcelogardens"
+      ]
+    },
+    "operations": {
+      "season": null,
+      "days": [
+        "Fridays 11am to 2pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Barcelo Gardens",
+      "dataset_name": "Barcelo Gardens on Facebook, with details confirmed by the owner on November 12, 2026",
+      "catalog_url": "https://www.facebook.com/barcelogardens",
+      "retrieved_at": "2026-11-12"
+    }
   }
 ]
