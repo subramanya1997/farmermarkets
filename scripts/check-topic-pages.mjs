@@ -15,7 +15,6 @@ import path from 'path';
 import { marketWeekdays, marketHours } from '../src/lib/seo.ts';
 import { isYearRoundMarket } from '../src/lib/marketWinter.ts';
 import {
-  LEGACY_TOPIC_SLUGS,
   NAV_TOPIC_SLUGS,
   RESERVED_MARKET_SLUGS,
   TOPIC_SLUGS,
@@ -395,15 +394,36 @@ await fetchPage('/not-a-real-state', 404);
 
 const topicPaths = NAV_TOPIC_SLUGS.map(pathForTopic);
 
-// The four addresses that lived under /farmers-markets/ until November 2026
-// must 308 to their new home in one hop.
-for (const slug of LEGACY_TOPIC_SLUGS) {
-  const response = await fetch(`${baseUrl}/farmers-markets/${slug}`, { redirect: 'manual' });
+// Every topic 308s from the root and from /farmers-markets/ in one hop.
+// The root paths 404ed after the November 2026 move. /farmers-markets/{topic}
+// for a topic outside the original four was caught by the state rule and
+// landed on that 404.
+async function assertTopicRedirect(source, destination, { search = '' } = {}) {
+  const response = await fetch(`${baseUrl}${source}`, { redirect: 'manual' });
+  const location = response.headers.get('location');
+  const target = location ? new URL(location, baseUrl) : null;
   assert(
-    response.status === 308 && new URL(response.headers.get('location'), baseUrl).pathname === pathForTopic(slug),
-    `/farmers-markets/${slug} does not 308 to ${pathForTopic(slug)}`
+    response.status === 308 && target?.pathname === destination && target.search === search,
+    `${source} does not 308 to ${destination}${search} (got ${response.status} ${location})`
   );
 }
+
+for (const slug of TOPIC_SLUGS) {
+  const destination = pathForTopic(slug);
+  await assertTopicRedirect(`/${slug}`, destination);
+  await assertTopicRedirect(`/farmers-markets/${slug}`, destination);
+}
+
+// Case and a trailing slash collapse in the same hop, and the query string
+// is kept. Next's redirect matcher does both; these lock it.
+await assertTopicRedirect('/HOURS', '/markets/hours');
+await assertTopicRedirect('/saturday/', '/markets/saturday');
+await assertTopicRedirect('/near-me?q=1', '/markets/near-me', { search: '?q=1' });
+await assertTopicRedirect('/farmers-markets/year-round/', '/markets/year-round');
+
+// The state and city moves are a different rule and must stay one hop.
+await assertTopicRedirect('/farmers-markets/north-carolina', '/north-carolina');
+await assertTopicRedirect('/farmers-markets/north-carolina/durham', '/north-carolina/durham');
 
 const sitemapChunk = await fetchPage('/sitemap/0.xml');
 assert(!sitemapChunk.includes('/farmers-markets/'), 'the sitemap still lists a /farmers-markets/ URL');

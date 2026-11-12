@@ -266,7 +266,7 @@ State hubs are `/{state}` (`/new-york`) and city pages are `/{state}/{city}`
 (`/new-york/brooklyn`). Until October 2026 both sat under `/farmers-markets/`.
 The four topic pages (`/farmers-markets/snap-ebt`, `/online`, `/hours`,
 `/saturday`) stayed there until November 2026, then moved to `/markets/`
-(section 13).
+(section 13). The root aliases (`/snap-ebt` and the rest) 308 there too.
 
 Every old URL 308s to its new one in a single hop from `next.config.ts`,
 including the 2-letter code form (`/farmers-markets/ny` goes to `/new-york`).
@@ -321,6 +321,14 @@ The topic pages are `/markets/{topic}`: `near-me`, `year-round`, `snap-ebt`,
 `/farmers-markets/`; each 308s to its new address from `next.config.ts`, and
 bare `/farmers-markets` goes to `/markets`. Nothing is served under
 `/farmers-markets/` any more.
+
+Every topic slug also 308s from the site root (`/snap-ebt` to
+`/markets/snap-ebt`, and the same for the other eleven). Those root paths were
+never pages. `/farmers-markets/{topic}` for a topic outside the original four
+was caught by the state rule and sent to the root, which then 404ed. The state
+rule now excludes every topic slug, so `/farmers-markets/near-me` 308s straight
+to `/markets/near-me`. Uppercase and a trailing slash match the same rule, and
+the query string is kept.
 
 The slugs, paths and labels are one list in `src/lib/topicSlugs.ts`, read by
 the redirects, the analytics page type, the sitemap, the header and the footer.
