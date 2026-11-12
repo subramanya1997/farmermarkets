@@ -142,3 +142,15 @@ test('a recent check never hides that a listing left the USDA directory', () => 
   );
   assert.equal(result.notice, 'No longer in the USDA directory and may be closed. Last checked 2020.');
 });
+
+test('a register match is not a check of the listing: the stale line stays', () => {
+  const result = marketFreshness(
+    {
+      last_updated: '2020-08-27',
+      enrichment: { verified_at: '2026-08-21', verification_scope: 'register' },
+    },
+    NOW
+  );
+  assert.equal(result.level, 'stale');
+  assert.equal(result.notice, 'Listing last checked 2020.');
+});

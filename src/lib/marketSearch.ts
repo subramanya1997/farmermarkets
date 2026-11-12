@@ -12,9 +12,12 @@
  *    upstream directory dropped rank below them.
  *  - Distance: closer markets get a bounded boost, so proximity breaks ties
  *    between comparable text matches without drowning out a much better one.
+ *  - Richness: listings that tell a visitor more (hours, website, phone,
+ *    social pages; see `marketRichness.ts`) get a bounded boost too.
  */
 
 import type { FarmerMarket } from '@/lib/api';
+import { effectiveDistance } from './marketRichness.ts';
 
 /** Query text → lowercase tokens; punctuation splits, empty tokens drop. */
 export function tokenizeQuery(query: string): string[] {
@@ -109,6 +112,16 @@ export function proximityBoost(distance: number | undefined): number {
 }
 
 /**
+ * Bounded boost for how much the listing can tell a visitor: up to 20 points
+ * for a full record. Sized between the verification and proximity boosts, so
+ * among comparable text matches in one area the well documented market
+ * leads, and a much better text match still wins.
+ */
+export function richnessBoost(richness: number | undefined): number {
+  return (Math.min(100, Math.max(0, richness ?? 0)) / 100) * 20;
+}
+
+/**
  * Markets matching `query`, best first. Non-matching records drop out.
  * Assumes the caller's input order is a sensible tie-break (the explorer
  * passes its distance-sorted list); the sort is stable so equal scores keep
@@ -124,7 +137,11 @@ export function searchMarkets(markets: FarmerMarket[], query: string): FarmerMar
     if (relevance <= 0) continue;
     scored.push({
       market,
-      score: relevance + verificationBoost(market) + proximityBoost(market.distance),
+      score:
+        relevance +
+        verificationBoost(market) +
+        proximityBoost(market.distance) +
+        richnessBoost(market.richness),
     });
   }
 
@@ -132,19 +149,30 @@ export function searchMarkets(markets: FarmerMarket[], query: string): FarmerMar
 }
 
 /**
- * Sort key for the browse listing (no query, "nearest first"): plain distance
- * in miles, nearest first. Verification only breaks ties (distances are
- * rounded to 0.1 mi, so the 0.01 nudge never jumps a nearer market); a
- * mileage handicap here split the list into "verified by distance, then the
- * rest by distance", which read as broken sorting. Records the upstream
- * directory dropped still go last. Without a location every distance is
- * missing, so the listing becomes verified first, then unconfirmed, then
- * unverified, each keeping the caller's order.
+ * Sort key for the recommended browse listing (no query): distance in miles
+ * with the listing's richness folded in, lowest first. A full listing counts
+ * at its real distance and an empty one as if it were 15 miles farther
+ * (`effectiveDistance`), so within the reader's area the markets with hours,
+ * a website and social pages lead, and a far market never jumps a near one
+ * by more than that. Verification only breaks ties. Records the upstream
+ * directory dropped go last. Without a location every distance is missing,
+ * so the listing runs richest first.
  */
 export function listingSortKey(
-  market: Pick<FarmerMarket, 'distance' | 'verified' | 'unverified'>
+  market: Pick<FarmerMarket, 'distance' | 'verified' | 'unverified' | 'richness'>
 ): number {
   const distance =
     market.distance !== undefined && Number.isFinite(market.distance) ? market.distance : 25000;
-  return distance + (market.verified ? 0 : 0.01) + (market.unverified ? 100000 : 0);
+  return (
+    effectiveDistance(distance, market.richness) +
+    (market.verified ? 0 : 0.01) +
+    (market.unverified ? 100000 : 0)
+  );
+}
+
+/** Sort key for the explicit "Nearest" order: plain distance, dropped records last. */
+export function distanceSortKey(market: Pick<FarmerMarket, 'distance' | 'unverified'>): number {
+  const distance =
+    market.distance !== undefined && Number.isFinite(market.distance) ? market.distance : 25000;
+  return distance + (market.unverified ? 100000 : 0);
 }

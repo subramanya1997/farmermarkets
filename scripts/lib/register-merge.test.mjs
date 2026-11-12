@@ -32,7 +32,7 @@ test('a register record fills gaps and never replaces research', () => {
   assert.deepEqual(merged.contact.phone_numbers, ['408-555-0100']);
   assert.deepEqual(merged.contact.social_media, ['https://www.instagram.com/rosegardenfm', 'https://www.facebook.com/123456']);
   assert.equal(merged.payment.food_assistance.snap, true);
-  assert.equal(merged.verified_at, '2026-11-11');
+  assert.equal(merged.verified_at, '2026-08-30');
   assert.deepEqual(merged.sources[1].fields, ['contact.phone_numbers', 'contact.social_media']);
   assert.equal(merged.sources.length, 3);
 });

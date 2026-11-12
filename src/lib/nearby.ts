@@ -19,6 +19,7 @@ import { getMarkets } from './data';
 import { haversineKm } from './geo';
 import { displayName, marketLocationLine } from './seo';
 import { isYearRoundMarket } from './marketWinter';
+import { effectiveDistance, RICHNESS_REACH_MILES } from './marketRichness';
 
 /** Grid resolution. Half a degree is ~56 km of latitude. */
 const CELL_DEGREES = 0.5;
@@ -37,6 +38,19 @@ interface GridEntry {
   lon: number;
   /** States a year-round season, for the winter block's filter. */
   yearRound: boolean;
+  /** 0 to 100, see `marketRichness.ts`. */
+  richness: number;
+}
+
+const KM_PER_MILE = 1.609344;
+
+/**
+ * Distance with richness folded in, in km: a full listing counts at its real
+ * distance, an empty one as if it were 15 miles farther. Never less than the
+ * real distance, which is what keeps the ring walk's early exit exact.
+ */
+function rankKm(distanceKm: number, richness: number): number {
+  return effectiveDistance(distanceKm, richness, RICHNESS_REACH_MILES * KM_PER_MILE);
 }
 
 /** One entry of the nearby block. */
@@ -104,6 +118,7 @@ function getGrid(): Promise<Map<string, GridEntry[]>> {
             lat: lat as number,
             lon: lon as number,
             yearRound: isYearRoundMarket(market),
+            richness: market.richness ?? 0,
           };
           const key = cellKey(
             Math.floor(entry.lat / CELL_DEGREES),
@@ -151,8 +166,9 @@ export interface NearbyOptions {
 }
 
 /**
- * The `limit` markets nearest to `origin`, closest first, excluding itself and
- * anything past `MAX_DISTANCE_KM`.
+ * The `limit` best markets near `origin`, excluding itself and anything past
+ * `MAX_DISTANCE_KM`: nearest first, with richer listings moved ahead by up to
+ * 15 miles (`effectiveDistance`).
  */
 export async function getNearbyMarkets(
   origin: NearbyOrigin,
@@ -169,33 +185,36 @@ export async function getNearbyMarkets(
   const latIndex = Math.floor(originLat / CELL_DEGREES);
   const lonIndex = Math.floor(originLon / CELL_DEGREES);
 
-  // Best `limit` seen so far, kept sorted ascending by distance.
-  const best: NearbyMarket[] = [];
+  // Best `limit` seen so far, kept sorted ascending by rank: distance with
+  // richness folded in, so the well documented markets of the area lead.
+  const best: (NearbyMarket & { rank: number })[] = [];
   const consider = (entry: GridEntry) => {
     if (entry.slug === origin.slug) return;
     if (options.yearRoundOnly && !entry.yearRound) return;
     const distanceKm = haversineKm(originLat, originLon, entry.lat, entry.lon);
     if (distanceKm > MAX_DISTANCE_KM) return;
-    if (best.length === limit && distanceKm >= best[best.length - 1].distanceKm) return;
+    const rank = rankKm(distanceKm, entry.richness);
+    if (best.length === limit && rank >= best[best.length - 1].rank) return;
 
     // Both snapshots hold the same market twice under different slugs in a few
     // places. Listing "For Oak Cliff Farmers Market — 27 mi away" twice in a
-    // row looks broken, so the nearer copy of a name replaces the other.
+    // row looks broken, so the better ranked copy of a name replaces the other.
     const nameKey = nameKeyOf(entry.name);
     const duplicate = best.findIndex((candidate) => nameKeyOf(candidate.name) === nameKey);
     if (duplicate !== -1) {
-      if (best[duplicate].distanceKm <= distanceKm) return;
+      if (best[duplicate].rank <= rank) return;
       best.splice(duplicate, 1);
     }
 
-    const hit: NearbyMarket = {
+    const hit = {
       slug: entry.slug,
       name: entry.name,
       href: `/markets/${entry.slug}`,
       locationLine: entry.locationLine,
       distanceKm,
+      rank,
     };
-    const at = best.findIndex((candidate) => candidate.distanceKm > distanceKm);
+    const at = best.findIndex((candidate) => candidate.rank > rank);
     best.splice(at === -1 ? best.length : at, 0, hit);
     if (best.length > limit) best.pop();
   };
@@ -214,10 +233,18 @@ export async function getNearbyMarkets(
 
     const covered = guaranteedRadiusKm(originLat, rings);
     if (covered >= MAX_DISTANCE_KM) break;
-    if (best.length === limit && best[best.length - 1].distanceKm <= covered) break;
+    // Every unseen market is at least `covered` away, and rank is never less
+    // than distance, so nothing unseen can beat the current worst hit.
+    if (best.length === limit && best[best.length - 1].rank <= covered) break;
   }
 
-  return best;
+  return best.map(({ slug, name, href, locationLine, distanceKm }) => ({
+    slug,
+    name,
+    href,
+    locationLine,
+    distanceKm,
+  }));
 }
 
 let pointsPromise: Promise<Map<string, { lat: number; lon: number }>> | null = null;

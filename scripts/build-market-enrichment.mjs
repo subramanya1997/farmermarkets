@@ -181,9 +181,10 @@ function validateRecord(record, label, marketsById) {
   if (!DATE.test(record.verified_at)) fail(`${label}.verified_at must be YYYY-MM-DD`);
   if (
     record.verification_scope !== undefined &&
-    record.verification_scope !== 'partial'
+    record.verification_scope !== 'partial' &&
+    record.verification_scope !== 'register'
   ) {
-    fail(`${label}.verification_scope must be partial`);
+    fail(`${label}.verification_scope must be partial or register`);
   }
   if (!Array.isArray(record.sources) || record.sources.length === 0) fail(`${label}.sources must not be empty`);
 
@@ -387,7 +388,14 @@ export async function buildMarketEnrichment() {
       if (seen.has(id)) fail(`${file} lists ${id} twice`);
       seen.add(id);
       const existing = recordsById.get(id);
-      recordsById.set(id, existing ? mergeRegisterRecord(existing, { ...record, id }) : { ...record, id, verification_scope: 'partial' });
+      // A market with no research keeps the register's date but is marked
+      // `register`, so the site never reads that date as a check of the listing.
+      recordsById.set(
+        id,
+        existing
+          ? mergeRegisterRecord(existing, { ...record, id })
+          : { ...record, id, verification_scope: 'register' }
+      );
     }
   }
 

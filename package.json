@@ -53,7 +53,7 @@
     "test:market-highlights": "node --test --experimental-strip-types src/lib/marketHighlights.test.ts",
     "test:market-facts": "node --test --experimental-strip-types src/lib/marketFacts.test.ts src/lib/marketOffers.test.ts",
     "test:plan-visit": "node --test --experimental-strip-types src/lib/planVisit.test.ts",
-    "test:market-display": "node --test --experimental-strip-types src/lib/marketDisplay.test.ts",
+    "test:market-display": "node --test --experimental-strip-types src/lib/marketDisplay.test.ts src/lib/marketSearch.test.ts src/lib/marketRichness.test.ts",
     "test:city-guides": "node --test --experimental-strip-types src/lib/cityGuide.test.ts src/lib/cityPageView.test.ts",
     "test:blog": "node --test scripts/check-blog-posts.mjs",
     "blog:image": "node scripts/blog-image.mjs",

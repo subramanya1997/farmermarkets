@@ -49,7 +49,7 @@ export interface MarketFreshness {
 export interface MarketFreshnessRecord {
   last_updated?: string | null;
   unverified?: boolean;
-  enrichment?: { verified_at?: string | null; verification_scope?: 'partial' | null } | null;
+  enrichment?: { verified_at?: string | null; verification_scope?: 'partial' | 'register' | null } | null;
   /** Only the structured schedules' check dates are read. */
   first_party?: { operations?: { schedules?: { verified_at: string }[] } } | null;
 }
@@ -115,7 +115,8 @@ export const RECENT_CHECK_MONTHS = 12;
  */
 function recentlyChecked(input: MarketFreshnessRecord, now: Date): boolean {
   const dates = [
-    input.enrichment?.verified_at,
+    // A register match (see `verification_scope`) is not a check of the listing.
+    input.enrichment?.verification_scope === 'register' ? undefined : input.enrichment?.verified_at,
     ...(input.first_party?.operations?.schedules ?? []).map((item) => item.verified_at),
   ]
     .map((value) => parseDate(value))

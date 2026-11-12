@@ -1,4 +1,6 @@
 import type { ComponentType } from 'react';
+import { SocialIcon } from '@/components/SocialIconLinks';
+import type { SocialPlatform } from '@/lib/marketDisplay';
 import { ArrowUpRight, AtSign, CalendarCheck, Globe, Mail, Map as MapIcon, Phone, Store } from 'lucide-react';
 import type { FarmerMarket } from '@/lib/api';
 import type { AnalyticsProperties } from '@/lib/analytics';
@@ -18,6 +20,29 @@ interface MarketFactsProps {
 }
 
 type Icon = ComponentType<{ className?: string; 'aria-hidden'?: boolean }>;
+
+/** The network's own glyph for a social link, by its label; "@" only for one we have no glyph for. */
+const SOCIAL_PLATFORMS: [RegExp, SocialPlatform][] = [
+  [/facebook/i, 'facebook'],
+  [/instagram/i, 'instagram'],
+  [/^x\b|twitter/i, 'x'],
+  [/youtube/i, 'youtube'],
+  [/tiktok/i, 'tiktok'],
+  [/linkedin/i, 'linkedin'],
+];
+
+const glyphFor = (platform: SocialPlatform): Icon => {
+  const Glyph: Icon = ({ className }) => <SocialIcon platform={platform} className={className} />;
+  return Glyph;
+};
+
+/** Built once, so a glyph is the same component on every render. */
+const SOCIAL_GLYPHS = new Map(SOCIAL_PLATFORMS.map(([, platform]) => [platform, glyphFor(platform)]));
+
+function socialGlyph(label: string): Icon {
+  const platform = SOCIAL_PLATFORMS.find(([pattern]) => pattern.test(label))?.[1];
+  return (platform && SOCIAL_GLYPHS.get(platform)) || AtSign;
+}
 
 function hostOf(url: string): string | undefined {
   try {
@@ -105,7 +130,7 @@ export function MarketFacts({ market, analyticsProperties, omitTerms, hasPlanCar
   const firstParty = market.first_party;
   const links: { label: string; url?: string; event: string; icon: Icon }[] = [
     ...websites.map((url) => ({ label: hostOf(url) ?? url, url, event: 'Official Market Website Opened', icon: Globe })),
-    ...socials.map((social) => ({ label: social.label, url: social.href, event: 'Market Social Profile Opened', icon: AtSign })),
+    ...socials.map((social) => ({ label: social.label, url: social.href, event: 'Market Social Profile Opened', icon: socialGlyph(social.label) })),
     {
       label: 'Market map',
       url: firstParty?.access?.market_map_url?.value,

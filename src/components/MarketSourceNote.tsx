@@ -45,14 +45,17 @@ export function MarketSourceNote({ provenance, lastUpdated, enrichment, audit }:
   const researchHost =
     hostOf(sources.find((source) => source.kind === 'first_party')?.url) ?? hostOf(sources[0]?.url);
   const publisher = clean(provenance?.publisher) || undefined;
+  // A register match adds a link or a flag; it is not a check of the listing,
+  // so its date never leads the footer or clears the "could not confirm" line.
+  const researchedAt = enrichment?.verification_scope === 'register' ? undefined : enrichment?.verified_at;
   const candidates = [
-    { day: isoDay(enrichment?.verified_at), from: researchHost },
+    { day: isoDay(researchedAt), from: researchHost },
     { day: isoDay(provenance?.retrievedAt), from: publisher },
     { day: isoDay(lastUpdated), from: publisher },
   ].filter((candidate): candidate is { day: string; from: string | undefined } => Boolean(candidate.day));
   const latest = candidates.sort((left, right) => right.day.localeCompare(left.day))[0];
 
-  const enrichedDay = isoDay(enrichment?.verified_at);
+  const enrichedDay = isoDay(researchedAt);
   const auditDay = isoDay(audit?.checked_at);
   const auditDate = formatDate(audit?.checked_at);
   const caution =

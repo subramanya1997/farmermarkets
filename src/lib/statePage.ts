@@ -188,14 +188,18 @@ const GENERIC_WORDS = new Set([
  * directory dropped sink.
  */
 function scoreMarket(market: FarmerMarket, days: Weekday[], hours?: string): number {
+  // The site-wide richness score carries the listing's breadth (website,
+  // phone, social pages, season); the terms below keep a researched schedule
+  // and a current source on top, as before.
   return (
+    (market.richness ?? 0) / 10 +
     (market.first_party?.operations?.schedules?.length ? 8 : market.first_party ? 4 : 0) +
     (market.enrichment ? 2 : 0) +
     (market.verified ? 2 : 0) +
     (market.snap ? 2 : 0) +
     (hours ? 2 : 0) +
     (days.length > 0 ? 1 : 0) -
-    (market.unverified ? 6 : 0)
+    (market.unverified ? 12 : 0)
   );
 }
 

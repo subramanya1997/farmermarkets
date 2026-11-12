@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
+  distanceSortKey,
   listingSortKey,
+  richnessBoost,
   proximityBoost,
   searchMarkets,
   textRelevance,
@@ -74,13 +76,12 @@ test('verified record outranks an equal unconfirmed match', () => {
   assert.equal(results[0].id, 'verified');
 });
 
-test('listing key is plain distance, verified breaks ties, dropped records last', () => {
+test('listing key: equal richness is plain distance, verified breaks ties, dropped records last', () => {
   const verifiedFar = listingSortKey({ distance: 5, verified: true });
   const plainNearer = listingSortKey({ distance: 2 });
   const plainNearest = listingSortKey({ distance: 0.1 });
   const verifiedTie = listingSortKey({ distance: 2, verified: true });
   const unverifiedNearest = listingSortKey({ distance: 0.1, unverified: true });
-  // Plain distance: a nearer unconfirmed market beats a farther verified one.
   assert.ok(plainNearest < plainNearer);
   assert.ok(plainNearer < verifiedFar);
   // Verification only breaks a tie.
@@ -88,6 +89,36 @@ test('listing key is plain distance, verified breaks ties, dropped records last'
   assert.ok(listingSortKey({ distance: 2.1, verified: true }) > plainNearer);
   // Records the upstream directory dropped still go last.
   assert.ok(verifiedFar < unverifiedNearest);
+});
+
+test('listing key: a rich market nearby leads a bare one next door, within 15 miles only', () => {
+  const richAcrossTown = listingSortKey({ distance: 8, richness: 90 });
+  const bareNextDoor = listingSortKey({ distance: 0.5, richness: 20 });
+  const richFarAway = listingSortKey({ distance: 40, richness: 100 });
+  const bareInTown = listingSortKey({ distance: 10, richness: 0 });
+  assert.ok(richAcrossTown < bareNextDoor);
+  assert.ok(bareInTown < richFarAway);
+  // Without a location the richest listing leads.
+  assert.ok(listingSortKey({ richness: 80 }) < listingSortKey({ richness: 30 }));
+});
+
+test('the explicit nearest order ignores richness', () => {
+  assert.ok(distanceSortKey({ distance: 1 }) < distanceSortKey({ distance: 2 }));
+  assert.ok(distanceSortKey({ distance: 50 }) < distanceSortKey({ distance: 1, unverified: true }));
+});
+
+test('search: the richer of two equal matches leads, a better text match still wins', () => {
+  const results = searchMarkets(
+    [
+      market({ id: 'bare', name: 'River Market', distance: 3, richness: 10 }),
+      market({ id: 'rich', name: 'River Market', distance: 6, richness: 90 }),
+      market({ id: 'exact', name: 'River', distance: 6, richness: 0 }),
+    ],
+    'river'
+  );
+  assert.deepEqual(results.map((entry) => entry.id), ['exact', 'rich', 'bare']);
+  assert.equal(richnessBoost(100), 20);
+  assert.equal(richnessBoost(undefined), 0);
 });
 
 test('without distances the listing orders verified, unconfirmed, unverified', () => {

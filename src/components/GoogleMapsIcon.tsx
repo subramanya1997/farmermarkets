@@ -27,13 +27,19 @@ const PIN_SEGMENTS: { fill: string; d: string }[] = [
   },
 ];
 
-export function GoogleMapsIcon({ className = 'h-5 w-5' }: { className?: string }) {
+interface GoogleMapsIconProps {
+  className?: string;
+  /** The white disc behind the pin, for coloured buttons. Off on plain cards. */
+  disc?: boolean;
+}
+
+export function GoogleMapsIcon({ className = 'h-5 w-5', disc = true }: GoogleMapsIconProps) {
   return (
     <span
       aria-hidden="true"
-      className={`inline-flex shrink-0 items-center justify-center rounded-full bg-white ${className}`}
+      className={`inline-flex shrink-0 items-center justify-center ${disc ? 'rounded-full bg-white' : ''} ${className}`}
     >
-      <svg viewBox="0 0 24 24" className="h-[70%] w-[70%]">
+      <svg viewBox="0 0 24 24" className={disc ? 'h-[70%] w-[70%]' : 'h-full w-full'}>
         {PIN_SEGMENTS.map((segment) => (
           <path key={segment.fill} fill={segment.fill} d={segment.d} />
         ))}

@@ -136,17 +136,15 @@ export function cityPath(stateSlug: string, citySlug: string): string {
 /**
  * How complete one record is, used to order the list and to pick the market the meta description names.
  *
- * The order the issue asks for: stated opening times beat a bare weekday,
- * which beats a vendor count, which beats a description. A market nobody can
- * find the hours for is a bad thing to headline a city with.
+ * The site-wide richness score (`marketRichness.ts`): opening hours weigh
+ * most, then a website, verified research, a phone number, season and social
+ * pages. A record with no schedule, vendor count or description scores 0
+ * here whatever else it lists: a market nobody can find the hours for is a
+ * bad thing to headline a city with.
  */
 function scoreMarket(row: Omit<CityMarketRow, 'completeness'>, market: FarmerMarket): number {
-  return (
-    (row.hours ? 8 : 0) +
-    (row.days.length > 0 ? 4 : 0) +
-    (market.vendor_count ? 2 : 0) +
-    (marketBlurb(market) ? 1 : 0)
-  );
+  const headline = Boolean(row.hours || row.days.length > 0 || market.vendor_count || marketBlurb(market));
+  return headline ? Math.max(1, market.richness ?? 0) : 0;
 }
 
 /** The record's own prose, if it has any. */

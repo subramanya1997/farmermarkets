@@ -43,7 +43,8 @@ const phoneKey = (value) => formatUsPhone(value) ?? String(value).replace(/\D/g,
 /**
  * Fold a register record into the research record for the same market.
  * Returns the merged record, or `existing` untouched when the register adds
- * nothing. Sources are kept only for the fields they actually supplied.
+ * nothing. Sources are kept only for the fields they actually supplied, and
+ * the record's `verified_at` and scope are left as they were.
  */
 export function mergeRegisterRecord(existing, register) {
   const added = new Set();
@@ -104,7 +105,8 @@ export function mergeRegisterRecord(existing, register) {
     ...existing,
     ...(Object.keys(contact).length ? { contact } : {}),
     ...(payment ? { payment } : {}),
-    verified_at: [existing.verified_at, register.verified_at].sort().at(-1),
+    // `verified_at` stays the research date (or the first register's): a
+    // register match is not a fresh check of the listing.
     sources,
   };
 }

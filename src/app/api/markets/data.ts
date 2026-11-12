@@ -10,6 +10,7 @@ import type {
 } from '@/lib/enrichment';
 import { mergeEnrichment } from '@/lib/enrichment';
 import { marketHours, marketWeekdays } from '@/lib/seo';
+import { effectiveDistance, marketRichness } from '@/lib/marketRichness';
 export { mergeEnrichment };
 
 // FarmerMarket interface for TypeScript typing
@@ -26,6 +27,8 @@ export interface FarmerMarket {
    * `already_enriched`. Derived here so ranking never ships audit blobs.
    */
   verified?: boolean;
+  /** 0 to 100: how much the listing can tell a visitor (`marketRichness.ts`). */
+  richness?: number;
   country?: string;
   country_code?: string;
   distance?: number;
@@ -456,6 +459,13 @@ async function readMarketsData(): Promise<FarmerMarket[]> {
           pet_friendly: isPetFriendly,
           provenance: market.provenance
         };
+      }).map((market) => {
+        // Scored once here so every ordering on the site reads the same number.
+        const hasDays = marketWeekdays(market).length > 0;
+        return {
+          ...market,
+          richness: marketRichness(market, { hasDays, hasHours: hasDays && Boolean(marketHours(market)) }),
+        };
       });
     } catch (error) {
       console.error('Error parsing market data:', error);
@@ -611,6 +621,7 @@ export function slimMarket(market: FarmerMarket): Partial<FarmerMarket> {
     if (market[field] === true) slim[field] = true;
   }
 
+  if (market.richness) slim.richness = market.richness;
   if (!market.suppress_map && market.location) slim.location = market.location;
   if (!market.suppress_map && market.distance !== undefined) slim.distance = market.distance;
   // Only the source id is read (one analytics property); the rest of the
@@ -694,7 +705,8 @@ export const marketService = {
       );
     }
 
-    // Sort by distance if user location is provided
+    // Near the reader first, with richer listings ahead inside the same area
+    // (see `effectiveDistance`); without a location, richest first.
     if (hasValidCoordinates(userLat, userLon)) {
       const lat = userLat;
       const lon = userLon as number;
@@ -707,7 +719,14 @@ export const marketService = {
 
           return { ...market, distance };
         })
-        .sort((a, b) => a.distance - b.distance);
+        .sort(
+          (a, b) =>
+            effectiveDistance(a.distance, a.richness) - effectiveDistance(b.distance, b.richness)
+        );
+    } else {
+      filteredMarkets = [...filteredMarkets].sort(
+        (a, b) => (b.richness ?? 0) - (a.richness ?? 0)
+      );
     }
 
     // Apply pagination

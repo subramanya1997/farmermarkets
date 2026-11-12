@@ -276,8 +276,14 @@ export interface MarketFirstPartyFacts {
 
 export interface MarketEnrichmentMetadata {
   verified_at: string;
-  /** Whether the check covered the entire listing or only the cited fields. */
-  verification_scope: 'partial';
+  /**
+   * `partial`: research checked the cited fields on `verified_at`.
+   * `register`: the only additions are bulk matches against a public register
+   * (USDA SNAP retailers, Overture places) or a link read off the market's
+   * home page. Nobody looked at the listing itself, so the date must not
+   * stand in for a check of it.
+   */
+  verification_scope: 'partial' | 'register';
   sources: MarketEnrichmentSource[];
 }
 
@@ -298,7 +304,7 @@ export interface MarketEnrichmentRecord {
   id: string;
   market_name: string;
   verified_at: string;
-  verification_scope?: 'partial';
+  verification_scope?: 'partial' | 'register';
   schema_version?: 2;
   first_party?: MarketFirstPartyFacts;
   google_maps_url?: string;

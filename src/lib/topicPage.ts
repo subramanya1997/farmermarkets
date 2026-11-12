@@ -235,11 +235,12 @@ async function buildEntries(): Promise<TopicEntry[]> {
       ...place,
       days,
       hours,
+      // Same rule as the city pages: the site-wide richness score, and 0 for
+      // a record with nothing to headline.
       score:
-        (hours ? 8 : 0) +
-        (days.length > 0 ? 4 : 0) +
-        (market.vendor_count ? 2 : 0) +
-        (marketBlurb(market) ? 1 : 0),
+        hours || days.length > 0 || market.vendor_count || marketBlurb(market)
+          ? Math.max(1, market.richness ?? 0)
+          : 0,
       lastModified: toIsoInstant(market.last_updated),
     });
   }

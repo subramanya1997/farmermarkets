@@ -61,7 +61,7 @@ export interface MarketSchemaRecord extends MarketSeoRecord {
   suppress_map?: boolean;
   enrichment?: {
     verified_at?: string | null;
-    verification_scope?: 'partial' | null;
+    verification_scope?: 'partial' | 'register' | null;
   } | null;
   last_updated?: string | null;
   accepts_cash?: boolean;

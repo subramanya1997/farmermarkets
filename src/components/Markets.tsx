@@ -23,7 +23,7 @@ import { useGeolocation } from "@/hooks/useGeolocation";
 import { useAllMarkets } from "@/hooks/useAllMarkets";
 import { calculateDistance } from "@/lib/utils";
 import { extractFilterOptions, applyFilters } from "@/lib/filters";
-import { searchMarkets, listingSortKey } from "@/lib/marketSearch";
+import { searchMarkets, listingSortKey, distanceSortKey } from "@/lib/marketSearch";
 import { trackEvent } from "@/lib/analytics";
 import { settledMarketSearchEvent } from '@/lib/searchAnalytics';
 import { SITE_FRAME } from "@/lib/ui";
@@ -73,7 +73,7 @@ export function Markets() {
   );
   const [selectedCountry, setSelectedCountry] = useState('');
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
-  const [sortOrder, setSortOrder] = useState<'nearest' | 'name'>('nearest');
+  const [sortOrder, setSortOrder] = useState<'nearest' | 'distance' | 'name'>('nearest');
   // Markets inside the map's current viewport, closest first (fed by the map).
   const [mapVisibleMarkets, setMapVisibleMarkets] = useState<FarmerMarket[]>([]);
   const lastTrackedSearch = useRef('');
@@ -163,9 +163,12 @@ export function Markets() {
       filtered = [...filtered].sort((left, right) =>
         left.name.localeCompare(right.name, 'en', { sensitivity: 'base' })
       );
+    } else if (sortOrder === 'distance') {
+      // Plain distance, for a reader who wants the closest market whatever it lists.
+      filtered = [...filtered].sort((left, right) => distanceSortKey(left) - distanceSortKey(right));
     } else if (!searchTerm) {
-      // Recommended browse order: nearby, with recently supported records
-      // ranked ahead of unconfirmed ones and dropped records last.
+      // Recommended browse order: the reader's area first, and inside it the
+      // listings that tell a visitor the most (hours, website, social pages).
       filtered = [...filtered].sort((left, right) => listingSortKey(left) - listingSortKey(right));
     }
     // With a search term under the recommended order, the relevance order already
@@ -286,7 +289,7 @@ export function Markets() {
               <Select
                 value={sortOrder}
                 onValueChange={(value) => {
-                  setSortOrder(value as 'nearest' | 'name');
+                  setSortOrder(value as 'nearest' | 'distance' | 'name');
                   setPage(1);
                   trackEvent('Market Sort Changed', { sort: value });
                 }}
@@ -302,6 +305,7 @@ export function Markets() {
                 </SelectTrigger>
                 <SelectContent position="popper">
                   <SelectItem value="nearest">{searchTerm ? 'Best match' : 'Recommended'}</SelectItem>
+                  {location && <SelectItem value="distance">Nearest</SelectItem>}
                   <SelectItem value="name">Name A-Z</SelectItem>
                 </SelectContent>
               </Select>
@@ -369,7 +373,7 @@ export function Markets() {
                         <Tabs
                           value={sortOrder}
                           onValueChange={(value) => {
-                            setSortOrder(value as 'nearest' | 'name');
+                            setSortOrder(value as 'nearest' | 'distance' | 'name');
                             setPage(1);
                             trackEvent('Market Sort Changed', { sort: value });
                           }}
@@ -378,6 +382,11 @@ export function Markets() {
                             <TabsTrigger value="nearest" className="rounded-full">
                               {searchTerm ? 'Best match' : 'Recommended'}
                             </TabsTrigger>
+                            {location && (
+                              <TabsTrigger value="distance" className="rounded-full">
+                                Nearest
+                              </TabsTrigger>
+                            )}
                             <TabsTrigger value="name" className="rounded-full">
                               Name A-Z
                             </TabsTrigger>
