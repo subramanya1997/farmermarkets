@@ -87,7 +87,9 @@
       "monthlySearches": 90,
       "difficulty": 0,
       "cluster": "shopping",
-      "status": "todo"
+      "status": "published",
+      "slug": "farmers-market-vs-grocery-store",
+      "publishedAt": "2026-11-12"
     },
     {
       "keyword": "how to store cilantro",
