@@ -804,6 +804,117 @@
           "url": "https://www.bernardowinery.com/pages/friday-farmers-market"
         }
       ]
+    },
+    "wisconsin/madison": {
+      "verified_at": "2026-11-11",
+      "title": "Madison Farmers Markets: Holiday and Winter Market Dates",
+      "description": "{count} farmers markets in Madison, WI. Dane County Farmers' Market moves indoors to Monona Terrace for the holidays, then to Garver Feed Mill Jan-Apr.",
+      "tips": [
+        {
+          "label": "Last Saturday",
+          "text": "Saturday on the Square wraps up its 2026 season on November 14, 6:15am-1:45pm, around the Capitol. Every vendor sells what they produce, so popular stalls can sell out early.",
+          "source_ids": ["dcfm-sat"]
+        },
+        {
+          "label": "Holiday",
+          "text": "The Holiday Market moves indoors to Monona Terrace (1 John Nolen Dr) on Saturdays Nov 21, Dec 5, 12 and 19, 7:30am-12pm. Dec 5 runs until 1pm, and there is no market Nov 28.",
+          "source_ids": ["dcfm-holiday"]
+        },
+        {
+          "label": "Winter",
+          "text": "From January 2 to April 3, 2027, the Winter Market runs Saturdays 8am-12pm at Garver Feed Mill, 3241 Garver Green. Only Wisconsin farm products, no crafts.",
+          "source_ids": ["dcfm-winter"]
+        },
+        {
+          "label": "Parking",
+          "text": "Monona Terrace's on-site garage is $5 during the Holiday Market. Garver Feed Mill has over 100 free spots, and the Capital City Trail runs past both buildings.",
+          "source_ids": ["dcfm-holiday", "dcfm-winter"]
+        },
+        {
+          "label": "EBT",
+          "text": "On the Square, swap SNAP/EBT for market dollars at the Info Booth (the green tent) at the top of State St, 7am-1pm. Market dollars don't expire.",
+          "source_ids": ["dcfm-ebt"]
+        },
+        {
+          "label": "Pets",
+          "text": "Dane County Farmers' Market allows no pets, not even a dog carried in your arms at Garver. Service animals are welcome. Northside's Sunday market lets leashed pets in.",
+          "source_ids": ["dcfm-sat", "dcfm-winter", "nfm-visit"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Is there a farmers market in Madison on Wednesdays?",
+          "answer": "Yes, in season. Dane County Farmers' Market ran Wednesdays April 22 to November 4 in 2026, 8:30am-1:15pm, on the 200 block of Martin Luther King Jr Blvd between the Municipal Building and the City County Building.",
+          "source_ids": ["dcfm-wed"]
+        },
+        {
+          "question": "Is there an evening farmers market in Madison?",
+          "answer": "The Eastside Farmers' Market runs Tuesdays 4pm-7pm, rain or shine, at McPike Park (202 S Ingersoll St). The 2026 season ran April 28 to October 27, and it takes EBT with Double Dollars.",
+          "source_ids": ["efm-home"]
+        },
+        {
+          "question": "Where is the Westside Community Market now?",
+          "answer": "Inside University Research Park at 505 S Rosa Rd, with street parking on the east side of Rosa Rd and a lot by the MG&E Innovation Center. In 2026 it ran Saturdays 7am-12:30pm from April 11 to a bonus week on November 7.",
+          "source_ids": ["wcm-find", "wcm-schedule"]
+        },
+        {
+          "question": "Is there a Sunday farmers market in Madison?",
+          "answer": "Northside Farmers Market runs Sundays 8:30am-12:30pm at Northside TownCenter, May 3 to October 25 in 2026. SNAP tokens there are worth $2 each, and parking in the center is plentiful.",
+          "source_ids": ["nfm-home", "nfm-visit"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "dcfm-sat",
+          "title": "Saturday on the Square, DCFM",
+          "url": "https://dcfm.org/markets/saturday-on-the-square"
+        },
+        {
+          "id": "dcfm-holiday",
+          "title": "Holiday Market, DCFM",
+          "url": "https://dcfm.org/markets/holiday-market"
+        },
+        {
+          "id": "dcfm-winter",
+          "title": "Winter Market, DCFM",
+          "url": "https://dcfm.org/markets/late-winter-market"
+        },
+        {
+          "id": "dcfm-ebt",
+          "title": "SNAP/EBT, DCFM",
+          "url": "https://dcfm.org/foodshare-ebt"
+        },
+        {
+          "id": "dcfm-wed",
+          "title": "Wednesday Market, DCFM",
+          "url": "https://dcfm.org/markets/wednesday-market"
+        },
+        {
+          "id": "efm-home",
+          "title": "Eastside Farmers' Market",
+          "url": "https://www.eastsidefarmersmarket.org/"
+        },
+        {
+          "id": "wcm-find",
+          "title": "Find the market, Westside",
+          "url": "https://www.westsidecommunitymarket.org/find-the-market"
+        },
+        {
+          "id": "wcm-schedule",
+          "title": "2026 schedule, Westside",
+          "url": "https://www.westsidecommunitymarket.org/market-schedule"
+        },
+        {
+          "id": "nfm-home",
+          "title": "Northside Farmers Market",
+          "url": "https://www.northsidefarmersmarket.org/"
+        },
+        {
+          "id": "nfm-visit",
+          "title": "Visit us, Northside",
+          "url": "https://www.northsidefarmersmarket.org/visit-us/"
+        }
+      ]
     }
   }
 }

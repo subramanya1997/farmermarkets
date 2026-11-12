@@ -177,6 +177,30 @@
       "market": "rancho-bernardo-farmers-market-san-diego",
       "issue": "Address spells the street 'Paseo Del Verno Norte'; San Diego County Farm Bureau lists 13330 Paseo Del Verano Norte.",
       "status": "open"
+    },
+    {
+      "city": "wisconsin/madison",
+      "market": "eastside-farmers-market-1",
+      "issue": "Dataset address is 953 Jenifer St; the official site says the market runs Tuesdays 4pm-7pm at McPike Park, 202 S Ingersoll St (2026 season Apr 28 to Oct 27). Dataset has no days or hours.",
+      "status": "open"
+    },
+    {
+      "city": "wisconsin/madison",
+      "market": "tuesday-eastside-farmers-market-madison",
+      "issue": "Looks like a duplicate of eastside-farmers-market-1 (same 953 Jenifer St address, and the Eastside market only runs Tuesdays).",
+      "status": "open"
+    },
+    {
+      "city": "wisconsin/madison",
+      "market": "westside-community-market-madison",
+      "issue": "Two entries (westside-community-market-madison and -1) for the same market, both at 750 University Row. The official site says it moved to University Research Park, 505 S Rosa Rd; Saturdays 7am-12:30pm, 2026 season Apr 11 to Oct 31 plus Nov 7.",
+      "status": "open"
+    },
+    {
+      "city": "wisconsin/madison",
+      "market": null,
+      "issue": "Missing markets: Dane County Farmers' Market Wednesday Market (200 block MLK Jr Blvd, Wednesdays 8:30am-1:15pm, Apr 22 to Nov 4 2026), Holiday Market (Monona Terrace, Nov 21 to Dec 19 2026) and Winter Market (Garver Feed Mill, Jan 2 to Apr 3 2027). Sources: dcfm.org/markets/*.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -195,6 +219,10 @@
     {
       "city": "california/san-diego",
       "idea": "San Diego has a fishermen's market (Tuna Harbor Dockside) that is not a produce market. A 'Seafood market' tag or badge on market cards would help visitors find it, like night or winter markets."
+    },
+    {
+      "city": "wisconsin/madison",
+      "idea": "Madison's main market changes venue by season (Capitol Square, Monona Terrace, Garver Feed Mill). A 'Where is it this week' block driven by dated venue ranges would answer the top off-season question better than tips."
     }
   ],
   "cities": [
@@ -349,8 +377,15 @@
       "keyword": "farmers market madison",
       "volume": 14800,
       "difficulty": 43,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-11",
+          "changes": "First guide: 6 sourced tips (Saturday on the Square final 2026 date Nov 14, Holiday Market at Monona Terrace Nov 21 to Dec 19, Winter Market at Garver Feed Mill Jan 2 to Apr 3 2027, Monona Terrace $5 garage and free Garver parking, EBT info booth on State St, DCFM no-pets rule vs Northside leashed pets), 4 FAQs (DCFM Wednesday market, Eastside Tuesday evening market at McPike Park, Westside at University Research Park, Northside Sunday market), title and description override aimed at the holiday and winter season.",
+          "baseline": "No settled GSC baseline yet; city URL moved to /wisconsin/madison on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-12-09"
     },
     {
       "priority": 10,
