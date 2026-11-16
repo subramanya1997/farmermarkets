@@ -915,6 +915,107 @@
           "url": "https://www.northsidefarmersmarket.org/visit-us/"
         }
       ]
+    },
+    "florida/orlando": {
+      "verified_at": "2026-11-15",
+      "title": "Orlando Farmers Markets: Lake Eola Sundays, Audubon Mondays",
+      "description": "{count} farmers markets in Orlando, FL. Lake Eola's market runs every Sunday 10am-3pm, Audubon Park on Monday nights, with parking and SunRail tips.",
+      "tips": [
+        {
+          "label": "Sundays",
+          "text": "Orlando Farmers Market runs every Sunday 10am-3pm in Lake Eola Park, at E Central Blvd and N Eola Dr. It started in 1987 and moved to Lake Eola in 2004.",
+          "source_ids": ["ofm-faq", "ofm-history"]
+        },
+        {
+          "label": "Peak season",
+          "text": "Fall and winter are the busiest months at Lake Eola, because that is when local produce is most plentiful.",
+          "source_ids": ["ofm-faq"]
+        },
+        {
+          "label": "Parking",
+          "text": "Free on-street parking is within walking distance of Lake Eola on Sundays. Paid garages sit on S Osceola Ave and N Eola Dr.",
+          "source_ids": ["ofm-faq", "ofm-history"]
+        },
+        {
+          "label": "By train",
+          "text": "SunRail's Church Street Station is a walk from the Lake Eola market, and several LYNX bus routes stop nearby.",
+          "source_ids": ["ofm-faq"]
+        },
+        {
+          "label": "Monday night",
+          "text": "Audubon Park Community Market runs Mondays 5pm-8pm at 1842 E Winter Park Rd, in front of Stardust Video & Coffee in the Audubon Park Garden District.",
+          "source_ids": ["apcm-location", "apcm-home"]
+        },
+        {
+          "label": "SNAP/EBT",
+          "text": "Most Lake Eola vendors take SNAP/EBT. At Audubon Park, start at the Market Headquarters tent, and Fresh Access Bucks match SNAP $1 for $1 on Florida-grown produce.",
+          "source_ids": ["ofm-faq", "apcm-faq", "apcm-snap"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Where do I park for the Audubon Park Community Market?",
+          "answer": "The market uses the Stardust lot, so park on Corrine Dr, Winter Park Dr or Falcon Dr, or in the large Audubon Park School lot, which is open in the evenings. Don't park at ABC Liquors: they tow.",
+          "source_ids": ["apcm-faq", "apcm-location"]
+        },
+        {
+          "question": "Can I bring my dog to Orlando farmers markets?",
+          "answer": "Yes at Lake Eola, where leashed dogs and cats are welcome on a leash no longer than eight feet. Audubon Park welcomes leashed pets too, but only service animals inside Stardust. Hunter's Creek lists itself as dog friendly.",
+          "source_ids": ["ofm-home", "apcm-faq", "hc-market"]
+        },
+        {
+          "question": "When is the Hunter's Creek farmers market?",
+          "answer": "It runs 10am-2pm on the third Sunday of the month at Hunter's Creek Village Park. The last 2026 date is December 13 (the second Sunday), and there were no markets June through September this year.",
+          "source_ids": ["hc-market"]
+        },
+        {
+          "question": "Do Orlando farmers markets take cards?",
+          "answer": "Many vendors do, but not all. At Lake Eola most take cash and many take credit or debit, and some take checks. At Audubon Park every vendor takes cash, so bring some, plus a cooler bag for fresh items.",
+          "source_ids": ["ofm-faq", "apcm-faq"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "ofm-home",
+          "title": "Orlando Farmers Market",
+          "url": "https://www.orlandofarmersmarket.com/"
+        },
+        {
+          "id": "ofm-faq",
+          "title": "FAQs, Orlando Farmers Market",
+          "url": "https://www.orlandofarmersmarket.com/faqs"
+        },
+        {
+          "id": "ofm-history",
+          "title": "Market history, Lake Eola",
+          "url": "https://www.orlandofarmersmarket.com/market-history"
+        },
+        {
+          "id": "apcm-home",
+          "title": "Audubon Park Community Market",
+          "url": "https://audubonmarket.com/"
+        },
+        {
+          "id": "apcm-location",
+          "title": "Location and parking, Audubon",
+          "url": "https://audubonmarket.com/location"
+        },
+        {
+          "id": "apcm-faq",
+          "title": "FAQs, Audubon Park market",
+          "url": "https://audubonmarket.com/faqs"
+        },
+        {
+          "id": "apcm-snap",
+          "title": "Shop with SNAP, Audubon",
+          "url": "https://audubonmarket.com/shop-with-snap"
+        },
+        {
+          "id": "hc-market",
+          "title": "Hunter's Creek Monthly Market",
+          "url": "https://www.charitiesofhunterscreek.org/monthly-market"
+        }
+      ]
     }
   }
 }

@@ -201,6 +201,30 @@
       "market": null,
       "issue": "Missing markets: Dane County Farmers' Market Wednesday Market (200 block MLK Jr Blvd, Wednesdays 8:30am-1:15pm, Apr 22 to Nov 4 2026), Holiday Market (Monona Terrace, Nov 21 to Dec 19 2026) and Winter Market (Garver Feed Mill, Jan 2 to Apr 3 2027). Sources: dcfm.org/markets/*.",
       "status": "open"
+    },
+    {
+      "city": "florida/orlando",
+      "market": "btn-lake-nona-farmers-market",
+      "issue": "Listed website lakenonaevents.com/lake-nona-farmers-market now serves an unrelated gaming site. Recent listings (Eventeny, nonahoodnews.com) describe a Lake Nona Farmers Market on first Wednesdays 5-8pm at Laureate Park Village Center run by Orlando Local Makers, not the Valencia College address; no official page confirms it, so the website should be removed and the listing rechecked.",
+      "status": "open"
+    },
+    {
+      "city": "florida/orlando",
+      "market": "orlando-farmers-market-at-lake-eola-e-central-boulevard-and-n-eola-drive-orlando",
+      "issue": "Duplicate of orlando-farmers-market-orlando (same website, both every Sunday 10am-3pm). The official site places it at Lake Eola Park, E Central Blvd and N Eola Dr, not 195 N Rosalind Ave. This row's city field is also malformed ('E. Central Boulevard And N. Eola Drive Orlando').",
+      "status": "open"
+    },
+    {
+      "city": "florida/orlando",
+      "market": "village-park-market-orlando",
+      "issue": "Likely the same market as hunters-creek-farmers-market-orlando: the Hunter's Creek Monthly Market is held at Hunter's Creek Village Park (13586 S John Young Pkwy is that center). No website for this row.",
+      "status": "open"
+    },
+    {
+      "city": "florida/orlando",
+      "market": null,
+      "issue": "Missing market: Audubon Park Community Market, Mondays 5-8pm, 1842 E Winter Park Rd, Orlando FL 32803, takes SNAP with Fresh Access Bucks. Sources: audubonmarket.com/location, audubonmarket.com/shop-with-snap.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -223,6 +247,10 @@
     {
       "city": "wisconsin/madison",
       "idea": "Madison's main market changes venue by season (Capitol Square, Monona Terrace, Garver Feed Mill). A 'Where is it this week' block driven by dated venue ranges would answer the top off-season question better than tips."
+    },
+    {
+      "city": "florida/orlando",
+      "idea": "Hunter's Creek is a monthly market (third Sunday). Market cards could show 'Monthly' with the next date when a market publishes a date list, so visitors don't expect it every week."
     }
   ],
   "cities": [
@@ -394,8 +422,15 @@
       "keyword": "farmers market orlando",
       "volume": 12100,
       "difficulty": 13,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-15",
+          "changes": "First guide: 6 sourced tips (Lake Eola Sunday market 10am-3pm and its history, fall and winter peak season, free street parking and garages, SunRail Church Street Station and LYNX, Audubon Park Monday night market, SNAP/EBT and Fresh Access Bucks), 4 FAQs (Audubon parking and ABC Liquors towing, pet rules, Hunter's Creek monthly dates, card and cash), title and description naming the Sunday and Monday markets.",
+          "baseline": "No settled GSC baseline yet; city URL moved to /florida/orlando on 2026-10-11."
+        }
+      ],
+      "next_check": "2026-12-13"
     },
     {
       "priority": 11,
