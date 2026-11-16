@@ -67,7 +67,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:sync": "node --env-file=.env.local scripts/db-sync.mjs",
-    "test:analytics": "node --test --experimental-strip-types src/lib/googleAnalyticsQueue.test.ts src/lib/searchAnalytics.test.ts",
+    "test:analytics": "node --test --experimental-strip-types src/lib/googleAnalyticsQueue.test.ts src/lib/searchAnalytics.test.ts src/lib/automatedBrowser.test.ts",
     "test:postal": "node --test --experimental-strip-types src/lib/postal.test.ts",
     "test:parallel": "node --test scripts/lib/parallel-campaign.test.mjs scripts/lib/parallel-evidence.test.mjs scripts/lib/parallel-rich-evidence.test.mjs scripts/lib/parallel-spec-validation.test.mjs",
     "test:db": "node --test scripts/lib/db-projections.test.mjs scripts/lib/db-sync-transaction.test.mjs",

@@ -1,17 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { flushGoogleAnalyticsEvents } from '@/lib/analytics';
+import { isAutomatedBrowser } from '@/lib/automatedBrowser';
 
 interface GoogleAnalyticsProps {
   measurementId?: string;
 }
 
+const subscribeNever = () => () => {};
+const isHumanBrowser = () => !isAutomatedBrowser();
+const serverSnapshot = () => false;
+
 export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
+  // False on the server and during hydration, so both render the same markup;
+  // the tag loads afterInteractive anyway. Self-declared headless browsers
+  // never get it.
+  const isAllowed = useSyncExternalStore(subscribeNever, isHumanBrowser, serverSnapshot);
   const initialized = useRef(false);
   const isValidId = Boolean(measurementId && /^G-[A-Z0-9]+$/i.test(measurementId));
 
@@ -34,7 +43,7 @@ export function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
     flushGoogleAnalyticsEvents();
   }, [isLoaded, isValidId, measurementId, pathname]);
 
-  if (!isValidId || !measurementId) return null;
+  if (!isValidId || !measurementId || !isAllowed) return null;
 
   return (
       <Script

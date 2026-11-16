@@ -6,6 +6,7 @@ import {
   POSTHOG_UI_HOST,
 } from '@/lib/posthogConfig';
 import { currentPageProperties } from '@/lib/pageContext';
+import { isAutomatedBrowser } from '@/lib/automatedBrowser';
 
 // The one place the browser PostHog client is initialized. Do not add a
 // PostHogProvider or a second `posthog.init` anywhere else.
@@ -16,7 +17,9 @@ const isLocalHost =
   typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname);
 const captureLocally = process.env.NEXT_PUBLIC_POSTHOG_DEV === '1';
 
-if (POSTHOG_TOKEN && (!isLocalHost || captureLocally)) {
+// Headless browsers that name themselves (see automatedBrowser.ts) are never
+// counted: one such fleet was most of the site's recorded traffic.
+if (POSTHOG_TOKEN && (!isLocalHost || captureLocally) && !isAutomatedBrowser()) {
   posthog.init(POSTHOG_TOKEN, {
     api_host: POSTHOG_PROXY_PATH,
     ui_host: POSTHOG_UI_HOST,

@@ -306,6 +306,7 @@ PostHog runs alongside Vercel Web Analytics and GA4 once `NEXT_PUBLIC_POSTHOG_PR
 - **Proxy**: the browser talks to `/ingest`, which `next.config.ts` rewrites to PostHog. That needs `skipTrailingSlashRedirect`, so `src/proxy.ts` now issues the trailing-slash redirect for page URLs itself.
 - **Server**: `src/instrumentation.ts` reports request errors to Error Tracking, and `/api/submissions` records a `Submission Received` event with the submission type only.
 - **Errors**: `src/app/global-error.tsx` reports render failures that reach the root boundary.
+- **Bots**: most raw traffic is crawler fleets that run JavaScript. Browsers that declare themselves headless (`Lightpanda`, `HeadlessChrome`, `PhantomJS`, matched in `src/lib/automatedBrowser.ts`) never start PostHog or load the GA4 tag. For data recorded before that, the PostHog project's internal/test filter (on by default) also excludes `$raw_user_agent` containing `Lightpanda`. A second fleet sends a normal Chrome user agent and cannot be matched this way: in analysis, count a session as human only if it has a non-direct referrer, a click or outcome event, or lasts at least 10 seconds.
 
 ## Project Structure
 
