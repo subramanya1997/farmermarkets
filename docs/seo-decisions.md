@@ -66,8 +66,10 @@ generate it from the same data the sitemap is built from — never by hand.
 
 ## 3. robots.txt allows every crawler
 
-**Decision.** One `User-agent: *` block, `Allow: /`, a single
-`Disallow: /api/*`, and the sitemap line. No per-agent blocks — GPTBot,
+**Decision.** One `User-agent: *` block, `Allow: /`, `Disallow: /api/*`
+plus the private organizer account pages (`/dashboard`, `/admin`,
+`/sign-in`, `/sign-up`, `/forgot-password`, `/reset-password`; added
+November 2026, all noindex and useless to a crawler), and the sitemap line. No per-agent blocks — GPTBot,
 ClaudeBot, CCBot, PerplexityBot and Google-Extended are all allowed the whole
 directory. The full rationale is repeated in `src/app/robots.ts` so a future
 reader hits it before editing rather than after.

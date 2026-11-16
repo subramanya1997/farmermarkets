@@ -976,15 +976,25 @@ if (!reachable) {
         assert.deepEqual(sitemaps, [`${CANONICAL_ORIGIN}/sitemap.xml`]);
       });
 
-      check(group, 'disallows /api/* and nothing else', () => {
+      check(group, 'disallows /api/* and the private organizer pages, nothing else', () => {
         const disallowed = [...body.matchAll(/^\s*Disallow:\s*(\S*)\s*$/gim)]
           .map((m) => m[1])
           .filter(Boolean);
         // `/private/*` used to be here and referred to a path that has never
         // existed. Anything new in this list is a crawler being shut out of a
         // public directory, which is a decision, not a tidy-up — see the
-        // rationale in `src/app/robots.ts` and `docs/seo-decisions.md`.
-        assert.deepEqual(disallowed, ['/api/*']);
+        // rationale in `src/app/robots.ts` and `docs/seo-decisions.md`. The
+        // organizer account pages are private (sign-in, dashboard, admin) and
+        // noindex, so they are the one deliberate addition.
+        assert.deepEqual(disallowed, [
+          '/api/*',
+          '/dashboard',
+          '/admin',
+          '/sign-in',
+          '/sign-up',
+          '/forgot-password',
+          '/reset-password',
+        ]);
       });
 
       check(group, 'singles out no crawler', () => {
