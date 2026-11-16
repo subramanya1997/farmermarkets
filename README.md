@@ -324,6 +324,8 @@ Nothing an organizer sends goes live on its own:
 3. `marketService.getMarketBySlug` / `getMarketById` apply the published layer (`src/lib/marketOverrides.ts`) over the dataset record: `src/lib/organizerOverlay.ts` writes the edits as sourced `first_party` facts (source id `organizer`) plus the flat fields, then the record is mapped again, so hours, filters, highlights and JSON-LD all agree. `rawFromMarket` makes that possible without keeping raw records in memory; `data.test.ts` checks the round trip on every record.
 4. Photos upload straight to Vercel Blob (`/api/organizer/photos` only issues a token to a manager of that market) and wait as `pending` in `market_photos` until approved. Rejected or removed photos are deleted from Blob.
 
+Admins can edit any market from `/admin/markets/[slug]` with the same editor plus admin-only sections (name, street address, ZIP, location note, map pin, hide map). Admin edits publish immediately and leave an approved history row; "Reset to original data" removes a section from `market_overrides`. City and state are not editable because they decide which city page a market belongs on. A listing shows "kept up to date by the market organizer" only when the market has a verified organizer; otherwise the footer credits Farmer Markets.
+
 Bulk views (`/markets`, topic pages, near-me, sitemap, `llms.txt`) read the dataset directly and pick up organizer edits at the next deploy, when the build reads every published layer in one query. Every page, server action and route checks the session itself (`requireOrganizer`, `requireAdmin` in `src/lib/organizer.ts`); `src/proxy.ts` only redirects visitors with no session cookie.
 
 ## Project Structure
@@ -497,7 +499,7 @@ Each run writes `scripts/legacy-refresh-report.json` with per-record `updated` /
 | `/markets/state/[state]` | State-specific market listing page. |
 | `/sign-up`, `/sign-in`, `/forgot-password`, `/reset-password` | Market organizer accounts (Better Auth, email and password). Noindex. |
 | `/dashboard` | Organizer home: managed markets, claims, and `/dashboard/claim`, `/dashboard/markets/[slug]` (listing editor and photos). Noindex. |
-| `/admin` | Review queue for claims, listing updates and photos. Only `ADMIN_EMAILS`; everyone else gets a 404. |
+| `/admin` | Admin dashboard: overview, review queue (`/admin/review`), every market (`/admin/markets`, edit any market and publish immediately), organizer accounts (`/admin/organizers`). Only `ADMIN_EMAILS`; everyone else gets a 404. |
 | `/about` | About page. |
 | `/about-the-data` | Sources, processing, refresh cadence, coverage numbers, limitations, and licence terms, with `Dataset` JSON-LD. Every number is computed from the current data at build/ISR time. |
 | `/privacy` | Privacy policy. |

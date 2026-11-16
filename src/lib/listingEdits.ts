@@ -142,7 +142,8 @@ export const seasonSchema = z.discriminatedUnion('kind', [
   }),
 ]);
 
-export const listingEditsSchema = z
+/** What a verified organizer may send. */
+export const organizerEditsSchema = z
   .object({
     status: z
       .object({
@@ -203,15 +204,51 @@ export const listingEditsSchema = z
   })
   .strict();
 
+/**
+ * Admin-only sections on top of the organizer ones: the market's name and
+ * where it is. City and state are not editable here because they decide
+ * which city page a market belongs on (the geo index is built at deploy).
+ */
+export const listingEditsSchema = organizerEditsSchema
+  .extend({
+    identity: z.object({ name: z.string().trim().min(2, 'Enter the market name').max(150) }).optional(),
+    location: z
+      .object({
+        address: line(200),
+        zip_code: line(20),
+        location_description: line(400),
+        coordinates: z
+          .object({ lat: z.number().min(-90).max(90), lon: z.number().min(-180).max(180) })
+          .optional(),
+        suppress_map: z.boolean().optional(),
+      })
+      .optional(),
+  })
+  .strict();
+
 export type ListingEdits = z.infer<typeof listingEditsSchema>;
 export type ListingSection = keyof ListingEdits;
 
-export const LISTING_SECTIONS = [
+export const ADMIN_ONLY_SECTIONS = ['identity', 'location'] as const satisfies readonly ListingSection[];
+
+export const ORGANIZER_SECTIONS = [
   'status', 'season', 'schedules', 'about', 'contact', 'payments',
   'products', 'amenities', 'vendors', 'events', 'programs',
 ] as const satisfies readonly ListingSection[];
 
+/** Every section in display order: admin-only ones first. */
+export const LISTING_SECTIONS = [...ADMIN_ONLY_SECTIONS, ...ORGANIZER_SECTIONS] as const;
+
+/** Drops admin-only sections, for anything an organizer sees or sends. */
+export function withoutAdminSections(edits: ListingEdits): ListingEdits {
+  const rest = { ...edits };
+  for (const section of ADMIN_ONLY_SECTIONS) delete rest[section];
+  return rest;
+}
+
 export const SECTION_LABELS: Record<ListingSection, string> = {
+  identity: 'Market name',
+  location: 'Address and map pin',
   status: 'Market status',
   season: 'Season',
   schedules: 'Days and hours',
@@ -225,11 +262,14 @@ export const SECTION_LABELS: Record<ListingSection, string> = {
   programs: 'Programs',
 };
 
-/** Parse untrusted input. Returns the cleaned edits or a list of messages. */
-export function parseListingEdits(input: unknown):
+/**
+ * Parse untrusted input. Returns the cleaned edits or a list of messages.
+ * Organizers may not send the admin-only sections; `{ admin: true }` allows them.
+ */
+export function parseListingEdits(input: unknown, options: { admin?: boolean } = {}):
   | { ok: true; edits: ListingEdits }
   | { ok: false; errors: { path: string; message: string }[] } {
-  const parsed = listingEditsSchema.safeParse(input);
+  const parsed = (options.admin ? listingEditsSchema : organizerEditsSchema).safeParse(input);
   if (parsed.success) return { ok: true, edits: parsed.data };
   return {
     ok: false,

@@ -28,9 +28,9 @@ export default async function ChangeReviewPage({ params }: { params: Promise<{ i
   return (
     <div className="mx-auto max-w-5xl space-y-5">
       <div className="space-y-1">
-        <Link href="/admin" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+        <Link href="/admin/review" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
           <ArrowLeft className="size-3.5" aria-hidden="true" />
-          Queue
+          Review queue
         </Link>
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="text-xl font-semibold tracking-tight">Listing update for {market?.name ?? 'an unknown market'}</h1>

@@ -11,20 +11,24 @@ import { cache } from 'react';
 import { headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { and, asc, desc, eq, inArray } from 'drizzle-orm';
+import { and, asc, count, desc, eq, inArray, sql } from 'drizzle-orm';
 import { del } from '@vercel/blob';
 import { dbSchema, getDb } from '@/db';
 import { getAuth } from './auth';
 import { marketService, type FarmerMarket } from '@/app/api/markets/data';
 import { getCityForMarketSlug } from './geoIndex';
 import {
+  ADMIN_ONLY_SECTIONS,
+  LISTING_SECTIONS,
   SECTION_LABELS,
   changedSections,
   mergeListingEdits,
   parseListingEdits,
   sectionsThatDiffer,
   listingEditsSchema,
+  withoutAdminSections,
   type ListingEdits,
+  type ListingSection,
 } from './listingEdits';
 import { listingEditsFromMarket } from './organizerOverlay';
 import { adminEmails, adminReviewAlertEmail, decisionEmail, sendOrganizerEmail } from './organizerEmails';
@@ -115,9 +119,10 @@ export async function getMarketsByIds(ids: string[]): Promise<FarmerMarket[]> {
   return all.filter((market) => wanted.has(market.id));
 }
 
-/** What the editor starts from: the listing as published now. */
-export async function editorValuesFor(market: FarmerMarket): Promise<ListingEdits> {
-  return listingEditsFromMarket(market);
+/** What the editor starts from: the listing as published now. Organizers never get the admin-only sections. */
+export async function editorValuesFor(market: FarmerMarket, options: { admin?: boolean } = {}): Promise<ListingEdits> {
+  const values = listingEditsFromMarket(market);
+  return options.admin ? values : withoutAdminSections(values);
 }
 
 /* ------------------------------------------------------------------ *
@@ -202,7 +207,12 @@ export async function submitChangeRequest(user: SessionUser, market: FarmerMarke
   ActionResult | { ok: false; error: string; fieldErrors: { path: string; message: string }[] }
 > {
   if (!(await canManageMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
-  const parsed = parseListingEdits(input);
+  // Name and address are admin-only; an organizer editor never sends them, so drop them if they appear.
+  const cleaned =
+    input && typeof input === 'object' && !Array.isArray(input)
+      ? Object.fromEntries(Object.entries(input).filter(([key]) => !(ADMIN_ONLY_SECTIONS as readonly string[]).includes(key)))
+      : input;
+  const parsed = parseListingEdits(cleaned);
   if (!parsed.ok) return { ok: false, error: 'Some fields need a fix before you submit.', fieldErrors: parsed.errors };
 
   const published = listingEditsFromMarket(market);
@@ -323,8 +333,14 @@ export async function registerPhoto(
       alt: input.alt?.trim().slice(0, 200) || null,
       sort: existing.length,
       uploadedBy: user.id,
+      // Admin uploads skip review.
+      ...(isAdmin(user) ? { status: 'approved' as const, reviewedAt: new Date() } : {}),
     })
     .onConflictDoNothing();
+  if (isAdmin(user)) {
+    await revalidateMarket(market.slug);
+    return { ok: true, message: 'Photo published.' };
+  }
 
   // One alert per batch: skip it when this market already had a photo waiting.
   const alreadyWaiting = existing.some((photo) => photo.status === 'pending');
@@ -589,6 +605,274 @@ export async function markLegacySubmissionReviewed(id: string, note?: string): P
     .where(and(eq(dbSchema.submissions.id, id), eq(dbSchema.submissions.status, 'pending')))
     .returning({ id: dbSchema.submissions.id });
   return updated.length ? { ok: true, message: 'Marked as handled.' } : { ok: false, error: 'Already handled.' };
+}
+
+/* ------------------------------------------------------------------ *
+ * Admin editing: publish directly, reset sections, managers, overview
+ * ------------------------------------------------------------------ */
+
+async function currentOverride(marketId: string): Promise<ListingEdits | undefined> {
+  const [row] = await getDb().select().from(marketOverrides).where(eq(marketOverrides.marketId, marketId)).limit(1);
+  if (!row) return undefined;
+  const parsed = listingEditsSchema.safeParse(row.data);
+  return parsed.success ? parsed.data : undefined;
+}
+
+/**
+ * Admin edits publish right away. A history row (already approved) keeps
+ * the record of who changed what, next to organizer updates.
+ */
+export async function adminPublish(admin: SessionUser, market: FarmerMarket, input: unknown): Promise<
+  ActionResult | { ok: false; error: string; fieldErrors: { path: string; message: string }[] }
+> {
+  if (!isAdmin(admin)) return { ok: false, error: 'Not allowed.' };
+  const parsed = parseListingEdits(input, { admin: true });
+  if (!parsed.ok) return { ok: false, error: 'Some fields need a fix before you publish.', fieldErrors: parsed.errors };
+  const sections = sectionsThatDiffer(listingEditsFromMarket(market), parsed.edits);
+  if (sections.length === 0) return { ok: false, error: 'Nothing has changed yet.' };
+  const changes = Object.fromEntries(sections.map((section) => [section, parsed.edits[section]])) as ListingEdits;
+
+  const db = getDb();
+  const now = new Date();
+  const merged = mergeListingEdits(await currentOverride(market.id), changes);
+  await db.batch([
+    db
+      .insert(marketOverrides)
+      .values({ marketId: market.id, data: merged, updatedAt: now, updatedBy: admin.id })
+      .onConflictDoUpdate({ target: marketOverrides.marketId, set: { data: merged, updatedAt: now, updatedBy: admin.id } }),
+    db.insert(marketChangeRequests).values({
+      marketId: market.id,
+      userId: admin.id,
+      changes,
+      status: 'approved',
+      reviewNote: 'Published by an admin',
+      reviewedAt: now,
+      reviewedBy: admin.id,
+      updatedAt: now,
+    }),
+  ]);
+  await revalidateMarket(market.slug);
+  capture(admin.id, 'Listing Edited By Admin', { market_id: market.id, sections });
+  return { ok: true, message: `Published: ${sections.map((section) => SECTION_LABELS[section]).join(', ')}.` };
+}
+
+/** Puts sections back to what the dataset says, dropping the published edits for them. */
+export async function resetSections(admin: SessionUser, market: FarmerMarket, sections: ListingSection[]): Promise<ActionResult> {
+  if (!isAdmin(admin)) return { ok: false, error: 'Not allowed.' };
+  const wanted = sections.filter((section) => (LISTING_SECTIONS as readonly string[]).includes(section));
+  const current = await currentOverride(market.id);
+  if (!current || wanted.every((section) => current[section] === undefined)) {
+    return { ok: false, error: 'Those sections already match the original data.' };
+  }
+  const next: ListingEdits = { ...current };
+  for (const section of wanted) delete next[section];
+  const db = getDb();
+  if (Object.keys(next).length === 0) {
+    await db.delete(marketOverrides).where(eq(marketOverrides.marketId, market.id));
+  } else {
+    await db
+      .update(marketOverrides)
+      .set({ data: next, updatedAt: new Date(), updatedBy: admin.id })
+      .where(eq(marketOverrides.marketId, market.id));
+  }
+  await revalidateMarket(market.slug);
+  return { ok: true, message: `Reset to the original data: ${wanted.map((section) => SECTION_LABELS[section]).join(', ')}.` };
+}
+
+/** Which sections currently carry published edits (organizer or admin) for a market. */
+export async function editedSectionsFor(marketId: string): Promise<ListingSection[]> {
+  const current = await currentOverride(marketId);
+  return current ? changedSections(current) : [];
+}
+
+/** Admin: give an existing, verified account manager access without a claim. */
+export async function addManagerByEmail(admin: SessionUser, market: FarmerMarket, email: string): Promise<ActionResult> {
+  if (!isAdmin(admin)) return { ok: false, error: 'Not allowed.' };
+  const address = email.trim().toLowerCase();
+  const [account] = await getDb()
+    .select({ id: userTable.id, emailVerified: userTable.emailVerified })
+    .from(userTable)
+    .where(eq(userTable.email, address))
+    .limit(1);
+  if (!account) return { ok: false, error: 'No account uses that email yet. Ask them to sign up first.' };
+  if (!account.emailVerified) return { ok: false, error: 'That account has not confirmed its email yet.' };
+  const inserted = await getDb()
+    .insert(marketManagers)
+    .values({ userId: account.id, marketId: market.id, approvedBy: admin.id })
+    .onConflictDoNothing()
+    .returning({ userId: marketManagers.userId });
+  if (inserted.length === 0) return { ok: false, error: 'They already manage this market.' };
+  await revalidateMarket(market.slug);
+  return { ok: true, message: 'Access granted.' };
+}
+
+/** Numbers and recent activity for the admin overview. */
+export async function adminOverview() {
+  const db = getDb();
+  const [
+    [claimsPending],
+    [changesPending],
+    [photosPending],
+    [accounts],
+    [verifiedAccounts],
+    [managedMarkets],
+    [editedMarkets],
+    [photosLive],
+    recentClaims,
+    recentChanges,
+    recentPhotos,
+    recentAccounts,
+  ] = await Promise.all([
+    db.select({ n: count() }).from(marketClaims).where(eq(marketClaims.status, 'pending')),
+    db.select({ n: count() }).from(marketChangeRequests).where(eq(marketChangeRequests.status, 'pending')),
+    db.select({ n: count() }).from(marketPhotos).where(eq(marketPhotos.status, 'pending')),
+    db.select({ n: count() }).from(userTable),
+    db.select({ n: count() }).from(userTable).where(eq(userTable.emailVerified, true)),
+    db.select({ n: sql<number>`count(distinct ${marketManagers.marketId})` }).from(marketManagers),
+    db.select({ n: count() }).from(marketOverrides),
+    db.select({ n: count() }).from(marketPhotos).where(eq(marketPhotos.status, 'approved')),
+    db
+      .select({ claim: marketClaims, user: { name: userTable.name, email: userTable.email } })
+      .from(marketClaims)
+      .innerJoin(userTable, eq(userTable.id, marketClaims.userId))
+      .orderBy(desc(marketClaims.createdAt))
+      .limit(10),
+    db
+      .select({ change: marketChangeRequests, user: { name: userTable.name, email: userTable.email } })
+      .from(marketChangeRequests)
+      .innerJoin(userTable, eq(userTable.id, marketChangeRequests.userId))
+      .orderBy(desc(marketChangeRequests.updatedAt))
+      .limit(10),
+    db.select().from(marketPhotos).orderBy(desc(marketPhotos.createdAt)).limit(10),
+    db
+      .select({ id: userTable.id, name: userTable.name, email: userTable.email, emailVerified: userTable.emailVerified, createdAt: userTable.createdAt })
+      .from(userTable)
+      .orderBy(desc(userTable.createdAt))
+      .limit(5),
+  ]);
+  const marketIds = [
+    ...new Set([
+      ...recentClaims.map((row) => row.claim.marketId),
+      ...recentChanges.map((row) => row.change.marketId),
+      ...recentPhotos.map((row) => row.marketId),
+    ]),
+  ];
+  const markets = new Map((await getMarketsByIds(marketIds)).map((market) => [market.id, market]));
+
+  type Activity = {
+    kind: 'claim' | 'change' | 'photo';
+    at: Date;
+    status: string;
+    marketId: string;
+    who?: { name: string; email: string };
+    detail: string;
+    href: string;
+  };
+  const activity: Activity[] = [
+    ...recentClaims.map((row) => ({
+      kind: 'claim' as const,
+      at: row.claim.reviewedAt ?? row.claim.createdAt,
+      status: row.claim.status,
+      marketId: row.claim.marketId,
+      who: row.user,
+      detail: `Claim as ${row.claim.role}`,
+      href: `/admin/claims/${row.claim.id}`,
+    })),
+    ...recentChanges.map((row) => {
+      const parsed = listingEditsSchema.safeParse(row.change.changes);
+      const labels = parsed.success ? changedSections(parsed.data).map((section) => SECTION_LABELS[section]) : [];
+      return {
+        kind: 'change' as const,
+        at: row.change.reviewedAt ?? row.change.createdAt,
+        status: row.change.status,
+        marketId: row.change.marketId,
+        who: row.user,
+        detail: labels.join(', ') || 'Listing update',
+        href: `/admin/changes/${row.change.id}`,
+      };
+    }),
+    ...recentPhotos.map((photo) => ({
+      kind: 'photo' as const,
+      at: photo.reviewedAt ?? photo.createdAt,
+      status: photo.status,
+      marketId: photo.marketId,
+      detail: 'Photo',
+      href: `/admin/markets/${markets.get(photo.marketId)?.slug ?? ''}`,
+    })),
+  ]
+    .sort((a, b) => b.at.getTime() - a.at.getTime())
+    .slice(0, 15);
+
+  return {
+    counts: {
+      claimsPending: claimsPending.n,
+      changesPending: changesPending.n,
+      photosPending: photosPending.n,
+      accounts: accounts.n,
+      verifiedAccounts: verifiedAccounts.n,
+      managedMarkets: Number(managedMarkets.n),
+      editedMarkets: editedMarkets.n,
+      photosLive: photosLive.n,
+    },
+    activity,
+    recentAccounts,
+    markets,
+  };
+}
+
+/** Markets that carry published edits or have managers, newest edit first. */
+export async function adminEditedMarkets() {
+  const db = getDb();
+  const [overrides, managers] = await Promise.all([
+    db.select({ marketId: marketOverrides.marketId, updatedAt: marketOverrides.updatedAt, data: marketOverrides.data }).from(marketOverrides),
+    db
+      .select({ marketId: marketManagers.marketId, managers: count() })
+      .from(marketManagers)
+      .groupBy(marketManagers.marketId),
+  ]);
+  const managerCount = new Map(managers.map((row) => [row.marketId, row.managers]));
+  const ids = [...new Set([...overrides.map((row) => row.marketId), ...managers.map((row) => row.marketId)])];
+  const markets = await getMarketsByIds(ids);
+  const overrideFor = new Map(overrides.map((row) => [row.marketId, row]));
+  return markets
+    .map((market) => {
+      const override = overrideFor.get(market.id);
+      const parsed = override ? listingEditsSchema.safeParse(override.data) : null;
+      return {
+        market,
+        updatedAt: override?.updatedAt ?? null,
+        sections: parsed?.success ? changedSections(parsed.data) : [],
+        managers: managerCount.get(market.id) ?? 0,
+      };
+    })
+    .sort((a, b) => (b.updatedAt?.getTime() ?? 0) - (a.updatedAt?.getTime() ?? 0));
+}
+
+/** Every organizer account with what they manage and have claimed. */
+export async function adminOrganizers() {
+  const db = getDb();
+  const [users, managers, claims] = await Promise.all([
+    db
+      .select({ id: userTable.id, name: userTable.name, email: userTable.email, emailVerified: userTable.emailVerified, createdAt: userTable.createdAt })
+      .from(userTable)
+      .orderBy(desc(userTable.createdAt))
+      .limit(500),
+    db.select({ userId: marketManagers.userId, marketId: marketManagers.marketId }).from(marketManagers),
+    db
+      .select({ userId: marketClaims.userId, marketId: marketClaims.marketId, status: marketClaims.status, id: marketClaims.id })
+      .from(marketClaims),
+  ]);
+  const markets = new Map(
+    (await getMarketsByIds([...new Set([...managers.map((m) => m.marketId), ...claims.map((c) => c.marketId)])])).map((market) => [market.id, market]),
+  );
+  return users.map((account) => ({
+    ...account,
+    admin: isAdmin({ ...account, emailVerified: account.emailVerified }),
+    manages: managers.filter((row) => row.userId === account.id).map((row) => markets.get(row.marketId)).filter(Boolean) as FarmerMarket[],
+    claims: claims
+      .filter((row) => row.userId === account.id)
+      .map((row) => ({ ...row, market: markets.get(row.marketId) ?? null })),
+  }));
 }
 
 /* ------------------------------------------------------------------ *

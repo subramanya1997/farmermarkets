@@ -46,6 +46,17 @@ export const ORGANIZER_SOURCE_ID = 'organizer';
 
 /** The slice of a raw dataset record the overlay writes. Structural on purpose. */
 export interface OverlayableMarket {
+  name?: string;
+  location?: {
+    address?: string;
+    city?: string;
+    state?: string;
+    zip_code?: string;
+    coordinates?: { latitude: number; longitude: number };
+    description?: string;
+    [key: string]: unknown;
+  };
+  suppress_map?: boolean;
   schema_version?: 2;
   visitor_note?: string;
   organization?: { types?: string[]; description?: string };
@@ -82,6 +93,8 @@ export interface OverlayMeta {
   approvedAt: string;
   /** Public listing URL, used when the organizer gives no website of their own. */
   listingUrl: string;
+  /** Who stands behind the published edits: a verified organizer, or Farmer Markets editors. */
+  editor?: 'organizer' | 'farmer_markets';
 }
 
 const PAYMENT_LABELS: Record<(typeof PAYMENT_CODES)[number], string> = {
@@ -148,6 +161,22 @@ export function applyListingEdits<T extends OverlayableMarket>(raw: T, edits: Li
     sales_channels: { ...raw.sales_channels },
     amenities: { ...raw.amenities },
   };
+
+  if (edits.identity) {
+    next.name = edits.identity.name;
+  }
+
+  if (edits.location) {
+    const { address, zip_code, location_description, coordinates, suppress_map } = edits.location;
+    next.location = {
+      ...raw.location,
+      address,
+      zip_code,
+      description: location_description,
+      coordinates: coordinates ? { latitude: coordinates.lat, longitude: coordinates.lon } : raw.location?.coordinates,
+    };
+    if (suppress_map !== undefined) next.suppress_map = suppress_map;
+  }
 
   if (edits.status) {
     firstParty.operations = { ...firstParty.operations, status: sv({ ...edits.status }) };
@@ -321,7 +350,7 @@ export function applyListingEdits<T extends OverlayableMarket>(raw: T, edits: Li
   const source: MarketEnrichmentSource = {
     id: ORGANIZER_SOURCE_ID,
     url: website ?? meta.listingUrl,
-    title: 'The market organizer, verified by Farmer Markets',
+    title: meta.editor === 'farmer_markets' ? 'Farmer Markets editors' : 'The market organizer, verified by Farmer Markets',
     fields: sections,
     kind: 'first_party',
     scope: 'market',
@@ -343,6 +372,12 @@ export function applyListingEdits<T extends OverlayableMarket>(raw: T, edits: Li
 
 /** The fields of a mapped `FarmerMarket` the prefill reads. */
 export interface PrefillableMarket {
+  name?: string;
+  address?: string;
+  zip_code?: string;
+  location_description?: string;
+  location?: { lat: number; lon: number };
+  suppress_map?: boolean;
   organization_description?: string;
   visitor_note?: string;
   websites?: string[];
@@ -434,6 +469,14 @@ export function listingEditsFromMarket(market: PrefillableMarket, today = new Da
   const fp = market.first_party;
   const ops = fp?.operations;
   const draft: Record<ListingSection, unknown> = {
+    identity: market.name ? { name: market.name } : undefined,
+    location: {
+      address: market.address ?? '',
+      zip_code: market.zip_code ?? '',
+      location_description: market.location_description ?? '',
+      ...(market.location ? { coordinates: { lat: market.location.lat, lon: market.location.lon } } : {}),
+      suppress_map: Boolean(market.suppress_map),
+    },
     status: ops?.status?.value,
     season:
       ops?.season && (ops.season.value.kind === 'year_round' || ops.season.value.kind === 'annual_range')

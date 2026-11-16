@@ -105,6 +105,9 @@ export function friendlyMessage(path: string, message: string): string {
   if (/^Too small: expected string/.test(message)) return field === 'name' ? 'Add a name' : 'Fill this in';
   if (/^Too big: expected string/.test(message)) return 'That is too long';
   if (/^Too big: expected array/.test(message)) return 'That is more than a listing can show';
+  if (path.startsWith('location.coordinates.') && /^Too (small|big): expected number/.test(message)) {
+    return field === 'lat' ? 'Latitude runs from -90 to 90' : 'Longitude runs from -180 to 180';
+  }
   if (/^Too (small|big): expected number/.test(message)) return 'Enter a number from 0 to 2000';
   if (/expected number/.test(message)) return 'Enter a number';
   if (/^Invalid email/.test(message)) return 'Enter an email like hello@yourmarket.org';

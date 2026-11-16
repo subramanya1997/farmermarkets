@@ -28,6 +28,8 @@ interface PhotoManagerProps {
   maxPhotos: number;
   maxBytes: number;
   contentTypes: string[];
+  /** Overrides the intro line, for example when uploads skip review. */
+  description?: string;
 }
 
 type UploadItem = {
@@ -82,7 +84,18 @@ function megabytes(bytes: number): string {
   return `${Math.round(bytes / (1024 * 1024))} MB`;
 }
 
-export function PhotoManager({ slug, photos, pathPrefix, maxPhotos, maxBytes, contentTypes }: PhotoManagerProps) {
+const DEFAULT_DESCRIPTION =
+  'Real photos of your market help visitors picture the day. Each new photo is checked before it goes live.';
+
+export function PhotoManager({
+  slug,
+  photos,
+  pathPrefix,
+  maxPhotos,
+  maxBytes,
+  contentTypes,
+  description = DEFAULT_DESCRIPTION,
+}: PhotoManagerProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploads, setUploads] = useState<UploadItem[]>([]);
@@ -191,10 +204,7 @@ export function PhotoManager({ slug, photos, pathPrefix, maxPhotos, maxBytes, co
   const visibleUploads = uploads.filter((item) => item.state !== 'done');
 
   return (
-    <SectionCard
-      title="Photos"
-      description="Real photos of your market help visitors picture the day. Each new photo is checked before it goes live."
-    >
+    <SectionCard title="Photos" description={description}>
       <div className="flex flex-col gap-3 rounded-lg border border-dashed border-zinc-300 p-4 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-700">
         <div className="text-sm">
           <p className="font-medium text-zinc-900 dark:text-zinc-100">

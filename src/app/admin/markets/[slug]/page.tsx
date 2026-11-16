@@ -1,11 +1,27 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, ImageOff } from 'lucide-react';
-import { getPublishedMarket, managersFor, photosFor, recentChangesFor, requireAdmin } from '@/lib/organizer';
-import { LISTING_SECTIONS, SECTION_LABELS } from '@/lib/listingEdits';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import {
+  MAX_PHOTOS_PER_MARKET,
+  MAX_PHOTO_BYTES,
+  PHOTO_CONTENT_TYPES,
+  adminOrganizers,
+  editedSectionsFor,
+  editorValuesFor,
+  getPublishedMarket,
+  managersFor,
+  photoPathPrefix,
+  photosFor,
+  recentChangesFor,
+  requireAdmin,
+} from '@/lib/organizer';
+import { SECTION_LABELS, changedSections, listingEditsSchema } from '@/lib/listingEdits';
+import { ListingEditor } from '@/components/organizer/editor/ListingEditor';
+import { PhotoManager, type EditorPhoto } from '@/components/organizer/editor/PhotoManager';
+import { AddManagerForm } from '@/components/admin/AddManagerForm';
 import { PhotoReviewCard } from '@/components/admin/PhotoReviewCard';
+import { ResetSectionButton } from '@/components/admin/ResetSectionButton';
 import { RevokeManagerButton } from '@/components/admin/RevokeManagerButton';
 import { Muted, Panel, StatusPill, TimeAgo } from '@/components/admin/bits';
 import { formatTimestamp, placeLabel, timeAgo } from '@/components/admin/format';
@@ -13,154 +29,203 @@ import { formatTimestamp, placeLabel, timeAgo } from '@/components/admin/format'
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Market admin',
+  title: 'Edit market',
   robots: { index: false, follow: false },
 };
 
 function sectionsOf(changes: unknown): string {
-  if (!changes || typeof changes !== 'object') return 'No sections';
-  const labels = LISTING_SECTIONS.filter((section) => section in changes).map((section) => SECTION_LABELS[section]);
-  return labels.length ? labels.join(', ') : 'No sections';
+  const parsed = listingEditsSchema.safeParse(changes);
+  const labels = parsed.success ? changedSections(parsed.data).map((section) => SECTION_LABELS[section]) : [];
+  return labels.length ? labels.join(', ') : 'Listing update';
 }
 
-export default async function MarketAdminPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function AdminMarketPage({ params }: { params: Promise<{ slug: string }> }) {
   await requireAdmin();
   const { slug } = await params;
   const market = await getPublishedMarket(slug);
   if (!market) notFound();
 
-  const [managers, photos, changes] = await Promise.all([
+  const [values, edited, changes, photoRows, managers, accounts] = await Promise.all([
+    editorValuesFor(market, { admin: true }),
+    editedSectionsFor(market.id),
+    recentChangesFor(market.id, 20),
+    photosFor(market.id, ['pending', 'approved']),
     managersFor(market.id),
-    photosFor(market.id, ['pending', 'approved', 'rejected', 'removed']),
-    recentChangesFor(market.id, 10),
+    // Only for names in the history list; recentChangesFor returns user ids.
+    adminOrganizers(),
   ]);
-  const pending = photos.filter((photo) => photo.status === 'pending');
-  const decided = photos.filter((photo) => photo.status !== 'pending');
+  const people = new Map(accounts.map((account) => [account.id, account]));
+
+  const photos: EditorPhoto[] = photoRows
+    .filter((row): row is typeof row & { status: 'pending' | 'approved' } => row.status === 'pending' || row.status === 'approved')
+    .map((row) => ({
+      id: row.id,
+      url: row.blobUrl,
+      width: row.width,
+      height: row.height,
+      alt: row.alt,
+      caption: row.caption,
+      status: row.status,
+    }));
+  const waiting = photoRows.filter((row) => row.status === 'pending');
   const place = placeLabel(market);
 
   return (
-    <div className="mx-auto max-w-5xl space-y-5">
-      <div className="space-y-1">
-        <Link href="/admin" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+    <div className="mx-auto max-w-7xl space-y-6">
+      <header className="space-y-1">
+        <Link href="/admin/markets" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
           <ArrowLeft className="size-3.5" aria-hidden="true" />
-          Queue
+          Markets
         </Link>
-        <h1 className="text-xl font-semibold tracking-tight">{market.name}</h1>
-        {place ? <p className="text-sm text-zinc-600 dark:text-zinc-400">{place}</p> : null}
-        <p className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
-          <Link href={`/markets/${market.slug}`} className="text-green-700 hover:underline dark:text-green-400">
-            Public page
-          </Link>
-          <Link href={`/dashboard/markets/${market.slug}`} className="text-green-700 hover:underline dark:text-green-400">
-            Open the organizer editor
-          </Link>
-        </p>
-      </div>
+        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+          <div className="min-w-0">
+            <h1 className="text-xl font-semibold tracking-tight">{market.name}</h1>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">{place || 'No city on file'}</p>
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            <a
+              href={`/markets/${market.slug}`}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1 font-medium text-green-700 hover:underline dark:text-green-400"
+            >
+              Public page
+              <ArrowUpRight aria-hidden="true" className="size-3.5" />
+            </a>
+            <Link
+              href={`/dashboard/markets/${market.slug}`}
+              className="inline-flex items-center gap-1 font-medium text-green-700 hover:underline dark:text-green-400"
+            >
+              Organizer view
+              <ArrowRight aria-hidden="true" className="size-3.5" />
+            </Link>
+          </div>
+        </div>
+      </header>
 
-      <Panel title={`Managers (${managers.length})`}>
-        {managers.length === 0 ? (
-          <p className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">Nobody manages this market yet.</p>
-        ) : (
-          <ul className="divide-y text-sm">
-            {managers.map((manager) => (
-              <li key={manager.userId} className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5">
-                <div className="min-w-0">
-                  <div className="font-medium">{manager.name || 'No name'}</div>
-                  <div className="text-xs text-zinc-500 dark:text-zinc-400">
-                    {manager.email} · since <TimeAgo date={manager.createdAt} />
-                  </div>
-                </div>
-                <RevokeManagerButton marketId={market.id} userId={manager.userId} name={manager.name || manager.email} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
+      <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
+        <section aria-label="Listing" className="min-w-0">
+          <ListingEditor
+            mode="admin"
+            slug={market.slug}
+            initialValues={values}
+            place={{ city: market.city, state: market.state }}
+            photosWaiting={waiting.length}
+            photos={
+              <div className="flex flex-col gap-4">
+                {waiting.length > 0 ? (
+                  <Panel title={`Waiting for review (${waiting.length})`}>
+                    <ul className="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3">
+                      {waiting.map((photo) => (
+                        <PhotoReviewCard
+                          key={photo.id}
+                          photo={{
+                            id: photo.id,
+                            url: photo.blobUrl,
+                            alt: photo.alt,
+                            caption: photo.caption,
+                            uploaded: timeAgo(photo.createdAt),
+                            uploadedTitle: formatTimestamp(photo.createdAt),
+                            uploader: photo.uploadedBy ? (people.get(photo.uploadedBy) ?? null) : null,
+                          }}
+                        />
+                      ))}
+                    </ul>
+                  </Panel>
+                ) : null}
+                <PhotoManager
+                  slug={market.slug}
+                  photos={photos}
+                  pathPrefix={photoPathPrefix(market.id)}
+                  maxPhotos={MAX_PHOTOS_PER_MARKET}
+                  maxBytes={MAX_PHOTO_BYTES}
+                  contentTypes={PHOTO_CONTENT_TYPES}
+                  description="Photos you add go live right away. Organizer uploads wait for your review."
+                />
+              </div>
+            }
+          />
+        </section>
 
-      <Panel title={`Photos waiting (${pending.length})`}>
-        {pending.length === 0 ? (
-          <p className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">No photos waiting.</p>
-        ) : (
-          <ul className="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 lg:grid-cols-4">
-            {pending.map((photo) => (
-              <PhotoReviewCard
-                key={photo.id}
-                photo={{
-                  id: photo.id,
-                  url: photo.blobUrl,
-                  alt: photo.alt,
-                  caption: photo.caption,
-                  uploaded: timeAgo(photo.createdAt),
-                  uploadedTitle: formatTimestamp(photo.createdAt),
-                }}
-              />
-            ))}
-          </ul>
-        )}
-      </Panel>
+        <aside aria-label="Market details" className="flex min-w-0 flex-col gap-4">
+          <Panel title="Published edits">
+            {edited.length === 0 ? (
+              <p className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">
+                Nothing edited. The listing shows the original data.
+              </p>
+            ) : (
+              <>
+                <p className="border-b px-4 py-2 text-xs text-zinc-500 dark:text-zinc-400">
+                  These sections differ from the original data. Resetting one shows the original values again.
+                </p>
+                <ul className="divide-y text-sm">
+                  {edited.map((section) => (
+                    <li key={section} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2">
+                      <span className="font-medium">{SECTION_LABELS[section]}</span>
+                      <ResetSectionButton slug={market.slug} sections={[section]} label={SECTION_LABELS[section]} />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </Panel>
 
-      <Panel title={`Other photos (${decided.length})`}>
-        {decided.length === 0 ? (
-          <p className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">No other photos.</p>
-        ) : (
-          <ul className="grid grid-cols-2 gap-3 p-3 sm:grid-cols-3 lg:grid-cols-4">
-            {decided.map((photo) => (
-              <li key={photo.id} className="overflow-hidden rounded-lg border bg-white dark:bg-zinc-900">
-                <div className="relative aspect-[4/3] bg-zinc-100 dark:bg-zinc-800">
-                  {photo.status === 'approved' ? (
-                    <a href={photo.blobUrl} target="_blank" rel="noopener noreferrer" title="Open full size">
-                      <Image
-                        src={photo.blobUrl}
-                        alt={photo.alt || `Photo for ${market.name}`}
-                        fill
-                        sizes="(min-width: 1024px) 240px, (min-width: 640px) 33vw, 50vw"
-                        className="object-cover"
-                      />
-                    </a>
-                  ) : (
-                    <div className="flex h-full flex-col items-center justify-center gap-1 text-xs text-zinc-500 dark:text-zinc-400">
-                      <ImageOff className="size-5" aria-hidden="true" />
-                      File deleted
+          <Panel title={`Managers (${managers.length})`}>
+            {managers.length === 0 ? (
+              <p className="border-b px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">Nobody manages this market yet.</p>
+            ) : (
+              <ul className="divide-y border-b text-sm">
+                {managers.map((manager) => (
+                  <li key={manager.userId} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5">
+                    <div className="min-w-0">
+                      <div className="truncate font-medium">{manager.name || 'No name'}</div>
+                      <div className="truncate text-xs text-zinc-500 dark:text-zinc-400">
+                        {manager.email} · since <TimeAgo date={manager.createdAt} />
+                      </div>
                     </div>
-                  )}
-                </div>
-                <div className="space-y-1 p-2.5 text-xs">
-                  <div className="flex items-center justify-between gap-2">
-                    <StatusPill status={photo.status} />
-                    <Muted>
-                      <TimeAgo date={photo.reviewedAt ?? photo.createdAt} />
-                    </Muted>
-                  </div>
-                  {photo.alt ? <p className="line-clamp-2 text-zinc-600 dark:text-zinc-400">{photo.alt}</p> : null}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
+                    <RevokeManagerButton marketId={market.id} userId={manager.userId} name={manager.name || manager.email} />
+                  </li>
+                ))}
+              </ul>
+            )}
+            <AddManagerForm slug={market.slug} />
+          </Panel>
 
-      <Panel title="Recent listing updates">
-        {changes.length === 0 ? (
-          <p className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">No listing updates yet.</p>
-        ) : (
-          <ul className="divide-y text-sm">
-            {changes.map((change) => (
-              <li key={change.id} className="grid items-center gap-x-4 gap-y-1 px-4 py-2.5 sm:grid-cols-[6rem_minmax(0,1fr)_7rem_auto]">
-                <StatusPill status={change.status} className="justify-self-start" />
-                <span className="min-w-0 truncate text-zinc-700 dark:text-zinc-300">{sectionsOf(change.changes)}</span>
-                <TimeAgo date={change.createdAt} className="text-xs text-zinc-500 dark:text-zinc-400" />
-                <Link
-                  href={`/admin/changes/${change.id}`}
-                  className="inline-flex items-center gap-1 text-sm font-medium text-green-700 hover:underline dark:text-green-400"
-                >
-                  {change.status === 'pending' ? 'Review' : 'View'}
-                  <ArrowRight className="size-3.5" aria-hidden="true" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
+          <Panel title="History">
+            {changes.length === 0 ? (
+              <p className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">No listing updates yet.</p>
+            ) : (
+              <ul className="divide-y text-sm">
+                {changes.map((change) => {
+                  const who = people.get(change.userId);
+                  return (
+                    <li key={change.id}>
+                      <Link
+                        href={`/admin/changes/${change.id}`}
+                        className="block space-y-1 px-4 py-2.5 hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
+                      >
+                        <span className="flex items-center justify-between gap-2">
+                          <StatusPill status={change.status} />
+                          <TimeAgo date={change.createdAt} className="text-xs text-zinc-500 dark:text-zinc-400" />
+                        </span>
+                        <span className="block text-zinc-800 dark:text-zinc-200">{sectionsOf(change.changes)}</span>
+                        <span className="block truncate text-xs text-zinc-500 dark:text-zinc-400">
+                          {who ? who.name || who.email : 'Unknown account'}
+                        </span>
+                        {change.reviewNote ? (
+                          <span className="block line-clamp-2 text-xs text-zinc-600 dark:text-zinc-400">
+                            <Muted>Note:</Muted> {change.reviewNote}
+                          </span>
+                        ) : null}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </Panel>
+        </aside>
+      </div>
     </div>
   );
 }

@@ -325,7 +325,7 @@ export default async function MarketDetailPage({
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {displayName(market.name)}
               </h1>
-              {market.organizer && (
+              {market.organizer?.verified && (
                 <p className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-green-800 dark:text-green-400">
                   <BadgeCheck aria-hidden="true" className="size-4" />
                   Listing kept up to date by the market organizer
@@ -484,6 +484,7 @@ export default async function MarketDetailPage({
 
                   <MarketSourceNote
                     organizerUpdatedAt={market.organizer?.updated_at}
+                    organizerVerified={market.organizer?.verified}
                     provenance={provenance}
                     lastUpdated={market.last_updated}
                     enrichment={market.enrichment}

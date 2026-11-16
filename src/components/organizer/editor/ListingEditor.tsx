@@ -6,6 +6,7 @@ import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { submitListingChangesAction } from '@/app/dashboard/actions';
+import { adminPublishAction } from '@/app/admin/actions';
 import {
   SECTION_LABELS,
   parseListingEdits,
@@ -19,10 +20,12 @@ import { SchedulesSection, SeasonSection, StatusSection } from './sections/Statu
 import { AboutSection, ContactSection } from './sections/AboutAndLinks';
 import { AmenitiesSection, PaymentsSection, ProductsSection } from './sections/PaymentsAndProducts';
 import { EventsSection, ProgramsSection, VendorsSection } from './sections/VendorsAndEvents';
+import { IdentitySection, LocationSection } from './sections/NameAndLocation';
 
-type TabId = 'hours' | 'about' | 'payments' | 'vendors' | 'photos';
+type TabId = 'place' | 'hours' | 'about' | 'payments' | 'vendors' | 'photos';
+type Tab = { id: TabId; label: string; sections: ListingSection[] };
 
-const TABS: { id: TabId; label: string; sections: ListingSection[] }[] = [
+const TABS: Tab[] = [
   { id: 'hours', label: 'Status and hours', sections: ['status', 'season', 'schedules'] },
   { id: 'about', label: 'About and links', sections: ['about', 'contact'] },
   { id: 'payments', label: 'Payments and products', sections: ['payments', 'products', 'amenities'] },
@@ -30,8 +33,41 @@ const TABS: { id: TabId; label: string; sections: ListingSection[] }[] = [
   { id: 'photos', label: 'Photos', sections: [] },
 ];
 
-function tabFor(section: ListingSection | null): TabId {
-  return TABS.find((tab) => section && tab.sections.includes(section))?.id ?? 'hours';
+export type EditorMode = 'organizer' | 'admin';
+
+/**
+ * Everything that differs between an organizer sending an update for review
+ * and an admin publishing directly. The editing itself is the same.
+ */
+const MODES = {
+  organizer: {
+    tabs: TABS,
+    admin: false,
+    submit: submitListingChangesAction,
+    cta: 'Send for review',
+    busy: 'Sending',
+    fixFirst: 'A few fields need a fix before you send.',
+    done: 'Sent for review.',
+    unsent: 'You have changes that are not sent yet.',
+    footnote: 'Changes go live after a quick review.',
+  },
+  admin: {
+    tabs: [{ id: 'place', label: 'Name and location', sections: ['identity', 'location'] }, ...TABS] as Tab[],
+    admin: true,
+    submit: adminPublishAction,
+    cta: 'Publish now',
+    busy: 'Publishing',
+    fixFirst: 'A few fields need a fix before you publish.',
+    done: 'Published.',
+    unsent: 'You have changes that are not published yet.',
+    footnote: 'Changes go live as soon as you publish.',
+  },
+} as const;
+
+type ModeConfig = (typeof MODES)[EditorMode];
+
+function tabFor(section: ListingSection | null, tabs: readonly Tab[]): TabId {
+  return tabs.find((tab) => section && tab.sections.includes(section))?.id ?? tabs[0].id;
 }
 
 type FieldErrors = { path: string; message: string }[];
@@ -47,19 +83,42 @@ function toErrorMap(errors: FieldErrors): Record<string, string> {
 
 export interface ListingEditorProps {
   slug: string;
-  /** Published values, with any pending request merged over them. */
+  /**
+   * Organizer: published values, with any pending request merged over them.
+   * Admin: published values including the name and location sections.
+   */
   initialValues: ListingEdits;
-  /** True when this organizer already has an update waiting for review. */
-  hasPending: boolean;
+  /** True when this organizer already has an update waiting for review. Organizer mode only. */
+  hasPending?: boolean;
   /** The photo manager, rendered by the page; it saves on its own. */
   photos: ReactNode;
+  /**
+   * 'organizer' (default) sends the update for review. 'admin' adds the
+   * "Name and location" tab and publishes straight away.
+   */
+  mode?: EditorMode;
+  /** Admin mode: city and state, shown read-only next to the address. */
+  place?: { city?: string; state?: string };
+  /** Admin mode: photos waiting for review, counted on the Photos tab. */
+  photosWaiting?: number;
 }
 
-export function ListingEditor({ slug, initialValues, hasPending, photos }: ListingEditorProps) {
+export function ListingEditor({
+  slug,
+  initialValues,
+  hasPending = false,
+  photos,
+  mode = 'organizer',
+  place,
+  photosWaiting = 0,
+}: ListingEditorProps) {
+  const config: ModeConfig = MODES[mode];
+  const tabs = config.tabs;
   const router = useRouter();
   const [edits, setEdits] = useState<ListingEdits>(initialValues);
   const [baseline, setBaseline] = useState<ListingEdits>(initialValues);
-  const [tab, setTab] = useState<TabId>('hours');
+  const [syncedInitial, setSyncedInitial] = useState<ListingEdits>(initialValues);
+  const [tab, setTab] = useState<TabId>(tabs[0].id);
   const [submittedErrors, setSubmittedErrors] = useState<Record<string, string>>({});
   const [notice, setNotice] = useState<Notice>(null);
   const [sending, startSending] = useTransition();
@@ -68,16 +127,26 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
   const baselineKey = useMemo(() => payloadFingerprint(baseline, initialValues), [baseline, initialValues]);
   const dirty = payloadKey !== baselineKey;
 
+  // Admin mode: after a publish or a section reset the page sends fresh
+  // published values. Pick them up unless there is unsent work in the form.
+  if (config.admin && initialValues !== syncedInitial) {
+    setSyncedInitial(initialValues);
+    if (!dirty) {
+      setEdits(initialValues);
+      setBaseline(initialValues);
+    }
+  }
+
   // After a failed submit, errors fade out as they are fixed. New problems
   // only show on the next submit, so nobody is scolded mid-typing.
   const errors = useMemo(() => {
     const submitted = Object.keys(submittedErrors);
     if (submitted.length === 0) return submittedErrors;
-    const check = parseListingEdits(dropUntouchedEmptySections(edits, initialValues));
+    const check = parseListingEdits(dropUntouchedEmptySections(edits, initialValues), { admin: config.admin });
     if (check.ok) return {};
     const current = toErrorMap(check.errors);
     return Object.fromEntries(submitted.filter((path) => path in current).map((path) => [path, current[path]]));
-  }, [submittedErrors, edits, initialValues]);
+  }, [submittedErrors, edits, initialValues, config.admin]);
   const errorList = Object.entries(errors);
 
   useEffect(() => {
@@ -104,7 +173,7 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
   }
 
   function goToSection(section: ListingSection | null) {
-    setTab(tabFor(section));
+    setTab(tabFor(section, tabs));
     if (!section) return;
     // Wait for the tab to render before scrolling to the section.
     requestAnimationFrame(() => {
@@ -118,10 +187,10 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
     setEdits(compacted);
     const payload = dropUntouchedEmptySections(compacted, initialValues);
 
-    const parsed = parseListingEdits(payload);
+    const parsed = parseListingEdits(payload, { admin: config.admin });
     if (!parsed.ok) {
       showErrors(parsed.errors);
-      setNotice({ tone: 'error', text: 'A few fields need a fix before you send.' });
+      setNotice({ tone: 'error', text: config.fixFirst });
       return;
     }
     setSubmittedErrors({});
@@ -129,10 +198,10 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
 
     startSending(async () => {
       try {
-        const result = await submitListingChangesAction(slug, payload);
+        const result = await config.submit(slug, payload);
         if (result.ok) {
           setBaseline(compacted);
-          setNotice({ tone: 'success', text: result.message ?? 'Sent for review.' });
+          setNotice({ tone: 'success', text: result.message ?? config.done });
           router.refresh();
         } else {
           if ('fieldErrors' in result && result.fieldErrors.length) showErrors(result.fieldErrors);
@@ -144,7 +213,7 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
     });
   }
 
-  const errorTabs = new Set(errorList.map(([path]) => tabFor(sectionOf(path))));
+  const errorTabs = new Set(errorList.map(([path]) => tabFor(sectionOf(path), tabs)));
   const showBar = tab !== 'photos' || dirty;
 
   return (
@@ -155,9 +224,15 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
         <Tabs value={tab} onValueChange={(value) => setTab(value as TabId)}>
           <div className="-mx-4 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0">
             <TabsList className="w-max gap-1 group-data-[orientation=horizontal]/tabs:h-auto sm:w-full">
-              {TABS.map((item) => (
+              {tabs.map((item) => (
                 <TabsTrigger key={item.id} value={item.id} className="h-10 flex-none px-3 sm:flex-1">
                   {item.label}
+                  {item.id === 'photos' && photosWaiting > 0 ? (
+                    <span className="rounded-full bg-amber-100 px-1.5 text-xs font-semibold text-amber-900 tabular-nums dark:bg-amber-900/40 dark:text-amber-200">
+                      {photosWaiting}
+                      <span className="sr-only"> waiting for review</span>
+                    </span>
+                  ) : null}
                   {errorTabs.has(item.id) ? (
                     <>
                       <span aria-hidden="true" className="size-2 rounded-full bg-red-600" />
@@ -170,6 +245,18 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
           </div>
 
           {errorList.length > 0 ? <ErrorSummary errors={errorList} onJump={goToSection} /> : null}
+
+          {config.admin ? (
+            <TabsContent value="place" className="mt-4 flex flex-col gap-4">
+              <IdentitySection value={edits.identity} onChange={(value) => setSection('identity', value)} />
+              <LocationSection
+                value={edits.location}
+                onChange={(value) => setSection('location', value)}
+                city={place?.city}
+                state={place?.state}
+              />
+            </TabsContent>
+          ) : null}
 
           <TabsContent value="hours" className="mt-4 flex flex-col gap-4">
             <StatusSection value={edits.status} onChange={(value) => setSection('status', value)} />
@@ -198,6 +285,7 @@ export function ListingEditor({ slug, initialValues, hasPending, photos }: Listi
 
         {showBar ? (
           <SubmitBar
+            config={config}
             dirty={dirty}
             hasPending={hasPending}
             sending={sending}
@@ -249,12 +337,14 @@ function ErrorSummary({
 }
 
 function SubmitBar({
+  config,
   dirty,
   hasPending,
   sending,
   notice,
   onSubmit,
 }: {
+  config: ModeConfig;
   dirty: boolean;
   hasPending: boolean;
   sending: boolean;
@@ -264,7 +354,7 @@ function SubmitBar({
   const status = notice
     ? null
     : dirty
-      ? 'You have changes that are not sent yet.'
+      ? config.unsent
       : hasPending
         ? 'Your last update is waiting for review.'
         : 'No changes yet.';
@@ -289,7 +379,7 @@ function SubmitBar({
             </p>
           ) : (
             <p className="text-zinc-600 dark:text-zinc-400">
-              {status} <span className="hidden sm:inline">Changes go live after a quick review.</span>
+              {status} <span className="hidden sm:inline">{config.footnote}</span>
             </p>
           )}
         </div>
@@ -300,7 +390,7 @@ function SubmitBar({
           className="h-12 w-full bg-green-700 px-6 text-base text-white hover:bg-green-800 sm:h-11 sm:w-auto sm:text-sm dark:bg-green-700 dark:hover:bg-green-600"
         >
           {sending ? <Loader2 aria-hidden="true" className="animate-spin" /> : <Send aria-hidden="true" />}
-          {sending ? 'Sending' : 'Send for review'}
+          {sending ? config.busy : config.cta}
         </Button>
       </div>
     </div>

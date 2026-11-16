@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { mergeListingEdits, parseListingEdits, sectionsThatDiffer, type ListingEdits } from './listingEdits.ts';
+import { mergeListingEdits, parseListingEdits, sectionsThatDiffer, withoutAdminSections, type ListingEdits } from './listingEdits.ts';
 import { ORGANIZER_SOURCE_ID, applyListingEdits, listingEditsFromMarket, type OverlayableMarket } from './organizerOverlay.ts';
 
 const meta = { approvedAt: '2026-11-20', listingUrl: 'https://www.farmermarkets.app/markets/test-market' };
@@ -152,5 +152,22 @@ test('prefill reads the current listing and drops entries the editor would rejec
   assert.deepEqual(edits.payments?.assistance, ['snap_ebt']);
   assert.deepEqual(edits.products?.categories, ['fresh_produce', 'preserves']);
   assert.deepEqual(edits.events?.map((e) => e.name), ['Harvest fair']);
-  assert.equal(parseListingEdits(edits).ok, true);
+  // The full prefill (admin view) parses for admins; organizers never see or send the admin-only sections.
+  assert.equal(parseListingEdits(edits, { admin: true }).ok, true);
+  assert.equal(parseListingEdits(edits).ok, false);
+  assert.equal(parseListingEdits(withoutAdminSections(edits)).ok, true);
+});
+
+test('admins can rename and move a market; organizers cannot', () => {
+  const edits = { identity: { name: 'Heritage Market' }, location: { address: '1 Main St', coordinates: { lat: 40.5, lon: -89.6 } } };
+  assert.equal(parseListingEdits(edits).ok, false);
+  const parsed = parseListingEdits(edits, { admin: true });
+  assert.equal(parsed.ok, true);
+  if (!parsed.ok) return;
+  const raw: OverlayableMarket = { ...baseRecord(), location: { city: 'Pekin', state: 'IL', address: 'Old road' } };
+  const next = applyListingEdits(raw, parsed.edits, meta);
+  assert.equal(next.name, 'Heritage Market');
+  assert.equal(next.location?.address, '1 Main St');
+  assert.equal(next.location?.city, 'Pekin');
+  assert.deepEqual(next.location?.coordinates, { latitude: 40.5, longitude: -89.6 });
 });

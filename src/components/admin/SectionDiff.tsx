@@ -82,6 +82,19 @@ function seasonText(value?: Section<'season'>): string | undefined {
 
 function partsFor(section: ListingSection, before: ListingEdits, after: ListingEdits): Part[] {
   switch (section) {
+    case 'identity':
+      return [scalar('Name', before.identity?.name, after.identity?.name)];
+    case 'location': {
+      const pin = (value?: { lat: number; lon: number }) => (value ? `${value.lat.toFixed(5)}, ${value.lon.toFixed(5)}` : undefined);
+      const hidden = (value?: boolean) => (value === undefined ? undefined : value ? 'Hidden' : 'Shown');
+      return [
+        scalar('Street address', before.location?.address, after.location?.address),
+        scalar('ZIP or postal code', before.location?.zip_code, after.location?.zip_code),
+        scalar('Location note', before.location?.location_description, after.location?.location_description),
+        scalar('Map pin', pin(before.location?.coordinates), pin(after.location?.coordinates)),
+        scalar('Map', hidden(before.location?.suppress_map), hidden(after.location?.suppress_map)),
+      ];
+    }
     case 'status': {
       const a = before.status;
       const b = after.status;

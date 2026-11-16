@@ -53,7 +53,7 @@ export function DecisionForm({
         return;
       }
       const done = kind === 'claim' ? (approve ? 'claim-approved' : 'claim-rejected') : approve ? 'change-published' : 'change-rejected';
-      router.push(`/admin?done=${done}`);
+      router.push(`/admin/review?done=${done}`);
     });
   }
 

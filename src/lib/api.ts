@@ -92,7 +92,7 @@ export interface FarmerMarket {
   wheelchair_accessible?: boolean;
   pet_friendly?: boolean;
   /** Set when the market's verified organizer has published edits (src/lib/marketOverrides.ts). */
-  organizer?: { updated_at: string; sections: string[] };
+  organizer?: { updated_at: string; sections: string[]; verified?: boolean };
   /** Organizer photos an admin approved, in display order. */
   photos?: { url: string; width?: number; height?: number; alt?: string; caption?: string }[];
   provenance?: {

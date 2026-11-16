@@ -32,6 +32,8 @@ export interface PublishedLayer {
   edits: ListingEdits;
   updatedAt: string;
   photos: PublishedPhoto[];
+  /** The market has at least one verified organizer (an approved claim). */
+  hasOrganizer: boolean;
 }
 
 async function queryAllLayers(): Promise<Map<string, PublishedLayer>> {
@@ -44,14 +46,16 @@ async function queryAllLayers(): Promise<Map<string, PublishedLayer>> {
     throw error;
   }
 
-  const [overrides, photos] = await Promise.all([
+  const [overrides, photos, managers] = await Promise.all([
     db.select().from(dbSchema.marketOverrides),
     db
       .select()
       .from(dbSchema.marketPhotos)
       .where(eq(dbSchema.marketPhotos.status, 'approved'))
       .orderBy(asc(dbSchema.marketPhotos.sort), asc(dbSchema.marketPhotos.createdAt)),
+    db.selectDistinct({ marketId: dbSchema.marketManagers.marketId }).from(dbSchema.marketManagers),
   ]);
+  const managed = new Set(managers.map((row) => row.marketId));
 
   for (const row of overrides) {
     // Stored edits were validated on the way in; re-validate so a schema
@@ -61,12 +65,18 @@ async function queryAllLayers(): Promise<Map<string, PublishedLayer>> {
       edits: parsed.success ? parsed.data : {},
       updatedAt: row.updatedAt.toISOString().slice(0, 10),
       photos: [],
+      hasOrganizer: managed.has(row.marketId),
     });
   }
   for (const photo of photos) {
     const layer =
       layers.get(photo.marketId) ??
-      { edits: {}, updatedAt: (photo.reviewedAt ?? photo.createdAt).toISOString().slice(0, 10), photos: [] };
+      {
+        edits: {},
+        updatedAt: (photo.reviewedAt ?? photo.createdAt).toISOString().slice(0, 10),
+        photos: [],
+        hasOrganizer: managed.has(photo.marketId),
+      };
     layer.photos.push({
       url: photo.blobUrl,
       width: photo.width ?? undefined,
@@ -121,12 +131,13 @@ export async function applyPublishedLayer<
         applyListingEdits(mappers.toRaw(market), layer.edits, {
           approvedAt: layer.updatedAt,
           listingUrl: absoluteUrl(`/markets/${market.slug}`),
+          editor: layer.hasOrganizer ? 'organizer' : 'farmer_markets',
         }),
       )
     : market;
   return {
     ...edited,
-    organizer: { updated_at: layer.updatedAt, sections },
+    organizer: { updated_at: layer.updatedAt, sections, verified: layer.hasOrganizer },
     ...(layer.photos.length ? { photos: layer.photos } : {}),
   };
 }

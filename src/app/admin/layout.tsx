@@ -1,38 +1,27 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import Link from 'next/link';
 import { requireAdmin } from '@/lib/organizer';
-import { SITE_FRAME } from '@/lib/ui';
+import { AdminMobileBar, AdminSidebar } from '@/components/admin/AdminNav';
+import { cachedReviewQueue, waitingCount } from './_lib/queue';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Review',
+  title: 'Admin',
   robots: { index: false, follow: false },
 };
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const admin = await requireAdmin();
+  const pending = waitingCount(await cachedReviewQueue());
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-zinc-50 dark:bg-zinc-950">
-      <div className="border-b bg-white dark:bg-zinc-900">
-        <div className={`${SITE_FRAME} flex h-11 items-center justify-between gap-4 text-sm`}>
-          <nav aria-label="Admin" className="flex items-center gap-4">
-            <Link href="/admin" className="font-semibold">
-              Review desk
-            </Link>
-            <Link href="/admin" className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
-              Queue
-            </Link>
-            <Link href="/" className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100">
-              Back to site
-            </Link>
-          </nav>
-          <span className="hidden truncate text-xs text-zinc-500 sm:block dark:text-zinc-400">{admin.email}</span>
-        </div>
+    <div className="min-h-[calc(100vh-4rem)] bg-zinc-50 lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] dark:bg-zinc-950">
+      <AdminSidebar email={admin.email} pending={pending} />
+      <div className="min-w-0">
+        <AdminMobileBar email={admin.email} pending={pending} />
+        <div className="px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</div>
       </div>
-      <div className={`${SITE_FRAME} py-6`}>{children}</div>
     </div>
   );
 }
