@@ -1,4 +1,8 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { getSessionCookie } from 'better-auth/cookies';
+
+/** Organizer and admin areas: a visitor with no session cookie goes straight to sign-in. */
+const SIGNED_IN_AREAS = /^\/(dashboard|admin)(\/|$)/;
 
 /**
  * URL normalization: lowercase paths, no trailing slash.
@@ -21,6 +25,13 @@ export function proxy(request: NextRequest) {
   const normalized = pathname.toLowerCase().replace(/(?!^)\/+$/, '');
 
   if (pathname === normalized) {
+    // Only a cheap cookie-presence check. Pages and server actions verify
+    // the session (and admin rights) themselves; this just saves a render.
+    if (SIGNED_IN_AREAS.test(pathname) && !getSessionCookie(request)) {
+      const signIn = new URL('/sign-in', request.url);
+      signIn.searchParams.set('next', `${pathname}${request.nextUrl.search}`);
+      return NextResponse.redirect(signIn, 307);
+    }
     return NextResponse.next();
   }
 

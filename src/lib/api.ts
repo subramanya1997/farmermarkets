@@ -91,6 +91,10 @@ export interface FarmerMarket {
   has_picnic_area?: boolean;
   wheelchair_accessible?: boolean;
   pet_friendly?: boolean;
+  /** Set when the market's verified organizer has published edits (src/lib/marketOverrides.ts). */
+  organizer?: { updated_at: string; sections: string[] };
+  /** Organizer photos an admin approved, in display order. */
+  photos?: { url: string; width?: number; height?: number; alt?: string; caption?: string }[];
   provenance?: {
     official: boolean;
     source_id: string;

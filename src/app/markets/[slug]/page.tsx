@@ -1,4 +1,6 @@
 import { getMarketById, getMarketBySlug, getMarkets, getSlugByLegacyId } from "@/lib/data";
+import { MarketPhotos } from "@/components/MarketPhotos";
+import { BadgeCheck } from "lucide-react";
 import { getMarketAddress } from "@/lib/api";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -241,7 +243,8 @@ export default async function MarketDetailPage({
   // BreadcrumbList stays in `Breadcrumbs`, which renders the trail it declares.
   const jsonLd = marketSchemaGraph(market, {
     siteUrl: SITE_URL,
-    imageUrl: marketImageUrl(market.slug),
+    // A real photo from the organizer beats the generated card when there is one.
+    imageUrl: market.photos?.[0]?.url ?? marketImageUrl(market.slug),
   });
 
   // The same list the FAQPage node quotes, so markup and page can never drift.
@@ -322,6 +325,12 @@ export default async function MarketDetailPage({
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {displayName(market.name)}
               </h1>
+              {market.organizer && (
+                <p className="mt-1 inline-flex items-center gap-1.5 text-xs font-medium text-green-800 dark:text-green-400">
+                  <BadgeCheck aria-hidden="true" className="size-4" />
+                  Listing kept up to date by the market organizer
+                </p>
+              )}
               {/* One composed address line under the name: tidied street, a
                   clearly-clickable city segment (its page lists every market
                   there), and the postal code the raw string usually drops.
@@ -428,6 +437,13 @@ export default async function MarketDetailPage({
                     </p>
                   ))}
 
+                  {/* Approved photos from the market's verified organizer. */}
+                  {market.photos?.length ? (
+                    <div className="mt-6">
+                      <MarketPhotos photos={market.photos} marketName={displayName(market.name)} />
+                    </div>
+                  ) : null}
+
                   {!planView && prose.location.length > 0 && (
                     <div className="mt-6 sm:mt-8">
                       <h2 className="text-lg sm:text-xl font-semibold tracking-tight mb-3">
@@ -467,6 +483,7 @@ export default async function MarketDetailPage({
                   />
 
                   <MarketSourceNote
+                    organizerUpdatedAt={market.organizer?.updated_at}
                     provenance={provenance}
                     lastUpdated={market.last_updated}
                     enrichment={market.enrichment}

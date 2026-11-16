@@ -29,8 +29,8 @@ export default function MarketOperatorsPage() {
               For Market Operators
             </h1>
             <p className="mt-2 max-w-[75ch] text-zinc-600 dark:text-zinc-400 sm:text-lg">
-              Add your market to the directory, or tell us what changed on an existing listing.
-              It&apos;s free, and a person reads every request.
+              Add your market to the directory, or claim an existing listing and keep it up to date
+              yourself. It&apos;s free, and a person reviews every request.
             </p>
           </div>
         </div>

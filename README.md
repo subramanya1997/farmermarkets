@@ -173,6 +173,11 @@ The app can run locally without required environment variables. Server-side API 
 | `NEXT_PUBLIC_ORG_SAMEAS` | Comma-separated absolute URLs added to `Organization.sameAs` (Wikidata item, social profiles). The public repository URL is always included; entries that are not absolute `http(s)` URLs are dropped. See [Entity presence](#entity-presence). |
 | `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | PostHog project token (`phc_...`). PostHog is off entirely when unset; development logs a console error saying so. |
 | `NEXT_PUBLIC_POSTHOG_HOST` | PostHog Cloud ingestion host. Defaults to `https://us.i.posthog.com`; set `https://eu.i.posthog.com` for an EU project. Read at build time by the `/ingest` rewrites in `next.config.ts`. |
+| `BETTER_AUTH_SECRET` | Signs organizer session cookies. Required wherever sign-in is used; generate with `openssl rand -base64 32`. |
+| `BETTER_AUTH_URL` | Public origin for auth links in emails (`https://www.farmermarkets.app` in production, `http://localhost:3000` locally). Preview deployments use their own URL when unset. |
+| `ADMIN_EMAILS` | Comma-separated verified emails allowed into `/admin`; they also get the review alerts. Falls back to `DISCOVERY_NOTIFICATION_EMAIL`. |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob store `farmermarkets-photos`, for organizer photo uploads. Added by the Vercel Blob integration. |
+| `ORGANIZER_EMAIL_LOG_ONLY` | Set to `1` locally to print organizer emails (verification and reset links included) to the server console instead of sending them. |
 | `INDEXNOW_KEY` | Overrides the committed IndexNow key during a rotation. |
 | `INDEXNOW_DISABLE` | Set to `1` to skip all IndexNow submissions (CI, local runs). |
 
@@ -307,6 +312,19 @@ PostHog runs alongside Vercel Web Analytics and GA4 once `NEXT_PUBLIC_POSTHOG_PR
 - **Server**: `src/instrumentation.ts` reports request errors to Error Tracking, and `/api/submissions` records a `Submission Received` event with the submission type only.
 - **Errors**: `src/app/global-error.tsx` reports render failures that reach the root boundary.
 - **Bots**: most raw traffic is crawler fleets that run JavaScript. Browsers that declare themselves headless (`Lightpanda`, `HeadlessChrome`, `PhantomJS`, matched in `src/lib/automatedBrowser.ts`) never start PostHog or load the GA4 tag. For data recorded before that, the PostHog project's internal/test filter (on by default) also excludes `$raw_user_agent` containing `Lightpanda`. A second fleet sends a normal Chrome user agent and cannot be matched this way: in analysis, count a session as human only if it has a non-direct referrer, a click or outcome event, or lasts at least 10 seconds.
+
+## Market organizer accounts
+
+Organizers sign up with email and password (Better Auth, `src/lib/auth.ts`), confirm their email, and claim their market (`market_claims`). An admin approves the claim on `/admin`, which makes them a manager (`market_managers`). Managers then edit the listing and upload photos from `/dashboard/markets/[slug]`.
+
+Nothing an organizer sends goes live on its own:
+
+1. Edits are a `ListingEdits` object (`src/lib/listingEdits.ts`, one zod schema shared by the form, the server action and the admin diff). Submitting stores a pending `market_change_requests` row with only the sections that differ from the live listing, and emails `ADMIN_EMAILS`.
+2. The admin compares before and after on `/admin/changes/[id]`. Approving merges the sections into `market_overrides` and refreshes the market, city and state pages; the organizer gets an email either way.
+3. `marketService.getMarketBySlug` / `getMarketById` apply the published layer (`src/lib/marketOverrides.ts`) over the dataset record: `src/lib/organizerOverlay.ts` writes the edits as sourced `first_party` facts (source id `organizer`) plus the flat fields, then the record is mapped again, so hours, filters, highlights and JSON-LD all agree. `rawFromMarket` makes that possible without keeping raw records in memory; `data.test.ts` checks the round trip on every record.
+4. Photos upload straight to Vercel Blob (`/api/organizer/photos` only issues a token to a manager of that market) and wait as `pending` in `market_photos` until approved. Rejected or removed photos are deleted from Blob.
+
+Bulk views (`/markets`, topic pages, near-me, sitemap, `llms.txt`) read the dataset directly and pick up organizer edits at the next deploy, when the build reads every published layer in one query. Every page, server action and route checks the session itself (`requireOrganizer`, `requireAdmin` in `src/lib/organizer.ts`); `src/proxy.ts` only redirects visitors with no session cookie.
 
 ## Project Structure
 
@@ -477,6 +495,9 @@ Each run writes `scripts/legacy-refresh-report.json` with per-record `updated` /
 | `/markets` | Searchable and filterable market directory. |
 | `/markets/[slug]` | Individual market detail page. |
 | `/markets/state/[state]` | State-specific market listing page. |
+| `/sign-up`, `/sign-in`, `/forgot-password`, `/reset-password` | Market organizer accounts (Better Auth, email and password). Noindex. |
+| `/dashboard` | Organizer home: managed markets, claims, and `/dashboard/claim`, `/dashboard/markets/[slug]` (listing editor and photos). Noindex. |
+| `/admin` | Review queue for claims, listing updates and photos. Only `ADMIN_EMAILS`; everyone else gets a 404. |
 | `/about` | About page. |
 | `/about-the-data` | Sources, processing, refresh cadence, coverage numbers, limitations, and licence terms, with `Dataset` JSON-LD. Every number is computed from the current data at build/ISR time. |
 | `/privacy` | Privacy policy. |

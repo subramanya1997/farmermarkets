@@ -10,6 +10,9 @@ import {
   primaryKey,
   date,
   boolean,
+  integer,
+  bigint,
+  uniqueIndex,
 } from 'drizzle-orm/pg-core';
 
 // Mirror of the canonical dataset (public/data/farmers_markets.json), synced
@@ -174,5 +177,183 @@ export const newsletterSubscribers = pgTable(
   (t) => [
     index('newsletter_status_idx').on(t.status),
     index('newsletter_confirm_token_idx').on(t.confirmTokenHash),
+  ],
+);
+
+/* ------------------------------------------------------------------ *
+ * Organizer accounts (Better Auth) and reviewed listing edits
+ * ------------------------------------------------------------------ */
+
+// Better Auth core tables. Column names follow Better Auth's model fields
+// (the Drizzle adapter maps by these JS keys); see src/lib/auth.ts.
+export const user = pgTable('user', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  emailVerified: boolean('email_verified').notNull().default(false),
+  image: text('image'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const session = pgTable(
+  'session',
+  {
+    id: text('id').primaryKey(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    token: text('token').notNull().unique(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+    ipAddress: text('ip_address'),
+    userAgent: text('user_agent'),
+    userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+  },
+  (t) => [index('session_user_idx').on(t.userId)],
+);
+
+export const account = pgTable(
+  'account',
+  {
+    id: text('id').primaryKey(),
+    accountId: text('account_id').notNull(),
+    providerId: text('provider_id').notNull(),
+    userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    accessToken: text('access_token'),
+    refreshToken: text('refresh_token'),
+    idToken: text('id_token'),
+    accessTokenExpiresAt: timestamp('access_token_expires_at', { withTimezone: true }),
+    refreshTokenExpiresAt: timestamp('refresh_token_expires_at', { withTimezone: true }),
+    scope: text('scope'),
+    password: text('password'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('account_user_idx').on(t.userId)],
+);
+
+export const verification = pgTable(
+  'verification',
+  {
+    id: text('id').primaryKey(),
+    identifier: text('identifier').notNull(),
+    value: text('value').notNull(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('verification_identifier_idx').on(t.identifier)],
+);
+
+// Better Auth rate limiting, stored here because serverless instances do not
+// share memory.
+export const rateLimit = pgTable('rate_limit', {
+  id: text('id').primaryKey(),
+  key: text('key').notNull().unique(),
+  count: integer('count').notNull(),
+  lastRequest: bigint('last_request', { mode: 'number' }).notNull(),
+});
+
+export const reviewStatus = pgEnum('review_status', ['pending', 'approved', 'rejected']);
+
+// Market ids are the canonical dataset's ids. They are not foreign keys to
+// the `markets` mirror, which can lag the deployed file; the app checks them
+// against the dataset instead.
+
+/** Who may edit which market. Created when an admin approves a claim. */
+export const marketManagers = pgTable(
+  'market_managers',
+  {
+    userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    marketId: text('market_id').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    approvedBy: text('approved_by'),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.marketId] }), index('market_managers_market_idx').on(t.marketId)],
+);
+
+/** A signed-in organizer asking to manage a market. */
+export const marketClaims = pgTable(
+  'market_claims',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    marketId: text('market_id').notNull(),
+    role: text('role').notNull(),
+    phone: text('phone'),
+    message: text('message'),
+    evidenceUrl: text('evidence_url'),
+    status: reviewStatus('status').notNull().default('pending'),
+    reviewNote: text('review_note'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+    reviewedBy: text('reviewed_by'),
+  },
+  (t) => [
+    index('market_claims_status_idx').on(t.status),
+    index('market_claims_user_idx').on(t.userId),
+    index('market_claims_market_idx').on(t.marketId),
+  ],
+);
+
+/**
+ * Proposed listing edits. `changes` is a `ListingEdits` object
+ * (src/lib/listingEdits.ts): each section present replaces that section.
+ */
+export const marketChangeRequests = pgTable(
+  'market_change_requests',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    marketId: text('market_id').notNull(),
+    userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    changes: jsonb('changes').notNull(),
+    status: reviewStatus('status').notNull().default('pending'),
+    reviewNote: text('review_note'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+    reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+    reviewedBy: text('reviewed_by'),
+  },
+  (t) => [
+    index('market_change_requests_status_idx').on(t.status),
+    index('market_change_requests_market_idx').on(t.marketId),
+  ],
+);
+
+/**
+ * The published organizer layer: approved `ListingEdits`, merged section by
+ * section, applied over the canonical record when market pages render
+ * (src/lib/marketOverrides.ts). The file pipeline stays the base dataset.
+ */
+export const marketOverrides = pgTable('market_overrides', {
+  marketId: text('market_id').primaryKey(),
+  data: jsonb('data').notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedBy: text('updated_by'),
+});
+
+export const photoStatus = pgEnum('photo_status', ['pending', 'approved', 'rejected', 'removed']);
+
+/** Organizer photos in Vercel Blob. Only `approved` ones are published. */
+export const marketPhotos = pgTable(
+  'market_photos',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    marketId: text('market_id').notNull(),
+    blobUrl: text('blob_url').notNull(),
+    pathname: text('pathname').notNull(),
+    width: integer('width'),
+    height: integer('height'),
+    alt: text('alt'),
+    caption: text('caption'),
+    sort: integer('sort').notNull().default(0),
+    status: photoStatus('status').notNull().default('pending'),
+    uploadedBy: text('uploaded_by').references(() => user.id, { onDelete: 'set null' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+  },
+  (t) => [
+    index('market_photos_market_idx').on(t.marketId),
+    index('market_photos_status_idx').on(t.status),
+    uniqueIndex('market_photos_pathname_idx').on(t.pathname),
   ],
 );

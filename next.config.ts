@@ -140,6 +140,10 @@ const nextConfig: NextConfig = {
   // otherwise redirect away. Page URLs keep their no-trailing-slash canonical
   // form because `src/proxy.ts` now issues that redirect itself.
   skipTrailingSlashRedirect: true,
+  // Organizer photos are uploaded to Vercel Blob (src/app/api/organizer/photos).
+  images: {
+    remotePatterns: [{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com', pathname: '/markets/**' }],
+  },
   experimental: {
     // Next defaults to cores-1 workers, which leaves one of the Vercel
     // builder's 4 cores idle through the ~100s static-generation phase while

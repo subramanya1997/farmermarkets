@@ -45,7 +45,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/*'],
+      // Organizer sign-in, dashboard and admin pages are private and noindex.
+      disallow: ['/api/*', '/dashboard', '/admin', '/sign-in', '/sign-up', '/forgot-password', '/reset-password'],
     },
     sitemap: absoluteUrl('/sitemap.xml'),
   };

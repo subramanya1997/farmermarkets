@@ -14,7 +14,7 @@ export function TrackedMarketClaimLink({
 }: TrackedMarketClaimLinkProps) {
   return (
     <Link
-      href={`/for-market-operators?market=${marketSlug}`}
+      href={`/dashboard/claim?market=${encodeURIComponent(marketSlug)}`}
       onClick={() => trackEvent("listing_claim_started", { market_id: marketId })}
       className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300"
     >

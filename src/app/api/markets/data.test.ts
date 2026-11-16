@@ -1,7 +1,8 @@
 // @ts-expect-error Bun's test module is available to the configured test runner,
 // but this project intentionally does not add Bun's globals to production types.
 import { describe, expect, test } from 'bun:test';
-import { mergeEnrichment, slimMarket } from './data';
+import { readFileSync } from 'node:fs';
+import { mapRawMarket, mergeEnrichment, rawFromMarket, slimMarket } from './data';
 
 test('a disputed location never reaches the explorer as a map pin or distance claim', () => {
   const market = {
@@ -123,4 +124,16 @@ describe('mergeEnrichment', () => {
     expect(merged.amenities?.parking).toBe(true);
     expect(merged.products?.categories?.fresh_produce).toBe(true);
   });
+});
+
+test('every dataset record survives the round trip the organizer layer relies on', () => {
+  // The published organizer layer maps a record back to raw form, applies the
+  // edits and maps it again. Anything lost on that trip would silently change
+  // listings that have organizer edits.
+  const raws = JSON.parse(readFileSync('public/data/farmers_markets.json', 'utf8')) as Parameters<typeof mapRawMarket>[0][];
+  const changed = raws.filter((raw, index) => {
+    const mapped = mapRawMarket(raw, index);
+    return JSON.stringify(mapRawMarket(rawFromMarket(mapped), index)) !== JSON.stringify(mapped);
+  });
+  expect(changed.map((raw) => raw.slug)).toEqual([]);
 });

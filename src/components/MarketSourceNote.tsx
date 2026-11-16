@@ -4,6 +4,8 @@ import type { MarketProvenance } from '@/lib/provenance';
 import type { MarketAuditMetadata, MarketEnrichmentMetadata } from '@/lib/enrichment';
 
 interface MarketSourceNoteProps {
+  /** When the market's verified organizer last had an update approved. */
+  organizerUpdatedAt?: string | null;
   /** `null` for the legacy records, which name no publisher. */
   provenance: MarketProvenance | null;
   /** The record's own `last_updated` stamp. */
@@ -38,8 +40,8 @@ const LINK = 'underline hover:text-green-700 dark:hover:text-green-500';
  * The "could not be matched" caution only shows when no newer research
  * supersedes that check.
  */
-export function MarketSourceNote({ provenance, lastUpdated, enrichment, audit }: MarketSourceNoteProps) {
-  if (!provenance && !formatDate(lastUpdated) && !enrichment && !audit) return null;
+export function MarketSourceNote({ organizerUpdatedAt, provenance, lastUpdated, enrichment, audit }: MarketSourceNoteProps) {
+  if (!provenance && !formatDate(lastUpdated) && !enrichment && !audit && !organizerUpdatedAt) return null;
 
   const sources = (enrichment?.sources ?? []).filter((source) => hostOf(source.url));
   const researchHost =
@@ -49,6 +51,7 @@ export function MarketSourceNote({ provenance, lastUpdated, enrichment, audit }:
   // so its date never leads the footer or clears the "could not confirm" line.
   const researchedAt = enrichment?.verification_scope === 'register' ? undefined : enrichment?.verified_at;
   const candidates = [
+    { day: isoDay(organizerUpdatedAt), from: 'the market organizer' },
     { day: isoDay(researchedAt), from: researchHost },
     { day: isoDay(provenance?.retrievedAt), from: publisher },
     { day: isoDay(lastUpdated), from: publisher },

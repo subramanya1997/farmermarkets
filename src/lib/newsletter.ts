@@ -94,8 +94,8 @@ export function emailLayout({ heading, body, footer }: { heading: string; body: 
 }
 
 export const EMAIL_P = 'style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#3f3f46"';
-const BUTTON = 'style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 22px;border-radius:999px"';
-const LINK = 'style="color:#15803d"';
+export const BUTTON = 'style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 22px;border-radius:999px"';
+export const LINK = 'style="color:#15803d"';
 
 export function confirmationEmail({ confirm, unsubscribe }: { confirm: string; unsubscribe: string }): EmailContent {
   return {

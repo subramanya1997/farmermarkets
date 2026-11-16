@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { CheckCircle2, UserPlus } from 'lucide-react';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { posthogRequestHeaders, trackEvent } from '@/lib/analytics';
 
@@ -17,8 +17,8 @@ const PURPOSES: { id: Purpose; label: string; detail: string }[] = [
   },
   {
     id: 'update_listing',
-    label: 'Claim or correct a listing',
-    detail: 'Your market is listed and you want to update or take ownership of it.',
+    label: 'Claim or update a listing',
+    detail: 'Your market is listed and you want to manage or correct it.',
   },
 ];
 
@@ -27,9 +27,10 @@ const PURPOSES: { id: Purpose; label: string; detail: string }[] = [
  *
  * Posts to the same `/api/discovery` endpoint the survey uses (Resend email,
  * nothing stored client-side), with `helpTopics` narrowed to the two operator
- * intents. When the page is reached from a market page's claim link
- * (`?market=<slug>`), the listing URL is seeded into the message so we know
- * which record the request is about.
+ * intents. Only "get listed" uses that anonymous form now: updating an
+ * existing listing goes through an organizer account (sign up, claim, then
+ * edit), so that purpose shows the way in instead. A `?market=<slug>` on the
+ * URL preselects it and carries the market through sign-up to its claim form.
  */
 export function OperatorRequestForm() {
   const [purpose, setPurpose] = useState<Purpose>('get_listed');
@@ -64,7 +65,6 @@ export function OperatorRequestForm() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMarketSlug(slug);
     setPurpose('update_listing');
-    setMessage((current) => (current ? current : `Listing: /markets/${slug}\n\n`));
   }, []);
 
   const submit = async (event: React.FormEvent) => {
@@ -179,7 +179,7 @@ export function OperatorRequestForm() {
   }
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <fieldset>
         <legend className="mb-2 text-sm font-medium">What do you need?</legend>
         <div className="grid gap-2 sm:grid-cols-2">
@@ -209,77 +209,138 @@ export function OperatorRequestForm() {
         </div>
       </fieldset>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <label className="space-y-1 text-sm font-medium">
-          Name <span className="font-normal text-zinc-500">(optional)</span>
-          <Input value={name} onChange={(event) => setName(event.target.value)} maxLength={100} autoComplete="name" />
-        </label>
-        <label className="space-y-1 text-sm font-medium">
-          Market or organization <span className="font-normal text-zinc-500">(optional)</span>
-          <Input value={organization} onChange={(event) => setOrganization(event.target.value)} maxLength={120} autoComplete="organization" />
-        </label>
-      </div>
+      {purpose === 'update_listing' ? (
+        <ClaimWithAccount marketSlug={marketSlug} />
+      ) : (
+        <form onSubmit={submit} className="flex flex-col gap-5">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <label className="space-y-1 text-sm font-medium">
+              Name <span className="font-normal text-zinc-500">(optional)</span>
+              <Input value={name} onChange={(event) => setName(event.target.value)} maxLength={100} autoComplete="name" />
+            </label>
+            <label className="space-y-1 text-sm font-medium">
+              Market or organization <span className="font-normal text-zinc-500">(optional)</span>
+              <Input value={organization} onChange={(event) => setOrganization(event.target.value)} maxLength={120} autoComplete="organization" />
+            </label>
+          </div>
 
-      <label className="block space-y-1 text-sm font-medium">
-        Email
-        <Input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          maxLength={254}
-          autoComplete="email"
-          placeholder="you@example.com"
-          required
-        />
-      </label>
+          <label className="block space-y-1 text-sm font-medium">
+            Email
+            <Input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              maxLength={254}
+              autoComplete="email"
+              placeholder="you@example.com"
+              required
+            />
+          </label>
 
-      <label className="block space-y-1 text-sm font-medium">
-        Your market and what should change
-        <textarea
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          maxLength={1200}
-          rows={4}
-          className="w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 dark:border-zinc-700"
-          placeholder="Market name, where it runs, and what you want listed or corrected. A link to the listing or your website helps."
-        />
-      </label>
+          <label className="block space-y-1 text-sm font-medium">
+            Your market and what should change
+            <textarea
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              maxLength={1200}
+              rows={4}
+              className="w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 dark:border-zinc-700"
+              placeholder="Market name, where it runs, and what you want listed or corrected. A link to the listing or your website helps."
+            />
+          </label>
 
-      <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-        <label>
-          Website
-          <input tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
-        </label>
-      </div>
+          <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+            <label>
+              Website
+              <input tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
+            </label>
+          </div>
 
-      <label className="flex items-start gap-2 text-sm text-zinc-700 dark:text-zinc-300">
-        <input
-          type="checkbox"
-          checked={contactPermission}
-          onChange={(event) => setContactPermission(event.target.checked)}
-          className="mt-0.5 h-4 w-4 accent-green-600"
-        />
-        <span>You may contact me about this request using the details I provided.</span>
-      </label>
+          <label className="flex items-start gap-2 text-sm text-zinc-700 dark:text-zinc-300">
+            <input
+              type="checkbox"
+              checked={contactPermission}
+              onChange={(event) => setContactPermission(event.target.checked)}
+              className="mt-0.5 h-4 w-4 accent-green-600"
+            />
+            <span>You may contact me about this request using the details I provided.</span>
+          </label>
 
-      <p className="text-xs text-zinc-500 dark:text-zinc-400">
-        Contact details and your message are sent privately by email and are not included in Google
-        or Vercel Analytics. See our{' '}
-        <Link href="/privacy" className="underline hover:text-green-700">
-          privacy policy
-        </Link>
-        .
-      </p>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            Contact details and your message are sent privately by email and are not included in Google
+            or Vercel Analytics. See our{' '}
+            <Link href="/privacy" className="underline hover:text-green-700">
+              privacy policy
+            </Link>
+            .
+          </p>
 
-      {error ? (
-        <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:text-red-300">
-          {error}
+          {error ? (
+            <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:text-red-300">
+              {error}
+            </p>
+          ) : null}
+
+          <Button type="submit" disabled={status === 'sending'} className="w-fit bg-green-600 px-8 hover:bg-green-700">
+            {status === 'sending' ? 'Sending...' : 'Send request'}
+          </Button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+/**
+ * The "update my listing" path: organizers make an account, claim the
+ * market, then edit the listing themselves. Every claim and edit is still
+ * reviewed before it goes live.
+ */
+function ClaimWithAccount({ marketSlug }: { marketSlug: string | null }) {
+  const next = marketSlug ? `/dashboard/claim?market=${marketSlug}` : '/dashboard';
+  const query = `?next=${encodeURIComponent(next)}`;
+  const steps = [
+    'Create a free organizer account and confirm your email.',
+    marketSlug ? 'Send a short claim for your market.' : 'Find your market and send a short claim.',
+    'Once we confirm it, update hours, location, contact details and photos yourself.',
+  ];
+
+  return (
+    <div className="flex flex-col gap-4 rounded-xl border border-zinc-200 p-5 dark:border-zinc-700">
+      <div>
+        <p className="font-semibold">Manage your listing with an organizer account</p>
+        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+          It takes a couple of minutes. A person reviews each claim and change before it goes live.
         </p>
-      ) : null}
-
-      <Button type="submit" disabled={status === 'sending'} className="w-fit bg-green-600 px-8 hover:bg-green-700">
-        {status === 'sending' ? 'Sending...' : 'Send request'}
-      </Button>
-    </form>
+      </div>
+      <ol className="flex flex-col gap-2 text-sm text-zinc-700 dark:text-zinc-300">
+        {steps.map((step, index) => (
+          <li key={step} className="flex gap-2.5">
+            <span
+              aria-hidden="true"
+              className="flex size-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800 dark:bg-green-900/40 dark:text-green-300"
+            >
+              {index + 1}
+            </span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <Link
+          href={`/sign-up${query}`}
+          onClick={() => trackEvent('Operator Account Start', { has_market: Boolean(marketSlug) })}
+          className={buttonVariants({ className: 'h-11 bg-green-700 px-6 text-white hover:bg-green-800 sm:h-9' })}
+        >
+          <UserPlus aria-hidden="true" />
+          Create an organizer account
+        </Link>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          Already have one?{' '}
+          <Link href={`/sign-in${query}`} className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400">
+            Sign in
+          </Link>
+        </p>
+      </div>
+    </div>
   );
 }

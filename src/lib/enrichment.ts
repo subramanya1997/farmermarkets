@@ -436,7 +436,7 @@ const PAYMENT_LABELS: Record<RichPaymentMethodCode, string> = {
   other: 'Other',
 };
 
-function formatStructuredSeason(season: StructuredMarketSeason): string {
+export function formatStructuredSeason(season: StructuredMarketSeason): string {
   if (season.kind === 'year_round') return 'Year-round';
   if (season.kind === 'dated_range') {
     const formatDate = (value: string, includeYear: boolean) => {
@@ -461,7 +461,7 @@ function formatStructuredSeason(season: StructuredMarketSeason): string {
   return `${format(season.start)} - ${format(season.end)}`;
 }
 
-function formatStructuredSchedule(schedule: StructuredMarketSchedule): string[] {
+export function formatStructuredSchedule(schedule: StructuredMarketSchedule): string[] {
   const range = `${schedule.opens}-${schedule.closes}`;
   if (schedule.recurrence.kind === 'dates') {
     return schedule.recurrence.dates.map((date) => `${date} ${range}`);
