@@ -18,7 +18,6 @@ import { getAuth } from './auth';
 import { marketService, type FarmerMarket } from '@/app/api/markets/data';
 import { getCityForMarketSlug } from './geoIndex';
 import {
-  ADMIN_ONLY_SECTIONS,
   LISTING_SECTIONS,
   SECTION_LABELS,
   changedSections,
@@ -26,7 +25,6 @@ import {
   parseListingEdits,
   sectionsThatDiffer,
   listingEditsSchema,
-  withoutAdminSections,
   type ListingEdits,
   type ListingSection,
 } from './listingEdits';
@@ -34,6 +32,7 @@ import { listingEditsFromMarket } from './organizerOverlay';
 import { adminEmails, adminReviewAlertEmail, decisionEmail, sendOrganizerEmail } from './organizerEmails';
 import { getPostHogServer } from './posthogServer';
 import { absoluteUrl } from './site';
+import marketPopularity from '../../data/market-popularity.json';
 
 const { user: userTable, marketManagers, marketClaims, marketChangeRequests, marketOverrides, marketPhotos } = dbSchema;
 
@@ -119,10 +118,83 @@ export async function getMarketsByIds(ids: string[]): Promise<FarmerMarket[]> {
   return all.filter((market) => wanted.has(market.id));
 }
 
-/** What the editor starts from: the listing as published now. Organizers never get the admin-only sections. */
-export async function editorValuesFor(market: FarmerMarket, options: { admin?: boolean } = {}): Promise<ListingEdits> {
-  const values = listingEditsFromMarket(market);
-  return options.admin ? values : withoutAdminSections(values);
+/**
+ * What the editor starts from: the listing as published now, every section.
+ * Organizers see name and location too; they can suggest changes there, and
+ * like everything they send, those changes wait for an admin.
+ */
+export async function editorValuesFor(market: FarmerMarket, _options: { admin?: boolean } = {}): Promise<ListingEdits> {
+  void _options;
+  return listingEditsFromMarket(market);
+}
+
+/* ------------------------------------------------------------------ *
+ * Organizer overview
+ * ------------------------------------------------------------------ */
+
+const RECENT_VISITS: Record<string, number> = marketPopularity.markets;
+/** How many days `recentVisits` covers (refreshed daily from PostHog, people only). */
+export const VISITS_WINDOW_DAYS: number = marketPopularity.window_days;
+
+export interface OrganizerMarketSummary {
+  market: FarmerMarket;
+  /** Human visits to the listing in the last `VISITS_WINDOW_DAYS` days. */
+  recentVisits: number;
+  /** Newest update from any manager still waiting for review. */
+  pending: { id: string; createdAt: Date; sections: ListingSection[] } | null;
+  lastApprovedAt: Date | null;
+  lastRejected: { reviewedAt: Date | null; note: string | null } | null;
+  photos: { live: number; waiting: number };
+}
+
+/** Everything the organizer overview shows, for the markets this account manages. */
+export async function organizerOverview(user: SessionUser): Promise<OrganizerMarketSummary[]> {
+  const ids = await managedMarketIds(user.id);
+  if (ids.length === 0) return [];
+  const db = getDb();
+  const [markets, changes, photos] = await Promise.all([
+    getMarketsByIds(ids),
+    db
+      .select({
+        id: marketChangeRequests.id,
+        marketId: marketChangeRequests.marketId,
+        status: marketChangeRequests.status,
+        changes: marketChangeRequests.changes,
+        createdAt: marketChangeRequests.createdAt,
+        reviewedAt: marketChangeRequests.reviewedAt,
+        reviewNote: marketChangeRequests.reviewNote,
+      })
+      .from(marketChangeRequests)
+      .where(inArray(marketChangeRequests.marketId, ids))
+      .orderBy(desc(marketChangeRequests.createdAt)),
+    db
+      .select({ marketId: marketPhotos.marketId, status: marketPhotos.status, n: count() })
+      .from(marketPhotos)
+      .where(and(inArray(marketPhotos.marketId, ids), inArray(marketPhotos.status, ['pending', 'approved'])))
+      .groupBy(marketPhotos.marketId, marketPhotos.status),
+  ]);
+  return markets
+    .map((market) => {
+      const mine = changes.filter((row) => row.marketId === market.id);
+      const pendingRow = mine.find((row) => row.status === 'pending');
+      const parsed = pendingRow ? listingEditsSchema.safeParse(pendingRow.changes) : null;
+      const approved = mine.find((row) => row.status === 'approved');
+      const latestReviewed = mine.find((row) => row.status !== 'pending');
+      const photoCount = (status: 'pending' | 'approved') =>
+        photos.find((row) => row.marketId === market.id && row.status === status)?.n ?? 0;
+      return {
+        market,
+        recentVisits: RECENT_VISITS[market.slug] ?? 0,
+        pending: pendingRow
+          ? { id: pendingRow.id, createdAt: pendingRow.createdAt, sections: parsed?.success ? changedSections(parsed.data) : [] }
+          : null,
+        lastApprovedAt: approved ? approved.reviewedAt ?? approved.createdAt : null,
+        lastRejected:
+          latestReviewed?.status === 'rejected' ? { reviewedAt: latestReviewed.reviewedAt, note: latestReviewed.reviewNote } : null,
+        photos: { live: photoCount('approved'), waiting: photoCount('pending') },
+      };
+    })
+    .sort((a, b) => a.market.name.localeCompare(b.market.name));
 }
 
 /* ------------------------------------------------------------------ *
@@ -207,12 +279,9 @@ export async function submitChangeRequest(user: SessionUser, market: FarmerMarke
   ActionResult | { ok: false; error: string; fieldErrors: { path: string; message: string }[] }
 > {
   if (!(await canManageMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
-  // Name and address are admin-only; an organizer editor never sends them, so drop them if they appear.
-  const cleaned =
-    input && typeof input === 'object' && !Array.isArray(input)
-      ? Object.fromEntries(Object.entries(input).filter(([key]) => !(ADMIN_ONLY_SECTIONS as readonly string[]).includes(key)))
-      : input;
-  const parsed = parseListingEdits(cleaned);
+  // Organizers may suggest every section, name and location included: nothing
+  // they send is published until an admin approves it.
+  const parsed = parseListingEdits(input, { admin: true });
   if (!parsed.ok) return { ok: false, error: 'Some fields need a fix before you submit.', fieldErrors: parsed.errors };
 
   const published = listingEditsFromMarket(market);

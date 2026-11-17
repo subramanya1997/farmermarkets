@@ -7,7 +7,6 @@ import { ClaimForm } from '@/components/organizer/dashboard/ClaimForm';
 import { ClaimSearch } from '@/components/organizer/dashboard/ClaimSearch';
 import { TEXT_LINK } from '@/components/organizer/auth/FormBits';
 import { firstParam } from '@/components/organizer/auth/nextPath';
-import { SITE_FRAME } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
@@ -44,37 +43,34 @@ export default async function ClaimPage({ searchParams }: { searchParams: Promis
   const market = validSlug ? await getPublishedMarket(validSlug) : null;
 
   return (
-    <div className={`${SITE_FRAME} py-8 sm:py-10`}>
-      <div className="mx-auto flex max-w-2xl flex-col gap-6">
-        <Link href="/dashboard" className={cn(TEXT_LINK, 'inline-flex w-fit items-center gap-1 text-sm no-underline hover:underline')}>
-          <ArrowLeft aria-hidden="true" className="size-4" />
-          Your dashboard
+    <div className="mx-auto flex max-w-2xl flex-col gap-6">
+      <header className="space-y-1">
+        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
+          <ArrowLeft aria-hidden="true" className="size-3.5" />
+          Overview
         </Link>
+        <h1 className="text-xl font-semibold tracking-tight">{market ? `Claim ${market.name}` : 'Claim a market'}</h1>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          {market
+            ? 'Tell us how you are involved. Once we confirm it, you can edit this listing.'
+            : 'Find the market you run. Once we confirm your claim, you can edit its listing.'}
+        </p>
+      </header>
 
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{market ? `Claim ${market.name}` : 'Claim a market'}</h1>
-          <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-            {market
-              ? 'Tell us how you are involved. Once we confirm it, you can edit this listing.'
-              : 'Find the market you run. Once we confirm your claim, you can edit its listing.'}
-          </p>
-        </div>
-
-        {market ? (
-          <MarketClaim user={user} market={market} />
-        ) : (
-          <>
-            {slug ? (
-              <Notice icon={<Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
-                We could not find that market. Search for it below.
-              </Notice>
-            ) : null}
-            <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6 dark:border-zinc-800 dark:bg-zinc-900">
-              <ClaimSearch />
-            </div>
-          </>
-        )}
-      </div>
+      {market ? (
+        <MarketClaim user={user} market={market} />
+      ) : (
+        <>
+          {slug ? (
+            <Notice icon={<Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
+              We could not find that market. Search for it below.
+            </Notice>
+          ) : null}
+          <div className="rounded-lg border bg-white p-4 sm:p-5 dark:bg-zinc-900">
+            <ClaimSearch />
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -94,7 +90,7 @@ async function MarketClaim({ user, market }: { user: Organizer; market: Market }
 
   return (
     <>
-      <div className="flex flex-col gap-1 rounded-xl border border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="flex flex-col gap-1 rounded-lg border bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5 dark:bg-zinc-900">
         <div className="min-w-0">
           <p className="font-semibold text-zinc-900 dark:text-zinc-100">{market.name}</p>
           {place ? (
@@ -136,7 +132,7 @@ async function MarketClaim({ user, market }: { user: Organizer; market: Market }
           </p>
           <p className="mt-2">
             <Link href="/dashboard" className={TEXT_LINK}>
-              Back to your dashboard
+              Back to the overview
             </Link>
           </p>
         </Notice>
@@ -170,7 +166,7 @@ async function MarketClaim({ user, market }: { user: Organizer; market: Market }
             </Notice>
           )}
 
-          <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6 dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="rounded-lg border bg-white p-4 sm:p-5 dark:bg-zinc-900">
             <ClaimForm marketSlug={market.slug} marketName={market.name} marketId={market.id} />
           </div>
         </>

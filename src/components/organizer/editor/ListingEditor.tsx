@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, useTransition, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Info, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { submitListingChangesAction } from '@/app/dashboard/actions';
@@ -25,13 +25,12 @@ import { IdentitySection, LocationSection } from './sections/NameAndLocation';
 type TabId = 'place' | 'hours' | 'about' | 'payments' | 'vendors' | 'photos';
 type Tab = { id: TabId; label: string; sections: ListingSection[] };
 
-const TABS: Tab[] = [
-  { id: 'hours', label: 'Status and hours', sections: ['status', 'season', 'schedules'] },
-  { id: 'about', label: 'About and links', sections: ['about', 'contact'] },
-  { id: 'payments', label: 'Payments and products', sections: ['payments', 'products', 'amenities'] },
-  { id: 'vendors', label: 'Vendors and events', sections: ['vendors', 'events', 'programs'] },
-  { id: 'photos', label: 'Photos', sections: [] },
-];
+const PLACE_TAB: Tab = { id: 'place', label: 'Name and location', sections: ['identity', 'location'] };
+const HOURS_TAB: Tab = { id: 'hours', label: 'Status and hours', sections: ['status', 'season', 'schedules'] };
+const ABOUT_TAB: Tab = { id: 'about', label: 'About and links', sections: ['about', 'contact'] };
+const PAYMENTS_TAB: Tab = { id: 'payments', label: 'Payments and products', sections: ['payments', 'products', 'amenities'] };
+const VENDORS_TAB: Tab = { id: 'vendors', label: 'Vendors and events', sections: ['vendors', 'events', 'programs'] };
+const PHOTOS_TAB: Tab = { id: 'photos', label: 'Photos', sections: [] };
 
 export type EditorMode = 'organizer' | 'admin';
 
@@ -41,7 +40,9 @@ export type EditorMode = 'organizer' | 'admin';
  */
 const MODES = {
   organizer: {
-    tabs: TABS,
+    // Organizers mostly change hours, so those come first; name and location
+    // are rarer and always get a closer look.
+    tabs: [HOURS_TAB, ABOUT_TAB, PAYMENTS_TAB, VENDORS_TAB, PLACE_TAB, PHOTOS_TAB] as Tab[],
     admin: false,
     submit: submitListingChangesAction,
     cta: 'Send for review',
@@ -50,9 +51,11 @@ const MODES = {
     done: 'Sent for review.',
     unsent: 'You have changes that are not sent yet.',
     footnote: 'Changes go live after a quick review.',
+    placeHint: 'Name and address changes are always checked by our team before they go live.',
+    cityNote: "City and state can't be changed here. Email us if the market moved.",
   },
   admin: {
-    tabs: [{ id: 'place', label: 'Name and location', sections: ['identity', 'location'] }, ...TABS] as Tab[],
+    tabs: [PLACE_TAB, HOURS_TAB, ABOUT_TAB, PAYMENTS_TAB, VENDORS_TAB, PHOTOS_TAB] as Tab[],
     admin: true,
     submit: adminPublishAction,
     cta: 'Publish now',
@@ -61,6 +64,8 @@ const MODES = {
     done: 'Published.',
     unsent: 'You have changes that are not published yet.',
     footnote: 'Changes go live as soon as you publish.',
+    placeHint: null,
+    cityNote: 'City and state decide which city page lists this market, so they cannot be changed here.',
   },
 } as const;
 
@@ -85,7 +90,7 @@ export interface ListingEditorProps {
   slug: string;
   /**
    * Organizer: published values, with any pending request merged over them.
-   * Admin: published values including the name and location sections.
+   * Admin: published values. Both include the name and location sections.
    */
   initialValues: ListingEdits;
   /** True when this organizer already has an update waiting for review. Organizer mode only. */
@@ -93,11 +98,11 @@ export interface ListingEditorProps {
   /** The photo manager, rendered by the page; it saves on its own. */
   photos: ReactNode;
   /**
-   * 'organizer' (default) sends the update for review. 'admin' adds the
-   * "Name and location" tab and publishes straight away.
+   * 'organizer' (default) sends the update for review, name and location
+   * included. 'admin' publishes straight away.
    */
   mode?: EditorMode;
-  /** Admin mode: city and state, shown read-only next to the address. */
+  /** City and state, shown read-only next to the address. */
   place?: { city?: string; state?: string };
   /** Admin mode: photos waiting for review, counted on the Photos tab. */
   photosWaiting?: number;
@@ -142,11 +147,11 @@ export function ListingEditor({
   const errors = useMemo(() => {
     const submitted = Object.keys(submittedErrors);
     if (submitted.length === 0) return submittedErrors;
-    const check = parseListingEdits(dropUntouchedEmptySections(edits, initialValues), { admin: config.admin });
+    const check = parseListingEdits(dropUntouchedEmptySections(edits, initialValues), { admin: true });
     if (check.ok) return {};
     const current = toErrorMap(check.errors);
     return Object.fromEntries(submitted.filter((path) => path in current).map((path) => [path, current[path]]));
-  }, [submittedErrors, edits, initialValues, config.admin]);
+  }, [submittedErrors, edits, initialValues]);
   const errorList = Object.entries(errors);
 
   useEffect(() => {
@@ -187,7 +192,8 @@ export function ListingEditor({
     setEdits(compacted);
     const payload = dropUntouchedEmptySections(compacted, initialValues);
 
-    const parsed = parseListingEdits(payload, { admin: config.admin });
+    // Both modes may send every section; the server decides what waits for review.
+    const parsed = parseListingEdits(payload, { admin: true });
     if (!parsed.ok) {
       showErrors(parsed.errors);
       setNotice({ tone: 'error', text: config.fixFirst });
@@ -246,17 +252,22 @@ export function ListingEditor({
 
           {errorList.length > 0 ? <ErrorSummary errors={errorList} onJump={goToSection} /> : null}
 
-          {config.admin ? (
-            <TabsContent value="place" className="mt-4 flex flex-col gap-4">
-              <IdentitySection value={edits.identity} onChange={(value) => setSection('identity', value)} />
-              <LocationSection
-                value={edits.location}
-                onChange={(value) => setSection('location', value)}
-                city={place?.city}
-                state={place?.state}
-              />
-            </TabsContent>
-          ) : null}
+          <TabsContent value="place" className="mt-4 flex flex-col gap-4">
+            {config.placeHint ? (
+              <p className="flex items-start gap-2 rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300">
+                <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-green-700 dark:text-green-400" />
+                {config.placeHint}
+              </p>
+            ) : null}
+            <IdentitySection value={edits.identity} onChange={(value) => setSection('identity', value)} />
+            <LocationSection
+              value={edits.location}
+              onChange={(value) => setSection('location', value)}
+              city={place?.city}
+              state={place?.state}
+              cityNote={config.cityNote}
+            />
+          </TabsContent>
 
           <TabsContent value="hours" className="mt-4 flex flex-col gap-4">
             <StatusSection value={edits.status} onChange={(value) => setSection('status', value)} />

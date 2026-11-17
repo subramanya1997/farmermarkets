@@ -7,7 +7,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Field, FieldError, SectionCard, TextArea, TextInput, useFieldError } from '../fields';
 
 /**
- * Admin-only sections: the market's name, street address and map pin.
+ * The market's name, street address and map pin. Admins publish these
+ * directly; organizers suggest changes that always wait for review.
  * City and state stay read-only because they decide the city page URL.
  */
 
@@ -69,11 +70,14 @@ export function LocationSection({
   onChange,
   city,
   state,
+  cityNote = 'City and state decide which city page lists this market, so they cannot be changed here.',
 }: {
   value: Location | undefined;
   onChange: (next: Location) => void;
   city?: string;
   state?: string;
+  /** The line under city and state explaining why they are read-only. */
+  cityNote?: string;
 }) {
   const location: Location = value ?? {};
   const set = (patch: Partial<Location>) => onChange({ ...location, ...patch });
@@ -130,9 +134,7 @@ export function LocationSection({
           )}
         </Field>
       </div>
-      <p className="-mt-3 text-xs text-zinc-500 dark:text-zinc-400">
-        City and state decide which city page lists this market, so they cannot be changed here.
-      </p>
+      <p className="-mt-3 text-xs text-zinc-500 dark:text-zinc-400">{cityNote}</p>
 
       <Field
         label="Location note"

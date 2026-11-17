@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { ArrowUpRight, Inbox, LayoutDashboard, Store, Users } from 'lucide-react';
 import { requireAdmin } from '@/lib/organizer';
-import { AdminMobileBar, AdminSidebar } from '@/components/admin/AdminNav';
+import { DashboardShell, type DashboardNavGroup } from '@/components/dashboard/DashboardShell';
 import { cachedReviewQueue, waitingCount } from './_lib/queue';
 
 export const dynamic = 'force-dynamic';
@@ -13,15 +14,29 @@ export const metadata: Metadata = {
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const admin = await requireAdmin();
+  // Claims, updates, photos and older requests waiting for a decision.
   const pending = waitingCount(await cachedReviewQueue());
 
+  const groups: DashboardNavGroup[] = [
+    {
+      items: [
+        { href: '/admin', label: 'Overview', icon: <LayoutDashboard />, exact: true },
+        { href: '/admin/review', label: 'Review queue', icon: <Inbox />, also: ['/admin/claims', '/admin/changes'], count: pending },
+        { href: '/admin/markets', label: 'Markets', icon: <Store /> },
+        { href: '/admin/organizers', label: 'Organizers', icon: <Users /> },
+      ],
+    },
+  ];
+
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-zinc-50 lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] dark:bg-zinc-950">
-      <AdminSidebar email={admin.email} pending={pending} />
-      <div className="min-w-0">
-        <AdminMobileBar email={admin.email} pending={pending} />
-        <div className="px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</div>
-      </div>
-    </div>
+    <DashboardShell
+      title="Admin"
+      groups={groups}
+      links={[{ href: '/', label: 'View site', icon: <ArrowUpRight /> }]}
+      email={admin.email}
+      mobileLink={pending > 0 ? { href: '/admin/review', label: `${pending} waiting`, icon: <Inbox /> } : undefined}
+    >
+      {children}
+    </DashboardShell>
   );
 }
