@@ -1,6 +1,8 @@
 /**
- * Better Auth for market organizer accounts: email + password, verified
- * email required, password reset by email. Sessions live in Postgres (Neon)
+ * Better Auth for market organizer accounts. The main way in is a one-time
+ * code sent by email (no password; the first code creates the account and
+ * proves the address). Email + password still works for accounts that set
+ * one, with a verified email required and password reset by email. Sessions live in Postgres (Neon)
  * next to the rest of the organizer tables.
  *
  * `transaction: false` because `src/db/index.ts` uses the neon-http driver,
@@ -10,8 +12,9 @@ import 'server-only';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { nextCookies } from 'better-auth/next-js';
+import { emailOTP } from 'better-auth/plugins';
 import { getDb, dbSchema } from '@/db';
-import { existingAccountEmail, resetPasswordEmail, sendOrganizerEmail, verificationEmail } from './organizerEmails';
+import { existingAccountEmail, resetPasswordEmail, sendOrganizerEmail, signInCodeEmail, verificationEmail } from './organizerEmails';
 import { SITE_URL } from './site';
 
 function createAuth() {
@@ -80,12 +83,30 @@ function createAuth() {
         '/sign-up/email': { window: 60 * 10, max: 3 },
         '/request-password-reset': { window: 60 * 10, max: 3 },
         '/send-verification-email': { window: 60 * 10, max: 3 },
+        '/email-otp/send-verification-otp': { window: 60 * 10, max: 5 },
+        '/sign-in/email-otp': { window: 60, max: 5 },
       },
     },
     advanced: {
       useSecureCookies: process.env.NODE_ENV === 'production',
     },
-    plugins: [nextCookies()],
+    plugins: [
+      // Sign in with a 6 digit code. A new address gets an account, already
+      // verified because the code proved it; an unverified password account
+      // for the address loses its unproven password on first code sign-in.
+      emailOTP({
+        otpLength: 6,
+        expiresIn: 10 * 60,
+        allowedAttempts: 5,
+        storeOTP: 'hashed',
+        sendVerificationOTP: async ({ email, otp, type }) => {
+          if (type !== 'sign-in') return;
+          await sendOrganizerEmail(email, signInCodeEmail(otp));
+        },
+      }),
+      // Last, so it sets cookies for every endpoint above.
+      nextCookies(),
+    ],
   });
 }
 

@@ -29,7 +29,7 @@ import {
   type ListingSection,
 } from './listingEdits';
 import { listingEditsFromMarket } from './organizerOverlay';
-import { adminEmails, adminReviewAlertEmail, decisionEmail, sendOrganizerEmail } from './organizerEmails';
+import { adminEmails, adminReviewAlertEmail, decisionEmail, managerInviteEmail, sendOrganizerEmail } from './organizerEmails';
 import { getPostHogServer } from './posthogServer';
 import { absoluteUrl } from './site';
 import marketPopularity from '../../data/market-popularity.json';
@@ -775,6 +775,105 @@ export async function addManagerByEmail(admin: SessionUser, market: FarmerMarket
   return { ok: true, message: 'Access granted.' };
 }
 
+/** Who approved access granted by the outreach bot, in `market_managers.approved_by` and `market_claims.reviewed_by`. */
+export const OUTREACH_BOT_REVIEWER = 'outreach-bot';
+
+export interface BotGrantInput {
+  email: string;
+  name?: string;
+  role?: string;
+  note?: string;
+  /** Also send our own "you can now update this listing" email with the claim link. */
+  notify?: boolean;
+}
+
+export type BotGrantResult =
+  | {
+      ok: true;
+      claimUrl: string;
+      createdAccount: boolean;
+      alreadyManager: boolean;
+      notified: boolean;
+    }
+  | { ok: false; status: 400 | 403; error: string };
+
+/**
+ * The outreach bot (see docs/organizer-bot.md) vouches for someone the
+ * operator conversation already confirmed: they get an account for their
+ * email, if they have none, and manager access to the market, recorded as
+ * an approved claim. They sign in at /markets/<slug>/claim with a code sent
+ * to that email, so access only ever reaches whoever reads that inbox.
+ *
+ * A new account starts verified (it has no password, so nobody else can use
+ * it). An existing account is left as it is: an unverified one is proven by
+ * the first code sign-in, which also drops any password set before that.
+ */
+export async function grantMarketAccessFromBot(market: FarmerMarket, input: BotGrantInput): Promise<BotGrantResult> {
+  const email = input.email.trim().toLowerCase();
+  if (adminEmails().includes(email)) {
+    return { ok: false, status: 403, error: 'Admin accounts cannot be set up through the bot.' };
+  }
+  const db = getDb();
+  const name = input.name?.trim().slice(0, 120) || '';
+
+  let [account] = await db.select({ id: userTable.id }).from(userTable).where(eq(userTable.email, email)).limit(1);
+  let createdAccount = false;
+  if (!account) {
+    [account] = await db
+      .insert(userTable)
+      .values({ id: crypto.randomUUID(), email, name, emailVerified: true })
+      .onConflictDoNothing()
+      .returning({ id: userTable.id });
+    if (account) {
+      createdAccount = true;
+    } else {
+      // Created by a sign-up in the meantime.
+      [account] = await db.select({ id: userTable.id }).from(userTable).where(eq(userTable.email, email)).limit(1);
+    }
+  }
+
+  const granted = await db
+    .insert(marketManagers)
+    .values({ userId: account.id, marketId: market.id, approvedBy: OUTREACH_BOT_REVIEWER })
+    .onConflictDoNothing()
+    .returning({ userId: marketManagers.userId });
+  const alreadyManager = granted.length === 0;
+
+  if (!alreadyManager) {
+    const now = new Date();
+    const review = { status: 'approved' as const, reviewNote: 'Set up by the outreach bot.', reviewedAt: now, reviewedBy: OUTREACH_BOT_REVIEWER };
+    // The paper trail admins already read: a claim they had waiting is
+    // approved, otherwise an approved claim is recorded for the grant.
+    const settled = await db
+      .update(marketClaims)
+      .set(review)
+      .where(and(eq(marketClaims.userId, account.id), eq(marketClaims.marketId, market.id), eq(marketClaims.status, 'pending')))
+      .returning({ id: marketClaims.id });
+    if (settled.length === 0) {
+      await db.insert(marketClaims).values({
+        userId: account.id,
+        marketId: market.id,
+        role: input.role?.trim().slice(0, 80) || 'Organizer',
+        message: input.note?.trim().slice(0, 1000) || null,
+        ...review,
+      });
+    }
+    capture(account.id, 'Market Access Granted By Bot', { market_id: market.id, created_account: createdAccount });
+  }
+
+  const notified = input.notify
+    ? await sendOrganizerEmail(email, managerInviteEmail({ marketName: market.name, marketSlug: market.slug }))
+    : false;
+
+  return {
+    ok: true,
+    claimUrl: absoluteUrl(`/markets/${market.slug}/claim`),
+    createdAccount,
+    alreadyManager,
+    notified,
+  };
+}
+
 /** Numbers and recent activity for the admin overview. */
 export async function adminOverview() {
   const db = getDb();
@@ -973,7 +1072,7 @@ async function alertAdmins(input: {
       kind: input.kind,
       marketName: input.market.name,
       marketSlug: input.market.slug,
-      organizerName: input.user.name,
+      organizerName: input.user.name || input.user.email,
       organizerEmail: input.user.email,
       summary: input.summary,
       reviewUrl: absoluteUrl(input.reviewPath),

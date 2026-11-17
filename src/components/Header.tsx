@@ -11,6 +11,7 @@ import {
   CreditCard,
   Info,
   LocateFixed,
+  LogIn,
   MapPin,
   Menu,
   Search,
@@ -38,6 +39,11 @@ const DESKTOP_NAV = [
   { name: "Blog", href: "/blog" },
   { name: "About", href: "/about" },
 ];
+
+// One static link for everyone: the header renders on static pages, so it
+// never looks up a session. Sign-in sends an organizer who is already signed
+// in straight on to their dashboard.
+const SIGN_IN_HREF = "/sign-in";
 
 const MENU_NAV: { name: string; hint: string; href: string; icon: LucideIcon }[] = [
   { name: "Find a market", hint: "Search 9,000+ markets near you", href: "/", icon: MapPin },
@@ -84,148 +90,160 @@ export function Header({ states, topics }: HeaderProps) {
             Farmer Markets
           </Link>
 
-          {/* Desktop navigation */}
-          <nav className="hidden md:flex items-center gap-4">
-            {DESKTOP_NAV.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => trackEvent("Navigation Selected", { destination: item.href, location: "desktop_header" })}
-              >
-                <Button variant="ghost" className="hover:text-green-600">
-                  {item.name}
-                </Button>
-              </Link>
-            ))}
-          </nav>
-
-          {/* Mobile menu */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="hover:text-green-600">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              showClose={false}
-              className="w-full gap-0 overflow-y-auto border-l-0 bg-zinc-50 p-0 sm:max-w-sm dark:bg-zinc-950"
-            >
-              {/* Top bar. Below `sm` the panel is full width and covers the
-                  page header, so it carries the brand; wider, the page's own
-                  logo stays visible beside the panel and a quiet label is
-                  enough. */}
-              <div className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between border-b border-zinc-200 bg-white/90 px-5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
-                <SheetTitle className="sr-only">Menu</SheetTitle>
-                <span aria-hidden="true" className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-xl font-bold text-transparent sm:hidden">
-                  Farmer Markets
-                </span>
-                <span aria-hidden="true" className="hidden text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 sm:block dark:text-zinc-400">
-                  Menu
-                </span>
-                <SheetDescription className="sr-only">Site navigation</SheetDescription>
-                <SheetClose className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">
-                  <X className="h-5 w-5" />
-                  <span className="sr-only">Close menu</span>
-                </SheetClose>
-              </div>
-
-              <div className="flex flex-col gap-7 px-5 pb-10 pt-5">
-                {/* Search shortcut: the explorer on the homepage. */}
+          <div className="flex items-center gap-1 md:gap-4">
+            {/* Desktop navigation */}
+            <nav className="hidden md:flex items-center gap-4">
+              {DESKTOP_NAV.map((item) => (
                 <Link
-                  href="/"
-                  onClick={() => go("/")}
-                  className="menu-rise flex h-12 items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 text-[15px] text-zinc-500 shadow-sm transition-colors hover:border-green-600/40 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400"
-                  style={rise(row++)}
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => trackEvent("Navigation Selected", { destination: item.href, location: "desktop_header" })}
                 >
-                  <Search aria-hidden="true" className="h-4 w-4 text-green-700 dark:text-green-400" />
-                  Search markets by name or place
+                  <Button variant="ghost" className="hover:text-green-600">
+                    {item.name}
+                  </Button>
                 </Link>
+              ))}
+            </nav>
 
-                <nav aria-label="Main">
-                  <ul className="overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-                    {MENU_NAV.map(({ name, hint, href, icon: Icon }) => {
-                      const active = isActive(href);
-                      return (
-                        <li key={href} className="menu-rise border-b border-zinc-100 last:border-b-0 dark:border-zinc-800" style={rise(row++)}>
-                          <Link
-                            href={href}
-                            onClick={() => go(href)}
-                            aria-current={active ? "page" : undefined}
-                            className="group flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-green-50/70 dark:hover:bg-green-900/20"
-                          >
-                            <span
-                              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors ${
-                                active
-                                  ? "bg-green-700 text-white"
-                                  : "bg-green-50 text-green-700 group-hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400"
-                              }`}
+            {/* Organizer log in, at every width. */}
+            <Link
+              href={SIGN_IN_HREF}
+              onClick={() => trackEvent("Navigation Selected", { destination: SIGN_IN_HREF, location: "header_log_in" })}
+              className="inline-flex h-9 items-center gap-1.5 rounded-md border border-green-700/30 px-3 text-sm font-medium text-green-800 transition-colors hover:bg-green-50 hover:text-green-900 dark:border-green-400/30 dark:text-green-300 dark:hover:bg-green-900/30"
+            >
+              <LogIn aria-hidden="true" className="h-4 w-4" />
+              Log in
+            </Link>
+
+            {/* Mobile menu */}
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon" className="hover:text-green-600">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="right"
+                showClose={false}
+                className="w-full gap-0 overflow-y-auto border-l-0 bg-zinc-50 p-0 sm:max-w-sm dark:bg-zinc-950"
+              >
+                {/* Top bar. Below `sm` the panel is full width and covers the
+                    page header, so it carries the brand; wider, the page's own
+                    logo stays visible beside the panel and a quiet label is
+                    enough. */}
+                <div className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between border-b border-zinc-200 bg-white/90 px-5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
+                  <SheetTitle className="sr-only">Menu</SheetTitle>
+                  <span aria-hidden="true" className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-xl font-bold text-transparent sm:hidden">
+                    Farmer Markets
+                  </span>
+                  <span aria-hidden="true" className="hidden text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 sm:block dark:text-zinc-400">
+                    Menu
+                  </span>
+                  <SheetDescription className="sr-only">Site navigation</SheetDescription>
+                  <SheetClose className="flex h-10 w-10 items-center justify-center rounded-full text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100">
+                    <X className="h-5 w-5" />
+                    <span className="sr-only">Close menu</span>
+                  </SheetClose>
+                </div>
+
+                <div className="flex flex-col gap-7 px-5 pb-10 pt-5">
+                  {/* Search shortcut: the explorer on the homepage. */}
+                  <Link
+                    href="/"
+                    onClick={() => go("/")}
+                    className="menu-rise flex h-12 items-center gap-3 rounded-xl border border-zinc-200 bg-white px-4 text-[15px] text-zinc-500 shadow-sm transition-colors hover:border-green-600/40 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400"
+                    style={rise(row++)}
+                  >
+                    <Search aria-hidden="true" className="h-4 w-4 text-green-700 dark:text-green-400" />
+                    Search markets by name or place
+                  </Link>
+
+                  <nav aria-label="Main">
+                    <ul className="overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+                      {MENU_NAV.map(({ name, hint, href, icon: Icon }) => {
+                        const active = isActive(href);
+                        return (
+                          <li key={href} className="menu-rise border-b border-zinc-100 last:border-b-0 dark:border-zinc-800" style={rise(row++)}>
+                            <Link
+                              href={href}
+                              onClick={() => go(href)}
+                              aria-current={active ? "page" : undefined}
+                              className="group flex items-center gap-3.5 px-4 py-3.5 transition-colors hover:bg-green-50/70 dark:hover:bg-green-900/20"
                             >
-                              <Icon aria-hidden="true" className="h-[18px] w-[18px]" />
-                            </span>
-                            <span className="min-w-0 flex-1">
-                              <span className="block font-semibold text-zinc-900 dark:text-zinc-50">{name}</span>
-                              <span className="block truncate text-[13px] text-zinc-500 dark:text-zinc-400">{hint}</span>
-                            </span>
-                            <ChevronRight
-                              aria-hidden="true"
-                              className="h-4 w-4 shrink-0 text-zinc-300 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-green-600 dark:text-zinc-600"
-                            />
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </nav>
+                              <span
+                                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors ${
+                                  active
+                                    ? "bg-green-700 text-white"
+                                    : "bg-green-50 text-green-700 group-hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400"
+                                }`}
+                              >
+                                <Icon aria-hidden="true" className="h-[18px] w-[18px]" />
+                              </span>
+                              <span className="min-w-0 flex-1">
+                                <span className="block font-semibold text-zinc-900 dark:text-zinc-50">{name}</span>
+                                <span className="block truncate text-[13px] text-zinc-500 dark:text-zinc-400">{hint}</span>
+                              </span>
+                              <ChevronRight
+                                aria-hidden="true"
+                                className="h-4 w-4 shrink-0 text-zinc-300 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-green-600 dark:text-zinc-600"
+                              />
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </nav>
 
-                <section aria-labelledby="menu-topics">
-                  <h2 id="menu-topics" className="menu-rise mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400" style={rise(row++)}>
-                    Browse by what you need
-                  </h2>
-                  <ul className="grid grid-cols-2 gap-2">
-                    {topics.map(({ slug, label, href }) => {
-                      const Icon = TOPIC_ICONS[slug] ?? MapPin;
-                      return (
-                        <li key={slug} className="menu-rise" style={rise(row++)}>
-                          <Link
-                            href={href}
-                            onClick={() => go(href)}
-                            className="flex h-full items-start gap-2.5 rounded-xl border border-zinc-200 bg-white p-3 text-sm font-medium leading-snug text-zinc-800 transition-colors hover:border-green-600/40 hover:bg-green-50/60 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-green-900/20"
-                          >
-                            <Icon aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-green-700 dark:text-green-400" />
-                            {label}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </section>
-
-                {states.length > 0 && (
-                  <section aria-labelledby="menu-states">
-                    <h2 id="menu-states" className="menu-rise mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400" style={rise(row++)}>
-                      Popular states
+                  <section aria-labelledby="menu-topics">
+                    <h2 id="menu-topics" className="menu-rise mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400" style={rise(row++)}>
+                      Browse by what you need
                     </h2>
-                    <ul className="flex flex-wrap gap-2">
-                      {states.map(({ name, href, marketCount }) => (
-                        <li key={href} className="menu-rise" style={rise(row++)}>
-                          <Link
-                            href={href}
-                            onClick={() => go(href)}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 text-sm text-zinc-800 transition-colors hover:border-green-600/40 hover:text-green-800 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:text-green-300"
-                          >
-                            {name}
-                            <span className="text-xs text-zinc-400">{marketCount.toLocaleString()}</span>
-                          </Link>
-                        </li>
-                      ))}
+                    <ul className="grid grid-cols-2 gap-2">
+                      {topics.map(({ slug, label, href }) => {
+                        const Icon = TOPIC_ICONS[slug] ?? MapPin;
+                        return (
+                          <li key={slug} className="menu-rise" style={rise(row++)}>
+                            <Link
+                              href={href}
+                              onClick={() => go(href)}
+                              className="flex h-full items-start gap-2.5 rounded-xl border border-zinc-200 bg-white p-3 text-sm font-medium leading-snug text-zinc-800 transition-colors hover:border-green-600/40 hover:bg-green-50/60 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-green-900/20"
+                            >
+                              <Icon aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-green-700 dark:text-green-400" />
+                              {label}
+                            </Link>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </section>
-                )}
-              </div>
-            </SheetContent>
-          </Sheet>
+
+                  {states.length > 0 && (
+                    <section aria-labelledby="menu-states">
+                      <h2 id="menu-states" className="menu-rise mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400" style={rise(row++)}>
+                        Popular states
+                      </h2>
+                      <ul className="flex flex-wrap gap-2">
+                        {states.map(({ name, href, marketCount }) => (
+                          <li key={href} className="menu-rise" style={rise(row++)}>
+                            <Link
+                              href={href}
+                              onClick={() => go(href)}
+                              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3.5 py-1.5 text-sm text-zinc-800 transition-colors hover:border-green-600/40 hover:text-green-800 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:text-green-300"
+                            >
+                              {name}
+                              <span className="text-xs text-zinc-400">{marketCount.toLocaleString()}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>

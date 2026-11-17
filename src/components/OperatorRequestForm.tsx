@@ -296,10 +296,11 @@ export function OperatorRequestForm() {
  * reviewed before it goes live.
  */
 function ClaimWithAccount({ marketSlug }: { marketSlug: string | null }) {
-  const next = marketSlug ? `/dashboard/claim?market=${marketSlug}` : '/dashboard';
-  const query = `?next=${encodeURIComponent(next)}`;
+  // A market's claim page signs in with an emailed code and creates the
+  // account on the way; without a market, sign-in does the same.
+  const start = marketSlug ? `/markets/${marketSlug}/claim` : '/sign-in?next=%2Fdashboard%2Fclaim';
   const steps = [
-    'Create a free organizer account and confirm your email.',
+    'Enter your email and the code we send you. No password needed.',
     marketSlug ? 'Send a short claim for your market.' : 'Find your market and send a short claim.',
     'Once we confirm it, update hours, location, contact details and photos yourself.',
   ];
@@ -327,19 +328,13 @@ function ClaimWithAccount({ marketSlug }: { marketSlug: string | null }) {
       </ol>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <Link
-          href={`/sign-up${query}`}
+          href={start}
           onClick={() => trackEvent('Operator Account Start', { has_market: Boolean(marketSlug) })}
           className={buttonVariants({ className: 'h-11 bg-green-700 px-6 text-white hover:bg-green-800 sm:h-9' })}
         >
           <UserPlus aria-hidden="true" />
-          Create an organizer account
+          {marketSlug ? 'Claim this listing' : 'Sign in or create an account'}
         </Link>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          Already have one?{' '}
-          <Link href={`/sign-in${query}`} className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400">
-            Sign in
-          </Link>
-        </p>
       </div>
     </div>
   );

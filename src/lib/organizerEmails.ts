@@ -42,6 +42,36 @@ export function verificationEmail(url: string): EmailContent {
   };
 }
 
+export function signInCodeEmail(code: string): EmailContent {
+  return {
+    subject: `${code} is your Farmer Markets sign-in code`,
+    text: `Your sign-in code for Farmer Markets is ${code}\n\nEnter it on the page where you asked for it. The code works for 10 minutes. If you did not ask for it, ignore this email.`,
+    html: emailLayout({
+      heading: 'Your sign-in code',
+      body: `<p ${EMAIL_P}>Enter this code on the page where you asked for it:</p>
+<p style="margin:0 0 16px;font-size:32px;font-weight:700;letter-spacing:8px;color:#15803d;font-family:ui-monospace,Menlo,monospace">${escapeHtml(code)}</p>
+<p ${EMAIL_P}>The code works for 10 minutes. If you did not ask for it, you can ignore this email.</p>`,
+      footer: FOOTER,
+    }),
+  };
+}
+
+/** Sent when the outreach bot gives someone access to a market, if it asks us to. */
+export function managerInviteEmail(input: { marketName: string; marketSlug: string }): EmailContent {
+  const claimUrl = absoluteUrl(`/markets/${input.marketSlug}/claim`);
+  return {
+    subject: `You can now update ${input.marketName} on Farmer Markets`,
+    text: `You have been set up to manage the ${input.marketName} listing on Farmer Markets, so you can update its hours and details and add photos of the market and its vendors.\n\nOpen this link and enter this email address. We will send you a code to sign in, no password needed:\n${claimUrl}`,
+    html: emailLayout({
+      heading: `Update ${escapeHtml(input.marketName)}`,
+      body: `<p ${EMAIL_P}>You have been set up to manage the <strong>${escapeHtml(input.marketName)}</strong> listing on Farmer Markets, so you can update its hours and details and add photos of the market and its vendors.</p>
+<p ${EMAIL_P}><a href="${escapeHtml(claimUrl)}" ${BUTTON}>Open your listing</a></p>
+<p ${EMAIL_P}>Enter this email address and we will send you a code to sign in. No password needed.</p>`,
+      footer: 'You are getting this because you were in touch with Farmer Markets about this market.',
+    }),
+  };
+}
+
 export function resetPasswordEmail(url: string): EmailContent {
   return {
     subject: 'Reset your Farmer Markets password',
