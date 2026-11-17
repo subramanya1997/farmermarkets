@@ -5,7 +5,8 @@ import {
   AddButton,
   Field,
   FieldGroup,
-  NativeSelect,
+  SelectInput,
+  optionsFrom,
   RowCard,
   SectionCard,
   StringList,
@@ -155,17 +156,12 @@ export function ContactSection({
               <div className="grid gap-3 sm:grid-cols-[12rem_1fr]">
                 <Field label="Platform" path={`contact.social_profiles.${index}.platform`}>
                   {(control) => (
-                    <NativeSelect
+                    <SelectInput
                       {...control}
                       value={row.platform}
-                      onChange={(event) => updateSocial(index, { platform: event.target.value as SocialProfile['platform'] })}
-                    >
-                      {SOCIAL_PLATFORMS.map((code) => (
-                        <option key={code} value={code}>
-                          {SOCIAL_LABELS[code]}
-                        </option>
-                      ))}
-                    </NativeSelect>
+                      options={optionsFrom(SOCIAL_PLATFORMS, SOCIAL_LABELS)}
+                      onChange={(platform) => (platform ? updateSocial(index, { platform }) : undefined)}
+                    />
                   )}
                 </Field>
                 <Field label="Profile link" path={`contact.social_profiles.${index}.url`}>

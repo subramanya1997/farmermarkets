@@ -137,8 +137,16 @@ export function ListingEditor({
     if (!strip || !active) return;
     const stripBox = strip.getBoundingClientRect();
     const tabBox = active.getBoundingClientRect();
-    if (tabBox.left < stripBox.left) strip.scrollBy({ left: tabBox.left - stripBox.left - 16, behavior: 'smooth' });
-    else if (tabBox.right > stripBox.right) strip.scrollBy({ left: tabBox.right - stripBox.right + 16, behavior: 'smooth' });
+    // Not smooth: a second scroll (the page, below) would cut a smooth one short.
+    if (tabBox.left < stripBox.left) strip.scrollLeft += tabBox.left - stripBox.left - 16;
+    else if (tabBox.right > stripBox.right) strip.scrollLeft += tabBox.right - stripBox.right + 16;
+    // The strip sticks to the top on a phone. Opened from far down a long
+    // tab, the next one starts from its own top.
+    const tabsRoot = strip.parentElement;
+    const scroller = strip.closest('main');
+    if (tabsRoot && scroller && tabsRoot.getBoundingClientRect().top < scroller.getBoundingClientRect().top) {
+      tabsRoot.scrollIntoView({ block: 'start' });
+    }
   }, [tab]);
 
   const payloadKey = useMemo(() => payloadFingerprint(edits, initialValues), [edits, initialValues]);
@@ -234,6 +242,9 @@ export function ListingEditor({
 
   const errorTabs = new Set(errorList.map(([path]) => tabFor(sectionOf(path), tabs)));
   const showBar = tab !== 'photos' || dirty;
+  // On a phone the bar costs an eighth of the screen, so it waits until there
+  // is something to send or to say.
+  const quietBar = !dirty && !notice && !sending;
 
   return (
     <FieldErrorsContext.Provider value={errors}>
@@ -243,7 +254,10 @@ export function ListingEditor({
         <Tabs value={tab} onValueChange={(value) => setTab(value as TabId)}>
           {/* Underline tabs, left aligned. The strip scrolls sideways when it
               does not fit, so no tab is ever cut off out of reach. */}
-          <div ref={tabStrip} className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+          <div
+            ref={tabStrip}
+            className="sticky top-0 z-20 -mx-4 overflow-x-auto bg-white px-4 [scrollbar-width:none] sm:static sm:z-auto sm:mx-0 sm:bg-transparent sm:px-0 dark:bg-zinc-900 sm:dark:bg-transparent [&::-webkit-scrollbar]:hidden"
+          >
             <TabsList
               variant="line"
               className="w-max min-w-full justify-start gap-1 border-b border-zinc-200 p-0 group-data-[orientation=horizontal]/tabs:h-auto dark:border-zinc-800"
@@ -323,6 +337,7 @@ export function ListingEditor({
             hasPending={hasPending}
             sending={sending}
             notice={notice}
+            quiet={quietBar}
             onSubmit={submit}
           />
         ) : null}
@@ -355,13 +370,14 @@ function ErrorSummary({
       <ul className="mt-2 flex flex-col gap-1">
         {[...bySection.entries()].map(([section, messages]) => (
           <li key={section ?? 'other'}>
-            <button
+            <Button
               type="button"
+              variant="link"
               onClick={() => onJump(section)}
-              className="min-h-9 text-left underline decoration-red-300 underline-offset-4 hover:decoration-red-700"
+              className="h-auto min-h-9 justify-start p-0 text-left font-normal whitespace-normal text-current underline decoration-red-300 underline-offset-4 hover:decoration-red-700"
             >
               {section ? SECTION_LABELS[section] : 'Listing'}: {[...new Set(messages)].join('. ')}
-            </button>
+            </Button>
           </li>
         ))}
       </ul>
@@ -375,6 +391,7 @@ function SubmitBar({
   hasPending,
   sending,
   notice,
+  quiet,
   onSubmit,
 }: {
   config: ModeConfig;
@@ -382,6 +399,8 @@ function SubmitBar({
   hasPending: boolean;
   sending: boolean;
   notice: Notice;
+  /** Nothing to send or say: hidden on phones. */
+  quiet: boolean;
   onSubmit: () => void;
 }) {
   const status = notice
@@ -393,7 +412,7 @@ function SubmitBar({
         : 'No changes yet.';
 
   return (
-    <div className="sticky bottom-0 z-30 -mx-4 mt-6 border-t border-zinc-200 bg-white/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur supports-[backdrop-filter]:bg-white/80 sm:mx-0 sm:rounded-xl sm:border sm:px-4 sm:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/95 dark:supports-[backdrop-filter]:bg-zinc-900/80">
+    <div className={cn(quiet && 'hidden sm:block', 'sticky bottom-0 z-30 -mx-4 mt-6 border-t border-zinc-200 bg-white/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur supports-[backdrop-filter]:bg-white/80 sm:mx-0 sm:rounded-xl sm:border sm:px-4 sm:shadow-sm dark:border-zinc-800 dark:bg-zinc-900/95 dark:supports-[backdrop-filter]:bg-zinc-900/80')}>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div aria-live="polite" className="min-h-5 text-sm">
           {notice ? (

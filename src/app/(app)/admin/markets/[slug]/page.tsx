@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import {
   MAX_PHOTOS_PER_MARKET,
   MAX_PHOTO_BYTES,
@@ -26,6 +26,7 @@ import { RevokeManagerButton } from '@/components/admin/RevokeManagerButton';
 import { Muted, Panel, StatusPill, TimeAgo } from '@/components/admin/bits';
 import { formatTimestamp, placeLabel, timeAgo } from '@/components/admin/format';
 import { startOrganizerPreviewAction } from '@/app/(app)/dashboard/actions';
+import { Button } from '@/components/ui/button';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,10 +75,6 @@ export default async function AdminMarketPage({ params }: { params: Promise<{ sl
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <header className="space-y-1">
-        <Link href="/admin/markets" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
-          <ArrowLeft className="size-3.5" aria-hidden="true" />
-          Markets
-        </Link>
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
           <div className="min-w-0">
             <h1 className="text-2xl font-semibold tracking-tight">{market.name}</h1>
@@ -94,13 +91,14 @@ export default async function AdminMarketPage({ params }: { params: Promise<{ sl
               <ArrowUpRight aria-hidden="true" className="size-3.5" />
             </a>
             <form action={startOrganizerPreviewAction.bind(null, market.slug)}>
-              <button
+              <Button
                 type="submit"
-                className="inline-flex items-center gap-1 font-medium text-green-700 hover:underline dark:text-green-400"
+                variant="link"
+                className="h-auto gap-1 p-0 text-green-700 has-[>svg]:px-0 dark:text-green-400"
               >
                 Preview as organizer
                 <ArrowRight aria-hidden="true" className="size-3.5" />
-              </button>
+              </Button>
             </form>
           </div>
         </div>

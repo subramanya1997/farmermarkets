@@ -3,6 +3,7 @@
 import { useContext, useId, useState } from 'react';
 import { Plus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import {
   AMENITY_CODES,
   ASSISTANCE_CODES,
@@ -21,7 +22,8 @@ import {
   FieldError,
   FieldErrorsContext,
   FieldGroup,
-  NativeSelect,
+  SelectInput,
+  optionsFrom,
   RowCard,
   SectionCard,
   TextInput,
@@ -109,17 +111,12 @@ export function PaymentsSection({
                 </Field>
                 <Field label="Type" path={`payments.incentives.${index}.kind`}>
                   {(control) => (
-                    <NativeSelect
+                    <SelectInput
                       {...control}
                       value={row.kind}
-                      onChange={(event) => updateIncentive(index, { kind: event.target.value as Incentive['kind'] })}
-                    >
-                      {INCENTIVE_KINDS.map((code) => (
-                        <option key={code} value={code}>
-                          {INCENTIVE_LABELS[code]}
-                        </option>
-                      ))}
-                    </NativeSelect>
+                      options={optionsFrom(INCENTIVE_KINDS, INCENTIVE_LABELS)}
+                      onChange={(kind) => (kind ? updateIncentive(index, { kind }) : undefined)}
+                    />
                   )}
                 </Field>
               </div>
@@ -230,9 +227,9 @@ function TagInput({ items, onChange }: { items: string[]; onChange: (next: strin
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={inputId} className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+      <Label htmlFor={inputId} className="gap-1 leading-5 text-zinc-900 dark:text-zinc-100">
         Popular items <span className="font-normal text-zinc-500 dark:text-zinc-400">(optional)</span>
-      </label>
+      </Label>
       {items.length > 0 ? (
         <ul className="flex flex-wrap gap-2" aria-label="Items">
           {items.map((item, index) => (
@@ -241,14 +238,16 @@ function TagInput({ items, onChange }: { items: string[]; onChange: (next: strin
               className="inline-flex min-h-9 items-center gap-1 rounded-full border border-zinc-200 bg-zinc-50 py-1 pr-1 pl-3 text-sm dark:border-zinc-700 dark:bg-zinc-800"
             >
               {item}
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon"
                 onClick={() => onChange(items.filter((_, i) => i !== index))}
                 aria-label={`Remove ${item}`}
-                className="inline-flex size-8 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
+                className="size-8 rounded-full text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
               >
-                <X aria-hidden="true" className="size-4" />
-              </button>
+                <X aria-hidden="true" />
+              </Button>
             </li>
           ))}
         </ul>
@@ -314,36 +313,24 @@ export function AmenitiesSection({
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Parking" path="amenities.parking">
           {(control) => (
-            <NativeSelect
+            <SelectInput
               {...control}
-              value={amenities.parking ?? ''}
-              onChange={(event) =>
-                set({ parking: (event.target.value || undefined) as Amenities['parking'] })
-              }
-            >
-              <option value="">Not sure</option>
-              {AVAILABILITY.map((code) => (
-                <option key={code} value={code}>
-                  {AVAILABILITY_LABELS[code]}
-                </option>
-              ))}
-            </NativeSelect>
+              value={amenities.parking}
+              emptyLabel="Not sure"
+              options={optionsFrom(AVAILABILITY, AVAILABILITY_LABELS)}
+              onChange={(parking) => set({ parking })}
+            />
           )}
         </Field>
         <Field label="Pets" path="amenities.pets">
           {(control) => (
-            <NativeSelect
+            <SelectInput
               {...control}
-              value={amenities.pets ?? ''}
-              onChange={(event) => set({ pets: (event.target.value || undefined) as Amenities['pets'] })}
-            >
-              <option value="">Not sure</option>
-              {PET_RULES.map((code) => (
-                <option key={code} value={code}>
-                  {PET_LABELS[code]}
-                </option>
-              ))}
-            </NativeSelect>
+              value={amenities.pets}
+              emptyLabel="Not sure"
+              options={optionsFrom(PET_RULES, PET_LABELS)}
+              onChange={(pets) => set({ pets })}
+            />
           )}
         </Field>
       </div>

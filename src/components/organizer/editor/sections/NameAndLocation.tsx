@@ -1,10 +1,13 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useId, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import type { ListingEdits } from '@/lib/listingEdits';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Field, FieldError, SectionCard, TextArea, TextInput, useFieldError } from '../fields';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { Field, FieldError, GREEN_CHECK, SectionCard, TextArea, TextInput, useFieldError } from '../fields';
 
 /**
  * The market's name, street address and map pin. Admins publish these
@@ -13,6 +16,12 @@ import { Field, FieldError, SectionCard, TextArea, TextInput, useFieldError } fr
  */
 
 type Identity = NonNullable<ListingEdits['identity']>;
+/** MapLibre touches `window` on import, so the picker loads in the browser only. */
+const PinPickerMap = dynamic(() => import('../PinPickerMap'), {
+  ssr: false,
+  loading: () => <div className="h-full w-full animate-pulse bg-[#f6f6f2] dark:bg-zinc-900" />,
+});
+
 type Location = NonNullable<ListingEdits['location']>;
 type Coordinates = NonNullable<Location['coordinates']>;
 
@@ -99,7 +108,8 @@ export function LocationSection({
     set({ coordinates: coordsFromText(next.lat, next.lon) });
   }
 
-  const pinValid = coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lon);
+  const pinValid =
+    coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lon) && Math.abs(coords.lat) <= 90 && Math.abs(coords.lon) <= 180;
   const mapsUrl = pinValid ? `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lon}` : null;
   const pinError = useFieldError('location.coordinates');
   const mapId = useId();
@@ -118,10 +128,10 @@ export function LocationSection({
         )}
       </Field>
 
-      <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_9rem]">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_9rem]">
         <ReadOnly label="City" value={city} />
         <ReadOnly label="State" value={state} />
-        <Field label="ZIP code" optional path="location.zip_code">
+        <Field label="ZIP code" optional path="location.zip_code" className="col-span-2 sm:col-span-1">
           {(control) => (
             <TextInput
               {...control}
@@ -156,7 +166,19 @@ export function LocationSection({
 
       <fieldset className="flex min-w-0 flex-col gap-2">
         <legend className="mb-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">Map pin</legend>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <p className="-mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+          {pinValid ? 'Click the map or drag the pin to where the stalls are.' : 'Zoom in and click the map to drop the pin where the stalls are.'}
+        </p>
+        <div className="h-72 overflow-hidden rounded-lg border border-zinc-200 sm:h-80 dark:border-zinc-800">
+          <PinPickerMap
+            pin={pinValid ? { lat: coords.lat, lon: coords.lon } : undefined}
+            onChange={(next) => {
+              setText({ lat: coordText(next.lat), lon: coordText(next.lon) });
+              set({ coordinates: next });
+            }}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
           <Field label="Latitude" path="location.coordinates.lat">
             {(control) => (
               <TextInput
@@ -184,7 +206,7 @@ export function LocationSection({
         </div>
         <FieldError message={pinError} />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Decimal degrees. Latitude runs from -90 to 90, longitude from -180 to 180.{' '}
+          You can also type the exact numbers, in decimal degrees.{' '}
           {mapsUrl ? (
             <a
               href={mapsUrl}
@@ -202,16 +224,16 @@ export function LocationSection({
       <div className="flex items-start gap-3">
         <Checkbox
           id={mapId}
-          className="mt-0.5"
+          className={cn('mt-0.5', GREEN_CHECK)}
           checked={Boolean(location.suppress_map)}
-          onChange={(event) => set({ suppress_map: event.target.checked })}
+          onCheckedChange={(checked) => set({ suppress_map: checked === true })}
         />
-        <label htmlFor={mapId} className="text-sm">
+        <Label htmlFor={mapId} className="flex-col items-start gap-0.5 leading-5 font-normal">
           <span className="font-medium text-zinc-900 dark:text-zinc-100">Hide the map on the public page</span>
-          <span className="block text-xs text-zinc-500 dark:text-zinc-400">
+          <span className="text-xs text-zinc-500 dark:text-zinc-400">
             For markets without a fixed spot, or when the pin cannot be trusted.
           </span>
-        </label>
+        </Label>
       </div>
     </SectionCard>
   );

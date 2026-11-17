@@ -4,7 +4,8 @@ import { EVENT_KINDS, PROGRAM_KINDS, type ListingEdits } from '@/lib/listingEdit
 import {
   AddButton,
   Field,
-  NativeSelect,
+  SelectInput,
+  optionsFrom,
   RowCard,
   SectionCard,
   TextInput,
@@ -161,17 +162,12 @@ export function EventsSection({
             </Field>
             <Field label="Type" path={`events.${index}.kind`}>
               {(control) => (
-                <NativeSelect
+                <SelectInput
                   {...control}
                   value={row.kind}
-                  onChange={(event) => update(index, { kind: event.target.value as MarketEvent['kind'] })}
-                >
-                  {EVENT_KINDS.map((code) => (
-                    <option key={code} value={code}>
-                      {EVENT_LABELS[code]}
-                    </option>
-                  ))}
-                </NativeSelect>
+                  options={optionsFrom(EVENT_KINDS, EVENT_LABELS)}
+                  onChange={(kind) => (kind ? update(index, { kind }) : undefined)}
+                />
               )}
             </Field>
           </div>
@@ -290,17 +286,12 @@ export function ProgramsSection({
             </Field>
             <Field label="Type" path={`programs.${index}.kind`}>
               {(control) => (
-                <NativeSelect
+                <SelectInput
                   {...control}
                   value={row.kind}
-                  onChange={(event) => update(index, { kind: event.target.value as Program['kind'] })}
-                >
-                  {PROGRAM_KINDS.map((code) => (
-                    <option key={code} value={code}>
-                      {PROGRAM_LABELS[code]}
-                    </option>
-                  ))}
-                </NativeSelect>
+                  options={optionsFrom(PROGRAM_KINDS, PROGRAM_LABELS)}
+                  onChange={(kind) => (kind ? update(index, { kind }) : undefined)}
+                />
               )}
             </Field>
           </div>

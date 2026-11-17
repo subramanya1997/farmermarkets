@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Eye, Info, LayoutDashboard, LifeBuoy, Plus, Settings } from 'lucide-react';
 import { isAdmin, organizerPreviewMarket, requireOrganizer } from '@/lib/organizer';
+import { Button } from '@/components/ui/button';
 import { endOrganizerPreviewAction } from './actions';
 import { DashboardShell, type DashboardArea, type DashboardNavGroup, type DashboardNavItem } from '@/components/dashboard/DashboardShell';
 import { cachedOrganizerOverview } from './_lib/overview';
@@ -67,12 +68,13 @@ export default async function DashboardLayout({ children }: { children: ReactNod
             </span>
           </p>
           <form action={endOrganizerPreviewAction.bind(null, preview.slug)} className="shrink-0">
-            <button
+            <Button
               type="submit"
-              className="h-9 w-full rounded-md border border-sky-300 bg-white px-3 font-medium hover:bg-sky-100 sm:w-auto dark:border-sky-800 dark:bg-sky-950 dark:hover:bg-sky-900"
+              variant="outline"
+              className="w-full border-sky-300 bg-white hover:bg-sky-100 sm:w-auto dark:border-sky-800 dark:bg-sky-950 dark:hover:bg-sky-900"
             >
               Exit preview
-            </button>
+            </Button>
           </form>
         </div>
       ) : null}

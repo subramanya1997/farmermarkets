@@ -7,6 +7,7 @@ import { Loader2 } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import {
@@ -245,16 +246,16 @@ export function PasswordForm({ forgotHref }: { forgotHref: string }) {
       <div className="flex items-start gap-3">
         <Checkbox
           id={revokeId}
-          className="mt-0.5"
+          className="mt-0.5 bg-white data-[state=checked]:border-green-700 data-[state=checked]:bg-green-700 data-[state=checked]:text-white dark:bg-zinc-950 dark:data-[state=checked]:bg-green-700"
           checked={revokeOthers}
-          onChange={(event) => setRevokeOthers(event.target.checked)}
+          onCheckedChange={(checked) => setRevokeOthers(checked === true)}
         />
-        <label htmlFor={revokeId} className="text-sm">
+        <Label htmlFor={revokeId} className="flex-col items-start gap-0.5 leading-5 font-normal">
           <span className="font-medium text-zinc-900 dark:text-zinc-100">Sign out of other devices</span>
-          <span className="block text-xs text-zinc-500 dark:text-zinc-400">
+          <span className="text-xs text-zinc-500 dark:text-zinc-400">
             A good idea if you shared your password or signed in on a shared computer.
           </span>
-        </label>
+        </Label>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

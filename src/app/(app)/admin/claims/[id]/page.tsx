@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ShieldAlert, ShieldCheck } from 'lucide-react';
+import { ShieldAlert, ShieldCheck } from 'lucide-react';
 import { emailDomainHint, getClaimForReview, managersFor, requireAdmin } from '@/lib/organizer';
 import { DecisionForm } from '@/components/admin/DecisionForm';
 import { ExternalA, Fact, Facts, Muted, Panel, StatusPill, TimeAgo } from '@/components/admin/bits';
@@ -29,10 +29,6 @@ export default async function ClaimReviewPage({ params }: { params: Promise<{ id
   return (
     <div className="mx-auto max-w-4xl space-y-5">
       <div className="space-y-1">
-        <Link href="/admin/review" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
-          <ArrowLeft className="size-3.5" aria-hidden="true" />
-          Review queue
-        </Link>
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="text-2xl font-semibold tracking-tight">Claim for {market?.name ?? 'an unknown market'}</h1>
           <StatusPill status={claim.status} />

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, Clock, Info, MapPin, Pencil, ShieldCheck } from 'lucide-react';
+import { Clock, Info, MapPin, Pencil, ShieldCheck } from 'lucide-react';
 import { canManageMarket, claimsForUser, getPublishedMarket, requireOrganizer } from '@/lib/organizer';
 import { buttonVariants } from '@/components/ui/button';
 import { ClaimForm } from '@/components/organizer/dashboard/ClaimForm';
@@ -45,10 +45,6 @@ export default async function ClaimPage({ searchParams }: { searchParams: Promis
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <header className="space-y-1">
-        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
-          <ArrowLeft aria-hidden="true" className="size-3.5" />
-          Overview
-        </Link>
         <h1 className="text-2xl font-semibold tracking-tight">{market ? `Claim ${market.name}` : 'Claim a market'}</h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           {market

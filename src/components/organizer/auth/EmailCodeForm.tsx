@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Loader2 } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import { trackEvent } from '@/lib/analytics';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Field,
@@ -172,8 +173,9 @@ export function EmailCodeForm({ next, surface }: EmailCodeFormProps) {
       </Field>
       <SubmitButton pending={pending} label="Sign in" pendingLabel="Checking..." />
       <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-        <button
+        <Button
           type="button"
+          variant="link"
           disabled={pending}
           onClick={() => {
             setStep('email');
@@ -181,19 +183,20 @@ export function EmailCodeForm({ next, surface }: EmailCodeFormProps) {
             setNotice(null);
             setFieldError(undefined);
           }}
-          className="font-medium text-zinc-600 underline underline-offset-2 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+          className="h-auto p-0 text-zinc-600 underline underline-offset-2 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
         >
           Use a different email
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="link"
           disabled={pending}
           onClick={() => void sendCode(true)}
-          className="inline-flex items-center gap-1.5 font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-400"
+          className="h-auto gap-1.5 p-0 text-green-700 underline underline-offset-2 hover:text-green-800 has-[>svg]:px-0 dark:text-green-400"
         >
           {pending ? <Loader2 aria-hidden="true" className="size-3.5 animate-spin" /> : null}
           Send a new code
-        </button>
+        </Button>
       </div>
     </form>
   );

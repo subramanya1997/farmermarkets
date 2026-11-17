@@ -63,15 +63,16 @@ export function PasswordInput({ className, ...props }: PasswordInputProps) {
   return (
     <div className="relative">
       <Input {...props} type={visible ? 'text' : 'password'} className={cn('h-11 pr-11 sm:h-10', className)} />
-      <button
+      <Button
         type="button"
+        variant="ghost"
         onClick={() => setVisible((value) => !value)}
         aria-label={visible ? 'Hide password' : 'Show password'}
         aria-pressed={visible}
-        className="absolute inset-y-0 right-0 flex w-11 items-center justify-center rounded-r-md text-zinc-500 hover:text-zinc-800 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-green-700 dark:text-zinc-400 dark:hover:text-zinc-200"
+        className="absolute inset-y-0 right-0 h-full w-11 rounded-l-none px-0 text-zinc-500 hover:bg-transparent hover:text-zinc-800 has-[>svg]:px-0 dark:text-zinc-400 dark:hover:bg-transparent dark:hover:text-zinc-200"
       >
-        {visible ? <EyeOff aria-hidden="true" className="size-4" /> : <Eye aria-hidden="true" className="size-4" />}
-      </button>
+        {visible ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
+      </Button>
     </div>
   );
 }

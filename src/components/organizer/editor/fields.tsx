@@ -4,7 +4,10 @@ import { createContext, useContext, useId, type ComponentProps, type ReactNode }
 import { Plus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { cn } from '@/lib/utils';
 
 /* ------------------------------------------------------------------ *
@@ -86,10 +89,10 @@ export function Field({
   const describedBy = [errorId, hintId].filter(Boolean).join(' ') || undefined;
   return (
     <div className={cn('flex min-w-0 flex-col gap-1.5', className)}>
-      <label htmlFor={id} className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+      <Label htmlFor={id} className="gap-1 leading-5 text-zinc-900 dark:text-zinc-100">
         {label}
-        {optional ? <span className="font-normal text-zinc-500 dark:text-zinc-400"> (optional)</span> : null}
-      </label>
+        {optional ? <span className="font-normal text-zinc-500 dark:text-zinc-400">(optional)</span> : null}
+      </Label>
       {children({ id, 'aria-invalid': error ? true : undefined, 'aria-describedby': describedBy })}
       {hint ? (
         <p id={hintId} className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -136,22 +139,73 @@ export function TextArea({ className, ...props }: ComponentProps<typeof Textarea
   return <Textarea className={cn('min-h-28 bg-white dark:bg-zinc-950', className)} {...props} />;
 }
 
-/** Native select: the phone's own picker is the best one on a phone. */
-export function NativeSelect({ className, children, ...props }: ComponentProps<'select'>) {
+/** Brand green for a checked shadcn Checkbox. */
+export const GREEN_CHECK =
+  'bg-white data-[state=checked]:border-green-700 data-[state=checked]:bg-green-700 data-[state=checked]:text-white dark:bg-zinc-950 dark:data-[state=checked]:bg-green-700';
+
+/** Dropdown options sized for thumbs on a phone, compact with a mouse. */
+export const TOUCH_ITEM = 'min-h-11 text-base sm:min-h-0 sm:text-sm';
+
+/** Radix Select cannot hold an empty value, so "no choice" travels as this. */
+const NO_CHOICE = '__none__';
+
+export interface SelectOption<T extends string | number> {
+  value: T;
+  label: string;
+}
+
+/**
+ * A dropdown (shadcn Select). `placeholder` shows while nothing is chosen;
+ * `emptyLabel` adds a first option that clears the value, like "Not sure".
+ */
+export function SelectInput<T extends string | number>({
+  value,
+  onChange,
+  options,
+  placeholder,
+  emptyLabel,
+  className,
+  ...control
+}: {
+  value: T | undefined;
+  onChange: (next: T | undefined) => void;
+  options: readonly SelectOption<T>[];
+  placeholder?: string;
+  emptyLabel?: string;
+  className?: string;
+  'aria-label'?: string;
+} & Partial<ControlProps>) {
+  const selected = value === undefined ? (emptyLabel ? NO_CHOICE : '') : String(value);
   return (
-    <select
-      className={cn(
-        'h-11 w-full min-w-0 appearance-none rounded-md border border-input bg-white bg-[length:1rem] bg-[right_0.75rem_center] bg-no-repeat pr-9 pl-3 text-base shadow-xs outline-none md:text-sm dark:bg-zinc-950',
-        "bg-[url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E\")]",
-        'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
-        'aria-invalid:border-destructive aria-invalid:ring-destructive/20',
-        className,
-      )}
-      {...props}
+    <Select
+      value={selected}
+      onValueChange={(next) => onChange(options.find((option) => String(option.value) === next)?.value)}
     >
-      {children}
-    </select>
+      <SelectTrigger
+        {...control}
+        className={cn('w-full bg-white text-base data-[size=default]:h-11 md:text-sm dark:bg-zinc-950', className)}
+      >
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent position="popper" className="max-h-72">
+        {emptyLabel ? (
+          <SelectItem value={NO_CHOICE} className={TOUCH_ITEM}>
+            {emptyLabel}
+          </SelectItem>
+        ) : null}
+        {options.map((option) => (
+          <SelectItem key={option.value} value={String(option.value)} className={TOUCH_ITEM}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
+}
+
+/** Options for `SelectInput` from a list of codes and their labels. */
+export function optionsFrom<T extends string>(codes: readonly T[], labels: Record<T, string>): SelectOption<T>[] {
+  return codes.map((code) => ({ value: code, label: labels[code] }));
 }
 
 /** Multi-select as toggle chips. */
@@ -169,34 +223,31 @@ export function ChipGroup<T extends string>({
   /** Long labels for screen readers when the visible label is abbreviated. */
   short?: Record<T, string>;
 }) {
-  const selected = new Set(value);
   return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((option) => {
-        const on = selected.has(option);
-        return (
-          <button
-            key={option}
-            type="button"
-            aria-pressed={on}
-            aria-label={short ? labels[option] : undefined}
-            onClick={() =>
-              // Keep the schema's own order so the saved value is stable.
-              onChange(options.filter((code) => (code === option ? !on : selected.has(code))))
-            }
-            className={cn(
-              'inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium transition-colors outline-none',
-              'focus-visible:ring-[3px] focus-visible:ring-green-600/40',
-              on
-                ? 'border-green-700 bg-green-700 text-white hover:bg-green-800 dark:border-green-600 dark:bg-green-700'
-                : 'border-zinc-300 bg-white text-zinc-700 hover:border-zinc-400 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300 dark:hover:border-zinc-600',
-            )}
-          >
-            {short ? short[option] : labels[option]}
-          </button>
-        );
-      })}
-    </div>
+    <ToggleGroup
+      type="multiple"
+      variant="outline"
+      spacing={2}
+      value={[...value]}
+      // Keep the schema's own order so the saved value is stable.
+      onValueChange={(next) => onChange(options.filter((code) => next.includes(code)))}
+      className="w-full flex-wrap"
+    >
+      {options.map((option) => (
+        <ToggleGroupItem
+          key={option}
+          value={option}
+          aria-label={short ? labels[option] : undefined}
+          className={cn(
+            'h-11 rounded-full bg-white px-4 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 dark:bg-zinc-950 dark:text-zinc-300',
+            'focus-visible:border-green-700 focus-visible:ring-green-600/40',
+            'data-[state=on]:border-green-700 data-[state=on]:bg-green-700 data-[state=on]:text-white data-[state=on]:hover:bg-green-800 dark:data-[state=on]:border-green-600',
+          )}
+        >
+          {short ? short[option] : labels[option]}
+        </ToggleGroupItem>
+      ))}
+    </ToggleGroup>
   );
 }
 

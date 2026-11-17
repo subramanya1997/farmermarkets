@@ -349,6 +349,11 @@ export function DashboardTopBar(props: DashboardNavProps) {
   const path = usePathname() ?? '';
   const current = [...props.groups.flatMap((group) => group.items), ...props.footer].find((item) => isActive(item, path));
   const area = props.title.toLowerCase();
+  const home = props.areas.find((item) => item.current)?.href;
+  // On a page below a sidebar item (one market, one claim), the item's name
+  // in the breadcrumb is the way back to it.
+  const below = current && path !== current.href;
+  const crumbLink = 'rounded-sm hover:text-zinc-900 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 dark:hover:text-zinc-50';
 
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b border-zinc-200/80 px-2 sm:px-4 dark:border-zinc-800">
@@ -367,23 +372,48 @@ export function DashboardTopBar(props: DashboardNavProps) {
 
       <nav aria-label="Breadcrumb" className="min-w-0">
         <ol className="flex min-w-0 items-center gap-1.5 text-[13px]">
-          <li className="hidden shrink-0 text-zinc-500 sm:block dark:text-zinc-400">{props.title}</li>
+          <li className="hidden shrink-0 text-zinc-500 sm:block dark:text-zinc-400">
+            {home ? (
+              <Link href={home} className={crumbLink}>
+                {props.title}
+              </Link>
+            ) : (
+              props.title
+            )}
+          </li>
           {current ? (
             <>
               <li aria-hidden="true" className="hidden sm:block">
                 <ChevronRight className="size-3.5 text-zinc-300 dark:text-zinc-600" />
               </li>
-              <li className="flex min-w-0 items-center gap-1.5 font-medium text-zinc-900 dark:text-zinc-50" aria-current="page">
+              <li
+                className="flex min-w-0 items-center gap-1.5 font-medium text-zinc-900 dark:text-zinc-50"
+                aria-current={below ? undefined : 'page'}
+              >
                 {current.icon ? (
                   <span aria-hidden="true" className="flex shrink-0 text-zinc-400 [&_svg]:size-3.5">
                     {current.icon}
                   </span>
                 ) : null}
-                <span className="truncate">{current.label}</span>
+                {below ? (
+                  <Link href={current.href} className={cn('truncate', crumbLink)}>
+                    {current.label}
+                  </Link>
+                ) : (
+                  <span className="truncate">{current.label}</span>
+                )}
               </li>
             </>
           ) : (
-            <li className="font-medium text-zinc-900 sm:hidden dark:text-zinc-50">{props.title}</li>
+            <li className="font-medium text-zinc-900 sm:hidden dark:text-zinc-50">
+              {home && path !== home ? (
+                <Link href={home} className={crumbLink}>
+                  {props.title}
+                </Link>
+              ) : (
+                props.title
+              )}
+            </li>
           )}
         </ol>
       </nav>

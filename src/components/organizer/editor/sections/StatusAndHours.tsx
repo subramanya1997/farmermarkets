@@ -7,11 +7,14 @@ import {
   ChipGroup,
   Field,
   FieldGroup,
-  NativeSelect,
   RowCard,
   SectionCard,
+  SelectInput,
   TextInput,
+  optionsFrom,
 } from '../fields';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { MONTHS, STATUS_LABELS, WEEKDAY_LONG, WEEKDAY_SHORT } from '../labels';
 
 type Status = NonNullable<ListingEdits['status']>;
@@ -41,11 +44,13 @@ export function StatusSection({
     <SectionCard id="section-status" title="Market status" description="Let visitors know if the market is open right now.">
       <Field label="Status" path="status.value">
         {(control) => (
-          <NativeSelect
+          <SelectInput
             {...control}
-            value={status ?? ''}
-            onChange={(event) => {
-              const next = event.target.value as Status['value'];
+            value={status}
+            placeholder="Choose a status"
+            options={optionsFrom(MARKET_STATUSES, STATUS_LABELS)}
+            onChange={(next) => {
+              if (!next) return;
               onChange({
                 value: next,
                 // A reopening date only makes sense while closed.
@@ -53,18 +58,7 @@ export function StatusSection({
                 note: value?.note,
               });
             }}
-          >
-            {status ? null : (
-              <option value="" disabled>
-                Choose a status
-              </option>
-            )}
-            {MARKET_STATUSES.map((code) => (
-              <option key={code} value={code}>
-                {STATUS_LABELS[code]}
-              </option>
-            ))}
-          </NativeSelect>
+          />
         )}
       </Field>
 
@@ -119,22 +113,22 @@ export function SeasonSection({
   return (
     <SectionCard id="section-season" title="Season" description="When in the year the market runs.">
       <FieldGroup legend="When are you open?" path="season.kind">
-        <div className="grid gap-2 sm:grid-cols-2">
+        <RadioGroup
+          aria-label="When are you open?"
+          value={kind ?? ''}
+          onValueChange={(next) =>
+            onChange(next === 'year_round' ? { kind: 'year_round' } : value?.kind === 'annual_range' ? value : DEFAULT_RANGE)
+          }
+          className="grid gap-2 sm:grid-cols-2"
+        >
+          <ChoiceCard value="year_round" checked={kind === 'year_round'} label="All year" detail="Open every month." />
           <ChoiceCard
-            name="season-kind"
-            checked={kind === 'year_round'}
-            onSelect={() => onChange({ kind: 'year_round' })}
-            label="All year"
-            detail="Open every month."
-          />
-          <ChoiceCard
-            name="season-kind"
+            value="annual_range"
             checked={kind === 'annual_range'}
-            onSelect={() => onChange(value?.kind === 'annual_range' ? value : DEFAULT_RANGE)}
             label="Part of the year"
             detail="Pick the months you open and close."
           />
-        </div>
+        </RadioGroup>
       </FieldGroup>
 
       {value?.kind === 'annual_range' ? (
@@ -157,36 +151,33 @@ export function SeasonSection({
   );
 }
 
-function ChoiceCard({
-  name,
-  checked,
-  onSelect,
-  label,
-  detail,
-}: {
-  name: string;
-  checked: boolean;
-  onSelect: () => void;
-  label: string;
-  detail: string;
-}) {
+function ChoiceCard({ value, checked, label, detail }: { value: string; checked: boolean; label: string; detail: string }) {
+  const id = `season-${value}`;
   return (
-    <label
+    <Label
+      htmlFor={id}
       className={cn(
-        'flex min-h-11 cursor-pointer flex-col gap-0.5 rounded-lg border p-3 text-sm transition-colors',
+        'min-h-11 cursor-pointer flex-col items-start gap-0.5 rounded-lg border p-3 leading-5 font-normal transition-colors',
         checked
           ? 'border-green-600 bg-green-50 dark:border-green-500 dark:bg-green-900/20'
           : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600',
       )}
     >
       <span className="flex items-center gap-2 font-medium">
-        <input type="radio" name={name} checked={checked} onChange={onSelect} className="size-4 accent-green-700" />
+        <RadioGroupItem
+          id={id}
+          value={value}
+          className="bg-white text-green-700 data-[state=checked]:border-green-700 dark:bg-zinc-950 [&_svg]:fill-green-700"
+        />
         {label}
       </span>
       <span className="pl-6 text-xs text-zinc-500 dark:text-zinc-400">{detail}</span>
-    </label>
+    </Label>
   );
 }
+
+const MONTH_OPTIONS = MONTHS.map((name, index) => ({ value: index + 1, label: name }));
+const DAY_OPTIONS = Array.from({ length: 31 }, (_, i) => ({ value: i + 1, label: String(i + 1) }));
 
 function MonthDayPicker({
   legend,
@@ -202,31 +193,19 @@ function MonthDayPicker({
   return (
     <FieldGroup legend={legend} path={`${pathPrefix}.day`}>
       <div className="grid grid-cols-[3fr_2fr] gap-2">
-        <NativeSelect
+        <SelectInput
           aria-label={`${legend}: month`}
           value={value.month}
-          onChange={(event) => onChange({ ...value, month: Number(event.target.value) })}
-        >
-          {MONTHS.map((name, index) => (
-            <option key={name} value={index + 1}>
-              {name}
-            </option>
-          ))}
-        </NativeSelect>
-        <NativeSelect
+          options={MONTH_OPTIONS}
+          onChange={(month) => (month ? onChange({ ...value, month }) : undefined)}
+        />
+        <SelectInput
           aria-label={`${legend}: day`}
-          value={value.day ?? ''}
-          onChange={(event) =>
-            onChange({ ...value, day: event.target.value ? Number(event.target.value) : undefined })
-          }
-        >
-          <option value="">Any day</option>
-          {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          ))}
-        </NativeSelect>
+          value={value.day}
+          emptyLabel="Any day"
+          options={DAY_OPTIONS}
+          onChange={(day) => onChange({ ...value, day })}
+        />
       </div>
     </FieldGroup>
   );

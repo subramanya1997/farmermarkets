@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowUpRight, CheckCircle2, Clock, MessageSquareWarning } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Clock, MessageSquareWarning } from 'lucide-react';
 import {
   MAX_PHOTOS_PER_MARKET,
   MAX_PHOTO_BYTES,
@@ -71,10 +70,6 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <header className="space-y-1">
-        <Link href="/dashboard" className="inline-flex items-center gap-1 text-sm text-zinc-600 hover:underline dark:text-zinc-400">
-          <ArrowLeft aria-hidden="true" className="size-3.5" />
-          Overview
-        </Link>
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
           <div className="min-w-0">
             <h1 className="text-2xl font-semibold tracking-tight">{market.name}</h1>

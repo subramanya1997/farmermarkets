@@ -4,7 +4,9 @@ import { useEffect, useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Loader2, MapPin, Search } from 'lucide-react';
 import { searchMarketsAction, startOrganizerPreviewAction, type MarketSearchHit } from '@/app/(app)/dashboard/actions';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 import { TEXT_LINK } from '@/components/organizer/auth/FormBits';
 
 const DEBOUNCE_MS = 250;
@@ -98,7 +100,7 @@ export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQ
             <li key={market.slug}>
               {purpose === 'preview' ? (
                 <form action={startOrganizerPreviewAction.bind(null, market.slug)}>
-                  <button type="submit" className={ROW}>
+                  <Button type="submit" variant="ghost" className={cn(ROW, 'h-auto justify-start rounded-none font-normal whitespace-normal')}>
                     <span className="min-w-0 flex-1">
                       <span className="block font-medium text-zinc-900 dark:text-zinc-100">{market.name}</span>
                       {market.city || market.state ? (
@@ -112,7 +114,7 @@ export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQ
                       Preview
                       <ChevronRight aria-hidden="true" className="size-4" />
                     </span>
-                  </button>
+                  </Button>
                 </form>
               ) : (
                 <Link href={`/dashboard/claim?market=${encodeURIComponent(market.slug)}`} className={ROW}>

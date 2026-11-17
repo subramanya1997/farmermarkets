@@ -8,6 +8,7 @@ import { CLAIM_ROLES, CLAIM_ROLE_LABELS, type ClaimRole } from '@/lib/claimRoles
 import { trackEvent } from '@/lib/analytics';
 import { buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 import {
@@ -141,25 +142,28 @@ export function ClaimForm({ marketSlug, marketName, marketId }: ClaimFormProps) 
       {formError ? <FormAlert>{formError}</FormAlert> : null}
 
       <Field id={ids.role} label="Your role at the market" error={errors.role}>
-        <select
-          {...fieldA11y(ids.role, errors.role)}
+        <Select
           name="role"
           value={role}
-          onChange={(event) => {
-            setRole(event.target.value as ClaimRole | '');
+          onValueChange={(value) => {
+            setRole(value as ClaimRole);
             clear('role');
           }}
-          className="h-11 w-full rounded-md border border-input bg-transparent px-3 text-base shadow-xs outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive sm:h-10 sm:text-sm dark:bg-input/30"
         >
-          <option value="" disabled>
-            Choose one
-          </option>
-          {CLAIM_ROLES.map((value) => (
-            <option key={value} value={value}>
-              {CLAIM_ROLE_LABELS[value]}
-            </option>
-          ))}
-        </select>
+          <SelectTrigger
+            {...fieldA11y(ids.role, errors.role)}
+            className="w-full text-base data-[size=default]:h-11 sm:text-sm sm:data-[size=default]:h-10"
+          >
+            <SelectValue placeholder="Choose one" />
+          </SelectTrigger>
+          <SelectContent position="popper">
+            {CLAIM_ROLES.map((value) => (
+              <SelectItem key={value} value={value} className="min-h-11 text-base sm:min-h-0 sm:text-sm">
+                {CLAIM_ROLE_LABELS[value]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </Field>
 
       <Field

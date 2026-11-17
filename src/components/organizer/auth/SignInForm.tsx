@@ -154,15 +154,16 @@ export function SignInForm({ next, forgotHref, verifyNotice, linkFailed }: SignI
             ) : resend === 'failed' ? (
               NETWORK_MESSAGE
             ) : (
-              <button
+              <Button
                 type="button"
+                variant="link"
                 onClick={resendFromNotice}
                 disabled={resend === 'sending'}
-                className="inline-flex items-center gap-1.5 font-medium underline underline-offset-2 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+                className="h-auto gap-1.5 p-0 text-current underline underline-offset-2 has-[>svg]:px-0"
               >
                 {resend === 'sending' ? <Loader2 aria-hidden="true" className="size-3.5 animate-spin" /> : null}
                 {resend === 'sending' ? 'Sending...' : 'Resend the confirmation email'}
-              </button>
+              </Button>
             )}
           </p>
         </FormAlert>
