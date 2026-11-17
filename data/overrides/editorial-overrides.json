@@ -14627,6 +14627,268 @@
           ]
         }
       ]
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "location.address",
+      "value": "Walnut Park, 4th St and D St, Petaluma, CA 94952"
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -122.6365395,
+        "latitude": 38.231926
+      }
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=38.231926%2C-122.6365395"
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Agricultural Community Events Farmers’ Markets, with the 2027 Walnut Park season confirmed by the market manager by email on November 16, 2026",
+          "url": "https://www.ilovefarmersmarkets.org/",
+          "fields": [
+            "location.address"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "name",
+      "value": "Heart of the City Farmers Market"
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "location.address",
+      "value": "Fulton Plaza, Fulton St at Hyde St, San Francisco, CA 94102"
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "location.description",
+      "value": "Fulton Plaza in Civic Center, between the San Francisco Public Library and the Asian Art Museum. The information tent is near Fulton and Larkin Streets."
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -122.4159716,
+        "latitude": 37.7797193
+      }
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=37.7797193%2C-122.4159716"
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "operations.days",
+      "value": [
+        "Wednesdays, 7am to 4pm",
+        "Sundays, 7am to 4pm"
+      ]
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "operations.season",
+      "value": "Year-round, rain or shine"
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Find Us | Heart of the City Farmers Market",
+          "url": "https://hotcfarmersmarket.org/find-us",
+          "fields": [
+            "location.address",
+            "location.description",
+            "operations.days",
+            "operations.season"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 182,
+      "id": 300361,
+      "path": "name",
+      "value": "Napa Farmers Market"
+    },
+    {
+      "index": 182,
+      "id": 300361,
+      "path": "location.address",
+      "value": "1100 West St, Napa, CA 94559"
+    },
+    {
+      "index": 182,
+      "id": 300361,
+      "path": "location.description",
+      "value": "City of Napa parking lot at 1100 West Street in downtown Napa."
+    },
+    {
+      "index": 182,
+      "id": 300361,
+      "path": "operations.days",
+      "value": [
+        "Saturdays, 8am to 12pm, year-round",
+        "Tuesdays, 8am to 12pm, April 7 to December 22, 2026"
+      ]
+    },
+    {
+      "index": 182,
+      "id": 300361,
+      "path": "operations.season",
+      "value": "Saturdays year-round, Tuesdays April to December, rain or shine"
+    },
+    {
+      "index": 182,
+      "id": 300361,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Home | Napa Farmers Market",
+          "url": "https://napafarmersmarket.org/",
+          "fields": [
+            "location.address",
+            "operations.days",
+            "operations.season"
+          ]
+        },
+        {
+          "title": "Map | Napa Farmers Market",
+          "url": "https://napafarmersmarket.org/map/",
+          "fields": [
+            "location.address",
+            "location.description"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 1714,
+      "id": 308545,
+      "path": "location.address",
+      "value": "100 Alemany Blvd, San Francisco, CA 94110"
+    },
+    {
+      "index": 1714,
+      "id": 308545,
+      "path": "operations.days",
+      "value": [
+        "Saturdays, 7am to 2pm"
+      ]
+    },
+    {
+      "index": 1714,
+      "id": 308545,
+      "path": "operations.season",
+      "value": "Year-round"
+    },
+    {
+      "index": 1714,
+      "id": 308545,
+      "path": "payment.food_assistance.snap",
+      "value": true
+    },
+    {
+      "index": 1714,
+      "id": 308545,
+      "path": "payment.food_assistance.wic",
+      "value": true
+    },
+    {
+      "index": 1714,
+      "id": 308545,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Alemany Farmers Market | Foodwise",
+          "url": "https://foodwise.org/markets/alemany-farmers-market/",
+          "fields": [
+            "operations.days",
+            "operations.season",
+            "payment.food_assistance.snap",
+            "payment.food_assistance.wic"
+          ]
+        },
+        {
+          "title": "Alemany Farmers Market | SF.gov",
+          "url": "https://sf.gov/location/alemany-farmers-market",
+          "fields": [
+            "location.address",
+            "operations.days"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 594,
+      "id": 301319,
+      "path": "location.address",
+      "value": "84 Bartlett St, San Francisco, CA 94110"
+    },
+    {
+      "index": 594,
+      "id": 301319,
+      "path": "location.zip_code",
+      "value": "94110"
+    },
+    {
+      "index": 594,
+      "id": 301319,
+      "path": "operations.days",
+      "value": [
+        "Thursdays, 3pm to 7pm"
+      ]
+    },
+    {
+      "index": 594,
+      "id": 301319,
+      "path": "operations.season",
+      "value": "Mid-March to mid-November"
+    },
+    {
+      "index": 594,
+      "id": 301319,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Mission Community Market | Foodwise",
+          "url": "https://foodwise.org/markets/mission-community-market/",
+          "fields": [
+            "location.address",
+            "operations.days",
+            "operations.season"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 877,
+      "id": 301619,
+      "path": "name",
+      "value": "Santa Rosa Original Certified Farmers Market"
     }
   ]
 }

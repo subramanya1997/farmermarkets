@@ -743,5 +743,357 @@
         "accessed_at": "2026-11-16"
       }
     ]
+  },
+  {
+    "id": "308867",
+    "market_name": "Heart of the City Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-16",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Heart of the City Farmers Market",
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "wednesday-sunday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "wednesday",
+                  "sunday"
+                ]
+              },
+              "opens": "07:00",
+              "closes": "16:00",
+              "location_note": "Fulton Plaza, between the San Francisco Public Library and the Asian Art Museum"
+            },
+            "source_ids": [
+              "hotc-find-us"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt"
+            },
+            "source_ids": [
+              "hotc-home"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "hotc-home"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market fills Fulton Plaza in Civic Center, on Fulton St between Hyde and Larkin, between the San Francisco Public Library and the Asian Art Museum. The information tent is near Fulton and Larkin Streets. Civic Center BART and Muni Metro are steps away."
+          },
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        {
+          "id": "benefits",
+          "value": {
+            "topic": "payments",
+            "answer": "The market accepts EBT, credit cards and WIC. EBT purchases are matched dollar for dollar at the information tent, up to $30 a month."
+          },
+          "source_ids": [
+            "hotc-home"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "hotc-find-us",
+        "title": "Find Us | Heart of the City Farmers Market",
+        "url": "https://hotcfarmersmarket.org/find-us",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      },
+      {
+        "id": "hotc-home",
+        "title": "Heart of the City Farmers Market",
+        "url": "https://hotcfarmersmarket.org/",
+        "fields": [
+          "first_party.payments",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      }
+    ]
+  },
+  {
+    "id": "300361",
+    "market_name": "Napa Downtown Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-16",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Napa Farmers Market",
+          "source_ids": [
+            "napa-home"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "napa-home"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "napa-home"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "12:00"
+            },
+            "source_ids": [
+              "napa-home"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "tuesday-2026",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "tuesday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "12:00",
+              "start_date": "2026-04-07",
+              "end_date": "2026-12-22"
+            },
+            "source_ids": [
+              "napa-home"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where-and-when",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market sets up in the City of Napa parking lot at 1100 West Street in downtown Napa, Saturdays all year and Tuesdays from April to December (April 7 to December 22 in 2026), 8am to noon, rain or shine."
+          },
+          "source_ids": [
+            "napa-home",
+            "napa-map"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "napa-home",
+        "title": "Home | Napa Farmers Market",
+        "url": "https://napafarmersmarket.org/",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      },
+      {
+        "id": "napa-map",
+        "title": "Map | Napa Farmers Market",
+        "url": "https://napafarmersmarket.org/map/",
+        "fields": [
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      }
+    ]
+  },
+  {
+    "id": "308545",
+    "market_name": "Alemany Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-16",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Foodwise",
+          "source_ids": [
+            "alemany-foodwise"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "alemany-foodwise"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "alemany-foodwise"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "07:00",
+              "closes": "14:00"
+            },
+            "source_ids": [
+              "alemany-foodwise",
+              "alemany-sfgov"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt"
+            },
+            "source_ids": [
+              "alemany-foodwise"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "alemany-foodwise"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "alemany-foodwise",
+        "title": "Alemany Farmers Market | Foodwise",
+        "url": "https://foodwise.org/markets/alemany-farmers-market/",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      },
+      {
+        "id": "alemany-sfgov",
+        "title": "Alemany Farmers Market | SF.gov",
+        "url": "https://sf.gov/location/alemany-farmers-market",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      }
+    ]
   }
 ]

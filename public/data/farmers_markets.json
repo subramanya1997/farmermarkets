@@ -21564,10 +21564,10 @@
   },
   {
     "id": 300361,
-    "name": "Napa Downtown Farmers Market",
+    "name": "Napa Farmers Market",
     "last_updated": "2020-08-05T15:48:30",
     "location": {
-      "address": "1100 West Street, Napa, California, 94559",
+      "address": "1100 West St, Napa, CA 94559",
       "city": "Napa",
       "state": "California",
       "zip_code": "94559",
@@ -21575,7 +21575,7 @@
         "longitude": -122.28513,
         "latitude": 38.301189
       },
-      "description": "Located in the City of Napa Parking lot at the corner of Pearl and West Street in downtown Napa.",
+      "description": "City of Napa parking lot at 1100 West Street in downtown Napa.",
       "site_type": "Private business parking lot",
       "indoor_outdoor": "Outdoor"
     },
@@ -21597,9 +21597,10 @@
       ]
     },
     "operations": {
-      "season": "Saturday: Year-round, rain or shine; Tuesday: April 7 – December 22, 2026",
+      "season": "Saturdays year-round, Tuesdays April to December, rain or shine",
       "days": [
-        "Tuesdays & Saturdays, 8 a.m. to 12 p.m."
+        "Saturdays, 8am to 12pm, year-round",
+        "Tuesdays, 8am to 12pm, April 7 to December 22, 2026"
       ],
       "vendor_count": null
     },
@@ -21640,12 +21641,94 @@
     "slug": "napa-downtown-farmers-market-napa",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Napa Farmers Market",
+          "source_ids": [
+            "napa-home"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "napa-home"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "napa-home"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "12:00"
+            },
+            "source_ids": [
+              "napa-home"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "tuesday-2026",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "tuesday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "12:00",
+              "start_date": "2026-04-07",
+              "end_date": "2026-12-22"
+            },
+            "source_ids": [
+              "napa-home"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where-and-when",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market sets up in the City of Napa parking lot at 1100 West Street in downtown Napa, Saturdays all year and Tuesdays from April to December (April 7 to December 22 in 2026), 8am to noon, rain or shine."
+          },
+          "source_ids": [
+            "napa-home",
+            "napa-map"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.301189%2C-122.28513",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-16",
       "verification_scope": "partial",
       "sources": [
         {
@@ -21655,8 +21738,16 @@
             "contact.websites",
             "contact.social_media",
             "operations.days",
-            "operations.season"
-          ]
+            "operations.season",
+            "first_party.identity",
+            "first_party.operations",
+            "first_party.faq_facts",
+            "location.address"
+          ],
+          "id": "napa-home",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
         },
         {
           "title": "Contact - Napa Farmers Market",
@@ -21664,6 +21755,19 @@
           "fields": [
             "contact.phone_numbers"
           ]
+        },
+        {
+          "id": "napa-map",
+          "title": "Map | Napa Farmers Market",
+          "url": "https://napafarmersmarket.org/map/",
+          "fields": [
+            "first_party.faq_facts",
+            "location.address",
+            "location.description"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
         },
         {
           "title": "USDA SNAP Retailer Locator, store type Farmers and Markets",
@@ -32595,13 +32699,13 @@
     "name": "Petaluma Walnut Park Farmers’ Market",
     "last_updated": "2022-04-14T12:46:52",
     "location": {
-      "address": "Petaluma Blvd S and D St, Petaluma, California 94952",
+      "address": "Walnut Park, 4th St and D St, Petaluma, CA 94952",
       "city": "Petaluma",
       "state": "California",
       "zip_code": "94952",
       "coordinates": {
-        "longitude": -122.63679,
-        "latitude": 38.231796
+        "longitude": -122.6365395,
+        "latitude": 38.231926
       },
       "description": "Walnut Park",
       "site_type": "Local government building grounds",
@@ -32729,7 +32833,7 @@
         ]
       }
     },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.231796%2C-122.63679",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.231926%2C-122.6365395",
     "amenities": {
       "features": []
     },
@@ -32754,7 +32858,8 @@
             "contact.social_media",
             "operations.season",
             "first_party.identity",
-            "first_party.operations"
+            "first_party.operations",
+            "location.address"
           ],
           "id": "ace-walnut-park",
           "kind": "first_party",
@@ -70049,10 +70154,10 @@
     "name": "Mission Community Market",
     "last_updated": "2020-08-27T12:41:12",
     "location": {
-      "address": "84 Bartlett Street, San Francisco, California, 94111",
+      "address": "84 Bartlett St, San Francisco, CA 94110",
       "city": "San Francisco",
       "state": "California",
-      "zip_code": "94111",
+      "zip_code": "94110",
       "coordinates": {
         "longitude": -122.41988,
         "latitude": 37.755373
@@ -70078,8 +70183,10 @@
       ]
     },
     "operations": {
-      "season": null,
-      "days": [],
+      "season": "Mid-March to mid-November",
+      "days": [
+        "Thursdays, 3pm to 7pm"
+      ],
       "vendor_count": null
     },
     "products": {
@@ -70176,12 +70283,15 @@
           ]
         },
         {
-          "title": "Mission Community Market in San Francisco’s Mission District : Foodwise",
+          "title": "Mission Community Market | Foodwise",
           "url": "https://foodwise.org/markets/mission-community-market/",
           "fields": [
             "amenities.features",
             "first_party.payments",
-            "first_party.contact"
+            "first_party.contact",
+            "location.address",
+            "operations.days",
+            "operations.season"
           ],
           "id": "website-audit-6b601aed782a-1",
           "kind": "first_party",
@@ -103507,7 +103617,7 @@
   },
   {
     "id": 301619,
-    "name": "Santa Rosa Certified Farmers Market",
+    "name": "Santa Rosa Original Certified Farmers Market",
     "last_updated": "2021-12-13T16:55:28",
     "location": {
       "address": "50 Mark West Springs Rd., Santa Rosa, California 95403",
@@ -193592,7 +193702,7 @@
     "name": "Alemany Farmers’ Market",
     "last_updated": "2023-03-20T22:51:52",
     "location": {
-      "address": "100 Alemany Blvd., San Francisco, CA, 94110",
+      "address": "100 Alemany Blvd, San Francisco, CA 94110",
       "city": "San Francisco",
       "state": "California",
       "zip_code": "94110",
@@ -193622,8 +193732,10 @@
       ]
     },
     "operations": {
-      "season": null,
-      "days": [],
+      "season": "Year-round",
+      "days": [
+        "Saturdays, 7am to 2pm"
+      ],
       "vendor_count": null
     },
     "products": {
@@ -193634,10 +193746,10 @@
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
+        "wic": true,
         "sfmnp": false,
         "fmnp": false,
-        "snap": false,
+        "snap": true,
         "snap_option": null
       }
     },
@@ -193659,12 +193771,86 @@
     "slug": "alemany-farmers-market",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Foodwise",
+          "source_ids": [
+            "alemany-foodwise"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "alemany-foodwise"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "alemany-foodwise"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "07:00",
+              "closes": "14:00"
+            },
+            "source_ids": [
+              "alemany-foodwise",
+              "alemany-sfgov"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt"
+            },
+            "source_ids": [
+              "alemany-foodwise"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "alemany-foodwise"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      }
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.7369175274485%2C-122.40882709362944",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-21",
+      "verified_at": "2026-11-16",
       "verification_scope": "partial",
       "sources": [
         {
@@ -193674,6 +193860,36 @@
             "contact.phone_numbers",
             "contact.websites"
           ]
+        },
+        {
+          "id": "alemany-foodwise",
+          "title": "Alemany Farmers Market | Foodwise",
+          "url": "https://foodwise.org/markets/alemany-farmers-market/",
+          "fields": [
+            "first_party.identity",
+            "first_party.operations",
+            "first_party.payments",
+            "operations.days",
+            "operations.season",
+            "payment.food_assistance.snap",
+            "payment.food_assistance.wic"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
+        },
+        {
+          "id": "alemany-sfgov",
+          "title": "Alemany Farmers Market | SF.gov",
+          "url": "https://sf.gov/location/alemany-farmers-market",
+          "fields": [
+            "first_party.operations",
+            "location.address",
+            "operations.days"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
         },
         {
           "title": "Alemany Farmers Market : Foodwise",
@@ -202090,168 +202306,6 @@
     "audit": {
       "checked_at": "2026-08-21",
       "status": "identity_ambiguous"
-    }
-  },
-  {
-    "id": 308629,
-    "name": "Downtown Napa Farmers’ Market",
-    "last_updated": "2023-03-20T22:52:00",
-    "location": {
-      "address": "500 First Street Napa, CA 94559",
-      "city": "Napa",
-      "state": "California",
-      "zip_code": "94559",
-      "coordinates": {
-        "longitude": -122.27930815758316,
-        "latitude": 38.30228749099002
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [
-        "(707) 501-3087"
-      ],
-      "emails": [],
-      "websites": [
-        "http://www.napafarmersmarket.org/"
-      ],
-      "social_media": [
-        "https://www.facebook.com/NapaFarmersMarket",
-        "https://www.instagram.com/napafarmersmkt"
-      ]
-    },
-    "operations": {
-      "season": "April 7–December 22",
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "downtown-napa-farmers-market-napa",
-    "country": "United States",
-    "country_code": "US",
-    "schema_version": 2,
-    "first_party": {
-      "operations": {
-        "season": {
-          "value": {
-            "kind": "annual_range",
-            "start": {
-              "month": 4,
-              "day": 7
-            },
-            "end": {
-              "month": 12,
-              "day": 22
-            }
-          },
-          "source_ids": [
-            "website-audit-7b7b5a976dfe-1"
-          ],
-          "verified_at": "2026-08-21"
-        }
-      },
-      "policies": [
-        {
-          "id": "pet-policy",
-          "value": {
-            "code": "pets",
-            "rule": "not_allowed",
-            "note": "No Pets Allowed"
-          },
-          "source_ids": [
-            "website-audit-7b7b5a976dfe-1"
-          ],
-          "verified_at": "2026-08-21"
-        },
-        {
-          "id": "weather-policy",
-          "value": {
-            "code": "weather",
-            "rule": "rain_or_shine",
-            "note": "Saturday: Year-round, rain or shine"
-          },
-          "source_ids": [
-            "website-audit-7b7b5a976dfe-1"
-          ],
-          "verified_at": "2026-08-21"
-        }
-      ]
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.30228749099002%2C-122.27930815758316",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for Napa Farmers Market",
-          "url": "https://www.google.com/maps/search/?api=1&query=Downtown%20Napa%20Farmers'%20Market%2C%20500%20First%20Street%20Napa%2C%20CA%2094559%2C%20Napa%2C%20California%2C%2094559",
-          "fields": [
-            "contact.websites",
-            "contact.phone_numbers"
-          ]
-        },
-        {
-          "id": "website-audit-7b7b5a976dfe-1",
-          "title": "Shop at the Napa Farmers Market",
-          "url": "https://napafarmersmarket.org/",
-          "fields": [
-            "first_party.operations",
-            "first_party.policies"
-          ],
-          "kind": "first_party",
-          "scope": "market",
-          "accessed_at": "2026-08-21"
-        },
-        {
-          "title": "Home | Napa Farmers Market",
-          "url": "http://www.napafarmersmarket.org/",
-          "fields": [
-            "contact.social_media"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
     }
   },
   {
@@ -226701,18 +226755,18 @@
   },
   {
     "id": 308867,
-    "name": "Heart of the City Market",
+    "name": "Heart of the City Farmers Market",
     "last_updated": "2023-03-20T22:52:06",
     "location": {
-      "address": "Market St. and 7th St., San Francisco, CA, 94102",
+      "address": "Fulton Plaza, Fulton St at Hyde St, San Francisco, CA 94102",
       "city": "San Francisco",
       "state": "California",
       "zip_code": "94102",
       "coordinates": {
-        "longitude": -122.41250999384212,
-        "latitude": 37.78047998332441
+        "longitude": -122.4159716,
+        "latitude": 37.7797193
       },
-      "description": "",
+      "description": "Fulton Plaza in Civic Center, between the San Francisco Public Library and the Asian Art Museum. The information tent is near Fulton and Larkin Streets.",
       "site_type": "",
       "indoor_outdoor": "Unknown"
     },
@@ -226734,10 +226788,10 @@
       ]
     },
     "operations": {
-      "season": "Year-round",
+      "season": "Year-round, rain or shine",
       "days": [
-        "Sundays 7am-4pm",
-        "Wednesdays 7am-4pm"
+        "Wednesdays, 7am to 4pm",
+        "Sundays, 7am to 4pm"
       ],
       "vendor_count": null
     },
@@ -226774,12 +226828,111 @@
     "slug": "heart-of-the-city-market",
     "country": "United States",
     "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.78047998332441%2C-122.41250999384212",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Heart of the City Farmers Market",
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "wednesday-sunday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "wednesday",
+                  "sunday"
+                ]
+              },
+              "opens": "07:00",
+              "closes": "16:00",
+              "location_note": "Fulton Plaza, between the San Francisco Public Library and the Asian Art Museum"
+            },
+            "source_ids": [
+              "hotc-find-us"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt"
+            },
+            "source_ids": [
+              "hotc-home"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "hotc-home"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market fills Fulton Plaza in Civic Center, on Fulton St between Hyde and Larkin, between the San Francisco Public Library and the Asian Art Museum. The information tent is near Fulton and Larkin Streets. Civic Center BART and Muni Metro are steps away."
+          },
+          "source_ids": [
+            "hotc-find-us"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        {
+          "id": "benefits",
+          "value": {
+            "topic": "payments",
+            "answer": "The market accepts EBT, credit cards and WIC. EBT purchases are matched dollar for dollar at the information tent, up to $30 a month."
+          },
+          "source_ids": [
+            "hotc-home"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.7797193%2C-122.4159716",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-16",
       "verification_scope": "partial",
       "sources": [
         {
@@ -226796,8 +226949,31 @@
           "fields": [
             "contact.phone_numbers",
             "contact.social_media",
-            "operations.days"
-          ]
+            "operations.days",
+            "first_party.payments",
+            "first_party.faq_facts"
+          ],
+          "id": "hotc-home",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
+        },
+        {
+          "id": "hotc-find-us",
+          "title": "Find Us | Heart of the City Farmers Market",
+          "url": "https://hotcfarmersmarket.org/find-us",
+          "fields": [
+            "first_party.identity",
+            "first_party.operations",
+            "first_party.faq_facts",
+            "location.address",
+            "location.description",
+            "operations.days",
+            "operations.season"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
         },
         {
           "title": "USDA SNAP Retailer Locator, store type Farmers and Markets",
@@ -803643,52 +803819,6 @@
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Diablo%20Valley%20CFM%2C%20N%20WIGET%20LN.%20%26%20MITCHELL%20DR"
   },
   {
-    "id": "gov:us_ca_wic_farmers_markets:74cb8212053e4593",
-    "slug": "santa-rosa-original-cfm-santa-rosa-1736039c",
-    "name": "Santa Rosa Original Certified Farmers Market",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "50 Mark West Springs Rd",
-      "city": "Santa Rosa",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Saturday 08:30 am - 01:00 pm",
-        "Wednesday"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "74cb8212053e4593",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Santa%20Rosa%20Original%20CFM%2C%2050%20MARK%20WEST%20SPRINGS%20RD"
-  },
-  {
     "id": "gov:us_ca_wic_farmers_markets:758a969dc8e99d83",
     "slug": "old-town-eureka-fm-eureka-b27ba876",
     "name": "Old Town Eureka Farmers Market",
@@ -804159,51 +804289,6 @@
       "status": "official_source_reviewed"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Hillcrest%20CFM%2C%203960%20NORMAL%20ST"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:7b379800c227873b",
-    "slug": "downtown-napa-fm-napa-855e919d",
-    "name": "Downtown Napa Farmers Market",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "1100 West St",
-      "city": "Napa",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Tuesday 08:00 am - 12:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "7b379800c227873b",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Downtown%20Napa%20FM%2C%201100%20WEST%20ST"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:7b4c5dd7857be542",
@@ -806366,51 +806451,6 @@
       "status": "identity_ambiguous"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Shafter%20Farmers%2C%20320%20CENTRAL%20AVE"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:9cb7d1fb6126dc5b",
-    "slug": "mission-community-market-san-francisco-a42dae9c",
-    "name": "Mission Community Market",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "22 Bartlett St",
-      "city": "San Francisco",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Mar-Nov",
-      "days": [
-        "Thursday 03:00 pm - 07:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "9cb7d1fb6126dc5b",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Mission%20Community%20Market%2C%2022%20BARTLETT%20ST"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:9cc10f7ae77a1a9c",

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-17T00:24:25.668Z",
-  "market_count": 9140,
+  "generated_at": "2026-11-17T01:31:12.683Z",
+  "market_count": 9136,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 962,
+      "market_count": 958,
       "city_count": 405,
       "cities": [
         {
@@ -4440,43 +4440,6 @@
           ]
         },
         {
-          "name": "San Francisco",
-          "slug": "san-francisco",
-          "market_count": 30,
-          "market_slugs": [
-            "alemany-farmers-market",
-            "associated-students-farmers-market",
-            "castro-fm-san-francisco-438a66d1",
-            "clement-street-farmers-market",
-            "clement-street-fm-san-francisco-b7955892",
-            "divisadero-cfm-san-francisco-a0ec8d28",
-            "divisadero-farmers-market",
-            "ferry-plaza-farmers-market-san-francisco",
-            "ferry-plaza-saturday-fm-san-francisco-bcc6a053",
-            "ferry-plaza-thursday-fm-san-francisco-0b0e0b87",
-            "ferry-plaza-tuesday-fm-san-francisco-c6af16d9",
-            "fillmore-cfm-san-francisco-33d5a998",
-            "fillmore-farmers-market",
-            "fort-mason-center-cfm-san-francisco-5b74ab72",
-            "fort-mason-center-farmers-market",
-            "heart-of-the-city-market",
-            "inner-sunset-cfm-san-francisco-ee2274d5",
-            "inner-sunset-farmers-market",
-            "kaiser-permanente-san-francisco-farmers-market",
-            "kaiser-san-francisco-farmers-market-san-francisco",
-            "mission-bay-farmers-market",
-            "mission-community-market-san-francisco",
-            "mission-community-market-san-francisco-a42dae9c",
-            "noe-valley-farmers-market",
-            "outer-sunset-fm-mercantile-san-francisco-e57bdd90",
-            "san-francisco-farmers-market-at-crocker",
-            "stonestown-farmers-market-san-francisco",
-            "stonestown-fm-san-francisco-555536c2",
-            "ucsf-parnassus-farmers-market",
-            "va-san-francisco-farmers-market"
-          ]
-        },
-        {
           "name": "Sacramento",
           "slug": "sacramento",
           "market_count": 29,
@@ -4510,6 +4473,42 @@
             "roosevelt-park-farmers-market-sacramento",
             "sunrise-station-certified-farmers-market-sacramento",
             "uc-davis-health-system-farmers-market"
+          ]
+        },
+        {
+          "name": "San Francisco",
+          "slug": "san-francisco",
+          "market_count": 29,
+          "market_slugs": [
+            "alemany-farmers-market",
+            "associated-students-farmers-market",
+            "castro-fm-san-francisco-438a66d1",
+            "clement-street-farmers-market",
+            "clement-street-fm-san-francisco-b7955892",
+            "divisadero-cfm-san-francisco-a0ec8d28",
+            "divisadero-farmers-market",
+            "ferry-plaza-farmers-market-san-francisco",
+            "ferry-plaza-saturday-fm-san-francisco-bcc6a053",
+            "ferry-plaza-thursday-fm-san-francisco-0b0e0b87",
+            "ferry-plaza-tuesday-fm-san-francisco-c6af16d9",
+            "fillmore-cfm-san-francisco-33d5a998",
+            "fillmore-farmers-market",
+            "fort-mason-center-cfm-san-francisco-5b74ab72",
+            "fort-mason-center-farmers-market",
+            "heart-of-the-city-market",
+            "inner-sunset-cfm-san-francisco-ee2274d5",
+            "inner-sunset-farmers-market",
+            "kaiser-permanente-san-francisco-farmers-market",
+            "kaiser-san-francisco-farmers-market-san-francisco",
+            "mission-bay-farmers-market",
+            "mission-community-market-san-francisco",
+            "noe-valley-farmers-market",
+            "outer-sunset-fm-mercantile-san-francisco-e57bdd90",
+            "san-francisco-farmers-market-at-crocker",
+            "stonestown-farmers-market-san-francisco",
+            "stonestown-fm-san-francisco-555536c2",
+            "ucsf-parnassus-farmers-market",
+            "va-san-francisco-farmers-market"
           ]
         },
         {
@@ -4684,21 +4683,6 @@
           ]
         },
         {
-          "name": "Santa Rosa",
-          "slug": "santa-rosa",
-          "market_count": 8,
-          "market_slugs": [
-            "redwood-empire-farmers-markets-santa-rosa",
-            "roseland-mercadito-farmers-market",
-            "santa-rosa-certified-farmers-market-santa-rosa",
-            "santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa",
-            "santa-rosa-downtown-farmers-market-at-courthouse-square-ca",
-            "santa-rosa-original-cfm-santa-rosa-1736039c",
-            "santa-rosa-original-cfm-wic-satellite-santa-rosa-cf3a3dc2",
-            "west-end-farmers-market-santa-rosa"
-          ]
-        },
-        {
           "name": "Berkeley",
           "slug": "berkeley",
           "market_count": 7,
@@ -4752,6 +4736,20 @@
             "salinas-alisal-certified-farmers-market-salinas",
             "salinas-city-center-certified-organic-farmers-market-salinas",
             "salinas-valley-memorial-hospital-cfm-salinas-9ee77fa7"
+          ]
+        },
+        {
+          "name": "Santa Rosa",
+          "slug": "santa-rosa",
+          "market_count": 7,
+          "market_slugs": [
+            "redwood-empire-farmers-markets-santa-rosa",
+            "roseland-mercadito-farmers-market",
+            "santa-rosa-certified-farmers-market-santa-rosa",
+            "santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa",
+            "santa-rosa-downtown-farmers-market-at-courthouse-square-ca",
+            "santa-rosa-original-cfm-wic-satellite-santa-rosa-cf3a3dc2",
+            "west-end-farmers-market-santa-rosa"
           ]
         },
         {
@@ -5026,17 +5024,6 @@
             "morro-bay-main-st-saturday-fm-morro-bay-54c1c32f",
             "morro-bay-main-street-farmers-market-morro-bay",
             "morro-bay-thursday-afternoons-cfm-morro-bay-d85bc9f0"
-          ]
-        },
-        {
-          "name": "Napa",
-          "slug": "napa",
-          "market_count": 4,
-          "market_slugs": [
-            "downtown-napa-farmers-market-napa",
-            "downtown-napa-fm-napa-855e919d",
-            "napa-downtown-farmers-market-napa",
-            "vacaville-certified-farmers-market-napa"
           ]
         },
         {
@@ -6152,6 +6139,15 @@
           "market_slugs": [
             "murrieta-cfm-murrieta-63cee226",
             "murrieta-farmers-market"
+          ]
+        },
+        {
+          "name": "Napa",
+          "slug": "napa",
+          "market_count": 2,
+          "market_slugs": [
+            "napa-downtown-farmers-market-napa",
+            "vacaville-certified-farmers-market-napa"
           ]
         },
         {

@@ -2,10 +2,14 @@
   "schema_version": 1,
   "note": "Old market slugs and where they now live. Written by scripts/build-slug-redirects.mjs during data refreshes and by hand for merged duplicates (data/overrides/merged-markets.json); served by next.config.ts.",
   "redirects": {
+    "downtown-napa-farmers-market-napa": "/markets/napa-downtown-farmers-market-napa",
+    "downtown-napa-fm-napa-855e919d": "/markets/napa-downtown-farmers-market-napa",
     "heart-of-the-city-sunday-fm-san-francisco-23cabc69": "/markets/heart-of-the-city-market",
+    "mission-community-market-san-francisco-a42dae9c": "/markets/mission-community-market-san-francisco",
     "petaluma-east-side-fm-petaluma-0c485015": "/markets/the-petaluma-east-side-farmers-market-petaluma",
     "petaluma-saturday-cfm-bloomfield-7be63a46": "/markets/petaluma-farmers-market-petaluma",
     "santa-rosa-community-saturday-fm-santa-rosa-14bc8bc7": "/markets/santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa",
-    "santa-rosa-community-wednesday-fm-santa-rosa-8abfddf8": "/markets/santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa"
+    "santa-rosa-community-wednesday-fm-santa-rosa-8abfddf8": "/markets/santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa",
+    "santa-rosa-original-cfm-santa-rosa-1736039c": "/markets/santa-rosa-certified-farmers-market-santa-rosa"
   }
 }

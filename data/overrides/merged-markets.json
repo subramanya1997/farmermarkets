@@ -31,6 +31,30 @@
       "name": "Heart of the City Sunday Farmers Market",
       "into": "308867",
       "reason": "California WIC dataset row for the Heart of the City Farmers Market at United Nations Plaza (Market St at 7th St), the same market as the main listing; merge approved by the site owner on 2026-11-16."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:74cb8212053e4593",
+      "name": "Santa Rosa Original Certified Farmers Market",
+      "into": "301619",
+      "reason": "California WIC dataset row for the Santa Rosa Original Certified Farmers Market at 50 Mark West Springs Rd, the same market and address as the main listing; merge approved by the site owner on 2026-11-16."
+    },
+    {
+      "id": "308629",
+      "name": "Downtown Napa Farmers’ Market",
+      "into": "300361",
+      "reason": "Second legacy row for the Napa Farmers Market, at its old 500 First St address; napafarmersmarket.org gives one market at 1100 West St. Merge approved by the site owner on 2026-11-16."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:7b379800c227873b",
+      "name": "Downtown Napa Farmers Market",
+      "into": "300361",
+      "reason": "California WIC dataset row for the Napa Farmers Market at 1100 West St, the same market as the main listing; merge approved by the site owner on 2026-11-16."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:9cb7d1fb6126dc5b",
+      "name": "Mission Community Market",
+      "into": "301319",
+      "reason": "California WIC dataset row for the Mission Community Market on Bartlett St, the same Thursday market as the main listing; merge approved by the site owner on 2026-11-16."
     }
   ]
 }
