@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { LoaderCircle, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { resetSectionsAction } from '@/app/admin/actions';
+import { resetSectionsAction } from '@/app/(app)/admin/actions';
 import type { ListingSection } from '@/lib/listingEdits';
 
 /**

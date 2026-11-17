@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { upload } from '@vercel/blob/client';
 import { AlertCircle, ArrowDown, ArrowUp, CheckCircle2, Clock, ImagePlus, Loader2, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { registerPhotoAction, removePhotoAction, reorderPhotosAction, updatePhotoAction } from '@/app/dashboard/actions';
+import { registerPhotoAction, removePhotoAction, reorderPhotosAction, updatePhotoAction } from '@/app/(app)/dashboard/actions';
 import { cn } from '@/lib/utils';
 import { SectionCard, TextInput } from './fields';
 

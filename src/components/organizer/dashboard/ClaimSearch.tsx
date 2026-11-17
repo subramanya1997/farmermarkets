@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Loader2, MapPin, Search } from 'lucide-react';
-import { searchMarketsAction, type MarketSearchHit } from '@/app/dashboard/actions';
+import { searchMarketsAction, type MarketSearchHit } from '@/app/(app)/dashboard/actions';
 import { Input } from '@/components/ui/input';
 import { TEXT_LINK } from '@/components/organizer/auth/FormBits';
 

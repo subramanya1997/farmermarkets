@@ -21,7 +21,7 @@
  * Routing note: the slugs, paths and labels live in `topicSlugs.ts`. The pages
  * sat under `/farmers-markets/` until November 2026; `next.config.ts` 308s the
  * four addresses that existed there. A new topic needs a slug in that file and
- * a page folder under `src/app/markets/`.
+ * a page folder under `src/app/(site)/markets/`.
  */
 
 import 'server-only';

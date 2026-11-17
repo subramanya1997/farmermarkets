@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Check, LoaderCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { decidePhotoAction } from '@/app/admin/actions';
+import { decidePhotoAction } from '@/app/(app)/admin/actions';
 
 export interface ReviewPhoto {
   id: string;

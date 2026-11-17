@@ -335,13 +335,19 @@ src/
   app/
     api/markets/              Market list and market detail API routes
     api/discovery/            Validated server-only Resend contact submissions
-    markets/                  Market listing, detail, and state pages
-    about/                    Static about page
-    about-the-data/           Data provenance page and its Dataset JSON-LD
-    privacy/                  Static privacy page
-    terms/                    Static terms page
-    layout.tsx                Root layout, metadata, analytics, and shared chrome
-    page.tsx                  Homepage
+    (site)/                   Public pages; layout.tsx adds the header, footer and visitor prompts
+      markets/                Market listing, detail, and state pages
+      about/                  Static about page
+      about-the-data/         Data provenance page and its Dataset JSON-LD
+      privacy/                Static privacy page
+      terms/                  Static terms page
+      page.tsx                Homepage
+    (app)/                    Signed-in areas, each with its own dashboard shell
+      dashboard/              Market organizers
+      admin/                  Site admin
+    (auth)/                   Sign in, sign up and password pages in a plain centered layout
+    layout.tsx                Root layout: html and body, metadata, fonts, analytics (no visible chrome)
+    not-found.tsx             Public 404, wrapped in the site header and footer itself
     robots.ts                 robots.txt generation
     sitemap.ts                sitemap.xml generation
   components/                 App components and shared UI primitives
@@ -498,8 +504,8 @@ Each run writes `scripts/legacy-refresh-report.json` with per-record `updated` /
 | `/markets/[slug]` | Individual market detail page. |
 | `/markets/state/[state]` | State-specific market listing page. |
 | `/sign-up`, `/sign-in`, `/forgot-password`, `/reset-password` | Market organizer accounts (Better Auth, email and password). Noindex. |
-| `/dashboard` | Organizer home: managed markets, claims, and `/dashboard/claim`, `/dashboard/markets/[slug]` (listing editor and photos). Noindex. |
-| `/admin` | Admin dashboard: overview, review queue (`/admin/review`), every market (`/admin/markets`, edit any market and publish immediately), organizer accounts (`/admin/organizers`). Only `ADMIN_EMAILS`; everyone else gets a 404. |
+| `/dashboard` | Organizer home: managed markets, claims, and `/dashboard/claim`, `/dashboard/markets/[slug]` (listing editor and photos), `/dashboard/settings` (profile, password, email updates; `/dashboard/account` redirects there), `/dashboard/help`, `/dashboard/about`. Noindex. |
+| `/admin` | Admin dashboard: overview, review queue (`/admin/review`), every market (`/admin/markets`, edit any market and publish immediately), organizer accounts (`/admin/organizers`), read-only settings (`/admin/settings`) and help (`/admin/help`). Only `ADMIN_EMAILS`; everyone else gets a 404. |
 | `/about` | About page. |
 | `/about-the-data` | Sources, processing, refresh cadence, coverage numbers, limitations, and licence terms, with `Dataset` JSON-LD. Every number is computed from the current data at build/ISR time. |
 | `/privacy` | Privacy policy. |

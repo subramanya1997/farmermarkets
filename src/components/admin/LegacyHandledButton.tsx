@@ -4,7 +4,7 @@ import { useId, useState, useTransition } from 'react';
 import { Check, LoaderCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { markLegacyClaimHandledAction } from '@/app/admin/actions';
+import { markLegacyClaimHandledAction } from '@/app/(app)/admin/actions';
 
 /**
  * Clears an old contact-form claim from the queue. The optional note is kept

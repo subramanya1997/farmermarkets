@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Loader2, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { adminSearchMarketsAction, type AdminMarketHit } from '@/app/admin/actions';
+import { adminSearchMarketsAction, type AdminMarketHit } from '@/app/(app)/admin/actions';
 import { cn } from '@/lib/utils';
 import { placeLabel } from './format';
 

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { ArrowUpRight, LayoutDashboard, Plus, ShieldCheck, UserRound } from 'lucide-react';
+import { ArrowUpRight, Info, LayoutDashboard, LifeBuoy, Plus, Settings, ShieldCheck } from 'lucide-react';
 import { isAdmin, requireOrganizer } from '@/lib/organizer';
 import { DashboardShell, type DashboardNavGroup, type DashboardNavItem } from '@/components/dashboard/DashboardShell';
 import { cachedOrganizerOverview } from './_lib/overview';
@@ -21,7 +21,6 @@ export default async function DashboardLayout({ children }: { children: ReactNod
       items: [
         { href: '/dashboard', label: 'Overview', icon: <LayoutDashboard />, exact: true },
         { href: '/dashboard/claim', label: 'Claim a market', icon: <Plus /> },
-        { href: '/dashboard/account', label: 'Account', icon: <UserRound /> },
       ],
     },
     {
@@ -31,6 +30,13 @@ export default async function DashboardLayout({ children }: { children: ReactNod
         label: market.name,
         dot: pending ? 'Update waiting for review' : undefined,
       })),
+    },
+    {
+      items: [
+        { href: '/dashboard/settings', label: 'Settings', icon: <Settings />, also: ['/dashboard/account'] },
+        { href: '/dashboard/help', label: 'Help', icon: <LifeBuoy /> },
+        { href: '/dashboard/about', label: 'About', icon: <Info /> },
+      ],
     },
   ];
 

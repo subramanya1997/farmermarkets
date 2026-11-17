@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/SiteHeader";
-import { VisitorPrompts } from "@/components/VisitorPrompts";
-import { DiscoverySurvey } from "@/components/DiscoverySurvey";
-import { Footer } from "@/components/Footer";
 import { AnalyticsProviders } from "@/components/AnalyticsProviders";
 import { SITE_URL, absoluteUrl, organizationSameAs } from "@/lib/site";
 
@@ -150,17 +146,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        <div className="min-h-screen flex flex-col">
-          <SiteHeader />
-          <main className="flex-1 w-full">
-            {children}
-          </main>
-          <Footer />
-          {/* Contextual questions (src/components/VisitorPrompts.tsx) and the
-              on-demand feedback form behind the footer's "Send feedback". */}
-          <VisitorPrompts />
-          <DiscoverySurvey />
-        </div>
+        {/* No visible frame here. Each route group brings its own:
+            (site) the public header, footer and visitor prompts; (app) the
+            dashboard shell; (auth) the centered sign-in column. */}
+        {children}
         <AnalyticsProviders
           googleMeasurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-S2P5DZTJC8"}
           enableVercelAnalytics={Boolean(process.env.VERCEL)}

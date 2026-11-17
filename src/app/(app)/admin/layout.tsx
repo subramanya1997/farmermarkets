@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { ArrowUpRight, Inbox, LayoutDashboard, Store, Users } from 'lucide-react';
+import { ArrowUpRight, Inbox, LayoutDashboard, LifeBuoy, Settings, Store, Users } from 'lucide-react';
 import { requireAdmin } from '@/lib/organizer';
 import { DashboardShell, type DashboardNavGroup } from '@/components/dashboard/DashboardShell';
 import { cachedReviewQueue, waitingCount } from './_lib/queue';
@@ -24,6 +24,12 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         { href: '/admin/review', label: 'Review queue', icon: <Inbox />, also: ['/admin/claims', '/admin/changes'], count: pending },
         { href: '/admin/markets', label: 'Markets', icon: <Store /> },
         { href: '/admin/organizers', label: 'Organizers', icon: <Users /> },
+      ],
+    },
+    {
+      items: [
+        { href: '/admin/settings', label: 'Settings', icon: <Settings /> },
+        { href: '/admin/help', label: 'Help', icon: <LifeBuoy /> },
       ],
     },
   ];

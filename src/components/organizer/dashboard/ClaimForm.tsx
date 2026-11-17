@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
-import { claimMarketAction } from '@/app/dashboard/actions';
+import { claimMarketAction } from '@/app/(app)/dashboard/actions';
 import { CLAIM_ROLES, CLAIM_ROLE_LABELS, type ClaimRole } from '@/lib/claimRoles';
 import { trackEvent } from '@/lib/analytics';
 import { buttonVariants } from '@/components/ui/button';

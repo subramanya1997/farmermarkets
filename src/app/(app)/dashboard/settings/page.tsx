@@ -1,26 +1,25 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Mail } from 'lucide-react';
 import { requireOrganizer } from '@/lib/organizer';
 import { Panel } from '@/components/admin/bits';
 import { NameForm, PasswordForm } from '@/components/organizer/dashboard/AccountForms';
 import { withNext } from '@/components/organizer/auth/nextPath';
+import { DocList, PageHeader, TEXT_LINK } from '@/components/dashboard/DocBits';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Your account',
+  title: 'Settings',
   robots: { index: false, follow: false },
 };
 
-export default async function AccountPage() {
-  const user = await requireOrganizer('/dashboard/account');
+export default async function SettingsPage() {
+  const user = await requireOrganizer('/dashboard/settings');
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <div>
-        <h1 className="text-xl font-semibold tracking-tight">Account</h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">Your name, email and password.</p>
-      </div>
+      <PageHeader title="Settings">Your name, email and password, and the emails we send you.</PageHeader>
 
       <Panel title="Profile">
         <div className="flex flex-col gap-5 p-4 sm:p-5">
@@ -38,7 +37,26 @@ export default async function AccountPage() {
 
       <Panel title="Password">
         <div className="p-4 sm:p-5">
-          <PasswordForm forgotHref={withNext('/forgot-password', '/dashboard/account')} />
+          <PasswordForm forgotHref={withNext('/forgot-password', '/dashboard/settings')} />
+        </div>
+      </Panel>
+
+      <Panel title="Email updates">
+        <div className="space-y-3 p-4 text-sm leading-6 text-zinc-700 sm:p-5 dark:text-zinc-300">
+          <p>We only email {user.email} about your account and your listings:</p>
+          <DocList>
+            <li>Whether your claim for a market was approved.</li>
+            <li>Whether an update you sent was published, with a note from us when it was not.</li>
+            <li>Confirming your email and resetting your password, when you ask for them.</li>
+          </DocList>
+          <p>
+            These come with having an account, so there is nothing to switch on or off. Photos are the exception: we do
+            not email about them, and each one shows as waiting or live on your market&apos;s page here.{' '}
+            <Link href="/dashboard/help#contact" className={TEXT_LINK}>
+              Questions? Get in touch
+            </Link>
+            .
+          </p>
         </div>
       </Panel>
     </div>

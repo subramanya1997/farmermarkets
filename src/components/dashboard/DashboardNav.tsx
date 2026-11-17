@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Loader2, LogOut, Menu, Sprout } from 'lucide-react';
+import { ChevronRight, Loader2, LogOut, Menu, Sprout } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -151,11 +151,21 @@ function NavBody({ title, groups, links, email, onNavigate }: DashboardNavProps 
   const path = usePathname() ?? '';
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-14 shrink-0 items-center gap-2 px-4">
-        <span className="flex size-7 items-center justify-center rounded-md bg-green-700 text-white">
-          <Sprout aria-hidden="true" className="size-4" />
-        </span>
-        <span className="text-sm font-semibold tracking-tight">{title}</span>
+      {/* Same height as the top bar, so the two bottom borders line up. */}
+      <div className="flex h-14 shrink-0 items-center border-b px-3">
+        <Link
+          href="/"
+          onClick={onNavigate}
+          className="flex min-w-0 items-center gap-2.5 rounded-md px-1 py-1 outline-none focus-visible:ring-2 focus-visible:ring-green-600"
+        >
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-green-700 text-white">
+            <Sprout aria-hidden="true" className="size-4" />
+          </span>
+          <span className="flex min-w-0 flex-col leading-tight">
+            <span className="truncate text-sm font-semibold tracking-tight">Farmer Markets</span>
+            <span className="truncate text-xs text-zinc-500 dark:text-zinc-400">{title}</span>
+          </span>
+        </Link>
       </div>
 
       <nav aria-label={title} className="flex-1 overflow-y-auto px-2 py-2">
@@ -200,29 +210,31 @@ function NavBody({ title, groups, links, email, onNavigate }: DashboardNavProps 
   );
 }
 
-/** Fixed left column on large screens. */
+/** The full-height left column on large screens. */
 export function DashboardSidebar(props: DashboardNavProps) {
   return (
-    <aside className="hidden border-r bg-white lg:block dark:bg-zinc-900">
-      <div className="sticky top-16 h-[calc(100vh-4rem)]">
-        <NavBody {...props} />
-      </div>
+    <aside className="hidden w-60 shrink-0 border-r bg-white lg:block dark:bg-zinc-900">
+      <NavBody {...props} />
     </aside>
   );
 }
 
-/** A slim bar with the current page on phones and tablets; the menu opens as a sheet. */
-export function DashboardMobileBar(props: DashboardNavProps) {
+/**
+ * The bar over the page on every screen size: where you are, and on phones
+ * and tablets the menu button (the nav opens as a sheet) and the one link
+ * that needs attention.
+ */
+export function DashboardTopBar(props: DashboardNavProps) {
   const [open, setOpen] = useState(false);
   const path = usePathname() ?? '';
   const current = props.groups.flatMap((group) => group.items).find((item) => isActive(item, path));
   const area = props.title.toLowerCase();
 
   return (
-    <div className="sticky top-16 z-30 flex h-12 items-center gap-2 border-b bg-white/95 px-2 backdrop-blur supports-[backdrop-filter]:bg-white/80 lg:hidden dark:bg-zinc-900/95 dark:supports-[backdrop-filter]:bg-zinc-900/80">
+    <header className="flex h-14 shrink-0 items-center gap-2 border-b bg-white px-2 sm:px-4 lg:px-8 dark:bg-zinc-900">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button type="button" variant="ghost" size="icon" aria-label={`Open ${area} menu`}>
+          <Button type="button" variant="ghost" size="icon" aria-label={`Open ${area} menu`} className="lg:hidden">
             <Menu aria-hidden="true" />
           </Button>
         </SheetTrigger>
@@ -232,16 +244,27 @@ export function DashboardMobileBar(props: DashboardNavProps) {
           <NavBody {...props} onNavigate={() => setOpen(false)} />
         </SheetContent>
       </Sheet>
-      <span className="min-w-0 truncate text-sm font-semibold">{current?.label ?? props.title}</span>
+      {/* "Admin > Review queue": the area on wider screens, then the page. */}
+      <p className="flex min-w-0 items-center gap-1.5 text-sm">
+        {current ? (
+          <>
+            <span className="hidden shrink-0 text-zinc-500 sm:inline dark:text-zinc-400">{props.title}</span>
+            <ChevronRight aria-hidden="true" className="hidden size-3.5 shrink-0 text-zinc-400 sm:block" />
+            <span className="min-w-0 truncate font-semibold">{current.label}</span>
+          </>
+        ) : (
+          <span className="font-semibold">{props.title}</span>
+        )}
+      </p>
       {props.mobileLink ? (
         <Link
           href={props.mobileLink.href}
-          className="ml-auto mr-2 inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-amber-900 dark:text-amber-200 [&_svg]:size-3.5"
+          className="ml-auto mr-2 inline-flex shrink-0 items-center gap-1.5 text-xs font-medium text-amber-900 lg:hidden dark:text-amber-200 [&_svg]:size-3.5"
         >
           {props.mobileLink.icon ? <span aria-hidden="true" className="flex">{props.mobileLink.icon}</span> : null}
           {props.mobileLink.label}
         </Link>
       ) : null}
-    </div>
+    </header>
   );
 }

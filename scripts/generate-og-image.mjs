@@ -4,7 +4,7 @@
  * own image).
  *
  * Per-market pages do NOT use this file; they render a personalised card at
- * `src/app/markets/[slug]/opengraph-image.tsx`.
+ * `src/app/(site)/markets/[slug]/opengraph-image.tsx`.
  *
  * Run with: `node scripts/generate-og-image.mjs`
  *

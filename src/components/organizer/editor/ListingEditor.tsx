@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { AlertCircle, CheckCircle2, Info, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { submitListingChangesAction } from '@/app/dashboard/actions';
-import { adminPublishAction } from '@/app/admin/actions';
+import { submitListingChangesAction } from '@/app/(app)/dashboard/actions';
+import { adminPublishAction } from '@/app/(app)/admin/actions';
 import {
   SECTION_LABELS,
   parseListingEdits,

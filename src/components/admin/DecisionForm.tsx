@@ -6,7 +6,7 @@ import { Check, LoaderCircle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { decideChangeAction, decideClaimAction } from '@/app/admin/actions';
+import { decideChangeAction, decideClaimAction } from '@/app/(app)/admin/actions';
 
 /**
  * Approve or reject a claim or a listing update, with an optional note that is

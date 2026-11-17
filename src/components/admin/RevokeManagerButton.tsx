@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { LoaderCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { revokeManagerAction } from '@/app/admin/actions';
+import { revokeManagerAction } from '@/app/(app)/admin/actions';
 
 /** Removes one organizer's access to a market, after an inline confirm. */
 export function RevokeManagerButton({ marketId, userId, name }: { marketId: string; userId: string; name: string }) {

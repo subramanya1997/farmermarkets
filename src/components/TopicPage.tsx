@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { FaqSection } from '@/components/FaqSection';
-import { TopicMarketCard } from '@/app/markets/_components/TopicMarketRow';
+import { TopicMarketCard } from '@/app/(site)/markets/_components/TopicMarketRow';
 import { absoluteUrl } from '@/lib/site';
 import {
   NAV_TOPIC_SLUGS,

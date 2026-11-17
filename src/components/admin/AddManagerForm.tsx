@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { LoaderCircle, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { addManagerAction } from '@/app/admin/actions';
+import { addManagerAction } from '@/app/(app)/admin/actions';
 
 /** Gives an existing, verified account access to a market without a claim. */
 export function AddManagerForm({ slug }: { slug: string }) {
