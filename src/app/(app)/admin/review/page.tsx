@@ -47,7 +47,7 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
     <div className="mx-auto max-w-6xl space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Review queue</h1>
+          <h1 className="sr-only">Review queue</h1>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">Oldest first. Approving publishes right away.</p>
         </div>
       </div>

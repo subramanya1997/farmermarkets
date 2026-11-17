@@ -4,11 +4,15 @@ import type { ReactNode } from 'react';
 export { TEXT_LINK } from '@/components/organizer/auth/FormBits';
 
 /** The title and one line under it, as on every dashboard page. */
+/**
+ * The page's name already shows in the breadcrumb bar, so the heading is for
+ * screen readers only; the one-line summary is what people see.
+ */
 export function PageHeader({ title, children }: { title: string; children?: ReactNode }) {
   return (
     <div>
-      <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-      {children ? <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{children}</p> : null}
+      <h1 className="sr-only">{title}</h1>
+      {children ? <p className="text-sm text-zinc-600 dark:text-zinc-400">{children}</p> : null}
     </div>
   );
 }
