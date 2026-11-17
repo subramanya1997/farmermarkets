@@ -14607,6 +14607,26 @@
           ]
         }
       ]
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "payment.food_assistance.wic",
+      "value": true
+    },
+    {
+      "index": 2035,
+      "id": 308867,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "California WIC Authorized Farmers’ Markets, California Department of Public Health (lists Heart of the City at 1 United Nations Plaza)",
+          "url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
+          "fields": [
+            "payment.food_assistance.wic"
+          ]
+        }
+      ]
     }
   ]
 }

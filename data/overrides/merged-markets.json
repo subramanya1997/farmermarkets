@@ -25,6 +25,12 @@
       "name": "Petaluma Saturday CFM",
       "into": "300567",
       "reason": "California WIC dataset row for the Saturday market at Walnut Park (Petaluma Blvd and D St), filed under the wrong city (Bloomfield); the same market as the Petaluma Walnut Park listing. Fix approved by Kelly Smith (ACE) by email on 2026-11-16."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:324c0a0fb58e2406",
+      "name": "Heart of the City Sunday Fm",
+      "into": "308867",
+      "reason": "California WIC dataset row for the Heart of the City Farmers Market at United Nations Plaza (Market St at 7th St), the same market as the main listing; merge approved by the site owner on 2026-11-16."
     }
   ]
 }

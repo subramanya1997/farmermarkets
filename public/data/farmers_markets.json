@@ -226749,7 +226749,7 @@
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
+        "wic": true,
         "sfmnp": false,
         "fmnp": false,
         "snap": true,
@@ -226804,6 +226804,13 @@
           "url": "https://www.fns.usda.gov/snap/retailer-locator",
           "fields": [
             "payment.food_assistance.snap"
+          ]
+        },
+        {
+          "title": "California WIC Authorized Farmers’ Markets, California Department of Public Health (lists Heart of the City at 1 United Nations Plaza)",
+          "url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
+          "fields": [
+            "payment.food_assistance.wic"
           ]
         }
       ]
@@ -799247,52 +799254,6 @@
       "status": "official_source_reviewed"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Gardena%20FM%2C%2013000%20VAN%20NESS"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:324c0a0fb58e2406",
-    "slug": "heart-of-the-city-sunday-fm-san-francisco-23cabc69",
-    "name": "Heart of the City Sunday Fm",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "1 United Nations Plaza",
-      "city": "San Francisco",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Monday",
-        "Sunday 07:00 am - 05:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "324c0a0fb58e2406",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Heart%20of%20the%20City%20Sunday%20FM%2C%201%20UNITED%20NATIONS%20PLAZA"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:33a41b7a22332bd7",

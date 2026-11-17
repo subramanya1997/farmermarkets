@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-17T00:22:24.031Z",
-  "market_count": 9141,
+  "generated_at": "2026-11-17T00:24:25.668Z",
+  "market_count": 9140,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 963,
+      "market_count": 962,
       "city_count": 405,
       "cities": [
         {
@@ -4442,7 +4442,7 @@
         {
           "name": "San Francisco",
           "slug": "san-francisco",
-          "market_count": 31,
+          "market_count": 30,
           "market_slugs": [
             "alemany-farmers-market",
             "associated-students-farmers-market",
@@ -4460,7 +4460,6 @@
             "fort-mason-center-cfm-san-francisco-5b74ab72",
             "fort-mason-center-farmers-market",
             "heart-of-the-city-market",
-            "heart-of-the-city-sunday-fm-san-francisco-23cabc69",
             "inner-sunset-cfm-san-francisco-ee2274d5",
             "inner-sunset-farmers-market",
             "kaiser-permanente-san-francisco-farmers-market",
