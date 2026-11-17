@@ -10,6 +10,7 @@ import { normalizeSourcePostalCode } from '../src/lib/postal.ts';
 import { buildMarketEnrichment } from './build-market-enrichment.mjs';
 import { readAddedMarkets } from './lib/added-markets.mjs';
 import { applySourceCorrections } from './lib/editorial-sources.mjs';
+import { applyMarketMerges, readMarketMerges } from './lib/merged-markets.mjs';
 
 const root = process.cwd();
 const execFile = promisify(execFileCallback);
@@ -252,7 +253,10 @@ export async function buildConsolidatedMarkets({ check = false } = {}) {
     };
     checkReferences(market.first_party);
   }
-  const serialized = `${JSON.stringify(markets, null, 2)}\n`;
+  // Duplicate rows an operator confirmed are one market; see scripts/lib/merged-markets.mjs.
+  const { merges, redirects } = await readMarketMerges(root);
+  const published = applyMarketMerges(markets, merges, redirects, { skipStale });
+  const serialized = `${JSON.stringify(published, null, 2)}\n`;
   if (check) {
     const current = await fs.readFile(outputPath, 'utf8');
     if (current !== serialized) {
@@ -269,10 +273,11 @@ export async function buildConsolidatedMarkets({ check = false } = {}) {
   }
 
   console.log(
-    `${check ? 'validated' : 'built'} one canonical file with ${markets.length} rows, ` +
+    `${check ? 'validated' : 'built'} one canonical file with ${published.length} rows ` +
+    `(${markets.length - published.length} merged away), ` +
     `${enrichmentById.size} enriched IDs, and ${auditById.size} audited IDs`
   );
-  return markets;
+  return published;
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
