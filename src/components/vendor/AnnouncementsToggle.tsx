@@ -4,6 +4,8 @@ import { useId, useState, useTransition } from 'react';
 import { Loader2 } from 'lucide-react';
 import { setAnnouncementsAction } from '@/app/(app)/vendor/actions';
 import { Checkbox } from '@/components/ui/checkbox';
+import { GREEN_CHECK } from '@/components/vendor/fields';
+import { cn } from '@/lib/utils';
 
 /** One checkbox that saves as soon as it changes. */
 export function AnnouncementsToggle({ optedOut }: { optedOut: boolean }) {
@@ -42,8 +44,8 @@ export function AnnouncementsToggle({ optedOut }: { optedOut: boolean }) {
           id={id}
           checked={subscribed}
           disabled={saving}
-          onChange={(event) => change(event.target.checked)}
-          className="mt-0.5 size-5"
+          onCheckedChange={(value) => change(value === true)}
+          className={cn('mt-0.5 size-5', GREEN_CHECK)}
         />
         <span className="min-w-0">
           <span className="block font-medium">Send me announcements</span>

@@ -6,7 +6,8 @@ import { Check, Copy, LoaderCircle, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { inviteVendorAction } from '@/app/(app)/admin/vendors/actions';
-import { Field, FieldErrorsContext, TextArea, TextInput } from '@/components/vendor/fields';
+import { Field, FieldErrorsContext, GREEN_CHECK, TextArea, TextInput } from '@/components/vendor/fields';
+import { cn } from '@/lib/utils';
 
 /** Adds a vendor account by email. The invite email only goes out when the box is checked. */
 export function VendorInviteForm() {
@@ -122,9 +123,9 @@ export function VendorInviteForm() {
             <Checkbox
               id={checkId}
               checked={notify}
-              onChange={(event) => setNotify(event.target.checked)}
+              onCheckedChange={(value) => setNotify(value === true)}
               disabled={isPending}
-              className="mt-0.5 size-5"
+              className={cn('mt-0.5 size-5', GREEN_CHECK)}
             />
             <label htmlFor={checkId} className="text-sm leading-5">
               Send the invite email now

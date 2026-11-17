@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { ArrowUpRight, CheckCircle2, Clock, Eye, Images, MapPin, MessageSquareWarning, Pencil, Plus, Stamp } from 'lucide-react';
 import {
   VISITS_WINDOW_DAYS,
@@ -12,6 +13,7 @@ import {
   type OrganizerMarketSummary,
 } from '@/lib/organizer';
 import { SECTION_LABELS } from '@/lib/listingEdits';
+import { getVendorForUser } from '@/lib/vendors';
 import { buttonVariants } from '@/components/ui/button';
 import { Panel } from '@/components/admin/bits';
 import { StatusBadge } from '@/components/organizer/dashboard/StatusBadge';
@@ -49,6 +51,12 @@ export default async function DashboardPage() {
   const preview = await organizerPreviewMarket(user);
   const [summaries, allClaims] = await Promise.all([cachedOrganizerOverview(user), preview ? [] : claimsForUser(user.id)]);
   const offerPreview = isAdmin(user) && !preview;
+
+  // Someone who only sells at markets signed in from the header: their work
+  // is in the vendor area, not on an empty organizer overview.
+  if (!isAdmin(user) && summaries.length === 0 && allClaims.length === 0 && (await getVendorForUser(user.id))) {
+    redirect('/vendor');
+  }
 
   // Only the newest claim per market matters, and only while it is still open
   // or was turned down for a market this account does not manage yet.
