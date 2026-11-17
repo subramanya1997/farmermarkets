@@ -6,39 +6,45 @@ import { Button } from '@/components/ui/button';
 
 const SITE = 'https://www.farmermarkets.app';
 
-const FONT = "system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+export const BADGE_WIDTH = 200;
+export const BADGE_HEIGHT = 52;
+
+const escapeAttribute = (value: string) => value.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+
+/** The public address of a market's listing. */
+export function listingUrl(slug: string): string {
+  return `${SITE}/markets/${encodeURIComponent(slug)}`;
+}
 
 /**
- * The badge as one self-contained <a>: inline styles only, no scripts, no
- * images, so it pastes cleanly into Squarespace, Wix or WordPress and cannot
- * break the organizer's site. The "F" mark is a styled letter, not an image.
+ * The badge as one short line: a link around an image we host
+ * (`public/badge.svg`, the leaf logo and "Find us on Farmer Markets"). No
+ * scripts and no styles, so it pastes cleanly into Squarespace, Wix or
+ * WordPress, and the badge can be improved later without anyone pasting again.
  */
 export function badgeHtml(slug: string, marketName: string): string {
-  const href = `${SITE}/markets/${encodeURIComponent(slug)}`;
-  const title = `${marketName} on Farmer Markets`.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
-  return [
-    `<a href="${href}" title="${title}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border:1px solid #d4d4d8;border-radius:999px;background:#ffffff;color:#18181b;text-decoration:none;font-family:${FONT};line-height:1.15;box-shadow:0 1px 2px rgba(0,0,0,0.05);">`,
-    `<span style="display:inline-block;width:30px;height:30px;border-radius:999px;background:#15803d;color:#ffffff;font-size:15px;font-weight:700;line-height:30px;text-align:center;">F</span>`,
-    `<span style="display:inline-block;text-align:left;"><span style="display:block;font-size:11px;color:#52525b;">Find us on</span><span style="display:block;font-size:14px;font-weight:700;color:#166534;">Farmer Markets</span></span>`,
-    `</a>`,
-  ].join('\n');
+  const alt = escapeAttribute(`Find ${marketName} on Farmer Markets`);
+  return `<a href="${listingUrl(slug)}"><img src="${SITE}/badge.svg" alt="${alt}" width="${BADGE_WIDTH}" height="${BADGE_HEIGHT}"></a>`;
 }
+
+type Copied = 'code' | 'link' | null;
 
 export function BadgeSnippet({ slug, marketName }: { slug: string; marketName: string }) {
   const html = badgeHtml(slug, marketName);
-  const [copied, setCopied] = useState(false);
+  const link = listingUrl(slug);
+  const [copied, setCopied] = useState<Copied>(null);
 
-  async function copy() {
+  async function copy(what: Exclude<Copied, null>, text: string, fallbackId: string) {
     try {
-      await navigator.clipboard.writeText(html);
+      await navigator.clipboard.writeText(text);
     } catch {
       // Clipboard can be blocked (older browsers, iframes); select the text instead.
-      const code = document.getElementById('badge-snippet-code');
-      if (code) window.getSelection()?.selectAllChildren(code);
+      const target = document.getElementById(fallbackId);
+      if (target) window.getSelection()?.selectAllChildren(target);
       return;
     }
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 2000);
+    setCopied(what);
+    window.setTimeout(() => setCopied((current) => (current === what ? null : current)), 2000);
   }
 
   return (
@@ -48,26 +54,52 @@ export function BadgeSnippet({ slug, marketName }: { slug: string; marketName: s
         It links visitors to your listing here, so they can check hours and directions before they come.
       </p>
 
-      <div className="mt-5 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-8 dark:border-zinc-800 dark:bg-zinc-100">
-        {/* The same markup organizers paste, rendered as a preview. */}
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+      <div className="mt-5 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-6 dark:border-zinc-800 dark:bg-zinc-100">
+        {/* The same image the pasted code shows, served from this site. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/badge.svg" alt="Find us on Farmer Markets" width={BADGE_WIDTH} height={BADGE_HEIGHT} />
       </div>
 
-      <div className="mt-4 flex items-center justify-between gap-2">
-        <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">HTML to paste</p>
-        <Button type="button" variant="outline" onClick={() => void copy()} className="h-11 px-4">
-          {copied ? <Check aria-hidden="true" className="text-green-700" /> : <Copy aria-hidden="true" />}
-          {copied ? 'Copied' : 'Copy code'}
-        </Button>
-      </div>
-      <pre className="mt-2 max-h-48 overflow-auto rounded-lg border border-zinc-200 bg-zinc-950 p-3 text-xs leading-relaxed text-zinc-100 dark:border-zinc-800">
-        <code id="badge-snippet-code" className="break-all whitespace-pre-wrap">
-          {html}
-        </code>
-      </pre>
+      <code
+        id="badge-snippet-code"
+        className="mt-4 block rounded-lg border border-zinc-200 bg-zinc-50 p-3 font-mono text-xs leading-relaxed break-all text-zinc-800 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200"
+      >
+        {html}
+      </code>
+      <Button
+        type="button"
+        onClick={() => void copy('code', html, 'badge-snippet-code')}
+        className="mt-3 h-11 w-full bg-green-700 text-white hover:bg-green-800 sm:h-10 dark:bg-green-700 dark:hover:bg-green-600"
+      >
+        {copied === 'code' ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+        {copied === 'code' ? 'Copied' : 'Copy badge code'}
+      </Button>
       <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400" aria-live="polite">
-        {copied ? 'Copied. Paste it into an HTML or embed block on your site.' : 'Paste it into an HTML or embed block on your site.'}
+        {copied === 'code' ? 'Copied. Paste it into an HTML or embed block on your site.' : 'Paste it into an HTML or embed block on your site.'}
       </p>
+
+      <div className="mt-5 border-t border-zinc-200 pt-4 dark:border-zinc-800">
+        <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Just need the link?</p>
+        <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">For social profiles, emails and anywhere code does not paste.</p>
+        <div className="mt-2 flex items-center gap-2">
+          <span
+            id="badge-listing-link"
+            className="min-w-0 flex-1 truncate rounded-md border border-zinc-200 bg-zinc-50 px-2.5 py-2 font-mono text-xs text-zinc-800 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200"
+          >
+            {link}
+          </span>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => void copy('link', link, 'badge-listing-link')}
+            className="h-9 shrink-0 px-3"
+            aria-label={copied === 'link' ? 'Link copied' : 'Copy link to your listing'}
+          >
+            {copied === 'link' ? <Check aria-hidden="true" className="text-green-700" /> : <Copy aria-hidden="true" />}
+            {copied === 'link' ? 'Copied' : 'Copy'}
+          </Button>
+        </div>
+      </div>
     </section>
   );
 }

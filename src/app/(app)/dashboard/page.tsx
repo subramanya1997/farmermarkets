@@ -6,6 +6,8 @@ import {
   VISITS_WINDOW_DAYS,
   claimsForUser,
   getMarketsByIds,
+  isAdmin,
+  organizerPreviewMarket,
   requireOrganizer,
   type OrganizerMarketSummary,
 } from '@/lib/organizer';
@@ -13,6 +15,7 @@ import { SECTION_LABELS } from '@/lib/listingEdits';
 import { buttonVariants } from '@/components/ui/button';
 import { Panel } from '@/components/admin/bits';
 import { StatusBadge } from '@/components/organizer/dashboard/StatusBadge';
+import { ClaimSearch } from '@/components/organizer/dashboard/ClaimSearch';
 import { cn } from '@/lib/utils';
 import { cachedOrganizerOverview } from './_lib/overview';
 
@@ -43,7 +46,9 @@ function firstName(name: string): string {
 
 export default async function DashboardPage() {
   const user = await requireOrganizer('/dashboard');
-  const [summaries, allClaims] = await Promise.all([cachedOrganizerOverview(user), claimsForUser(user.id)]);
+  const preview = await organizerPreviewMarket(user);
+  const [summaries, allClaims] = await Promise.all([cachedOrganizerOverview(user), preview ? [] : claimsForUser(user.id)]);
+  const offerPreview = isAdmin(user) && !preview;
 
   // Only the newest claim per market matters, and only while it is still open
   // or was turned down for a market this account does not manage yet.
@@ -153,6 +158,17 @@ export default async function DashboardPage() {
               );
             })}
           </ul>
+        </Panel>
+      ) : null}
+
+      {offerPreview ? (
+        <Panel title="Preview as an organizer">
+          <div className="space-y-3 px-4 py-3">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              Only admins see this. Pick any market to see this dashboard the way its organizer would after their claim is approved.
+            </p>
+            <ClaimSearch purpose="preview" />
+          </div>
         </Panel>
       ) : null}
     </div>

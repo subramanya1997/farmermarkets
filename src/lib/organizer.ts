@@ -8,7 +8,7 @@
  */
 import 'server-only';
 import { cache } from 'react';
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { and, asc, count, desc, eq, inArray, sql } from 'drizzle-orm';
@@ -83,6 +83,19 @@ export async function requireAdmin(): Promise<SessionUser> {
   return user as SessionUser;
 }
 
+/**
+ * Admins can preview the organizer dashboard for any market, as if they had
+ * claimed it. The choice lives in a cookie scoped to /dashboard; it is ignored
+ * for anyone who is not an admin.
+ */
+export const ORGANIZER_PREVIEW_COOKIE = 'fm_organizer_preview';
+
+export const organizerPreviewMarket = cache(async (user: SessionUser | null): Promise<FarmerMarket | null> => {
+  if (!isAdmin(user)) return null;
+  const slug = (await cookies()).get(ORGANIZER_PREVIEW_COOKIE)?.value ?? '';
+  return slug ? getPublishedMarket(slug) : null;
+});
+
 export async function managedMarketIds(userId: string): Promise<string[]> {
   const rows = await getDb()
     .select({ marketId: marketManagers.marketId })
@@ -149,7 +162,8 @@ export interface OrganizerMarketSummary {
 
 /** Everything the organizer overview shows, for the markets this account manages. */
 export async function organizerOverview(user: SessionUser): Promise<OrganizerMarketSummary[]> {
-  const ids = await managedMarketIds(user.id);
+  const preview = await organizerPreviewMarket(user);
+  const ids = preview ? [preview.id] : await managedMarketIds(user.id);
   if (ids.length === 0) return [];
   const db = getDb();
   const [markets, changes, photos] = await Promise.all([

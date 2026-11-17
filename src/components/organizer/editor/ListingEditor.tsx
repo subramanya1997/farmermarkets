@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState, useTransition, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, useTransition, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, CheckCircle2, Info, Loader2, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -25,11 +25,11 @@ import { IdentitySection, LocationSection } from './sections/NameAndLocation';
 type TabId = 'place' | 'hours' | 'about' | 'payments' | 'vendors' | 'photos';
 type Tab = { id: TabId; label: string; sections: ListingSection[] };
 
-const PLACE_TAB: Tab = { id: 'place', label: 'Name and location', sections: ['identity', 'location'] };
-const HOURS_TAB: Tab = { id: 'hours', label: 'Status and hours', sections: ['status', 'season', 'schedules'] };
-const ABOUT_TAB: Tab = { id: 'about', label: 'About and links', sections: ['about', 'contact'] };
-const PAYMENTS_TAB: Tab = { id: 'payments', label: 'Payments and products', sections: ['payments', 'products', 'amenities'] };
-const VENDORS_TAB: Tab = { id: 'vendors', label: 'Vendors and events', sections: ['vendors', 'events', 'programs'] };
+const PLACE_TAB: Tab = { id: 'place', label: 'Basics', sections: ['identity', 'location'] };
+const HOURS_TAB: Tab = { id: 'hours', label: 'Hours', sections: ['status', 'season', 'schedules'] };
+const ABOUT_TAB: Tab = { id: 'about', label: 'About', sections: ['about', 'contact'] };
+const PAYMENTS_TAB: Tab = { id: 'payments', label: 'Shopping', sections: ['payments', 'products', 'amenities'] };
+const VENDORS_TAB: Tab = { id: 'vendors', label: 'Vendors', sections: ['vendors', 'events', 'programs'] };
 const PHOTOS_TAB: Tab = { id: 'photos', label: 'Photos', sections: [] };
 
 export type EditorMode = 'organizer' | 'admin';
@@ -127,6 +127,19 @@ export function ListingEditor({
   const [submittedErrors, setSubmittedErrors] = useState<Record<string, string>>({});
   const [notice, setNotice] = useState<Notice>(null);
   const [sending, startSending] = useTransition();
+  const tabStrip = useRef<HTMLDivElement>(null);
+
+  // On a narrow screen the tab strip scrolls sideways. Keep the open tab in
+  // view, without moving the page itself.
+  useEffect(() => {
+    const strip = tabStrip.current;
+    const active = strip?.querySelector<HTMLElement>('[data-state="active"]');
+    if (!strip || !active) return;
+    const stripBox = strip.getBoundingClientRect();
+    const tabBox = active.getBoundingClientRect();
+    if (tabBox.left < stripBox.left) strip.scrollBy({ left: tabBox.left - stripBox.left - 16, behavior: 'smooth' });
+    else if (tabBox.right > stripBox.right) strip.scrollBy({ left: tabBox.right - stripBox.right + 16, behavior: 'smooth' });
+  }, [tab]);
 
   const payloadKey = useMemo(() => payloadFingerprint(edits, initialValues), [edits, initialValues]);
   const baselineKey = useMemo(() => payloadFingerprint(baseline, initialValues), [baseline, initialValues]);
@@ -228,10 +241,19 @@ export function ListingEditor({
           and the photo tab saves on its own. */}
       <div>
         <Tabs value={tab} onValueChange={(value) => setTab(value as TabId)}>
-          <div className="-mx-4 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0">
-            <TabsList className="w-max gap-1 group-data-[orientation=horizontal]/tabs:h-auto sm:w-full">
+          {/* Underline tabs, left aligned. The strip scrolls sideways when it
+              does not fit, so no tab is ever cut off out of reach. */}
+          <div ref={tabStrip} className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+            <TabsList
+              variant="line"
+              className="w-max min-w-full justify-start gap-1 border-b border-zinc-200 p-0 group-data-[orientation=horizontal]/tabs:h-auto dark:border-zinc-800"
+            >
               {tabs.map((item) => (
-                <TabsTrigger key={item.id} value={item.id} className="h-10 flex-none px-3 sm:flex-1">
+                <TabsTrigger
+                  key={item.id}
+                  value={item.id}
+                  className="h-11 flex-none px-3 text-zinc-600 after:bg-green-700 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-green-700/40 focus-visible:outline-none focus-visible:ring-inset hover:text-zinc-900 data-[state=active]:text-green-800 group-data-[orientation=horizontal]/tabs:after:-bottom-px dark:text-zinc-400 dark:after:bg-green-500 dark:hover:text-zinc-100 dark:data-[state=active]:text-green-300"
+                >
                   {item.label}
                   {item.id === 'photos' && photosWaiting > 0 ? (
                     <span className="rounded-full bg-amber-100 px-1.5 text-xs font-semibold text-amber-900 tabular-nums dark:bg-amber-900/40 dark:text-amber-200">

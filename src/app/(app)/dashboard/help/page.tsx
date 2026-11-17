@@ -82,8 +82,9 @@ export default async function OrganizerHelpPage() {
       <DocPanel title="The &ldquo;Find us on Farmer Markets&rdquo; badge" id="badge">
         <p>
           Each market page here has a small badge you can copy onto your own website. It links visitors to your listing,
-          so they can check hours and directions before they come. It is plain HTML with no scripts or tracking, so it
-          pastes into Squarespace, Wix or WordPress without breaking anything.
+          so they can check hours and directions before they come. It is one short line of HTML, a link around a small
+          image with our leaf logo, with no scripts. It pastes into Squarespace, Wix or WordPress without breaking
+          anything.
         </p>
       </DocPanel>
 

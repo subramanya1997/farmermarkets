@@ -6,13 +6,17 @@
  * that called it.
  */
 import { z } from 'zod';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { marketService } from '@/app/api/markets/data';
 import { searchMarkets } from '@/lib/marketSearch';
 import { httpUrl } from '@/lib/listingEdits';
 import { CLAIM_ROLES, CLAIM_ROLE_LABELS } from '@/lib/claimRoles';
 import {
+  ORGANIZER_PREVIEW_COOKIE,
   getPublishedMarket,
   getSessionUser,
+  isAdmin,
   registerPhoto,
   removePhoto,
   reorderPhotos,
@@ -132,4 +136,27 @@ export async function reorderPhotosAction(slug: string, photoIds: unknown): Prom
   const parsed = z.array(z.string().max(40)).max(50).safeParse(photoIds);
   if (!parsed.success) return { ok: false, error: 'The new order did not save.' };
   return reorderPhotos(user, market, parsed.data);
+}
+
+/* Admin preview: see the organizer dashboard for any market, as if it were claimed. */
+
+export async function startOrganizerPreviewAction(slug: string): Promise<void> {
+  const user = await getSessionUser();
+  if (!isAdmin(user)) redirect('/dashboard');
+  const market = await getPublishedMarket(slug);
+  if (!market) redirect('/dashboard');
+  (await cookies()).set(ORGANIZER_PREVIEW_COOKIE, market.slug, {
+    path: '/dashboard',
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 12,
+  });
+  redirect('/dashboard');
+}
+
+export async function endOrganizerPreviewAction(slug?: string): Promise<void> {
+  (await cookies()).delete({ name: ORGANIZER_PREVIEW_COOKIE, path: '/dashboard' });
+  const user = await getSessionUser();
+  redirect(isAdmin(user) && slug && /^[a-z0-9-]{1,200}$/.test(slug) ? `/admin/markets/${slug}` : '/dashboard');
 }

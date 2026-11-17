@@ -25,6 +25,7 @@ import { ResetSectionButton } from '@/components/admin/ResetSectionButton';
 import { RevokeManagerButton } from '@/components/admin/RevokeManagerButton';
 import { Muted, Panel, StatusPill, TimeAgo } from '@/components/admin/bits';
 import { formatTimestamp, placeLabel, timeAgo } from '@/components/admin/format';
+import { startOrganizerPreviewAction } from '@/app/(app)/dashboard/actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -92,13 +93,15 @@ export default async function AdminMarketPage({ params }: { params: Promise<{ sl
               Public page
               <ArrowUpRight aria-hidden="true" className="size-3.5" />
             </a>
-            <Link
-              href={`/dashboard/markets/${market.slug}`}
-              className="inline-flex items-center gap-1 font-medium text-green-700 hover:underline dark:text-green-400"
-            >
-              Organizer view
-              <ArrowRight aria-hidden="true" className="size-3.5" />
-            </Link>
+            <form action={startOrganizerPreviewAction.bind(null, market.slug)}>
+              <button
+                type="submit"
+                className="inline-flex items-center gap-1 font-medium text-green-700 hover:underline dark:text-green-400"
+              >
+                Preview as organizer
+                <ArrowRight aria-hidden="true" className="size-3.5" />
+              </button>
+            </form>
           </div>
         </div>
       </header>

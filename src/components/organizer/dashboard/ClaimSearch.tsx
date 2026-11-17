@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight, Loader2, MapPin, Search } from 'lucide-react';
-import { searchMarketsAction, type MarketSearchHit } from '@/app/(app)/dashboard/actions';
+import { searchMarketsAction, startOrganizerPreviewAction, type MarketSearchHit } from '@/app/(app)/dashboard/actions';
 import { Input } from '@/components/ui/input';
 import { TEXT_LINK } from '@/components/organizer/auth/FormBits';
 
@@ -17,8 +17,15 @@ interface SearchResult {
   failed: boolean;
 }
 
-/** Find a market to claim. Each result opens the claim form for that market. */
-export function ClaimSearch({ initialQuery = '' }: { initialQuery?: string }) {
+const ROW =
+  'flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-green-50 focus-visible:bg-green-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-green-700 dark:hover:bg-green-950/30 dark:focus-visible:bg-green-950/30';
+
+/**
+ * Find a market. Organizers use it to claim one: each result opens the claim
+ * form. Admins also use it with `purpose="preview"` to see the organizer
+ * dashboard for that market as if they had claimed it.
+ */
+export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQuery?: string; purpose?: 'claim' | 'preview' }) {
   const inputId = useId();
   const statusId = useId();
   const [query, setQuery] = useState(initialQuery);
@@ -60,7 +67,7 @@ export function ClaimSearch({ initialQuery = '' }: { initialQuery?: string }) {
   return (
     <div className="flex flex-col gap-3">
       <label htmlFor={inputId} className="text-sm font-medium">
-        Search for your market
+        {purpose === 'preview' ? 'Search for any market' : 'Search for your market'}
       </label>
       <div className="relative">
         <Search aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" />
@@ -89,30 +96,47 @@ export function ClaimSearch({ initialQuery = '' }: { initialQuery?: string }) {
         <ul className="divide-y divide-zinc-200 overflow-hidden rounded-lg border border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
           {results.map((market) => (
             <li key={market.slug}>
-              <Link
-                href={`/dashboard/claim?market=${encodeURIComponent(market.slug)}`}
-                className="flex items-center gap-3 px-4 py-3 hover:bg-green-50 focus-visible:bg-green-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-green-700 dark:hover:bg-green-950/30 dark:focus-visible:bg-green-950/30"
-              >
-                <span className="min-w-0 flex-1">
-                  <span className="block font-medium text-zinc-900 dark:text-zinc-100">{market.name}</span>
-                  {market.city || market.state ? (
-                    <span className="mt-0.5 flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400">
-                      <MapPin aria-hidden="true" className="size-3.5 shrink-0" />
-                      {[market.city, market.state].filter(Boolean).join(', ')}
+              {purpose === 'preview' ? (
+                <form action={startOrganizerPreviewAction.bind(null, market.slug)}>
+                  <button type="submit" className={ROW}>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-medium text-zinc-900 dark:text-zinc-100">{market.name}</span>
+                      {market.city || market.state ? (
+                        <span className="mt-0.5 flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400">
+                          <MapPin aria-hidden="true" className="size-3.5 shrink-0" />
+                          {[market.city, market.state].filter(Boolean).join(', ')}
+                        </span>
+                      ) : null}
                     </span>
-                  ) : null}
-                </span>
-                <span className="flex shrink-0 items-center gap-0.5 text-sm font-medium text-green-700 dark:text-green-400">
-                  Claim
-                  <ChevronRight aria-hidden="true" className="size-4" />
-                </span>
-              </Link>
+                    <span className="flex shrink-0 items-center gap-0.5 text-sm font-medium text-green-700 dark:text-green-400">
+                      Preview
+                      <ChevronRight aria-hidden="true" className="size-4" />
+                    </span>
+                  </button>
+                </form>
+              ) : (
+                <Link href={`/dashboard/claim?market=${encodeURIComponent(market.slug)}`} className={ROW}>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-medium text-zinc-900 dark:text-zinc-100">{market.name}</span>
+                    {market.city || market.state ? (
+                      <span className="mt-0.5 flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400">
+                        <MapPin aria-hidden="true" className="size-3.5 shrink-0" />
+                        {[market.city, market.state].filter(Boolean).join(', ')}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="flex shrink-0 items-center gap-0.5 text-sm font-medium text-green-700 dark:text-green-400">
+                    Claim
+                    <ChevronRight aria-hidden="true" className="size-4" />
+                  </span>
+                </Link>
+              )}
             </li>
           ))}
         </ul>
       ) : null}
 
-      {current && !current.failed ? (
+      {purpose === 'claim' && current && !current.failed ? (
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           Not in the directory?{' '}
           <Link href="/for-market-operators" className={TEXT_LINK}>
