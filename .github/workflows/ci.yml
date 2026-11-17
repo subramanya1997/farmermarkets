@@ -6,6 +6,11 @@ name: CI
 # nothing anywhere exercised the three checks that need a running server.
 # This workflow is the per-change gate: build the site, serve it, and run every
 # check against the real HTML.
+#
+# Two jobs run side by side so nobody waits on lint while the build runs, and
+# the build prerenders a sample of market pages rather than all of them. The
+# time budget, the measurements behind these choices and the experiments that
+# were tried are in docs/ci-performance.md. Read it before adding a step.
 
 on:
   push:
@@ -22,11 +27,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  # Everything that needs no build: about 45 seconds.
+  checks:
     runs-on: ubuntu-latest
-    # The build prerenders 9,132 market pages and 4,920 city pages; ~15 minutes
-    # of headroom over the observed wall time.
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -46,13 +50,39 @@ jobs:
       - name: Type-check
         run: bunx tsc --noEmit
 
-      # Offline unit suites plus the SEO smoke tests, which skip themselves at
-      # this point because nothing is listening yet. They run for real below.
+      # Offline unit suites plus the SEO smoke tests, which skip themselves
+      # here because nothing is listening. They run for real in the build job.
       - name: Unit tests
         run: bun run test
 
+  # The long pole: build, serve, and check the real HTML.
+  build:
+    runs-on: ubuntu-latest
+    # A sampled build takes under two minutes; this leaves room for a full one
+    # if the sample is ever switched off.
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install --frozen-lockfile
+
       - name: Build
         run: bun run build
+        env:
+          # Prerender 500 of the ~9,000 market pages, spread evenly across the
+          # list. They share one template, and the rest still render on demand
+          # for the route checks below. City pages, state hubs and everything
+          # else prerender in full. Production (Vercel) and the nightly data
+          # refresh leave this unset and prerender every page.
+          PRERENDER_MARKET_SAMPLE: 500
+          # The checks job type-checks; doing it again here bought nothing.
+          SKIP_BUILD_TYPECHECK: 1
 
       - name: Start the server
         run: |

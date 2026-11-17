@@ -144,6 +144,11 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com', pathname: '/markets/**' }],
   },
+  // CI type-checks in its own step (`tsc --noEmit`), in a job that runs
+  // beside the build. Checking again inside `next build` cost 11 seconds for
+  // the same answer, so the CI build sets SKIP_BUILD_TYPECHECK=1. Vercel and
+  // local builds leave it unset and keep the check.
+  typescript: { ignoreBuildErrors: process.env.SKIP_BUILD_TYPECHECK === '1' },
   experimental: {
     // Next defaults to cores-1 workers, which leaves one of the Vercel
     // builder's 4 cores idle through the ~100s static-generation phase while

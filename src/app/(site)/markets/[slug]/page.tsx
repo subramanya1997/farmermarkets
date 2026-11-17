@@ -40,6 +40,7 @@ import { MarketOffers } from "@/components/MarketOffers";
 import { MarketWinter } from "@/components/MarketWinter";
 import { OFFER_COVERED_TERMS, marketOffers } from "@/lib/marketOffers";
 import { marketWinterAnswer } from "@/lib/marketWinter";
+import { prerenderSampleSize, sampleEvenly } from "@/lib/prerenderSample";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -49,19 +50,22 @@ export const dynamicParams = true;
 /**
  * Prerender every market.
  *
- * Measured on this repo: the full 8,807-page prerender adds ~10s to
- * `next build` (whole build ~15s wall) and peaks well under 1 GB, so there is
- * no reason to prerender only a subset. If a much larger dataset ever makes
- * that too slow or memory-hungry, narrow this to a deterministic subset (e.g.
- * the ~2,000 markets with `operations.days` populated, or the first N by
- * slug) — `dynamicParams = true` above means the rest keep working, they just
- * pay one cold render before landing in the ISR cache.
+ * Measured in CI in November 2026: prerendering all ~14,300 pages of the site
+ * (9,132 of them markets) takes about 138 seconds on 3 workers, roughly 10 ms
+ * of wall time a page. Production and the nightly data refresh pay that and
+ * prerender everything, so no visitor or crawler waits on a cold render.
+ *
+ * CI sets `PRERENDER_MARKET_SAMPLE` and prerenders an even sample instead:
+ * every market shares this one template, and `dynamicParams = true` above
+ * means the rest still render on demand for the route checks. See
+ * `src/lib/prerenderSample.ts` and `docs/ci-performance.md`.
  */
 export async function generateStaticParams() {
   const markets = await getMarkets();
-  return markets
+  const params = markets
     .filter((market) => market.slug)
     .map((market) => ({ slug: market.slug }));
+  return sampleEvenly(params, prerenderSampleSize(process.env.PRERENDER_MARKET_SAMPLE));
 }
 
 /**
