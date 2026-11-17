@@ -253,7 +253,9 @@ export function ListingEditor({
       <div>
         <Tabs value={tab} onValueChange={(value) => setTab(value as TabId)}>
           {/* Underline tabs, left aligned. The strip scrolls sideways when it
-              does not fit, so no tab is ever cut off out of reach. */}
+              does not fit, so no tab is ever cut off out of reach. No focus
+              box: a focused tab is always the open one, so keyboard focus
+              just thickens its underline. */}
           <div
             ref={tabStrip}
             className="sticky top-0 z-20 -mx-4 overflow-x-auto bg-white px-4 [scrollbar-width:none] sm:static sm:z-auto sm:mx-0 sm:bg-transparent sm:px-0 dark:bg-zinc-900 sm:dark:bg-transparent [&::-webkit-scrollbar]:hidden"
@@ -266,7 +268,7 @@ export function ListingEditor({
                 <TabsTrigger
                   key={item.id}
                   value={item.id}
-                  className="h-11 flex-none px-3 text-zinc-600 after:bg-green-700 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-green-700/40 focus-visible:outline-none focus-visible:ring-inset hover:text-zinc-900 data-[state=active]:text-green-800 group-data-[orientation=horizontal]/tabs:after:-bottom-px dark:text-zinc-400 dark:after:bg-green-500 dark:hover:text-zinc-100 dark:data-[state=active]:text-green-300"
+                  className="h-11 flex-none px-3 text-zinc-600 after:bg-green-700 focus-visible:border-transparent focus-visible:ring-0 focus-visible:outline-none group-data-[orientation=horizontal]/tabs:focus-visible:after:h-[3px] hover:text-zinc-900 data-[state=active]:text-green-800 group-data-[orientation=horizontal]/tabs:after:-bottom-px dark:text-zinc-400 dark:after:bg-green-500 dark:hover:text-zinc-100 dark:data-[state=active]:text-green-300"
                 >
                   {item.label}
                   {item.id === 'photos' && photosWaiting > 0 ? (
