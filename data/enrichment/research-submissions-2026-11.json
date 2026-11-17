@@ -459,5 +459,289 @@
         "accessed_at": "2026-11-12"
       }
     ]
+  },
+  {
+    "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+    "market_name": "Outer Sunset Fm & Mercantile",
+    "schema_version": 2,
+    "verified_at": "2026-11-16",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Outer Sunset Farmers Market & Mercantile",
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "sunday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "sunday"
+                ]
+              },
+              "opens": "09:00",
+              "closes": "14:00",
+              "location_note": "37th Ave at Pacheco St, between Ortega and Quintara"
+            },
+            "source_ids": [
+              "osfmm-page"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt"
+            },
+            "source_ids": [
+              "osfmm-page"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "osfmm-page"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where-and-when",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market sets up on 37th Ave at Pacheco St in the Outer Sunset, between Ortega and Quintara, every Sunday from 9am to 2pm, year-round, rain or shine."
+          },
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        {
+          "id": "benefits",
+          "value": {
+            "topic": "payments",
+            "answer": "CalFresh/SNAP EBT and WIC are accepted. EBT cardholders get market coins at the info booth, and WIC can be used directly with WIC-approved farmers."
+          },
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "osfmm-page",
+        "title": "Outer Sunset Farmers Market & Mercantile | Sunset Mercantile, with the name and address confirmed by the market by email on November 16, 2026",
+        "url": "https://sunsetmercantilesf.com/osfmm/",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations",
+          "first_party.payments",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      }
+    ]
+  },
+  {
+    "id": "301620",
+    "market_name": "Russian River Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-16",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Guerneville Certified Farmers Market",
+          "source_ids": [
+            "sonoma-county-guerneville"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "operator_name": {
+          "value": "Santa Rosa Original Certified Farmers Market",
+          "source_ids": [
+            "sonoma-county-guerneville"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      }
+    },
+    "sources": [
+      {
+        "id": "sonoma-county-guerneville",
+        "title": "The Guerneville Certified Farmers Market | Sonoma County Tourism, with the name confirmed by the market manager by email on November 16, 2026",
+        "url": "https://www.sonomacounty.com/farms-farmers-markets/the-guerneville-certified-farmers-market",
+        "fields": [
+          "first_party.identity"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      }
+    ]
+  },
+  {
+    "id": "300565",
+    "market_name": "Santa Rosa Community Farmers Market at the Veterans Building",
+    "schema_version": 2,
+    "verified_at": "2026-11-16",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Agricultural Community Events Farmers’ Markets",
+          "source_ids": [
+            "ace-markets"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "faq_facts": [
+        {
+          "id": "where",
+          "value": {
+            "topic": "updates",
+            "answer": "The market has moved from Farmers Lane Plaza back to the Santa Rosa Veterans Memorial Building at 1351 Maple Ave, across from the Sonoma County Fairgrounds. Check with the market for the current days and hours before you go."
+          },
+          "source_ids": [
+            "ace-markets"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "ace-markets",
+        "title": "Agricultural Community Events Farmers’ Markets, with the move to the Santa Rosa Veterans Building confirmed by the market manager by email on November 16, 2026",
+        "url": "https://www.ilovefarmersmarkets.org/",
+        "fields": [
+          "first_party.identity",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      }
+    ]
+  },
+  {
+    "id": "300567",
+    "market_name": "Petaluma Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-16",
+    "verification_scope": "partial",
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Petaluma Walnut Park Farmers’ Market",
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "operator_name": {
+          "value": "Agricultural Community Events Farmers’ Markets",
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2027-05-01",
+            "end_date": "2027-11-20"
+          },
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "saturday-2027",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "14:00",
+              "closes": "17:00",
+              "start_date": "2027-05-01",
+              "end_date": "2027-11-20",
+              "location_note": "Walnut Park, Petaluma Blvd S and D St"
+            },
+            "source_ids": [
+              "ace-walnut-park"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "ace-walnut-park",
+        "title": "Agricultural Community Events Farmers’ Markets, with the 2027 Walnut Park season confirmed by the market manager by email on November 16, 2026",
+        "url": "https://www.ilovefarmersmarkets.org/",
+        "fields": [
+          "first_party.identity",
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-16"
+      }
+    ]
   }
 ]

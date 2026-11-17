@@ -32360,13 +32360,13 @@
     "name": "Santa Rosa Community Farmers Market at the Veterans Building",
     "last_updated": "2025-08-11T15:46:47",
     "location": {
-      "address": "1501 Farmers Lane, Santa Rosa, California, 95404",
+      "address": "1351 Maple Ave, Santa Rosa, CA 95404",
       "city": "Santa Rosa",
       "state": "California",
       "zip_code": "95404",
       "coordinates": {
-        "longitude": -122.68939,
-        "latitude": 38.434379
+        "longitude": -122.699883516166,
+        "latitude": 38.433821982831
       },
       "description": "Sonoma County's oldest farmers’ market.",
       "site_type": "Local government building grounds",
@@ -32374,7 +32374,7 @@
     },
     "organization": {
       "types": [],
-      "description": "The perfect farmers’ market located at Farmers Lane Plaza every Saturday 8:30-1 and Wednesday 9-1"
+      "description": "Run by Agricultural Community Events Farmers’ Markets at the Santa Rosa Veterans Memorial Building, across from the Sonoma County Fairgrounds."
     },
     "contact": {
       "phone_numbers": [
@@ -32434,12 +32434,38 @@
     "slug": "santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa",
     "country": "United States",
     "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.434379%2C-122.68939",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "Agricultural Community Events Farmers’ Markets",
+          "source_ids": [
+            "ace-markets"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "faq_facts": [
+        {
+          "id": "where",
+          "value": {
+            "topic": "updates",
+            "answer": "The market has moved from Farmers Lane Plaza back to the Santa Rosa Veterans Memorial Building at 1351 Maple Ave, across from the Sonoma County Fairgrounds. Check with the market for the current days and hours before you go."
+          },
+          "source_ids": [
+            "ace-markets"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.433821982831%2C-122.699883516166",
+    "visitor_note": "The market has moved from Farmers Lane Plaza (1501 Farmers Lane) to the Santa Rosa Veterans Memorial Building at 1351 Maple Ave. Check with the market for the current days and hours before you go.",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-16",
       "verification_scope": "partial",
       "sources": [
         {
@@ -32457,6 +32483,29 @@
             "contact.social_media",
             "operations.days",
             "operations.season"
+          ]
+        },
+        {
+          "id": "ace-markets",
+          "title": "Agricultural Community Events Farmers’ Markets, with the move to the Santa Rosa Veterans Building confirmed by the market manager by email on November 16, 2026",
+          "url": "https://www.ilovefarmersmarkets.org/",
+          "fields": [
+            "first_party.identity",
+            "first_party.faq_facts",
+            "location.address",
+            "organization.description",
+            "visitor_note"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
+        },
+        {
+          "title": "Sonoma County: Santa Rosa Veterans Memorial Building, 1351 Maple Ave, Santa Rosa, CA 95404",
+          "url": "https://sonomacounty.gov/veterans-advisory-committee-meeting-august-5-2025",
+          "fields": [
+            "location.address",
+            "location.zip_code"
           ]
         }
       ]
@@ -32543,7 +32592,7 @@
   },
   {
     "id": 300567,
-    "name": "Petaluma Farmers Market",
+    "name": "Petaluma Walnut Park Farmers’ Market",
     "last_updated": "2022-04-14T12:46:52",
     "location": {
       "address": "Petaluma Blvd S and D St, Petaluma, California 94952",
@@ -32554,7 +32603,7 @@
         "longitude": -122.63679,
         "latitude": 38.231796
       },
-      "description": "",
+      "description": "Walnut Park",
       "site_type": "Local government building grounds",
       "indoor_outdoor": "Outdoor"
     },
@@ -32576,9 +32625,9 @@
       ]
     },
     "operations": {
-      "season": "May to November",
+      "season": "May 1 to November 20, 2027",
       "days": [
-        "Saturdays 2 to 5 pm"
+        "Saturdays, 2pm to 5pm"
       ],
       "vendor_count": null
     },
@@ -32619,12 +32668,73 @@
     "slug": "petaluma-farmers-market-petaluma",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Petaluma Walnut Park Farmers’ Market",
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "operator_name": {
+          "value": "Agricultural Community Events Farmers’ Markets",
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "dated_range",
+            "start_date": "2027-05-01",
+            "end_date": "2027-11-20"
+          },
+          "source_ids": [
+            "ace-walnut-park"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "saturday-2027",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "14:00",
+              "closes": "17:00",
+              "start_date": "2027-05-01",
+              "end_date": "2027-11-20",
+              "location_note": "Walnut Park, Petaluma Blvd S and D St"
+            },
+            "source_ids": [
+              "ace-walnut-park"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      }
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.231796%2C-122.63679",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-16",
       "verification_scope": "partial",
       "sources": [
         {
@@ -32638,12 +32748,18 @@
           ]
         },
         {
-          "title": "Agricultural Community Events Farmers' Markets | Sonoma & Marin County",
+          "title": "Agricultural Community Events Farmers’ Markets, with the 2027 Walnut Park season confirmed by the market manager by email on November 16, 2026",
           "url": "https://www.ilovefarmersmarkets.org/",
           "fields": [
             "contact.social_media",
-            "operations.season"
-          ]
+            "operations.season",
+            "first_party.identity",
+            "first_party.operations"
+          ],
+          "id": "ace-walnut-park",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
         },
         {
           "title": "Walnut Park Farmers' Market - Petaluma",
@@ -103424,8 +103540,11 @@
       ]
     },
     "operations": {
-      "season": null,
-      "days": [],
+      "season": "Year-round",
+      "days": [
+        "Saturdays, 8:30am to 1pm, year-round",
+        "Wednesdays, 8:30am to 1pm, March to December"
+      ],
       "vendor_count": null
     },
     "products": {
@@ -103540,12 +103659,14 @@
         },
         {
           "id": "website-audit-f551f5b1d4f5-1",
-          "title": "SANTA ROSA ORIGINAL CERTIFIED FARMERS MARKET - THE SANTA ROSA ORIGINAL CERTIFIED FARMERS MARKET",
+          "title": "Santa Rosa Original Certified Farmers Market, with hours confirmed by the market manager by email on November 16, 2026",
           "url": "https://thesantarosafarmersmarket.com/",
           "fields": [
             "first_party.payments",
             "first_party.access",
-            "first_party.policies"
+            "first_party.policies",
+            "operations.days",
+            "operations.season"
           ],
           "kind": "first_party",
           "scope": "market",
@@ -103567,7 +103688,7 @@
   },
   {
     "id": 301620,
-    "name": "Russian River Farmers Market",
+    "name": "Guerneville Certified Farmers Market",
     "last_updated": "2021-12-13T17:20:16",
     "location": {
       "address": "16290 5th St, Guerneville, California 95446",
@@ -103643,20 +103764,44 @@
     "slug": "russian-river-farmers-market-guerneville",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Guerneville Certified Farmers Market",
+          "source_ids": [
+            "sonoma-county-guerneville"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "operator_name": {
+          "value": "Santa Rosa Original Certified Farmers Market",
+          "source_ids": [
+            "sonoma-county-guerneville"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      }
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.503197%2C-122.99878",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-16",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "The Guerneville Certified Farmers Market - Sonoma County Tourism",
+          "title": "The Guerneville Certified Farmers Market | Sonoma County Tourism, with the name confirmed by the market manager by email on November 16, 2026",
           "url": "https://www.sonomacounty.com/farms-farmers-markets/the-guerneville-certified-farmers-market",
           "fields": [
-            "contact.websites"
-          ]
+            "contact.websites",
+            "first_party.identity"
+          ],
+          "id": "sonoma-county-guerneville",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
         },
         {
           "title": "SANTA ROSA ORIGINAL CERTIFIED FARMERS MARKET - THE SANTA ROSA ORIGINAL CERTIFIED FARMERS MARKET",
@@ -796187,51 +796332,6 @@
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Simi%20Valley%20CFM%2C%202757%20TAPO%20CANYON%20RD"
   },
   {
-    "id": "gov:us_ca_wic_farmers_markets:0193c1f52570796d",
-    "slug": "petaluma-east-side-fm-petaluma-0c485015",
-    "name": "Petaluma East Side Fm",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "320 N McDowell Blvd",
-      "city": "Petaluma",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Tuesday 09:30 am - 01:30 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "0193c1f52570796d",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Petaluma%20East%20Side%20FM%2C%20320%20N%20MCDOWELL%20BLVD"
-  },
-  {
     "id": "gov:us_ca_wic_farmers_markets:025c2acdd48e837d",
     "slug": "canyon-country-farmers-market-santa-clarita-fef74e9a",
     "name": "Canyon Country Farmers Market",
@@ -799553,51 +799653,6 @@
       "status": "official_source_reviewed"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Cypress%20CFM%2C%204505%20KATELLA%20AVE"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:3a7b9cec52f5b7ac",
-    "slug": "santa-rosa-community-wednesday-fm-santa-rosa-8abfddf8",
-    "name": "Santa Rosa Community Wednesday Fm",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "1501 Farmers Lane",
-      "city": "Santa Rosa",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Wednesday 09:00 am - 01:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "3a7b9cec52f5b7ac",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Santa%20Rosa%20Community%20Wednesday%20FM%2C%201501%20FARMERS%20LANE"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:3c3fdacae96bce53",
@@ -805157,13 +805212,18 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
     "slug": "outer-sunset-fm-mercantile-san-francisco-e57bdd90",
-    "name": "Outer Sunset Fm & Mercantile",
+    "name": "Outer Sunset Farmers Market & Mercantile",
     "country": "United States",
     "country_code": "US",
     "location": {
-      "address": "1994 37Th Ave",
+      "address": "37th Ave and Pacheco St, San Francisco, CA 94116",
       "city": "San Francisco",
-      "state": "California"
+      "state": "California",
+      "zip_code": "94116",
+      "coordinates": {
+        "longitude": -122.4955167,
+        "latitude": 37.7496663
+      }
     },
     "organization": {
       "types": [
@@ -805174,13 +805234,15 @@
     "operations": {
       "season": "Year-round",
       "days": [
-        "Sunday 09:00 am - 02:00 pm"
+        "Sundays, 9am to 2pm"
       ]
     },
     "payment": {
       "food_assistance": {
-        "wic": true
-      }
+        "wic": true,
+        "snap": true
+      },
+      "methods": []
     },
     "provenance": {
       "official": true,
@@ -805193,11 +805255,147 @@
       "license": "Creative Commons Attribution",
       "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
     },
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "canonical_name": {
+          "value": "Outer Sunset Farmers Market & Mercantile",
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        "schedules": [
+          {
+            "id": "sunday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "sunday"
+                ]
+              },
+              "opens": "09:00",
+              "closes": "14:00",
+              "location_note": "37th Ave at Pacheco St, between Ortega and Quintara"
+            },
+            "source_ids": [
+              "osfmm-page"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "payments": {
+        "assistance": [
+          {
+            "id": "snap-ebt",
+            "value": {
+              "code": "snap_ebt"
+            },
+            "source_ids": [
+              "osfmm-page"
+            ],
+            "verified_at": "2026-11-16"
+          },
+          {
+            "id": "wic",
+            "value": {
+              "code": "wic"
+            },
+            "source_ids": [
+              "osfmm-page"
+            ],
+            "verified_at": "2026-11-16"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "where-and-when",
+          "value": {
+            "topic": "arrival",
+            "answer": "The market sets up on 37th Ave at Pacheco St in the Outer Sunset, between Ortega and Quintara, every Sunday from 9am to 2pm, year-round, rain or shine."
+          },
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        },
+        {
+          "id": "benefits",
+          "value": {
+            "topic": "payments",
+            "answer": "CalFresh/SNAP EBT and WIC are accepted. EBT cardholders get market coins at the info booth, and WIC can be used directly with WIC-approved farmers."
+          },
+          "source_ids": [
+            "osfmm-page"
+          ],
+          "verified_at": "2026-11-16"
+        }
+      ]
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.7496663%2C-122.4955167",
+    "contact": {
+      "websites": [],
+      "social_media": [],
+      "phone_numbers": [],
+      "emails": []
+    },
+    "amenities": {
+      "features": []
+    },
+    "products": {
+      "items": [],
+      "production_methods": [],
+      "categories": {}
+    },
+    "enrichment": {
+      "verified_at": "2026-11-16",
+      "verification_scope": "partial",
+      "sources": [
+        {
+          "id": "osfmm-page",
+          "title": "Outer Sunset Farmers Market & Mercantile | Sunset Mercantile, with the name and address confirmed by the market by email on November 16, 2026",
+          "url": "https://sunsetmercantilesf.com/osfmm/",
+          "fields": [
+            "first_party.identity",
+            "first_party.operations",
+            "first_party.payments",
+            "first_party.faq_facts",
+            "location.address",
+            "operations.days",
+            "payment.food_assistance.snap",
+            "payment.food_assistance.wic"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-16"
+        }
+      ]
+    },
     "audit": {
       "checked_at": "2026-08-21",
       "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Outer%20Sunset%20FM%20%26%20Mercantile%2C%201994%2037TH%20AVE"
+    }
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:8757d5f442bd0384",
@@ -805288,51 +805486,6 @@
       "status": "official_source_reviewed"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Point%20Reyes%20FM%2C%2011250%20STATE%20RTE%201"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:87eaf3652b6cc782",
-    "slug": "santa-rosa-community-saturday-fm-santa-rosa-14bc8bc7",
-    "name": "Santa Rosa Community Saturday Fm",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "1501 Farmers Lane",
-      "city": "Santa Rosa",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Saturday 08:30 am - 01:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "87eaf3652b6cc782",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Santa%20Rosa%20Community%20Saturday%20FM%2C%201501%20FARMERS%20LANE"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:898202760315dfe6",
@@ -807102,51 +807255,6 @@
       "status": "checked_no_verified_update"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=De%20Anza%20College%2C%2021250%20Stevens%20Creek%20Blvd"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:a514da3888e17193",
-    "slug": "petaluma-saturday-cfm-bloomfield-7be63a46",
-    "name": "Petaluma Saturday CFM",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "Corner of Petaluma Blvd & D St",
-      "city": "Bloomfield",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "May-Nov",
-      "days": [
-        "Saturday 02:00 pm - 05:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "a514da3888e17193",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Petaluma%20Saturday%20CFM%2C%20CORNER%20OF%20PETALUMA%20BLVD%20%26%20D%20ST"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:a6745ba19476c5bc",

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-12T21:13:35.109Z",
-  "market_count": 9145,
+  "generated_at": "2026-11-17T00:22:24.031Z",
+  "market_count": 9141,
   "states": [
     {
       "code": "NY",
@@ -4365,8 +4365,8 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 967,
-      "city_count": 406,
+      "market_count": 963,
+      "city_count": 405,
       "cities": [
         {
           "name": "Los Angeles",
@@ -4608,23 +4608,6 @@
           ]
         },
         {
-          "name": "Santa Rosa",
-          "slug": "santa-rosa",
-          "market_count": 10,
-          "market_slugs": [
-            "redwood-empire-farmers-markets-santa-rosa",
-            "roseland-mercadito-farmers-market",
-            "santa-rosa-certified-farmers-market-santa-rosa",
-            "santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa",
-            "santa-rosa-community-saturday-fm-santa-rosa-14bc8bc7",
-            "santa-rosa-community-wednesday-fm-santa-rosa-8abfddf8",
-            "santa-rosa-downtown-farmers-market-at-courthouse-square-ca",
-            "santa-rosa-original-cfm-santa-rosa-1736039c",
-            "santa-rosa-original-cfm-wic-satellite-santa-rosa-cf3a3dc2",
-            "west-end-farmers-market-santa-rosa"
-          ]
-        },
-        {
           "name": "San Luis Obispo",
           "slug": "san-luis-obispo",
           "market_count": 9,
@@ -4699,6 +4682,21 @@
             "galleria-at-tyler-riverside-farmers-market",
             "kaiser-permanente-riverside-certified-farmers-market",
             "riverside-certified-farmers-market-riverside"
+          ]
+        },
+        {
+          "name": "Santa Rosa",
+          "slug": "santa-rosa",
+          "market_count": 8,
+          "market_slugs": [
+            "redwood-empire-farmers-markets-santa-rosa",
+            "roseland-mercadito-farmers-market",
+            "santa-rosa-certified-farmers-market-santa-rosa",
+            "santa-rosa-community-farmers-market-at-the-veterans-building-santa-rosa",
+            "santa-rosa-downtown-farmers-market-at-courthouse-square-ca",
+            "santa-rosa-original-cfm-santa-rosa-1736039c",
+            "santa-rosa-original-cfm-wic-satellite-santa-rosa-cf3a3dc2",
+            "west-end-farmers-market-santa-rosa"
           ]
         },
         {
@@ -5065,17 +5063,6 @@
           ]
         },
         {
-          "name": "Petaluma",
-          "slug": "petaluma",
-          "market_count": 4,
-          "market_slugs": [
-            "petaluma-east-side-fm-petaluma-0c485015",
-            "petaluma-evening-farmers-market-petaluma",
-            "petaluma-farmers-market-petaluma",
-            "the-petaluma-east-side-farmers-market-petaluma"
-          ]
-        },
-        {
           "name": "Sonora",
           "slug": "sonora",
           "market_count": 4,
@@ -5320,6 +5307,16 @@
             "certified-farmers-market-palm-springs-indoor-palm-springs",
             "certified-farmers-market-palm-springs-outdoor-palm-springs",
             "palm-springs-cfm-palm-springs-253e4195"
+          ]
+        },
+        {
+          "name": "Petaluma",
+          "slug": "petaluma",
+          "market_count": 3,
+          "market_slugs": [
+            "petaluma-evening-farmers-market-petaluma",
+            "petaluma-farmers-market-petaluma",
+            "the-petaluma-east-side-farmers-market-petaluma"
           ]
         },
         {
@@ -6679,14 +6676,6 @@
           "market_count": 1,
           "market_slugs": [
             "bishop-farmers-market"
-          ]
-        },
-        {
-          "name": "Bloomfield",
-          "slug": "bloomfield",
-          "market_count": 1,
-          "market_slugs": [
-            "petaluma-saturday-cfm-bloomfield-7be63a46"
           ]
         },
         {

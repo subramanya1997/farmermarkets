@@ -14390,6 +14390,223 @@
       "id": 310526,
       "path": "visitor_note",
       "value": "These hours are for the main store at 3440 Piety St. Barcelo Gardens also sets up at 2301 Gallier St, New Orleans, LA 70117 on Saturdays, 10am to 1pm, and at 211 Franklin Ave, Napoleonville, LA on Fridays, 11am to 2pm."
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "name",
+      "value": "Outer Sunset Farmers Market & Mercantile"
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "location.address",
+      "value": "37th Ave and Pacheco St, San Francisco, CA 94116"
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "location.zip_code",
+      "value": "94116"
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -122.4955167,
+        "latitude": 37.7496663
+      }
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=37.7496663%2C-122.4955167"
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "operations.days",
+      "value": [
+        "Sundays, 9am to 2pm"
+      ]
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "payment.food_assistance.snap",
+      "value": true
+    },
+    {
+      "index": 8232,
+      "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Outer Sunset Farmers Market & Mercantile | Sunset Mercantile, with the name and address confirmed by the market by email on November 16, 2026",
+          "url": "https://sunsetmercantilesf.com/osfmm/",
+          "fields": [
+            "location.address",
+            "operations.days",
+            "payment.food_assistance.snap",
+            "payment.food_assistance.wic"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 877,
+      "id": 301619,
+      "path": "operations.days",
+      "value": [
+        "Saturdays, 8:30am to 1pm, year-round",
+        "Wednesdays, 8:30am to 1pm, March to December"
+      ]
+    },
+    {
+      "index": 877,
+      "id": 301619,
+      "path": "operations.season",
+      "value": "Year-round"
+    },
+    {
+      "index": 877,
+      "id": 301619,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Santa Rosa Original Certified Farmers Market, with hours confirmed by the market manager by email on November 16, 2026",
+          "url": "https://thesantarosafarmersmarket.com/",
+          "fields": [
+            "operations.days",
+            "operations.season"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 878,
+      "id": 301620,
+      "path": "name",
+      "value": "Guerneville Certified Farmers Market"
+    },
+    {
+      "index": 878,
+      "id": 301620,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "The Guerneville Certified Farmers Market | Sonoma County Tourism, with the name confirmed by the market manager by email on November 16, 2026",
+          "url": "https://www.sonomacounty.com/farms-farmers-markets/the-guerneville-certified-farmers-market",
+          "fields": [
+            "contact.websites"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 267,
+      "id": 300565,
+      "path": "location.address",
+      "value": "1351 Maple Ave, Santa Rosa, CA 95404"
+    },
+    {
+      "index": 267,
+      "id": 300565,
+      "path": "location.zip_code",
+      "value": "95404"
+    },
+    {
+      "index": 267,
+      "id": 300565,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -122.699883516166,
+        "latitude": 38.433821982831
+      }
+    },
+    {
+      "index": 267,
+      "id": 300565,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=38.433821982831%2C-122.699883516166"
+    },
+    {
+      "index": 267,
+      "id": 300565,
+      "path": "organization.description",
+      "value": "Run by Agricultural Community Events Farmers’ Markets at the Santa Rosa Veterans Memorial Building, across from the Sonoma County Fairgrounds."
+    },
+    {
+      "index": 267,
+      "id": 300565,
+      "path": "visitor_note",
+      "value": "The market has moved from Farmers Lane Plaza (1501 Farmers Lane) to the Santa Rosa Veterans Memorial Building at 1351 Maple Ave. Check with the market for the current days and hours before you go."
+    },
+    {
+      "index": 267,
+      "id": 300565,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Agricultural Community Events Farmers’ Markets, with the move to the Santa Rosa Veterans Building confirmed by the market manager by email on November 16, 2026",
+          "url": "https://www.ilovefarmersmarkets.org/",
+          "fields": [
+            "location.address",
+            "organization.description",
+            "visitor_note"
+          ]
+        },
+        {
+          "title": "Sonoma County: Santa Rosa Veterans Memorial Building, 1351 Maple Ave, Santa Rosa, CA 95404",
+          "url": "https://sonomacounty.gov/veterans-advisory-committee-meeting-august-5-2025",
+          "fields": [
+            "location.address",
+            "location.zip_code"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "name",
+      "value": "Petaluma Walnut Park Farmers’ Market"
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "location.description",
+      "value": "Walnut Park"
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "operations.days",
+      "value": [
+        "Saturdays, 2pm to 5pm"
+      ]
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "operations.season",
+      "value": "May 1 to November 20, 2027"
+    },
+    {
+      "index": 269,
+      "id": 300567,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Agricultural Community Events Farmers’ Markets, with the 2027 Walnut Park season confirmed by the market manager by email on November 16, 2026",
+          "url": "https://www.ilovefarmersmarkets.org/",
+          "fields": [
+            "operations.season"
+          ]
+        }
+      ]
     }
   ]
 }
