@@ -973,3 +973,71 @@ export function marketSchemaGraph(
     '@graph': prune(nodes) as JsonValue,
   } as Record<string, JsonValue>;
 }
+
+/* ------------------------------------------------------------------ *
+ * Vendor pages
+ * ------------------------------------------------------------------ */
+
+/** The subset of a published vendor the structured data reads. */
+export interface VendorSchemaRecord {
+  slug: string;
+  name: string;
+  /** The page's own summary (its meta description), so markup matches the page. */
+  description?: string;
+  /** Photo URLs, cover first. */
+  images?: readonly string[];
+  website?: string;
+  socialUrls?: readonly string[];
+  phone?: string;
+  email?: string;
+  /** Market pages this vendor is listed on, as absolute URLs. */
+  marketUrls?: readonly string[];
+}
+
+function publicHttpUrl(value?: string | null): string | undefined {
+  const text = clean(value);
+  if (!/^https?:\/\//i.test(text)) return undefined;
+  try {
+    const url = new URL(text);
+    return ['http:', 'https:'].includes(url.protocol) && !url.username && !url.password ? url.href : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * The `@graph` for one vendor page. A vendor has no address of its own (it
+ * sells at markets), so it is an `Organization` rather than a
+ * `LocalBusiness`, which Google expects to carry one. Only values the vendor
+ * gave are emitted; `prune()` drops the rest.
+ */
+export function vendorSchemaGraph(vendor: VendorSchemaRecord, { siteUrl }: { siteUrl: string }): Record<string, JsonValue> {
+  const url = `${siteUrl}/vendors/${vendor.slug}`;
+  const sameAs = [...new Set([vendor.website, ...(vendor.socialUrls ?? [])].map(publicHttpUrl).filter((value): value is string => Boolean(value)))];
+  const images = (vendor.images ?? []).map(publicHttpUrl).filter((value): value is string => Boolean(value));
+  const organization: Record<string, unknown> = {
+    '@type': 'Organization',
+    '@id': `${url}#vendor`,
+    name: clean(vendor.name),
+    url,
+    description: clean(vendor.description) || undefined,
+    image: images.length > 1 ? images : images[0],
+    sameAs,
+    telephone: clean(vendor.phone) || undefined,
+    email: clean(vendor.email) || undefined,
+  };
+  const page: Record<string, unknown> = {
+    '@type': 'ProfilePage',
+    '@id': `${url}#webpage`,
+    url,
+    name: clean(vendor.name),
+    mainEntity: { '@id': `${url}#vendor` },
+    // The markets the page links to, so the vendor and the places it sells
+    // are connected in the markup as they are on the page.
+    relatedLink: (vendor.marketUrls ?? []).length ? [...(vendor.marketUrls ?? [])] : undefined,
+  };
+  return {
+    '@context': 'https://schema.org',
+    '@graph': prune([organization, page]) as JsonValue,
+  } as Record<string, JsonValue>;
+}

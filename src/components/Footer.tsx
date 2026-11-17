@@ -22,6 +22,7 @@ export async function Footer() {
   const navigation = [
     { name: 'Blog', href: '/blog' },
     { name: 'For market operators', href: '/for-market-operators' },
+    { name: 'For vendors', href: '/for-vendors' },
     { name: 'About', href: '/about' },
     { name: 'About the data', href: '/about-the-data' },
   ];

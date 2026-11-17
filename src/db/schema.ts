@@ -357,3 +357,140 @@ export const marketPhotos = pgTable(
     uniqueIndex('market_photos_pathname_idx').on(t.pathname),
   ],
 );
+
+/* ------------------------------------------------------------------ *
+ * Vendor accounts (src/lib/vendors.ts)
+ *
+ * A vendor is a business (a farm, a baker, a maker) run by one account. It
+ * has nothing to do with `market_vendors` above, which mirrors the vendor
+ * names found in the dataset.
+ * ------------------------------------------------------------------ */
+
+/** Describes the vendor's latest proposal, not whether a profile is live. */
+export const vendorStatus = pgEnum('vendor_status', ['draft', 'pending', 'approved', 'rejected']);
+
+export const vendors = pgTable(
+  'vendors',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    slug: text('slug').notNull(),
+    name: text('name').notNull(),
+    /** The live `VendorProfile` (src/lib/vendorProfile.ts); null until an admin approves one. */
+    profile: jsonb('profile'),
+    /** The profile being edited or waiting for review; null when it matches `profile`. */
+    proposed: jsonb('proposed'),
+    status: vendorStatus('status').notNull().default('draft'),
+    reviewNote: text('review_note'),
+    submittedAt: timestamp('submitted_at', { withTimezone: true }),
+    reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+    reviewedBy: text('reviewed_by'),
+    /** 'self', 'outreach-bot' or 'admin-invite'. */
+    source: text('source').notNull().default('self'),
+    /** Market ids suggested by the bot or an admin invite, shown as one-tap picks. */
+    invitedMarkets: jsonb('invited_markets'),
+    /** Set when an admin takes the vendor off the public site. */
+    suspendedAt: timestamp('suspended_at', { withTimezone: true }),
+    announcementsOptOut: boolean('announcements_opt_out').notNull().default(false),
+    unsubscribeToken: text('unsubscribe_token').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex('vendors_user_idx').on(t.userId),
+    uniqueIndex('vendors_slug_idx').on(t.slug),
+    uniqueIndex('vendors_unsubscribe_token_idx').on(t.unsubscribeToken),
+    index('vendors_status_idx').on(t.status),
+  ],
+);
+
+export const vendorApplicationStatus = pgEnum('vendor_application_status', ['pending', 'approved', 'denied', 'withdrawn']);
+
+/**
+ * A vendor asking to be listed at a market. The market's organizer decides
+ * when it has one, otherwise an admin. `market_id` is the dataset's id, not
+ * a foreign key (see the note above `market_managers`).
+ */
+export const vendorApplications = pgTable(
+  'vendor_applications',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    vendorId: uuid('vendor_id').notNull().references(() => vendors.id, { onDelete: 'cascade' }),
+    marketId: text('market_id').notNull(),
+    /** Weekday codes the vendor attends. */
+    days: jsonb('days').notNull().default([]),
+    stallNote: text('stall_note'),
+    message: text('message'),
+    status: vendorApplicationStatus('status').notNull().default('pending'),
+    decidedBy: text('decided_by'),
+    /** 'organizer' or 'admin': an organizer's approval shows the public badge. */
+    decidedRole: text('decided_role'),
+    decisionNote: text('decision_note'),
+    /** When the market's organizers were last emailed about this application. */
+    notifiedAt: timestamp('notified_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+    decidedAt: timestamp('decided_at', { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex('vendor_applications_vendor_market_idx').on(t.vendorId, t.marketId),
+    index('vendor_applications_market_idx').on(t.marketId),
+    index('vendor_applications_status_idx').on(t.status),
+  ],
+);
+
+/** What a market's organizer asks vendors for: `items` and `settings` are described in src/lib/vendorProfile.ts. */
+export const marketVendorChecklists = pgTable('market_vendor_checklists', {
+  marketId: text('market_id').primaryKey(),
+  items: jsonb('items').notNull().default([]),
+  settings: jsonb('settings').notNull().default({}),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedBy: text('updated_by'),
+});
+
+/** A vendor's own files, kept in a private Blob store and reused across markets. */
+export const vendorDocuments = pgTable(
+  'vendor_documents',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    vendorId: uuid('vendor_id').notNull().references(() => vendors.id, { onDelete: 'cascade' }),
+    label: text('label').notNull(),
+    pathname: text('pathname').notNull(),
+    contentType: text('content_type').notNull(),
+    size: integer('size').notNull(),
+    expiresOn: date('expires_on'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('vendor_documents_vendor_idx').on(t.vendorId), uniqueIndex('vendor_documents_pathname_idx').on(t.pathname)],
+);
+
+/** A document attached to one checklist item of one application, and the organizer's verdict on it. */
+export const vendorDocumentSubmissions = pgTable(
+  'vendor_document_submissions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    applicationId: uuid('application_id').notNull().references(() => vendorApplications.id, { onDelete: 'cascade' }),
+    requirementKey: text('requirement_key').notNull(),
+    documentId: uuid('document_id').notNull().references(() => vendorDocuments.id, { onDelete: 'cascade' }),
+    status: reviewStatus('status').notNull().default('pending'),
+    note: text('note'),
+    decidedBy: text('decided_by'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    decidedAt: timestamp('decided_at', { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex('vendor_document_submissions_item_idx').on(t.applicationId, t.requirementKey),
+    index('vendor_document_submissions_document_idx').on(t.documentId),
+  ],
+);
+
+/** A record of each announcement an admin sent to vendors. */
+export const vendorAnnouncements = pgTable('vendor_announcements', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  subject: text('subject').notNull(),
+  body: text('body').notNull(),
+  audience: text('audience').notNull(),
+  recipientCount: integer('recipient_count').notNull().default(0),
+  sentBy: text('sent_by'),
+  sentAt: timestamp('sent_at', { withTimezone: true }).notNull().defaultNow(),
+});

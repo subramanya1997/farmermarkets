@@ -43,6 +43,7 @@ import { MarketWinter } from "@/components/MarketWinter";
 import { OFFER_COVERED_TERMS, marketOffers } from "@/lib/marketOffers";
 import { marketWinterAnswer } from "@/lib/marketWinter";
 import { prerenderSampleSize, sampleEvenly } from "@/lib/prerenderSample";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -329,7 +330,7 @@ export default async function MarketDetailPage({
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }}
       />
       <div className="flex flex-col min-h-[calc(100vh-4rem)]">
         {/* Header Section */}
@@ -515,6 +516,17 @@ export default async function MarketDetailPage({
                       marketSlug={market.slug}
                     />
                     . Listing is free for market operators.
+                  </p>
+                  <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+                    Sell at this market?{' '}
+                    <Link
+                      href={`/markets/${encodeURIComponent(market.slug)}/apply`}
+                      rel="nofollow"
+                      className="underline underline-offset-2 hover:text-green-700 dark:hover:text-green-500"
+                    >
+                      Apply to be listed as a vendor
+                    </Link>
+                    .
                   </p>
                 </div>
               </div>

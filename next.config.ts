@@ -145,7 +145,11 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   // Organizer photos are uploaded to Vercel Blob (src/app/api/organizer/photos).
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com', pathname: '/markets/**' }],
+    remotePatterns: [
+      { protocol: 'https', hostname: '*.public.blob.vercel-storage.com', pathname: '/markets/**' },
+      // Vendor profile photos (src/app/api/vendor/photos/route.ts).
+      { protocol: 'https', hostname: '*.public.blob.vercel-storage.com', pathname: '/vendors/**' },
+    ],
   },
   // CI type-checks in its own step (`tsc --noEmit`), in a job that runs
   // beside the build. Checking again inside `next build` cost 11 seconds for

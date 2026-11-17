@@ -28,6 +28,7 @@ import {
   type TopicStatIcon,
 } from '@/lib/topicPage';
 import { SITE_FRAME } from '@/lib/ui';
+import { jsonLdHtml } from '@/lib/jsonLd';
 
 /**
  * The one layout the topic pages share.
@@ -312,7 +313,7 @@ export function TopicPageShell({
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(node) }}
         />
       ))}
 

@@ -1,7 +1,10 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import type { FarmerMarket } from '@/lib/api';
 import type { AnalyticsProperties } from '@/lib/analytics';
 import type { MarketFirstPartyFacts } from '@/lib/enrichment';
+import type { MarketVendorCard } from '@/lib/vendorLayer';
 import { clean } from '@/lib/geo';
 import {
   compactPublishedHours,
@@ -12,16 +15,24 @@ import {
   publishedLocalHours,
   rosterSubhead,
   safeHighlightUrl,
+  splitVisibleVendors,
   vendorHasDetails,
 } from '@/lib/marketHighlights';
+import { attendanceLabel } from '@/lib/vendorRules';
 import { TrackedExternalLink } from '@/components/TrackedExternalLink';
+import { VendorConfirmedBadge, vendorSellsLine } from '@/components/VendorBits';
 
 interface MarketHighlightsProps {
-  market: FarmerMarket;
+  /**
+   * The server record carries `vendor_profiles` (src/app/api/markets/data.ts);
+   * the client `FarmerMarket` type in src/lib/api.ts does not declare it yet.
+   */
+  market: FarmerMarket & { vendor_profiles?: MarketVendorCard[] };
   analyticsProperties: AnalyticsProperties;
 }
 
 type VendorRoster = NonNullable<NonNullable<MarketFirstPartyFacts['vendors']>['roster']>;
+type AccountVendor = MarketVendorCard;
 
 /** Names shown before the rest fold away. */
 const VISIBLE_VENDORS = 12;
@@ -52,6 +63,58 @@ function SectionHeading({ id, children }: { id: string; children: React.ReactNod
 }
 
 const CHIP = 'inline-flex items-center gap-1 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200';
+
+/**
+ * Vendors with their own page on the site: a small photo, what they sell and
+ * when they come. The whole card opens the vendor's page.
+ */
+function AccountVendors({ vendors }: { vendors: AccountVendor[] }) {
+  if (!vendors.length) return null;
+  return (
+    <ul className="mb-3 grid gap-2 sm:grid-cols-2">
+      {vendors.map((vendor) => {
+        const name = clean(vendor.name);
+        const sells = vendorSellsLine(vendor.products, vendor.items, 4);
+        const when = [attendanceLabel(vendor.days), clean(vendor.stall_note)].filter(Boolean).join(' · ');
+        return (
+          <li
+            key={vendor.slug}
+            className="relative flex min-h-16 items-start gap-3 rounded-xl border border-zinc-200 px-3 py-2.5 transition-colors hover:border-green-600 dark:border-zinc-700 dark:hover:border-green-500"
+          >
+            {vendor.cover ? (
+              <Image
+                src={vendor.cover.url}
+                alt=""
+                width={56}
+                height={56}
+                sizes="56px"
+                loading="lazy"
+                className="size-14 shrink-0 rounded-lg bg-zinc-100 object-cover dark:bg-zinc-800"
+              />
+            ) : null}
+            <div className="min-w-0">
+              <p className="font-medium leading-snug text-zinc-900 dark:text-zinc-100">
+                <Link
+                  href={`/vendors/${vendor.slug}`}
+                  className="after:absolute after:inset-0 after:rounded-xl hover:text-green-700 hover:underline dark:hover:text-green-500"
+                >
+                  {name}
+                </Link>
+              </p>
+              {sells && <p className="text-sm text-zinc-600 dark:text-zinc-400">{sells}</p>}
+              {when && <p className="text-sm text-zinc-500 dark:text-zinc-400">{when}</p>}
+              {vendor.confirmed && (
+                <p className="mt-1">
+                  <VendorConfirmedBadge />
+                </p>
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 /** Name-only vendors as chips, vendors with categories or links as small cards. */
 function Vendors({ roster, analyticsProperties }: { roster: VendorRoster; analyticsProperties: AnalyticsProperties }) {
@@ -108,14 +171,23 @@ function Vendors({ roster, analyticsProperties }: { roster: VendorRoster; analyt
  * past events are gone, and a section with nothing left is not rendered.
  */
 export function MarketHighlights({ market, analyticsProperties }: MarketHighlightsProps) {
-  const { events, programs, roster, vendorLinks } = marketHighlights(market.first_party);
+  const { events, programs, accounts, roster, typedRosterCount, vendorLinks } = marketHighlights(
+    market.first_party,
+    undefined,
+    market.vendor_profiles ?? [],
+  );
   const rosterContext = market.first_party?.vendors?.roster_context?.value;
-  const subhead = rosterSubhead(rosterContext);
+  // The subhead ("From last season", "Some regulars") describes the typed
+  // roster. With account vendors above it, it moves down to sit over that list.
+  const subhead = roster.length ? rosterSubhead(rosterContext) : undefined;
+  const headingSubhead = accounts.length ? undefined : subhead;
+  const vendorCount = accounts.length + roster.length;
+  const split = splitVisibleVendors(accounts, roster, VISIBLE_VENDORS);
   const programCards = programs.filter((item) => clean(item.value.description) || clean(item.value.eligibility));
   const programChips = programs.filter((item) => !programCards.includes(item));
   // Without a roster the vendor links live in the visit card or the contact
   // row; a section holding only a link would repeat them.
-  if (!events.length && !programs.length && !roster.length) return null;
+  if (!events.length && !programs.length && !vendorCount) return null;
 
   return (
     <div className="mt-8 space-y-8 sm:mt-10">
@@ -221,14 +293,14 @@ export function MarketHighlights({ market, analyticsProperties }: MarketHighligh
         </section>
       )}
 
-      {roster.length > 0 && (
+      {vendorCount > 0 && (
         <section aria-labelledby="market-vendors-heading">
           <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
             <h2 id="market-vendors-heading" className="text-lg font-semibold tracking-tight sm:text-xl">
               Vendors
-              {subhead && <span className="ml-2 text-sm font-normal text-zinc-500 dark:text-zinc-400">{subhead}</span>}
+              {headingSubhead && <span className="ml-2 text-sm font-normal text-zinc-500 dark:text-zinc-400">{headingSubhead}</span>}
             </h2>
-            {vendorLinks.length > 0 && (
+            {typedRosterCount > 0 && vendorLinks.length > 0 && (
               <span className="flex flex-wrap gap-x-4">
                 {vendorLinks.map((link) => (
                   <HighlightLink key={link.href} href={link.href} eventName={link.eventName} analyticsProperties={analyticsProperties}>
@@ -239,14 +311,22 @@ export function MarketHighlights({ market, analyticsProperties }: MarketHighligh
               </span>
             )}
           </div>
-          <Vendors roster={roster.slice(0, VISIBLE_VENDORS)} analyticsProperties={analyticsProperties} />
-          {roster.length > VISIBLE_VENDORS && (
+          <AccountVendors vendors={split.visible.accounts} />
+          {accounts.length > 0 && subhead && split.visible.roster.length > 0 && (
+            <p className="mb-2 text-sm text-zinc-500 dark:text-zinc-400">{subhead}</p>
+          )}
+          <Vendors roster={split.visible.roster} analyticsProperties={analyticsProperties} />
+          {split.hiddenCount > 0 && (
             <details className="mt-3">
-              <summary className="cursor-pointer text-sm font-medium text-green-700 dark:text-green-500">
-                {roster.length - VISIBLE_VENDORS} more
+              <summary className="cursor-pointer py-2 text-sm font-medium text-green-700 dark:text-green-500">
+                {split.hiddenCount} more
               </summary>
               <div className="mt-3">
-                <Vendors roster={roster.slice(VISIBLE_VENDORS)} analyticsProperties={analyticsProperties} />
+                <AccountVendors vendors={split.hidden.accounts} />
+                {accounts.length > 0 && subhead && split.visible.roster.length === 0 && split.hidden.roster.length > 0 && (
+                  <p className="mb-2 text-sm text-zinc-500 dark:text-zinc-400">{subhead}</p>
+                )}
+                <Vendors roster={split.hidden.roster} analyticsProperties={analyticsProperties} />
               </div>
             </details>
           )}

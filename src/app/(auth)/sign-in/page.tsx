@@ -33,10 +33,17 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
     return `/sign-in?${query.toString()}`;
   };
 
+  // Vendors arrive with `next` inside the vendor area; the page speaks to them.
+  const vendor = next === '/vendor' || next.startsWith('/vendor/') || next.startsWith('/vendor?');
+
   return (
     <AuthShell
       title="Sign in"
-      description="Sign in to manage your market listing. New organizers get an account with their first code."
+      description={
+        vendor
+          ? 'Sign in to set up your vendor page and pick your markets. New vendors get an account with their first code.'
+          : 'Sign in to manage your market listing. New organizers get an account with their first code.'
+      }
       footer={
         <>
           <p>
@@ -56,7 +63,7 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
               </>
             )}
           </p>
-          {usePassword ? (
+          {usePassword && !vendor ? (
             <p>
               Run a market and new here?{' '}
               <Link href={withNext('/sign-up', next)} className={TEXT_LINK}>
@@ -64,12 +71,21 @@ export default async function SignInPage({ searchParams }: { searchParams: Promi
               </Link>
             </p>
           ) : null}
-          <p>
-            Only want to suggest a correction?{' '}
-            <Link href="/for-market-operators" className={TEXT_LINK}>
-              Send us a note instead
-            </Link>
-          </p>
+          {vendor ? (
+            <p>
+              Not sure what this is?{' '}
+              <Link href="/for-vendors" className={TEXT_LINK}>
+                How vendor pages work
+              </Link>
+            </p>
+          ) : (
+            <p>
+              Only want to suggest a correction?{' '}
+              <Link href="/for-market-operators" className={TEXT_LINK}>
+                Send us a note instead
+              </Link>
+            </p>
+          )}
         </>
       }
     >

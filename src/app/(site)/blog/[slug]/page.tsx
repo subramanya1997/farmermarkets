@@ -9,6 +9,7 @@ import { absoluteUrl } from "@/lib/site";
 import { SITE_FRAME_GUTTER } from "@/lib/ui";
 import { displaySerif } from "@/lib/fonts";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 export const revalidate = 86400;
 // Posts are code: an unknown slug can never become real without a deploy.
@@ -99,7 +100,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(articleSchema) }}
       />
       <div className="min-h-[calc(100vh-4rem)] bg-white dark:bg-zinc-900">
         <article className={`${SITE_FRAME_GUTTER} mx-auto w-full max-w-5xl py-8 sm:py-12`}>

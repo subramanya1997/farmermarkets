@@ -43,6 +43,7 @@ import { getPublishedLayers } from './marketOverrides';
 import { shownMarketPhotos } from './marketPhotos';
 import { SITE_URL } from './site';
 import { isMarketAlias } from './marketAliases';
+import { getPublishedVendors } from './vendorLayer';
 
 /**
  * URLs per chunk. The sitemap protocol caps a file at 50,000 URLs / 50 MB;
@@ -69,6 +70,27 @@ function newer(left: string | undefined, right: string | undefined): string | un
 }
 
 let entriesPromise: Promise<SitemapEntry[]> | null = null;
+
+/**
+ * Published vendor pages, sorted by slug so the order never depends on the
+ * database. An unreachable database means no vendor entries, never a broken
+ * sitemap. `lastmod` is the date an admin last approved the profile: the
+ * only time a vendor page's copy changes.
+ */
+async function vendorEntries(absolute: (path: string) => string): Promise<SitemapEntry[]> {
+  try {
+    const { bySlug } = await getPublishedVendors();
+    return [...bySlug.values()]
+      .sort((left, right) => (left.slug < right.slug ? -1 : left.slug > right.slug ? 1 : 0))
+      .map((vendor) => ({
+        url: absolute(`/vendors/${vendor.slug}`),
+        lastModified: toIsoInstant(vendor.updatedAt),
+      }));
+  } catch (error) {
+    console.error('Sitemap: vendor pages unavailable:', error);
+    return [];
+  }
+}
 
 async function buildEntries(): Promise<SitemapEntry[]> {
   const [markets, geoIndex, totalPages, topics] = await Promise.all([
@@ -109,6 +131,7 @@ async function buildEntries(): Promise<SitemapEntry[]> {
     '/about',
     '/about-the-data',
     '/for-market-operators',
+    '/for-vendors',
     '/privacy',
     '/terms',
   ].map((path) => ({ url: absolute(path) }));
@@ -171,6 +194,8 @@ async function buildEntries(): Promise<SitemapEntry[]> {
       marketId: String(market.id),
     }));
 
+  const vendorPageEntries = await vendorEntries(absolute);
+
   // Shallowest first, so chunk 0 holds the pages that matter most if a crawler
   // only ever reads one of them.
   return [
@@ -182,6 +207,7 @@ async function buildEntries(): Promise<SitemapEntry[]> {
     ...stateEntries,
     ...cityEntries,
     ...marketEntries,
+    ...vendorPageEntries,
   ];
 }
 

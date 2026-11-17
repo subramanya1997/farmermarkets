@@ -4,6 +4,8 @@ Canonical published data remains `public/data/farmers_markets.json`, compiled fr
 
 The one exception is reviewed organizer edits. Verified market organizers submit changes that an admin approves on `/admin`; approved edits are stored in `market_overrides` (and photos in `market_photos`) and applied over the file record when market pages render. The file stays the base dataset and `db:sync` never touches the organizer tables. See "Market organizer accounts" in the README.
 
+Vendor accounts work the same way: `vendors`, `vendor_applications`, `market_vendor_checklists`, `vendor_documents`, `vendor_document_submissions` and `vendor_announcements` hold what vendors and organizers enter, `db:sync` never touches them, and an approved vendor is shown on market pages at render time. They are unrelated to `market_vendors`, which mirrors the vendor names found in the dataset. See "Vendor accounts" in the README.
+
 `markets.record` preserves the full canonical record. Indexed latitude/longitude columns are null when `suppress_map` is true; the source record remains available for review. `market_facts` retains per-field values, source URLs/titles, verification date, and research batch, including rich collection provenance.
 
 Migration `0001_market_highlights.sql` adds three tables without altering existing market, fact, or submission tables:

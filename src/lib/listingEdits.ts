@@ -34,7 +34,7 @@ export const AVAILABILITY = ['yes', 'no', 'limited'] as const;
 export const PET_RULES = ['allowed', 'not_allowed', 'service_animals_only'] as const;
 
 /** Trimmed single-line text; empty becomes undefined. */
-const line = (max: number) =>
+export const line = (max: number) =>
   z
     .string()
     .trim()
@@ -43,7 +43,7 @@ const line = (max: number) =>
     .optional();
 
 /** Trimmed multi-line text; keeps paragraph breaks, drops control characters. */
-const paragraph = (max: number) =>
+export const paragraph = (max: number) =>
   z
     .string()
     .max(max)
@@ -71,7 +71,7 @@ export const httpUrl = z
     }
   }, 'Enter a full web address starting with https://');
 
-const optionalUrl = z
+export const optionalUrl = z
   .union([httpUrl, z.literal('')])
   .transform((value) => value || undefined)
   .optional();

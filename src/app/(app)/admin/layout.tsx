@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { Inbox, LayoutDashboard, LifeBuoy, Settings, Store, Users } from 'lucide-react';
 import { requireAdmin } from '@/lib/organizer';
 import { DashboardShell, type DashboardNavGroup } from '@/components/dashboard/DashboardShell';
-import { cachedReviewQueue, waitingCount } from './_lib/queue';
+import { cachedReviewQueue, cachedVendorQueue, vendorWaitingCount, waitingCount } from './_lib/queue';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,8 +14,9 @@ export const metadata: Metadata = {
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const admin = await requireAdmin();
-  // Claims, updates, photos and older requests waiting for a decision.
-  const pending = waitingCount(await cachedReviewQueue());
+  // Claims, updates, photos, older requests and vendor reviews waiting for a decision.
+  const [reviewQueue, vendorQueue] = await Promise.all([cachedReviewQueue(), cachedVendorQueue()]);
+  const pending = waitingCount(reviewQueue) + vendorWaitingCount(vendorQueue);
 
   const groups: DashboardNavGroup[] = [
     {
@@ -24,6 +25,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         { href: '/admin/review', label: 'Review queue', icon: <Inbox />, also: ['/admin/claims', '/admin/changes'], count: pending },
         { href: '/admin/markets', label: 'Markets', icon: <Store /> },
         { href: '/admin/organizers', label: 'Organizers', icon: <Users /> },
+        { href: '/admin/vendors', label: 'Vendors', icon: <Store /> },
       ],
     },
   ];
