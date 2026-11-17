@@ -313,7 +313,7 @@ export async function buildMarketEnrichment() {
     for (const [index, record] of parsed.entries()) {
       if (skipStale && record && typeof record === 'object') {
         const market = marketsById.get(String(record.id));
-        // A casing-only change ("Castro Fm" -> "Castro FM") is the same
+        // A casing-only change ("Downtown Slo Farmers Market" -> "Downtown SLO Farmers Market") is the same
         // market; carry the research over under the source's new spelling.
         if (
           market &&

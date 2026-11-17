@@ -42774,7 +42774,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:0017a7ef777ca1b7",
     "slug": "simi-valley-cfm-simi-valley-38f9a733",
-    "name": "Simi Valley CFM",
+    "name": "Simi Valley Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -42814,7 +42814,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:0193c1f52570796d",
     "slug": "petaluma-east-side-fm-petaluma-0c485015",
-    "name": "Petaluma East Side Fm",
+    "name": "Petaluma East Side Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -42894,7 +42894,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:02781df8a9ae104d",
     "slug": "costa-mesa-cfm-costa-mesa-ccbbcb8e",
-    "name": "Costa Mesa CFM",
+    "name": "Costa Mesa Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -42934,7 +42934,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:04bad7b6d1a0a666",
     "slug": "downey-cfm-downey-ce35281f",
-    "name": "Downey CFM",
+    "name": "Downey Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -42974,7 +42974,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:07050c3a273813e5",
     "slug": "kaiser-permanente-walnut-creek-cfm-walnut-creek-14f8d11a",
-    "name": "Kaiser Permanente Walnut Creek CFM",
+    "name": "Kaiser Permanente Walnut Creek Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43054,7 +43054,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:073ecb5e504155c0",
     "slug": "pasadena-victory-park-cfm-pasadena-6358cb28",
-    "name": "Pasadena Victory Park CFM",
+    "name": "Pasadena Victory Park Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43134,7 +43134,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:09f74cf16d77dc38",
     "slug": "compton-college-fm-compton-7f7b2975",
-    "name": "Compton College Fm",
+    "name": "Compton College Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43174,7 +43174,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:0b9ec9f92a4ed070",
     "slug": "pleasanton-cfm-pleasanton-87a00597",
-    "name": "Pleasanton CFM",
+    "name": "Pleasanton Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43214,7 +43214,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:0c019039ec3dab54",
     "slug": "riverlakes-fm-bakersfield-aa3b6801",
-    "name": "Riverlakes Fm",
+    "name": "Riverlakes Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43254,7 +43254,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:0ea05f891fdf44a4",
     "slug": "pinole-cfm-pinole-d09c1c72",
-    "name": "Pinole CFM",
+    "name": "Pinole Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43294,7 +43294,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:1020e5a318cd7e66",
     "slug": "alisal-community-cfm-salinas-568f03f9",
-    "name": "Alisal Community CFM",
+    "name": "Alisal Community Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43334,7 +43334,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:122ba2c462f0fabc",
     "slug": "tahoe-city-fm-tahoe-city-8c80401d",
-    "name": "Tahoe City Fm",
+    "name": "Tahoe City Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43374,7 +43374,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:1348912f8a0ff325",
     "slug": "shelter-cove-fm-whitethorn-1701b976",
-    "name": "Shelter Cove Fm",
+    "name": "Shelter Cove Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43414,7 +43414,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:143f1eb96670b08e",
     "slug": "live-oak-cfm-santa-cruz-626b354c",
-    "name": "Live Oak CFM",
+    "name": "Live Oak Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43534,7 +43534,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:14f84b62d77cb2d4",
     "slug": "cfm-yucca-valley-founders-plaza-yucca-valley-d0826ecf",
-    "name": "CFM @ Yucca Valley Founders Plaza",
+    "name": "Certified Farmers Market @ Yucca Valley Founders Plaza",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43574,7 +43574,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:15435a4ad6a50297",
     "slug": "huntington-park-cfm-huntington-park-0b5a2359",
-    "name": "Huntington Park CFM",
+    "name": "Huntington Park Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43614,7 +43614,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:155b2610bc9dbd34",
     "slug": "montclair-cfm-oakland-6147395b",
-    "name": "Montclair CFM",
+    "name": "Montclair Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43654,7 +43654,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:163c0c5948de6acb",
     "slug": "clement-street-fm-san-francisco-b7955892",
-    "name": "Clement Street Fm",
+    "name": "Clement Street Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43694,7 +43694,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:17c2c3e23f699f2e",
     "slug": "downtown-ventura-cfm-ventura-5b882361",
-    "name": "Downtown Ventura CFM",
+    "name": "Downtown Ventura Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43734,7 +43734,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:17ce386cd659a883",
     "slug": "south-pasadena-fm-south-pasadena-7b6b8ab5",
-    "name": "South Pasadena Fm",
+    "name": "South Pasadena Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43774,7 +43774,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:186844cc1c7e916f",
     "slug": "rossmoor-fm-walnut-creek-d37e4ecb",
-    "name": "Rossmoor Fm",
+    "name": "Rossmoor Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43854,7 +43854,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:1a055fa17d519de1",
     "slug": "auburn-old-town-cfm-auburn-a54fc35d",
-    "name": "Auburn Old Town CFM",
+    "name": "Auburn Old Town Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43894,7 +43894,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:1b64ecd36910a47c",
     "slug": "long-beach-marina-cfm-long-beach-9f2f759b",
-    "name": "Long Beach Marina CFM",
+    "name": "Long Beach Marina Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -43934,7 +43934,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:1dab8b039dfd5830",
     "slug": "solvang-village-cfm-ballard-6ff0f018",
-    "name": "Solvang Village CFM",
+    "name": "Solvang Village Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44014,7 +44014,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:1e7f32164e9e6579",
     "slug": "daly-city-cfm-daly-city-a923039a",
-    "name": "Daly City CFM",
+    "name": "Daly City Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44054,7 +44054,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:1fb7409aed7dd708",
     "slug": "fortuna-fm-fortuna-f7a394b6",
-    "name": "Fortuna Fm",
+    "name": "Fortuna Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44134,7 +44134,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:226f2f3cb62ea799",
     "slug": "alum-rock-cfm-san-jose-60b00b5d",
-    "name": "Alum Rock CFM",
+    "name": "Alum Rock Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44174,7 +44174,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:22d17b75bc83b73a",
     "slug": "pacific-grove-cfm-pacific-grove-4578572c",
-    "name": "Pacific Grove CFM",
+    "name": "Pacific Grove Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44214,7 +44214,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:22f03ba3bbd4a4cb",
     "slug": "rialto-cfm-rialto-5cd03459",
-    "name": "Rialto CFM",
+    "name": "Rialto Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44254,7 +44254,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:238acf1f47ad4da6",
     "slug": "santa-monica-main-street-cfm-santa-monica-04c54ed2",
-    "name": "Santa Monica Main Street CFM",
+    "name": "Santa Monica Main Street Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44294,7 +44294,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:23a574e27f6ff451",
     "slug": "evergreen-cfm-san-jose-56d82bfb",
-    "name": "Evergreen CFM",
+    "name": "Evergreen Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44335,7 +44335,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:23a9663bc7bb77a5",
     "slug": "downtown-crescent-city-fm-crescent-city-ba8159a1",
-    "name": "Downtown Crescent City Fm",
+    "name": "Downtown Crescent City Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44375,7 +44375,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:24e1095dc20d1c32",
     "slug": "downtown-novato-community-fm-novato-e1a460d6",
-    "name": "Downtown Novato Community Fm",
+    "name": "Downtown Novato Community Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44415,7 +44415,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:24f6a6d3667a197b",
     "slug": "ojai-cfm-ojai-235bf6b3",
-    "name": "Ojai CFM",
+    "name": "Ojai Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44455,7 +44455,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:26dd0d342f009d04",
     "slug": "lincoln-heights-cfm-los-angeles-36c3224a",
-    "name": "Lincoln Heights CFM",
+    "name": "Lincoln Heights Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44535,7 +44535,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:28654fb3400b297e",
     "slug": "kaiser-permanente-oakland-cfm-oakland-c1d596ea",
-    "name": "Kaiser Permanente Oakland CFM",
+    "name": "Kaiser Permanente Oakland Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44575,7 +44575,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2866c415f106863e",
     "slug": "kaiser-santa-clara-cfm-santa-clara-56005a90",
-    "name": "Kaiser Santa Clara CFM",
+    "name": "Kaiser Santa Clara Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44615,7 +44615,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:287caa6ebb00ff0d",
     "slug": "los-gatos-fm-los-gatos-94d7b7ca",
-    "name": "Los Gatos Fm",
+    "name": "Los Gatos Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44656,7 +44656,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:289749e1c7be192b",
     "slug": "old-oakland-fm-oakland-56a19357",
-    "name": "Old Oakland Fm",
+    "name": "Old Oakland Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44696,7 +44696,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2a3c7c32d396ce5d",
     "slug": "union-city-cfm-union-city-0eb12800",
-    "name": "Union City CFM",
+    "name": "Union City Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44736,7 +44736,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2ad896f5b94ddc13",
     "slug": "belmont-cfm-belmont-18010419",
-    "name": "Belmont CFM",
+    "name": "Belmont Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44776,7 +44776,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2b3886361c555068",
     "slug": "carmichael-fm-carmichael-43509ca7",
-    "name": "Carmichael Fm",
+    "name": "Carmichael Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44816,7 +44816,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2b75bd18cf1788c8",
     "slug": "rohnert-park-fm-rohnert-park-e746df95",
-    "name": "Rohnert Park Fm",
+    "name": "Rohnert Park Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44896,7 +44896,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2bf65bb7b12181ec",
     "slug": "mountain-view-cfm-mountain-view-8dcb9f5e",
-    "name": "Mountain View CFM",
+    "name": "Mountain View Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -44936,7 +44936,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2ce174b120a05779",
     "slug": "kaiser-permanente-vallejo-cfm-vallejo-ee0f67d2",
-    "name": "Kaiser Permanente Vallejo CFM",
+    "name": "Kaiser Permanente Vallejo Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45016,7 +45016,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2d0f4f5bb618a1ea",
     "slug": "modesto-cfm-modesto-f8410c57",
-    "name": "Modesto CFM",
+    "name": "Modesto Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45097,7 +45097,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:2fc896f50fe19626",
     "slug": "canyon-lake-cfm-menifee-52b0b08e",
-    "name": "Canyon Lake CFM",
+    "name": "Canyon Lake Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45137,7 +45137,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:3164205c4cd65a57",
     "slug": "etna-cfm-etna-662901e9",
-    "name": "Etna CFM",
+    "name": "Etna Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45178,7 +45178,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:31b951378b2ebad1",
     "slug": "gardena-fm-gardena-33dccdcf",
-    "name": "Gardena Fm",
+    "name": "Gardena Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45218,7 +45218,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:324c0a0fb58e2406",
     "slug": "heart-of-the-city-sunday-fm-san-francisco-23cabc69",
-    "name": "Heart of the City Sunday Fm",
+    "name": "Heart of the City Sunday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45259,7 +45259,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:33a41b7a22332bd7",
     "slug": "garberville-fm-garberville-b21001ff",
-    "name": "Garberville Fm",
+    "name": "Garberville Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45299,7 +45299,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:33ac144389f43628",
     "slug": "yuba-city-cfm-yuba-city-d7445f94",
-    "name": "Yuba City CFM",
+    "name": "Yuba City Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45339,7 +45339,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:346104930d222da4",
     "slug": "high-desert-cfm-victorville-2d0d64b6",
-    "name": "High Desert CFM",
+    "name": "High Desert Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45379,7 +45379,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:34f760cc872249bc",
     "slug": "galleria-at-tyler-riverside-cfm-riverside-5df815bf",
-    "name": "Galleria at Tyler Riverside CFM",
+    "name": "Galleria at Tyler Riverside Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45419,7 +45419,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:36c876e010aac317",
     "slug": "watts-willowbrook-fm-los-angeles-9e4d1d2b",
-    "name": "Watts Willowbrook Fm",
+    "name": "Watts Willowbrook Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45459,7 +45459,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:36da96b6ec42b605",
     "slug": "fairfax-community-fm-fairfax-8c83165e",
-    "name": "Fairfax Community Fm",
+    "name": "Fairfax Community Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45499,7 +45499,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:37f64943949503e7",
     "slug": "midtown-ventura-cfm-ventura-fd665467",
-    "name": "Midtown Ventura CFM",
+    "name": "Midtown Ventura Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45539,7 +45539,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:38d8b162a104249f",
     "slug": "cypress-cfm-cypress-ce094e5d",
-    "name": "Cypress CFM",
+    "name": "Cypress Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45579,7 +45579,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:3a7b9cec52f5b7ac",
     "slug": "santa-rosa-community-wednesday-fm-santa-rosa-8abfddf8",
-    "name": "Santa Rosa Community Wednesday Fm",
+    "name": "Santa Rosa Community Wednesday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45619,7 +45619,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:3c3fdacae96bce53",
     "slug": "natividad-cfm-salinas-432aa77c",
-    "name": "Natividad CFM",
+    "name": "Natividad Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45659,7 +45659,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:3c7e46e2aa801e33",
     "slug": "south-berkeley-fm-berkeley-fd1351a6",
-    "name": "South Berkeley Fm",
+    "name": "South Berkeley Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45700,7 +45700,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:3d02f6d66ebde9fd",
     "slug": "tustin-cfm-tustin-8f4b4f20",
-    "name": "Tustin CFM",
+    "name": "Tustin Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45740,7 +45740,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:3dd732de98ced56e",
     "slug": "hollywood-fm-los-angeles-3ab61fcb",
-    "name": "Hollywood Fm",
+    "name": "Hollywood Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45780,7 +45780,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:3f98cf79e9dbd66c",
     "slug": "ascendkemet-cfm-of-city-heights-san-diego-fb02a49b",
-    "name": "Ascendkemet CFM of City Heights",
+    "name": "Ascendkemet Certified Farmers Market of City Heights",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45861,7 +45861,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:403e1d9988c3193e",
     "slug": "west-point-fm-west-point-949ef10b",
-    "name": "West Point Fm",
+    "name": "West Point Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45901,7 +45901,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:404ca264380b35d4",
     "slug": "eureka-friday-night-fm-eureka-da928b6a",
-    "name": "Eureka Friday Night Fm",
+    "name": "Eureka Friday Night Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -45941,7 +45941,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:41f0ac654a52ec44",
     "slug": "san-carlos-cfm-san-carlos-e2ee13d2",
-    "name": "San Carlos CFM",
+    "name": "San Carlos Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46021,7 +46021,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:45cdaaffa746e5e9",
     "slug": "escondido-cfm-and-other-purveyors-escondido-82a07330",
-    "name": "Escondido CFM and Other Purveyors",
+    "name": "Escondido Certified Farmers Market and Other Purveyors",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46061,7 +46061,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:465c07418515d07d",
     "slug": "nevada-city-cfm-summer-nevada-city-5ca08da6",
-    "name": "Nevada City CFM (Summer)",
+    "name": "Nevada City Certified Farmers Market (Summer)",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46101,7 +46101,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:467445faa16969f6",
     "slug": "burney-cfm-burney-1fc53c31",
-    "name": "Burney CFM",
+    "name": "Burney Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46141,7 +46141,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:46d5421c643a55da",
     "slug": "clearlake-cfm-clearlake-33e86c6f",
-    "name": "Clearlake CFM",
+    "name": "Clearlake Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46181,7 +46181,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4701fd3af8b302a1",
     "slug": "fillmore-cfm-san-francisco-33d5a998",
-    "name": "Fillmore CFM",
+    "name": "Fillmore Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46221,7 +46221,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:47158ff0039c3fe0",
     "slug": "yreka-community-cfm-yreka-a06d80f0",
-    "name": "Yreka Community CFM",
+    "name": "Yreka Community Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46261,7 +46261,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:477ef9834e5d07a3",
     "slug": "campbell-fm-campbell-73505405",
-    "name": "Campbell Fm",
+    "name": "Campbell Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46301,7 +46301,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:47f823bdb64ed298",
     "slug": "coastside-fm-pacifica-pacifica-17ddce70",
-    "name": "Coastside Fm - Pacifica",
+    "name": "Coastside Farmers Market - Pacifica",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46381,7 +46381,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:49d5282986ed3e4e",
     "slug": "sherman-oaks-tuesday-cfm-sherman-oaks-52d19367",
-    "name": "Sherman Oaks Tuesday CFM",
+    "name": "Sherman Oaks Tuesday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46421,7 +46421,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4a30ed22f66f61d0",
     "slug": "truckee-cfm-truckee-4f3dd2a4",
-    "name": "Truckee CFM",
+    "name": "Truckee Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46461,7 +46461,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4a3656a70df5ae8d",
     "slug": "danville-cfm-danville-53d777aa",
-    "name": "Danville CFM",
+    "name": "Danville Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46501,7 +46501,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4abc1984c483d284",
     "slug": "seaside-cfm-seaside-a0508186",
-    "name": "Seaside CFM",
+    "name": "Seaside Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46541,7 +46541,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4afe398861cb9a38",
     "slug": "arroyo-grande-wednesday-mornings-cfm-arroyo-grande-33bc861e",
-    "name": "Arroyo Grande Wednesday Mornings CFM",
+    "name": "Arroyo Grande Wednesday Mornings Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46581,7 +46581,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4c19a5b249f9d267",
     "slug": "downtown-long-beach-cfm-long-beach-816d38be",
-    "name": "Downtown Long Beach CFM",
+    "name": "Downtown Long Beach Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46621,7 +46621,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4d13a268169e4952",
     "slug": "thousand-oaks-cfm-thousand-oaks-907bc0b4",
-    "name": "Thousand Oaks CFM",
+    "name": "Thousand Oaks Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46661,7 +46661,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4d4d11f36ff0815f",
     "slug": "morgan-hill-cfm-morgan-hill-9d601ef7",
-    "name": "Morgan Hill CFM",
+    "name": "Morgan Hill Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46701,7 +46701,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4d6b3d78ae527f58",
     "slug": "downtown-san-leandro-cfm-san-leandro-e7517fd1",
-    "name": "Downtown San Leandro CFM",
+    "name": "Downtown San Leandro Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46781,7 +46781,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4f4bd64ce5bd7cc3",
     "slug": "pasadena-villa-parke-cfm-pasadena-dd44d791",
-    "name": "Pasadena Villa Parke CFM",
+    "name": "Pasadena Villa Parke Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46821,7 +46821,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4f6804da2a605227",
     "slug": "healdsburg-cfm-tue-healdsburg-aae1cab9",
-    "name": "Healdsburg CFM Tue",
+    "name": "Healdsburg Certified Farmers Market Tue",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46861,7 +46861,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:4f698e91f585f870",
     "slug": "laytonville-cfm-laytonville-7c7f8081",
-    "name": "Laytonville CFM",
+    "name": "Laytonville Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46901,7 +46901,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:500ae3be456bdc46",
     "slug": "sunnyvale-cfm-sunnyvale-78703c6e",
-    "name": "Sunnyvale CFM",
+    "name": "Sunnyvale Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46941,7 +46941,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:52b402e955c8abb9",
     "slug": "ferry-plaza-saturday-fm-san-francisco-bcc6a053",
-    "name": "Ferry Plaza Saturday Fm",
+    "name": "Ferry Plaza Saturday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -46981,7 +46981,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:52eb9be1f2550f44",
     "slug": "dublin-cfm-dublin-8410ccb5",
-    "name": "Dublin CFM",
+    "name": "Dublin Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47021,7 +47021,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:536511704eb4b505",
     "slug": "ukiah-cfm-ukiah-c971eaf5",
-    "name": "Ukiah CFM",
+    "name": "Ukiah Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47061,7 +47061,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5449e4305bcfea83",
     "slug": "vail-headquarters-cfm-temecula-3165d0ce",
-    "name": "Vail Headquarters CFM",
+    "name": "Vail Headquarters Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47101,7 +47101,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5497cf9766143459",
     "slug": "barnyard-cfm-carmel-416660af",
-    "name": "Barnyard CFM",
+    "name": "Barnyard Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47141,7 +47141,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:55b06bca83863300",
     "slug": "ferry-plaza-tuesday-fm-san-francisco-c6af16d9",
-    "name": "Ferry Plaza Tuesday Fm",
+    "name": "Ferry Plaza Tuesday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47181,7 +47181,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:55c44ff7bbbd9f3e",
     "slug": "salinas-valley-memorial-hospital-cfm-salinas-9ee77fa7",
-    "name": "Salinas Valley Memorial Hospital CFM",
+    "name": "Salinas Valley Memorial Hospital Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47221,7 +47221,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:566bb24fab7a515e",
     "slug": "arroyo-grande-saturday-afternoons-cfm-arroyo-grande-52e95c82",
-    "name": "Arroyo Grande Saturday Afternoons CFM",
+    "name": "Arroyo Grande Saturday Afternoons Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47261,7 +47261,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5674eafb1e240594",
     "slug": "slo-saturday-mornings-cfm-san-luis-obispo-055aa9cd",
-    "name": "Slo Saturday Mornings CFM",
+    "name": "Slo Saturday Mornings Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47301,7 +47301,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5886d135cc3d3b74",
     "slug": "cambria-cfm-cambria-22da9dc7",
-    "name": "Cambria CFM",
+    "name": "Cambria Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47341,7 +47341,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5a83c7038fe7fac2",
     "slug": "miranda-fm-miranda-c9e614d3",
-    "name": "Miranda Fm",
+    "name": "Miranda Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47381,7 +47381,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5ac11b2295bd0a57",
     "slug": "castro-fm-san-francisco-438a66d1",
-    "name": "Castro Fm",
+    "name": "Castro Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47421,7 +47421,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5d16c836e7d21c0f",
     "slug": "downtown-riverside-fm-riverside-f82311e1",
-    "name": "Downtown Riverside Fm",
+    "name": "Downtown Riverside Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47461,7 +47461,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5d9662a5ed27d883",
     "slug": "pacific-beach-tuesday-cfm-san-diego-73eba548",
-    "name": "Pacific Beach Tuesday CFM",
+    "name": "Pacific Beach Tuesday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47501,7 +47501,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:5eb96e4d5b845d58",
     "slug": "morro-bay-main-st-saturday-fm-morro-bay-54c1c32f",
-    "name": "Morro Bay Main St Saturday Fm",
+    "name": "Morro Bay Main St Saturday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47581,7 +47581,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:606be4862dec9b75",
     "slug": "walnut-creek-fm-walnut-creek-2b8f859e",
-    "name": "Walnut Creek Fm",
+    "name": "Walnut Creek Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47621,7 +47621,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:616b95ad567e88c1",
     "slug": "san-marcos-cfm-san-marcos-e288f946",
-    "name": "San Marcos CFM",
+    "name": "San Marcos Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47661,7 +47661,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:61f090510e5356b7",
     "slug": "pico-rivera-cfm-pico-rivera-3d7abf2f",
-    "name": "Pico Rivera CFM",
+    "name": "Pico Rivera Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47701,7 +47701,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6206d08826938f86",
     "slug": "mar-vista-cfm-los-angeles-a587ab36",
-    "name": "Mar Vista CFM",
+    "name": "Mar Vista Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47741,7 +47741,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:626d32638a25633d",
     "slug": "burbank-fm-burbank-26fd0ff7",
-    "name": "Burbank Fm",
+    "name": "Burbank Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47781,7 +47781,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:635f33825598a1f0",
     "slug": "mesa-verde-fm-costa-mesa-183413d8",
-    "name": "Mesa Verde Fm",
+    "name": "Mesa Verde Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47821,7 +47821,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:63daa6b7f9367fda",
     "slug": "chico-wednesday-cfm-chico-c7dd6f4a",
-    "name": "Chico Wednesday CFM",
+    "name": "Chico Wednesday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47861,7 +47861,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6491f99eb2279ea9",
     "slug": "ascendkemet-cfm-san-diego-8b7564ea",
-    "name": "Ascendkemet CFM",
+    "name": "Ascendkemet Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47901,7 +47901,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:64f580a19559c676",
     "slug": "southgate-cfm-south-gate-5e5ff7c1",
-    "name": "Southgate CFM",
+    "name": "Southgate Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47941,7 +47941,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6532bcb12b760d65",
     "slug": "east-palo-alto-community-fm-e-palo-alto-b211009a",
-    "name": "East Palo Alto Community Fm",
+    "name": "East Palo Alto Community Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -47981,7 +47981,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:661c411cfced59fe",
     "slug": "nevada-city-cfm-winter-nevada-city-a650066a",
-    "name": "Nevada City CFM (Winter)",
+    "name": "Nevada City Certified Farmers Market (Winter)",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48021,7 +48021,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6682d1956f4995b1",
     "slug": "atwater-village-fm-los-angeles-998af89f",
-    "name": "Atwater Village Fm",
+    "name": "Atwater Village Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48061,7 +48061,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:66a765206256d348",
     "slug": "downtown-berkeley-fm-berkeley-e9cfa8f8",
-    "name": "Downtown Berkeley Fm",
+    "name": "Downtown Berkeley Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48101,7 +48101,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:675d054274c4290b",
     "slug": "cerritos-cfm-cerritos-a4868668",
-    "name": "Cerritos CFM",
+    "name": "Cerritos Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48141,7 +48141,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:679bbef7b991b9ec",
     "slug": "costa-mesa-soco-fm-costa-mesa-2351e125",
-    "name": "Costa Mesa (Soco) Fm",
+    "name": "Costa Mesa (Soco) Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48181,7 +48181,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:67b75ad80ba89d82",
     "slug": "arcata-plaza-fm-arcata-4fe90cf7",
-    "name": "Arcata Plaza Fm",
+    "name": "Arcata Plaza Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48221,7 +48221,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6a0f123d79059104",
     "slug": "laguna-hills-cfm-laguna-beach-ff23f67d",
-    "name": "Laguna Hills CFM",
+    "name": "Laguna Hills Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48261,7 +48261,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6a2fd8ef2692df24",
     "slug": "fullerton-cfm-fullerton-3e310384",
-    "name": "Fullerton CFM",
+    "name": "Fullerton Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48301,7 +48301,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6a70d1894b11e06a",
     "slug": "martinez-fm-martinez-ed06afd5",
-    "name": "Martinez Fm",
+    "name": "Martinez Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48341,7 +48341,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6b348f707bc785e8",
     "slug": "atascadero-fm-atascadero-6a23f762",
-    "name": "Atascadero Fm",
+    "name": "Atascadero Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48381,7 +48381,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6b9765d435337895",
     "slug": "downtown-oxnard-fm-oxnard-103174bb",
-    "name": "Downtown Oxnard Fm",
+    "name": "Downtown Oxnard Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48421,7 +48421,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6c22bd74e6d94b54",
     "slug": "adams-and-vermont-cfm-los-angeles-c9818fea",
-    "name": "Adams and Vermont CFM",
+    "name": "Adams and Vermont Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48461,7 +48461,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6c257cc504f2fe55",
     "slug": "oceanside-cfm-oceanside-b9199d7e",
-    "name": "Oceanside CFM",
+    "name": "Oceanside Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48501,7 +48501,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6d39d10dbdfa1ee7",
     "slug": "city-of-ridgecrest-fm-ridgecrest-e355016b",
-    "name": "City of Ridgecrest Fm",
+    "name": "City of Ridgecrest Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48541,7 +48541,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6d6309fd56c702c0",
     "slug": "rosemead-fm-rosemead-2b5c72b5",
-    "name": "Rosemead Fm",
+    "name": "Rosemead Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48581,7 +48581,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6e0c4bf7138d66d8",
     "slug": "newark-cfm-newark-85800347",
-    "name": "Newark CFM",
+    "name": "Newark Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48621,7 +48621,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6e225d0f3bc56a76",
     "slug": "castro-valley-fm-castro-valley-6e6eb796",
-    "name": "Castro Valley Fm",
+    "name": "Castro Valley Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48661,7 +48661,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6e29e3b6cbf55e2f",
     "slug": "slo-tuesday-fm-farm-supply-san-luis-obispo-8c381fb8",
-    "name": "Slo Tuesday Fm @ Farm Supply",
+    "name": "Slo Tuesday Farmers Market @ Farm Supply",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48701,7 +48701,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6e36d1936a991944",
     "slug": "mariposa-cfm-mariposa-362da75e",
-    "name": "Mariposa CFM",
+    "name": "Mariposa Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48741,7 +48741,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6e455646ccbf404a",
     "slug": "fair-oaks-fm-fair-oaks-920102c5",
-    "name": "Fair Oaks Fm",
+    "name": "Fair Oaks Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48781,7 +48781,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6f999805c838294e",
     "slug": "miracle-mile-cfm-los-angeles-ba413d7f",
-    "name": "Miracle Mile CFM",
+    "name": "Miracle Mile Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48821,7 +48821,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6fd59517a108cac8",
     "slug": "norwalk-cfm-norwalk-981e5e05",
-    "name": "Norwalk CFM",
+    "name": "Norwalk Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48861,7 +48861,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:6fe04ac839717580",
     "slug": "barstow-fm-barstow-43c58acb",
-    "name": "Barstow Fm",
+    "name": "Barstow Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48902,7 +48902,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:70666f81238119cb",
     "slug": "san-jacinto-valley-cfm-san-jacinto-06b08f61",
-    "name": "San Jacinto Valley CFM",
+    "name": "San Jacinto Valley Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -48982,7 +48982,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:710658f88afeb62f",
     "slug": "san-bernardino-cfm-san-bernardino-9ff7b799",
-    "name": "San Bernardino CFM",
+    "name": "San Bernardino Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49022,7 +49022,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:712c69d394748fff",
     "slug": "fort-bragg-cfm-fort-bragg-ebf1e994",
-    "name": "Fort Bragg CFM",
+    "name": "Fort Bragg Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49062,7 +49062,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:72578173d5df0078",
     "slug": "kaiser-permanente-south-sacramento-cfm-sacramento-705d6547",
-    "name": "Kaiser Permanente South Sacramento CFM",
+    "name": "Kaiser Permanente South Sacramento Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49102,7 +49102,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:732a279d03170481",
     "slug": "diablo-valley-cfm-walnut-creek-1bdbb36d",
-    "name": "Diablo Valley CFM",
+    "name": "Diablo Valley Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49142,7 +49142,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:74cb8212053e4593",
     "slug": "santa-rosa-original-cfm-santa-rosa-1736039c",
-    "name": "Santa Rosa Original CFM",
+    "name": "Santa Rosa Original Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49183,7 +49183,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:758a969dc8e99d83",
     "slug": "old-town-eureka-fm-eureka-b27ba876",
-    "name": "Old Town Eureka Fm",
+    "name": "Old Town Eureka Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49223,7 +49223,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:770ecfec549e3828",
     "slug": "downtown-santa-monica-fm-santa-monica-6d046df6",
-    "name": "Downtown Santa Monica Fm",
+    "name": "Downtown Santa Monica Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49263,7 +49263,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:77cab92c7d054e2d",
     "slug": "stonestown-fm-san-francisco-555536c2",
-    "name": "Stonestown Fm",
+    "name": "Stonestown Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49303,7 +49303,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7866e6ad4cddf74f",
     "slug": "vallejo-cfm-vallejo-2141a7ca",
-    "name": "Vallejo CFM",
+    "name": "Vallejo Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49343,7 +49343,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:786dcca113bcb480",
     "slug": "poway-cfm-poway-77bc332a",
-    "name": "Poway CFM",
+    "name": "Poway Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49383,7 +49383,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7a34809552dbda7a",
     "slug": "inner-sunset-cfm-san-francisco-ee2274d5",
-    "name": "Inner Sunset CFM",
+    "name": "Inner Sunset Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49463,7 +49463,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7ac2d7c11efd1bc7",
     "slug": "hillcrest-cfm-san-diego-6c461b34",
-    "name": "Hillcrest CFM",
+    "name": "Hillcrest Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49503,7 +49503,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7b379800c227873b",
     "slug": "downtown-napa-fm-napa-855e919d",
-    "name": "Downtown Napa Fm",
+    "name": "Downtown Napa Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49543,7 +49543,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7b4c5dd7857be542",
     "slug": "calistoga-fm-calistoga-983119e7",
-    "name": "Calistoga Fm",
+    "name": "Calistoga Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49583,7 +49583,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7d248ba6370f8649",
     "slug": "willow-glen-fm-san-jose-ed75a320",
-    "name": "Willow Glen Fm",
+    "name": "Willow Glen Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49623,7 +49623,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7d901ce797013f37",
     "slug": "los-altos-cfm-los-altos-3cfad9aa",
-    "name": "Los Altos CFM",
+    "name": "Los Altos Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49663,7 +49663,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7dea741664ea893a",
     "slug": "county-of-riverside-cfm-riverside-7f066205",
-    "name": "County of Riverside CFM",
+    "name": "County of Riverside Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49703,7 +49703,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7eb466e5f3bc4c94",
     "slug": "aptos-cfm-aptos-ba141c56",
-    "name": "Aptos CFM",
+    "name": "Aptos Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49743,7 +49743,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7ec62f06bb2e27c4",
     "slug": "palm-springs-cfm-palm-springs-253e4195",
-    "name": "Palm Springs CFM",
+    "name": "Palm Springs Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49783,7 +49783,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7ee1eeb74f68f913",
     "slug": "dunsmuir-fm-dunsmuir-2df3d63a",
-    "name": "Dunsmuir Fm",
+    "name": "Dunsmuir Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49863,7 +49863,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:7fc725f828d8adbb",
     "slug": "weberstown-fm-stockton-d67ef6a7",
-    "name": "Weberstown Fm",
+    "name": "Weberstown Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49904,7 +49904,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:802a292ad6f814bd",
     "slug": "wilshire-fairfax-fm-los-angeles-e08330b5",
-    "name": "Wilshire-Fairfax Fm",
+    "name": "Wilshire-Fairfax Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49944,7 +49944,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:80c8673cba88cc21",
     "slug": "north-county-fm-castroville-0718167d",
-    "name": "North County Fm",
+    "name": "North County Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -49984,7 +49984,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:80ec48ff5110e593",
     "slug": "larp-co-op-janesville-fm-janesville-ea19876d",
-    "name": "Larp CO-Op Janesville Fm",
+    "name": "Larp CO-Op Janesville Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50064,7 +50064,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:8350ebd7a14d184e",
     "slug": "arden-arcade-cfm-sacramento-333a3c79",
-    "name": "Arden-Arcade CFM",
+    "name": "Arden-Arcade Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50104,7 +50104,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:8364a6f55f8766ca",
     "slug": "milpitas-fm-milpitas-e6e8ec9d",
-    "name": "Milpitas Fm",
+    "name": "Milpitas Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50144,7 +50144,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:836a0b33ccf21c05",
     "slug": "morro-bay-thursday-afternoons-cfm-morro-bay-d85bc9f0",
-    "name": "Morro Bay Thursday Afternoons CFM",
+    "name": "Morro Bay Thursday Afternoons Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50184,7 +50184,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:843fb442157c5d42",
     "slug": "fairfield-cfm-fairfield-0ce8b5c5",
-    "name": "Fairfield CFM",
+    "name": "Fairfield Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50224,7 +50224,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:862b16d952a153b3",
     "slug": "outer-sunset-fm-mercantile-san-francisco-e57bdd90",
-    "name": "Outer Sunset Fm & Mercantile",
+    "name": "Outer Sunset Farmers Market & Mercantile",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50304,7 +50304,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:87a91f4ba7f69718",
     "slug": "point-reyes-fm-point-reyes-station-e51e8b39",
-    "name": "Point Reyes Fm",
+    "name": "Point Reyes Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50344,7 +50344,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:87eaf3652b6cc782",
     "slug": "santa-rosa-community-saturday-fm-santa-rosa-14bc8bc7",
-    "name": "Santa Rosa Community Saturday Fm",
+    "name": "Santa Rosa Community Saturday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50384,7 +50384,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:898202760315dfe6",
     "slug": "santana-row-fm-san-jose-a24aef38",
-    "name": "Santana Row Fm",
+    "name": "Santana Row Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50424,7 +50424,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:89f32e8e1d7b0ff5",
     "slug": "murrieta-cfm-murrieta-63cee226",
-    "name": "Murrieta CFM",
+    "name": "Murrieta Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50504,7 +50504,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:8be7b9861845133d",
     "slug": "sonora-cfm-sonora-829c725e",
-    "name": "Sonora CFM",
+    "name": "Sonora Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50544,7 +50544,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:8e55c0f44f62e9d0",
     "slug": "irvington-fm-fremont-65ad45d6",
-    "name": "Irvington Fm",
+    "name": "Irvington Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50584,7 +50584,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:8ee2ce0c223a0e04",
     "slug": "mckinleyville-fm-mckinleyville-ec1b3a97",
-    "name": "McKinleyville Fm",
+    "name": "McKinleyville Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50624,7 +50624,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:8f218e5947093849",
     "slug": "turlock-cfm-turlock-1561496b",
-    "name": "Turlock CFM",
+    "name": "Turlock Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50664,7 +50664,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9100813a72ea1abe",
     "slug": "larp-co-op-susanville-fm-susanville-6226742c",
-    "name": "Larp CO-Op Susanville Fm",
+    "name": "Larp CO-Op Susanville Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50704,7 +50704,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:931c2c247c330fc7",
     "slug": "moreno-valley-cfm-moreno-valley-9ea3a351",
-    "name": "Moreno Valley CFM",
+    "name": "Moreno Valley Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50744,7 +50744,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:94927ad780dd499e",
     "slug": "downtown-slo-fm-san-luis-obispo-be4f5c3e",
-    "name": "Downtown Slo Fm",
+    "name": "Downtown Slo Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50784,7 +50784,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:95294fd081cd8b32",
     "slug": "san-mateo-csm-cfm-san-mateo-6242ed42",
-    "name": "San Mateo (Csm) CFM",
+    "name": "San Mateo (Csm) Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50824,7 +50824,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:958f1c747512ddf7",
     "slug": "madera-fm-madera-31c47ccf",
-    "name": "Madera Fm",
+    "name": "Madera Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50864,7 +50864,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:966edd0c4e382507",
     "slug": "mendocino-cfm-mendocino-77422656",
-    "name": "Mendocino CFM",
+    "name": "Mendocino Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50944,7 +50944,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:977b1c9f15da8a06",
     "slug": "davis-saturday-cfm-davis-bafe4b8c",
-    "name": "Davis Saturday CFM",
+    "name": "Davis Saturday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -50984,7 +50984,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:982309ff4df9c01d",
     "slug": "rivertown-cfm-antioch-534616ba",
-    "name": "Rivertown CFM",
+    "name": "Rivertown Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51024,7 +51024,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9951b02c8448ed79",
     "slug": "bodega-days-fm-sacramento-f4b1dd46",
-    "name": "Bodega Days Fm",
+    "name": "Bodega Days Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51064,7 +51064,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9a3c0af05091a62e",
     "slug": "old-town-temecula-cfm-temecula-57d2e563",
-    "name": "Old Town Temecula CFM",
+    "name": "Old Town Temecula Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51264,7 +51264,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9e47ea5b97819148",
     "slug": "ascendkemet-cfm-of-east-village-san-diego-567b5ee7",
-    "name": "Ascendkemet CFM of East Village",
+    "name": "Ascendkemet Certified Farmers Market of East Village",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51304,7 +51304,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9e4d5c22b26b865e",
     "slug": "bayfair-cfm-san-leandro-de2b5d3a",
-    "name": "Bayfair CFM",
+    "name": "Bayfair Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51344,7 +51344,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9e7e82f03b6714c7",
     "slug": "tesoro-viejo-fm-madera-01f960cf",
-    "name": "Tesoro Viejo Fm",
+    "name": "Tesoro Viejo Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51384,7 +51384,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9efb0d458d3e5331",
     "slug": "goleta-cfm-santa-barbara-b3e15974",
-    "name": "Goleta CFM",
+    "name": "Goleta Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51424,7 +51424,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9f2359f854e10f1e",
     "slug": "harbor-city-fm-presented-by-kaiser-permanante-harbor-city-5d69066f",
-    "name": "Harbor City Fm presented by Kaiser Permanante",
+    "name": "Harbor City Farmers Market presented by Kaiser Permanante",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51464,7 +51464,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9f62735fb7fc90c2",
     "slug": "corona-cfm-corona-153a3b45",
-    "name": "Corona CFM",
+    "name": "Corona Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51504,7 +51504,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:9fde742d184b298e",
     "slug": "kaiser-permanente-richmond-cfm-north-richmond-fdc27d84",
-    "name": "Kaiser Permanente Richmond CFM",
+    "name": "Kaiser Permanente Richmond Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51544,7 +51544,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a1d57014550b7863",
     "slug": "oak-park-fm-sacramento-07288b6a",
-    "name": "Oak Park Fm",
+    "name": "Oak Park Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51584,7 +51584,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a223bbe27e9ea046",
     "slug": "helen-albert-cfm-west-hollywood-los-angeles-df5cd57c",
-    "name": "Helen Albert CFM (West Hollywood)",
+    "name": "Helen Albert Certified Farmers Market (West Hollywood)",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51624,7 +51624,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a22cb689bc125f44",
     "slug": "turtle-bay-cfm-redding-5492f4e5",
-    "name": "Turtle Bay CFM",
+    "name": "Turtle Bay Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51664,7 +51664,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a22dfd7428b544f8",
     "slug": "la-canada-cfm-la-canada-1bf9d386",
-    "name": "LA Canada CFM",
+    "name": "LA Canada Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51704,7 +51704,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a2599a2e34f195ff",
     "slug": "monterey-park-cfm-monterey-park-023c6d9e",
-    "name": "Monterey Park CFM",
+    "name": "Monterey Park Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51744,7 +51744,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a2ca4ddeeeac8736",
     "slug": "hollywood-park-fm-inglewood-f53535c6",
-    "name": "Hollywood Park Fm",
+    "name": "Hollywood Park Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51784,7 +51784,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a4219f29f5226cd4",
     "slug": "henderson-center-fm-eureka-4e61f5d3",
-    "name": "Henderson Center Fm",
+    "name": "Henderson Center Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51864,7 +51864,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a514da3888e17193",
     "slug": "petaluma-saturday-cfm-bloomfield-7be63a46",
-    "name": "Petaluma Saturday CFM",
+    "name": "Petaluma Saturday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51904,7 +51904,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a6745ba19476c5bc",
     "slug": "richmond-cfm-richmond-1fdacf1c",
-    "name": "Richmond CFM",
+    "name": "Richmond Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51944,7 +51944,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a919bbb2f254a611",
     "slug": "lincoln-hills-fm-lincoln-abb9ccc8",
-    "name": "Lincoln Hills Fm",
+    "name": "Lincoln Hills Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -51984,7 +51984,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a9489cab5ab06b3d",
     "slug": "echo-park-fm-los-angeles-0eeb0ae3",
-    "name": "Echo Park Fm",
+    "name": "Echo Park Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52024,7 +52024,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a9a57b35778bb537",
     "slug": "ferry-plaza-thursday-fm-san-francisco-0b0e0b87",
-    "name": "Ferry Plaza Thursday Fm",
+    "name": "Ferry Plaza Thursday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52064,7 +52064,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:a9f7514de4d75477",
     "slug": "haggin-oaks-fm-bakersfield-d6354bcb",
-    "name": "Haggin Oaks Fm",
+    "name": "Haggin Oaks Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52104,7 +52104,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:aba6ff5f1c725fc7",
     "slug": "temecula-promenade-mall-cfm-rancho-california-6d2062e4",
-    "name": "Temecula Promenade Mall CFM",
+    "name": "Temecula Promenade Mall Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52144,7 +52144,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ac5cb0496051939e",
     "slug": "montecito-cfm-santa-barbara-f1359c56",
-    "name": "Montecito CFM",
+    "name": "Montecito Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52224,7 +52224,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:af7e6f158919cbed",
     "slug": "santa-monica-virginia-avenue-park-cfm-santa-monica-b8851428",
-    "name": "Santa Monica Virginia Avenue Park CFM",
+    "name": "Santa Monica Virginia Avenue Park Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52264,7 +52264,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b034b481b82c69ec",
     "slug": "kaiser-permanente-san-jose-cfm-san-jose-52bd5c98",
-    "name": "Kaiser Permanente San Jose CFM",
+    "name": "Kaiser Permanente San Jose Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52304,7 +52304,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b09aa605f5bab89b",
     "slug": "pajaro-valley-cfm-watsonville-58d59b35",
-    "name": "Pajaro Valley CFM",
+    "name": "Pajaro Valley Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52344,7 +52344,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b0f5ef70a30d303a",
     "slug": "phelan-cfm-phelan-aa07011a",
-    "name": "Phelan CFM",
+    "name": "Phelan Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52384,7 +52384,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b10775816202efd4",
     "slug": "camarillo-cfm-camarillo-57c65362",
-    "name": "Camarillo CFM",
+    "name": "Camarillo Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52424,7 +52424,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b10b132feb415099",
     "slug": "happy-camp-fm-happy-camp-65144e41",
-    "name": "Happy Camp Fm",
+    "name": "Happy Camp Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52464,7 +52464,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b19b346de6f3d3b9",
     "slug": "wilshire-la-brea-fm-los-angeles-72c021fb",
-    "name": "Wilshire/LA Brea Fm",
+    "name": "Wilshire/LA Brea Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52504,7 +52504,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b25c3fe13641bad5",
     "slug": "saratoga-cfm-saratoga-4c054660",
-    "name": "Saratoga CFM",
+    "name": "Saratoga Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52544,7 +52544,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b3160277d688130e",
     "slug": "alturas-fm-alturas-7505879a",
-    "name": "Alturas Fm",
+    "name": "Alturas Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52584,7 +52584,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b37df5d4c2d2c675",
     "slug": "potawot-community-garden-fm-arcata-d8cb85b3",
-    "name": "Potawot Community Garden Fm",
+    "name": "Potawot Community Garden Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52665,7 +52665,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b4ed9655a49424da",
     "slug": "kaiser-permanente-san-leandro-cfm-san-leandro-52c1a95c",
-    "name": "Kaiser Permanente San Leandro CFM",
+    "name": "Kaiser Permanente San Leandro Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52705,7 +52705,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b53d5ef375472eda",
     "slug": "baywood-los-osos-cfm-los-osos-5ea352b9",
-    "name": "Baywood/Los Osos CFM",
+    "name": "Baywood/Los Osos Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52745,7 +52745,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b6b380e19fefd923",
     "slug": "creekside-fm-cupertino-07e5a1a8",
-    "name": "Creekside Fm",
+    "name": "Creekside Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52785,7 +52785,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b6f5533ece50e346",
     "slug": "capitol-mall-cfm-sacramento-bd1dac86",
-    "name": "Capitol Mall CFM",
+    "name": "Capitol Mall Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52825,7 +52825,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b7b2402828d7979d",
     "slug": "main-street-canoga-park-fm-canoga-park-fc3913a8",
-    "name": "Main Street Canoga Park Fm",
+    "name": "Main Street Canoga Park Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52865,7 +52865,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b805693e13b2acbe",
     "slug": "florin-cfm-sacramento-21be50b4",
-    "name": "Florin CFM",
+    "name": "Florin Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52905,7 +52905,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:b8c4cd4dbd75698b",
     "slug": "old-town-santa-barbara-cfm-santa-barbara-2f855d14",
-    "name": "Old Town Santa Barbara CFM",
+    "name": "Old Town Santa Barbara Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52945,7 +52945,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ba3b840d9f5502b4",
     "slug": "berryessa-fm-san-jose-236c5b98",
-    "name": "Berryessa Fm",
+    "name": "Berryessa Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -52985,7 +52985,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:bafb1147b7bdb1f4",
     "slug": "blossom-hill-cfm-san-jose-4e77cef1",
-    "name": "Blossom Hill CFM",
+    "name": "Blossom Hill Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53025,7 +53025,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:bb94986c90fbd0bf",
     "slug": "brentwood-cfm-nocal-brentwood-dde8d36f",
-    "name": "Brentwood CFM (NoCal)",
+    "name": "Brentwood Certified Farmers Market (NoCal)",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53065,7 +53065,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:bc86f7208a7b5946",
     "slug": "fort-mason-center-cfm-san-francisco-5b74ab72",
-    "name": "Fort Mason Center CFM",
+    "name": "Fort Mason Center Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53145,7 +53145,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:be316741cfc9af65",
     "slug": "south-park-fm-los-angeles-ebe6b72b",
-    "name": "South Park Fm",
+    "name": "South Park Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53185,7 +53185,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:be95a4b3a9470972",
     "slug": "joshua-tree-cfm-joshua-tree-d9bfe064",
-    "name": "Joshua Tree CFM",
+    "name": "Joshua Tree Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53225,7 +53225,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:bec420e1c21740c0",
     "slug": "arden-fair-fm-sacramento-b6065031",
-    "name": "Arden Fair Fm",
+    "name": "Arden Fair Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53265,7 +53265,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:bed716048b0cdf67",
     "slug": "north-berkeley-fm-berkeley-caca4200",
-    "name": "North Berkeley Fm",
+    "name": "North Berkeley Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53305,7 +53305,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c07b270bb7b31a8f",
     "slug": "redwood-city-kiwanis-cfm-redwood-city-0d1e0dab",
-    "name": "Redwood City Kiwanis CFM",
+    "name": "Redwood City Kiwanis Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53345,7 +53345,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c0ce33c4b5d1e32a",
     "slug": "downtown-tracy-fm-tracy-289e844c",
-    "name": "Downtown Tracy Fm",
+    "name": "Downtown Tracy Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53385,7 +53385,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c219a8177bd82796",
     "slug": "cotati-community-fm-cotati-4a8c4799",
-    "name": "Cotati Community Fm",
+    "name": "Cotati Community Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53425,7 +53425,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c2a175b23e6cadcd",
     "slug": "la-jolla-cfm-la-jolla-e56705e5",
-    "name": "LA Jolla CFM",
+    "name": "LA Jolla Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53465,7 +53465,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c2a466c912b67cdb",
     "slug": "irvine-cfm-irvine-068e3a57",
-    "name": "Irvine CFM",
+    "name": "Irvine Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53505,7 +53505,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c2e57f7602bdc820",
     "slug": "covina-cfm-covina-76a9b164",
-    "name": "Covina CFM",
+    "name": "Covina Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53625,7 +53625,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c471d43ddf8c33ac",
     "slug": "hidden-cfm-escondido-7a7c14bf",
-    "name": "Hidden CFM",
+    "name": "Hidden Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53665,7 +53665,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c54630731236be66",
     "slug": "culver-city-fm-culver-city-b378bb9c",
-    "name": "Culver City Fm",
+    "name": "Culver City Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53745,7 +53745,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c69ad90106a0cc59",
     "slug": "temescal-fm-oakland-ae4d1b9e",
-    "name": "Temescal Fm",
+    "name": "Temescal Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53785,7 +53785,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c7444c8072db7cd4",
     "slug": "grand-lake-fm-oakland-5fcf3feb",
-    "name": "Grand Lake Fm",
+    "name": "Grand Lake Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53825,7 +53825,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:c7b38f2711be18a6",
     "slug": "santa-teresa-cfm-san-jose-e6d2e21f",
-    "name": "Santa Teresa CFM",
+    "name": "Santa Teresa Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53865,7 +53865,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ccc3cf38dccbf11a",
     "slug": "templeton-cfm-templeton-8ba83a22",
-    "name": "Templeton CFM",
+    "name": "Templeton Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53905,7 +53905,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:cf4bb7ae725f0472",
     "slug": "encino-fm-van-nuys-4c5b92c4",
-    "name": "Encino Fm",
+    "name": "Encino Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53945,7 +53945,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d03f1e9dca3952d1",
     "slug": "crenshaw-fm-los-angeles-f5b35103",
-    "name": "Crenshaw Fm",
+    "name": "Crenshaw Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -53985,7 +53985,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d10f174f8d31b011",
     "slug": "freedom-summer-fm-los-angeles-d3bc31b2",
-    "name": "Freedom Summer Fm",
+    "name": "Freedom Summer Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54025,7 +54025,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d2b1e8ee4b6710eb",
     "slug": "kaiser-dublin-cfm-dublin-22415ccb",
-    "name": "Kaiser Dublin CFM",
+    "name": "Kaiser Dublin Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54065,7 +54065,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d2ee60009ed0eb0d",
     "slug": "carson-fm-presented-by-kaiser-permanente-gardena-f06a1150",
-    "name": "Carson Fm presented by Kaiser Permanente",
+    "name": "Carson Farmers Market presented by Kaiser Permanente",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54105,7 +54105,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d3007fcec432e71e",
     "slug": "healdsburg-saturday-cfm-healdsburg-de302bce",
-    "name": "Healdsburg Saturday CFM",
+    "name": "Healdsburg Saturday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54185,7 +54185,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d4a88a52c40ebea7",
     "slug": "bunker-hill-fm-bank-of-america-plaza-los-angeles-01d0c9a9",
-    "name": "Bunker Hill Fm @ Bank of America Plaza",
+    "name": "Bunker Hill Farmers Market @ Bank of America Plaza",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54225,7 +54225,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d4e3334c38717b4a",
     "slug": "grass-valley-fm-grass-valley-7524e7ba",
-    "name": "Grass Valley Fm",
+    "name": "Grass Valley Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54266,7 +54266,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d50725a5b20d6145",
     "slug": "larchmont-village-cfm-sunday-los-angeles-69dbb0e0",
-    "name": "Larchmont Village CFM Sunday",
+    "name": "Larchmont Village Certified Farmers Market Sunday",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54306,7 +54306,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d66bbdc62b520192",
     "slug": "adventist-health-white-memorial-fm-los-angeles-fc00bf15",
-    "name": "Adventist Health White Memorial Fm",
+    "name": "Adventist Health White Memorial Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54346,7 +54346,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d7f1369c50f69e60",
     "slug": "concord-tuesday-cfm-concord-9ed11283",
-    "name": "Concord Tuesday CFM",
+    "name": "Concord Tuesday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54386,7 +54386,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d837968b3c98345b",
     "slug": "west-covina-fm-west-covina-6cefdd79",
-    "name": "West Covina Fm",
+    "name": "West Covina Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54426,7 +54426,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d8914aa0602d9d6d",
     "slug": "elk-grove-cfm-elk-grove-94051c22",
-    "name": "Elk Grove CFM",
+    "name": "Elk Grove Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54466,7 +54466,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d8b752ffa92f8eb5",
     "slug": "the-woodland-tuesday-fm-woodland-bf255280",
-    "name": "The Woodland Tuesday Fm",
+    "name": "The Woodland Tuesday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54506,7 +54506,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d8b7c80186190fc5",
     "slug": "little-tokyo-fm-los-angeles-75ec8aeb",
-    "name": "Little Tokyo Fm",
+    "name": "Little Tokyo Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54546,7 +54546,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d8e1f784168abbef",
     "slug": "weaverville-cfm-weaverville-eb3ef92f",
-    "name": "Weaverville CFM",
+    "name": "Weaverville Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54626,7 +54626,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d93da8baa05cf9b9",
     "slug": "the-woodland-saturday-fm-woodland-c6df294a",
-    "name": "The Woodland Saturday Fm",
+    "name": "The Woodland Saturday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54666,7 +54666,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:d9a5185a0453e1a5",
     "slug": "hollister-cfm-hollister-fa05b9fa",
-    "name": "Hollister CFM",
+    "name": "Hollister Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54706,7 +54706,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:da0dd12856d84628",
     "slug": "meadowview-cfm-sacramento-404653b8",
-    "name": "Meadowview CFM",
+    "name": "Meadowview Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54826,7 +54826,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:db9510a24203f017",
     "slug": "brentwood-cfm-socal-los-angeles-f0af83e6",
-    "name": "Brentwood CFM (SoCal)",
+    "name": "Brentwood Certified Farmers Market (SoCal)",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54866,7 +54866,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:dba1a287f5defdb7",
     "slug": "big-bear-cfm-big-bear-3ef40e86",
-    "name": "Big Bear CFM",
+    "name": "Big Bear Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54906,7 +54906,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:dcb3fe3ee10c6195",
     "slug": "divisadero-cfm-san-francisco-a0ec8d28",
-    "name": "Divisadero CFM",
+    "name": "Divisadero Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54946,7 +54946,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:dd0995082be789c1",
     "slug": "coastside-fm-half-moon-bay-half-moon-bay-e44f2013",
-    "name": "Coastside Fm - Half Moon Bay",
+    "name": "Coastside Farmers Market - Half Moon Bay",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -54986,7 +54986,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:de9cae77524d5b47",
     "slug": "orinda-fm-orinda-4a41b84a",
-    "name": "Orinda Fm",
+    "name": "Orinda Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55026,7 +55026,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:df8ab86e5bc84ed8",
     "slug": "del-monte-cfm-monterey-37bf2faa",
-    "name": "Del Monte CFM",
+    "name": "Del Monte Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55066,7 +55066,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:df97db7cb5694f0e",
     "slug": "sutter-davis-hospital-fm-davis-ec257700",
-    "name": "Sutter Davis Hospital Fm",
+    "name": "Sutter Davis Hospital Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55106,7 +55106,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:df9f0edd2292de9c",
     "slug": "playa-vista-fm-playa-vista-2e08f7b3",
-    "name": "Playa Vista Fm",
+    "name": "Playa Vista Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55146,7 +55146,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:dfcc0a8c1376f6b8",
     "slug": "kaiser-antioch-cfm-antioch-9eb7c0b1",
-    "name": "Kaiser Antioch CFM",
+    "name": "Kaiser Antioch Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55186,7 +55186,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e01df1f61a1890f7",
     "slug": "redding-cfm-redding-e91700d5",
-    "name": "Redding CFM",
+    "name": "Redding Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55226,7 +55226,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e107b2e0796e731d",
     "slug": "alhambra-sunday-cfm-alhambra-95084419",
-    "name": "Alhambra Sunday CFM",
+    "name": "Alhambra Sunday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55266,7 +55266,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e12e75d94e28b902",
     "slug": "westwood-village-fm-los-angeles-47f9c0d9",
-    "name": "Westwood Village Fm",
+    "name": "Westwood Village Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55306,7 +55306,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e1958d8bb209fc19",
     "slug": "wrightwood-cfm-wrightwood-071cdafe",
-    "name": "Wrightwood CFM",
+    "name": "Wrightwood Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55506,7 +55506,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e4ac783a5814325b",
     "slug": "east-hollywood-cfm-los-angeles-56acf30b",
-    "name": "East Hollywood CFM",
+    "name": "East Hollywood Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55587,7 +55587,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e52e0dc067fb9555",
     "slug": "pomona-valley-cfm-pomona-c0bb4dd4",
-    "name": "Pomona Valley CFM",
+    "name": "Pomona Valley Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55627,7 +55627,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e59d946452ccb272",
     "slug": "carpinteria-cfm-carpinteria-c333e9f3",
-    "name": "Carpinteria CFM",
+    "name": "Carpinteria Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55667,7 +55667,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e700d785a5aa981d",
     "slug": "marilyn-miller-fm-redding-875d8c1a",
-    "name": "Marilyn Miller Fm",
+    "name": "Marilyn Miller Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55707,7 +55707,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:e7123e2cd90cc599",
     "slug": "va-palo-alto-cfm-palo-alto-3869e4f4",
-    "name": "VA Palo Alto CFM",
+    "name": "VA Palo Alto Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55827,7 +55827,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ea95c16f5b5d4ce0",
     "slug": "melrose-place-cfm-los-angeles-62b49f49",
-    "name": "Melrose Place CFM",
+    "name": "Melrose Place Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55907,7 +55907,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:eac5390cdec5ed29",
     "slug": "long-beach-bixby-knolls-cfm-long-beach-79a6d06c",
-    "name": "Long Beach Bixby Knolls CFM",
+    "name": "Long Beach Bixby Knolls Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55947,7 +55947,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:eb6d3fedd98c1036",
     "slug": "temple-city-cfm-temple-city-ceac28c9",
-    "name": "Temple City CFM",
+    "name": "Temple City Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -55987,7 +55987,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ec38cd2ae4ea16bd",
     "slug": "weed-fm-weed-86e62c14",
-    "name": "Weed Fm",
+    "name": "Weed Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56067,7 +56067,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:edd465cca09a7ad7",
     "slug": "windsor-cfm-windsor-5df233dd",
-    "name": "Windsor CFM",
+    "name": "Windsor Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56108,7 +56108,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ee07bcc41622b0dc",
     "slug": "felton-fm-felton-8d86d905",
-    "name": "Felton Fm",
+    "name": "Felton Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56188,7 +56188,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f0ceb83670966328",
     "slug": "santa-monica-wednesday-cfm-santa-monica-d8d27790",
-    "name": "Santa Monica Wednesday CFM",
+    "name": "Santa Monica Wednesday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56228,7 +56228,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f1b95e49bb4b8b70",
     "slug": "santa-clarita-cfm-santa-clarita-6581e129",
-    "name": "Santa Clarita CFM",
+    "name": "Santa Clarita Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56268,7 +56268,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f1deca3af8e9ab2a",
     "slug": "central-avenue-fm-los-angeles-aad55cb2",
-    "name": "Central Avenue Fm",
+    "name": "Central Avenue Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56348,7 +56348,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f34656e9e286d767",
     "slug": "santee-cfm-santee-152c2be5",
-    "name": "Santee CFM",
+    "name": "Santee Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56388,7 +56388,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f379c95ed2388623",
     "slug": "mount-shasta-fm-mount-shasta-97875310",
-    "name": "Mount Shasta Fm",
+    "name": "Mount Shasta Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56428,7 +56428,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f5072cdcfb6c4191",
     "slug": "newport-beach-fm-newport-beach-59378b93",
-    "name": "Newport Beach Fm",
+    "name": "Newport Beach Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56468,7 +56468,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f58d4cc8f9038a03",
     "slug": "marina-cfm-marina-9bd239f1",
-    "name": "Marina CFM",
+    "name": "Marina Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56508,7 +56508,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f6cfb65f43262466",
     "slug": "paso-robles-fm-paso-robles-7b1811d1",
-    "name": "Paso Robles Fm",
+    "name": "Paso Robles Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56548,7 +56548,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f79f43262604afc1",
     "slug": "rancho-cordova-cfm-rancho-cordova-618ca20f",
-    "name": "Rancho Cordova CFM",
+    "name": "Rancho Cordova Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56588,7 +56588,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f7b12c7adefb3aa9",
     "slug": "adventist-health-simi-valley-cfm-simi-valley-ee3572ca",
-    "name": "Adventist Health Simi Valley CFM",
+    "name": "Adventist Health Simi Valley Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56628,7 +56628,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f7fbe9adf65fb784",
     "slug": "farm-house-collective-cfm-riverside-979a86db",
-    "name": "Farm House Collective CFM",
+    "name": "Farm House Collective Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56668,7 +56668,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:f9ccb5d23383cabd",
     "slug": "davis-wednesday-cfm-davis-b09b72ed",
-    "name": "Davis Wednesday CFM",
+    "name": "Davis Wednesday Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56708,7 +56708,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:fb2c2cb5f6613ce1",
     "slug": "little-italy-mercato-cfm-san-diego-bb7a6878",
-    "name": "Little Italy Mercato CFM",
+    "name": "Little Italy Mercato Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56749,7 +56749,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:fd3f0cb443303f69",
     "slug": "downtown-santa-barbara-cfm-santa-barbara-75b9b53b",
-    "name": "Downtown Santa Barbara CFM",
+    "name": "Downtown Santa Barbara Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56789,7 +56789,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:fd6206a6863cae48",
     "slug": "original-merced-county-cfm-merced-451c2025",
-    "name": "Original Merced County CFM",
+    "name": "Original Merced County Certified Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56829,7 +56829,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:fd810dfb12579944",
     "slug": "alameda-tuesday-and-saturday-fm-alameda-dafd8ad8",
-    "name": "Alameda Tuesday and Saturday Fm",
+    "name": "Alameda Tuesday and Saturday Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56870,7 +56870,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:fda29a11d6da6b63",
     "slug": "vista-fm-vista-f114e20e",
-    "name": "Vista Fm",
+    "name": "Vista Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56910,7 +56910,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:fe0ef07da967d083",
     "slug": "ascendkemet-cfm-marina-district-san-diego-de204781",
-    "name": "Ascendkemet CFM Marina District",
+    "name": "Ascendkemet Certified Farmers Market Marina District",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56950,7 +56950,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ff72e8c6224aef30",
     "slug": "el-nido-fm-pacoima-bc8fd91e",
-    "name": "El Nido Fm",
+    "name": "El Nido Farmers Market",
     "country": "United States",
     "country_code": "US",
     "location": {
@@ -56990,7 +56990,7 @@
   {
     "id": "gov:us_ca_wic_farmers_markets:ff94cadfccd79d35",
     "slug": "santa-rosa-original-cfm-wic-satellite-santa-rosa-cf3a3dc2",
-    "name": "Santa Rosa Original CFM - Wic Satellite",
+    "name": "Santa Rosa Original Certified Farmers Market - Wic Satellite",
     "country": "United States",
     "country_code": "US",
     "location": {

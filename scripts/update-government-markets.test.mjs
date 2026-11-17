@@ -75,6 +75,22 @@ test('California and Lyon parsers group multiple operating days at one location'
   assert.equal(lyon[0].operations.days.length, 2);
 });
 
+test('California parser spells out FM and CFM without moving the slug', () => {
+  const california = parsers.california_wic_csv(source('california', 'california_wic_csv', { fixture_file: 'california.csv' }), [
+    'COUNTY,MARKET_NAME,LOCATION_OF_MARKET,CITY,DAY,HOUR,SEASON',
+    'Sonoma,Petaluma East Side FM,1 Main St,Petaluma,Tuesday,9-1,Year Round',
+    'Sonoma,CFM @ Founders Plaza,2 Main St,Yucca Valley,Saturday,9-1,Year Round',
+    'Butte,Chico Saturday CCFM,3 Main St,Chico,Saturday,9-1,Year Round'
+  ].join('\n'), retrievedAt);
+  assert.deepEqual(california.map((market) => market.name), [
+    'Petaluma East Side Farmers Market',
+    'Certified Farmers Market @ Founders Plaza',
+    'Chico Saturday CCFM'
+  ]);
+  assert.match(california[0].slug, /^petaluma-east-side-fm-petaluma-[0-9a-f]{8}$/);
+  assert.match(california[1].slug, /^cfm-founders-plaza-yucca-valley-[0-9a-f]{8}$/);
+});
+
 test('European public-market parsers preserve schedules, place types, and coordinates', () => {
   const toulouseSource = source('toulouse', 'toulouse_geojson', {
     country: 'France', country_code: 'FR', region: 'Occitanie', place_type: 'Public food market'

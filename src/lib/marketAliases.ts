@@ -62,17 +62,17 @@ export const MARKET_ALIASES: Readonly<Record<string, MarketAlias>> = {
   // day as its own row. Foodwise runs one market, Tue/Thu/Sat, at the Ferry Building.
   'gov:us_ca_wic_farmers_markets:55b06bca83863300': {
     canonicalId: '301318',
-    name: 'Ferry Plaza Tuesday Fm',
+    name: 'Ferry Plaza Tuesday Farmers Market',
     reason: 'Tuesday row of the Ferry Plaza Farmers Market in the California WIC dataset.',
   },
   'gov:us_ca_wic_farmers_markets:a9a57b35778bb537': {
     canonicalId: '301318',
-    name: 'Ferry Plaza Thursday Fm',
+    name: 'Ferry Plaza Thursday Farmers Market',
     reason: 'Thursday row of the Ferry Plaza Farmers Market in the California WIC dataset.',
   },
   'gov:us_ca_wic_farmers_markets:52b402e955c8abb9': {
     canonicalId: '301318',
-    name: 'Ferry Plaza Saturday Fm',
+    name: 'Ferry Plaza Saturday Farmers Market',
     reason: 'Saturday row of the Ferry Plaza Farmers Market in the California WIC dataset.',
   },
 };

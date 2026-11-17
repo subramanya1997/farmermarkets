@@ -4,31 +4,31 @@
   "merges": [
     {
       "id": "gov:us_ca_wic_farmers_markets:3a7b9cec52f5b7ac",
-      "name": "Santa Rosa Community Wednesday Fm",
+      "name": "Santa Rosa Community Wednesday Farmers Market",
       "into": "300565",
       "reason": "Wednesday row of the Santa Rosa Community Farmers Market in the California WIC dataset. Agricultural Community Events runs one market on Wednesdays and Saturdays; merge approved by Kelly Smith (ACE) by email on 2026-11-16."
     },
     {
       "id": "gov:us_ca_wic_farmers_markets:87eaf3652b6cc782",
-      "name": "Santa Rosa Community Saturday Fm",
+      "name": "Santa Rosa Community Saturday Farmers Market",
       "into": "300565",
       "reason": "Saturday row of the Santa Rosa Community Farmers Market in the California WIC dataset. Agricultural Community Events runs one market on Wednesdays and Saturdays; merge approved by Kelly Smith (ACE) by email on 2026-11-16."
     },
     {
       "id": "gov:us_ca_wic_farmers_markets:0193c1f52570796d",
-      "name": "Petaluma East Side Fm",
+      "name": "Petaluma East Side Farmers Market",
       "into": "300568",
       "reason": "California WIC dataset row for the Petaluma East Side Farmers' Market at 320 N McDowell Blvd, the same market as the main listing; merge approved by Kelly Smith (ACE) by email on 2026-11-16."
     },
     {
       "id": "gov:us_ca_wic_farmers_markets:a514da3888e17193",
-      "name": "Petaluma Saturday CFM",
+      "name": "Petaluma Saturday Certified Farmers Market",
       "into": "300567",
       "reason": "California WIC dataset row for the Saturday market at Walnut Park (Petaluma Blvd and D St), filed under the wrong city (Bloomfield); the same market as the Petaluma Walnut Park listing. Fix approved by Kelly Smith (ACE) by email on 2026-11-16."
     },
     {
       "id": "gov:us_ca_wic_farmers_markets:324c0a0fb58e2406",
-      "name": "Heart of the City Sunday Fm",
+      "name": "Heart of the City Sunday Farmers Market",
       "into": "308867",
       "reason": "California WIC dataset row for the Heart of the City Farmers Market at United Nations Plaza (Market St at 7th St), the same market as the main listing; merge approved by the site owner on 2026-11-16."
     }

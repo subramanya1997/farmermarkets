@@ -7809,7 +7809,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:073ecb5e504155c0",
-    "market_name": "Pasadena Victory Park CFM",
+    "market_name": "Pasadena Victory Park Certified Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7839,7 +7839,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:163c0c5948de6acb",
-    "market_name": "Clement Street Fm",
+    "market_name": "Clement Street Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7879,7 +7879,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:186844cc1c7e916f",
-    "market_name": "Rossmoor Fm",
+    "market_name": "Rossmoor Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7919,7 +7919,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:5ac11b2295bd0a57",
-    "market_name": "Castro Fm",
+    "market_name": "Castro Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -7944,7 +7944,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:626d32638a25633d",
-    "market_name": "Burbank Fm",
+    "market_name": "Burbank Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8006,7 +8006,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:898202760315dfe6",
-    "market_name": "Santana Row Fm",
+    "market_name": "Santana Row Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8026,7 +8026,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:b4ed9655a49424da",
-    "market_name": "Kaiser Permanente San Leandro CFM",
+    "market_name": "Kaiser Permanente San Leandro Certified Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {
@@ -8046,7 +8046,7 @@
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:f7fbe9adf65fb784",
-    "market_name": "Farm House Collective CFM",
+    "market_name": "Farm House Collective Certified Farmers Market",
     "verified_at": "2026-08-21",
     "verification_scope": "partial",
     "contact": {

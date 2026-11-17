@@ -145,7 +145,8 @@ function makeMarket(source, sourceRecordId, _retrievedAt, fields) {
 
   return {
     id: `gov:${recordKey}`,
-    slug: `${slugify(name)}-${slugify(fields.location?.city || source.region)}-${shortHash(recordKey).slice(0, 8)}`,
+    // `slugName` lets a parser tidy the display name without moving the URL.
+    slug: `${slugify(compact(fields.slugName) || name)}-${slugify(fields.location?.city || source.region)}-${shortHash(recordKey).slice(0, 8)}`,
     name,
     last_updated: compact(fields.lastUpdated),
     country: source.country,
@@ -271,6 +272,17 @@ function parseDc(source, payload, retrievedAt) {
   });
 }
 
+/**
+ * The CDPH WIC list shortens "Certified Farmers Market" to "CFM" and
+ * "Farmers Market" to "FM". Operators read the short forms as us renaming
+ * their market, so spell them out. Whole words only: "CCFM" is left alone.
+ */
+export function expandCaliforniaMarketName(name) {
+  return String(name ?? '')
+    .replace(/\bCFM\b/gi, 'Certified Farmers Market')
+    .replace(/\bFM\b/gi, 'Farmers Market');
+}
+
 function parseCalifornia(source, payload, retrievedAt) {
   const grouped = new Map();
   for (const row of parseCsv(payload)) {
@@ -283,7 +295,9 @@ function parseCalifornia(source, payload, retrievedAt) {
   }
 
   return [...grouped.entries()].map(([identity, entry]) => makeMarket(source, shortHash(identity), retrievedAt, {
-    name: entry.row.MARKET_NAME,
+    name: expandCaliforniaMarketName(entry.row.MARKET_NAME),
+    // Slugs predate the spelled-out names; keep the published URLs.
+    slugName: entry.row.MARKET_NAME,
     location: {
       address: compact(entry.row.LOCATION_OF_MARKET),
       city: compact(entry.row.CITY),
