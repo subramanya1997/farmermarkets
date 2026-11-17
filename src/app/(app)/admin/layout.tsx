@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { ArrowUpRight, Inbox, LayoutDashboard, LifeBuoy, Settings, Store, Users } from 'lucide-react';
+import { Inbox, LayoutDashboard, LifeBuoy, Settings, Store, Users } from 'lucide-react';
 import { requireAdmin } from '@/lib/organizer';
 import { DashboardShell, type DashboardNavGroup } from '@/components/dashboard/DashboardShell';
 import { cachedReviewQueue, waitingCount } from './_lib/queue';
@@ -26,20 +26,23 @@ export default async function AdminLayout({ children }: { children: ReactNode })
         { href: '/admin/organizers', label: 'Organizers', icon: <Users /> },
       ],
     },
-    {
-      items: [
-        { href: '/admin/settings', label: 'Settings', icon: <Settings /> },
-        { href: '/admin/help', label: 'Help', icon: <LifeBuoy /> },
-      ],
-    },
   ];
 
   return (
     <DashboardShell
       title="Admin"
       groups={groups}
-      links={[{ href: '/', label: 'View site', icon: <ArrowUpRight /> }]}
-      email={admin.email}
+      footer={[
+        { href: '/admin/settings', label: 'Settings', icon: <Settings /> },
+        { href: '/admin/help', label: 'Help', icon: <LifeBuoy /> },
+      ]}
+      areas={[
+        { href: '/admin', label: 'Admin', current: true },
+        { href: '/dashboard', label: 'Organizer' },
+      ]}
+      user={{ name: admin.name, email: admin.email }}
+      settingsHref="/admin/settings"
+      helpHref="/admin/help"
       mobileLink={pending > 0 ? { href: '/admin/review', label: `${pending} waiting`, icon: <Inbox /> } : undefined}
     >
       {children}

@@ -16,7 +16,7 @@ export default async function OrganizerHelpPage() {
   await requireOrganizer('/dashboard/help');
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-2xl space-y-7">
       <PageHeader title="Help">How claiming, review and publishing work, and how to reach us.</PageHeader>
 
       <DocPanel title="Claiming your market" id="claiming">

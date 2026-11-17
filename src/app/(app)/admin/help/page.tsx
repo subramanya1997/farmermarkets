@@ -16,7 +16,7 @@ export default async function AdminHelpPage() {
   await requireAdmin();
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-2xl space-y-7">
       <PageHeader title="Help">How review, admin edits, resets, managers and photos work.</PageHeader>
 
       <DocPanel title="Review">

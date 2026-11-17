@@ -48,7 +48,7 @@ export default async function AdminOverviewPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Overview</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Overview</h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">What needs you, and what changed lately.</p>
       </div>
 

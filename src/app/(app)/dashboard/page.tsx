@@ -64,7 +64,7 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-xl font-semibold tracking-tight">{name ? `Hi, ${name}` : 'Welcome'}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{name ? `Hi, ${name}` : 'Welcome'}</h1>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
             {hasMarkets
               ? 'Here is how your listing is doing. Changes you send go live after a quick review.'

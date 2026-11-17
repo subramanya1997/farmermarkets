@@ -79,7 +79,7 @@ export default async function AdminMarketPage({ params }: { params: Promise<{ sl
         </Link>
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
           <div className="min-w-0">
-            <h1 className="text-xl font-semibold tracking-tight">{market.name}</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{market.name}</h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400">{place || 'No city on file'}</p>
           </div>
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">

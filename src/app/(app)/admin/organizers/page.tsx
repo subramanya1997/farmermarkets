@@ -34,7 +34,7 @@ export default async function AdminOrganizersPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Organizers</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Organizers</h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           {accounts.length} {accounts.length === 1 ? 'account' : 'accounts'}, {managing} managing at least one market. Newest first.
         </p>

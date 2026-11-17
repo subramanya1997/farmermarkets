@@ -23,7 +23,7 @@ export default async function AdminMarketsPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Markets</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Markets</h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">Find any market to edit it, or pick up one that already has edits or organizers.</p>
       </div>
 

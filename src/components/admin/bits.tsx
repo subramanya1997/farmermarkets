@@ -70,9 +70,9 @@ export function Facts({ children }: { children: ReactNode }) {
   return <dl className="divide-y text-sm">{children}</dl>;
 }
 
-export function Fact({ label, children }: { label: string; children: ReactNode }) {
+export function Fact({ label, children, className }: { label: string; children: ReactNode; className?: string }) {
   return (
-    <div className="grid gap-0.5 px-4 py-2 sm:grid-cols-[10rem_1fr] sm:gap-4">
+    <div className={cn('grid gap-0.5 px-4 py-2 sm:grid-cols-[10rem_1fr] sm:gap-4', className)}>
       <dt className="text-zinc-500 dark:text-zinc-400">{label}</dt>
       <dd className="min-w-0 break-words">{children}</dd>
     </div>

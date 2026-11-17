@@ -33,7 +33,7 @@ export default async function ChangeReviewPage({ params }: { params: Promise<{ i
           Review queue
         </Link>
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-xl font-semibold tracking-tight">Listing update for {market?.name ?? 'an unknown market'}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Listing update for {market?.name ?? 'an unknown market'}</h1>
           <StatusPill status={change.status} />
         </div>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">

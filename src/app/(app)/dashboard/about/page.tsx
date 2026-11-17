@@ -14,7 +14,7 @@ export default async function OrganizerAboutPage() {
   await requireOrganizer('/dashboard/about');
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-2xl space-y-7">
       <PageHeader title="About Farmer Markets">What the site is and where your listing came from.</PageHeader>
 
       <DocPanel title="What Farmer Markets is">

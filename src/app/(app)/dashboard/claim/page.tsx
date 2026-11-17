@@ -49,7 +49,7 @@ export default async function ClaimPage({ searchParams }: { searchParams: Promis
           <ArrowLeft aria-hidden="true" className="size-3.5" />
           Overview
         </Link>
-        <h1 className="text-xl font-semibold tracking-tight">{market ? `Claim ${market.name}` : 'Claim a market'}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{market ? `Claim ${market.name}` : 'Claim a market'}</h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           {market
             ? 'Tell us how you are involved. Once we confirm it, you can edit this listing.'
