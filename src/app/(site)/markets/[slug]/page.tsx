@@ -1,5 +1,7 @@
 import { getMarketById, getMarketBySlug, getMarkets, getSlugByLegacyId } from "@/lib/data";
 import { MarketPhotos } from "@/components/MarketPhotos";
+import { shownMarketPhotos } from "@/lib/marketPhotos";
+import { pickCover } from "@/lib/marketCard";
 import { BadgeCheck } from "lucide-react";
 import { getMarketAddress } from "@/lib/api";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -76,11 +78,18 @@ export async function generateStaticParams() {
  * same site-wide file.
  *
  * The `og:image` / `twitter:image` meta tags are NOT set here: Next wires the
- * `opengraph-image` file convention into the page metadata itself, and a
- * manual `openGraph.images` entry would override it.
+ * `opengraph-image` file convention into the page metadata itself, and
+ * file-based metadata wins over `generateMetadata`. That card draws the
+ * market's cover photo when it has one.
  */
 function marketImageUrl(slug: string): string {
   return absoluteUrl(`/markets/${slug}/opengraph-image`);
+}
+
+/** The photos with the cover (the card photo, see `pickCover`) moved to the front. */
+function coverFirst<P extends { url: string }>(photos: P[]): P[] {
+  const cover = pickCover(photos);
+  return cover ? [cover, ...photos.filter((photo) => photo !== cover)] : photos;
 }
 
 /** The main listing this record duplicates, when it is a known alias. */
@@ -247,8 +256,10 @@ export default async function MarketDetailPage({
   // BreadcrumbList stays in `Breadcrumbs`, which renders the trail it declares.
   const jsonLd = marketSchemaGraph(market, {
     siteUrl: SITE_URL,
-    // A real photo from the organizer beats the generated card when there is one.
-    imageUrl: market.photos?.[0]?.url ?? marketImageUrl(market.slug),
+    imageUrl: marketImageUrl(market.slug),
+    // The organizer photos the gallery shows, cover first: real photos beat
+    // the generated card, and each carries its alt text and credit.
+    photos: coverFirst(shownMarketPhotos(market.photos)),
   });
 
   // The same list the FAQPage node quotes, so markup and page can never drift.

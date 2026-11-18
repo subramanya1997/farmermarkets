@@ -360,6 +360,52 @@ test('dateModified is an ISO date, or nothing', () => {
   assert.equal(marketDateModified(market()), undefined);
 });
 
+test('dateModified moves with an approved organizer edit or photo, never backwards', () => {
+  assert.equal(
+    marketDateModified(market({ last_updated: '2020-08-03T13:44:04', organizer: { updated_at: '2026-11-18' } })),
+    '2026-11-18'
+  );
+  assert.equal(
+    marketDateModified(market({ last_updated: '2026-12-01', organizer: { updated_at: '2026-11-18' } })),
+    '2026-12-01'
+  );
+  assert.equal(marketDateModified(market({ organizer: { updated_at: '2026-11-18' } })), '2026-11-18');
+});
+
+test('organizer photos become ImageObjects, with no invented credit', () => {
+  const graph = marketSchemaGraph(market(), {
+    ...OPTIONS,
+    photos: [
+      { url: 'https://x.public.blob.vercel-storage.com/markets/1/stand.jpg', width: 1600, height: 1200, alt: 'A produce stand' },
+      { url: 'https://x.public.blob.vercel-storage.com/markets/1/herbs.jpg' },
+      { url: 'http://insecure.example/photo.jpg' },
+    ],
+  });
+  const business = (graph['@graph'] as Record<string, unknown>[])[0];
+  assert.deepEqual(business.image, [
+    {
+      '@type': 'ImageObject',
+      contentUrl: 'https://x.public.blob.vercel-storage.com/markets/1/stand.jpg',
+      url: 'https://x.public.blob.vercel-storage.com/markets/1/stand.jpg',
+      width: 1600,
+      height: 1200,
+      caption: 'A produce stand',
+    },
+    {
+      '@type': 'ImageObject',
+      contentUrl: 'https://x.public.blob.vercel-storage.com/markets/1/herbs.jpg',
+      url: 'https://x.public.blob.vercel-storage.com/markets/1/herbs.jpg',
+    },
+  ]);
+  assertNoEmptyValues(graph);
+});
+
+test('without photos the business image is the generated card', () => {
+  const graph = marketSchemaGraph(market(), { ...OPTIONS, photos: [] });
+  const business = (graph['@graph'] as Record<string, unknown>[])[0];
+  assert.equal(business.image, OPTIONS.imageUrl);
+});
+
 /* ------------------------------------------------------------------ *
  * FAQs
  * ------------------------------------------------------------------ */

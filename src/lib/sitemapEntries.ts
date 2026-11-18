@@ -17,6 +17,17 @@
  * `changefreq` and `priority` are dropped rather than rationalized: Google has
  * said for years that it ignores both, and the old file had them inverted
  * (static pages 1.0, market pages 0.8) anyway.
+ *
+ * Photos ride along as `<image:image>` entries: a market page lists the
+ * organizer photos its gallery shows, a blog post its cover photograph. Only
+ * `image:loc` is written; Google stopped reading the caption, title and
+ * licence tags in 2022.
+ *
+ * The organizer layer (approved edits and photos, in Postgres) is applied per
+ * chunk read, not baked into the per-process URL list: the dataset only
+ * changes on deploy, an approval can land any time. A market's `lastmod` is
+ * then the newer of its `last_updated` and its last approval, the same rule
+ * its JSON-LD `dateModified` follows (`marketDateModified`).
  */
 
 import 'server-only';
@@ -27,7 +38,9 @@ import { getTotalMarketPages, marketsPagePath } from './marketsIndex';
 import { cityPath } from './cityPage';
 import { statePath } from './statePage';
 import { getTopicSitemapEntries } from './topicPage';
-import { toIsoInstant } from './dates';
+import { newerInstant, toIsoInstant } from './dates';
+import { getPublishedLayers } from './marketOverrides';
+import { shownMarketPhotos } from './marketPhotos';
 import { SITE_URL } from './site';
 import { isMarketAlias } from './marketAliases';
 
@@ -43,6 +56,10 @@ export interface SitemapEntry {
   url: string;
   /** ISO-8601 instant, or undefined when no truthful date exists. */
   lastModified?: string;
+  /** Absolute URLs of the photos the page shows, for `<image:image>`. */
+  images?: string[];
+  /** The market a market page shows, so its organizer layer can be applied. */
+  marketId?: string;
 }
 
 function newer(left: string | undefined, right: string | undefined): string | undefined {
@@ -103,6 +120,7 @@ async function buildEntries(): Promise<SitemapEntry[]> {
   const postEntries: SitemapEntry[] = posts.map((post) => ({
     url: absolute(blogPath(post.slug)),
     lastModified: toIsoInstant(post.updatedAt ?? post.publishedAt),
+    ...(post.photo ? { images: [absolute(post.photo.src)] } : {}),
   }));
   const blogIndexEntry: SitemapEntry = {
     url: absolute('/blog'),
@@ -150,6 +168,7 @@ async function buildEntries(): Promise<SitemapEntry[]> {
     .map((market) => ({
       url: absolute(`/markets/${market.slug}`),
       lastModified: marketDates.get(market.slug),
+      marketId: String(market.id),
     }));
 
   // Shallowest first, so chunk 0 holds the pages that matter most if a crawler
@@ -183,11 +202,37 @@ export async function getSitemapChunkCount(): Promise<number> {
   return Math.max(1, Math.ceil(entries.length / SITEMAP_CHUNK_SIZE));
 }
 
-/** The entries in one chunk (empty for an out-of-range id). */
+/**
+ * The entries in one chunk (empty for an out-of-range id), with each market
+ * page's organizer photos and approval date applied.
+ */
 export async function getSitemapChunk(id: number): Promise<SitemapEntry[]> {
   const entries = await getSitemapEntries();
   if (!Number.isInteger(id) || id < 0) return [];
-  return entries.slice(id * SITEMAP_CHUNK_SIZE, (id + 1) * SITEMAP_CHUNK_SIZE);
+  const chunk = entries.slice(id * SITEMAP_CHUNK_SIZE, (id + 1) * SITEMAP_CHUNK_SIZE);
+
+  // No database (local builds without one) means no layers: plain entries.
+  let layers: Awaited<ReturnType<typeof getPublishedLayers>>;
+  try {
+    layers = await getPublishedLayers();
+  } catch (error) {
+    console.error('Sitemap: could not load organizer layers:', error);
+    return chunk;
+  }
+  if (!layers.size) return chunk;
+
+  return chunk.map((entry) => {
+    const layer = entry.marketId ? layers.get(entry.marketId) : undefined;
+    if (!layer) return entry;
+    const images = shownMarketPhotos(layer.photos)
+      .map((photo) => photo.url)
+      .filter((url) => /^https:\/\//.test(url));
+    return {
+      ...entry,
+      lastModified: newerInstant(entry.lastModified, toIsoInstant(layer.changedAt)),
+      ...(images.length ? { images } : {}),
+    };
+  });
 }
 
 /** Path of one chunk, as Next's `generateSitemaps` publishes it. */

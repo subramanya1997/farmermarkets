@@ -9,9 +9,9 @@ import { getSitemapChunk, getSitemapChunkCount } from '@/lib/sitemapEntries';
  * `src/app/sitemap.xml/route.ts`. Both index and chunks are plain route
  * handlers now; the URLs are unchanged.
  *
- * Everything about the entries — which URLs are in, and the rule that a page
- * with no truthful date carries no `lastmod` — lives in
- * `src/lib/sitemapEntries.ts`.
+ * Everything about the entries — which URLs are in, which photos ride along
+ * as `<image:image>`, and the rule that a page with no truthful date carries
+ * no `lastmod` — lives in `src/lib/sitemapEntries.ts`.
  */
 export const revalidate = 86400;
 export const dynamic = 'force-static';
@@ -43,12 +43,15 @@ export async function GET(
 
   const body = [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
     ...entries.map((entry) =>
       [
         '<url>',
         `<loc>${escapeXml(entry.url)}</loc>`,
         entry.lastModified ? `<lastmod>${entry.lastModified}</lastmod>` : '',
+        ...(entry.images ?? []).map(
+          (image) => `<image:image><image:loc>${escapeXml(image)}</image:loc></image:image>`
+        ),
         '</url>',
       ]
         .filter(Boolean)

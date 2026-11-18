@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { clean } from '@/lib/geo';
+import { shownMarketPhotos } from '@/lib/marketPhotos';
 import type { FarmerMarket } from '@/lib/api';
 
 type Photo = NonNullable<FarmerMarket['photos']>[number];
@@ -21,7 +22,7 @@ const SWIPE_MIN = 40;
  * set.
  */
 export function MarketPhotos({ photos, marketName }: { photos?: Photo[]; marketName: string }) {
-  const shown = (photos ?? []).slice(0, 12);
+  const shown = shownMarketPhotos(photos);
   const [open, setOpen] = useState<number | null>(null);
   const touchStart = useRef<number | null>(null);
   if (shown.length === 0) return null;

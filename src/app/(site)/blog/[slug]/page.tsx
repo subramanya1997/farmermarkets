@@ -69,7 +69,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     url: absoluteUrl(blogPath(post.slug)),
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
-    ...(post.photo ? { image: absoluteUrl(post.photo.src) } : {}),
+    // The credit Google Images shows in its image details is `creditText`;
+    // it is the same credit line printed under the photo.
+    ...(post.photo
+      ? {
+          image: {
+            '@type': 'ImageObject',
+            contentUrl: absoluteUrl(post.photo.src),
+            url: absoluteUrl(post.photo.src),
+            caption: post.photo.alt,
+            creditText: post.photo.credit,
+          },
+        }
+      : {}),
     // The root layout's Organization node is the publisher; naming it here by
     // reference keeps the two from drifting apart.
     author: {

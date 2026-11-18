@@ -31,7 +31,15 @@ export interface PublishedPhoto {
 
 export interface PublishedLayer {
   edits: ListingEdits;
+  /** When the listing edits were last approved (YYYY-MM-DD). */
   updatedAt: string;
+  /**
+   * The newest approval of anything in the layer, edits or photos
+   * (YYYY-MM-DD). This is the date the published page last changed because
+   * of the organizer, so it feeds the page's `dateModified` and the sitemap
+   * `lastmod`; a photo approved after the last edit still moves it.
+   */
+  changedAt: string;
   photos: PublishedPhoto[];
   /** The market has at least one verified organizer (an approved claim). */
   hasOrganizer: boolean;
@@ -62,22 +70,28 @@ async function queryAllLayers(): Promise<Map<string, PublishedLayer>> {
     // Stored edits were validated on the way in; re-validate so a schema
     // change can never put malformed data on a public page.
     const parsed = listingEditsSchema.safeParse(row.data);
+    const updatedAt = row.updatedAt.toISOString().slice(0, 10);
     layers.set(row.marketId, {
       edits: parsed.success ? parsed.data : {},
-      updatedAt: row.updatedAt.toISOString().slice(0, 10),
+      updatedAt,
+      changedAt: updatedAt,
       photos: [],
       hasOrganizer: managed.has(row.marketId),
     });
   }
   for (const photo of photos) {
+    const approvedAt = (photo.reviewedAt ?? photo.createdAt).toISOString().slice(0, 10);
     const layer =
       layers.get(photo.marketId) ??
       {
         edits: {},
-        updatedAt: (photo.reviewedAt ?? photo.createdAt).toISOString().slice(0, 10),
+        updatedAt: approvedAt,
+        changedAt: approvedAt,
         photos: [],
         hasOrganizer: managed.has(photo.marketId),
       };
+    // YYYY-MM-DD strings compare in date order.
+    if (approvedAt > layer.changedAt) layer.changedAt = approvedAt;
     layer.photos.push({
       url: photo.blobUrl,
       width: photo.width ?? undefined,
@@ -164,7 +178,7 @@ function applyLayer<
   const cover = pickCover(layer.photos);
   return {
     ...edited,
-    organizer: { updated_at: layer.updatedAt, sections, verified: layer.hasOrganizer },
+    organizer: { updated_at: layer.changedAt, sections, verified: layer.hasOrganizer },
     ...(layer.photos.length ? { photos: layer.photos } : {}),
     ...(cover ? { cover_photo: { url: cover.url, width: cover.width, height: cover.height, alt: cover.alt } } : {}),
   };

@@ -918,6 +918,33 @@ if (!reachable) {
         });
       }
 
+      // Photo entries need the image namespace declared, an absolute https
+      // URL, and a home inside a <url> (a stray one is a parse error), and no
+      // page may list more photos than its gallery shows (12).
+      check(group, 'image entries are well formed', () => {
+        for (const [index, body] of chunks.entries()) {
+          const urls = [...body.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
+          const images = urls.flatMap((url) =>
+            [...url.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map((m) => m[1])
+          );
+          const total = (body.match(/<image:loc>/g) || []).length;
+          assert.equal(total, images.length, `chunk ${index}: an image:loc sits outside a <url>`);
+          if (!total) continue;
+          assert.match(
+            body,
+            /xmlns:image="http:\/\/www\.google\.com\/schemas\/sitemap-image\/1\.1"/,
+            `chunk ${index} uses image:image without declaring the namespace`
+          );
+          for (const image of images) {
+            assert.match(image, /^https:\/\//, `chunk ${index}: image:loc ${image} is not absolute https`);
+          }
+          for (const url of urls) {
+            const count = (url.match(/<image:loc>/g) || []).length;
+            assert.ok(count <= 12, `chunk ${index}: a URL lists ${count} photos, over the gallery's 12`);
+          }
+        }
+      });
+
       check(group, 'no retired /markets/state/ URLs advertised', () => {
         const joined = chunks.join('\n');
         assert.ok(

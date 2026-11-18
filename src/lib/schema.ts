@@ -64,6 +64,8 @@ export interface MarketSchemaRecord extends MarketSeoRecord {
     verification_scope?: 'partial' | 'register' | null;
   } | null;
   last_updated?: string | null;
+  /** The organizer layer, when an organizer edit or photo was approved. */
+  organizer?: { updated_at?: string | null } | null;
   accepts_cash?: boolean;
   accepts_credit_debit?: boolean;
   accepts_checks?: boolean;
@@ -71,11 +73,24 @@ export interface MarketSchemaRecord extends MarketSeoRecord {
   first_party?: MarketFirstPartyFacts;
 }
 
+/** One organizer photo the market page shows. */
+export interface MarketSchemaPhoto {
+  url: string;
+  width?: number;
+  height?: number;
+  alt?: string;
+}
+
 export interface MarketSchemaOptions {
   /** Canonical site origin, e.g. `https://www.farmermarkets.app`. */
   siteUrl: string;
-  /** Absolute URL of this market's Open Graph card. */
+  /** Absolute URL of this market's Open Graph card, the image when there are no photos. */
   imageUrl: string;
+  /**
+   * The organizer photos the page shows, cover first. When there are any they
+   * replace the card as the business `image`, each as an `ImageObject`.
+   */
+  photos?: MarketSchemaPhoto[];
   /** Injected for deterministic season-year resolution in tests. */
   now?: Date;
 }
@@ -396,13 +411,27 @@ export function marketSameAs(market: MarketSchemaRecord): string[] | undefined {
   return urls.length ? urls : undefined;
 }
 
-/** ISO date from `last_updated` ("2020-08-03T13:44:04"), when it parses. */
-export function marketDateModified(market: MarketSchemaRecord): string | undefined {
-  const raw = clean(market.last_updated);
+/** The YYYY-MM-DD day of a date string, when it parses. */
+function isoDay(value: string | null | undefined): string | undefined {
+  const raw = clean(value);
   if (!raw) return undefined;
   const parsed = new Date(raw);
   if (Number.isNaN(parsed.getTime())) return undefined;
   return parsed.toISOString().slice(0, 10);
+}
+
+/**
+ * ISO date the page last changed: the newer of the record's `last_updated`
+ * ("2020-08-03T13:44:04") and the last approved organizer edit or photo.
+ * The sitemap's `lastmod` for the page follows the same rule
+ * (`src/lib/sitemapEntries.ts`).
+ */
+export function marketDateModified(market: MarketSchemaRecord): string | undefined {
+  const dataset = isoDay(market.last_updated);
+  const organizer = isoDay(market.organizer?.updated_at);
+  if (!dataset) return organizer;
+  if (!organizer) return dataset;
+  return organizer > dataset ? organizer : dataset;
 }
 
 interface PostalAddress {
@@ -803,6 +832,33 @@ export function nextMarketOccurrence(
 }
 
 /**
+ * The page's photos as `ImageObject`s: the file, its size and its alt text
+ * as the caption.
+ *
+ * No `creditText`, `creator` or `copyrightNotice`: photos reach a market page
+ * from organizer uploads, operator emails and an editorial import, and the
+ * table records no rights holder for any of them. A credit line Google Images
+ * would show has to come from a real field, not a guess; add one to
+ * `market_photos` before emitting it. `license` is only for the "Licensable"
+ * badge, which does not apply.
+ */
+export function marketPhotoObjects(
+  photos: MarketSchemaPhoto[] | undefined
+): Record<string, unknown>[] | undefined {
+  const objects = (photos ?? [])
+    .filter((photo) => /^https:\/\//.test(photo.url))
+    .map((photo) => ({
+      '@type': 'ImageObject',
+      contentUrl: photo.url,
+      url: photo.url,
+      width: photo.width || undefined,
+      height: photo.height || undefined,
+      caption: clean(photo.alt) || undefined,
+    }));
+  return objects.length ? objects : undefined;
+}
+
+/**
  * The `@graph` for one market page: a `GroceryStore`/`LocalBusiness`, the
  * recurring `Event` it holds when we know a day and a time, and the `FAQPage`
  * mirroring the visible FAQ block.
@@ -813,7 +869,7 @@ export function nextMarketOccurrence(
  */
 export function marketSchemaGraph(
   market: MarketSchemaRecord,
-  { siteUrl, imageUrl, now }: MarketSchemaOptions
+  { siteUrl, imageUrl, photos, now }: MarketSchemaOptions
 ): Record<string, JsonValue> {
   const url = `${siteUrl}/markets/${market.slug}`;
   const businessId = `${url}#market`;
@@ -822,13 +878,14 @@ export function marketSchemaGraph(
   const openingHours = marketOpeningHoursSpec(market, now);
   const season = marketSeasonRange(market, now);
   const faqs = marketFaqs(market, now);
+  const photoObjects = marketPhotoObjects(photos);
 
   const business: Record<string, unknown> = {
     '@type': ['GroceryStore', 'LocalBusiness'],
     '@id': businessId,
     name,
     url,
-    image: imageUrl,
+    image: photoObjects ?? imageUrl,
     description: marketDescription(market),
     address: market.suppress_map ? undefined : marketAddress(market),
     geo: coordinates
@@ -887,7 +944,7 @@ export function marketSchemaGraph(
       '@id': `${url}#event`,
       name: `${name} weekly market day`,
       url,
-      image: imageUrl,
+      image: photos?.[0]?.url ?? imageUrl,
       description: marketDescription(market),
       startDate: occurrence.startDate,
       endDate: occurrence.endDate,
