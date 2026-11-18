@@ -14889,6 +14889,124 @@
       "id": 301619,
       "path": "name",
       "value": "Santa Rosa Original Certified Farmers Market"
+    },
+    {
+      "index": 8453,
+      "id": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
+      "path": "operations.season",
+      "value": "First Wednesday in May through the last Wednesday in October, plus one Saturday holiday market in December"
+    },
+    {
+      "index": 8453,
+      "id": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
+      "path": "operations.days",
+      "value": [
+        "Wednesdays, 3pm to 7pm",
+        "Holiday market on one Saturday in December"
+      ]
+    },
+    {
+      "index": 8453,
+      "id": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
+      "path": "contact.social_media",
+      "value": [
+        "https://www.facebook.com/RoseParkFarmersMarket",
+        "https://www.instagram.com/roseparkfarmersmarket"
+      ]
+    },
+    {
+      "index": 8453,
+      "id": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Friends of Rose Park, with the Wednesday season (first Wednesday in May through the last Wednesday in October) and the December Saturday holiday market confirmed by the market by email on November 18, 2026",
+          "url": "https://www.roseparkdc.org/",
+          "fields": [
+            "operations.season",
+            "operations.days"
+          ]
+        },
+        {
+          "title": "Rose Park Farmers Market | Facebook",
+          "url": "https://www.facebook.com/RoseParkFarmersMarket",
+          "fields": [
+            "contact.social_media"
+          ]
+        },
+        {
+          "title": "Rose Park Farmers Market (@roseparkfarmersmarket)",
+          "url": "https://www.instagram.com/roseparkfarmersmarket?hl=en",
+          "fields": [
+            "contact.social_media"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 1831,
+      "id": 308663,
+      "path": "operations.days",
+      "value": [
+        "Tuesdays, Thursdays and Fridays, 10am to 7pm"
+      ]
+    },
+    {
+      "index": 1831,
+      "id": 308663,
+      "path": "organization.description",
+      "value": "Run by the Unity Council at the Fruitvale Transit Village, near Fruitvale BART."
+    },
+    {
+      "index": 1831,
+      "id": 308663,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Fruitvale Farmers’ Market | The Unity Council, with the operator and the Tuesday, Thursday and Friday hours (10am to 7pm, no Sunday market) confirmed by the market by email on November 18, 2026",
+          "url": "https://unitycouncil.org/program/farmers-market/",
+          "fields": [
+            "operations.days",
+            "organization.description"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 2025,
+      "id": 308857,
+      "path": "operations.days",
+      "value": [
+        "Saturdays, 8am to noon, rain or shine"
+      ]
+    },
+    {
+      "index": 2025,
+      "id": 308857,
+      "path": "operations.season",
+      "value": "Year-round, with a holiday break: the last market of 2026 is December 19, and the market reopens January 16, 2027"
+    },
+    {
+      "index": 2025,
+      "id": 308857,
+      "path": "organization.description",
+      "value": "A volunteer-run nonprofit that has connected local farms and food with the community since 1981. The market donates its proceeds to Avenidas every year."
+    },
+    {
+      "index": 2025,
+      "id": 308857,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Downtown Palo Alto Farmers' Market | Serving the community every Saturday, with Saturday hours, the nonprofit and Avenidas details, and the 2026 holiday break confirmed by the market by email on November 18, 2026",
+          "url": "https://www.pafarmersmarket.org/",
+          "fields": [
+            "operations.days",
+            "operations.season",
+            "organization.description"
+          ]
+        }
+      ]
     }
   ]
 }

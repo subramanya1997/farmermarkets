@@ -205793,7 +205793,7 @@
     },
     "organization": {
       "types": [],
-      "description": ""
+      "description": "Run by the Unity Council at the Fruitvale Transit Village, near Fruitvale BART."
     },
     "contact": {
       "phone_numbers": [
@@ -205810,8 +205810,7 @@
     "operations": {
       "season": null,
       "days": [
-        "Tuesday & Thursday: 11am – 7pm",
-        "Sunday: 8am – 3:30pm"
+        "Tuesdays, Thursdays and Fridays, 10am to 7pm"
       ],
       "vendor_count": null
     },
@@ -205848,21 +205847,70 @@
     "slug": "fruitvale-farmers-market",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "The Unity Council",
+          "source_ids": [
+            "unity-council"
+          ],
+          "verified_at": "2026-11-18"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "unity-council"
+          ],
+          "verified_at": "2026-11-18"
+        },
+        "schedules": [
+          {
+            "id": "tuesday-thursday-friday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "tuesday",
+                  "thursday",
+                  "friday"
+                ]
+              },
+              "opens": "10:00",
+              "closes": "19:00"
+            },
+            "source_ids": [
+              "unity-council"
+            ],
+            "verified_at": "2026-11-18"
+          }
+        ]
+      }
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.776122212778205%2C-122.22431120459676",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-18",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Fruitvale Farmer’s Market",
+          "title": "Fruitvale Farmers’ Market | The Unity Council, with the operator and the Tuesday, Thursday and Friday hours (10am to 7pm, no Sunday market) confirmed by the market by email on November 18, 2026",
           "url": "https://unitycouncil.org/program/farmers-market/",
           "fields": [
             "contact.websites",
-            "operations.days"
-          ]
+            "operations.days",
+            "first_party.identity",
+            "first_party.operations",
+            "organization.description"
+          ],
+          "id": "unity-council",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-18"
         },
         {
           "title": "Certified Farmers' Markets by County as of July 1, 2026 County Name Market Name",
@@ -225715,7 +225763,7 @@
     },
     "organization": {
       "types": [],
-      "description": ""
+      "description": "A volunteer-run nonprofit that has connected local farms and food with the community since 1981. The market donates its proceeds to Avenidas every year."
     },
     "contact": {
       "phone_numbers": [],
@@ -225729,9 +225777,9 @@
       ]
     },
     "operations": {
-      "season": "Year-round; short holiday break, typically 3 Saturdays off",
+      "season": "Year-round, with a holiday break: the last market of 2026 is December 19, and the market reopens January 16, 2027",
       "days": [
-        "Saturdays 8am-noon, rain or shine"
+        "Saturdays, 8am to noon, rain or shine"
       ],
       "vendor_count": null
     },
@@ -225768,22 +225816,99 @@
     "slug": "downtown-palo-alto-farmers-market",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "pafm-home"
+          ],
+          "verified_at": "2026-11-18"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "pafm-home"
+          ],
+          "verified_at": "2026-11-18"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "12:00"
+            },
+            "source_ids": [
+              "pafm-home"
+            ],
+            "verified_at": "2026-11-18"
+          }
+        ],
+        "exceptions": [
+          {
+            "id": "holiday-break-2026",
+            "value": {
+              "start_date": "2026-12-20",
+              "end_date": "2027-01-15",
+              "status": "closed",
+              "note": "Holiday break; the last market of 2026 is December 19 and the first of 2027 is January 16"
+            },
+            "source_ids": [
+              "pafm-home"
+            ],
+            "verified_at": "2026-11-18"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "holiday-break-2026",
+          "value": {
+            "topic": "updates",
+            "answer": "The market takes a holiday break over three Saturdays. The last market of 2026 is Saturday, December 19, and the market reopens Saturday, January 16, 2027.",
+            "expires_on": "2027-01-16"
+          },
+          "source_ids": [
+            "pafm-home"
+          ],
+          "verified_at": "2026-11-18"
+        }
+      ]
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.44570999752996%2C-122.15974004108446",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-18",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Downtown Palo Alto Farmers' Market | Serving the community every Saturday",
+          "title": "Downtown Palo Alto Farmers' Market | Serving the community every Saturday, with Saturday hours, the nonprofit and Avenidas details, and the 2026 holiday break confirmed by the market by email on November 18, 2026",
           "url": "https://www.pafarmersmarket.org/",
           "fields": [
             "contact.websites",
             "contact.social_media",
-            "operations.days"
-          ]
+            "operations.days",
+            "first_party.operations",
+            "first_party.faq_facts",
+            "operations.season",
+            "organization.description"
+          ],
+          "id": "pafm-home",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-18"
         },
         {
           "title": "About our market and FAQs — Downtown Palo Alto Farmers' Market",
@@ -472059,587 +472184,6 @@
       "status": "identity_ambiguous"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.89721564791791%2C-77.02303338409807"
-  },
-  {
-    "id": 311231,
-    "name": "Georgetown Farmers’ Market",
-    "last_updated": "2023-03-27T09:13:23",
-    "location": {
-      "address": "2600 O Street NW, Washington, DC, 20007",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20007",
-      "coordinates": {
-        "longitude": -77.05481942945511,
-        "latitude": 38.90855282535065
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.roseparkdc.org/farmers-market-2026/"
-      ],
-      "social_media": [
-        "https://www.facebook.com/RoseParkFarmersMarket",
-        "https://www.instagram.com/roseparkfarmersmarket"
-      ]
-    },
-    "operations": {
-      "season": "May 6 through October 28, 2026",
-      "days": [
-        "Wednesdays, 3 PM – 7 PM"
-      ],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [
-        "Small-batch roasted coffee",
-        "Bagels",
-        "Fresh juices",
-        "Spice mixes",
-        "Freeze-dried fruits and treats"
-      ],
-      "production_methods": [],
-      "categories": {
-        "fresh_produce": true,
-        "prepared_food": true
-      }
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "georgetown-farmers-market-1",
-    "country": "United States",
-    "country_code": "US",
-    "schema_version": 2,
-    "first_party": {
-      "identity": {
-        "canonical_name": {
-          "value": "Rose Park Farmers Market",
-          "source_ids": [
-            "events"
-          ],
-          "verified_at": "2026-11-10"
-        },
-        "operator_name": {
-          "value": "Friends of Rose Park",
-          "source_ids": [
-            "events"
-          ],
-          "verified_at": "2026-11-10"
-        }
-      },
-      "operations": {
-        "timezone": {
-          "value": "America/New_York",
-          "source_ids": [
-            "market-2026"
-          ],
-          "verified_at": "2026-11-10"
-        },
-        "season": {
-          "value": {
-            "kind": "annual_range",
-            "start": {
-              "month": 5
-            },
-            "end": {
-              "month": 10
-            }
-          },
-          "source_ids": [
-            "market-2026",
-            "events"
-          ],
-          "verified_at": "2026-11-10"
-        },
-        "schedules": [
-          {
-            "value": {
-              "recurrence": {
-                "kind": "weekly",
-                "weekdays": [
-                  "wednesday"
-                ]
-              },
-              "opens": "15:00",
-              "closes": "19:00",
-              "location_note": "Rose Park, 26th and O Streets NW"
-            },
-            "source_ids": [
-              "market-2026",
-              "events"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "wednesday"
-          }
-        ]
-      },
-      "vendors": {
-        "roster_context": {
-          "value": {
-            "label": "2026 season vendor list"
-          },
-          "source_ids": [
-            "market-2026"
-          ],
-          "verified_at": "2026-11-10"
-        },
-        "roster": [
-          {
-            "value": {
-              "name": "Quaker Valley Orchard"
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "quaker-valley-orchard"
-          },
-          {
-            "value": {
-              "name": "Fajardo’s Produce Farm",
-              "categories": [
-                "Produce"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "fajardos-produce-farm"
-          },
-          {
-            "value": {
-              "name": "Anchor Nursery & Produce",
-              "categories": [
-                "Nursery plants",
-                "Produce"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "anchor-nursery-produce"
-          },
-          {
-            "value": {
-              "name": "Country Vittles from Critter Hill Farm",
-              "attendance_note": "New vendor in 2026, listed as appearing 7/22 and 8/5."
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "country-vittles"
-          },
-          {
-            "value": {
-              "name": "Bread Furst"
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "bread-furst"
-          },
-          {
-            "value": {
-              "name": "Lobster Maine-ia",
-              "categories": [
-                "Fresh seafood"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "lobster-maine-ia"
-          },
-          {
-            "value": {
-              "name": "Potomac Roasting Co.",
-              "categories": [
-                "Small-batch roasted coffee"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "potomac-roasting"
-          },
-          {
-            "value": {
-              "name": "District Farmacy",
-              "categories": [
-                "Freeze-dried fruits and treats"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "district-farmacy"
-          },
-          {
-            "value": {
-              "name": "The Covenant Bagels",
-              "categories": [
-                "Bagels"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "covenant-bagels"
-          },
-          {
-            "value": {
-              "name": "The Waterhole",
-              "categories": [
-                "Fresh juices"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "the-waterhole"
-          },
-          {
-            "value": {
-              "name": "ITSUMONO",
-              "categories": [
-                "Spice mixes"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "itsumono"
-          },
-          {
-            "value": {
-              "name": "Elif’s Table",
-              "categories": [
-                "Mediterranean specialties"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "elifs-table"
-          },
-          {
-            "value": {
-              "name": "Benchmark Sharpening",
-              "categories": [
-                "Knife sharpening"
-              ],
-              "attendance_note": "Listed as appearing 7/22, 8/26, 9/23 and 10/28."
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "benchmark-sharpening"
-          },
-          {
-            "value": {
-              "name": "El Jefe Wood Fired Pizza",
-              "categories": [
-                "Wood-fired pizza"
-              ]
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "el-jefe-pizza"
-          }
-        ]
-      },
-      "products": {
-        "categories": [
-          {
-            "value": {
-              "code": "fresh_produce"
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "produce"
-          },
-          {
-            "value": {
-              "code": "other",
-              "label": "Fresh seafood"
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "seafood"
-          },
-          {
-            "value": {
-              "code": "prepared_food",
-              "label": "Wood-fired pizza and Mediterranean specialties"
-            },
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "prepared-food"
-          }
-        ],
-        "items": [
-          {
-            "value": "Small-batch roasted coffee",
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "coffee"
-          },
-          {
-            "value": "Bagels",
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "bagels"
-          },
-          {
-            "value": "Fresh juices",
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "juices"
-          },
-          {
-            "value": "Spice mixes",
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "spice-mixes"
-          },
-          {
-            "value": "Freeze-dried fruits and treats",
-            "source_ids": [
-              "market-2026"
-            ],
-            "verified_at": "2026-11-10",
-            "id": "freeze-dried-fruit"
-          }
-        ]
-      }
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.90855282535065%2C-77.05481942945511",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-11-10",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Farmers Market! | Friends of Rose Park",
-          "url": "https://www.roseparkdc.org/farmers-market-2026/",
-          "fields": [
-            "contact.websites",
-            "first_party.operations",
-            "first_party.vendors",
-            "first_party.products"
-          ],
-          "id": "market-2026",
-          "kind": "first_party",
-          "scope": "market",
-          "accessed_at": "2026-11-10"
-        },
-        {
-          "title": "Rose Park Farmers Market | Facebook",
-          "url": "https://www.facebook.com/RoseParkFarmersMarket",
-          "fields": [
-            "contact.social_media"
-          ]
-        },
-        {
-          "title": "Rose Park Farmers Market (@roseparkfarmersmarket)",
-          "url": "https://www.instagram.com/roseparkfarmersmarket?hl=en",
-          "fields": [
-            "contact.social_media"
-          ]
-        },
-        {
-          "title": "Home - Friends of Rose Park, Washington DC",
-          "url": "https://www.roseparkdc.org/",
-          "fields": [
-            "operations.days",
-            "operations.season"
-          ]
-        },
-        {
-          "id": "events",
-          "url": "https://www.roseparkdc.org/events/",
-          "title": "Events | Friends of Rose Park",
-          "fields": [
-            "first_party.identity",
-            "first_party.operations"
-          ],
-          "kind": "first_party",
-          "scope": "market",
-          "accessed_at": "2026-11-10"
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    }
-  },
-  {
-    "id": 311232,
-    "name": "Georgetown Market IN Rose Park",
-    "last_updated": "2023-03-27T09:13:23",
-    "location": {
-      "address": "26th and O St. NW, Washington, DC, 20007",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20007",
-      "coordinates": {
-        "longitude": -77.01037904709871,
-        "latitude": 38.90856381177695
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [
-        "(202) 999 - 9999"
-      ],
-      "emails": [],
-      "websites": [
-        "https://www.roseparkdc.org/farmers-market-2026/"
-      ],
-      "social_media": [
-        "https://www.facebook.com/RoseParkFarmersMarket"
-      ]
-    },
-    "operations": {
-      "season": "May 6 through October 28, 2026",
-      "days": [
-        "Wednesdays | 3 PM – 7 PM"
-      ],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "georgetown-market-in-rose-park",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.90856381177695%2C-77.01037904709871",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-30",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Home - Friends of Rose Park, Washington DC",
-          "url": "https://www.roseparkdc.org/",
-          "fields": [
-            "contact.websites",
-            "contact.phone_numbers",
-            "operations.days",
-            "operations.season"
-          ]
-        },
-        {
-          "title": "Rose Park Farmers Market (@RoseParkFarmersMarket)",
-          "url": "https://www.facebook.com/RoseParkFarmersMarket",
-          "fields": [
-            "contact.social_media"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    }
   },
   {
     "id": 311233,
@@ -818253,7 +817797,8 @@
         "https://www.roseparkdc.org"
       ],
       "social_media": [
-        "Roseparkfarmersmarket"
+        "https://www.facebook.com/RoseParkFarmersMarket",
+        "https://www.instagram.com/roseparkfarmersmarket"
       ],
       "phone_numbers": [
         "202-643-8352"
@@ -818261,9 +817806,10 @@
       "emails": []
     },
     "operations": {
-      "season": "May - October",
+      "season": "First Wednesday in May through the last Wednesday in October, plus one Saturday holiday market in December",
       "days": [
-        "Wednesday 15:00-19:00"
+        "Wednesdays, 3pm to 7pm",
+        "Holiday market on one Saturday in December"
       ]
     },
     "payment": {
@@ -818328,9 +817874,10 @@
           },
           "source_ids": [
             "market-2026",
-            "events"
+            "events",
+            "operator-email"
           ],
-          "verified_at": "2026-11-10"
+          "verified_at": "2026-11-18"
         },
         "schedules": [
           {
@@ -818347,9 +817894,10 @@
             },
             "source_ids": [
               "market-2026",
-              "events"
+              "events",
+              "operator-email"
             ],
-            "verified_at": "2026-11-10",
+            "verified_at": "2026-11-18",
             "id": "wednesday"
           }
         ]
@@ -818620,7 +818168,22 @@
             "id": "freeze-dried-fruit"
           }
         ]
-      }
+      },
+      "events": [
+        {
+          "id": "december-holiday-market",
+          "value": {
+            "name": "Rose Park Holiday Market",
+            "kind": "special_market",
+            "description": "One Saturday holiday market in December, outside the Wednesday season. Check the Friends of Rose Park site for this year's date.",
+            "venue": "Rose Park, 26th and O Streets NW"
+          },
+          "source_ids": [
+            "operator-email"
+          ],
+          "verified_at": "2026-11-18"
+        }
+      ]
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.90857708229531%2C-77.05477945797341",
     "products": {
@@ -818638,7 +818201,7 @@
       }
     },
     "enrichment": {
-      "verified_at": "2026-11-10",
+      "verified_at": "2026-11-18",
       "verification_scope": "partial",
       "sources": [
         {
@@ -818667,10 +818230,38 @@
           "accessed_at": "2026-11-10"
         },
         {
+          "id": "operator-email",
+          "url": "https://www.roseparkdc.org/",
+          "title": "Friends of Rose Park, with the Wednesday season (first Wednesday in May through the last Wednesday in October) and the December Saturday holiday market confirmed by the market by email on November 18, 2026",
+          "fields": [
+            "first_party.operations",
+            "first_party.events",
+            "operations.season",
+            "operations.days"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-18"
+        },
+        {
           "title": "Overture Maps places, release 2026-10-21.0",
           "url": "https://overturemaps.org/",
           "fields": [
             "contact.phone_numbers"
+          ]
+        },
+        {
+          "title": "Rose Park Farmers Market | Facebook",
+          "url": "https://www.facebook.com/RoseParkFarmersMarket",
+          "fields": [
+            "contact.social_media"
+          ]
+        },
+        {
+          "title": "Rose Park Farmers Market (@roseparkfarmersmarket)",
+          "url": "https://www.instagram.com/roseparkfarmersmarket?hl=en",
+          "fields": [
+            "contact.social_media"
           ]
         }
       ]

@@ -55,6 +55,18 @@
       "name": "Mission Community Market",
       "into": "301319",
       "reason": "California WIC dataset row for the Mission Community Market on Bartlett St, the same Thursday market as the main listing; merge approved by the site owner on 2026-11-16."
+    },
+    {
+      "id": "311231",
+      "name": "Georgetown Farmers’ Market",
+      "into": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
+      "reason": "Legacy USDA row for the Rose Park Farmers Market at 2600 O St NW, Washington, DC; Friends of Rose Park runs one Wednesday market at 26th and O St NW. Merge requested by the operator by email, recorded on 2026-11-18. The survivor keeps the operator's organizer access."
+    },
+    {
+      "id": "311232",
+      "name": "Georgetown Market IN Rose Park",
+      "into": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
+      "reason": "Second legacy USDA row for the Rose Park Farmers Market (26th and O St NW, Washington, DC), with a placeholder phone and a pin about 4 km east of the park. Merge requested by the operator by email, recorded on 2026-11-18."
     }
   ]
 }

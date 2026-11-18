@@ -709,7 +709,7 @@
     "id": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
     "market_name": "Rose Park Farmers Market",
     "schema_version": 2,
-    "verified_at": "2026-11-10",
+    "verified_at": "2026-11-18",
     "verification_scope": "partial",
     "first_party": {
       "identity": {
@@ -748,9 +748,10 @@
           },
           "source_ids": [
             "market-2026",
-            "events"
+            "events",
+            "operator-email"
           ],
-          "verified_at": "2026-11-10"
+          "verified_at": "2026-11-18"
         },
         "schedules": [
           {
@@ -767,9 +768,10 @@
             },
             "source_ids": [
               "market-2026",
-              "events"
+              "events",
+              "operator-email"
             ],
-            "verified_at": "2026-11-10",
+            "verified_at": "2026-11-18",
             "id": "wednesday"
           }
         ]
@@ -1040,7 +1042,22 @@
             "id": "freeze-dried-fruit"
           }
         ]
-      }
+      },
+      "events": [
+        {
+          "id": "december-holiday-market",
+          "value": {
+            "name": "Rose Park Holiday Market",
+            "kind": "special_market",
+            "description": "One Saturday holiday market in December, outside the Wednesday season. Check the Friends of Rose Park site for this year's date.",
+            "venue": "Rose Park, 26th and O Streets NW"
+          },
+          "source_ids": [
+            "operator-email"
+          ],
+          "verified_at": "2026-11-18"
+        }
+      ]
     },
     "sources": [
       {
@@ -1067,6 +1084,18 @@
         "kind": "first_party",
         "scope": "market",
         "accessed_at": "2026-11-10"
+      },
+      {
+        "id": "operator-email",
+        "url": "https://www.roseparkdc.org/",
+        "title": "Friends of Rose Park, with the Wednesday season (first Wednesday in May through the last Wednesday in October) and the December Saturday holiday market confirmed by the market by email on November 18, 2026",
+        "fields": [
+          "first_party.operations",
+          "first_party.events"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-18"
       }
     ]
   },

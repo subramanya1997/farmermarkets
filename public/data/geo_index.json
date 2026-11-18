@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-17T01:31:12.683Z",
-  "market_count": 9136,
+  "generated_at": "2026-11-18T20:08:32.125Z",
+  "market_count": 9134,
   "states": [
     {
       "code": "NY",
@@ -34662,13 +34662,13 @@
       "name": "Washington, D.C.",
       "country_code": "US",
       "slug": "washington-d-c",
-      "market_count": 125,
+      "market_count": 123,
       "city_count": 1,
       "cities": [
         {
           "name": "Washington",
           "slug": "washington",
-          "market_count": 125,
+          "market_count": 123,
           "market_slugs": [
             "14-and-u-market-nw-farmers-market-washington",
             "14-u-farmers-market",
@@ -34747,8 +34747,6 @@
             "freshfarm-union-market-district-washington-18b7b3a1",
             "freshfarm-uptown-washington-0f66198c",
             "freshfarm-whittier-elementary-farm-stand-washington-5f57ca5b",
-            "georgetown-farmers-market-1",
-            "georgetown-market-in-rose-park",
             "glover-park-burleith-farmers-market",
             "h-street-ne-freshfarm-market",
             "half-street-central-farm-market-dc",

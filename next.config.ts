@@ -97,7 +97,10 @@ function geoPageRedirects() {
 /**
  * Market slugs that a data refresh retired (a source re-keyed its records or
  * dropped a market), each pointing at the same market's new page or the city
- * it was listed in. Written by `scripts/build-slug-redirects.mjs`.
+ * it was listed in. Written by `scripts/build-slug-redirects.mjs`, and by
+ * hand for duplicates folded into one page (data/overrides/merged-markets.json).
+ * These answer with a 301, which operators ask for by name when they merge
+ * listings; the URL-scheme moves above stay 308.
  */
 function marketSlugRedirects() {
   let file: { redirects?: Record<string, string> } = {};
@@ -109,7 +112,7 @@ function marketSlugRedirects() {
   return Object.entries(file.redirects ?? {}).map(([slug, destination]) => ({
     source: `/markets/${slug}`,
     destination,
-    permanent: true,
+    statusCode: 301 as const,
   }));
 }
 

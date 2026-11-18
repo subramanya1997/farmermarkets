@@ -1,20 +1,20 @@
 Geo index build report
-generated_at            2026-11-17T01:31:12.683Z
+generated_at            2026-11-18T20:08:32.125Z
 
 Records
-  total                 9136
-  indexed               9131
+  total                 9134
+  indexed               9129
   unresolved            5
   without coordinates   385
 
 Resolution method (weakest source a record needed)
-  from fields           8791
+  from fields           8789
   from address          77
   from coordinates      223
   corrupt combos fixed  1
 
 State resolution
-  from fields           8624
+  from fields           8622
   from address          2
   from coordinates      2
   missing before        511
@@ -22,7 +22,7 @@ State resolution
     of those, outside US/CA (grouped by country instead)  503
 
 City resolution
-  from fields           8776
+  from fields           8774
   from address          77
   from coordinates      223
   missing before        132
