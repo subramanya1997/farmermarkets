@@ -95,6 +95,8 @@ export interface FarmerMarket {
   organizer?: { updated_at: string; sections: string[]; verified?: boolean };
   /** Organizer photos an admin approved, in display order. */
   photos?: { url: string; width?: number; height?: number; alt?: string; caption?: string }[];
+  /** The lead approved photo, attached to list records so cards can show it. */
+  cover_photo?: { url: string; width?: number; height?: number; alt?: string };
   provenance?: {
     official: boolean;
     source_id: string;

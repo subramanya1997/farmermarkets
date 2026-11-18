@@ -1,6 +1,7 @@
 import { marketService, slimMarket } from './data';
 import { after, NextRequest, NextResponse } from 'next/server';
 import { getPostHogServer } from '@/lib/posthogServer';
+import { withCoverPhotos } from '@/lib/marketOverrides';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 50;
@@ -107,11 +108,12 @@ export async function GET(request: NextRequest) {
       userLon: coordinates.userLon,
     });
 
+    // Cards show a market's lead approved photo when it has one.
+    const data = await withCoverPhotos(result.data);
+
     // Return response with pagination metadata
     recordRequestMetrics(startedAt, '200');
-    return NextResponse.json(
-      slim ? { ...result, data: result.data.map(slimMarket) } : result
-    );
+    return NextResponse.json({ ...result, data: slim ? data.map(slimMarket) : data });
   } catch (error) {
     console.error('Error fetching markets:', error);
     recordRequestMetrics(startedAt, '500');

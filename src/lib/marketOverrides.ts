@@ -109,6 +109,54 @@ export async function getPublishedLayers(): Promise<Map<string, PublishedLayer>>
   return runtimeLayers();
 }
 
+export type CoverPhoto = Pick<PublishedPhoto, 'url' | 'width' | 'height' | 'alt'>;
+
+/** How long one read of the cover photos serves list requests at runtime. */
+const COVER_TTL_MS = 5 * 60 * 1000;
+let runtimeCovers: { at: number; value: Promise<Map<string, CoverPhoto>> } | null = null;
+
+function coversFrom(layers: Map<string, PublishedLayer>): Map<string, CoverPhoto> {
+  const covers = new Map<string, CoverPhoto>();
+  for (const [marketId, layer] of layers) {
+    const lead = layer.photos[0];
+    if (lead) covers.set(marketId, { url: lead.url, width: lead.width, height: lead.height, alt: lead.alt });
+  }
+  return covers;
+}
+
+/**
+ * Each market's lead approved photo, for list cards. The explorer pulls the
+ * dataset in ~10 parallel API pages per visit, so at runtime one read serves
+ * every request for five minutes instead of querying per page; a new photo
+ * reaches cards within that window. A failed read means "no covers", never a
+ * broken list.
+ */
+export async function getCoverPhotos(): Promise<Map<string, CoverPhoto>> {
+  if (isBuildPhase()) return coversFrom(await getPublishedLayers());
+  const now = Date.now();
+  if (!runtimeCovers || now - runtimeCovers.at > COVER_TTL_MS) {
+    const value = queryAllLayers()
+      .then(coversFrom)
+      .catch((error) => {
+        console.error('Could not load cover photos:', error);
+        runtimeCovers = null;
+        return new Map<string, CoverPhoto>();
+      });
+    runtimeCovers = { at: now, value };
+  }
+  return runtimeCovers.value;
+}
+
+/** The same markets, with `cover_photo` set on those that have one. */
+export async function withCoverPhotos<M extends { id: string | number; cover_photo?: CoverPhoto }>(markets: M[]): Promise<M[]> {
+  const covers = await getCoverPhotos();
+  if (!covers.size) return markets;
+  return markets.map((market) => {
+    const cover = covers.get(String(market.id));
+    return cover ? { ...market, cover_photo: cover } : market;
+  });
+}
+
 export async function getPublishedLayer(marketId: string): Promise<PublishedLayer | undefined> {
   return (await getPublishedLayers()).get(marketId);
 }

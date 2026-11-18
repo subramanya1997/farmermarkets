@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { CalendarDays, Globe, HandCoins, MapPin } from 'lucide-react';
 import type { FarmerMarket } from '@/lib/api';
@@ -27,6 +28,7 @@ interface MarketCardViewProps {
  */
 export function MarketCardView({ market, onDetailClick }: MarketCardViewProps) {
   const name = displayName(market.name);
+  const cover = market.cover_photo?.url ? market.cover_photo : undefined;
   const schedule = cardScheduleLine(market);
   const marketType = notableMarketType(market);
   const distance =
@@ -50,6 +52,18 @@ export function MarketCardView({ market, onDetailClick }: MarketCardViewProps) {
 
   return (
     <article className="group relative isolate flex h-full flex-col gap-2 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-green-600/40 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-green-500/40">
+      {cover && (
+        // Decorative here: the title link right below names the market.
+        <div className="relative -mx-4 -mt-4 mb-1 aspect-[16/9] overflow-hidden rounded-t-2xl bg-zinc-100 dark:bg-zinc-800">
+          <Image
+            src={cover.url}
+            alt=""
+            fill
+            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </div>
+      )}
       {marketType && (
         <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
           {marketType}
