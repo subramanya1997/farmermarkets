@@ -123,3 +123,17 @@ test('slim records use the precomputed weekdays and hours', () => {
   const options = extractFilterOptions(markets, new Date(2026, 9, 24));
   assert.equal(applyFilters(markets, new Set(['today']), options).length, 1);
 });
+
+test('cardDates keeps the season when it fits a card and leaves prose to the market page', async () => {
+  const { cardDates } = await import('./marketDisplay.ts');
+  assert.equal(cardDates({ name: 'A', season: 'Year-round, rain or shine' }), 'Year-round');
+  assert.equal(cardDates({ name: 'A', season: 'May - October' }), 'May-Oct');
+  assert.equal(cardDates({ name: 'A', season: 'June 4 through October 1, 2026' }), 'June 4-October 1, 2026');
+  assert.equal(
+    cardDates({ name: 'A', season: 'First Wednesday in May through the last Wednesday in October, plus one Saturday in December' }),
+    undefined
+  );
+  // The slim API precomputes it from the full record; an empty string means "none fits".
+  assert.equal(cardDates({ name: 'A', season: 'May - October', season_label: '' }), undefined);
+  assert.equal(cardDates({ name: 'A', season_label: 'Year-round' }), 'Year-round');
+});

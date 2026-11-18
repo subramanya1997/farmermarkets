@@ -19,6 +19,7 @@ import { DatabaseUnavailableError, dbSchema, getDb } from '@/db';
 import { listingEditsSchema, changedSections, type ListingEdits } from './listingEdits';
 import { applyListingEdits, type OverlayableMarket } from './organizerOverlay';
 import { absoluteUrl } from './site';
+import { pickCover } from './marketCard';
 
 export interface PublishedPhoto {
   url: string;
@@ -111,50 +112,29 @@ export async function getPublishedLayers(): Promise<Map<string, PublishedLayer>>
 
 export type CoverPhoto = Pick<PublishedPhoto, 'url' | 'width' | 'height' | 'alt'>;
 
-/** How long one read of the cover photos serves list requests at runtime. */
-const COVER_TTL_MS = 5 * 60 * 1000;
-let runtimeCovers: { at: number; value: Promise<Map<string, CoverPhoto>> } | null = null;
-
-function coversFrom(layers: Map<string, PublishedLayer>): Map<string, CoverPhoto> {
-  const covers = new Map<string, CoverPhoto>();
-  for (const [marketId, layer] of layers) {
-    const lead = layer.photos[0];
-    if (lead) covers.set(marketId, { url: lead.url, width: lead.width, height: lead.height, alt: lead.alt });
-  }
-  return covers;
-}
+/** How long one read of the organizer layers serves list requests at runtime. */
+const LIST_LAYERS_TTL_MS = 5 * 60 * 1000;
+let listLayers: { at: number; value: Promise<Map<string, PublishedLayer>> } | null = null;
 
 /**
- * Each market's lead approved photo, for list cards. The explorer pulls the
- * dataset in ~10 parallel API pages per visit, so at runtime one read serves
- * every request for five minutes instead of querying per page; a new photo
- * reaches cards within that window. A failed read means "no covers", never a
- * broken list.
+ * The organizer layers for market lists (the explorer's API pages). The
+ * explorer pulls the dataset in ~10 parallel pages per visit, so at runtime
+ * one read serves every request for five minutes instead of querying per
+ * page; an approval reaches list cards within that window (its market page
+ * revalidates at once). A failed read means plain records, never a broken list.
  */
-export async function getCoverPhotos(): Promise<Map<string, CoverPhoto>> {
-  if (isBuildPhase()) return coversFrom(await getPublishedLayers());
+export async function getListLayers(): Promise<Map<string, PublishedLayer>> {
+  if (isBuildPhase()) return getPublishedLayers();
   const now = Date.now();
-  if (!runtimeCovers || now - runtimeCovers.at > COVER_TTL_MS) {
-    const value = queryAllLayers()
-      .then(coversFrom)
-      .catch((error) => {
-        console.error('Could not load cover photos:', error);
-        runtimeCovers = null;
-        return new Map<string, CoverPhoto>();
-      });
-    runtimeCovers = { at: now, value };
+  if (!listLayers || now - listLayers.at > LIST_LAYERS_TTL_MS) {
+    const value = queryAllLayers().catch((error) => {
+      console.error('Could not load organizer layers for lists:', error);
+      listLayers = null;
+      return new Map<string, PublishedLayer>();
+    });
+    listLayers = { at: now, value };
   }
-  return runtimeCovers.value;
-}
-
-/** The same markets, with `cover_photo` set on those that have one. */
-export async function withCoverPhotos<M extends { id: string | number; cover_photo?: CoverPhoto }>(markets: M[]): Promise<M[]> {
-  const covers = await getCoverPhotos();
-  if (!covers.size) return markets;
-  return markets.map((market) => {
-    const cover = covers.get(String(market.id));
-    return cover ? { ...market, cover_photo: cover } : market;
-  });
+  return listLayers.value;
 }
 
 export async function getPublishedLayer(marketId: string): Promise<PublishedLayer | undefined> {
@@ -166,13 +146,11 @@ interface LayerMappers<M, R> {
   fromRaw: (raw: R) => M;
 }
 
-/** The market as published: dataset record + approved organizer edits + photos. */
-export async function applyPublishedLayer<
-  M extends { id: string; slug: string; organizer?: unknown; photos?: unknown },
+/** One market with its organizer layer applied: approved edits and photos. */
+function applyLayer<
+  M extends { id: string; slug: string; organizer?: unknown; photos?: unknown; cover_photo?: CoverPhoto },
   R extends OverlayableMarket,
->(market: M, mappers: LayerMappers<M, R>): Promise<M> {
-  const layer = await getPublishedLayer(market.id);
-  if (!layer) return market;
+>(market: M, layer: PublishedLayer, mappers: LayerMappers<M, R>): M {
   const sections = changedSections(layer.edits);
   const edited = sections.length
     ? mappers.fromRaw(
@@ -183,9 +161,36 @@ export async function applyPublishedLayer<
         }),
       )
     : market;
+  const cover = pickCover(layer.photos);
   return {
     ...edited,
     organizer: { updated_at: layer.updatedAt, sections, verified: layer.hasOrganizer },
     ...(layer.photos.length ? { photos: layer.photos } : {}),
+    ...(cover ? { cover_photo: { url: cover.url, width: cover.width, height: cover.height, alt: cover.alt } } : {}),
   };
+}
+
+/** The market as published: dataset record + approved organizer edits + photos. */
+export async function applyPublishedLayer<
+  M extends { id: string; slug: string; organizer?: unknown; photos?: unknown; cover_photo?: CoverPhoto },
+  R extends OverlayableMarket,
+>(market: M, mappers: LayerMappers<M, R>): Promise<M> {
+  const layer = await getPublishedLayer(market.id);
+  return layer ? applyLayer(market, layer, mappers) : market;
+}
+
+/**
+ * A page of list records as published, so a list card says what the market
+ * page says: organizer edits (hours, season) and the lead photo as its cover.
+ */
+export async function applyListLayers<
+  M extends { id: string; slug: string; organizer?: unknown; photos?: unknown; cover_photo?: CoverPhoto },
+  R extends OverlayableMarket,
+>(markets: M[], mappers: LayerMappers<M, R>): Promise<M[]> {
+  const layers = await getListLayers();
+  if (!layers.size) return markets;
+  return markets.map((market) => {
+    const layer = layers.get(String(market.id));
+    return layer ? applyLayer(market, layer, mappers) : market;
+  });
 }

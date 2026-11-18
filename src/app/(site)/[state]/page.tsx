@@ -6,7 +6,7 @@ import { HandCoins, MapPin, Store } from 'lucide-react';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { CityDirectory } from '@/components/CityDirectory';
 import { LazyPlacesMap } from '@/components/LazyPlacesMap';
-import { WeekStrip } from '@/components/WeekStrip';
+import { MarketCardView } from '@/components/MarketCardView';
 import { getAllStateParams, getStatePageData, type StatePageData, type StateWeekdayCount } from '@/lib/statePage';
 import { topicPath } from '@/lib/topicPage';
 import { absoluteUrl } from '@/lib/site';
@@ -304,36 +304,10 @@ export default async function StateHubPage({ params }: StatePageProps) {
             {data.notableMarkets.length > 0 && (
               <div>
                 <h2 className="text-xl font-bold tracking-tight sm:text-2xl">Notable markets</h2>
-                <ul className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                <ul className="mt-4 grid grid-flow-row-dense gap-3 sm:grid-cols-2 xl:grid-cols-4">
                   {data.notableMarkets.map((market) => (
-                    <li
-                      key={market.slug}
-                      className="group relative flex flex-col gap-2 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm transition-colors hover:border-green-600/40 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-green-500/40"
-                    >
-                      <h3 className="text-base font-semibold leading-snug">
-                        <Link
-                          href={market.href}
-                          className="text-zinc-900 after:absolute after:inset-0 after:rounded-2xl after:content-[''] group-hover:text-green-700 dark:text-zinc-50 dark:group-hover:text-green-400"
-                        >
-                          {market.name}
-                        </Link>
-                      </h3>
-                      <p className="flex items-center gap-1.5 text-sm text-zinc-600 dark:text-zinc-400">
-                        <MapPin aria-hidden className="h-3.5 w-3.5 shrink-0 text-green-700 dark:text-green-500" />
-                        <Link href={market.cityHref} className="relative z-10 underline-offset-2 hover:underline">
-                          {market.cityName}
-                        </Link>
-                      </p>
-                      <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-2 pt-1 text-sm text-zinc-700 dark:text-zinc-300">
-                        <WeekStrip days={market.days} />
-                        {market.hours && <span className="tabular-nums">{market.hours}</span>}
-                        {market.snap && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-300">
-                            <HandCoins aria-hidden className="h-3.5 w-3.5" />
-                            SNAP/EBT
-                          </span>
-                        )}
-                      </div>
+                    <li key={market.slug} className={market.card.cover ? 'sm:col-span-2' : undefined}>
+                      <MarketCardView card={market.card} />
                     </li>
                   ))}
                 </ul>

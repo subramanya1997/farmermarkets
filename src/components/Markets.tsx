@@ -16,6 +16,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { MarketCard } from "@/components/MarketCard";
+import { photoSpan } from "@/lib/marketCard";
 import { FilterBar } from "@/components/FilterBar";
 import dynamic from "next/dynamic";
 import { preloadMapStyle } from "@/components/mapStyle";
@@ -449,9 +450,11 @@ export function Markets() {
           </p>
           {view === 'grid' ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {/* A photo card takes two columns (photo beside text) so it stays as tall
+                  as its neighbours; dense packing fills the gaps it leaves. */}
+              <div className="grid grid-flow-row-dense grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
                 {currentMarkets.map((market) => (
-                  <MarketCard key={market.id} market={market} />
+                  <MarketCard key={market.id} market={market} className={photoSpan(market, 'sm:col-span-2')} />
                 ))}
               </div>
               {filteredMarkets.length === 0 && marketsLoading && (
@@ -483,9 +486,9 @@ export function Markets() {
                     : `Closest ${Math.min(mapVisibleMarkets.length, MAP_LIST_SIZE)} of ${mapVisibleMarkets.length.toLocaleString()} markets in view`}
                 </p>
                 <ScrollArea className="min-h-0 flex-1">
-                  <div className="grid grid-cols-1 gap-3 pr-3 xl:grid-cols-2">
+                  <div className="grid grid-flow-row-dense grid-cols-1 gap-3 pr-3 xl:grid-cols-2">
                     {mapVisibleMarkets.slice(0, MAP_LIST_SIZE).map((market) => (
-                      <MarketCard key={market.id} market={market} />
+                      <MarketCard key={market.id} market={market} className={photoSpan(market, 'xl:col-span-2')} />
                     ))}
                   </div>
                 </ScrollArea>

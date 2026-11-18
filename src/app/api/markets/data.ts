@@ -10,6 +10,7 @@ import type {
 } from '@/lib/enrichment';
 import { mergeEnrichment } from '@/lib/enrichment';
 import { marketHours, marketWeekdays } from '@/lib/seo';
+import { cardDates } from '@/lib/marketDisplay';
 import { effectiveDistance, listingStrength, marketRichness } from '@/lib/marketRichness';
 import marketPopularity from '../../../../data/market-popularity.json';
 export { mergeEnrichment };
@@ -111,6 +112,8 @@ export interface FarmerMarket {
   photos?: { url: string; width?: number; height?: number; alt?: string; caption?: string }[];
   /** The lead approved photo, attached to list records so cards can show it. */
   cover_photo?: { url: string; width?: number; height?: number; alt?: string };
+  /** Slim API only: the season as a card shows it (see `cardDates`); empty when none fits. */
+  season_label?: string;
   provenance?: {
     official: boolean;
     source_id: string;
@@ -573,6 +576,29 @@ async function withOrganizerLayer(market: FarmerMarket | null | undefined): Prom
   }
 }
 
+/**
+ * A page of list records with their organizer layers applied (edits and the
+ * cover photo), from one cached read of the layer table; see `getListLayers`.
+ */
+export async function withListLayers(markets: FarmerMarket[]): Promise<FarmerMarket[]> {
+  try {
+    const { applyListLayers } = await import('@/lib/marketOverrides');
+    const published = await applyListLayers(markets, {
+      toRaw: rawFromMarket,
+      fromRaw: (raw) => scoreMarket(mapRawMarket(raw, 0)),
+    });
+    // Re-mapping an edited record drops the reader's distance; keep it.
+    return published.map((market, index) =>
+      market === markets[index] || markets[index].distance === undefined
+        ? market
+        : { ...market, distance: markets[index].distance }
+    );
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'test') console.error('Organizer layers unavailable for list:', error);
+    return markets;
+  }
+}
+
 // Load the one canonical, already consolidated market dataset.
 async function readMarketsData(): Promise<FarmerMarket[]> {
   try {
@@ -743,6 +769,8 @@ export function slimMarket(market: FarmerMarket): Partial<FarmerMarket> {
 
   if (market.richness) slim.richness = market.richness;
   if (market.cover_photo) slim.cover_photo = market.cover_photo;
+  // The structured first-party season is dropped above; the card's dates come from it.
+  slim.season_label = cardDates(market) ?? '';
   if (!market.suppress_map && market.location) slim.location = market.location;
   if (!market.suppress_map && market.distance !== undefined) slim.distance = market.distance;
   // Only the source id is read (one analytics property); the rest of the

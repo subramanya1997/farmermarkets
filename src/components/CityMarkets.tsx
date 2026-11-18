@@ -2,12 +2,12 @@
 
 import { useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Clock, MapPin, Sprout } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import type { CityMarketRow } from '@/lib/cityPage';
 import { SNAP_HASH, dayHash, splitBySchedule } from '@/lib/cityPageView';
 import type { Weekday } from '@/lib/schedule';
 import { LazyPlacesMap, type MapPlace } from '@/components/LazyPlacesMap';
-import { WeekStrip } from '@/components/WeekStrip';
+import { MarketCardView } from '@/components/MarketCardView';
 
 interface CityMarketsProps {
   rows: CityMarketRow[];
@@ -29,65 +29,24 @@ function MarketRow({
   row,
   active,
   onPoint,
+  span,
 }: {
   row: CityMarketRow;
   active: boolean;
   onPoint: (slug: string | null) => void;
+  /** A photo card's two-column span, where the grid has two columns. */
+  span?: string;
 }) {
+  // Pointing at a card lights up its dot on the map.
   return (
     <li
       onMouseEnter={() => onPoint(row.slug)}
       onMouseLeave={() => onPoint(null)}
       onFocus={() => onPoint(row.slug)}
       onBlur={() => onPoint(null)}
-      className={`group relative rounded-2xl border bg-white p-4 transition-colors dark:bg-zinc-900 ${
-        active
-          ? 'border-green-600 dark:border-green-500'
-          : 'border-zinc-200 hover:border-green-600/60 dark:border-zinc-800 dark:hover:border-green-500/60'
-      }`}
+      className={span}
     >
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="text-base font-semibold leading-snug">
-          {/* Stretched link: the whole card is the target, the name stays the
-              anchor text a crawler follows. */}
-          <Link
-            href={row.href}
-            className="text-green-800 after:absolute after:inset-0 after:rounded-2xl after:content-[''] group-hover:underline focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-green-700 dark:text-green-400"
-          >
-            {row.name}
-          </Link>
-        </h3>
-        {row.snap && (
-          <span className="shrink-0 rounded-md bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-900/30 dark:text-green-400">
-            SNAP/EBT
-          </span>
-        )}
-      </div>
-
-      {row.address && (
-        <p className="mt-1.5 flex items-start gap-1.5 text-sm text-zinc-600 dark:text-zinc-400">
-          <MapPin aria-hidden="true" className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400" />
-          {row.address}
-        </p>
-      )}
-
-      {(row.days.length > 0 || row.hours || row.season) && (
-        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-zinc-700 dark:text-zinc-300">
-          <WeekStrip days={row.days} />
-          {row.hours && (
-            <span className="inline-flex items-center gap-1.5">
-              <Clock aria-hidden="true" className="h-3.5 w-3.5 text-zinc-400" />
-              {row.hours}
-            </span>
-          )}
-          {row.season && (
-            <span className="inline-flex items-center gap-1.5">
-              <Sprout aria-hidden="true" className="h-3.5 w-3.5 text-zinc-400" />
-              {row.season}
-            </span>
-          )}
-        </div>
-      )}
+      <MarketCardView card={row.card} active={active} />
     </li>
   );
 }
@@ -265,12 +224,18 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
             <ul
               className={
                 anyPlaces
-                  ? 'grid content-start gap-3 xl:grid-cols-2'
-                  : 'grid max-w-screen-2xl content-start gap-3 md:grid-cols-2 xl:grid-cols-3'
+                  ? 'grid grid-flow-row-dense content-start gap-3 xl:grid-cols-2'
+                  : 'grid max-w-screen-2xl grid-flow-row-dense content-start gap-3 md:grid-cols-2 xl:grid-cols-3'
               }
             >
               {documented.map((row) => (
-                <MarketRow key={row.slug} row={row} active={pointed === row.slug} onPoint={setPointed} />
+                <MarketRow
+                  key={row.slug}
+                  row={row}
+                  active={pointed === row.slug}
+                  onPoint={setPointed}
+                  span={row.card.cover ? (anyPlaces ? 'xl:col-span-2' : 'md:col-span-2') : undefined}
+                />
               ))}
             </ul>
             {thin.length > 0 && (

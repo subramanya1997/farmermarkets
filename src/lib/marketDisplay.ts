@@ -35,6 +35,11 @@ function hoursFor(market: MarketSeoRecord & SlimScheduleFields): string | undefi
   return market.weekdays ? market.hours : marketHours(market);
 }
 
+/** The card's opening hours ("8am-12pm"), only for a market with parsed days. */
+export function cardHours(market: MarketSeoRecord & SlimScheduleFields): string | undefined {
+  return weekdaysFor(market).length > 0 ? tidyHours(hoursFor(market)) : undefined;
+}
+
 const STREET_WORDS = /\d|&|\b(and|at|avenue|ave|street|st|road|rd|boulevard|blvd|lane|ln|drive|dr|way|plaza|park and|parking|lot|corner|behind|between)\b\.?/i;
 
 function wordCount(value: string): number {
@@ -134,6 +139,23 @@ export function cardSeason(market: MarketSeoRecord): string | undefined {
   if ((to + 1) % 12 === from) return 'Year-round';
   const short = (index: number) => capitalize(MONTHS[index].slice(0, 3));
   return `${short(from)}-${short(to)}`;
+}
+
+/** Longest season label a card shows whole; longer prose stays on the market page. */
+const CARD_DATES_MAX = 40;
+
+/**
+ * When in the year a market runs, as a card shows it: "Year-round", "May-Oct",
+ * or a dated span that fits one line ("June 4-October 1, 2026"). The slim API
+ * precomputes it from the full record (`season_label`), since the structured
+ * first-party season is not in the client payload.
+ */
+export function cardDates(market: MarketSeoRecord & { season_label?: string }): string | undefined {
+  if (market.season_label !== undefined) return market.season_label || undefined;
+  const short = cardSeason(market);
+  if (short) return short;
+  const label = clean(marketSeasonLabel(market));
+  return label && label.length <= CARD_DATES_MAX ? label : undefined;
 }
 
 /**

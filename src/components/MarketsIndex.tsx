@@ -4,6 +4,7 @@ import { BrowseByTopic } from '@/components/BrowseByTopic';
 import { MarketsExplorer } from '@/components/MarketsExplorer';
 import { MarketsPagination } from '@/components/MarketsPagination';
 import { MarketSummaryCard } from '@/components/MarketSummaryCard';
+import { photoSpan } from '@/lib/marketCard';
 import { INDEX_NAME, MARKETS_PER_PAGE, getMarketsPage, marketsPagePath } from '@/lib/marketsIndex';
 import { getStateHubSummaries } from '@/lib/statePage';
 import { getTopicSummaries } from '@/lib/topicPage';
@@ -88,9 +89,9 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
                   {result.total.toLocaleString()}, A to Z
                 </p>
               </div>
-              <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+              <ul className="grid grid-flow-row-dense grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
                 {result.markets.map((market) => (
-                  <li key={market.id}>
+                  <li key={market.id} className={photoSpan(market, 'sm:col-span-2')}>
                     <MarketSummaryCard market={market} />
                   </li>
                 ))}

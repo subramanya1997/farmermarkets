@@ -18,6 +18,7 @@ import { resolveLocation } from './geo';
 import { newerInstant, toIsoInstant } from './dates';
 import { isMarketAlias } from './marketAliases';
 import { tidyHours } from './marketDisplay';
+import { marketCardData, type MarketCardData } from './marketCard';
 import {
   WEEKDAY_NAMES,
   displayName,
@@ -71,6 +72,8 @@ export interface StateNotableMarket {
   days: Weekday[];
   hours?: string;
   snap: boolean;
+  /** The shared market card, its place linking to the market's city page. */
+  card: MarketCardData;
 }
 
 /** How many of the state's markets trade on one weekday. */
@@ -294,6 +297,7 @@ async function collectNotable(
           days,
           hours,
           snap: market.snap === true,
+          card: marketCardData(market, { place: city.name, placeHref: `${statePath(state.slug)}/${city.slug}` }),
         },
         score: scoreMarket(market, days, hours),
         cityRank,

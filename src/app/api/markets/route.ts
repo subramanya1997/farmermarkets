@@ -1,7 +1,6 @@
-import { marketService, slimMarket } from './data';
+import { marketService, slimMarket, withListLayers } from './data';
 import { after, NextRequest, NextResponse } from 'next/server';
 import { getPostHogServer } from '@/lib/posthogServer';
-import { withCoverPhotos } from '@/lib/marketOverrides';
 
 const DEFAULT_PAGE = 1;
 const DEFAULT_LIMIT = 50;
@@ -108,8 +107,8 @@ export async function GET(request: NextRequest) {
       userLon: coordinates.userLon,
     });
 
-    // Cards show a market's lead approved photo when it has one.
-    const data = await withCoverPhotos(result.data);
+    // Cards say what the market page says: organizer edits and the cover photo.
+    const data = await withListLayers(result.data);
 
     // Return response with pagination metadata
     recordRequestMetrics(startedAt, '200');

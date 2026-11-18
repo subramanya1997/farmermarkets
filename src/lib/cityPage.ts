@@ -17,6 +17,7 @@ import { getCity, getStateByCode, type GeoCity, type GeoState } from './geoIndex
 import { statePath } from './statePage';
 import { getMarketBySlug, type FarmerMarket } from './data';
 import { resolveLocation } from './geo';
+import { marketCardData, type MarketCardData } from './marketCard';
 import { newerInstant, toIsoInstant } from './dates';
 import { getMarketPoints, getNearbyMarkets, type NearbyMarket } from './nearby';
 import { getCityGuide } from './cityGuide';
@@ -57,6 +58,8 @@ export interface CityMarketRow {
   /** The record's own coordinates, when it has them; drives the page's map. */
   lat?: number;
   lon?: number;
+  /** The shared market card; its place is the street, as the city is in the H1. */
+  card: MarketCardData;
 }
 
 export interface CityDayGroup {
@@ -170,6 +173,7 @@ function toRow(market: FarmerMarket): CityMarketRow {
     snap: market.snap === true,
     vendorCount: market.vendor_count ?? undefined,
     ...(hasCoordinates ? { lat: Number(lat.toFixed(5)), lon: Number(lon.toFixed(5)) } : {}),
+    card: marketCardData(market, { place: resolveLocation(market).street || undefined }),
   };
 
   return { ...base, completeness: scoreMarket(base, market) };

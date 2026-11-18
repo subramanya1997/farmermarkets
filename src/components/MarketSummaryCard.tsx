@@ -1,5 +1,6 @@
 import type { FarmerMarket } from '@/lib/api';
 import { MarketCardView } from '@/components/MarketCardView';
+import { marketCardData } from '@/lib/marketCard';
 
 interface MarketSummaryCardProps {
   market: FarmerMarket;
@@ -14,5 +15,5 @@ interface MarketSummaryCardProps {
  * title link is exactly the anchor a crawler needs to reach the detail page.
  */
 export function MarketSummaryCard({ market }: MarketSummaryCardProps) {
-  return <MarketCardView market={market} />;
+  return <MarketCardView card={marketCardData(market)} />;
 }

@@ -97,6 +97,8 @@ export interface FarmerMarket {
   photos?: { url: string; width?: number; height?: number; alt?: string; caption?: string }[];
   /** The lead approved photo, attached to list records so cards can show it. */
   cover_photo?: { url: string; width?: number; height?: number; alt?: string };
+  /** Slim API only: the season as a card shows it (see `cardDates`); empty when none fits. */
+  season_label?: string;
   provenance?: {
     official: boolean;
     source_id: string;
