@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-18T20:08:32.125Z",
-  "market_count": 9134,
+  "generated_at": "2026-11-18T23:45:22.999Z",
+  "market_count": 9136,
   "states": [
     {
       "code": "NY",
@@ -4365,8 +4365,8 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 958,
-      "city_count": 405,
+      "market_count": 960,
+      "city_count": 407,
       "cities": [
         {
           "name": "Los Angeles",
@@ -4818,19 +4818,6 @@
           ]
         },
         {
-          "name": "San Rafael",
-          "slug": "san-rafael",
-          "market_count": 6,
-          "market_slugs": [
-            "marinwood-community-farmers-market",
-            "mill-valley-farmers-market",
-            "san-rafael-downtown-farmers-market",
-            "san-rafael-marin-farmers-market",
-            "sunday-marin-civic-center-san-rafael-4a5df6df",
-            "thursday-marin-civic-center-san-rafael-9a985247"
-          ]
-        },
-        {
           "name": "Santa Monica",
           "slug": "santa-monica",
           "market_count": 6,
@@ -4901,6 +4888,18 @@
             "san-mateo-csm-cfm-san-mateo-6242ed42",
             "san-mateo-farmers-market",
             "the-college-of-san-mateo-farmers-market-san-mateo"
+          ]
+        },
+        {
+          "name": "San Rafael",
+          "slug": "san-rafael",
+          "market_count": 5,
+          "market_slugs": [
+            "marinwood-community-farmers-market",
+            "san-rafael-downtown-farmers-market",
+            "san-rafael-marin-farmers-market",
+            "sunday-marin-civic-center-san-rafael-4a5df6df",
+            "thursday-marin-civic-center-san-rafael-9a985247"
           ]
         },
         {
@@ -6079,6 +6078,15 @@
           ]
         },
         {
+          "name": "Mill Valley",
+          "slug": "mill-valley",
+          "market_count": 2,
+          "market_slugs": [
+            "mill-valley-farmers-market",
+            "strawberry-village-farmers-market"
+          ]
+        },
+        {
           "name": "Milpitas",
           "slug": "milpitas",
           "market_count": 2,
@@ -6887,6 +6895,14 @@
           "market_count": 1,
           "market_slugs": [
             "compton-college-fm-compton-7f7b2975"
+          ]
+        },
+        {
+          "name": "Corte Madera",
+          "slug": "corte-madera",
+          "market_count": 1,
+          "market_slugs": [
+            "corte-madera-farmers-market"
           ]
         },
         {

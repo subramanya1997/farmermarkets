@@ -565,5 +565,101 @@
       "catalog_url": "https://www.facebook.com/barcelogardens",
       "retrieved_at": "2026-11-12"
     }
+  },
+  {
+    "id": "added:corte-madera-farmers-market",
+    "slug": "corte-madera-farmers-market",
+    "name": "Corte Madera Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "Corte Madera Town Center Courtyard, 100 Corte Madera Town Center, Corte Madera, CA 94925",
+      "city": "Corte Madera",
+      "state": "California",
+      "zip_code": "94925",
+      "coordinates": {
+        "longitude": -122.51728,
+        "latitude": 37.926536
+      },
+      "description": "In the Town Center Courtyard by the elephant fountain, not in the parking lot."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Run by the Marin Community Farmers Markets Association. For market information, call Lynn Bagley at (415) 382-7846."
+    },
+    "contact": {
+      "phone_numbers": [
+        "(415) 382-7846"
+      ],
+      "emails": [],
+      "websites": [
+        "https://marincommunityfarmersmarkets.com/markets/corte-madera"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "Year-round",
+      "days": [
+        "Wednesdays, 12pm to 5pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Marin Community Farmers Markets Association",
+      "dataset_name": "Corte Madera Farmers Market | Marin Community Farmers Markets, with the Wednesday hours, year-round season and Town Center Courtyard location confirmed by the operator by email on November 18, 2026",
+      "catalog_url": "https://marincommunityfarmersmarkets.com/markets/corte-madera",
+      "retrieved_at": "2026-11-18"
+    }
+  },
+  {
+    "id": "added:strawberry-village-farmers-market",
+    "slug": "strawberry-village-farmers-market",
+    "name": "Strawberry Village Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "Strawberry Village, 800 Redwood Hwy, Mill Valley, CA 94941",
+      "city": "Mill Valley",
+      "state": "California",
+      "zip_code": "94941",
+      "coordinates": {
+        "longitude": -122.5138267,
+        "latitude": 37.8986252
+      },
+      "description": "At the Strawberry Village shopping center on Redwood Highway."
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Run by the Marin Community Farmers Markets Association. For market information, call Lynn Bagley at (415) 382-7846."
+    },
+    "contact": {
+      "phone_numbers": [
+        "(415) 382-7846"
+      ],
+      "emails": [],
+      "websites": [
+        "https://marincommunityfarmersmarkets.com/markets/mill-valley-tuesday"
+      ],
+      "social_media": []
+    },
+    "operations": {
+      "season": "June through November",
+      "days": [
+        "Tuesdays, 10am to 2:30pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Marin Community Farmers Markets Association",
+      "dataset_name": "Strawberry Village Farmers Market (Tuesday) | Marin Community Farmers Markets, with the Tuesday hours, June through November season and 800 Redwood Hwy location confirmed by the operator by email on November 18, 2026",
+      "catalog_url": "https://marincommunityfarmersmarkets.com/markets/mill-valley-tuesday",
+      "retrieved_at": "2026-11-18"
+    }
   }
 ]

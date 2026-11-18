@@ -15007,6 +15007,65 @@
           ]
         }
       ]
+    },
+    {
+      "index": 1930,
+      "id": 308762,
+      "path": "location.address",
+      "value": "759 E. Blithedale Ave. (CVS Parking Lot at Alto Shopping Center), Mill Valley, CA 94941"
+    },
+    {
+      "index": 1930,
+      "id": 308762,
+      "path": "location.city",
+      "value": "Mill Valley"
+    },
+    {
+      "index": 1930,
+      "id": 308762,
+      "path": "operations.days",
+      "value": [
+        "Fridays, 9:30am to 2:30pm"
+      ]
+    },
+    {
+      "index": 1930,
+      "id": 308762,
+      "path": "operations.season",
+      "value": "Year-round"
+    },
+    {
+      "index": 1930,
+      "id": 308762,
+      "path": "organization.description",
+      "value": "Run by the Marin Community Farmers Markets Association. For market information, call Lynn Bagley at (415) 382-7846."
+    },
+    {
+      "index": 1930,
+      "id": 308762,
+      "path": "contact.websites",
+      "value": [
+        "https://marincommunityfarmersmarkets.com/markets/mill-valley-friday"
+      ]
+    },
+    {
+      "index": 1930,
+      "id": 308762,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Mill Valley Farmers Market (Friday) | Marin Community Farmers Markets, with the Friday hours, year-round season and Alto Shopping Center location confirmed by the operator by email on November 18, 2026",
+          "url": "https://marincommunityfarmersmarkets.com/markets/mill-valley-friday",
+          "fields": [
+            "location.address",
+            "location.city",
+            "operations.days",
+            "operations.season",
+            "organization.description",
+            "contact.websites"
+          ]
+        }
+      ]
     }
   ]
 }
