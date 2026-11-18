@@ -42,9 +42,13 @@ Add a row for every experiment, including the ones that did not help.
 
 | Date | Change | Result | Kept |
 |---|---|---|---|
-| 2026-11-16 | Sample 500 market pages in the CI build | See the run after this lands; expected about 85 seconds saved (8,632 fewer pages at 10 ms) | Yes |
-| 2026-11-16 | Skip the type-check inside the CI build | Expected 11 seconds saved | Yes |
-| 2026-11-16 | Split lint, type-check and unit tests into a parallel job | Expected about 30 seconds off the wall time | Yes |
+| 2026-11-16 | Sample 500 market pages in the CI build | Prerender went from 138 s (14,282 pages) to 62 s (5,646 pages) | Yes |
+| 2026-11-16 | Skip the type-check inside the CI build | 11 s saved; the build step went from 171 s to 86 s with the sample | Yes |
+| 2026-11-16 | Split lint, type-check and unit tests into a parallel job | `checks` takes 49 s beside a 109 s `build`, so it no longer adds to the wall time | Yes |
+
+All three landed together in commit `3b64580`. Run 44032279564 took 112 seconds of wall time, against 230 for run 44021216465 before it and 201 to 257 across the eight runs before that.
+
+What is left in the 109 second `build` job: prerendering 62 s (4,920 of the 5,646 pages are city pages), compile 17 s, setup and install about 12 s, server and route checks about 12 s.
 
 ## Considered and not done
 
