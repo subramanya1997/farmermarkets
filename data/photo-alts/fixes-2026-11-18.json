@@ -1,0 +1,92 @@
+{
+  "drafts": [
+    {
+      "id": "33d089ce-70e3-46bb-bc92-965b720e9f82",
+      "market_id": "308774",
+      "market_name": "Mountain View Farmers’ Market",
+      "alt": "Mountain View Farmers’ Market, tomatoes, peaches, blueberries, raspberries, radishes, green beans, lettuce and grapes on display",
+      "old_alt": "Mountain View Farmers’ Market, stand with carrots, beets, turnips, radishes and green onions stacked on a red tablecloth",
+      "template": false
+    },
+    {
+      "id": "b4aa502d-b939-4995-8df5-ebfadea25a13",
+      "market_id": "308774",
+      "market_name": "Mountain View Farmers’ Market",
+      "alt": "Mountain View Farmers’ Market, market table piled with carrots, beets, turnips, radishes and green onions under a red tablecloth",
+      "old_alt": "Mountain View Farmers’ Market, crowd of shoppers including children walking along a street under tents and trees",
+      "template": false
+    },
+    {
+      "id": "6f56f09b-620c-4b79-8f2c-9757550dcdb2",
+      "market_id": "308774",
+      "market_name": "Mountain View Farmers’ Market",
+      "alt": "Mountain View Farmers’ Market, crowd of shoppers walking down a street lined with white and red tents",
+      "old_alt": "Mountain View Farmers’ Market, fruit and vegetables",
+      "template": false
+    },
+    {
+      "id": "f6539193-b453-4611-9a01-9d661a0b97ae",
+      "market_id": "308846",
+      "market_name": "Chico Certified Farmers’ Market",
+      "alt": "Chico Certified Farmers’ Market, bunches of colorful anemone flowers on a stall with shoppers standing behind",
+      "old_alt": "Chico Certified Farmers’ Market, two people sorting used books on a table in a room with bookshelves",
+      "template": false
+    },
+    {
+      "id": "946b7d01-e596-4ed3-bd2b-a2888bbac28e",
+      "market_id": "308849",
+      "market_name": "Claremont Farmers’ Market",
+      "alt": "Photo of Claremont Farmers’ Market",
+      "old_alt": "Claremont Farmers’ Market, close view of fresh cut flower bunches in white, pink and purple with shoppers behind",
+      "template": true
+    },
+    {
+      "id": "a2dbadc6-f9d2-4c8e-af67-6ca1f377d033",
+      "market_id": "309859",
+      "market_name": "Lincoln Square Farmers Market",
+      "alt": "Lincoln Square Farmers Market, white tents and a few shoppers beside a street with a train station staircase behind",
+      "old_alt": "Lincoln Square Farmers Market, view from above of tents and crowds of shoppers on a closed street",
+      "template": false
+    },
+    {
+      "id": "0ce062ad-e235-4692-a85d-41e88e0c2bcf",
+      "market_id": "309859",
+      "market_name": "Lincoln Square Farmers Market",
+      "alt": "Lincoln Square Farmers Market, overhead view of white and blue vendor tents and shoppers along a street lined with trees",
+      "old_alt": "Lincoln Square Farmers Market, shoppers browsing green beans and yellow peppers at a stand under a tent",
+      "template": false
+    },
+    {
+      "id": "8c6ec10f-9528-49d4-b2c8-7bfe5b5531c8",
+      "market_id": "309859",
+      "market_name": "Lincoln Square Farmers Market",
+      "alt": "Lincoln Square Farmers Market, shoppers browsing stalls of green beans and yellow peppers under white tents",
+      "old_alt": "Lincoln Square Farmers Market, white tents and shoppers on a street below an elevated train station",
+      "template": false
+    },
+    {
+      "id": "f6088f38-2b7f-4595-9022-63ca5d32a8d1",
+      "market_id": "310197",
+      "market_name": "Ft Madison Farmers Market",
+      "alt": "Photo of Ft Madison Farmers Market",
+      "old_alt": "Ft Madison Farmers Market, two vendors seated behind a table of vegetables and herbs with hanging flower baskets in front",
+      "template": true
+    },
+    {
+      "id": "74f67037-ce83-4f59-b07b-b404661aeac4",
+      "market_id": "gov:be_brussels_food_markets:7bc4d6c3596bd3c5",
+      "market_name": "Marché DE Wand / Markt DE Wand",
+      "alt": "Marché DE Wand / Markt DE Wand, shiny metal balls in a tree shaded square with market stalls and tents behind",
+      "old_alt": "Marché DE Wand / Markt DE Wand, a food truck on a grass lawn with straw bales and a wooden table in front",
+      "template": false
+    },
+    {
+      "id": "30972e6b-b1bf-4e58-9f48-9afcd940e066",
+      "market_id": "gov:be_brussels_food_markets:7bc4d6c3596bd3c5",
+      "market_name": "Marché DE Wand / Markt DE Wand",
+      "alt": "Marché DE Wand / Markt DE Wand, black food truck on a street with straw bales and a wooden table on grass",
+      "old_alt": "Marché DE Wand / Markt DE Wand, market stalls and tents beside a park with large metal balls and a sand court",
+      "template": false
+    }
+  ]
+}
