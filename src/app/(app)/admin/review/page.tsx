@@ -10,6 +10,8 @@ import { PhotoReviewCard } from '@/components/admin/PhotoReviewCard';
 import { LegacyHandledButton } from '@/components/admin/LegacyHandledButton';
 import { formatTimestamp, placeLabel, roleLabel, timeAgo } from '@/components/admin/format';
 import { cachedReviewQueue, cachedVendorQueue } from '../_lib/queue';
+import { describeBotAction } from '@/lib/botActions';
+import { BotRequestDecision } from '@/components/admin/BotRequestDecision';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +44,7 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
     { id: 'claims', label: 'Claims', count: queue.claims.length },
     { id: 'updates', label: 'Listing updates', count: queue.changes.length },
     { id: 'photos', label: 'Photos', count: queue.photos.length },
+    { id: 'bot', label: 'Bot requests', count: queue.botRequests.length },
     { id: 'older', label: 'Older contact-form claims', count: queue.legacyClaims.length },
     { id: 'vendor-profiles', label: 'Vendor profiles', count: vendorQueue.profiles.length },
     { id: 'vendor-applications', label: 'Vendor applications', count: vendorQueue.applications.length },
@@ -72,7 +75,7 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
         </div>
       ) : null}
 
-      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-zinc-200 sm:grid-cols-3 lg:grid-cols-6 dark:bg-zinc-800">
+      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-zinc-200 sm:grid-cols-4 lg:grid-cols-7 dark:bg-zinc-800">
         {counts.map((item) => (
           <a key={item.id} href={`#${item.id}`} className="bg-white px-4 py-3 hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/60">
             <dt className="text-xs text-zinc-500 dark:text-zinc-400">{item.label}</dt>
@@ -87,13 +90,14 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
         <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed bg-white px-6 py-14 text-center dark:bg-zinc-900">
           <Inbox className="size-8 text-zinc-400" aria-hidden="true" />
           <p className="font-medium">Nothing is waiting for review</p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">New claims, listing updates, photos and vendor reviews show up here.</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">New claims, listing updates, photos, bot requests and vendor reviews show up here.</p>
         </div>
       ) : (
         <>
           <ClaimsSection queue={queue} />
           <ChangesSection queue={queue} />
           <PhotosSection queue={queue} />
+          <BotRequestsSection queue={queue} />
           <LegacySection rows={queue.legacyClaims} markets={legacyMarkets} />
           <VendorProfilesSection queue={vendorQueue} />
           <VendorApplicationsSection queue={vendorQueue} />
@@ -226,6 +230,43 @@ function PhotosSection({ queue }: { queue: Queue }) {
                 }}
                 market={market ? { name: market.name, place: placeLabel(market), slug: market.slug } : null}
               />
+            );
+          })}
+        </ul>
+      )}
+    </Panel>
+  );
+}
+
+function BotRequestsSection({ queue }: { queue: Queue }) {
+  return (
+    <Panel id="bot" title={`Bot requests (${queue.botRequests.length})`}>
+      <p className="border-b px-4 py-2 text-xs text-zinc-500 dark:text-zinc-400">
+        The outreach bot publishes edits and photos itself. Removals and closures wait for you.
+      </p>
+      {queue.botRequests.length === 0 ? (
+        <Empty>No bot requests waiting.</Empty>
+      ) : (
+        <ul className="divide-y">
+          {queue.botRequests.map((row) => {
+            const { title, detail, approveLabel } = describeBotAction(row);
+            return (
+              <li
+                key={row.id}
+                className="grid items-start gap-x-4 gap-y-2 px-4 py-3 text-sm md:grid-cols-[minmax(0,1.2fr)_minmax(0,2fr)_6.5rem_auto]"
+              >
+                <MarketCell market={queue.markets.get(row.marketId)} fallbackId={row.marketId} />
+                <div className="min-w-0 space-y-1">
+                  <div className="font-medium">
+                    {title}
+                    {detail ? <Muted> · {detail}</Muted> : null}
+                  </div>
+                  <p className="whitespace-pre-line text-zinc-700 dark:text-zinc-300">{row.note}</p>
+                  {row.operatorEmail ? <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">From {row.operatorEmail}</p> : null}
+                </div>
+                <TimeAgo date={row.createdAt} className="text-xs text-zinc-500 dark:text-zinc-400" />
+                <BotRequestDecision id={row.id} approveLabel={approveLabel} />
+              </li>
             );
           })}
         </ul>
