@@ -33,7 +33,7 @@ Prerendering ran at an even pace of about 10 ms of wall time a page. Of the 14,2
 
 What stays in full:
 
-- **Production (Vercel) and the nightly data refresh** set neither variable. They prerender every page and type-check in the build. A market page that fails to render still fails the production deploy, and the previous deploy stays live.
+- **Production (Vercel) and the monthly data refresh** set neither variable. They prerender every page and type-check in the build. A market page that fails to render still fails the production deploy, and the previous deploy stays live.
 - **City pages and state hubs** always prerender in full. Those routes use `dynamicParams = false` on purpose (unknown top-level URLs must be a static 404), so a page left out of the build would 404 in the CI server.
 
 ## Experiment log

@@ -12,6 +12,9 @@ import {
   normalizeAddress,
   normalizeCoordinate,
   normalizeIndoor,
+  normalizeName,
+  normalizeProse,
+  normalizeSiteType,
   normalizeText,
   parseAddress,
   parseArguments,
@@ -21,6 +24,8 @@ import {
   reconcile,
   summarize,
   toSnapshotTimestamp,
+  UPSTREAM_URL,
+  manifestPathFor,
   updateLegacyMarkets
 } from './update-legacy-markets.mjs';
 
@@ -108,7 +113,40 @@ test('coordinate normalization ignores float noise below five decimals', () => {
 test('indoor normalization treats the snapshot placeholder as no value', () => {
   assert.equal(normalizeIndoor('Unknown'), undefined);
   assert.equal(normalizeIndoor(null), undefined);
-  assert.equal(normalizeIndoor('No Indoor;'), 'No Indoor;');
+});
+
+test('the upstream indoor answers compare equal to the labels the snapshot holds', () => {
+  assert.equal(normalizeIndoor('No Indoor;'), normalizeIndoor('Outdoor'));
+  assert.equal(normalizeIndoor('No;'), 'Outdoor');
+  assert.equal(normalizeIndoor('Yes, part of the time the market is open indoor;'), 'Indoor and outdoor');
+  assert.equal(normalizeIndoor('Part of the time the market is open indoor;'), normalizeIndoor('Indoor and outdoor'));
+  assert.equal(normalizeIndoor('Yes, entire time the market is open indoor;'), 'Indoor');
+  assert.equal(normalizeIndoor('Entire time the market is open indoor;'), normalizeIndoor('Indoor'));
+  assert.notEqual(normalizeIndoor('No Indoor;'), normalizeIndoor('Indoor'), 'a real change still counts');
+});
+
+test('site types ignore the upstream separator and names ignore apostrophe style', () => {
+  assert.equal(normalizeSiteType('Closed-off public street;'), normalizeSiteType('Closed-off public street'));
+  assert.notEqual(normalizeSiteType('Faith-based institution;'), normalizeSiteType('Educational institution'));
+  assert.equal(normalizeName("Durham Farmers' Market"), normalizeName('Durham Farmers\u2019 Market'));
+  assert.equal(normalizeName('Iowa Falls Farmers\u2019 Market'), normalizeName("iowa falls farmers' market"));
+  assert.equal(normalizeName("Evart Farmers\\' Market"), normalizeName('Evart Farmers\u2019 Market'));
+  assert.notEqual(normalizeName('Evart Farmers Market'), normalizeName('Evart Community Market'), 'a rename still counts');
+  assert.equal(normalizeProse("Weekly farmers' market"), normalizeProse('Weekly farmers\u2019 market'));
+  assert.notEqual(normalizeProse('Weekly market'), normalizeProse('weekly market'), 'prose keeps its case');
+});
+
+test('an upstream that only changed formatting leaves the record untouched', () => {
+  const market = snapshotMarket({
+    name: 'Colorado Farm and Art Market\u2019s Corner',
+    location: { ...snapshotMarket().location, site_type: 'Closed-off public street', indoor_outdoor: 'Outdoor' }
+  });
+  const record = upstream({
+    listing_name: "Colorado Farm and Art Market's Corner",
+    location_site: 'Closed-off public street;',
+    location_indoor: 'No Indoor;'
+  });
+  assert.deepEqual(changedFields(market, record), []);
 });
 
 test('upstream timestamps become snapshot timestamps', () => {
@@ -484,4 +522,57 @@ test('an applied run followed by a second run is a no-op', async () => {
     assert.deepEqual(second.changedSlugs, []);
     assert.equal(await fs.readFile(snapshotPath, 'utf8'), afterFirst, 'second run must not rewrite the snapshot');
   });
+});
+
+test('only a full applied run records the refresh date the freshness check reads', async () => {
+  await withTemporaryProject(async ({ directory, snapshotPath, reportPath }) => {
+    await fs.writeFile(snapshotPath, `${JSON.stringify([snapshotMarket()], null, 2)}\n`, 'utf8');
+    const manifestPath = path.join(directory, 'snapshot.manifest.json');
+    const common = {
+      snapshot: snapshotPath,
+      report: reportPath,
+      govSnapshot: path.join(directory, 'missing.json'),
+      geoIndex: path.join(directory, 'missing-geo.json'),
+      ping: async () => ({ ok: true }),
+      log: silent,
+      now: new Date('2027-02-15T10:00:00.000Z')
+    };
+    const records = [upstream({ update_time: '2026-01-01 00:00:00' })];
+
+    await updateLegacyMarkets({ ...common, dryRun: true, fetchImpl: fakeFetch(records).fetch });
+    await assert.rejects(fs.readFile(manifestPath, 'utf8'), /ENOENT/, 'a dry run is not a refresh');
+
+    await updateLegacyMarkets({ ...common, limit: 1, fetchImpl: fakeFetch(records).fetch });
+    await assert.rejects(fs.readFile(manifestPath, 'utf8'), /ENOENT/, 'a --limit run is not a full refresh');
+
+    await updateLegacyMarkets({ ...common, fetchImpl: fakeFetch(records).fetch });
+    const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
+    assert.deepEqual(manifest, {
+      schema_version: 1,
+      retrieved_at: '2027-02-15T10:00:00.000Z',
+      upstream_url: UPSTREAM_URL,
+      upstream_record_count: 1,
+      record_count: 1
+    });
+  });
+});
+
+test('a failed fetch writes no manifest, so the snapshot keeps reading as old', async () => {
+  await withTemporaryProject(async ({ directory, snapshotPath, reportPath }) => {
+    await fs.writeFile(snapshotPath, `${JSON.stringify([snapshotMarket()], null, 2)}\n`, 'utf8');
+    await assert.rejects(
+      updateLegacyMarkets({
+        snapshot: snapshotPath,
+        report: reportPath,
+        fixture: path.join(directory, 'missing-upstream.json'),
+        log: silent
+      }),
+      /ENOENT/
+    );
+    await assert.rejects(fs.readFile(path.join(directory, 'snapshot.manifest.json'), 'utf8'), /ENOENT/);
+  });
+});
+
+test('the manifest sits next to the snapshot it describes', () => {
+  assert.equal(manifestPathFor('data/sources/legacy_markets.json'), 'data/sources/legacy_markets.manifest.json');
 });

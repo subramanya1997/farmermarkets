@@ -5,6 +5,7 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { SITE_URL, pingIndexNow } from './lib/indexnow.mjs';
+import { normalizeMarketNameTypography } from './lib/market-name-equivalence.mjs';
 
 const DEFAULT_REGISTRY = 'data/government-market-sources.json';
 const DEFAULT_OUTPUT = 'data/sources/government_markets.json';
@@ -12,6 +13,9 @@ const DEFAULT_MANIFEST = 'data/sources/government_markets.manifest.json';
 const DEFAULT_GEO_INDEX = 'public/data/geo_index.json';
 const REQUEST_TIMEOUT_MS = 45_000;
 const REQUEST_ATTEMPTS = 3;
+// How far a market may sit from its previous position and still be the same
+// market when its source reissued the record id (see carryForwardIdentities).
+const IDENTITY_MAX_DISTANCE_KM = 0.5;
 
 function compact(value) {
   if (value === null || value === undefined) return undefined;
@@ -599,6 +603,69 @@ function validateRecords(records, source) {
   }
 }
 
+function identityName(market) {
+  return (normalizeMarketNameTypography(market.name) ?? '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+}
+
+function identityAddress(market) {
+  return String(market.location?.address ?? '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+}
+
+function distanceKm(left, right) {
+  const toRadians = (degrees) => (degrees * Math.PI) / 180;
+  const latitude = toRadians(right.latitude - left.latitude);
+  const longitude = toRadians(right.longitude - left.longitude);
+  const a = Math.sin(latitude / 2) ** 2 +
+    Math.cos(toRadians(left.latitude)) * Math.cos(toRadians(right.latitude)) * Math.sin(longitude / 2) ** 2;
+  return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function uniqueBy(values, keyForValue) {
+  const groups = groupBy(values, keyForValue);
+  return new Map([...groups].filter(([key, group]) => key && group.length === 1).map(([key, [value]]) => [key, value]));
+}
+
+/**
+ * Keep a market's id and slug when its source reissued the record id.
+ *
+ * Ids come from the publisher's own record key, so a publisher that rebuilds
+ * its dataset can hand every market a new key overnight. DC Open Data did that
+ * between August and November 2026: all 64 markets came back with new
+ * GLOBALIDs. Taken at face value that moves every DC page to a new URL and
+ * orphans the research, editorial overrides and merges keyed to the old ids.
+ *
+ * A new record takes over a previous record's id and slug only when it is
+ * plainly the same market: same source, same name ignoring case and
+ * punctuation, that name unique on both sides, and either both within
+ * IDENTITY_MAX_DISTANCE_KM of each other or, without coordinates, the same
+ * address. Anything less stays a new record, and the old URL is handled by
+ * the slug redirects as before.
+ */
+export function carryForwardIdentities(records, previous) {
+  const currentIds = new Set(records.map((market) => market.id));
+  const previousIds = new Set(previous.map((market) => market.id));
+  const orphans = uniqueBy(previous.filter((market) => !currentIds.has(market.id)), identityName);
+  const newcomers = uniqueBy(records.filter((market) => !previousIds.has(market.id)), identityName);
+  let carried = 0;
+
+  const result = records.map((market) => {
+    const key = identityName(market);
+    if (newcomers.get(key) !== market) return market;
+    const match = orphans.get(key);
+    if (!match) return market;
+    const here = market.location?.coordinates;
+    const there = match.location?.coordinates;
+    const samePlace = here && there
+      ? distanceKm(here, there) <= IDENTITY_MAX_DISTANCE_KM
+      : identityAddress(market) !== '' && identityAddress(market) === identityAddress(match);
+    if (!samePlace) return market;
+    carried += 1;
+    return { ...market, id: match.id, slug: match.slug };
+  });
+
+  return { records: result, carried };
+}
+
 function validateGlobalRecords(records) {
   const ids = new Set();
   const slugs = new Set();
@@ -749,7 +816,9 @@ export async function updateGovernmentMarkets(options) {
   const enabledSources = registry.sources.filter((source) => source.enabled);
   const previousRecords = await readJsonIfPresent(outputPath, []);
   const previousBySource = groupBy(previousRecords, (market) => market.provenance?.source_id);
-  const retrievedAt = new Date().toISOString();
+  const previousManifest = await readJsonIfPresent(manifestPath, null);
+  const previousManifestSources = new Map((previousManifest?.sources ?? []).map((entry) => [entry.id, entry]));
+  const retrievedAt = (options.now ?? new Date()).toISOString();
   const records = [];
   const sourceResults = [];
 
@@ -761,8 +830,13 @@ export async function updateGovernmentMarkets(options) {
       const payload = options.fixturesDir
         ? await fs.readFile(path.resolve(options.fixturesDir, source.fixture_file), 'utf8')
         : await fetchPayload(source);
-      const parsed = parser(source, payload, retrievedAt);
-      validateRecords(parsed, source);
+      const fresh = parser(source, payload, retrievedAt);
+      validateRecords(fresh, source);
+      const { records: parsed, carried } = carryForwardIdentities(fresh, previous);
+      if (carried) {
+        console.log(`${source.id}: kept the previous id and URL for ${carried} market(s) whose source record id changed`);
+        validateRecords(parsed, source);
+      }
       parsed.sort((left, right) => left.id.localeCompare(right.id));
 
       if (previous.length > 0) {
@@ -790,11 +864,14 @@ export async function updateGovernmentMarkets(options) {
         catalog_url: source.catalog_url,
         data_url: source.data_url,
         license: source.license,
-        retrieved_at: retrievedAt
+        retrieved_at: retrievedAt,
+        last_attempted_at: retrievedAt,
+        consecutive_failures: 0
       });
       console.log(`${status} ${source.id}: ${parsed.length} records`);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
+      const previousEntry = previousManifestSources.get(source.id);
       records.push(...previous);
       sourceResults.push({
         id: source.id,
@@ -809,7 +886,12 @@ export async function updateGovernmentMarkets(options) {
         catalog_url: source.catalog_url,
         data_url: source.data_url,
         license: source.license,
-        retrieved_at: retrievedAt,
+        // The records kept are the ones from the last good retrieval, so the
+        // date stays the date of that retrieval. Stamping a failed attempt as
+        // "retrieved" is what let three months of failures look current.
+        retrieved_at: previousEntry?.retrieved_at ?? null,
+        last_attempted_at: retrievedAt,
+        consecutive_failures: (previousEntry?.consecutive_failures ?? 0) + 1,
         error: message
       });
       console.error(`${source.id}: ${message}${previous.length ? `; retained ${previous.length} previous records` : ''}`);
@@ -829,6 +911,10 @@ export async function updateGovernmentMarkets(options) {
     schema_version: 1,
     generated_at: retrievedAt,
     status: failures.length ? 'partial' : 'ok',
+    // Runs in a row that ended partial. `scripts/check-data-freshness.mjs`
+    // turns a streak into an alert, so one flaky night does not page anyone
+    // but a source that stays down cannot be ignored for months.
+    consecutive_partial_runs: failures.length ? (previousManifest?.consecutive_partial_runs ?? 0) + 1 : 0,
     record_count: records.length,
     sha256: createHash('sha256').update(outputContents).digest('hex'),
     sources: sourceResults,

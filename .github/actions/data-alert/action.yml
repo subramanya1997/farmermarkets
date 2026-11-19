@@ -1,0 +1,56 @@
+name: Data alert issue
+description: >
+  Open or update one GitHub issue per alert title when a data job fails, and
+  close it when the job passes again. One issue per title, so a job that keeps
+  failing adds a comment each run instead of opening a new issue each run.
+
+inputs:
+  title:
+    description: Exact issue title. It identifies the alert.
+    required: true
+  state:
+    description: "`failing` opens or comments on the issue; `passing` closes it if one is open."
+    required: true
+  body-file:
+    description: Optional Markdown file with details for a failing run.
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        TITLE: ${{ inputs.title }}
+        STATE: ${{ inputs.state }}
+        BODY_FILE: ${{ inputs.body-file }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: |
+        number=$(gh issue list --state open --limit 100 --json number,title \
+          --jq "map(select(.title == env.TITLE)) | first | .number // empty")
+
+        if [ "$STATE" = "passing" ]; then
+          if [ -n "$number" ]; then
+            gh issue close "$number" --comment "Passing again in $RUN_URL. Closing."
+          fi
+          exit 0
+        fi
+
+        body="$RUNNER_TEMP/data-alert-body.md"
+        {
+          echo "**${GITHUB_WORKFLOW}** failed on $(date -u +%Y-%m-%d): $RUN_URL"
+          echo
+          if [ -n "$BODY_FILE" ] && [ -s "$BODY_FILE" ]; then
+            cat "$BODY_FILE"
+          else
+            echo "See the run log for the failing step. What to do: docs/data-refresh.md."
+          fi
+        } > "$body"
+
+        if [ -n "$number" ]; then
+          gh issue comment "$number" --body-file "$body"
+        else
+          gh issue create --title "$TITLE" --label data --body-file "$body"
+        fi
+        echo "::error::$TITLE (see the linked issue)"
