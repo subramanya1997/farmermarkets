@@ -10,6 +10,7 @@ import { dbSchema, getDb } from '@/db';
 import { marketService } from '@/app/api/markets/data';
 import { buildBotMetrics, type GroupRows, type MetricsInput } from './botMetrics';
 import { OUTREACH_BOT_REVIEWER } from './organizer';
+import { vendorReachCounts } from './vendorReach';
 import { vendorCounts } from './vendors';
 
 const {
@@ -49,7 +50,7 @@ async function datasetTotals(): Promise<MetricsInput['dataset']> {
 async function vendorBlock(since: Date): Promise<{ block: MetricsInput['vendors']; recent: number }> {
   const db = getDb();
   try {
-    const [counts, byStatus, applicationsByStatus, [withVendors], recent] = await Promise.all([
+    const [counts, byStatus, applicationsByStatus, [withVendors], recent, reach] = await Promise.all([
       vendorCounts(),
       groupBy(vendors, vendors.status),
       groupBy(vendorApplications, vendorApplications.status),
@@ -58,6 +59,11 @@ async function vendorBlock(since: Date): Promise<{ block: MetricsInput['vendors'
         .from(vendorApplications)
         .where(eq(vendorApplications.status, 'approved')),
       total(vendors, gte(vendors.createdAt, since)),
+      // Follows and scans have their own tables; without them reach stays null and the rest still answers.
+      vendorReachCounts().catch((error) => {
+        console.error('Bot metrics: vendor reach unavailable:', error);
+        return null;
+      }),
     ]);
     return {
       block: {
@@ -67,6 +73,7 @@ async function vendorBlock(since: Date): Promise<{ block: MetricsInput['vendors'
         applicationsByStatus,
         applicationsWaitingForAdmin: counts.applicationsForAdmin,
         marketsWithApprovedVendors: Number(withVendors?.n ?? 0),
+        reach: reach ? { follows: reach.follows, qrScans: reach.qr_scans } : null,
       },
       recent,
     };

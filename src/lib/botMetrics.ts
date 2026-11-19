@@ -70,6 +70,8 @@ export interface MetricsInput {
     /** Waiting on an admin because the market has no organizer. */
     applicationsWaitingForAdmin: number;
     marketsWithApprovedVendors: number;
+    /** Shopper follows and counted QR scans, all time. Null when those tables are not there yet. */
+    reach?: { follows: number; qrScans: number } | null;
   } | null;
   /** Created in the last 7 days. */
   recent: { claims: number; changeRequests: number; photos: number; submissions: number; botActions: number; vendorProfiles: number };
@@ -147,10 +149,13 @@ export function buildBotMetrics(input: MetricsInput) {
       applications_waiting_for_admin: input.vendors?.applicationsWaitingForAdmin ?? 0,
       markets_with_approved_vendors: input.vendors?.marketsWithApprovedVendors ?? 0,
       /**
-       * Shopper reach (vendor follows, QR scans). Null means not tracked
-       * yet, not zero; #67 fills these in without changing anything else.
+       * Shopper reach: vendor follows and counted stall QR scans, all time.
+       * Null means not tracked (no such tables yet), which is not zero.
        */
-      reach: { follows: null as number | null, qr_scans: null as number | null },
+      reach: {
+        follows: (input.vendors?.reach?.follows ?? null) as number | null,
+        qr_scans: (input.vendors?.reach?.qrScans ?? null) as number | null,
+      },
     },
     last_7_days: {
       claims: input.recent.claims,

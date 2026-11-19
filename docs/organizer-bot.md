@@ -296,7 +296,7 @@ Response `200` (abridged):
     "by_status": { "draft": 1, "pending": 1, "approved": 3, "rejected": 0 },
     "pending_applications": 2, "approved_applications": 6, "denied_applications": 0, "withdrawn_applications": 0,
     "applications_waiting_for_admin": 1, "markets_with_approved_vendors": 4,
-    "reach": { "follows": null, "qr_scans": null }
+    "reach": { "follows": 12, "qr_scans": 140 }
   },
   "last_7_days": { "claims": 2, "change_requests": 3, "photos": 5, "submissions": 4, "bot_actions": 6, "vendor_profiles": 1 }
 }
@@ -315,8 +315,10 @@ What the numbers mean:
   decision. `approved_claims_by_bot` are the grants from
   `POST /api/bot/organizer-access`.
 - `vendors.available` is `false` (and the counts 0) on a database without the
-  vendor tables. `vendors.reach` stays `null` (not tracked, which is different
-  from 0) until vendor follows and QR scans exist; they will fill in there.
+  vendor tables. `vendors.reach.follows` is shopper follows across all vendors;
+  `qr_scans` is stall QR scans that counted (bots, link previews and repeat
+  scans within 30 minutes are left out). Both are `null` (not tracked, which is
+  different from 0) on a database without the follow and scan tables.
 - `last_7_days` counts rows created in the 7 days before `generated_at`.
 
 Fields may be added; existing ones keep their names and meaning while

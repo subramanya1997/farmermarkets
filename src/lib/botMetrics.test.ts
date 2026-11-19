@@ -88,6 +88,16 @@ test('counts land where they belong, missing statuses are zero', () => {
   assert.equal(metrics.vendors.reach.follows, null);
 });
 
+test('vendor reach fills in once follows and scans are tracked', () => {
+  const base = input();
+  const metrics = buildBotMetrics(input({ vendors: { ...base.vendors!, reach: { follows: 4, qrScans: 31 } } }));
+  assert.deepEqual(metrics.vendors.reach, { follows: 4, qr_scans: 31 });
+  assert.deepEqual(Object.keys(metrics.vendors), SHAPE.vendors);
+  // Zero is a real count, not "not tracked".
+  const none = buildBotMetrics(input({ vendors: { ...base.vendors!, reach: { follows: 0, qrScans: 0 } } }));
+  assert.deepEqual(none.vendors.reach, { follows: 0, qr_scans: 0 });
+});
+
 test('a row moves the count it belongs to', () => {
   const before = buildBotMetrics(input());
   const after = buildBotMetrics(input({ claimsByStatus: [{ key: 'approved', n: 3 }, { key: 'rejected', n: 1 }, { key: 'pending', n: 1 }] }));
