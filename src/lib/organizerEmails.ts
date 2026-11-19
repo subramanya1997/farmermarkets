@@ -134,6 +134,8 @@ export function decisionEmail(input: {
   marketName: string;
   marketSlug: string;
   note?: string | null;
+  /** Claim approvals: the edits or photos sent while waiting went live with it. */
+  published?: boolean;
 }): EmailContent {
   const listingUrl = absoluteUrl(`/markets/${input.marketSlug}`);
   const dashboardUrl = absoluteUrl(`/dashboard/markets/${input.marketSlug}`);
@@ -148,7 +150,9 @@ export function decisionEmail(input: {
   const lead =
     input.kind === 'claim'
       ? input.approved
-        ? `Your claim was approved. You can now update ${input.marketName}'s hours, details and photos.`
+        ? input.published
+          ? `Your claim was approved, and the changes you made to ${input.marketName} are now live. You can keep updating its hours, details and photos any time.`
+          : `Your claim was approved. You can now update ${input.marketName}'s hours, details and photos.`
         : `We could not approve your claim for ${input.marketName}.`
       : input.approved
         ? `Your changes to ${input.marketName} are published.`

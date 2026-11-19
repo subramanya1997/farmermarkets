@@ -25,8 +25,9 @@ export default async function OrganizerHelpPage() {
           <Link href="/dashboard/claim" className={TEXT_LINK}>
             Claim a market
           </Link>{' '}
-          and tell us how you are connected to it. A person checks every claim, usually within two business days, and
-          we email you either way. Once it is approved the market shows up in your sidebar and you can update it.
+          and tap your role. The market shows up in your sidebar right away and you can start editing. A person confirms
+          every claim, usually within two business days. Until then nothing you change is public; once we confirm, your
+          changes and photos go live together and we email you.
         </p>
         <p>
           More than one person can manage the same market. Each person on your team signs up with their own email and

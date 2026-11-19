@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { Camera, CalendarClock, MapPin } from 'lucide-react';
-import { canManageMarket, getPublishedMarket, getSessionUser } from '@/lib/organizer';
+import { canEditMarket, getPublishedMarket, getSessionUser } from '@/lib/organizer';
 import { AuthShell } from '@/components/organizer/auth/AuthShell';
 import { EmailCodeForm } from '@/components/organizer/auth/EmailCodeForm';
 import { TEXT_LINK } from '@/components/organizer/auth/FormBits';
@@ -28,7 +28,7 @@ export default async function MarketClaimPage({ params }: { params: Promise<{ sl
   const user = await getSessionUser();
   if (user?.emailVerified) {
     redirect(
-      (await canManageMarket(user, market.id))
+      (await canEditMarket(user, market.id))
         ? `/dashboard/markets/${market.slug}`
         : `/dashboard/claim?market=${market.slug}`,
     );
@@ -40,7 +40,7 @@ export default async function MarketClaimPage({ params }: { params: Promise<{ sl
   return (
     <AuthShell
       title={`Update ${market.name}`}
-      description="Sign in with your email to keep this listing current and add photos of the market and its vendors."
+      description="Takes about a minute. We email you a code, no password, and you can start editing right away."
       footer={
         <>
           <p>

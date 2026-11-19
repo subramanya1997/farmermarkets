@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ShieldAlert, ShieldCheck } from 'lucide-react';
 import { emailDomainHint, getClaimForReview, managersFor, requireAdmin } from '@/lib/organizer';
+import { SECTION_LABELS, changedSections } from '@/lib/listingEdits';
 import { DecisionForm } from '@/components/admin/DecisionForm';
+import { SectionDiff } from '@/components/admin/SectionDiff';
 import { ExternalA, Fact, Facts, Muted, Panel, StatusPill, TimeAgo } from '@/components/admin/bits';
 import { placeLabel, roleLabel, safeHttpUrl, shortUrl } from '@/components/admin/format';
 
@@ -20,7 +23,12 @@ export default async function ClaimReviewPage({ params }: { params: Promise<{ id
   const review = await getClaimForReview(id);
   if (!review) notFound();
 
-  const { claim, user, market } = review;
+  const { claim, user, market, change, photos } = review;
+  const sections = change ? changedSections(change.proposed) : [];
+  const waiting = [
+    sections.length ? `${sections.length === 1 ? 'one listing section' : `${sections.length} listing sections`}` : '',
+    photos.length ? `${photos.length === 1 ? 'one photo' : `${photos.length} photos`}` : '',
+  ].filter(Boolean);
   const managers = await managersFor(claim.marketId);
   const hint = market ? emailDomainHint(user.email, market) : null;
   const hintMatches = hint?.includes(' matches ') ?? false;
@@ -143,8 +151,49 @@ export default async function ClaimReviewPage({ params }: { params: Promise<{ id
         )}
       </Panel>
 
+      {claim.status === 'pending' && change && sections.length ? (
+        <section className="space-y-3">
+          <h2 className="text-base font-semibold">What they already changed</h2>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            {sections.map((section) => SECTION_LABELS[section]).join(', ')}. Compared with the live listing now. Approving the claim
+            publishes this.
+          </p>
+          {sections.map((section) => (
+            <SectionDiff key={section} section={section} before={change.published} after={change.proposed} />
+          ))}
+        </section>
+      ) : null}
+
+      {claim.status === 'pending' && photos.length ? (
+        <Panel title={`Photos they uploaded (${photos.length})`}>
+          <ul className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3">
+            {photos.map((photo) => (
+              <li key={photo.id}>
+                <a
+                  href={photo.blobUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative block aspect-[4/3] overflow-hidden rounded-md bg-zinc-100 dark:bg-zinc-800"
+                  title="Open full size"
+                >
+                  <Image src={photo.blobUrl} alt={photo.alt || 'Uploaded photo'} fill sizes="(min-width: 640px) 33vw, 50vw" className="object-cover" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      ) : null}
+
       {claim.status === 'pending' ? (
-        <DecisionForm kind="claim" id={claim.id} approveHint="The organizer can edit the listing right after." />
+        <DecisionForm
+          kind="claim"
+          id={claim.id}
+          approveHint={
+            waiting.length
+              ? `Approving also publishes their ${waiting.join(' and ')}. Rejecting turns those down too.`
+              : 'The organizer can keep editing, and changes go through normal review after this.'
+          }
+        />
       ) : (
         <Panel title="Decision">
           <Facts>

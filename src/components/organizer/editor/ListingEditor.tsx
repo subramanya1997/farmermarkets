@@ -32,7 +32,7 @@ const PAYMENTS_TAB: Tab = { id: 'payments', label: 'Shopping', sections: ['payme
 const VENDORS_TAB: Tab = { id: 'vendors', label: 'Vendors', sections: ['vendors', 'events', 'programs'] };
 const PHOTOS_TAB: Tab = { id: 'photos', label: 'Photos', sections: [] };
 
-export type EditorMode = 'organizer' | 'admin';
+export type EditorMode = 'organizer' | 'claimant' | 'admin';
 
 /**
  * Everything that differs between an organizer sending an update for review
@@ -50,7 +50,23 @@ const MODES = {
     fixFirst: 'A few fields need a fix before you send.',
     done: 'Sent for review.',
     unsent: 'You have changes that are not sent yet.',
+    pendingNote: 'Your last update is waiting for review.',
     footnote: 'Changes go live after a quick review.',
+    placeHint: 'Name and address changes are always checked by our team before they go live.',
+    cityNote: "City and state can't be changed here. Email us if the market moved.",
+  },
+  // Someone whose claim is still being checked: the same editor, saved now and published with the claim.
+  claimant: {
+    tabs: [HOURS_TAB, ABOUT_TAB, PAYMENTS_TAB, VENDORS_TAB, PLACE_TAB, PHOTOS_TAB] as Tab[],
+    admin: false,
+    submit: submitListingChangesAction,
+    cta: 'Save changes',
+    busy: 'Saving',
+    fixFirst: 'A few fields need a fix before you save.',
+    done: 'Saved.',
+    unsent: 'You have changes that are not saved yet.',
+    pendingNote: 'Your changes are saved.',
+    footnote: 'Saved changes go live once we confirm you run this market.',
     placeHint: 'Name and address changes are always checked by our team before they go live.',
     cityNote: "City and state can't be changed here. Email us if the market moved.",
   },
@@ -63,6 +79,7 @@ const MODES = {
     fixFirst: 'A few fields need a fix before you publish.',
     done: 'Published.',
     unsent: 'You have changes that are not published yet.',
+    pendingNote: 'Your last update is waiting for review.',
     footnote: 'Changes go live as soon as you publish.',
     placeHint: null,
     cityNote: 'City and state decide which city page lists this market, so they cannot be changed here.',
@@ -99,7 +116,8 @@ export interface ListingEditorProps {
   photos: ReactNode;
   /**
    * 'organizer' (default) sends the update for review, name and location
-   * included. 'admin' publishes straight away.
+   * included. 'claimant' saves it to go live with a waiting claim. 'admin'
+   * publishes straight away.
    */
   mode?: EditorMode;
   /** City and state, shown read-only next to the address. */
@@ -410,7 +428,7 @@ function SubmitBar({
     : dirty
       ? config.unsent
       : hasPending
-        ? 'Your last update is waiting for review.'
+        ? config.pendingNote
         : 'No changes yet.';
 
   return (

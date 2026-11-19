@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ArrowUpRight, CheckCircle2, Clock, MessageSquareWarning } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Clock, MessageSquareWarning, ShieldCheck } from 'lucide-react';
 import {
   MAX_PHOTOS_PER_MARKET,
   MAX_PHOTO_BYTES,
   PHOTO_CONTENT_TYPES,
   canManageMarket,
+  canEditMarket,
   editorValuesFor,
   getPublishedMarket,
   pendingChangeFor,
@@ -36,7 +37,9 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
   const user = await requireOrganizer(`/dashboard/markets/${slug}`);
   const market = await getPublishedMarket(slug);
   if (!market) notFound();
-  if (!(await canManageMarket(user, market.id))) notFound();
+  if (!(await canEditMarket(user, market.id))) notFound();
+  // Not a manager yet: the claim is still being checked.
+  const awaitingClaim = !(await canManageMarket(user, market.id));
 
   const [published, pending, recent, photoRows] = await Promise.all([
     editorValuesFor(market),
@@ -55,6 +58,8 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
 
   const photos: EditorPhoto[] = photoRows
     .filter((row): row is typeof row & { status: 'pending' | 'approved' } => row.status === 'pending' || row.status === 'approved')
+    // Live photos stay hands-off until the claim is confirmed; claimants see their own uploads.
+    .filter((row) => !awaitingClaim || row.uploadedBy === user.id)
     .map((row) => ({
       id: row.id,
       url: row.blobUrl,
@@ -86,7 +91,7 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
           </a>
         </div>
         <div className="pt-1">
-          {pending ? (
+          {awaitingClaim ? null : pending ? (
             <p className="inline-flex items-start gap-1.5 text-sm text-amber-900 dark:text-amber-200">
               <Clock aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
               Your last update is waiting for review, sent {formatDate(pending.createdAt)}.
@@ -99,6 +104,19 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
           )}
         </div>
       </header>
+
+      {awaitingClaim ? (
+        <div className="flex gap-3 rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-950 dark:border-green-900/60 dark:bg-green-950/30 dark:text-green-100">
+          <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-green-700 dark:text-green-400" />
+          <div>
+            <p className="font-semibold">Go ahead and make your changes</p>
+            <p className="mt-1 text-green-900/80 dark:text-green-200/80">
+              We are confirming that you run this market, usually within two business days. Everything you save here, photos
+              included, goes live as soon as we do. We will email you.
+            </p>
+          </div>
+        </div>
+      ) : null}
 
       {rejection ? (
         <div className="flex gap-3 rounded-lg border bg-white p-4 text-sm dark:bg-zinc-900">
@@ -119,13 +137,16 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
 
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
         <section aria-label="Listing" className="min-w-0">
-          <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
-            Edit any section, then send it for review. We usually publish within two business days and email you when it is live.
-          </p>
+          {awaitingClaim ? null : (
+            <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
+              Edit any section, then send it for review. We usually publish within two business days and email you when it is live.
+            </p>
+          )}
           <ListingEditor
             slug={market.slug}
             initialValues={initialValues}
             hasPending={Boolean(pending)}
+            mode={awaitingClaim ? 'claimant' : 'organizer'}
             place={{ city: market.city, state: market.state }}
             photos={
               <PhotoManager
@@ -162,7 +183,7 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
               </ul>
             )}
           </Panel>
-          <BadgeSnippet slug={market.slug} marketName={market.name} />
+          {awaitingClaim ? null : <BadgeSnippet slug={market.slug} marketName={market.name} />}
         </aside>
       </div>
     </div>

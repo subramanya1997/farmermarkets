@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Clock, Info, MapPin, Pencil, ShieldCheck } from 'lucide-react';
-import { canManageMarket, claimsForUser, getPublishedMarket, requireOrganizer } from '@/lib/organizer';
-import { buttonVariants } from '@/components/ui/button';
+import { redirect } from 'next/navigation';
+import { Info, MapPin, ShieldCheck } from 'lucide-react';
+import { canEditMarket, claimsForUser, getPublishedMarket, requireOrganizer } from '@/lib/organizer';
 import { ClaimForm } from '@/components/organizer/dashboard/ClaimForm';
 import { ClaimSearch } from '@/components/organizer/dashboard/ClaimSearch';
 import { TEXT_LINK } from '@/components/organizer/auth/FormBits';
@@ -15,8 +15,6 @@ export const metadata: Metadata = {
   title: 'Claim a market',
   robots: { index: false, follow: false },
 };
-
-const dateFormat = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
 function hostOf(url: string): string {
   try {
@@ -48,8 +46,8 @@ export default async function ClaimPage({ searchParams }: { searchParams: Promis
         <h1 className="text-2xl font-semibold tracking-tight">{market ? `Claim ${market.name}` : 'Claim a market'}</h1>
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           {market
-            ? 'Tell us how you are involved. Once we confirm it, you can edit this listing.'
-            : 'Find the market you run. Once we confirm your claim, you can edit its listing.'}
+            ? 'Tell us your role and start editing right away. Your changes go live once we confirm you run it.'
+            : 'Find the market you run. You can start editing its listing as soon as you claim it.'}
         </p>
       </header>
 
@@ -75,14 +73,13 @@ type Organizer = Awaited<ReturnType<typeof requireOrganizer>>;
 type Market = NonNullable<Awaited<ReturnType<typeof getPublishedMarket>>>;
 
 async function MarketClaim({ user, market }: { user: Organizer; market: Market }) {
-  const [manages, allClaims] = await Promise.all([canManageMarket(user, market.id), claimsForUser(user.id)]);
+  // Managers and anyone whose claim is already in go straight to the editor.
+  if (await canEditMarket(user, market.id)) redirect(`/dashboard/markets/${market.slug}`);
   // `claimsForUser` is newest first.
-  const claims = allClaims.filter((claim) => claim.marketId === market.id);
-  const pending = claims.find((claim) => claim.status === 'pending');
+  const claims = (await claimsForUser(user.id)).filter((claim) => claim.marketId === market.id);
   const lastRejected = claims[0]?.status === 'rejected' ? claims[0] : null;
   const place = [market.city, market.state].filter(Boolean).join(', ');
   const domainMatch = emailMatchesWebsite(user.email, market.websites);
-  const siteHost = (market.websites ?? []).map(hostOf).find(Boolean);
 
   return (
     <>
@@ -106,67 +103,31 @@ async function MarketClaim({ user, market }: { user: Organizer; market: Market }
         </div>
       </div>
 
-      {manages ? (
-        <Notice tone="success" icon={<ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
-          <p>You already manage this market.</p>
-          <Link
-            href={`/dashboard/markets/${market.slug}`}
-            className={cn(
-              buttonVariants(),
-              'mt-3 h-11 w-full bg-green-700 text-white hover:bg-green-800 sm:h-9 sm:w-auto dark:bg-green-600 dark:hover:bg-green-700',
-            )}
-          >
-            <Pencil aria-hidden="true" />
-            Edit listing
-          </Link>
-        </Notice>
-      ) : pending ? (
-        <Notice icon={<Clock aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
+      {lastRejected ? (
+        <Notice icon={<Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
           <p>
-            Your claim for this market is waiting for review. You sent it on {dateFormat.format(pending.createdAt)}. We will email you
-            once it is reviewed, usually within two business days.
+            Your last claim for this market was not approved.
+            {lastRejected.reviewNote ? (
+              <>
+                {' '}
+                <span className="font-medium">Note from our team: </span>
+                {lastRejected.reviewNote}
+              </>
+            ) : null}
           </p>
-          <p className="mt-2">
-            <Link href="/dashboard" className={TEXT_LINK}>
-              Back to the overview
-            </Link>
-          </p>
+          <p className="mt-1">You can send a new claim with more detail below.</p>
         </Notice>
-      ) : (
-        <>
-          {lastRejected ? (
-            <Notice icon={<Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
-              <p>
-                Your last claim for this market was not approved.
-                {lastRejected.reviewNote ? (
-                  <>
-                    {' '}
-                    <span className="font-medium">Note from our team: </span>
-                    {lastRejected.reviewNote}
-                  </>
-                ) : null}
-              </p>
-              <p className="mt-1">You can send a new claim with more detail below.</p>
-            </Notice>
-          ) : null}
+      ) : null}
 
-          {domainMatch ? (
-            <Notice tone="success" icon={<ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
-              Your account email matches the market&apos;s website, so your claim should be quick to confirm.
-            </Notice>
-          ) : (
-            <Notice icon={<Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
-              Claims are fastest to confirm when your account email is on the market&apos;s own domain, like{' '}
-              <span className="font-medium">you@{siteHost ?? 'yourmarket.org'}</span>. A personal email is fine too. We may just
-              ask a question or two.
-            </Notice>
-          )}
+      {domainMatch ? (
+        <Notice tone="success" icon={<ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0" />}>
+          Your email matches the market&apos;s website, so this should be quick to confirm.
+        </Notice>
+      ) : null}
 
-          <div className="rounded-lg border bg-white p-4 sm:p-5 dark:bg-zinc-900">
-            <ClaimForm marketSlug={market.slug} marketName={market.name} marketId={market.id} />
-          </div>
-        </>
-      )}
+      <div className="rounded-lg border bg-white p-4 sm:p-5 dark:bg-zinc-900">
+        <ClaimForm marketSlug={market.slug} marketId={market.id} />
+      </div>
     </>
   );
 }

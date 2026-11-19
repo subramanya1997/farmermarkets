@@ -13,7 +13,7 @@ import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import {
   MAX_PHOTO_BYTES,
   PHOTO_CONTENT_TYPES,
-  canManageMarket,
+  canEditMarket,
   getPublishedMarket,
   getSessionUser,
   photoPathPrefix,
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
         if (!user?.emailVerified) throw new Error('Sign in to upload photos.');
         const { slug } = JSON.parse(clientPayload ?? '{}') as { slug?: string };
         const market = slug ? await getPublishedMarket(slug) : null;
-        if (!market || !(await canManageMarket(user, market.id))) throw new Error('You do not manage this market.');
+        if (!market || !(await canEditMarket(user, market.id))) throw new Error('You do not manage this market.');
         if (!pathname.startsWith(photoPathPrefix(market.id))) throw new Error('Upload path does not match this market.');
         return {
           allowedContentTypes: PHOTO_CONTENT_TYPES,

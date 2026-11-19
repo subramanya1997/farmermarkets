@@ -114,6 +114,47 @@ export async function canManageMarket(user: SessionUser, marketId: string): Prom
   return rows.length > 0;
 }
 
+/** The account's claim for a market that is still waiting for review, if any. */
+export async function pendingClaimFor(userId: string, marketId: string) {
+  const [row] = await getDb()
+    .select()
+    .from(marketClaims)
+    .where(and(eq(marketClaims.userId, userId), eq(marketClaims.marketId, marketId), eq(marketClaims.status, 'pending')))
+    .orderBy(desc(marketClaims.createdAt))
+    .limit(1);
+  return row ?? null;
+}
+
+/**
+ * May this account open the listing editor and upload photos? Managers can,
+ * and so can someone whose claim is still waiting: they start editing right
+ * away, and nothing they send goes live until an admin approves the claim.
+ */
+export async function canEditMarket(user: SessionUser, marketId: string): Promise<boolean> {
+  if (await canManageMarket(user, marketId)) return true;
+  return Boolean(await pendingClaimFor(user.id, marketId));
+}
+
+/**
+ * Which photos of a market this account may change: all of them for a
+ * manager, only its own uploads while a claim is waiting (so nobody can touch
+ * live photos before we confirm them). Null means no access at all.
+ */
+async function photoAccess(user: SessionUser, marketId: string) {
+  if (await canManageMarket(user, marketId)) return eq(marketPhotos.marketId, marketId);
+  if (await pendingClaimFor(user.id, marketId)) return and(eq(marketPhotos.marketId, marketId), eq(marketPhotos.uploadedBy, user.id));
+  return null;
+}
+
+/** Market ids this account has a claim waiting for. */
+async function pendingClaimMarketIds(userId: string): Promise<string[]> {
+  const rows = await getDb()
+    .select({ marketId: marketClaims.marketId })
+    .from(marketClaims)
+    .where(and(eq(marketClaims.userId, userId), eq(marketClaims.status, 'pending')));
+  return [...new Set(rows.map((row) => row.marketId))];
+}
+
 /* ------------------------------------------------------------------ *
  * Markets as organizers see them
  * ------------------------------------------------------------------ */
@@ -158,12 +199,16 @@ export interface OrganizerMarketSummary {
   lastApprovedAt: Date | null;
   lastRejected: { reviewedAt: Date | null; note: string | null } | null;
   photos: { live: number; waiting: number };
+  /** True while this account's claim is waiting: it can edit, but nothing goes live until the claim is approved. */
+  awaitingClaim: boolean;
 }
 
-/** Everything the organizer overview shows, for the markets this account manages. */
+/** Everything the organizer overview shows, for the markets this account manages or has a claim waiting for. */
 export async function organizerOverview(user: SessionUser): Promise<OrganizerMarketSummary[]> {
   const preview = await organizerPreviewMarket(user);
-  const ids = preview ? [preview.id] : await managedMarketIds(user.id);
+  const [managed, claimed] = preview ? [[preview.id], []] : await Promise.all([managedMarketIds(user.id), pendingClaimMarketIds(user.id)]);
+  const managedIds = new Set(managed);
+  const ids = [...new Set([...managed, ...claimed])];
   if (ids.length === 0) return [];
   const db = getDb();
   const [markets, changes, photos] = await Promise.all([
@@ -206,6 +251,7 @@ export async function organizerOverview(user: SessionUser): Promise<OrganizerMar
         lastRejected:
           latestReviewed?.status === 'rejected' ? { reviewedAt: latestReviewed.reviewedAt, note: latestReviewed.reviewNote } : null,
         photos: { live: photoCount('approved'), waiting: photoCount('pending') },
+        awaitingClaim: !managedIds.has(market.id),
       };
     })
     .sort((a, b) => a.market.name.localeCompare(b.market.name));
@@ -260,7 +306,7 @@ export async function submitClaim(user: SessionUser, market: FarmerMarket, input
     reviewPath: `/admin/claims/${claim.id}`,
   });
   capture(user.id, 'Market Claim Submitted', { market_id: market.id });
-  return { ok: true, message: 'Thanks. We will email you once your claim is reviewed, usually within two business days.' };
+  return { ok: true, message: 'You can start editing now. Your changes go live once we confirm you run this market.' };
 }
 
 /** Admin hint: does the account's email domain match the market's website? */
@@ -292,7 +338,7 @@ export async function claimsForUser(userId: string) {
 export async function submitChangeRequest(user: SessionUser, market: FarmerMarket, input: unknown): Promise<
   ActionResult | { ok: false; error: string; fieldErrors: { path: string; message: string }[] }
 > {
-  if (!(await canManageMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
+  if (!(await canEditMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
   // Organizers may suggest every section, name and location included: nothing
   // they send is published until an admin approves it.
   const parsed = parseListingEdits(input, { admin: true });
@@ -338,7 +384,8 @@ export async function submitChangeRequest(user: SessionUser, market: FarmerMarke
     .where(and(eq(marketChangeRequests.userId, user.id), eq(marketChangeRequests.marketId, market.id), eq(marketChangeRequests.status, 'pending')))
     .limit(1);
 
-  if (!isAdmin(user)) {
+  // While a claim waits, its review page shows these edits; one email (the claim's) is enough.
+  if (!isAdmin(user) && (await canManageMarket(user, market.id))) {
     await alertAdmins({
       kind: 'change',
       market,
@@ -348,7 +395,12 @@ export async function submitChangeRequest(user: SessionUser, market: FarmerMarke
     });
   }
   capture(user.id, 'Listing Change Submitted', { market_id: market.id, sections });
-  return { ok: true, message: 'Sent for review. We will email you when it is live.' };
+  return {
+    ok: true,
+    message: (await canManageMarket(user, market.id))
+      ? 'Sent for review. We will email you when it is live.'
+      : 'Saved. It goes live as soon as we confirm you run this market.',
+  };
 }
 
 export async function pendingChangeFor(userId: string, marketId: string) {
@@ -392,7 +444,7 @@ export async function registerPhoto(
   market: FarmerMarket,
   input: { url: string; pathname: string; width?: number; height?: number; alt?: string },
 ): Promise<ActionResult> {
-  if (!(await canManageMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
+  if (!(await canEditMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
   if (!input.pathname.startsWith(photoPathPrefix(market.id))) return { ok: false, error: 'That upload does not belong to this market.' };
   let host = '';
   try {
@@ -427,7 +479,8 @@ export async function registerPhoto(
 
   // One alert per batch: skip it when this market already had a photo waiting.
   const alreadyWaiting = existing.some((photo) => photo.status === 'pending');
-  if (!isAdmin(user) && !alreadyWaiting) {
+  const manages = await canManageMarket(user, market.id);
+  if (manages && !alreadyWaiting) {
     await alertAdmins({
       kind: 'change',
       market,
@@ -437,7 +490,10 @@ export async function registerPhoto(
     });
   }
   capture(user.id, 'Market Photo Uploaded', { market_id: market.id });
-  return { ok: true, message: 'Photo uploaded. It will appear once reviewed.' };
+  return {
+    ok: true,
+    message: manages ? 'Photo uploaded. It will appear once reviewed.' : 'Photo uploaded. It goes live once we confirm you run this market.',
+  };
 }
 
 export async function updatePhotoDetails(
@@ -446,7 +502,8 @@ export async function updatePhotoDetails(
   photoId: string,
   details: { alt?: string; caption?: string; sort?: number },
 ): Promise<ActionResult> {
-  if (!(await canManageMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
+  const scope = await photoAccess(user, market.id);
+  if (!scope) return { ok: false, error: 'You do not manage this market.' };
   await getDb()
     .update(marketPhotos)
     .set({
@@ -454,20 +511,21 @@ export async function updatePhotoDetails(
       ...(details.caption !== undefined ? { caption: details.caption.trim().slice(0, 200) || null } : {}),
       ...(details.sort !== undefined ? { sort: Math.max(0, Math.min(99, Math.round(details.sort))) } : {}),
     })
-    .where(and(eq(marketPhotos.id, photoId), eq(marketPhotos.marketId, market.id)));
+    .where(and(eq(marketPhotos.id, photoId), scope));
   await revalidateMarket(market.slug);
   return { ok: true };
 }
 
 /** Saves a whole new photo order in one go. Unknown ids are ignored. */
 export async function reorderPhotos(user: SessionUser, market: FarmerMarket, photoIds: string[]): Promise<ActionResult> {
-  if (!(await canManageMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
+  const scope = await photoAccess(user, market.id);
+  if (!scope) return { ok: false, error: 'You do not manage this market.' };
   const db = getDb();
   const updates = photoIds
     .slice(0, MAX_PHOTOS_PER_MARKET)
     .filter((id) => /^[0-9a-f-]{36}$/.test(id))
     .map((id, position) =>
-      db.update(marketPhotos).set({ sort: position }).where(and(eq(marketPhotos.id, id), eq(marketPhotos.marketId, market.id))),
+      db.update(marketPhotos).set({ sort: position }).where(and(eq(marketPhotos.id, id), scope)),
     );
   if (updates.length === 0) return { ok: false, error: 'Nothing to reorder.' };
   await db.batch(updates as [(typeof updates)[number], ...(typeof updates)[number][]]);
@@ -477,11 +535,12 @@ export async function reorderPhotos(user: SessionUser, market: FarmerMarket, pho
 
 /** Organizers remove their own photos right away; no review needed to take one down. */
 export async function removePhoto(user: SessionUser, market: FarmerMarket, photoId: string): Promise<ActionResult> {
-  if (!(await canManageMarket(user, market.id))) return { ok: false, error: 'You do not manage this market.' };
+  const scope = await photoAccess(user, market.id);
+  if (!scope) return { ok: false, error: 'You do not manage this market.' };
   const [photo] = await getDb()
     .update(marketPhotos)
     .set({ status: 'removed' })
-    .where(and(eq(marketPhotos.id, photoId), eq(marketPhotos.marketId, market.id)))
+    .where(and(eq(marketPhotos.id, photoId), scope))
     .returning({ url: marketPhotos.blobUrl });
   if (photo) await deleteBlob(photo.url);
   await revalidateMarket(market.slug);
@@ -549,8 +608,36 @@ export async function getClaimForReview(id: string) {
     .where(eq(marketClaims.id, id))
     .limit(1);
   if (!row) return null;
-  const [market] = await getMarketsByIds([row.claim.marketId]);
-  return { ...row, market: market ?? null };
+  const db = getDb();
+  const [[base], changeRows, photos] = await Promise.all([
+    getMarketsByIds([row.claim.marketId]),
+    // What the claimant already edited while waiting: approving the claim publishes it.
+    db
+      .select({ id: marketChangeRequests.id })
+      .from(marketChangeRequests)
+      .where(
+        and(
+          eq(marketChangeRequests.userId, row.claim.userId),
+          eq(marketChangeRequests.marketId, row.claim.marketId),
+          eq(marketChangeRequests.status, 'pending'),
+        ),
+      )
+      .orderBy(desc(marketChangeRequests.createdAt))
+      .limit(1),
+    db
+      .select()
+      .from(marketPhotos)
+      .where(
+        and(
+          eq(marketPhotos.marketId, row.claim.marketId),
+          eq(marketPhotos.uploadedBy, row.claim.userId),
+          eq(marketPhotos.status, 'pending'),
+        ),
+      )
+      .orderBy(asc(marketPhotos.sort)),
+  ]);
+  const change = changeRows[0] ? await getChangeForReview(changeRows[0].id) : null;
+  return { ...row, market: base ?? null, change, photos };
 }
 
 export async function getChangeForReview(id: string) {
@@ -573,6 +660,11 @@ export async function getChangeForReview(id: string) {
   };
 }
 
+/**
+ * One decision covers everything the claimant sent while waiting: approving
+ * the claim also publishes their listing edits and photos, and rejecting it
+ * turns those down too. They get a single email.
+ */
 export async function decideClaim(admin: SessionUser, id: string, approve: boolean, note?: string): Promise<ActionResult> {
   const review = await getClaimForReview(id);
   if (!review || review.claim.status !== 'pending') return { ok: false, error: 'This claim was already reviewed.' };
@@ -592,10 +684,20 @@ export async function decideClaim(admin: SessionUser, id: string, approve: boole
         ]
       : []),
   ]);
+  if (review.change) await decideChange(admin, review.change.change.id, approve, undefined, { notify: false });
+  for (const photo of review.photos) await decidePhoto(admin, photo.id, approve);
+  const published = approve && Boolean(review.change || review.photos.length);
   if (review.market) {
     await sendOrganizerEmail(
       review.user.email,
-      decisionEmail({ kind: 'claim', approved: approve, marketName: review.market.name, marketSlug: review.market.slug, note }),
+      decisionEmail({
+        kind: 'claim',
+        approved: approve,
+        marketName: review.market.name,
+        marketSlug: review.market.slug,
+        note,
+        published,
+      }),
     );
   }
   capture(review.claim.userId, approve ? 'Market Claim Approved' : 'Market Claim Rejected', { market_id: review.claim.marketId });
@@ -603,7 +705,13 @@ export async function decideClaim(admin: SessionUser, id: string, approve: boole
 }
 
 /** Approving publishes: the change merges into `market_overrides` and the pages refresh. */
-export async function decideChange(admin: SessionUser, id: string, approve: boolean, note?: string): Promise<ActionResult> {
+export async function decideChange(
+  admin: SessionUser,
+  id: string,
+  approve: boolean,
+  note?: string,
+  options: { notify?: boolean } = {},
+): Promise<ActionResult> {
   const review = await getChangeForReview(id);
   if (!review || review.change.status !== 'pending') return { ok: false, error: 'This update was already reviewed.' };
   if (!review.market && approve) return { ok: false, error: 'That market is no longer in the dataset, so this update can only be rejected.' };
@@ -632,7 +740,7 @@ export async function decideChange(admin: SessionUser, id: string, approve: bool
       .where(eq(marketChangeRequests.id, id));
   }
 
-  if (review.user.id !== admin.id && review.market) {
+  if (options.notify !== false && review.user.id !== admin.id && review.market) {
     await sendOrganizerEmail(
       review.user.email,
       decisionEmail({ kind: 'change', approved: approve, marketName: review.market.name, marketSlug: review.market.slug, note }),

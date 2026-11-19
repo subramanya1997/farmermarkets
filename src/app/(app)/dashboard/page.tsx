@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, CheckCircle2, Clock, Eye, Images, MapPin, MessageSquareWarning, Pencil, Plus, Stamp } from 'lucide-react';
+import { ArrowUpRight, CheckCircle2, Clock, Eye, Images, MapPin, MessageSquareWarning, Pencil, Plus, ShieldCheck, Stamp } from 'lucide-react';
 import {
   VISITS_WINDOW_DAYS,
   claimsForUser,
@@ -60,7 +60,6 @@ export default async function DashboardPage() {
     return claim.status !== 'approved' && !managed.has(claim.marketId);
   });
   const claimMarkets = new Map((await getMarketsByIds(claims.map((claim) => claim.marketId))).map((market) => [market.id, market]));
-  const waitingClaims = claims.some((claim) => claim.status === 'pending');
 
   const name = firstName(user.name);
   const hasMarkets = summaries.length > 0;
@@ -92,16 +91,6 @@ export default async function DashboardPage() {
             </li>
           ))}
         </ul>
-      ) : waitingClaims ? (
-        <div className="flex items-start gap-3 rounded-lg border bg-white p-4 text-sm sm:p-5 dark:bg-zinc-900">
-          <Clock aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400" />
-          <div>
-            <p className="font-medium">Your claim is with our team</p>
-            <p className="mt-0.5 text-zinc-600 dark:text-zinc-400">
-              Once we confirm it, your market shows up here and you can start editing its listing.
-            </p>
-          </div>
-        </div>
       ) : (
         <GettingStarted />
       )}
@@ -176,7 +165,7 @@ export default async function DashboardPage() {
 }
 
 function MarketCard({ summary }: { summary: OrganizerMarketSummary }) {
-  const { market, recentVisits, pending, lastApprovedAt, lastRejected, photos } = summary;
+  const { market, recentVisits, pending, lastApprovedAt, lastRejected, photos, awaitingClaim } = summary;
   const where = place(market);
   const sections = pending?.sections.map((section) => SECTION_LABELS[section]) ?? [];
   // A rejection only matters until the next update is sent.
@@ -199,10 +188,18 @@ function MarketCard({ summary }: { summary: OrganizerMarketSummary }) {
               </p>
             ) : null}
           </div>
-          {pending ? <StatusBadge status="pending" /> : <LivePill />}
+          {awaitingClaim ? <ConfirmingPill /> : pending ? <StatusBadge status="pending" /> : <LivePill />}
         </div>
 
-        {pending ? (
+        {awaitingClaim ? (
+          <p className="flex items-start gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+            <ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-green-700 dark:text-green-400" />
+            <span>
+              We are confirming that you run this market, usually within two business days. Edit away: your changes go live as
+              soon as we do.
+            </span>
+          </p>
+        ) : pending ? (
           <p className="flex items-start gap-2 text-sm text-amber-900 dark:text-amber-200">
             <Clock aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
             <span>
@@ -279,6 +276,15 @@ function MarketCard({ summary }: { summary: OrganizerMarketSummary }) {
   );
 }
 
+function ConfirmingPill() {
+  return (
+    <span className="inline-flex w-fit shrink-0 items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
+      <Clock aria-hidden="true" className="size-3.5" />
+      Confirming your claim
+    </span>
+  );
+}
+
 function LivePill() {
   return (
     <span className="inline-flex w-fit shrink-0 items-center gap-1 rounded-full border border-green-200 bg-green-50 px-2 py-0.5 text-xs font-medium text-green-900 dark:border-green-900/60 dark:bg-green-950/40 dark:text-green-200">
@@ -313,9 +319,9 @@ function Stat({ icon, label, value, children }: { icon: ReactNode; label: string
 
 function GettingStarted() {
   const steps = [
-    { title: 'Claim your market', body: 'Find it in the directory and tell us how you are involved.' },
-    { title: 'We confirm it is you', body: 'A person checks every claim, usually within two business days.' },
-    { title: 'Keep it current', body: 'Update hours, details and photos. We check each change before it goes live.' },
+    { title: 'Find your market', body: 'Search for it below and tap your role. That is the whole claim.' },
+    { title: 'Start editing', body: 'Fix hours, details and photos right away. Nothing goes live yet.' },
+    { title: 'We confirm it is you', body: 'Usually within two business days. Your changes go live the moment we do.' },
   ];
   return (
     <section aria-labelledby="getting-started" className="rounded-lg border bg-white p-5 sm:p-6 dark:bg-zinc-900">
@@ -323,7 +329,7 @@ function GettingStarted() {
         Run a farmers market? Claim its page.
       </h2>
       <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-        It takes a couple of minutes. Shoppers use the listing to plan their visit, so a current one helps.
+        It takes about a minute. Shoppers use the listing to plan their visit, so a current one helps.
       </p>
       <ol className="mt-5 grid gap-4 sm:grid-cols-3">
         {steps.map((step, index) => (
@@ -341,10 +347,9 @@ function GettingStarted() {
           </li>
         ))}
       </ol>
-      <Link href="/dashboard/claim" className={cn(buttonVariants(), PRIMARY, 'mt-6 h-11 w-full sm:h-9 sm:w-auto')}>
-        <Plus aria-hidden="true" />
-        Claim your market
-      </Link>
+      <div className="mt-6 border-t pt-5">
+        <ClaimSearch />
+      </div>
     </section>
   );
 }

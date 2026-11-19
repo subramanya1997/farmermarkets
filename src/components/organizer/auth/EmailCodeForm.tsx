@@ -74,10 +74,10 @@ export function EmailCodeForm({ next, surface }: EmailCodeFormProps) {
     }
   };
 
-  const verify = async () => {
+  const verify = async (entered = code) => {
     setError(null);
     setNotice(null);
-    const digits = code.replace(/\D/g, '');
+    const digits = entered.replace(/\D/g, '');
     if (digits.length !== CODE_LENGTH) {
       setFieldError(`Enter the ${CODE_LENGTH} digit code from the email.`);
       codeRef.current?.focus();
@@ -131,6 +131,7 @@ export function EmailCodeForm({ next, surface }: EmailCodeFormProps) {
             autoCapitalize="none"
             spellCheck={false}
             maxLength={254}
+            autoFocus
             className="h-11 sm:h-10"
           />
         </Field>
@@ -165,8 +166,11 @@ export function EmailCodeForm({ next, surface }: EmailCodeFormProps) {
           maxLength={CODE_LENGTH + 2}
           value={code}
           onChange={(event) => {
-            setCode(event.target.value.replace(/[^\d ]/g, ''));
+            const next = event.target.value.replace(/[^\d ]/g, '');
+            setCode(next);
             setFieldError(undefined);
+            // Typed, pasted or filled from the email: sign in as soon as all six digits are there.
+            if (!pending && next.replace(/\D/g, '').length === CODE_LENGTH) void verify(next);
           }}
           className="h-12 text-center font-mono text-xl tracking-[0.4em] sm:h-12"
         />
