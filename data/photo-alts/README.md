@@ -15,3 +15,9 @@ node --env-file=.env.local scripts/apply-photo-alts.mjs --in data/photo-alts/dra
 ```
 
 The apply script changes only `alt`, in one transaction, and only on rows whose alt still equals the drafted template, so later organizer or operator edits are never overwritten. Market pages pick up the change on their 24h ISR revalidate or the next deploy.
+
+## Removal review (2026-11-18)
+
+The 57 drafts the model marked `unrelated` or `ai_generated` were reviewed by eye. 56 rows (55 of them plus `f6088f38`, see below) were set to `status = 'removed'` in production and on the dev branch, in one transaction; each carries `"outcome": "removed"`. Two were kept with `"outcome": "kept"`: `31b6a533` (a real market stand) and `aca87cd4` (the library the market is held at).
+
+`31b6a533` (Historic Valley Junction) and `f6088f38` (Ft Madison) came back from the same drafting batch with their alts swapped. The drafts now hold the right alt for each. Batching ten photos per model call can mix up descriptions, so a published alt is not guaranteed to match its photo.
