@@ -7,7 +7,8 @@ The outreach bot (Grok) talks to market operators by email. It can:
 - publish the listing corrections an operator sends
   ([`POST /api/bot/listing-edits`](#listing-edits)),
 - publish photos an operator sends ([`POST /api/bot/photos`](#photos)),
-- ask an admin to take photos down ([`POST /api/bot/photo-removals`](#photo-removals)).
+- ask an admin to take photos down ([`POST /api/bot/photo-removals`](#photo-removals)),
+- read the scoreboard ([`GET /api/bot/metrics`](#metrics)).
 
 Every call uses the same token and error shapes ([Auth and errors](#auth-and-errors)).
 Edits and photos go live at once and are logged in `bot_actions`. Anything that
@@ -250,6 +251,77 @@ the market page (dataset photos have no id). Response `202`:
 `unmatched` lists URLs that are not uploaded photos; the admin handles those as
 a data change.
 
+## Metrics
+
+A snapshot of where the site stands, for the growth bots to store and compare
+over time. Counts only: no emails, names or message text, and no PostHog visitor
+numbers (most raw pageviews are crawlers).
+
+```
+GET https://www.farmermarkets.app/api/bot/metrics
+Authorization: Bearer $ORGANIZER_BOT_TOKEN
+```
+
+Response `200` (abridged):
+
+```json
+{
+  "ok": true,
+  "schema_version": 1,
+  "generated_at": "2026-11-19T04:00:40.320Z",
+  "listings": { "total": 9133, "snap_ebt": 1793, "with_override": 12, "with_approved_photos": 1138, "with_manager": 9 },
+  "organizers": {
+    "accounts": 40, "verified_accounts": 38, "managers": 11, "managed_markets": 9,
+    "pending_claims": 2, "approved_claims": 11, "rejected_claims": 1,
+    "approved_claims_by_bot": 6, "claim_approval_rate": 0.917
+  },
+  "edits": {
+    "pending_change_requests": 1, "approved_change_requests": 14, "rejected_change_requests": 0,
+    "pending_photos": 3, "approved_photos": 2632, "approved_organizer_photos": 20,
+    "rejected_photos": 0, "removed_photos": 57
+  },
+  "bot": {
+    "by_action": { "listing_edit": 8, "photo_upload": 3, "remove_listing": 1, "close_listing": 0, "remove_photos": 0 },
+    "by_status": { "applied": 11, "pending": 1, "approved": 0, "dismissed": 0 },
+    "pending_requests": 1
+  },
+  "submissions": {
+    "total": 30, "pending": 4,
+    "by_type": { "correction": 20, "new_market": 6, "claim": 3, "contact": 1 },
+    "by_status": { "pending": 4, "reviewed": 20, "applied": 5, "rejected": 1 }
+  },
+  "newsletter": { "pending": 2, "confirmed": 25, "unsubscribed": 1 },
+  "vendors": {
+    "available": true, "profiles": 5, "live_profiles": 3,
+    "by_status": { "draft": 1, "pending": 1, "approved": 3, "rejected": 0 },
+    "pending_applications": 2, "approved_applications": 6, "denied_applications": 0, "withdrawn_applications": 0,
+    "applications_waiting_for_admin": 1, "markets_with_approved_vendors": 4,
+    "reach": { "follows": null, "qr_scans": null }
+  },
+  "last_7_days": { "claims": 2, "change_requests": 3, "photos": 5, "submissions": 4, "bot_actions": 6, "vendor_profiles": 1 }
+}
+```
+
+What the numbers mean:
+
+- `listings.total` and `snap_ebt` come from the published dataset, before
+  organizer edits. `with_override` is markets with published edits,
+  `with_approved_photos` markets with at least one live photo, `with_manager`
+  markets someone manages.
+- `edits.approved_photos` includes the editorial photos added by the data
+  pipeline; `approved_organizer_photos` counts only uploads by signed-in organizers.
+  Photos the bot published are in `bot.by_action.photo_upload` (one per call).
+- `claim_approval_rate` is approved / (approved + rejected), `null` before any
+  decision. `approved_claims_by_bot` are the grants from
+  `POST /api/bot/organizer-access`.
+- `vendors.available` is `false` (and the counts 0) on a database without the
+  vendor tables. `vendors.reach` stays `null` (not tracked, which is different
+  from 0) until vendor follows and QR scans exist; they will fill in there.
+- `last_7_days` counts rows created in the 7 days before `generated_at`.
+
+Fields may be added; existing ones keep their names and meaning while
+`schema_version` is 1. Errors: `401` bad token, `503` database down.
+
 ## The deletion rule
 
 The bot publishes corrections and photos. It never takes anything down. These
@@ -307,7 +379,7 @@ or take it from the market page URL.
 
 ## Testing
 
-`scripts/bot-api.e2e.test.mjs` runs every endpoint against a local dev server
+`scripts/bot-api.e2e.test.mjs` runs the write endpoints against a local dev server
 and a non-production database, then removes what it created:
 
 ```bash
