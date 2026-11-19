@@ -869718,7 +869718,7 @@
       "social_media": []
     },
     "operations": {
-      "season": "June - November",
+      "season": "Year-round",
       "days": [
         "Tuesday 10:00-14:30"
       ]
@@ -869727,7 +869727,7 @@
       "official": false,
       "source_id": "added",
       "publisher": "Marin Community Farmers Markets Association",
-      "dataset_name": "Strawberry Village Farmers Market (Tuesday) | Marin Community Farmers Markets, with the Tuesday hours, June through November season and 800 Redwood Hwy location confirmed by the operator by email on November 18, 2026",
+      "dataset_name": "Strawberry Village Farmers Market (Tuesday) | Marin Community Farmers Markets, with the Tuesday hours, year-round season and 800 Redwood Hwy location confirmed by the operator by email on November 18, 2026",
       "catalog_url": "https://marincommunityfarmersmarkets.com/markets/mill-valley-tuesday",
       "retrieved_at": "2026-11-18"
     },
@@ -869752,13 +869752,7 @@
         },
         "season": {
           "value": {
-            "kind": "annual_range",
-            "start": {
-              "month": 6
-            },
-            "end": {
-              "month": 11
-            }
+            "kind": "year_round"
           },
           "source_ids": [
             "mcfma-strawberry-village"
@@ -869805,7 +869799,7 @@
       "sources": [
         {
           "id": "mcfma-strawberry-village",
-          "title": "Strawberry Village Farmers Market (Tuesday) | Marin Community Farmers Markets, with the Tuesday hours, June through November season and 800 Redwood Hwy location confirmed by the operator by email on November 18, 2026",
+          "title": "Strawberry Village Farmers Market (Tuesday) | Marin Community Farmers Markets, with the Tuesday hours, year-round season and 800 Redwood Hwy location confirmed by the operator by email on November 18, 2026",
           "url": "https://marincommunityfarmersmarkets.com/markets/mill-valley-tuesday",
           "fields": [
             "first_party.identity",

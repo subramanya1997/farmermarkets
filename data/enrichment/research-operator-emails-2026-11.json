@@ -314,13 +314,7 @@
         },
         "season": {
           "value": {
-            "kind": "annual_range",
-            "start": {
-              "month": 6
-            },
-            "end": {
-              "month": 11
-            }
+            "kind": "year_round"
           },
           "source_ids": [
             "mcfma-strawberry-village"
@@ -351,7 +345,7 @@
     "sources": [
       {
         "id": "mcfma-strawberry-village",
-        "title": "Strawberry Village Farmers Market (Tuesday) | Marin Community Farmers Markets, with the Tuesday hours, June through November season and 800 Redwood Hwy location confirmed by the operator by email on November 18, 2026",
+        "title": "Strawberry Village Farmers Market (Tuesday) | Marin Community Farmers Markets, with the Tuesday hours, year-round season and 800 Redwood Hwy location confirmed by the operator by email on November 18, 2026",
         "url": "https://marincommunityfarmersmarkets.com/markets/mill-valley-tuesday",
         "fields": [
           "first_party.identity",
