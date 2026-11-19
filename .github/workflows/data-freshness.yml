@@ -1,0 +1,52 @@
+name: Check market data freshness
+
+# Weekly, and cheap: it reads two committed manifests, with no install, no
+# network and no build. It catches what the refresh job itself cannot:
+#  - the official refresh not running at all (disabled schedule, broken
+#    workflow file), seen as a manifest older than 45 days;
+#  - the USDA snapshot, which is refreshed by hand, going more than 180 days
+#    without a refresh.
+# Failing opens or updates the issue "Market data is stale"; the next passing
+# check closes it. Thresholds and what to do: docs/data-refresh.md.
+on:
+  schedule:
+    - cron: '23 15 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: market-data-freshness
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check both snapshots
+        run: node scripts/check-data-freshness.mjs --report-file "$RUNNER_TEMP/freshness.md"
+
+      # A timeout counts: the job is cancelled, not failed.
+      - name: Open or update the alert issue
+        if: failure() || cancelled()
+        uses: ./.github/actions/data-alert
+        with:
+          title: Market data is stale
+          state: failing
+          body-file: ${{ runner.temp }}/freshness.md
+
+      - name: Close the alert issue
+        if: success()
+        uses: ./.github/actions/data-alert
+        with:
+          title: Market data is stale
+          state: passing

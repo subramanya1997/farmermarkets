@@ -65,12 +65,26 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { SITE_URL, pingIndexNow } from './lib/indexnow.mjs';
+import { normalizeMarketNameTypography } from './lib/market-name-equivalence.mjs';
 import { refreshUrls } from './update-government-markets.mjs';
 
 const DEFAULT_SNAPSHOT = 'data/sources/legacy_markets.json';
 const DEFAULT_GOV_SNAPSHOT = 'data/sources/government_markets.json';
 const DEFAULT_GEO_INDEX = 'public/data/geo_index.json';
 const DEFAULT_REPORT = 'scripts/legacy-refresh-report.json';
+
+/**
+ * The one committed record of when the snapshot was last refreshed in full
+ * (`data/sources/legacy_markets.manifest.json` for the real snapshot). The
+ * per-run report above is gitignored, so without this nothing in the repo says
+ * how old the USDA half of the directory is, and
+ * `scripts/check-data-freshness.mjs` could not warn when it gets too old. It
+ * sits next to whichever snapshot is refreshed, so a test on a temporary
+ * snapshot never touches the real one.
+ */
+export function manifestPathFor(snapshotPath) {
+  return snapshotPath.replace(/\.json$/, '') + '.manifest.json';
+}
 
 export const UPSTREAM_URL =
   'https://www.usdalocalfoodportal.com/api/download_by_directory/?directory=farmersmarket';
@@ -209,10 +223,48 @@ export function normalizeCoordinate(value) {
   return number === undefined ? undefined : Math.round(number * 1e5) / 1e5;
 }
 
-/** The snapshot wrote the literal "Unknown" where upstream simply has no value. */
+/**
+ * The snapshot wrote the literal "Unknown" where upstream simply has no value.
+ *
+ * The upstream answers a question ("No Indoor;", "Yes, part of the time the
+ * market is open indoor;"); the snapshot holds the label the site prints
+ * ("Outdoor", "Indoor and outdoor", "Indoor"). Both sides map to the label so
+ * an unchanged answer is not a change, and a changed one is written as the
+ * label, so the snapshot keeps one vocabulary.
+ */
 export function normalizeIndoor(value) {
   const text = normalizeText(value);
-  return !text || text === 'Unknown' ? undefined : text;
+  if (!text || text === 'Unknown') return undefined;
+  const answer = text.toLowerCase().replace(/[;.]+$/, '').trim();
+  if (/part of the time/.test(answer) || answer === 'indoor and outdoor') return 'Indoor and outdoor';
+  if (/entire time/.test(answer) || answer === 'yes' || answer === 'indoor') return 'Indoor';
+  if (['no', 'no indoor', 'outdoor'].includes(answer)) return 'Outdoor';
+  return text;
+}
+
+/** Upstream ends controlled values with a separator ("Closed-off public street;"). */
+export function normalizeSiteType(value) {
+  return compact(normalizeText(value)?.replace(/[;,.]+$/, ''));
+}
+
+/**
+ * Prose compares without typography or stray escapes. The snapshot's text was
+ * tidied after the August 2026 refresh (curly apostrophes), while the upstream
+ * still ships straight ones and the odd `\'`, so unchanged text looked edited.
+ */
+export function normalizeProse(value) {
+  const text = normalizeText(value);
+  return text ? compact(normalizeMarketNameTypography(text.replace(/\\(['"])/g, '$1'))) : undefined;
+}
+
+/**
+ * Names also compare without case: the snapshot's names were title-cased in
+ * the same tidy ("Iowa Falls Farmers’ Market" where upstream has "iowa falls
+ * farmers' market"). Comparing raw, 3,414 names looked renamed and the refresh
+ * would have undone the tidy. A real rename still differs in its letters.
+ */
+export function normalizeName(value) {
+  return normalizeProse(value)?.toLowerCase();
 }
 
 export function productionMethods(record) {
@@ -318,14 +370,14 @@ export function projectCurrent(market) {
 function normalizeProjection(projection) {
   return {
     last_updated: compact(projection.last_updated),
-    name: normalizeText(projection.name),
+    name: normalizeName(projection.name),
     address: normalizeAddress(projection.address),
     longitude: normalizeCoordinate(projection.longitude),
     latitude: normalizeCoordinate(projection.latitude),
-    location_description: normalizeText(projection.location_description),
-    site_type: normalizeText(projection.site_type),
+    location_description: normalizeProse(projection.location_description),
+    site_type: normalizeSiteType(projection.site_type),
     indoor_outdoor: normalizeIndoor(projection.indoor_outdoor),
-    organization_description: normalizeText(projection.organization_description),
+    organization_description: normalizeProse(projection.organization_description),
     production_methods: projection.production_methods ?? [],
     snap_option: normalizeText(projection.snap_option)
   };
@@ -377,8 +429,10 @@ export function mergeMarket(market, upstreamRecord, fields) {
     merged.location = { ...(market.location ?? {}) };
     apply('address', (value) => { merged.location.address = value; });
     apply('location_description', (value) => { merged.location.description = value; });
-    apply('site_type', (value) => { merged.location.site_type = value; });
-    apply('indoor_outdoor', (value) => { merged.location.indoor_outdoor = value; });
+    // Written in the snapshot's own vocabulary, so the file never mixes
+    // "Outdoor" with "No Indoor;".
+    apply('site_type', (value) => { merged.location.site_type = normalizeSiteType(value) ?? value; });
+    apply('indoor_outdoor', (value) => { merged.location.indoor_outdoor = normalizeIndoor(value) ?? value; });
     if ((fields.includes('longitude') || fields.includes('latitude')) && next.longitude !== undefined && next.latitude !== undefined) {
       merged.location.coordinates = { longitude: next.longitude, latitude: next.latitude };
     }
@@ -619,6 +673,17 @@ async function atomicWrite(filePath, content) {
   await fs.rename(temporaryPath, filePath);
 }
 
+/** What the committed legacy manifest says about a full, applied refresh. */
+export function legacyManifest(report) {
+  return {
+    schema_version: 1,
+    retrieved_at: report.generated_at,
+    upstream_url: report.upstream_url,
+    upstream_record_count: report.upstream_record_count,
+    record_count: report.snapshot_record_count_after
+  };
+}
+
 export function summarize(report, { dryRun } = {}) {
   const lines = [
     `${dryRun ? 'DRY RUN — no files written' : 'Applied'}`,
@@ -642,6 +707,7 @@ export function parseArguments(argv) {
     govSnapshot: DEFAULT_GOV_SNAPSHOT,
     geoIndex: DEFAULT_GEO_INDEX,
     report: DEFAULT_REPORT,
+    manifest: undefined,
     fixture: undefined,
     limit: undefined,
     dryRun: false
@@ -653,6 +719,7 @@ export function parseArguments(argv) {
     else if (argument === '--gov-snapshot') options.govSnapshot = argv[++index];
     else if (argument === '--geo-index') options.geoIndex = argv[++index];
     else if (argument === '--report') options.report = argv[++index];
+    else if (argument === '--manifest') options.manifest = argv[++index];
     else if (argument === '--fixture') options.fixture = argv[++index];
     else if (argument === '--limit') options.limit = Number(argv[++index]);
     else if (argument === '--dry-run') options.dryRun = true;
@@ -669,6 +736,7 @@ export async function updateLegacyMarkets(options = {}) {
   const root = process.cwd();
   const snapshotPath = path.resolve(root, options.snapshot ?? DEFAULT_SNAPSHOT);
   const reportPath = path.resolve(root, options.report ?? DEFAULT_REPORT);
+  const manifestPath = path.resolve(root, options.manifest ?? manifestPathFor(options.snapshot ?? DEFAULT_SNAPSHOT));
   const log = options.log ?? console.log;
 
   const snapshot = await readJson(snapshotPath, []);
@@ -699,9 +767,10 @@ export async function updateLegacyMarkets(options = {}) {
   const { records, report } = reconcile(snapshot, upstreamRecords, { limit: options.limit, reservedSlugs });
 
   const changedSlugs = changedLegacySlugs(snapshot, records);
+  const generatedAt = (options.now ?? new Date()).toISOString();
   const fullReport = {
     schema_version: 1,
-    generated_at: new Date().toISOString(),
+    generated_at: generatedAt,
     dry_run: Boolean(options.dryRun),
     limit: options.limit ?? null,
     upstream_url: UPSTREAM_URL,
@@ -725,6 +794,14 @@ export async function updateLegacyMarkets(options = {}) {
   await atomicWrite(reportPath, `${JSON.stringify(fullReport, null, 2)}\n`);
   log(`wrote ${records.length} legacy markets to ${path.relative(root, snapshotPath)}`);
   log(`wrote report to ${path.relative(root, reportPath)}`);
+
+  // A `--limit` run touched only part of the snapshot, so it does not count
+  // as a refresh of the whole thing.
+  if (options.limit === undefined) {
+    const manifest = legacyManifest(fullReport);
+    await atomicWrite(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+    log(`wrote ${path.relative(root, manifestPath)} (retrieved ${manifest.retrieved_at})`);
+  }
 
   // Push changed URLs to IndexNow. Failures here are never fatal: the snapshot
   // is already safely on disk, `pingIndexNow` swallows network errors, and

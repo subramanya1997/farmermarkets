@@ -2,6 +2,11 @@ name: Update official government market data
 
 # Monthly: the government sources change slowly, and each refresh rebuilds and
 # redeploys ~14k pages. Run it by hand from the Actions tab when needed.
+#
+# A failure cannot go quiet: any failed step, or a source that keeps failing
+# (scripts/check-data-freshness.mjs), opens or updates the issue "Official data
+# refresh is failing", and the next clean run closes it. Runbook:
+# docs/data-refresh.md.
 on:
   schedule:
     - cron: '17 8 1 * *'
@@ -9,6 +14,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: official-government-market-data
@@ -82,9 +88,30 @@ jobs:
             node scripts/indexnow-ping.mjs < "$RUNNER_TEMP/indexnow-urls.txt"
           fi
 
+      # One partial run is a warning; a source that fails two runs in a row,
+      # or has not been retrieved in 75 days, fails the job.
       - name: Note sources that failed
         run: |
           status=$(node -e "console.log(require('./data/sources/government_markets.manifest.json').status)")
           if [ "$status" != "ok" ]; then
             echo "::warning::One or more government sources failed this run; their last good records were kept. See the Fetch sources log."
           fi
+
+      - name: Check that the official data is fresh
+        run: node scripts/check-data-freshness.mjs --scope government --report-file "$RUNNER_TEMP/freshness.md"
+
+      # A timeout counts: the job is cancelled, not failed.
+      - name: Open or update the alert issue
+        if: failure() || cancelled()
+        uses: ./.github/actions/data-alert
+        with:
+          title: Official data refresh is failing
+          state: failing
+          body-file: ${{ runner.temp }}/freshness.md
+
+      - name: Close the alert issue
+        if: success()
+        uses: ./.github/actions/data-alert
+        with:
+          title: Official data refresh is failing
+          state: passing
