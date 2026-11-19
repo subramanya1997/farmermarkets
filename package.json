@@ -67,7 +67,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:sync": "node --env-file=.env.local scripts/db-sync.mjs",
-    "test:organizer": "node --test --experimental-strip-types src/lib/organizerOverlay.test.ts",
+    "test:organizer": "node --test --experimental-strip-types src/lib/organizerOverlay.test.ts src/lib/botRequests.test.ts",
     "test:photos": "node --test --experimental-strip-types src/lib/photoConvert.test.ts",
     "test:vendors": "node --test --experimental-strip-types src/lib/vendorRules.test.ts src/lib/jsonLd.test.ts",
     "test:analytics": "node --test --experimental-strip-types src/lib/googleAnalyticsQueue.test.ts src/lib/searchAnalytics.test.ts src/lib/automatedBrowser.test.ts",

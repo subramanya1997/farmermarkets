@@ -1,9 +1,9 @@
-import { createHash, timingSafeEqual } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { DatabaseUnavailableError } from '@/db';
+import { botAuthorized } from '@/lib/botAuth';
+import { resolveMarketSlug } from '@/lib/marketSlug';
 import { getPublishedMarket, grantMarketAccessFromBot } from '@/lib/organizer';
-import slugRedirects from '../../../../../data/slug-redirects.json';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -28,38 +28,8 @@ const bodySchema = z.object({
   notify: z.boolean().optional(),
 });
 
-const redirects: Record<string, string> = slugRedirects.redirects;
-
-function digest(value: string): Buffer {
-  return createHash('sha256').update(value).digest();
-}
-
-function authorized(request: Request): boolean {
-  const expected = process.env.ORGANIZER_BOT_TOKEN?.trim();
-  if (!expected || expected.length < 32) return false;
-  const header = request.headers.get('authorization') ?? '';
-  const match = /^Bearer\s+(.+)$/i.exec(header.trim());
-  if (!match) return false;
-  // Hash both sides so the comparison is constant time whatever the length.
-  return timingSafeEqual(digest(match[1].trim()), digest(expected));
-}
-
-/** A slug, `/markets/<slug>` or a full market URL, following merged-listing redirects. */
-function slugFrom(value: string): string | null {
-  let path = value;
-  try {
-    path = new URL(value).pathname;
-  } catch {
-    // Not a URL: a slug or a path.
-  }
-  const slug = path.replace(/^\/?(markets\/)?/, '').replace(/\/(claim)?\/?$/, '').toLowerCase();
-  if (!/^[a-z0-9-]{1,200}$/.test(slug)) return null;
-  const moved = redirects[slug];
-  return moved?.startsWith('/markets/') ? moved.slice('/markets/'.length) : slug;
-}
-
 export async function POST(request: Request) {
-  if (!authorized(request)) {
+  if (!botAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -80,7 +50,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const slug = slugFrom(parsed.data.market);
+  const slug = resolveMarketSlug(parsed.data.market);
   const market = slug ? await getPublishedMarket(slug) : null;
   if (!market) {
     return NextResponse.json({ error: `No market found for "${parsed.data.market}".` }, { status: 404 });
