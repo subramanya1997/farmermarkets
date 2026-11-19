@@ -21,11 +21,14 @@ import { ListingEditor } from '@/components/organizer/editor/ListingEditor';
 import { PhotoManager, type EditorPhoto } from '@/components/organizer/editor/PhotoManager';
 import { BadgeSnippet } from '@/components/organizer/editor/BadgeSnippet';
 import { StatusBadge } from '@/components/organizer/dashboard/StatusBadge';
+import { MarketHomeLinks } from '@/components/organizer/dashboard/MarketHomeLinks';
+import { marketUpdatesFor } from '@/lib/marketUpdates';
+import { pendingApplicationCounts } from '@/lib/vendors';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Edit your listing',
+  title: 'Your market',
   robots: { index: false, follow: false },
 };
 
@@ -41,11 +44,14 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
   // Not a manager yet: the claim is still being checked.
   const awaitingClaim = !(await canManageMarket(user, market.id));
 
-  const [published, pending, recent, photoRows] = await Promise.all([
+  const [published, pending, recent, photoRows, updates, waiting] = await Promise.all([
     editorValuesFor(market),
     pendingChangeFor(user.id, market.id),
     recentChangesFor(market.id),
     photosFor(market.id),
+    // Updates and vendors are for confirmed managers only.
+    awaitingClaim ? Promise.resolve(null) : marketUpdatesFor(user, market),
+    awaitingClaim ? Promise.resolve(new Map<string, number>()) : pendingApplicationCounts([market.id]),
   ]);
 
   // Organizers pick up where they left off: what they sent, over what is live.
@@ -118,6 +124,16 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
         </div>
       ) : null}
 
+      {awaitingClaim ? null : (
+        <MarketHomeLinks
+          slug={market.slug}
+          liveUpdates={updates?.filter((row) => row.state === 'live').length ?? 0}
+          scheduledUpdates={updates?.filter((row) => row.state === 'scheduled').length ?? 0}
+          vendorsWaiting={waiting.get(market.id) ?? 0}
+          listingPending={Boolean(pending)}
+        />
+      )}
+
       {rejection ? (
         <div className="flex gap-3 rounded-lg border bg-white p-4 text-sm dark:bg-zinc-900">
           <MessageSquareWarning aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-zinc-500" />
@@ -136,7 +152,7 @@ export default async function EditMarketPage({ params }: { params: Promise<{ slu
       ) : null}
 
       <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
-        <section aria-label="Listing" className="min-w-0">
+        <section id="listing" aria-label="Listing" className="min-w-0 scroll-mt-4">
           {awaitingClaim ? null : (
             <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
               Edit any section, then send it for review. We usually publish within two business days and email you when it is live.

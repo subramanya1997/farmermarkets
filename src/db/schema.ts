@@ -358,6 +358,28 @@ export const marketPhotos = pgTable(
   ],
 );
 
+/**
+ * Short notes from a market's managers to shoppers ("Closed Saturday for the
+ * parade"). Shown on the market page between `starts_at` and `ends_at`
+ * unless withdrawn. They sit beside the listing: they never touch
+ * `market_overrides` or the dataset. Rules in src/lib/marketUpdateRules.ts.
+ */
+export const marketUpdates = pgTable(
+  'market_updates',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    marketId: text('market_id').notNull(),
+    body: text('body').notNull(),
+    startsAt: timestamp('starts_at', { withTimezone: true }).notNull(),
+    endsAt: timestamp('ends_at', { withTimezone: true }).notNull(),
+    createdBy: text('created_by').references(() => user.id, { onDelete: 'set null' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+    withdrawnAt: timestamp('withdrawn_at', { withTimezone: true }),
+  },
+  (t) => [index('market_updates_market_idx').on(t.marketId), index('market_updates_ends_idx').on(t.endsAt)],
+);
+
 /* ------------------------------------------------------------------ *
  * Vendor accounts (src/lib/vendors.ts)
  *

@@ -43,6 +43,13 @@
       "when": 1795059861133,
       "tag": "0005_bot_actions",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795066708760,
+      "tag": "0006_market_updates",
+      "breakpoints": true
     }
   ]
 }
