@@ -245,7 +245,6 @@ function DocumentLine({ line, slug, canDecide }: { line: ChecklistLine; slug: st
             <DocumentDecision
               slug={slug}
               submissionId={submission.id}
-              documentLabel={submission.documentLabel}
               status={submission.status}
               note={submission.note}
             />

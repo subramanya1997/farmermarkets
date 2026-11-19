@@ -1405,7 +1405,14 @@ export async function decideDocument(
   if (!updated) return { ok: false, error: 'The vendor replaced this document. Reload and look again.' };
   if (!approve && row.submission.status !== 'rejected') {
     const market = (await marketsByStoredId([row.application.marketId])).get(row.application.marketId);
-    if (market) await sendOrganizerEmail(row.email, documentDeniedEmail({ documentLabel: row.document.label, marketName: market.name, note }));
+    // Name what the market asked for: one file can be sent for several items.
+    const item = (await getChecklist(row.application.marketId)).items.find((entry) => entry.id === row.submission.requirementKey);
+    if (market) {
+      await sendOrganizerEmail(
+        row.email,
+        documentDeniedEmail({ itemLabel: item?.label ?? row.document.label, documentLabel: row.document.label, marketName: market.name, note }),
+      );
+    }
   }
   capture(row.vendor.id, approve ? 'Vendor Document Approved' : 'Vendor Document Denied', { market_id: row.application.marketId });
   return { ok: true, message: approve ? 'Document approved.' : 'Document denied. The vendor was emailed your note.' };
