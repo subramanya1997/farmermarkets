@@ -628,6 +628,12 @@ function uniqueBy(values, keyForValue) {
 /**
  * Keep a market's id and slug when its source reissued the record id.
  *
+ * Two passes. First, a record whose source record id was already seen under
+ * a carried id keeps that id: once a reissue has been matched, the mapping
+ * stays put, so a later rename or a new market with the same name cannot
+ * break it. Second, for source record ids never seen before, the name match
+ * below decides.
+ *
  * Ids come from the publisher's own record key, so a publisher that rebuilds
  * its dataset can hand every market a new key overnight. DC Open Data did that
  * between August and November 2026: all 64 markets came back with new
@@ -644,11 +650,26 @@ function uniqueBy(values, keyForValue) {
 export function carryForwardIdentities(records, previous) {
   const currentIds = new Set(records.map((market) => market.id));
   const previousIds = new Set(previous.map((market) => market.id));
-  const orphans = uniqueBy(previous.filter((market) => !currentIds.has(market.id)), identityName);
-  const newcomers = uniqueBy(records.filter((market) => !previousIds.has(market.id)), identityName);
+  const orphaned = previous.filter((market) => !currentIds.has(market.id));
+  const bySourceRecordId = uniqueBy(orphaned, (market) => market.provenance?.source_record_id);
   let carried = 0;
 
-  const result = records.map((market) => {
+  // Pass 1: the source record id is already known under a carried id.
+  const known = records.map((market) => {
+    if (previousIds.has(market.id)) return market;
+    const match = bySourceRecordId.get(market.provenance?.source_record_id);
+    if (!match) return market;
+    carried += 1;
+    return { ...market, id: match.id, slug: match.slug };
+  });
+
+  // Pass 2: never seen before, so match on name and place.
+  const claimed = new Set(known.map((market) => market.id));
+  const knownIds = new Set([...previousIds].filter((id) => claimed.has(id)));
+  const orphans = uniqueBy(previous.filter((market) => !claimed.has(market.id)), identityName);
+  const newcomers = uniqueBy(known.filter((market) => !knownIds.has(market.id)), identityName);
+
+  const result = known.map((market) => {
     const key = identityName(market);
     if (newcomers.get(key) !== market) return market;
     const match = orphans.get(key);

@@ -25,8 +25,8 @@ Two issues, each opened once and then commented on each time the problem repeats
 The thresholds live at the top of `scripts/check-data-freshness.mjs`:
 
 - **Official refresh older than 45 days.** A good snapshot is at most about 31 days old, so this is one missed run plus two weeks. It catches a schedule that stopped running.
-- **Two partial runs in a row.** One partial run (a source down for the night) is only a warning in the run summary. Two in a row means the source is broken. The manifest counts the streak in `consecutive_partial_runs`, and each source counts its own in `consecutive_failures`.
-- **Any one source not retrieved in 45 days.** A failed source keeps its last good records, and its `retrieved_at` stays the date of that last good retrieval. (Before #63 a failed attempt overwrote `retrieved_at`, so a dead source looked current on `/about-the-data`.)
+- **The same source failing two runs in a row.** One failed run (a source down for the night) is only a warning in the run summary. Two in a row means the source is broken. Each source counts its streak in `consecutive_failures`; the manifest also records the run-wide streak in `consecutive_partial_runs`, but two different flaky sources on back-to-back runs do not raise an alert.
+- **Any one source not retrieved in 75 days.** A source that misses one monthly run is about 60 days old by the next, so this means two missed runs. It catches a source with no failure count, such as one that never succeeded. A failed source keeps its last good records, and its `retrieved_at` stays the date of that last good retrieval. (Before #63 a failed attempt overwrote `retrieved_at`, so a dead source looked current on `/about-the-data`.)
 - **USDA snapshot older than 180 days.** After a June or July pass the reminder arrives in January, in time for the spring pass.
 
 Run the check locally at any time:

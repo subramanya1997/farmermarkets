@@ -43,22 +43,39 @@ test('a single partial run is not yet an alert', () => {
   assert.deepEqual(governmentProblems(manifest, now), []);
 });
 
-test('two partial runs in a row are an alert that names the failing source', () => {
+test('one source failing two runs in a row is one alert that names it', () => {
   const manifest = governmentManifest({
     status: 'partial',
     consecutive_partial_runs: 2,
-    sources: [source('ontario'), source('lyon', { status: 'stale', retrieved_at: daysAgo(32), consecutive_failures: 2, error: 'fetch failed' })]
+    sources: [source('ontario'), source('lyon', { status: 'stale', retrieved_at: daysAgo(80), consecutive_failures: 2, error: 'fetch failed' })]
   });
   const problems = governmentProblems(manifest, now);
-  assert.equal(problems.length, 1);
-  assert.match(problems[0], /2 official refreshes in a row ended partial/);
-  assert.match(problems[0], /lyon \(fetch failed\)/);
+  assert.deepEqual(problems, ['lyon failed 2 refreshes in a row; last error: fetch failed.']);
 });
 
-test('an old manifest without the counter counts a partial status as one run', () => {
-  const manifest = governmentManifest({ status: 'partial', consecutive_partial_runs: undefined });
+test('two different sources failing on back-to-back runs is not an alert', () => {
+  const manifest = governmentManifest({
+    status: 'partial',
+    consecutive_partial_runs: 2,
+    sources: [source('ontario'), source('lyon', { status: 'stale', retrieved_at: daysAgo(31), consecutive_failures: 1, error: 'fetch failed' })]
+  });
   assert.deepEqual(governmentProblems(manifest, now), []);
-  assert.equal(governmentProblems(manifest, now, { maxPartialRuns: 1 }).length, 1);
+});
+
+test('a source that missed one monthly run is not yet stale', () => {
+  const manifest = governmentManifest({
+    sources: [source('ontario'), source('lyon', { status: 'stale', retrieved_at: daysAgo(61), consecutive_failures: 1, error: 'HTTP 500' })]
+  });
+  assert.deepEqual(governmentProblems(manifest, now), []);
+});
+
+test('an old manifest without the counters has no failure streak', () => {
+  const manifest = governmentManifest({
+    status: 'partial',
+    consecutive_partial_runs: undefined,
+    sources: [source('lyon', { status: 'stale', consecutive_failures: undefined, error: 'fetch failed' })]
+  });
+  assert.deepEqual(governmentProblems(manifest, now), []);
 });
 
 test('a refresh that stopped running is one alert, not one per source', () => {
@@ -72,10 +89,10 @@ test('a refresh that stopped running is one alert, not one per source', () => {
 
 test('one source with an old retrieved_at is an alert even when the run is recent', () => {
   const problems = governmentProblems(governmentManifest({
-    sources: [source('ontario'), source('new_york', { status: 'stale', retrieved_at: daysAgo(60), error: 'HTTP 404' })]
+    sources: [source('ontario'), source('new_york', { status: 'stale', retrieved_at: daysAgo(90), consecutive_failures: 1, error: 'HTTP 404' })]
   }), now);
   assert.equal(problems.length, 1);
-  assert.match(problems[0], /^new_york was last retrieved on .* \(60 days ago\); last error: HTTP 404\.$/);
+  assert.match(problems[0], /^new_york was last retrieved on .* \(90 days ago\); last error: HTTP 404\.$/);
 });
 
 test('a source that never succeeded is an alert', () => {

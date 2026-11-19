@@ -279,6 +279,30 @@ test('a source that reissues record ids keeps the same market ids and URLs', () 
   assert.equal(idFor('Brand New Market'), 'gov:dc:brand-new');
 });
 
+test('a carried id stays with its source record id after a rename or a new namesake', () => {
+  const market = (id, sourceRecordId, name, latitude) => ({
+    id: `gov:dc:${id}`, slug: `${id}-slug`, name,
+    location: { address: '1 Main St', coordinates: { latitude, longitude: -77 } },
+    provenance: { source_record_id: sourceRecordId }
+  });
+  // Last month the reissue was matched by name: old ids, new source record ids.
+  const previous = [
+    market('old-rose', 'new-rose', 'Rose Park Farmers Market', 38.91),
+    market('old-river', 'new-river', 'Riverdale Park Market', 38.96)
+  ];
+  const current = [
+    market('new-rose', 'new-rose', 'Rose Park Market', 38.91),
+    market('new-river', 'new-river', 'Riverdale Park Market', 38.96),
+    market('other-river', 'other-river', 'Riverdale Park Market', 39.4)
+  ];
+
+  const { records, carried } = carryForwardIdentities(current, previous);
+  assert.equal(carried, 2);
+  assert.deepEqual(records.map((record) => record.id), ['gov:dc:old-rose', 'gov:dc:old-river', 'gov:dc:other-river']);
+  assert.equal(records[0].slug, 'old-rose-slug');
+  assert.deepEqual(carryForwardIdentities(records, records).records, records, 'a second run changes nothing');
+});
+
 test('changed markets are the added and edited records, never the deleted ones', () => {
   const previous = [
     { id: 'gov:a', slug: 'a', name: 'A' },

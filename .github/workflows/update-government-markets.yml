@@ -89,7 +89,7 @@ jobs:
           fi
 
       # One partial run is a warning; a source that fails two runs in a row,
-      # or has not been retrieved in 45 days, fails the job.
+      # or has not been retrieved in 75 days, fails the job.
       - name: Note sources that failed
         run: |
           status=$(node -e "console.log(require('./data/sources/government_markets.manifest.json').status)")

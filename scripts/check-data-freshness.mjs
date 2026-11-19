@@ -19,8 +19,15 @@
  *  - GOVERNMENT_MAX_AGE_DAYS: the official refresh runs on the 1st of each
  *    month, so a good snapshot is at most about 31 days old. 45 days means one
  *    missed run plus two weeks.
- *  - GOVERNMENT_MAX_PARTIAL_RUNS: one partial run is a warning (a feed can be
- *    down for a night). Two in a row means a source is broken, not flaky.
+ *  - GOVERNMENT_MAX_SOURCE_FAILURES: one failed run is a warning (a feed can
+ *    be down for a night). The same source failing two runs in a row means it
+ *    is broken, not flaky.
+ *  - GOVERNMENT_SOURCE_MAX_AGE_DAYS: a source that misses one monthly run is
+ *    about 60 days old by the next one, so 75 days means two missed runs. It
+ *    catches a source the failure counter cannot (one that never succeeded).
+ *    The manifest also keeps `consecutive_partial_runs`, the run-wide streak,
+ *    for the record; the alert is per source so two different flaky feeds on
+ *    back-to-back nights do not page anyone.
  *  - LEGACY_MAX_AGE_DAYS: the USDA snapshot is refreshed by hand before and
  *    during the market season. 180 days means the reminder arrives in time for
  *    the next pass, not after it.
@@ -35,7 +42,8 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 export const GOVERNMENT_MAX_AGE_DAYS = 45;
-export const GOVERNMENT_MAX_PARTIAL_RUNS = 2;
+export const GOVERNMENT_MAX_SOURCE_FAILURES = 2;
+export const GOVERNMENT_SOURCE_MAX_AGE_DAYS = 75;
 export const LEGACY_MAX_AGE_DAYS = 180;
 
 const GOVERNMENT_MANIFEST = 'data/sources/government_markets.manifest.json';
@@ -60,7 +68,8 @@ function day(value) {
 /** Problems with the official government snapshot, as readable sentences. */
 export function governmentProblems(manifest, now, {
   maxAgeDays = GOVERNMENT_MAX_AGE_DAYS,
-  maxPartialRuns = GOVERNMENT_MAX_PARTIAL_RUNS
+  maxSourceFailures = GOVERNMENT_MAX_SOURCE_FAILURES,
+  sourceMaxAgeDays = GOVERNMENT_SOURCE_MAX_AGE_DAYS
 } = {}) {
   if (!manifest) return [`${GOVERNMENT_MANIFEST} is missing.`];
   const problems = [];
@@ -74,22 +83,18 @@ export function governmentProblems(manifest, now, {
     );
   }
 
-  // Manifests written before the counter existed still say whether that run
-  // was partial, which counts as one.
-  const partialRuns = manifest.consecutive_partial_runs ?? (manifest.status === 'ok' ? 0 : 1);
-  const failing = (manifest.sources ?? []).filter((source) => ['stale', 'failed'].includes(source.status));
-  if (partialRuns >= maxPartialRuns) {
-    problems.push(
-      `${partialRuns} official refreshes in a row ended partial. Failing: ` +
-        `${failing.map((source) => `${source.id} (${source.error ?? source.status})`).join(', ') || 'see the manifest'}.`
-    );
+  for (const source of manifest.sources ?? []) {
+    const failures = source.consecutive_failures ?? 0;
+    if (failures < maxSourceFailures) continue;
+    problems.push(`${source.id} failed ${failures} refreshes in a row; last error: ${source.error ?? source.status}.`);
   }
 
   // When the whole run is old every source is old too; one line says it.
   if (!runIsOld) {
     for (const source of manifest.sources ?? []) {
+      if ((source.consecutive_failures ?? 0) >= maxSourceFailures) continue;
       const sourceAge = ageInDays(source.retrieved_at, now);
-      if (sourceAge !== undefined && sourceAge <= maxAgeDays) continue;
+      if (sourceAge !== undefined && sourceAge <= sourceMaxAgeDays) continue;
       problems.push(
         `${source.id} was last retrieved on ${day(source.retrieved_at)}` +
           `${sourceAge === undefined ? '' : ` (${sourceAge} days ago)`}` +

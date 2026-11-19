@@ -229,8 +229,8 @@ export function normalizeCoordinate(value) {
  * The upstream answers a question ("No Indoor;", "Yes, part of the time the
  * market is open indoor;"); the snapshot holds the label the site prints
  * ("Outdoor", "Indoor and outdoor", "Indoor"). Both sides map to the label so
- * an unchanged answer is not a change, and the snapshot keeps its label.
- * `src/lib/marketFacts.ts` (`settingLabel`) reads both spellings the same way.
+ * an unchanged answer is not a change, and a changed one is written as the
+ * label, so the snapshot keeps one vocabulary.
  */
 export function normalizeIndoor(value) {
   const text = normalizeText(value);
@@ -429,8 +429,10 @@ export function mergeMarket(market, upstreamRecord, fields) {
     merged.location = { ...(market.location ?? {}) };
     apply('address', (value) => { merged.location.address = value; });
     apply('location_description', (value) => { merged.location.description = value; });
-    apply('site_type', (value) => { merged.location.site_type = value; });
-    apply('indoor_outdoor', (value) => { merged.location.indoor_outdoor = value; });
+    // Written in the snapshot's own vocabulary, so the file never mixes
+    // "Outdoor" with "No Indoor;".
+    apply('site_type', (value) => { merged.location.site_type = normalizeSiteType(value) ?? value; });
+    apply('indoor_outdoor', (value) => { merged.location.indoor_outdoor = normalizeIndoor(value) ?? value; });
     if ((fields.includes('longitude') || fields.includes('latitude')) && next.longitude !== undefined && next.latitude !== undefined) {
       merged.location.coordinates = { longitude: next.longitude, latitude: next.latitude };
     }
