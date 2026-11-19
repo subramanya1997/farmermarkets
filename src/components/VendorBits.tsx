@@ -28,7 +28,7 @@ export function vendorSellsLine(products: readonly string[], items: readonly str
 }
 
 /** Lowercase a label's first letter unless it looks like a name or an acronym ("CSA", "Honeycrisp"). */
-function lowerFirst(text: string): string {
+export function lowerFirst(text: string): string {
   const [first = '', second = ''] = text;
   return second && second === second.toUpperCase() && /[A-Z]/.test(second) ? text : first.toLowerCase() + text.slice(1);
 }

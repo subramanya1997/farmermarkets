@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { AlertCircle, BadgeCheck, CalendarDays, Clock, FileText, MapPin, Pencil, RotateCcw, Tent } from 'lucide-react';
+import { AlertCircle, BadgeCheck, CalendarDays, Clock, FileText, MapPin, Pencil, RotateCcw, ShoppingBasket, Tent } from 'lucide-react';
 import { requireOrganizer } from '@/lib/organizer';
 import { attendanceLabel } from '@/lib/vendorRules';
 import type { VendorApplicationView } from '@/lib/vendors';
@@ -190,6 +190,12 @@ function ApplicationCard({ application }: { application: VendorApplicationView }
       {market ? (
         <div className="flex flex-col-reverse gap-2 border-t border-zinc-200 bg-zinc-50/60 p-3 sm:flex-row sm:justify-end sm:px-5 dark:border-zinc-800 dark:bg-zinc-950/30">
           {open ? <WithdrawButton applicationId={application.id} marketName={market.name} listed={status === 'approved'} /> : null}
+          {status === 'approved' ? (
+            <Link href="/vendor/offerings" className={cn(buttonVariants({ variant: 'outline' }), 'h-11 w-full sm:h-9 sm:w-auto')}>
+              <ShoppingBasket aria-hidden="true" />
+              Post this week
+            </Link>
+          ) : null}
           <Link href={applyHref!} className={cn(buttonVariants(), PRIMARY_SMALL)} aria-label={`${open ? 'Edit' : 'Apply again to'} ${market.name}`}>
             {open ? <Pencil aria-hidden="true" /> : <RotateCcw aria-hidden="true" />}
             {open ? (attention ? 'Add documents' : 'Edit') : 'Apply again'}

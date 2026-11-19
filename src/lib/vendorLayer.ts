@@ -11,13 +11,27 @@
  */
 import 'server-only';
 import { cache } from 'react';
-import { and, eq, isNotNull, isNull } from 'drizzle-orm';
+import { and, eq, gte, isNotNull, isNull } from 'drizzle-orm';
 import { DatabaseUnavailableError, dbSchema, getDb } from '@/db';
+import { offeringsToCarry, readOfferingItems, usToday, type OfferingItem } from './offeringRules';
 import { readDays, readVendorProfile, type VendorProfile } from './vendorProfile';
 import { confirmedByMarket, resolveMarketId } from './vendorRules';
 import mergedMarkets from '../../data/overrides/merged-markets.json';
 
-const { vendors, vendorApplications } = dbSchema;
+const { vendors, vendorApplications, vendorOfferings } = dbSchema;
+
+/**
+ * A weekly post as public pages carry it. Pages are cached for up to a day,
+ * so they carry the posts that are current or about to start and pick the
+ * one to show at view time (`currentOffering` in src/lib/offeringRules.ts).
+ */
+export interface PublicOffering {
+  startsOn: string;
+  endsOn: string;
+  items: OfferingItem[];
+  note?: string;
+  updatedAt: string;
+}
 
 export interface PublishedVendorMarket {
   marketId: string;
@@ -25,6 +39,7 @@ export interface PublishedVendorMarket {
   stallNote?: string;
   /** One of the market's own organizers approved this vendor. */
   confirmed: boolean;
+  offerings: PublicOffering[];
 }
 
 export interface PublishedVendor {
@@ -46,6 +61,7 @@ export interface MarketVendorCard {
   days: string[];
   stall_note?: string;
   confirmed: boolean;
+  offerings?: PublicOffering[];
 }
 
 export interface PublishedVendors {
@@ -67,7 +83,8 @@ async function queryPublishedVendors(): Promise<PublishedVendors> {
     throw error;
   }
 
-  const [vendorRows, applicationRows] = await Promise.all([
+  const today = usToday();
+  const [vendorRows, applicationRows, offeringRows] = await Promise.all([
     db
       .select({ id: vendors.id, slug: vendors.slug, profile: vendors.profile, reviewedAt: vendors.reviewedAt, updatedAt: vendors.updatedAt })
       .from(vendors)
@@ -83,7 +100,30 @@ async function queryPublishedVendors(): Promise<PublishedVendors> {
       })
       .from(vendorApplications)
       .where(eq(vendorApplications.status, 'approved')),
+    db
+      .select({
+        vendorId: vendorOfferings.vendorId,
+        marketId: vendorOfferings.marketId,
+        startsOn: vendorOfferings.startsOn,
+        endsOn: vendorOfferings.endsOn,
+        items: vendorOfferings.items,
+        note: vendorOfferings.note,
+        updatedAt: vendorOfferings.updatedAt,
+      })
+      .from(vendorOfferings)
+      .where(and(isNull(vendorOfferings.withdrawnAt), gte(vendorOfferings.endsOn, today.from))),
   ]);
+
+  // Posts by vendor and market, trimmed to what a cached page needs.
+  const offeringsFor = new Map<string, PublicOffering[]>();
+  for (const row of offeringRows) {
+    const items = readOfferingItems(row.items);
+    if (items.length === 0) continue;
+    const key = `${row.vendorId}:${row.marketId}`;
+    const list = offeringsFor.get(key) ?? [];
+    list.push({ startsOn: row.startsOn, endsOn: row.endsOn, items, note: row.note ?? undefined, updatedAt: row.updatedAt.toISOString() });
+    offeringsFor.set(key, list);
+  }
 
   const bySlug = new Map<string, PublishedVendor>();
   const byId = new Map<string, PublishedVendor>();
@@ -111,7 +151,10 @@ async function queryPublishedVendors(): Promise<PublishedVendors> {
     const confirmed = confirmedByMarket(row);
     const marketId = resolveMarketId(row.marketId, MERGES);
     if (vendor.markets.some((market) => market.marketId === marketId)) continue;
-    vendor.markets.push({ marketId, days, stallNote: row.stallNote ?? undefined, confirmed });
+    // Only reached for a vendor that is publicly listed here (live profile,
+    // not suspended, approved application), so posts never leak past that.
+    const offerings = offeringsToCarry(offeringsFor.get(`${vendor.id}:${marketId}`) ?? [], today);
+    vendor.markets.push({ marketId, days, stallNote: row.stallNote ?? undefined, confirmed, offerings });
     const cover = vendor.profile.photos[0];
     const cards = byMarket.get(marketId) ?? [];
     cards.push({
@@ -123,6 +166,7 @@ async function queryPublishedVendors(): Promise<PublishedVendors> {
       days,
       stall_note: row.stallNote ?? undefined,
       confirmed,
+      ...(offerings.length ? { offerings } : {}),
     });
     byMarket.set(marketId, cards);
   }

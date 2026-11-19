@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { FileText, LayoutDashboard, MapPin, Settings, Store } from 'lucide-react';
+import { FileText, LayoutDashboard, MapPin, Settings, ShoppingBasket, Store } from 'lucide-react';
 import { isAdmin, managedMarketIds, requireOrganizer } from '@/lib/organizer';
 import { DashboardShell, type DashboardArea, type DashboardNavGroup, type DashboardNavItem } from '@/components/dashboard/DashboardShell';
 import { cachedVendorOverview, needsDocument } from './_lib/overview';
@@ -18,6 +18,7 @@ export default async function VendorLayout({ children }: { children: ReactNode }
   const [overview, managed] = await Promise.all([cachedVendorOverview(user), admin ? Promise.resolve([]) : managedMarketIds(user.id)]);
   const attention = overview.applications.filter(needsDocument).length;
   const asked = overview.applications.some((application) => application.progress.active > 0 && (application.status === 'pending' || application.status === 'approved'));
+  const listed = overview.applications.some((application) => application.market && application.status === 'approved');
 
   const groups: DashboardNavGroup[] = [
     {
@@ -25,6 +26,7 @@ export default async function VendorLayout({ children }: { children: ReactNode }
         { href: '/vendor', label: 'Overview', icon: <LayoutDashboard />, exact: true },
         { href: '/vendor/profile', label: 'Profile', icon: <Store /> },
         { href: '/vendor/markets', label: 'Markets', icon: <MapPin />, count: attention },
+        ...(listed ? [{ href: '/vendor/offerings', label: 'This week', icon: <ShoppingBasket /> }] : []),
         ...(asked || overview.documents.length > 0 ? [{ href: '/vendor/documents', label: 'Documents', icon: <FileText /> }] : []),
       ],
     },

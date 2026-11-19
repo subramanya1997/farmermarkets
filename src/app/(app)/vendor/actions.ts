@@ -19,6 +19,7 @@ import {
   type ApplicationInput,
   type VendorActionResult,
 } from '@/lib/vendors';
+import { postOffering, withdrawOffering } from '@/lib/vendorOfferings';
 
 async function verifiedUser() {
   const user = await getSessionUser();
@@ -119,4 +120,17 @@ export async function setAnnouncementsAction(optOut: boolean): Promise<VendorAct
   const result = await setAnnouncementsOptOut(user, Boolean(optOut));
   if (result.ok) refresh();
   return result;
+}
+
+/** Post what the vendor is bringing; `replaces` is the post being edited. */
+export async function postOfferingAction(input: unknown, replaces?: string): Promise<VendorActionResult> {
+  const user = await verifiedUser();
+  if (!user) return SIGN_IN_ERROR;
+  return postOffering(user, input, typeof replaces === 'string' ? replaces : undefined);
+}
+
+export async function withdrawOfferingAction(offeringId: string): Promise<VendorActionResult> {
+  const user = await verifiedUser();
+  if (!user) return SIGN_IN_ERROR;
+  return withdrawOffering(user, String(offeringId));
 }

@@ -21,6 +21,8 @@ import {
 import { attendanceLabel } from '@/lib/vendorRules';
 import { TrackedExternalLink } from '@/components/TrackedExternalLink';
 import { VendorConfirmedBadge, vendorSellsLine } from '@/components/VendorBits';
+import { VendorOfferingLine } from '@/components/VendorOffering';
+import { usToday } from '@/lib/offeringDays';
 
 interface MarketHighlightsProps {
   /**
@@ -70,6 +72,7 @@ const CHIP = 'inline-flex items-center gap-1 rounded-full border border-zinc-200
  */
 function AccountVendors({ vendors }: { vendors: AccountVendor[] }) {
   if (!vendors.length) return null;
+  const rendered = usToday();
   return (
     <ul className="mb-3 grid gap-2 sm:grid-cols-2">
       {vendors.map((vendor) => {
@@ -103,6 +106,7 @@ function AccountVendors({ vendors }: { vendors: AccountVendor[] }) {
               </p>
               {sells && <p className="text-sm text-zinc-600 dark:text-zinc-400">{sells}</p>}
               {when && <p className="text-sm text-zinc-500 dark:text-zinc-400">{when}</p>}
+              <VendorOfferingLine offerings={vendor.offerings} rendered={rendered} />
               {vendor.confirmed && (
                 <p className="mt-1">
                   <VendorConfirmedBadge />
