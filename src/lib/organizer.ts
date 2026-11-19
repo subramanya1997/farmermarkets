@@ -32,13 +32,16 @@ import { listingEditsFromMarket } from './organizerOverlay';
 import { adminEmails, adminReviewAlertEmail, decisionEmail, managerInviteEmail, sendOrganizerEmail } from './organizerEmails';
 import { getPostHogServer } from './posthogServer';
 import { absoluteUrl } from './site';
+import { webPhotoForUpload } from './photoConvert';
+import { UPLOAD_PHOTO_TYPES } from './photoTypes';
 import marketPopularity from '../../data/market-popularity.json';
 
 const { user: userTable, marketManagers, marketClaims, marketChangeRequests, marketOverrides, marketPhotos } = dbSchema;
 
 export const MAX_PHOTOS_PER_MARKET = 12;
 export const MAX_PHOTO_BYTES = 8 * 1024 * 1024;
-export const PHOTO_CONTENT_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+/** HEIC/HEIF uploads are converted to JPEG in `registerPhoto` (src/lib/photoConvert.ts). */
+export const PHOTO_CONTENT_TYPES = UPLOAD_PHOTO_TYPES;
 
 export interface SessionUser {
   id: string;
@@ -456,6 +459,9 @@ export async function registerPhoto(
 
   const existing = await photosFor(market.id);
   if (existing.length >= MAX_PHOTOS_PER_MARKET) return { ok: false, error: `A listing can have up to ${MAX_PHOTOS_PER_MARKET} photos.` };
+  const web = await webPhotoForUpload(input);
+  if (!web.ok) return web;
+  input = { ...input, ...web.photo };
 
   await getDb()
     .insert(marketPhotos)
