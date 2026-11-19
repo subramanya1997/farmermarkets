@@ -13,3 +13,8 @@ const noop = () => () => {};
 export function useLocalDay(serverDay: string): string {
   return useSyncExternalStore(noop, () => localDay(), () => serverDay);
 }
+
+/** False on the server and during hydration, true once the browser has taken over. */
+export function useHydrated(): boolean {
+  return useSyncExternalStore(noop, () => true, () => false);
+}

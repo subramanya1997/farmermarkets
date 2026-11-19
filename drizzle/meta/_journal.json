@@ -43,6 +43,13 @@
       "when": 1795059957006,
       "tag": "0005_vendor_offerings",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795060853003,
+      "tag": "0006_vendor_qr_follows",
+      "breakpoints": true
     }
   ]
 }

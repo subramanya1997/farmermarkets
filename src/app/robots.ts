@@ -49,7 +49,9 @@ export default function robots(): MetadataRoute.Robots {
       // `/vendor/` keeps its trailing slash on purpose: rules match by prefix,
       // and `/vendor` alone would also block the public `/vendors/...` pages.
       // The bare `/vendor` page redirects signed-out visitors and is noindex.
-      disallow: ['/api/*', '/dashboard', '/admin', '/vendor/', '/sign-in', '/sign-up', '/forgot-password', '/reset-password'],
+      // `/v/` is the stall QR landing page: noindex, and a crawler visit
+      // should not even reach the vendor's scan count.
+      disallow: ['/api/*', '/dashboard', '/admin', '/vendor/', '/v/', '/sign-in', '/sign-up', '/forgot-password', '/reset-password'],
     },
     sitemap: absoluteUrl('/sitemap.xml'),
   };

@@ -53,12 +53,24 @@ export function VendorOfferingLine({ offerings, rendered }: { offerings?: Public
 }
 
 /** The full post, under a market on the vendor's own page. */
-export function VendorOfferingBlock({ offerings, rendered, className }: { offerings?: PublicOffering[]; rendered: DayRange; className?: string }) {
+export function VendorOfferingBlock({
+  offerings,
+  rendered,
+  label,
+  className,
+}: {
+  offerings?: PublicOffering[];
+  rendered: DayRange;
+  /** A small line above the heading, such as the market name. */
+  label?: string;
+  className?: string;
+}) {
   const current = useCurrent(offerings, rendered);
   if (!current) return null;
   const { offering, today } = current;
   return (
     <div className={cn('relative z-10 mt-2 rounded-xl border border-green-200 bg-green-50/70 p-3 dark:border-green-900/60 dark:bg-green-950/30', className)}>
+      {label ? <p className="mb-1 text-xs font-medium break-words text-green-900/80 dark:text-green-200/80">{label}</p> : null}
       <p className="flex items-center gap-1.5 text-sm font-semibold text-green-900 dark:text-green-100">
         <ShoppingBasket aria-hidden="true" className="size-4 shrink-0 text-green-700 dark:text-green-400" />
         {heading(offering, today)}

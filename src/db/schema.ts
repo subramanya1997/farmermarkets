@@ -512,6 +512,47 @@ export const vendorOfferings = pgTable(
   ],
 );
 
+/**
+ * A shopper following a vendor (src/lib/vendorReach.ts). The follower is a
+ * signed-in account whose email was proven with a sign-in code; vendors only
+ * ever see counts, never who follows. One row per vendor and account, so a
+ * refresh or a second scan cannot add another.
+ */
+export const vendorFollows = pgTable(
+  'vendor_follows',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    vendorId: uuid('vendor_id').notNull().references(() => vendors.id, { onDelete: 'cascade' }),
+    /** The follower key: the account that follows. */
+    userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    /** Where the follow came from: 'qr' for the stall QR scan page. */
+    source: text('source').notNull().default('qr'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('vendor_follows_vendor_user_idx').on(t.vendorId, t.userId), index('vendor_follows_user_idx').on(t.userId)],
+);
+
+/**
+ * One counted visit to a vendor's stall QR URL (`/v/<slug>`). No IP address
+ * is stored: `visitor_hash` is a keyed hash of the address and user agent
+ * that changes every day, used only to skip repeat scans and floods.
+ */
+export const vendorQrScans = pgTable(
+  'vendor_qr_scans',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    vendorId: uuid('vendor_id').notNull().references(() => vendors.id, { onDelete: 'cascade' }),
+    /** Canonical market id when the code names a market; null for the vendor's own code. */
+    marketId: text('market_id'),
+    visitorHash: text('visitor_hash').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    index('vendor_qr_scans_vendor_created_idx').on(t.vendorId, t.createdAt),
+    index('vendor_qr_scans_visitor_created_idx').on(t.visitorHash, t.createdAt),
+  ],
+);
+
 /** A record of each announcement an admin sent to vendors. */
 export const vendorAnnouncements = pgTable('vendor_announcements', {
   id: uuid('id').primaryKey().defaultRandom(),
