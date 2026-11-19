@@ -6,7 +6,9 @@ import { usePathname } from "next/navigation";
 import { CheckCircle2, Loader2, Store } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 /**
  * Dispatch this on `window` to open the feedback form. It never opens by
@@ -117,13 +119,13 @@ export function DiscoverySurvey() {
                   ? "We'll reply by email if there's anything to follow up."
                   : "We read every message."}
             </DialogDescription>
-            <button
+            <Button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="mt-2 rounded-full bg-green-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-800"
+              className="mt-2 h-auto rounded-full bg-green-700 px-5 py-2.5 text-sm font-semibold text-white shadow-none hover:bg-green-800"
             >
               Done
-            </button>
+            </Button>
           </div>
         ) : (
           <form onSubmit={submit} className="space-y-4">
@@ -134,14 +136,15 @@ export function DiscoverySurvey() {
 
             <label className="block">
               <span className="sr-only">Your feedback</span>
-              <textarea
+              <Textarea
                 value={message}
                 onChange={(event) => setMessage(event.target.value)}
                 maxLength={MESSAGE_LIMIT}
                 rows={4}
                 required
                 autoFocus
-                className="w-full resize-none rounded-xl border border-zinc-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700"
+                // field-sizing-fixed and min-h-0 keep the four-row box (shadcn's Textarea grows with its text).
+                className="field-sizing-fixed min-h-0 w-full resize-none rounded-xl border border-zinc-300 bg-transparent px-3 py-2 text-sm shadow-none outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 focus-visible:border-green-600 focus-visible:ring-4 focus-visible:ring-green-600/15 dark:border-zinc-700 dark:bg-transparent"
               />
             </label>
 
@@ -160,6 +163,7 @@ export function DiscoverySurvey() {
             <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
               <label>
                 Website
+                {/* Honeypot: hidden from people, so it stays a plain input rather than shadcn's Input. */}
                 <input tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
               </label>
             </div>
@@ -186,14 +190,14 @@ export function DiscoverySurvey() {
                   Privacy
                 </Link>
               </p>
-              <button
+              <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-green-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex h-auto shrink-0 items-center justify-center gap-2 rounded-full bg-green-700 px-5 py-2.5 text-sm font-semibold text-white shadow-none hover:bg-green-800 has-[>svg]:px-5 disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
                 {isSubmitting ? "Sending" : "Send"}
-              </button>
+              </Button>
             </div>
           </form>
         )}

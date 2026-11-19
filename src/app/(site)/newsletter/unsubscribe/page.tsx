@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { NOTICE_BUTTON, NewsletterNotice } from "@/components/NewsletterNotice";
+import { Button } from "@/components/ui/button";
 import { isWellFormedToken } from "@/lib/newsletter";
 
 export const metadata: Metadata = {
@@ -46,8 +47,9 @@ export default async function NewsletterUnsubscribePage({ searchParams }: Unsubs
     <NewsletterNotice title="Unsubscribe?">
       <p>You will stop getting the Farmer Markets newsletter.</p>
       <form action="/api/newsletter/unsubscribe" method="post">
+        {/* A hidden value for the native POST, not a visible control, so it stays a plain input. */}
         <input type="hidden" name="token" value={token} />
-        <button type="submit" className={NOTICE_BUTTON}>Unsubscribe</button>
+        <Button type="submit" className={`${NOTICE_BUTTON} h-auto shadow-none`}>Unsubscribe</Button>
       </form>
     </NewsletterNotice>
   );

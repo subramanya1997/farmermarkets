@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import posthog from "posthog-js";
+import { Button } from "@/components/ui/button";
 
 // Last-resort boundary: it replaces the root layout, so it carries its own
 // <html> and <body> and cannot rely on the site's header, footer or styles.
@@ -40,21 +41,25 @@ export default function GlobalError({
           This page failed to load. Please try again, or head back to the homepage.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center" }}>
-          <button
+          {/* Styled inline: global styles are not loaded here, so Button's classes may not apply. */}
+          <Button
             type="button"
             onClick={() => reset()}
             style={{
+              height: "auto",
               padding: "0.625rem 1.5rem",
               border: 0,
               borderRadius: "0.375rem",
               background: "#16a34a",
+              boxShadow: "none",
               color: "#fff",
               fontSize: "1rem",
+              fontWeight: 400,
               cursor: "pointer",
             }}
           >
             Try again
-          </button>
+          </Button>
           {/* A full page load on purpose: the app shell is what just failed. */}
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a

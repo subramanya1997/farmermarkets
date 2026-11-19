@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { CheckCircle2, UserPlus } from 'lucide-react';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Textarea } from '@/components/ui/textarea';
 import { posthogRequestHeaders, trackEvent } from '@/lib/analytics';
 
 type Purpose = 'get_listed' | 'update_listing';
@@ -182,7 +185,12 @@ export function OperatorRequestForm() {
     <div className="flex flex-col gap-5">
       <fieldset>
         <legend className="mb-2 text-sm font-medium">What do you need?</legend>
-        <div className="grid gap-2 sm:grid-cols-2">
+        <RadioGroup
+          name="purpose"
+          value={purpose}
+          onValueChange={(value) => setPurpose(value as Purpose)}
+          className="grid gap-2 sm:grid-cols-2"
+        >
           {PURPOSES.map((option) => (
             <label
               key={option.id}
@@ -193,20 +201,16 @@ export function OperatorRequestForm() {
               }`}
             >
               <span className="flex items-center gap-2 font-medium">
-                <input
-                  type="radio"
-                  name="purpose"
+                <RadioGroupItem
                   value={option.id}
-                  checked={purpose === option.id}
-                  onChange={() => setPurpose(option.id)}
-                  className="h-4 w-4 accent-green-600"
+                  className="size-4 border-zinc-400 bg-white text-green-600 data-[state=checked]:border-green-600 dark:text-green-500 dark:border-zinc-500 dark:bg-zinc-900 dark:data-[state=checked]:border-green-500 [&_svg]:fill-green-600 dark:[&_svg]:fill-green-500"
                 />
                 {option.label}
               </span>
               <span className="pl-6 text-xs text-zinc-500 dark:text-zinc-400">{option.detail}</span>
             </label>
           ))}
-        </div>
+        </RadioGroup>
       </fieldset>
 
       {purpose === 'update_listing' ? (
@@ -239,12 +243,13 @@ export function OperatorRequestForm() {
 
           <label className="block space-y-1 text-sm font-medium">
             Your market and what should change
-            <textarea
+            <Textarea
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               maxLength={1200}
               rows={4}
-              className="w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 dark:border-zinc-700"
+              // field-sizing-fixed and min-h-0 keep the four-row box (shadcn's Textarea grows with its text).
+              className="field-sizing-fixed min-h-0 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm shadow-none outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 focus-visible:border-green-600 focus-visible:ring-2 focus-visible:ring-green-600/20 dark:border-zinc-700 dark:bg-transparent"
               placeholder="Market name, where it runs, and what you want listed or corrected. A link to the listing or your website helps."
             />
           </label>
@@ -252,16 +257,16 @@ export function OperatorRequestForm() {
           <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
             <label>
               Website
+              {/* Honeypot: hidden from people, so it stays a plain input rather than shadcn's Input. */}
               <input tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
             </label>
           </div>
 
           <label className="flex items-start gap-2 text-sm text-zinc-700 dark:text-zinc-300">
-            <input
-              type="checkbox"
+            <Checkbox
               checked={contactPermission}
-              onChange={(event) => setContactPermission(event.target.checked)}
-              className="mt-0.5 h-4 w-4 accent-green-600"
+              onCheckedChange={(checked) => setContactPermission(checked === true)}
+              className="mt-0.5 size-4 border-zinc-400 bg-white data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white dark:border-zinc-500 dark:bg-zinc-900 dark:data-[state=checked]:border-green-500 dark:data-[state=checked]:bg-green-600"
             />
             <span>You may contact me about this request using the details I provided.</span>
           </label>
@@ -301,8 +306,8 @@ function ClaimWithAccount({ marketSlug }: { marketSlug: string | null }) {
   const start = marketSlug ? `/markets/${marketSlug}/claim` : '/sign-in?next=%2Fdashboard%2Fclaim';
   const steps = [
     'Enter your email and the code we send you. No password needed.',
-    marketSlug ? 'Send a short claim for your market.' : 'Find your market and send a short claim.',
-    'Once we confirm it, update hours, location, contact details and photos yourself.',
+    marketSlug ? 'Tap your role at the market.' : 'Find your market and tap your role.',
+    'Start updating hours, details and photos right away. They go live once we confirm it is you.',
   ];
 
   return (

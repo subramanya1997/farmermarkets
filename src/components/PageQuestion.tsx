@@ -6,6 +6,8 @@ import { posthogRequestHeaders, trackEvent } from "@/lib/analytics";
 import { newsletterAskVariant } from "@/lib/experiments";
 import { canShowInlineQuestion, markInlineQuestionSeen, markPromptOutcome } from "@/lib/promptBudget";
 import { CITY_NEEDS, MARKET_NEEDS, type VisitorNeed } from "@/lib/visitorNeeds";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { PromptSubscribe } from "./PromptSubscribe";
 
 interface PageQuestionProps {
@@ -123,14 +125,16 @@ export function PageQuestion({ kind, place, marketSlug }: PageQuestionProps) {
       className="relative rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-900"
     >
       {step === "ask" && (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           onClick={dismiss}
-          className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-200/60 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+          className="absolute right-2 top-2 flex size-8 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-200/60 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
         >
           <X aria-hidden="true" className="h-4 w-4" />
           <span className="sr-only">Hide this question</span>
-        </button>
+        </Button>
       )}
       <div className="flex items-start gap-3">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-50 dark:bg-green-900/30">
@@ -152,14 +156,15 @@ export function PageQuestion({ kind, place, marketSlug }: PageQuestionProps) {
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {needs.map((option) => (
-                  <button
+                  <Button
                     key={option.id}
                     type="button"
+                    variant="ghost"
                     onClick={() => choose(option)}
-                    className="rounded-xl border border-zinc-200 bg-white px-3 py-2.5 text-left text-sm font-medium text-zinc-800 transition-[border-color,background-color,transform] hover:border-green-600/50 hover:bg-green-50 active:scale-[0.98] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-green-900/20"
+                    className="h-auto shrink justify-start whitespace-normal rounded-xl border border-zinc-200 bg-white px-3 py-2.5 text-left text-sm font-medium text-zinc-800 transition-[border-color,background-color,transform] hover:border-green-600/50 hover:bg-green-50 hover:text-zinc-800 active:scale-[0.98] dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:bg-green-900/20 dark:hover:text-zinc-200"
                   >
                     {option.label}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </>
@@ -170,21 +175,22 @@ export function PageQuestion({ kind, place, marketSlug }: PageQuestionProps) {
               <label className="sr-only" htmlFor="page-question-note">
                 {need?.followUp ?? "Tell us in a few words"}
               </label>
-              <textarea
+              <Textarea
                 id="page-question-note"
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
                 maxLength={500}
                 rows={2}
                 placeholder={need?.followUp ? "For example: eggs, tomatoes, a bakery" : "Tell us in a few words"}
-                className="w-full resize-none rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
+                // field-sizing-fixed and min-h-0 keep the two-row box (shadcn's Textarea grows with its text).
+                className="field-sizing-fixed min-h-0 w-full resize-none rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm shadow-none outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 focus-visible:border-green-600 focus-visible:ring-4 focus-visible:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
               />
-              <button
+              <Button
                 type="submit"
-                className="mt-2 inline-flex h-11 items-center justify-center rounded-xl bg-green-700 px-4 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-green-800 active:scale-[0.98]"
+                className="mt-2 inline-flex h-11 items-center justify-center rounded-xl bg-green-700 px-4 text-sm font-semibold text-white shadow-none transition-[background-color,transform] hover:bg-green-800 active:scale-[0.98]"
               >
                 {note.trim() ? "Send" : "Skip"}
-              </button>
+              </Button>
             </form>
           )}
 

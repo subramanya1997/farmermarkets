@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useId, useState, type FormEvent } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { trackEvent } from "@/lib/analytics";
 
 interface PromptSubscribeProps {
@@ -56,7 +58,7 @@ export function PromptSubscribe({ place, placement, onSubscribed }: PromptSubscr
       </p>
       <div className="flex gap-2">
         <label className="sr-only" htmlFor={inputId}>Email address</label>
-        <input
+        <Input
           id={inputId}
           type="email"
           required
@@ -64,15 +66,15 @@ export function PromptSubscribe({ place, placement, onSubscribed }: PromptSubscr
           placeholder="you@example.com"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="h-11 min-w-0 flex-1 rounded-xl border border-zinc-300 bg-white px-3 text-sm outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
+          className="h-11 min-w-0 flex-1 rounded-xl border border-zinc-300 bg-white px-3 text-sm shadow-none outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 focus-visible:border-green-600 focus-visible:ring-4 focus-visible:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
         />
-        <button
+        <Button
           type="submit"
           disabled={busy}
-          className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-green-700 px-4 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-green-800 active:scale-[0.98] disabled:opacity-70"
+          className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-green-700 px-4 text-sm font-semibold text-white shadow-none transition-[background-color,transform] hover:bg-green-800 active:scale-[0.98] disabled:opacity-70"
         >
           {busy ? "Sending" : "Subscribe"}
-        </button>
+        </Button>
       </div>
       {error && <p role="alert" className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>}
     </form>

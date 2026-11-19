@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 import { splitFilterOptions, type FilterCategory, type FilterOption } from '@/lib/filters';
 import { trackEvent } from '@/lib/analytics';
 import { SITE_FRAME } from '@/lib/ui';
@@ -26,12 +27,15 @@ interface FilterBarProps {
   onCountryChange: (country: string) => void;
 }
 
+// The chips are ghost Buttons. h-auto, font-normal and the hover colors
+// that repeat the resting ones cancel the ghost defaults so the pills keep
+// their own look.
 const chipBase =
-  'inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-sm transition-colors';
+  'inline-flex h-auto shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-normal transition-colors has-[>svg]:px-3';
 const chipIdle =
-  'border-zinc-200 bg-white text-zinc-700 hover:border-green-600/40 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-green-500/40';
+  'border-zinc-200 bg-white text-zinc-700 hover:border-green-600/40 hover:bg-white hover:text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-green-500/40 dark:hover:bg-zinc-900 dark:hover:text-zinc-300';
 const chipActive =
-  'border-green-600 bg-green-50 text-green-800 dark:border-green-500 dark:bg-green-900/30 dark:text-green-300';
+  'border-green-600 bg-green-50 text-green-800 hover:bg-green-50 hover:text-green-800 dark:border-green-500 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/30 dark:hover:text-green-300';
 
 function FilterChip({
   option,
@@ -44,15 +48,16 @@ function FilterChip({
 }) {
   const Icon = option.icon;
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
       aria-pressed={active}
       onClick={onToggle}
       className={`${chipBase} ${active ? chipActive : chipIdle}`}
     >
       <Icon aria-hidden className="h-4 w-4 text-green-700 dark:text-green-500" />
       {option.label}
-    </button>
+    </Button>
   );
 }
 
@@ -106,8 +111,9 @@ export function FilterBar({
               onToggle={() => toggleFilter(option.id)}
             />
           ))}
-          <button
+          <Button
             type="button"
+            variant="ghost"
             aria-expanded={moreOpen}
             aria-controls="explorer-more-filters"
             onClick={() => setMoreOpen((open) => !open)}
@@ -122,18 +128,19 @@ export function FilterBar({
             )}
             <ChevronDown
               aria-hidden
-              className={`h-3.5 w-3.5 transition-transform ${moreOpen ? 'rotate-180' : ''}`}
+              className={`size-3.5 transition-transform ${moreOpen ? 'rotate-180' : ''}`}
             />
-          </button>
+          </Button>
           {anyActive && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
               onClick={clearAll}
-              className="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1.5 text-sm text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+              className="inline-flex h-auto shrink-0 items-center gap-1 rounded-full px-2 py-1.5 text-sm font-normal text-zinc-500 transition-none hover:bg-transparent hover:text-zinc-800 has-[>svg]:px-2 dark:text-zinc-400 dark:hover:bg-transparent dark:hover:text-zinc-200"
             >
-              <X aria-hidden className="h-3.5 w-3.5" />
+              <X aria-hidden className="size-3.5" />
               Clear
-            </button>
+            </Button>
           )}
         </div>
 

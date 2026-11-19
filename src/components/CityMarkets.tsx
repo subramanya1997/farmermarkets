@@ -8,6 +8,7 @@ import { SNAP_HASH, dayHash, splitBySchedule } from '@/lib/cityPageView';
 import type { Weekday } from '@/lib/schedule';
 import { LazyPlacesMap, type MapPlace } from '@/components/LazyPlacesMap';
 import { MarketCardView } from '@/components/MarketCardView';
+import { Button } from '@/components/ui/button';
 
 interface CityMarketsProps {
   rows: CityMarketRow[];
@@ -18,12 +19,14 @@ interface CityMarketsProps {
   snapCount: number;
 }
 
+// Chips are ghost Buttons; the hover, height, gap and focus overrides keep
+// the pill look (no ghost hover fill, outline focus ring, baseline counts).
 const CHIP =
-  'rounded-full border px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700';
+  'h-auto items-baseline gap-0 rounded-full border px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-green-700 focus-visible:ring-0';
 const CHIP_OFF =
-  'border-zinc-200 bg-white text-zinc-700 hover:border-green-600 hover:text-green-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-green-500 dark:hover:text-green-400';
+  'border-zinc-200 bg-white text-zinc-700 hover:border-green-600 hover:bg-white hover:text-green-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-green-500 dark:hover:bg-zinc-900 dark:hover:text-green-400';
 const CHIP_ON =
-  'border-green-700 bg-green-700 text-white dark:border-green-600 dark:bg-green-600';
+  'border-green-700 bg-green-700 text-white hover:bg-green-700 hover:text-white dark:border-green-600 dark:bg-green-600 dark:hover:bg-green-600';
 
 function MarketRow({
   row,
@@ -152,18 +155,20 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
         <div className="mb-4 flex flex-wrap items-center gap-2" role="group" aria-label="Filter markets">
           {showDayChips && (
             <>
-              <button
+              <Button
                 type="button"
+                variant="ghost"
                 aria-pressed={day === null}
                 onClick={() => setDay(null)}
                 className={`${CHIP} ${day === null ? CHIP_ON : CHIP_OFF}`}
               >
                 Any day
-              </button>
+              </Button>
               {days.map((entry) => (
-                <button
+                <Button
                   key={entry.day}
                   type="button"
+                  variant="ghost"
                   aria-pressed={day === entry.day}
                   onClick={() => setDay(day === entry.day ? null : entry.day)}
                   className={`${CHIP} ${day === entry.day ? CHIP_ON : CHIP_OFF}`}
@@ -172,19 +177,20 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
                   <span className={`ml-1.5 text-xs ${day === entry.day ? 'text-green-100' : 'text-zinc-500 dark:text-zinc-400'}`}>
                     {entry.count}
                   </span>
-                </button>
+                </Button>
               ))}
             </>
           )}
           {showSnapChip && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
               aria-pressed={snapOnly}
               onClick={() => setSnapOnly(!snapOnly)}
               className={`${CHIP} ${snapOnly ? CHIP_ON : CHIP_OFF} ${showDayChips ? 'sm:ml-2' : ''}`}
             >
               Accepts SNAP/EBT
-            </button>
+            </Button>
           )}
         </div>
       )}
@@ -267,13 +273,14 @@ export function CityMarkets({ rows, cityName, regionFull, days, snapCount }: Cit
               {day ? ` for ${day}` : ''}
               {snapOnly ? ' that accepts SNAP/EBT' : ''}.
             </p>
-            <button
+            <Button
               type="button"
+              variant="link"
               onClick={() => setFilter(null, false)}
-              className="mt-2 font-medium text-green-700 hover:underline dark:text-green-500"
+              className="mt-2 h-auto p-0 font-medium text-green-700 underline-offset-auto hover:underline dark:text-green-500"
             >
               Show all {rows.length} markets
-            </button>
+            </Button>
           </div>
         )}
       </div>

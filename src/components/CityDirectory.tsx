@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import type { StateCityLink } from '@/lib/statePage';
 import { trackEvent } from '@/lib/analytics';
 import { citySearchEvent } from '@/lib/searchAnalytics';
@@ -144,12 +145,12 @@ export function CityDirectory({ cities, regionFull }: CityDirectoryProps) {
             aria-hidden="true"
             className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400"
           />
-          <input
+          <Input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={`Find a town in ${regionFull}`}
-            className="w-full rounded-full border border-zinc-300 bg-white py-2 pl-9 pr-3 text-sm outline-none placeholder:text-zinc-400 focus:border-green-700 focus:ring-2 focus:ring-green-700/20 dark:border-zinc-700 dark:bg-zinc-900"
+            className="h-auto w-full rounded-full border border-zinc-300 bg-white py-2 pl-9 pr-3 text-sm shadow-none outline-none placeholder:text-zinc-400 focus:border-green-700 focus:ring-2 focus:ring-green-700/20 focus-visible:border-green-700 focus-visible:ring-2 focus-visible:ring-green-700/20 dark:border-zinc-700 dark:bg-zinc-900"
           />
         </label>
       )}

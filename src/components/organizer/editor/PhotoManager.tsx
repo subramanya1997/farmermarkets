@@ -214,6 +214,7 @@ export function PhotoManager({
             JPEG, PNG or WebP, up to {megabytes(maxBytes)} each. Landscape works best.
           </p>
         </div>
+        {/* Native on purpose: shadcn has no file picker, and the Button below opens this hidden input. */}
         <input
           ref={inputRef}
           type="file"

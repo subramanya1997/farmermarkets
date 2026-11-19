@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { NOTICE_BUTTON, NewsletterNotice } from "@/components/NewsletterNotice";
+import { Button } from "@/components/ui/button";
 import { isWellFormedToken } from "@/lib/newsletter";
 
 export const metadata: Metadata = {
@@ -58,8 +59,9 @@ export default async function NewsletterConfirmPage({ searchParams }: ConfirmPag
     <NewsletterNotice title="Confirm your subscription">
       <p>One tap and you will get markets near you and what is in season, no more than once a week.</p>
       <form action="/api/newsletter/confirm" method="post">
+        {/* A hidden value for the native POST, not a visible control, so it stays a plain input. */}
         <input type="hidden" name="token" value={token} />
-        <button type="submit" className={NOTICE_BUTTON}>Confirm my subscription</button>
+        <Button type="submit" className={`${NOTICE_BUTTON} h-auto shadow-none`}>Confirm my subscription</Button>
       </form>
     </NewsletterNotice>
   );

@@ -52,11 +52,12 @@ export function MarketPhotos({ photos, marketName }: { photos?: Photo[]; marketN
               }
             >
               <figure className="h-full">
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
                   onClick={() => setOpen(index)}
                   aria-label={`Open photo ${index + 1} of ${count}: ${altFor(photo, index)}`}
-                  className="relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-lg bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 dark:bg-zinc-800"
+                  className="relative block aspect-[4/3] h-auto w-full cursor-zoom-in overflow-hidden rounded-lg bg-zinc-100 p-0 hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-offset-2 focus-visible:outline-green-700 focus-visible:ring-0 dark:bg-zinc-800 dark:hover:bg-zinc-800"
                 >
                   <Image
                     src={photo.url}
@@ -66,7 +67,7 @@ export function MarketPhotos({ photos, marketName }: { photos?: Photo[]; marketN
                     priority={lead}
                     className="object-cover transition-transform duration-300 hover:scale-[1.02]"
                   />
-                </button>
+                </Button>
                 {clean(photo.caption) && (
                   <figcaption className="mt-1.5 text-xs text-zinc-500 dark:text-zinc-400">{clean(photo.caption)}</figcaption>
                 )}

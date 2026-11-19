@@ -18,6 +18,8 @@ import {
   type SignalDetail,
 } from "@/lib/visitSignals";
 import { CITY_NEEDS, MARKET_NEEDS, type VisitorNeed } from "@/lib/visitorNeeds";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { PromptSubscribe } from "./PromptSubscribe";
 
 /**
@@ -334,14 +336,14 @@ export function VisitorPrompts() {
             finish();
           }}
         >
-          <textarea
+          <Textarea
             value={note}
             onChange={(event) => setNote(event.target.value)}
             maxLength={500}
             rows={3}
             autoFocus
             placeholder="What was different?"
-            className="w-full resize-none rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
+            className={NOTE_TEXTAREA}
           />
           <Actions>
             <Primary type="submit">Send</Primary>
@@ -418,14 +420,14 @@ export function VisitorPrompts() {
             finishNeed();
           }}
         >
-          <textarea
+          <Textarea
             value={note}
             onChange={(event) => setNote(event.target.value)}
             maxLength={500}
             rows={3}
             autoFocus
             placeholder={need?.followUp ? "For example: eggs, tomatoes, a bakery" : "Tell us in a few words"}
-            className="w-full resize-none rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950"
+            className={NOTE_TEXTAREA}
           />
           <Actions>
             <Primary type="submit">Send</Primary>
@@ -457,14 +459,16 @@ export function VisitorPrompts() {
       aria-live="polite"
       className="prompt-in fixed inset-x-3 bottom-3 z-40 rounded-2xl border border-zinc-200 bg-white p-5 shadow-2xl shadow-zinc-900/15 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-[380px] dark:border-zinc-800 dark:bg-zinc-900"
     >
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon"
         onClick={() => close(step === "done" || step === "subscribe" ? "silent" : "dismissed")}
-        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+        className="absolute right-3 top-3 flex size-8 items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
       >
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
-      </button>
+      </Button>
       <p className="flex items-center gap-2 pr-8 text-xs font-semibold uppercase tracking-[0.12em] text-green-700 dark:text-green-400">
         <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-green-50 dark:bg-green-900/30">{icon}</span>
         {eyebrow}
@@ -481,39 +485,48 @@ function Actions({ children }: { children: ReactNode }) {
   return <div className="mt-3 flex items-center gap-2">{children}</div>;
 }
 
+/**
+ * The prompt textareas. shadcn's Textarea grows with its content; the
+ * overrides keep the fixed three-row box and the green focus ring.
+ */
+const NOTE_TEXTAREA =
+  "field-sizing-fixed min-h-0 w-full resize-none rounded-xl border border-zinc-300 bg-white px-3 py-2 text-sm shadow-none outline-none focus:border-green-600 focus:ring-4 focus:ring-green-600/15 focus-visible:border-green-600 focus-visible:ring-4 focus-visible:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950";
+
 function Primary({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button
+    <Button
       type="button"
       {...props}
-      className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-green-700 px-4 text-sm font-semibold text-white transition-[background-color,transform] hover:bg-green-800 active:scale-[0.98] disabled:opacity-70"
+      className="inline-flex h-11 shrink-0 items-center justify-center rounded-xl bg-green-700 px-4 text-sm font-semibold text-white shadow-none transition-[background-color,transform] hover:bg-green-800 active:scale-[0.98] disabled:opacity-70"
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
 function Secondary({ children, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
       {...props}
-      className="inline-flex h-11 items-center justify-center rounded-xl px-4 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+      className="inline-flex h-11 shrink items-center justify-center rounded-xl px-4 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
 function Chip({ children, onClick }: { children: ReactNode; onClick: () => void }) {
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
       onClick={onClick}
-      className="rounded-xl border border-zinc-200 bg-white px-3 py-2.5 text-left text-sm font-medium text-zinc-800 transition-[border-color,background-color,transform] hover:border-green-600/50 hover:bg-green-50 active:scale-[0.98] dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-green-900/20"
+      className="h-auto shrink justify-start whitespace-normal rounded-xl border border-zinc-200 bg-white px-3 py-2.5 text-left text-sm font-medium text-zinc-800 transition-[border-color,background-color,transform] hover:border-green-600/50 hover:bg-green-50 hover:text-zinc-800 active:scale-[0.98] dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-green-900/20 dark:hover:text-zinc-200"
     >
       {children}
-    </button>
+    </Button>
   );
 }
 

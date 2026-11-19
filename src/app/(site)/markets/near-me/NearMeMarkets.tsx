@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { CalendarDays, Clock, LocateFixed, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { trackEvent } from '@/lib/analytics';
 import { filterNearMe, localDay, type NearMeMarket, type NearMeTab } from '@/lib/nearMeFilter';
@@ -35,6 +36,14 @@ type Results = { key: string; markets: NearMeMarket[] } | { key: string; failed:
 
 const chip =
   'inline-flex items-center gap-1 rounded-full border border-zinc-200 bg-white px-2.5 py-0.5 text-xs text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300';
+
+// Pill buttons are ghost Buttons; h-auto, font-normal and hover colors that
+// repeat the resting ones cancel the ghost defaults.
+const PILL = 'inline-flex h-auto items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-normal transition-colors';
+const PILL_IDLE =
+  'border-zinc-200 bg-white text-zinc-800 hover:border-green-300 hover:bg-green-50 hover:text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-zinc-200';
+const PILL_ACTIVE =
+  'border-green-700 bg-green-700 text-white hover:bg-green-700 hover:text-white dark:border-green-500 dark:bg-green-600 dark:hover:bg-green-600';
 
 function emptyMessage(tab: NearMeTab, weekday: string): string {
   if (tab === 'today') {
@@ -157,15 +166,16 @@ export function NearMeMarkets() {
                   : 'We could not work out where you are.'}
         </p>
         {origin?.source !== 'device' && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
             onClick={useDeviceLocation}
             disabled={deviceState === 'asking'}
-            className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-800 transition-colors hover:border-green-300 hover:bg-green-50 disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            className={`${PILL} ${PILL_IDLE} has-[>svg]:px-3 disabled:opacity-60`}
           >
             <LocateFixed aria-hidden className="h-4 w-4 text-green-700 dark:text-green-500" />
             Use my exact location
-          </button>
+          </Button>
         )}
       </div>
 
@@ -180,16 +190,13 @@ export function NearMeMarkets() {
           {TABS.map(({ key, label }) => {
             const active = tab === key;
             return (
-              <button
+              <Button
                 key={key}
                 type="button"
+                variant="ghost"
                 aria-pressed={active}
                 onClick={() => selectTab(key)}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors ${
-                  active
-                    ? 'border-green-700 bg-green-700 text-white dark:border-green-500 dark:bg-green-600'
-                    : 'border-zinc-200 bg-white text-zinc-800 hover:border-green-300 hover:bg-green-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800'
-                }`}
+                className={`${PILL} ${active ? PILL_ACTIVE : PILL_IDLE}`}
               >
                 {label}
                 <span
@@ -199,7 +206,7 @@ export function NearMeMarkets() {
                 >
                   {counts[key].toLocaleString('en-US')}
                 </span>
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -280,13 +287,14 @@ export function NearMeMarkets() {
               ))}
             </ul>
             {shown.length > visible && (
-              <button
+              <Button
                 type="button"
+                variant="ghost"
                 onClick={() => setVisible((count) => count + PAGE_SIZE)}
-                className="mt-3 inline-flex items-center rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm text-zinc-800 transition-colors hover:border-green-300 hover:bg-green-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
+                className={`${PILL} ${PILL_IDLE} mt-3 px-4 py-2`}
               >
                 Show {Math.min(PAGE_SIZE, shown.length - visible)} more
-              </button>
+              </Button>
             )}
             <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
               Open today means the market lists today as a market day and is in season. Hours can

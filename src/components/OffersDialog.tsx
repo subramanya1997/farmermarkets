@@ -2,6 +2,7 @@
 
 import { useRef, type ReactNode } from 'react';
 import { X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/lib/analytics';
 
 /**
@@ -17,16 +18,17 @@ export function OffersDialog({ count, children }: { count: number; children: Rea
 
   return (
     <>
-      <button
+      <Button
         type="button"
+        variant="ghost"
         onClick={() => {
           dialogRef.current?.showModal();
           trackEvent('market_offers_opened', { count });
         }}
-        className="mt-4 rounded-lg border border-zinc-900 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-50 dark:border-zinc-200 dark:text-zinc-100 dark:hover:bg-zinc-800"
+        className="mt-4 h-auto rounded-lg border border-zinc-900 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-200 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
       >
         Show all {count} items
-      </button>
+      </Button>
       <dialog
         ref={dialogRef}
         aria-labelledby="market-offers-dialog-heading"
@@ -38,14 +40,16 @@ export function OffersDialog({ count, children }: { count: number; children: Rea
       >
         <div className="flex max-h-[85vh] flex-col">
           <div className="flex items-center gap-3 border-b border-zinc-200 px-5 py-3 dark:border-zinc-800">
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon"
               onClick={() => dialogRef.current?.close()}
-              className="rounded-full p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+              className="size-auto rounded-full p-1.5 hover:bg-zinc-100 hover:text-inherit dark:hover:bg-zinc-800"
             >
-              <X aria-hidden className="h-5 w-5" />
+              <X aria-hidden className="size-5" />
               <span className="sr-only">Close</span>
-            </button>
+            </Button>
             {/* Not a heading: the section's own h2 already names this list. */}
             <p id="market-offers-dialog-heading" className="text-lg font-semibold tracking-tight">
               What this market offers

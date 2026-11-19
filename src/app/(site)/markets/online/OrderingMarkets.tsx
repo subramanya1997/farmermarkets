@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import type { OrderingBadge, TopicMarketRow } from '@/lib/topicPage';
 import { TopicMarketCard } from '../_components/TopicMarketRow';
 
@@ -51,15 +52,17 @@ export function OrderingMarkets({
           const count = key === 'All' ? markets.length : counts[key];
           if (count === 0) return null;
           return (
-            <button
+            <Button
               key={key}
               type="button"
+              variant="ghost"
               aria-pressed={active}
               onClick={() => setFilter(key)}
-              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors ${
+              // h-auto, font-normal and hover colors that repeat the resting ones cancel the ghost defaults.
+              className={`inline-flex h-auto items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-normal transition-colors ${
                 active
-                  ? 'border-green-700 bg-green-700 text-white dark:border-green-500 dark:bg-green-600'
-                  : 'border-zinc-200 bg-white text-zinc-800 hover:border-green-300 hover:bg-green-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800'
+                  ? 'border-green-700 bg-green-700 text-white hover:bg-green-700 hover:text-white dark:border-green-500 dark:bg-green-600 dark:hover:bg-green-600'
+                  : 'border-zinc-200 bg-white text-zinc-800 hover:border-green-300 hover:bg-green-50 hover:text-zinc-800 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-zinc-200'
               }`}
             >
               {label}
@@ -70,7 +73,7 @@ export function OrderingMarkets({
               >
                 {count.toLocaleString('en-US')}
               </span>
-            </button>
+            </Button>
           );
         })}
       </div>

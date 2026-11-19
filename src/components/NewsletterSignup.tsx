@@ -15,6 +15,8 @@ import {
   Wheat,
   type LucideIcon,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { trackEvent } from "@/lib/analytics";
 import { displaySerif } from "@/lib/fonts";
 
@@ -186,12 +188,14 @@ export function NewsletterSignup({
     }
   }
 
+  // shadcn Input and Button underneath; the focus-visible, md:text, shadow and
+  // svg padding overrides keep these boxes exactly as designed.
   const inputBase =
-    "h-12 w-full min-w-0 rounded-xl border px-4 text-[15px] outline-none transition-[box-shadow,border-color] duration-200";
+    "h-12 w-full min-w-0 rounded-xl border px-4 text-[15px] shadow-none outline-none transition-[box-shadow,border-color] duration-200 md:text-[15px]";
   const input = dark
-    ? `${inputBase} border-transparent bg-white text-zinc-900 placeholder:text-zinc-400 focus:ring-4 focus:ring-lime-300/40`
-    : `${inputBase} border-zinc-300 bg-white text-zinc-900 placeholder:text-zinc-400 focus:border-green-600 focus:ring-4 focus:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100`;
-  const button = `group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl px-6 text-[15px] font-semibold transition-[background-color,transform] duration-200 active:scale-[0.98] disabled:opacity-80 ${
+    ? `${inputBase} border-transparent bg-white text-zinc-900 placeholder:text-zinc-400 focus:ring-4 focus:ring-lime-300/40 focus-visible:border-transparent focus-visible:ring-4 focus-visible:ring-lime-300/40 dark:bg-white`
+    : `${inputBase} border-zinc-300 bg-white text-zinc-900 placeholder:text-zinc-400 focus:border-green-600 focus:ring-4 focus:ring-green-600/15 focus-visible:border-green-600 focus-visible:ring-4 focus-visible:ring-green-600/15 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100`;
+  const button = `group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl px-6 text-[15px] font-semibold shadow-none transition-[background-color,transform] duration-200 has-[>svg]:px-6 active:scale-[0.98] disabled:opacity-80 ${
     dark ? "bg-lime-300 text-green-950 hover:bg-lime-200" : "bg-green-700 text-white hover:bg-green-800"
   }`;
   const fine = dark ? "text-green-50/60" : "text-zinc-500 dark:text-zinc-400";
@@ -200,7 +204,7 @@ export function NewsletterSignup({
     <form onSubmit={onSubmit} noValidate>
       <div className={`flex flex-col gap-2.5 ${rowAt === "sm" ? "sm:flex-row" : ""}`}>
         <label className="sr-only" htmlFor={`newsletter-email-${source}`}>Email address</label>
-        <input
+        <Input
           id={`newsletter-email-${source}`}
           type="email"
           required
@@ -213,7 +217,7 @@ export function NewsletterSignup({
         {withZip && (
           <>
             <label className="sr-only" htmlFor={`newsletter-zip-${source}`}>ZIP code (optional)</label>
-            <input
+            <Input
               id={`newsletter-zip-${source}`}
               inputMode="numeric"
               autoComplete="postal-code"
@@ -225,7 +229,7 @@ export function NewsletterSignup({
             />
           </>
         )}
-        {/* Honeypot: hidden from people and screen readers. */}
+        {/* Honeypot: hidden from people and screen readers, so it stays a plain input rather than shadcn's Input. */}
         <input
           type="text"
           name="website"
@@ -236,7 +240,7 @@ export function NewsletterSignup({
           onChange={(event) => setWebsite(event.target.value)}
           className="hidden"
         />
-        <button type="submit" disabled={status === "sending"} className={button}>
+        <Button type="submit" disabled={status === "sending"} className={button}>
           {status === "sending" ? (
             <>
               <LoaderCircle aria-hidden="true" className="h-4 w-4 animate-spin" />
@@ -248,7 +252,7 @@ export function NewsletterSignup({
               <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </>
           )}
-        </button>
+        </Button>
       </div>
       {error ? (
         <p role="alert" className={`mt-2.5 text-sm font-medium ${dark ? "text-red-200" : "text-red-600 dark:text-red-400"}`}>
