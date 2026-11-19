@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "retrieved_at": "2026-08-21T08:59:20.000Z",
+  "upstream_url": "https://www.usdalocalfoodportal.com/api/download_by_directory/?directory=farmersmarket",
+  "upstream_record_count": null,
+  "record_count": 7157,
+  "note": "Backfilled by hand on 2026-11-18. The last full USDA refresh (commit 215ac2d, issue #22) did not record a time, so this is that commit's time. The next full run of `npm run data:update-legacy` replaces this file."
+}
