@@ -97922,8 +97922,8 @@
         "longitude": -121.06429,
         "latitude": 38.651318
       },
-      "description": "Town Center Blvd. street closer",
-      "site_type": "Closed-off public street",
+      "description": "Marshall Amphitheater, El Dorado Hills Town Center",
+      "site_type": "",
       "indoor_outdoor": "Outdoor"
     },
     "organization": {
@@ -97944,9 +97944,9 @@
       ]
     },
     "operations": {
-      "season": "Season dates not specified on the official market page",
+      "season": "Year-round",
       "days": [
-        "Every Saturday, 9AM-2PM"
+        "Saturdays, 9am to 2pm"
       ],
       "vendor_count": null
     },
@@ -97987,24 +97987,69 @@
     "slug": "el-dorado-hills-town-center-certified-farmers-market-el-dorado-hills",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "edhtc-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "edhtc-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "09:00",
+              "closes": "14:00"
+            },
+            "source_ids": [
+              "edhtc-market"
+            ],
+            "verified_at": "2026-11-19"
+          }
+        ]
+      }
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.651318%2C-121.06429",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-19",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Farmer's Market | El Dorado Hills Town Center",
+          "title": "Farmer's Market | El Dorado Hills Town Center, with the Saturday hours (9am to 2pm), year-round season and Marshall Amphitheater location confirmed by the market by email on November 19, 2026",
           "url": "https://edhtowncenter.com/upcoming-events/town-center-market",
           "fields": [
             "contact.websites",
             "contact.phone_numbers",
             "contact.social_media",
             "operations.days",
-            "operations.season"
-          ]
+            "operations.season",
+            "first_party.operations"
+          ],
+          "id": "edhtc-market",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-19"
         },
         {
           "title": "Farmer's Market | El Dorado Hills Town Center",
@@ -202544,9 +202589,10 @@
       ]
     },
     "operations": {
-      "season": "Year-round",
+      "season": "Year-round, every Thursday night",
       "days": [
-        "Every Thursday, 6–9 PM"
+        "Thursdays, 6pm to 8:30pm, November 5, 2026 to March 11, 2027",
+        "Thursdays, 6pm to 9pm, March 18 to November 11, 2027"
       ],
       "vendor_count": null
     },
@@ -202558,7 +202604,7 @@
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
+        "wic": true,
         "sfmnp": false,
         "fmnp": false,
         "snap": false,
@@ -202583,22 +202629,88 @@
     "slug": "downtown-slo-thursday-night-farmers-market-san-luis-obispo",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "dslo-farmers-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "dslo-farmers-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "schedules": [
+          {
+            "id": "thursday-winter-2026",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "thursday"
+                ]
+              },
+              "opens": "18:00",
+              "closes": "20:30",
+              "start_date": "2026-11-05",
+              "end_date": "2027-03-11"
+            },
+            "source_ids": [
+              "dslo-farmers-market"
+            ],
+            "verified_at": "2026-11-19"
+          },
+          {
+            "id": "thursday-2027",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "thursday"
+                ]
+              },
+              "opens": "18:00",
+              "closes": "21:00",
+              "start_date": "2027-03-18",
+              "end_date": "2027-11-11"
+            },
+            "source_ids": [
+              "dslo-farmers-market"
+            ],
+            "verified_at": "2026-11-19"
+          }
+        ]
+      }
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=35.27957741466754%2C-120.66260841578205",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-19",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Farmers’ Market | Downtown San Luis Obispo, CA",
+          "title": "Farmers’ Market | Downtown San Luis Obispo, CA, with the seasonal Thursday hours (6pm to 8:30pm from November 5, 2026 through March 11, 2027; 6pm to 9pm from March 18 through November 11, 2027) confirmed by Downtown SLO by email on November 19, 2026",
           "url": "https://downtownslo.com/farmers-market",
           "fields": [
             "contact.websites",
             "contact.social_media",
-            "operations.days"
-          ]
+            "operations.days",
+            "first_party.operations"
+          ],
+          "id": "dslo-farmers-market",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-19"
         },
         {
           "title": "Contact | Farmers’ Market | Downtown San Luis Obispo, CA",
@@ -222361,11 +222473,9 @@
       ]
     },
     "operations": {
-      "season": "April through November",
+      "season": "April through November. The last market of 2026 is Saturday, November 28, and the market returns in April 2027",
       "days": [
-        "Mon - Fri: Closed",
-        "Sat: 8 am - 1 pm",
-        "Sun: Closed"
+        "Saturdays, 8am to 1pm, through November 28, 2026"
       ],
       "vendor_count": null
     },
@@ -222402,23 +222512,90 @@
     "slug": "redwood-city-kiwanis-certified-farmers-market-redwood-city",
     "country": "United States",
     "country_code": "US",
+    "schema_version": 2,
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "rwck-home"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "season": {
+          "value": {
+            "kind": "annual_range",
+            "start": {
+              "month": 4
+            },
+            "end": {
+              "month": 11
+            }
+          },
+          "source_ids": [
+            "rwck-home"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "schedules": [
+          {
+            "id": "saturday-2026",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "13:00",
+              "end_date": "2026-11-28"
+            },
+            "source_ids": [
+              "rwck-home"
+            ],
+            "verified_at": "2026-11-19"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "season-end-2026",
+          "value": {
+            "topic": "updates",
+            "answer": "The last market day of the 2026 season is Saturday, November 28, 2026. The market returns in April 2027.",
+            "expires_on": "2027-04-01"
+          },
+          "source_ids": [
+            "rwck-home"
+          ],
+          "verified_at": "2026-11-19"
+        }
+      ]
+    },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.487181589426385%2C-122.233233462265",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-19",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Home | Redwood City Kiwanis Farmers Market",
+          "title": "Home | Redwood City Kiwanis Farmers Market, with the 2026 season end (last market Saturday, November 28, 2026) and the April 2027 return confirmed by Redwood City Kiwanis by email on November 19, 2026",
           "url": "https://www.rwckiwanisfarmersmarket.com/",
           "fields": [
             "contact.websites",
             "contact.social_media",
             "operations.days",
-            "operations.season"
-          ]
+            "operations.season",
+            "first_party.operations",
+            "first_party.faq_facts"
+          ],
+          "id": "rwck-home",
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-19"
         },
         {
           "title": "Overture Maps places, release 2026-10-21.0",
@@ -222432,127 +222609,6 @@
     "audit": {
       "checked_at": "2026-08-21",
       "status": "identity_ambiguous"
-    }
-  },
-  {
-    "id": 308824,
-    "name": "Redwood City Kiwanis Farmers Market",
-    "last_updated": "2023-03-20T09:31:57",
-    "location": {
-      "address": "850 Winslow St, Redwood City, CA 94063",
-      "city": "Redwood City",
-      "state": "California",
-      "zip_code": "94063",
-      "coordinates": {
-        "longitude": -122.23085495838758,
-        "latitude": 37.48567984990416
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "http://www.rwckiwanisfarmersmarket.com/"
-      ],
-      "social_media": [
-        "https://facebook.com/RedwoodCityKiwanisFarmersMarket"
-      ]
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "redwood-city-kiwanis-farmers-market-redwood-city",
-    "country": "United States",
-    "country_code": "US",
-    "schema_version": 2,
-    "first_party": {
-      "contact": {
-        "social_profiles": [
-          {
-            "id": "facebook-redwoodcitykiwanisfarmersmarket",
-            "value": {
-              "platform": "facebook",
-              "url": "https://facebook.com/RedwoodCityKiwanisFarmersMarket",
-              "scope": "market"
-            },
-            "source_ids": [
-              "website-audit-aca59c0cbc3d-1"
-            ],
-            "verified_at": "2026-08-21"
-          }
-        ]
-      }
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.48567984990416%2C-122.23085495838758",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for Redwood City Kiwanis Farmers Market",
-          "url": "https://www.google.com/maps/search/?api=1&query=Redwood%20City%20Kiwanis%20Farmers%20Market%2C%20850%20WINSLOW%20ST%2C%20REDWOOD%20CITY%2C%20CA%2094063%2C%20Redwood%20City%2C%20California%2C%2094063",
-          "fields": [
-            "contact.websites"
-          ]
-        },
-        {
-          "id": "website-audit-aca59c0cbc3d-1",
-          "title": "Redwood City Kiwanis Farmers Market Updates",
-          "url": "https://www.rwckiwanisfarmersmarket.com/",
-          "fields": [
-            "first_party.contact"
-          ],
-          "kind": "first_party",
-          "scope": "market",
-          "accessed_at": "2026-08-21"
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
     }
   },
   {
@@ -805732,51 +805788,6 @@
       "status": "official_source_reviewed"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Moreno%20Valley%20CFM%2C%2026520%20CACTUS%20AVE"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:94927ad780dd499e",
-    "slug": "downtown-slo-fm-san-luis-obispo-be4f5c3e",
-    "name": "Downtown Slo Farmers Market",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "Higuera Street Between Chorro and Osos St",
-      "city": "San Luis Obispo",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Thursday 06:00 pm - 09:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "94927ad780dd499e",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Downtown%20SLO%20FM%2C%20HIGUERA%20STREET%20BETWEEN%20CHORRO%20AND%20OSOS%20ST"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:95294fd081cd8b32",

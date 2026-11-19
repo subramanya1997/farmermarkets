@@ -526,5 +526,225 @@
         "accessed_at": "2026-11-18"
       }
     ]
+  },
+  {
+    "id": "308632",
+    "market_name": "Downtown Slo Thursday Night Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-19",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "dslo-farmers-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "dslo-farmers-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "schedules": [
+          {
+            "id": "thursday-winter-2026",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "thursday"
+                ]
+              },
+              "opens": "18:00",
+              "closes": "20:30",
+              "start_date": "2026-11-05",
+              "end_date": "2027-03-11"
+            },
+            "source_ids": [
+              "dslo-farmers-market"
+            ],
+            "verified_at": "2026-11-19"
+          },
+          {
+            "id": "thursday-2027",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "thursday"
+                ]
+              },
+              "opens": "18:00",
+              "closes": "21:00",
+              "start_date": "2027-03-18",
+              "end_date": "2027-11-11"
+            },
+            "source_ids": [
+              "dslo-farmers-market"
+            ],
+            "verified_at": "2026-11-19"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "dslo-farmers-market",
+        "title": "Farmers’ Market | Downtown San Luis Obispo, CA, with the seasonal Thursday hours (6pm to 8:30pm from November 5, 2026 through March 11, 2027; 6pm to 9pm from March 18 through November 11, 2027) confirmed by Downtown SLO by email on November 19, 2026",
+        "url": "https://downtownslo.com/farmers-market",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-19"
+      }
+    ]
+  },
+  {
+    "id": "301571",
+    "market_name": "El Dorado Hills Town Center Certified Farmers Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-19",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "edhtc-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "edhtc-market"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "09:00",
+              "closes": "14:00"
+            },
+            "source_ids": [
+              "edhtc-market"
+            ],
+            "verified_at": "2026-11-19"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "edhtc-market",
+        "title": "Farmer's Market | El Dorado Hills Town Center, with the Saturday hours (9am to 2pm), year-round season and Marshall Amphitheater location confirmed by the market by email on November 19, 2026",
+        "url": "https://edhtowncenter.com/upcoming-events/town-center-market",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-19"
+      }
+    ]
+  },
+  {
+    "id": "308823",
+    "market_name": "Redwood City Kiwanis Certified Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-19",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "rwck-home"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "season": {
+          "value": {
+            "kind": "annual_range",
+            "start": {
+              "month": 4
+            },
+            "end": {
+              "month": 11
+            }
+          },
+          "source_ids": [
+            "rwck-home"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "schedules": [
+          {
+            "id": "saturday-2026",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "08:00",
+              "closes": "13:00",
+              "end_date": "2026-11-28"
+            },
+            "source_ids": [
+              "rwck-home"
+            ],
+            "verified_at": "2026-11-19"
+          }
+        ]
+      },
+      "faq_facts": [
+        {
+          "id": "season-end-2026",
+          "value": {
+            "topic": "updates",
+            "answer": "The last market day of the 2026 season is Saturday, November 28, 2026. The market returns in April 2027.",
+            "expires_on": "2027-04-01"
+          },
+          "source_ids": [
+            "rwck-home"
+          ],
+          "verified_at": "2026-11-19"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "id": "rwck-home",
+        "title": "Home | Redwood City Kiwanis Farmers Market, with the 2026 season end (last market Saturday, November 28, 2026) and the April 2027 return confirmed by Redwood City Kiwanis by email on November 19, 2026",
+        "url": "https://www.rwckiwanisfarmersmarket.com/",
+        "fields": [
+          "first_party.operations",
+          "first_party.faq_facts"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-19"
+      }
+    ]
   }
 ]

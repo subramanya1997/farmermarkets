@@ -944,11 +944,13 @@ test('a researched FAQ filed under the wrong topic is asked under a question it 
         { id: 'wholesale', value: { topic: 'products', answer: 'The Wholesale Market is open to the public for bulk purchases only, midnight-6am.' }, ...evidence },
         { id: 'stray', value: { topic: 'pets', answer: 'Mondays are closed.' }, ...evidence },
         { id: 'fine', value: { topic: 'products', answer: 'Farmers sell produce, meat and cheese.' }, ...evidence },
+        { id: 'season-end', value: { topic: 'updates', answer: 'The last market day of the 2026 season is Saturday, November 28, 2026. The market returns in April 2027.' }, ...evidence },
       ],
     },
   }), new Date('2026-10-21T00:00:00Z'));
   const questions = faqs.map((faq) => faq.question);
   assert.ok(questions.includes("What are Findlay Market's holiday hours?"));
+  assert.ok(questions.includes("When does Findlay Market's season end?"));
   assert.ok(questions.includes("Can the public shop Findlay Market's wholesale market?"));
   assert.ok(questions.includes('What can I buy at Findlay Market?'));
   assert.equal(questions.includes('How can I get updates from Findlay Market?'), false);

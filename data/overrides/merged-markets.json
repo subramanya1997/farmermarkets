@@ -85,6 +85,18 @@
       "name": "Marina Certified Farmers Market",
       "into": "308755",
       "reason": "California WIC row for the Marina Certified Farmers' Market at 215 Reservation Rd; Everyone's Harvest runs one Sunday market there. Merge requested by the operator by email, recorded on 2026-11-18. Its WIC authorization moves to the survivor through an editorial override, and the survivor keeps the operator's organizer access."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:94927ad780dd499e",
+      "name": "Downtown Slo Farmers Market",
+      "into": "308632",
+      "reason": "California WIC dataset row for the Downtown SLO Thursday Night Farmers’ Market on Higuera St between Chorro and Osos, the same Thursday market as the main listing. Merge requested by Downtown SLO by email, recorded on 2026-11-19. The survivor keeps the operator's organizer access and the WIC flag."
+    },
+    {
+      "id": "308824",
+      "name": "Redwood City Kiwanis Farmers Market",
+      "into": "308823",
+      "reason": "Second legacy USDA row for the Redwood City Kiwanis Farmers Market (850 Winslow St), with no hours of its own. Redwood City Kiwanis runs one Saturday market; merge requested by the operator by email, recorded on 2026-11-19. The survivor keeps the operator's organizer access."
     }
   ]
 }

@@ -546,6 +546,7 @@ function faqQuestion(topic: FaqTopic, answer: string, name: string): string | un
   if (!evidence || evidence.test(answer)) return FAQ_TOPIC_QUESTIONS[topic](name);
   if (/holiday|thanksgiving|christmas|new year/i.test(answer)) return `What are ${name}'s holiday hours?`;
   if (/wholesale/i.test(answer)) return `Can the public shop ${name}'s wholesale market?`;
+  if (/\blast market\b|\b(?:returns|reopens)\b/i.test(answer)) return `When does ${name}'s season end?`;
   return undefined;
 }
 

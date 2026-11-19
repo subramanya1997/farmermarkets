@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-19T03:20:33.712Z",
-  "market_count": 9133,
+  "generated_at": "2026-11-19T22:26:25.041Z",
+  "market_count": 9131,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 957,
+      "market_count": 955,
       "city_count": 407,
       "cities": [
         {
@@ -4606,22 +4606,6 @@
           ]
         },
         {
-          "name": "San Luis Obispo",
-          "slug": "san-luis-obispo",
-          "market_count": 9,
-          "market_slugs": [
-            "downtown-slo-fm-san-luis-obispo-be4f5c3e",
-            "downtown-slo-thursday-night-farmers-market-san-luis-obispo",
-            "san-luis-obispo-county-farmers-market",
-            "san-luis-obispo-sat-san-luis-obispo-be766ecb",
-            "slo-certified-farmers-market-san-luis-obispo",
-            "slo-farm-supply-farmers-market-san-luis-obispo",
-            "slo-grangetuesday-farmers-market",
-            "slo-saturday-mornings-cfm-san-luis-obispo-055aa9cd",
-            "slo-tuesday-fm-farm-supply-san-luis-obispo-8c381fb8"
-          ]
-        },
-        {
           "name": "Walnut Creek",
           "slug": "walnut-creek",
           "market_count": 9,
@@ -4680,6 +4664,21 @@
             "galleria-at-tyler-riverside-farmers-market",
             "kaiser-permanente-riverside-certified-farmers-market",
             "riverside-certified-farmers-market-riverside"
+          ]
+        },
+        {
+          "name": "San Luis Obispo",
+          "slug": "san-luis-obispo",
+          "market_count": 8,
+          "market_slugs": [
+            "downtown-slo-thursday-night-farmers-market-san-luis-obispo",
+            "san-luis-obispo-county-farmers-market",
+            "san-luis-obispo-sat-san-luis-obispo-be766ecb",
+            "slo-certified-farmers-market-san-luis-obispo",
+            "slo-farm-supply-farmers-market-san-luis-obispo",
+            "slo-grangetuesday-farmers-market",
+            "slo-saturday-mornings-cfm-san-luis-obispo-055aa9cd",
+            "slo-tuesday-fm-farm-supply-san-luis-obispo-8c381fb8"
           ]
         },
         {
@@ -4792,19 +4791,6 @@
           ]
         },
         {
-          "name": "Redwood City",
-          "slug": "redwood-city",
-          "market_count": 6,
-          "market_slugs": [
-            "kaiser-permanente-redwood-city-farmers-market",
-            "kaiser-redwood-city-farmers-market-redwood-city",
-            "redwood-city-kiwanis-certified-farmers-market-redwood-city",
-            "redwood-city-kiwanis-cfm-redwood-city-0d1e0dab",
-            "redwood-city-kiwanis-farmers-market-redwood-city",
-            "west-coast-farmers-markets-association-redwood-city"
-          ]
-        },
-        {
           "name": "San Leandro",
           "slug": "san-leandro",
           "market_count": 6,
@@ -4876,6 +4862,18 @@
             "pasadena-victory-park-cfm-pasadena-6358cb28",
             "pasadena-victory-park-farmers-market",
             "pasadena-villa-parke-cfm-pasadena-dd44d791"
+          ]
+        },
+        {
+          "name": "Redwood City",
+          "slug": "redwood-city",
+          "market_count": 5,
+          "market_slugs": [
+            "kaiser-permanente-redwood-city-farmers-market",
+            "kaiser-redwood-city-farmers-market-redwood-city",
+            "redwood-city-kiwanis-certified-farmers-market-redwood-city",
+            "redwood-city-kiwanis-cfm-redwood-city-0d1e0dab",
+            "west-coast-farmers-markets-association-redwood-city"
           ]
         },
         {
