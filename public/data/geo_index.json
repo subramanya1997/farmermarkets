@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-18T23:45:22.999Z",
-  "market_count": 9136,
+  "generated_at": "2026-11-19T01:27:21.429Z",
+  "market_count": 9135,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 960,
+      "market_count": 959,
       "city_count": 407,
       "cities": [
         {
@@ -4993,17 +4993,6 @@
           ]
         },
         {
-          "name": "Grass Valley",
-          "slug": "grass-valley",
-          "market_count": 4,
-          "market_slugs": [
-            "farm2family-brunswick-farmers-market-grass-valley",
-            "grass-valley-farmers-market",
-            "grass-valley-fm-grass-valley-7524e7ba",
-            "nevada-county-certified-growers-market"
-          ]
-        },
-        {
           "name": "Modesto",
           "slug": "modesto",
           "market_count": 4,
@@ -5212,6 +5201,16 @@
             "carson-fm-presented-by-kaiser-permanente-gardena-f06a1150",
             "gardena-farmers-market",
             "gardena-fm-gardena-33dccdcf"
+          ]
+        },
+        {
+          "name": "Grass Valley",
+          "slug": "grass-valley",
+          "market_count": 3,
+          "market_slugs": [
+            "farm2family-brunswick-farmers-market-grass-valley",
+            "grass-valley-farmers-market",
+            "nevada-county-certified-growers-market"
           ]
         },
         {

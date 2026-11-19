@@ -226629,13 +226629,13 @@
     "name": "Grass Valley Farmers’ Market",
     "last_updated": "2023-03-20T22:52:05",
     "location": {
-      "address": "Mill St. and Main St., Grass Valley, CA, 95945",
+      "address": "Pine Creek Shopping Center, 650 Freeman Lane, Grass Valley, CA 95949",
       "city": "Grass Valley",
       "state": "California",
-      "zip_code": "95945",
+      "zip_code": "95949",
       "coordinates": {
-        "longitude": -121.0629700222346,
-        "latitude": 39.21910001394298
+        "longitude": -121.06359,
+        "latitude": 39.202309
       },
       "description": "",
       "site_type": "",
@@ -226659,9 +226659,9 @@
       ]
     },
     "operations": {
-      "season": "Tuesdays: May 5, 2026 – September 22, 2026; Saturdays: April 18, 2026 – November 21, 2026",
+      "season": "Tuesdays: May through September; Saturdays: April 18, 2026 – November 21, 2026",
       "days": [
-        "Tuesdays 8:30 AM – 1:00 PM",
+        "Tuesdays 8:30 AM – 1:00 PM, May through September",
         "Saturdays 8:00 AM – 12:30 PM"
       ],
       "vendor_count": null
@@ -226674,7 +226674,7 @@
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
+        "wic": true,
         "sfmnp": false,
         "fmnp": false,
         "snap": false,
@@ -226699,7 +226699,7 @@
     "slug": "grass-valley-farmers-market",
     "country": "United States",
     "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=39.21910001394298%2C-121.0629700222346",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=39.202309%2C-121.06359",
     "amenities": {
       "features": []
     },
@@ -226708,13 +226708,17 @@
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Grass Valley Farmers Market – Established 1980",
+          "title": "Grass Valley Farmers Market | Established 1980, with the Pine Creek Shopping Center location, the Saturday details and the May through September Tuesday market confirmed by the market by email on November 18, 2026",
           "url": "https://gvfarmersmarket.org/",
           "fields": [
             "contact.websites",
             "contact.social_media",
             "operations.days",
-            "operations.season"
+            "operations.season",
+            "location.address",
+            "location.zip_code",
+            "location.coordinates",
+            "google_maps_url"
           ]
         },
         {
@@ -226722,6 +226726,13 @@
           "url": "https://gvfarmersmarket.org/contact/",
           "fields": [
             "contact.phone_numbers"
+          ]
+        },
+        {
+          "title": "California WIC Authorized Farmers’ Markets | California Department of Public Health",
+          "url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
+          "fields": [
+            "payment.food_assistance.wic"
           ]
         }
       ]
@@ -809599,52 +809610,6 @@
       "status": "official_source_reviewed"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Bunker%20Hill%20FM%20%40%20Bank%20of%20America%20Plaza%2C%20333%20S%20HOPE%20ST"
-  },
-  {
-    "id": "gov:us_ca_wic_farmers_markets:d4e3334c38717b4a",
-    "slug": "grass-valley-fm-grass-valley-7524e7ba",
-    "name": "Grass Valley Farmers Market",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "650 Freeman Ln",
-      "city": "Grass Valley",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Apr-Nov",
-      "days": [
-        "Saturday 08:00 am - 12:30 pm",
-        "Tuesday 08:30 am - 01:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "d4e3334c38717b4a",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Grass%20Valley%20FM%2C%20650%20FREEMAN%20LN"
   },
   {
     "id": "gov:us_ca_wic_farmers_markets:d50725a5b20d6145",

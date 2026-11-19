@@ -67,6 +67,12 @@
       "name": "Georgetown Market IN Rose Park",
       "into": "gov:us_dc_farmers_markets:{AC5D5B14-6688-4438-810B-D4D3F49B7456}",
       "reason": "Second legacy USDA row for the Rose Park Farmers Market (26th and O St NW, Washington, DC), with a placeholder phone and a pin about 4 km east of the park. Merge requested by the operator by email, recorded on 2026-11-18."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:d4e3334c38717b4a",
+      "name": "Grass Valley Farmers Market",
+      "into": "308864",
+      "reason": "California WIC row for the Grass Valley Farmers Market at 650 Freeman Ln (Pine Creek Shopping Center); the market confirmed by email on 2026-11-18 that it is one market with a Saturday and a seasonal Tuesday day. Its WIC authorization moves to the survivor through an editorial override. The survivor keeps the operator's organizer access."
     }
   ]
 }

@@ -15066,6 +15066,80 @@
           ]
         }
       ]
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "location.address",
+      "value": "Pine Creek Shopping Center, 650 Freeman Lane, Grass Valley, CA 95949"
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "location.zip_code",
+      "value": "95949"
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -121.06359,
+        "latitude": 39.202309
+      }
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=39.202309%2C-121.06359"
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "operations.days",
+      "value": [
+        "Tuesdays 8:30 AM – 1:00 PM, May through September",
+        "Saturdays 8:00 AM – 12:30 PM"
+      ]
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "operations.season",
+      "value": "Tuesdays: May through September; Saturdays: April 18, 2026 – November 21, 2026"
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "payment.food_assistance.wic",
+      "value": true
+    },
+    {
+      "index": 2032,
+      "id": 308864,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Grass Valley Farmers Market | Established 1980, with the Pine Creek Shopping Center location, the Saturday details and the May through September Tuesday market confirmed by the market by email on November 18, 2026",
+          "url": "https://gvfarmersmarket.org/",
+          "fields": [
+            "location.address",
+            "location.zip_code",
+            "location.coordinates",
+            "google_maps_url",
+            "operations.days",
+            "operations.season"
+          ]
+        },
+        {
+          "title": "California WIC Authorized Farmers’ Markets | California Department of Public Health",
+          "url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
+          "fields": [
+            "payment.food_assistance.wic"
+          ]
+        }
+      ]
     }
   ]
 }
