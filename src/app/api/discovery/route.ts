@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { createRateLimiter, requestOriginAllowed, requestTooLarge } from "@/lib/formGuards";
 import { getPostHogServer } from "@/lib/posthogServer";
+import { discoveryEmailLines } from "@/lib/discoveryEmail";
 import { acknowledgementEmail, type AcknowledgementKind } from "@/lib/submissionEmails";
 
 export const runtime = "nodejs";
@@ -51,8 +52,12 @@ const submissionSchema = z.object({
   phone: z.union([z.literal(""), z.string().trim().min(7).max(30).regex(/^[+()0-9 .-]+$/)]),
   message: z.string().trim().max(1200),
   contactPermission: z.boolean(),
-  country: z.string().trim().min(1).max(100),
-  resultCount: z.number().int().min(0).max(1000000),
+  // Where the request came from, such as "/for-market-operators".
+  source: z.string().trim().min(1).max(100).optional(),
+  // Only the survey has these: the country it was filtered to and how many
+  // results it showed. Other forms leave them out.
+  country: z.string().trim().min(1).max(100).optional(),
+  resultCount: z.number().int().min(0).max(1000000).optional(),
   website: z.string().max(200).optional().default("")
 }).superRefine((submission, context) => {
   if ((submission.email || submission.phone) && !submission.contactPermission) {
@@ -119,19 +124,7 @@ export async function POST(request: NextRequest) {
   const intent = intentLabels[submission.intent];
   const helpTopics = submission.helpTopics.map((topic) => helpLabels[topic]);
   const submittedAt = new Date().toISOString();
-  const lines = [
-    `Intent: ${intent}`,
-    `Help requested: ${helpTopics.length ? helpTopics.join(", ") : "None selected"}`,
-    `Country filter: ${submission.country}`,
-    `Visible result count: ${submission.resultCount}`,
-    `Name: ${submission.name || "Not provided"}`,
-    `Organization: ${submission.organization || "Not provided"}`,
-    `Email: ${submission.email || "Not provided"}`,
-    `Phone: ${submission.phone || "Not provided"}`,
-    `Contact permission: ${submission.contactPermission ? "Yes" : "No"}`,
-    `Message: ${submission.message || "Not provided"}`,
-    `Submitted at: ${submittedAt}`
-  ];
+  const lines = discoveryEmailLines({ ...submission, intent, helpTopics }, submittedAt);
 
   const htmlRows = lines.map((line) => {
     const separator = line.indexOf(":");
