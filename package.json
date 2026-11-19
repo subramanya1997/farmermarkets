@@ -68,7 +68,7 @@
     "db:studio": "drizzle-kit studio",
     "db:sync": "node --env-file=.env.local scripts/db-sync.mjs",
     "test:organizer": "node --test --experimental-strip-types src/lib/organizerOverlay.test.ts",
-    "test:vendors": "node --test --experimental-strip-types src/lib/vendorRules.test.ts src/lib/jsonLd.test.ts",
+    "test:vendors": "node --test --experimental-strip-types src/lib/vendorRules.test.ts src/lib/offeringRules.test.ts src/lib/jsonLd.test.ts",
     "test:analytics": "node --test --experimental-strip-types src/lib/googleAnalyticsQueue.test.ts src/lib/searchAnalytics.test.ts src/lib/automatedBrowser.test.ts",
     "test:postal": "node --test --experimental-strip-types src/lib/postal.test.ts",
     "test:parallel": "node --test scripts/lib/parallel-campaign.test.mjs scripts/lib/parallel-evidence.test.mjs scripts/lib/parallel-rich-evidence.test.mjs scripts/lib/parallel-spec-validation.test.mjs",

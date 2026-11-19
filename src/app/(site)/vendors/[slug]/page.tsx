@@ -6,6 +6,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { MarketPhotos } from '@/components/MarketPhotos';
 import { TrackedExternalLink } from '@/components/TrackedExternalLink';
 import { VendorConfirmedBadge, vendorSellsLine, vendorSellsList } from '@/components/VendorBits';
+import { VendorOfferingBlock } from '@/components/VendorOffering';
 import { SOCIAL_LABELS } from '@/components/organizer/editor/labels';
 import { getMarketById } from '@/lib/data';
 import { clean } from '@/lib/geo';
@@ -14,7 +15,8 @@ import { vendorSchemaGraph } from '@/lib/schema';
 import { displayName, vendorDescription, vendorTitle } from '@/lib/seo';
 import { SITE_URL, absoluteUrl } from '@/lib/site';
 import { SITE_FRAME } from '@/lib/ui';
-import { getPublishedVendorBySlug, getPublishedVendors, type PublishedVendor } from '@/lib/vendorLayer';
+import { usToday } from '@/lib/offeringDays';
+import { getPublishedVendorBySlug, getPublishedVendors, type PublicOffering, type PublishedVendor } from '@/lib/vendorLayer';
 import { attendanceLabel } from '@/lib/vendorRules';
 import { jsonLdHtml } from '@/lib/jsonLd';
 
@@ -54,6 +56,7 @@ interface VendorMarket {
   attendance: string;
   stallNote: string;
   confirmed: boolean;
+  offerings: PublicOffering[];
 }
 
 /** The markets that approved this vendor and still exist, in a stable order. */
@@ -69,6 +72,7 @@ async function vendorMarkets(vendor: PublishedVendor): Promise<VendorMarket[]> {
         attendance: attendanceLabel(entry.days),
         stallNote: clean(entry.stallNote),
         confirmed: entry.confirmed,
+        offerings: entry.offerings,
       };
     }),
   );
@@ -133,6 +137,7 @@ export default async function VendorPage({ params }: VendorPageProps) {
   const { profile } = vendor;
   const name = clean(profile.name);
   const markets = await vendorMarkets(vendor);
+  const rendered = usToday();
   const sells = vendorSellsLine(profile.products, profile.items, 8);
   const about = paragraphs(profile.description);
   const website = safeHighlightUrl(profile.website);
@@ -232,6 +237,7 @@ export default async function VendorPage({ params }: VendorPageProps) {
                                 <VendorConfirmedBadge />
                               </p>
                             )}
+                            <VendorOfferingBlock offerings={market.offerings} rendered={rendered} />
                           </li>
                         );
                       })}

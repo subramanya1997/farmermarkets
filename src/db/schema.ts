@@ -484,6 +484,34 @@ export const vendorDocumentSubmissions = pgTable(
   ],
 );
 
+/**
+ * What a vendor is bringing to one market on one day or a short run of days
+ * (src/lib/vendorOfferings.ts). Only a vendor with an approved application
+ * at the market may post. `market_id` is the canonical dataset id (merges
+ * already followed). Posting again for the same days replaces the post.
+ */
+export const vendorOfferings = pgTable(
+  'vendor_offerings',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    vendorId: uuid('vendor_id').notNull().references(() => vendors.id, { onDelete: 'cascade' }),
+    marketId: text('market_id').notNull(),
+    startsOn: date('starts_on').notNull(),
+    endsOn: date('ends_on').notNull(),
+    /** `[{ name, note? }]`, plain text, at most 30 (src/lib/offeringRules.ts). */
+    items: jsonb('items').notNull().default([]),
+    note: text('note'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+    withdrawnAt: timestamp('withdrawn_at', { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex('vendor_offerings_vendor_market_days_idx').on(t.vendorId, t.marketId, t.startsOn, t.endsOn),
+    index('vendor_offerings_market_idx').on(t.marketId),
+    index('vendor_offerings_ends_on_idx').on(t.endsOn),
+  ],
+);
+
 /** A record of each announcement an admin sent to vendors. */
 export const vendorAnnouncements = pgTable('vendor_announcements', {
   id: uuid('id').primaryKey().defaultRandom(),
