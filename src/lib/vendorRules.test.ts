@@ -26,6 +26,8 @@ import {
   uniqueVendorSlug,
   vendorFieldsThatDiffer,
   vendorSlugBase,
+  vendorStartSchema,
+  MAX_START_MARKETS,
   type ChecklistItem,
   type VendorProfile,
 } from './vendorProfile.ts';
@@ -214,4 +216,18 @@ test('attendance reads like a sentence', () => {
   assert.equal(attendanceLabel(['wednesday']), 'Wednesdays');
   assert.equal(attendanceLabel(['wednesday', 'saturday', 'sunday']), 'Wednesdays, Saturdays and Sundays');
   assert.equal(attendanceLabel([]), '');
+});
+
+test('the first screen needs only a name and what you sell', () => {
+  assert.equal(vendorStartSchema.safeParse({ name: '  Green Gate Farm ', products: ['eggs'], markets: [] }).success, true);
+  const parsed = vendorStartSchema.safeParse({ name: 'Green Gate Farm', products: ['eggs'], markets: ['downtown-market'] });
+  assert.ok(parsed.success && parsed.data.name === 'Green Gate Farm');
+  const noProducts = vendorStartSchema.safeParse({ name: 'Green Gate Farm', products: [], markets: [] });
+  assert.ok(!noProducts.success && noProducts.error.issues[0].path[0] === 'products');
+  assert.equal(vendorStartSchema.safeParse({ name: 'G', products: ['eggs'], markets: [] }).success, false);
+  assert.equal(vendorStartSchema.safeParse({ name: 'Green Gate Farm', products: ['eggs'], markets: ['../admin'] }).success, false);
+  const tooMany = Array.from({ length: MAX_START_MARKETS + 1 }, (_, index) => `market-${index}`);
+  assert.equal(vendorStartSchema.safeParse({ name: 'Green Gate Farm', products: ['eggs'], markets: tooMany }).success, false);
+  // Nothing else rides along: photos and links go through the full profile editor.
+  assert.equal(vendorStartSchema.safeParse({ name: 'Green Gate Farm', products: ['eggs'], markets: [], website: 'https://x.test' }).success, false);
 });

@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { firstParam } from '@/components/organizer/auth/nextPath';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { SITE_FRAME } from '@/lib/ui';
+import { stopVendorEmailsAction } from './actions';
 
 export const metadata: Metadata = {
   title: 'Vendor emails',
@@ -11,8 +13,8 @@ export const metadata: Metadata = {
 
 /**
  * Where the "Stop these emails" link in a vendor announcement lands. With
- * `?token=` it asks first and posts to src/app/api/vendor/unsubscribe/route.ts;
- * that route sends people back with `?status=stopped`, or
+ * `?token=` it asks first; the button runs `stopVendorEmailsAction`, which
+ * sends people back with `?status=stopped`, or
  * `?status=unavailable` when the database could not be reached.
  */
 export default async function VendorEmailsPage({
@@ -38,8 +40,8 @@ export default async function VendorEmailsPage({
                 You will still get emails about your own profile, applications and documents. You can turn announcements
                 back on in your vendor settings.
               </p>
-              <form method="post" action="/api/vendor/unsubscribe" className="mt-6">
-                <input type="hidden" name="token" value={token} />
+              {/* A server action carries the token, so the page has no hidden field and still works without JavaScript. */}
+              <form action={stopVendorEmailsAction.bind(null, token)} className="mt-6">
                 <Button type="submit" className="h-11 w-full rounded-full bg-green-700 px-5 text-white hover:bg-green-800 sm:w-auto">
                   Stop these emails
                 </Button>
@@ -78,11 +80,8 @@ export default async function VendorEmailsPage({
               </p>
             )}
             <p className="mt-6">
-              <Link
-                href="/"
-                className="inline-flex min-h-11 items-center rounded-full border border-green-600 px-4 py-2.5 text-sm font-medium text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-950"
-              >
-                Back to Farmer Markets
+              <Link href="/" className={cn(buttonVariants({ variant: 'outline' }), 'h-11 rounded-full border-green-600 px-4 text-green-700 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-950')}>
+                Farmer Markets home
               </Link>
             </p>
           </div>

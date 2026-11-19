@@ -23,17 +23,18 @@ function blobFileName(file: File, label: string): string {
   return `${base || 'document'}.${EXTENSIONS[file.type] ?? 'pdf'}`;
 }
 
-function today(): string {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-}
-
 type Phase = { kind: 'idle' } | { kind: 'uploading'; progress: number; name: string } | { kind: 'saving'; name: string } | { kind: 'done'; label: string } | { kind: 'error'; text: string };
 
+/** "Liability_Insurance-2026.PDF" reads as "Liability Insurance 2026". */
+function nameFromFile(file: File): string {
+  const base = file.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+  return base.length >= 2 ? base.slice(0, 80) : 'Document';
+}
+
 /**
- * Add one document to the locker: name it, optionally give it an expiry
- * date, then pick the file (a phone offers the camera). The upload starts as
- * soon as a file is picked and the document is saved to the locker.
+ * Add one document to the locker in one tap: pick the file (a phone offers
+ * the camera) and it uploads and saves. The name is optional and falls back
+ * to the file name; an expiry date can be set later from the locker.
  */
 export function DocumentUpload({
   defaultLabel = '',
@@ -53,21 +54,13 @@ export function DocumentUpload({
   const router = useRouter();
   const statusId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
-  const labelRef = useRef<HTMLDivElement>(null);
   const [label, setLabel] = useState(defaultLabel);
-  const [expires, setExpires] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<Phase>({ kind: 'idle' });
   const busy = phase.kind === 'uploading' || phase.kind === 'saving';
 
   function pick() {
     if (busy) return;
-    const name = label.trim();
-    if (name.length < 2) {
-      setErrors({ label: 'Name this document' });
-      requestAnimationFrame(() => labelRef.current?.querySelector('input')?.focus());
-      return;
-    }
     setErrors({});
     inputRef.current?.click();
   }
@@ -83,7 +76,8 @@ export function DocumentUpload({
       setPhase({ kind: 'error', text: `That file is over ${fileSize(maxBytes)}. Try a smaller scan or a photo.` });
       return;
     }
-    const name = label.trim();
+    const typed = label.trim();
+    const name = typed.length >= 2 ? typed : nameFromFile(file);
     try {
       setPhase({ kind: 'uploading', progress: 0, name: file.name });
       const response = await fetch('/api/vendor/documents', { cache: 'no-store' });
@@ -96,7 +90,7 @@ export function DocumentUpload({
         onUploadProgress: ({ percentage }) => setPhase({ kind: 'uploading', progress: Math.round(percentage), name: file.name }),
       });
       setPhase({ kind: 'saving', name: file.name });
-      const result = await registerDocumentAction({ pathname: blob.pathname, contentType: file.type, size: file.size, label: name, expires_on: expires });
+      const result = await registerDocumentAction({ pathname: blob.pathname, contentType: file.type, size: file.size, label: name });
       if (!result.ok) {
         if (result.fieldErrors?.length) setErrors(toErrorMap(result.fieldErrors));
         throw new Error(result.error);
@@ -107,14 +101,13 @@ export function DocumentUpload({
           label: name,
           contentType: file.type,
           size: file.size,
-          expiresOn: expires || null,
-          expired: Boolean(expires && expires < today()),
+          expiresOn: null,
+          expired: false,
           usedBy: 0,
         });
       }
       setPhase({ kind: 'done', label: name });
       setLabel(defaultLabel);
-      setExpires('');
       router.refresh();
     } catch (cause) {
       setPhase({ kind: 'error', text: cause instanceof Error && cause.message ? cause.message : 'Upload failed. Please try again.' });
@@ -124,29 +117,23 @@ export function DocumentUpload({
   return (
     <FieldErrorsContext.Provider value={errors}>
       <div className={cn('flex flex-col gap-4', className)}>
-        <div ref={labelRef}>
-          <Field label="What is it?" path="label" hint="Like liability insurance or health permit.">
-            {(control) => (
-              <TextInput
-                {...control}
-                value={label}
-                maxLength={80}
-                placeholder="Liability insurance"
-                onChange={(event) => {
-                  setLabel(event.target.value);
-                  if (errors.label) setErrors({});
-                  if (phase.kind === 'done' || phase.kind === 'error') setPhase({ kind: 'idle' });
-                }}
-              />
-            )}
-          </Field>
-        </div>
-        <Field label="Expires on" optional path="expires_on" hint="We show it as expired after this date.">
+        <Field label="Name" optional path="label" hint="Like liability insurance. We use the file name if you skip it.">
           {(control) => (
-            <TextInput {...control} type="date" value={expires} className="w-full sm:w-56" onChange={(event) => setExpires(event.target.value)} />
+            <TextInput
+              {...control}
+              value={label}
+              maxLength={80}
+              placeholder="Liability insurance"
+              onChange={(event) => {
+                setLabel(event.target.value);
+                if (errors.label) setErrors({});
+                if (phase.kind === 'done' || phase.kind === 'error') setPhase({ kind: 'idle' });
+              }}
+            />
           )}
         </Field>
 
+        {/* The browser's file picker has no shadcn equivalent: it stays hidden and the shadcn Button below opens it. */}
         <input
           ref={inputRef}
           type="file"

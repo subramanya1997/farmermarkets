@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { buttonVariants } from '@/components/ui/button';
 import { SITE_FRAME, SITE_FRAME_GUTTER } from '@/lib/ui';
+import { cn } from '@/lib/utils';
 
 export const revalidate = 86400;
 
@@ -18,15 +20,15 @@ export const metadata: Metadata = {
 const STEPS = [
   {
     title: 'Sign in with your email',
-    body: 'Type your email and we send you a code. No password to remember.',
+    body: 'We send you a six digit code. No password to remember.',
   },
   {
-    title: 'Set up your profile',
-    body: 'Add your business name, what you sell, a few photos and how shoppers can reach you.',
+    title: 'Name, what you sell, and where',
+    body: 'One short screen: your business name, what you sell, and the markets you sell at. Photos and the rest can wait.',
   },
   {
-    title: 'Pick your markets',
-    body: 'Choose the markets you sell at and upload what each one asks for, like insurance or a permit. The market sees it in one place.',
+    title: 'Get listed',
+    body: 'We check your page and each market approves you. If a market needs a permit or insurance, you add it after you apply.',
   },
 ];
 
@@ -48,7 +50,7 @@ export default function ForVendorsPage() {
               <Link
                 href={START_HREF}
                 rel="nofollow"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-green-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-500"
+                className={cn(buttonVariants(), 'h-12 w-full rounded-full bg-green-700 px-6 text-base text-white hover:bg-green-800 sm:h-11 sm:w-auto sm:text-sm')}
               >
                 Start your vendor page
               </Link>

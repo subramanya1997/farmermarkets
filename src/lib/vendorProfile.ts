@@ -118,6 +118,28 @@ export function readVendorDraft(stored: unknown): VendorProfile {
   return draft;
 }
 
+/* ------------------------------------------------------------------ *
+ * The first screen: enough to get started, nothing more
+ * ------------------------------------------------------------------ */
+
+/** Markets a new vendor can pick on the first screen. More can be added later. */
+export const MAX_START_MARKETS = 10;
+
+/**
+ * What a vendor needs to begin: a name, what they sell, and the markets they
+ * sell at. Photos, a description, links and documents all come later.
+ */
+export const vendorStartSchema = z
+  .object({
+    name: z.string().trim().min(2, 'Enter your business name').max(120),
+    products: z.array(z.enum(PRODUCT_CODES)).min(1, 'Pick at least one').max(PRODUCT_CODES.length),
+    /** Market slugs. */
+    markets: z.array(z.string().regex(/^[a-z0-9-]{1,200}$/)).max(MAX_START_MARKETS),
+  })
+  .strict();
+
+export type VendorStart = z.infer<typeof vendorStartSchema>;
+
 /** Which profile fields differ, for the admin's before and after. */
 export const VENDOR_PROFILE_FIELDS = [
   'name', 'products', 'items', 'description', 'website', 'social_profiles', 'phone', 'email', 'photos',

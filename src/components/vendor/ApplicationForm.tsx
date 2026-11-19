@@ -3,14 +3,14 @@
 import { useMemo, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CheckCircle2, ChevronDown, ChevronUp, Mail, Upload } from 'lucide-react';
+import { CheckCircle2, ChevronDown, ChevronUp, FileText, Mail, Upload } from 'lucide-react';
 import { submitApplicationAction } from '@/app/(app)/vendor/actions';
 import { WEEKDAYS, type Weekday } from '@/lib/listingEdits';
 import { applicationDetailsSchema, type ChecklistItem } from '@/lib/vendorProfile';
 import { WEEKDAY_LONG, WEEKDAY_SHORT } from '@/components/organizer/editor/labels';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { ChipGroup, Field, FieldErrorsContext, FieldGroup, SectionCard, SelectInput, TextArea, TextInput, useFieldError } from './fields';
+import { ChipGroup, Field, FieldErrorsContext, FieldGroup, SectionCard, SelectInput, TextArea, TextInput } from './fields';
 import { Callout, DocumentVerdictBadge, LINK, Pill, formatDay, type ApplicationStatusCode, type LockerDocument } from './bits';
 import { DocumentUpload } from './DocumentUpload';
 import { StickyBar, focusFirstInvalid, toErrorMap, useLeaveGuard, type Notice } from './StickyBar';
@@ -91,19 +91,17 @@ export function ApplicationForm({ slug, items, existing, documents, documentsEna
   }, [documents, uploaded]);
 
   const sentByItem = useMemo(() => new Map((existing?.sent ?? []).map((line) => [line.itemId, line])), [existing]);
-  const missing = items.filter((item) => item.required && !values.chosen[item.id] && !sentByItem.has(item.id));
-  const blockedByUploads = !documentsEnabled && missing.length > 0 && !listed;
+  // Documents come after applying: a new application only says what the market will ask for.
+  const showDocuments = items.length > 0 && (status === 'pending' || status === 'approved');
+  const owed = items.filter((item) => item.required).length;
 
   // Errors from the last send fade out as they are fixed.
   const errors = useMemo(() => {
     const paths = Object.keys(submitted);
     if (paths.length === 0) return submitted;
-    const stillMissing = new Set(missing.map((item) => `documents.${item.id}`));
     const tooLong: Record<string, boolean> = { stall_note: values.stallNote.trim().length > MAX_STALL, message: values.message.trim().length > MAX_MESSAGE };
-    return Object.fromEntries(
-      paths.filter((path) => (path.startsWith('documents.') ? stillMissing.has(path) : path in tooLong ? tooLong[path] : true)).map((path) => [path, submitted[path]]),
-    );
-  }, [submitted, missing, values]);
+    return Object.fromEntries(paths.filter((path) => (path in tooLong ? tooLong[path] : true)).map((path) => [path, submitted[path]]));
+  }, [submitted, values]);
 
   function set<K extends keyof FormValues>(key: K, value: FormValues[K]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -130,9 +128,8 @@ export function ApplicationForm({ slug, items, existing, documents, documentsEna
     if (sending) return;
     const details = applicationDetailsSchema.safeParse({ days: values.days, stall_note: values.stallNote, message: values.message });
     const issues = details.success ? [] : details.error.issues.map((issue) => ({ path: issue.path.join('.'), message: issue.message }));
-    if (!listed) issues.push(...missing.map((item) => ({ path: `documents.${item.id}`, message: 'This market requires this document' })));
     if (issues.length) {
-      fail(issues, missing.length && !listed ? `Attach ${missing.length === 1 ? 'the document' : 'the documents'} this market requires.` : 'A few fields need a fix.');
+      fail(issues, 'A few fields need a fix.');
       return;
     }
     setSubmitted({});
@@ -172,9 +169,7 @@ export function ApplicationForm({ slug, items, existing, documents, documentsEna
 
   const cta = listed ? 'Save changes' : reopening ? 'Send again' : status === 'pending' ? 'Update application' : 'Send application';
   const canSend = status === null || reopening || dirty;
-  const idle = blockedByUploads
-    ? 'This market requires documents, and uploads are not available yet.'
-    : dirty
+  const idle = dirty
       ? 'You have changes that are not sent yet.'
       : status === null
         ? 'Ready when you are.'
@@ -185,47 +180,59 @@ export function ApplicationForm({ slug, items, existing, documents, documentsEna
   return (
     <FieldErrorsContext.Provider value={errors}>
       <div ref={rootRef} className="flex flex-col gap-4">
-        <SectionCard
-          title="When you sell here"
-          description={listed ? 'Days and stall note update on the market page as soon as you save.' : 'Shoppers see this on the market page once you are approved.'}
-        >
-          <FieldGroup legend="Market days you attend" hint="Leave empty if it changes week to week." path="days">
+        <SectionCard title={listed ? 'Your listing' : 'Your application'}>
+          <FieldGroup legend="Days you are there" hint={listed ? 'Shown on the market page as soon as you save.' : 'Skip it if it changes week to week.'} path="days">
             <ChipGroup options={WEEKDAYS} labels={WEEKDAY_LONG} short={WEEKDAY_SHORT} value={values.days} onChange={(next) => set('days', next)} />
           </FieldGroup>
-          <Field
-            label="Where to find your stall"
-            optional
-            path="stall_note"
-            hint={`Shown publicly. For example, Row B, near the fountain. ${MAX_STALL - values.stallNote.length} characters left.`}
-          >
-            {(control) => (
-              <TextInput
-                {...control}
-                value={values.stallNote}
-                maxLength={MAX_STALL}
-                placeholder="Row B, near the fountain"
-                onChange={(event) => set('stallNote', event.target.value)}
-              />
-            )}
-          </Field>
+          {listed ? (
+            <Field label="Where to find your stall" optional path="stall_note" hint="Shown on the market page.">
+              {(control) => (
+                <TextInput
+                  {...control}
+                  value={values.stallNote}
+                  maxLength={MAX_STALL}
+                  placeholder="Row B, near the fountain"
+                  onChange={(event) => set('stallNote', event.target.value)}
+                />
+              )}
+            </Field>
+          ) : (
+            <Field label="Note to the market" optional path="message" hint="Only the market sees this.">
+              {(control) => (
+                <TextArea
+                  {...control}
+                  value={values.message}
+                  maxLength={MAX_MESSAGE}
+                  rows={3}
+                  className="min-h-20"
+                  placeholder="We have sold nearby for three years and bring our own tent."
+                  onChange={(event) => set('message', event.target.value)}
+                />
+              )}
+            </Field>
+          )}
+          {!showDocuments && items.length > 0 ? (
+            <p className="flex items-start gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+              <FileText aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-zinc-400" />
+              {owed > 0
+                ? `This market asks for ${owed === 1 ? 'a document' : `${owed} documents`}, like a permit or insurance. You can add ${owed === 1 ? 'it' : 'them'} right after you apply.`
+                : 'This market lists a few optional documents. You can add them after you apply.'}
+            </p>
+          ) : null}
         </SectionCard>
 
-        {items.length > 0 ? (
+        {showDocuments ? (
           <SectionCard
             title="Documents"
             description={
               documentsEnabled
-                ? 'Pick one from your documents or upload a new one here. Only this market and our team can open what you attach.'
+                ? 'What this market asks for. Only this market and our team can open what you send.'
                 : 'What this market asks vendors for.'
             }
           >
             {!documentsEnabled ? (
               <Callout title="Document uploads are not available yet">
-                {items.some((item) => item.required)
-                  ? listed
-                    ? 'You can still save your days and stall note.'
-                    : 'This market requires at least one document, so you cannot send this application yet. We will let you know when uploads open.'
-                  : 'Everything here is optional, so you can send your application without them.'}
+                Your application is in. We will let you know when you can add documents here.
               </Callout>
             ) : null}
             <ul className="flex flex-col gap-3">
@@ -249,21 +256,6 @@ export function ApplicationForm({ slug, items, existing, documents, documentsEna
           </SectionCard>
         ) : null}
 
-        <SectionCard title="Message to the reviewer" description="Private. Only whoever reviews your application sees it.">
-          <Field label="Message" optional path="message" hint={`${MAX_MESSAGE - values.message.length} characters left.`}>
-            {(control) => (
-              <TextArea
-                {...control}
-                value={values.message}
-                maxLength={MAX_MESSAGE}
-                rows={4}
-                placeholder="We have sold at markets nearby for three years and bring our own tent."
-                onChange={(event) => set('message', event.target.value)}
-              />
-            )}
-          </Field>
-        </SectionCard>
-
         <p className="flex items-start gap-2 px-1 text-sm text-zinc-600 dark:text-zinc-400">
           <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-zinc-400" />
           The market will see the email you sign in with, so they can reach you.
@@ -275,7 +267,7 @@ export function ApplicationForm({ slug, items, existing, documents, documentsEna
           label={cta}
           busyLabel={listed ? 'Saving' : 'Sending'}
           busy={sending}
-          disabled={!canSend || blockedByUploads}
+          disabled={!canSend}
           onSubmit={submit}
         />
       </div>
@@ -368,9 +360,7 @@ function ChecklistRow({
                 />
               )}
             </Field>
-          ) : (
-            <MissingNote path={`documents.${item.id}`} />
-          )}
+          ) : null}
           {chosenDocument?.expired ? <p className="text-sm font-medium text-amber-800 dark:text-amber-300">That document has expired. The market may ask for a current one.</p> : null}
           <p aria-live="polite" className="text-sm">
             {justAdded ? (
@@ -413,14 +403,4 @@ function ChecklistRow({
       ) : null}
     </li>
   );
-}
-
-/** With an empty locker there is no dropdown, so the "required" error needs its own home. */
-function MissingNote({ path }: { path: string }) {
-  const error = useFieldError(path);
-  return error ? (
-    <p data-field-error tabIndex={-1} className="text-sm font-medium text-red-700 outline-none dark:text-red-400">
-      {error}. Upload it below.
-    </p>
-  ) : null;
 }

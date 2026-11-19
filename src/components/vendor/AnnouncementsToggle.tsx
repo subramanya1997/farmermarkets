@@ -1,5 +1,6 @@
 'use client';
 
+import { Label } from '@/components/ui/label';
 import { useId, useState, useTransition } from 'react';
 import { Loader2 } from 'lucide-react';
 import { setAnnouncementsAction } from '@/app/(app)/vendor/actions';
@@ -36,9 +37,9 @@ export function AnnouncementsToggle({ optedOut }: { optedOut: boolean }) {
 
   return (
     <div className="flex flex-col gap-2">
-      <label
+      <Label
         htmlFor={id}
-        className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg py-1 text-sm text-zinc-900 has-[:disabled]:cursor-wait dark:text-zinc-100"
+        className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg py-1 text-sm leading-5 font-normal text-zinc-900 has-[:disabled]:cursor-wait dark:text-zinc-100"
       >
         <Checkbox
           id={id}
@@ -51,7 +52,7 @@ export function AnnouncementsToggle({ optedOut }: { optedOut: boolean }) {
           <span className="block font-medium">Send me announcements</span>
           <span className="mt-0.5 block text-zinc-500 dark:text-zinc-400">New features, and markets near you looking for vendors. A few times a year.</span>
         </span>
-      </label>
+      </Label>
       <p aria-live="polite" className="min-h-5 pl-8 text-sm">
         {saving ? (
           <span className="inline-flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400">

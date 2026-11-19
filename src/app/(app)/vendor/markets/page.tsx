@@ -40,7 +40,7 @@ export default async function VendorMarketsPage() {
           Apply to a market
         </h2>
         <div className="mt-3">
-          <MarketPicker appliedSlugs={appliedSlugs} />
+          <MarketPicker appliedSlugs={appliedSlugs} hideLabel />
         </div>
         {overview.suggestedMarkets.length > 0 ? (
           <div className="-mx-4 mt-4 sm:-mx-6">

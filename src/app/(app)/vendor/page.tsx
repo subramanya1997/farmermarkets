@@ -2,12 +2,15 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Check, ChevronRight, FileText, MapPin, Store } from 'lucide-react';
+import { StartForm, type StartMarket } from '@/components/vendor/StartForm';
 import { SuggestedList } from '@/components/vendor/SuggestedMarkets';
-import { requireOrganizer } from '@/lib/organizer';
+import { getPublishedMarket, requireOrganizer } from '@/lib/organizer';
+import { getChecklist } from '@/lib/vendors';
+import { MAX_START_MARKETS } from '@/lib/vendorProfile';
 import { absoluteUrl } from '@/lib/site';
 import type { MarketRef, VendorOverview } from '@/lib/vendors';
 import { buttonVariants } from '@/components/ui/button';
-import { Callout, NoteFrom, PRIMARY, plural } from '@/components/vendor/bits';
+import { Callout, LINK, NoteFrom, plural } from '@/components/vendor/bits';
 import { cn } from '@/lib/utils';
 import { cachedVendorOverview, needsDocument } from './_lib/overview';
 
@@ -43,7 +46,7 @@ function profileStep(overview: VendorOverview): Step {
     case 'pending':
       return {
         ...base,
-        status: overview.live ? 'Live. Your changes are waiting for review.' : 'Waiting for review. We usually decide within two business days.',
+        status: overview.live ? 'Live. Your changes are waiting for review.' : 'Waiting for review. You can keep adding to it.',
         tone: 'waiting',
       };
     case 'approved':
@@ -65,7 +68,7 @@ function marketsStep(overview: VendorOverview): Step {
   const waiting = open.filter((application) => application.status === 'pending').length;
   const missing = overview.applications.filter(needsDocument).length;
   if (open.length === 0) {
-    return { ...base, status: 'Pick the markets you sell at and apply in a few taps.', tone: 'todo' };
+    return { ...base, status: 'Add the markets you sell at.', tone: 'todo' };
   }
   const parts = [listed ? `Listed at ${plural(listed, 'market', 'markets')}` : null, waiting ? `${waiting} waiting` : null].filter(Boolean);
   if (missing > 0) {
@@ -82,7 +85,7 @@ function documentsStep(overview: VendorOverview): Step {
     return {
       ...base,
       status: overview.documentsEnabled
-        ? 'Keep permits and insurance here once, then attach them to any market.'
+        ? 'Only if a market asks for a permit or insurance.'
         : 'Document uploads are coming soon.',
       tone: 'todo',
     };
@@ -94,22 +97,46 @@ function documentsStep(overview: VendorOverview): Step {
   };
 }
 
-export default async function VendorHomePage() {
+/** A market named in the link that brought the vendor here, if it takes applications. */
+async function linkedMarket(raw: string | string[] | undefined): Promise<StartMarket | null> {
+  const slug = typeof raw === 'string' ? raw.trim().toLowerCase() : '';
+  if (!/^[a-z0-9-]{1,200}$/.test(slug)) return null;
+  const market = await getPublishedMarket(slug);
+  if (!market) return null;
+  const checklist = await getChecklist(market.id);
+  if (!checklist.settings.accepting) return null;
+  return { slug: market.slug, name: market.name, city: market.city || undefined, state: market.state || undefined };
+}
+
+export default async function VendorHomePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const user = await requireOrganizer('/vendor');
   const overview = await cachedVendorOverview(user);
   const name = firstName(user.name);
   const business = overview.live?.name || overview.draft.name;
 
-  if (overview.state === 'none' && overview.applications.length === 0 && overview.documents.length === 0) {
+  // Never sent a profile: the whole start is one screen.
+  if (overview.state === 'none' || overview.state === 'draft') {
+    const applied = overview.applications.flatMap((application) =>
+      application.market && application.status !== 'withdrawn' ? [application.market.slug] : [],
+    );
+    const linked = await linkedMarket((await searchParams).market);
+    const picked = [...(linked ? [linked] : []), ...overview.suggestedMarkets.map(({ slug, name: marketName, city, state }) => ({ slug, name: marketName, city, state }))];
+    const initialMarkets = [...new Map(picked.filter((market) => !applied.includes(market.slug)).map((market) => [market.slug, market])).values()].slice(0, MAX_START_MARKETS);
     return (
-      <div className="mx-auto max-w-2xl space-y-6">
-        <Welcome name={name} />
-        <Suggested markets={overview.suggestedMarkets} />
+      <div className="mx-auto max-w-2xl space-y-4">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Start your vendor page</h1>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Your name, what you sell and where. That is all we need to begin.</p>
+        </div>
+        <StartForm initialName={overview.draft.name} initialProducts={overview.draft.products} initialMarkets={initialMarkets} appliedSlugs={applied} />
       </div>
     );
   }
 
-  const steps = [profileStep(overview), marketsStep(overview), documentsStep(overview)];
+  // Documents only matter once a market asks for one, or the vendor already keeps some.
+  const asked = overview.applications.some((application) => application.progress.active > 0 && (application.status === 'pending' || application.status === 'approved'));
+  const steps = [profileStep(overview), marketsStep(overview), ...(asked || overview.documents.length > 0 ? [documentsStep(overview)] : [])];
+  const thin = overview.draft.photos.length === 0 && !overview.draft.description;
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -125,6 +152,22 @@ export default async function VendorHomePage() {
         </Callout>
       ) : null}
 
+      {overview.state === 'pending' && !overview.live ? (
+        <Callout tone="success" title="You are in. We are checking your page.">
+          We email you when it is live, usually within two business days.
+          {thin ? (
+            <>
+              {' '}
+              While you wait,{' '}
+              <Link href="/vendor/profile" className={LINK}>
+                add photos and a few words about you
+              </Link>
+              .
+            </>
+          ) : null}
+        </Callout>
+      ) : null}
+
       {overview.publicPath ? <LiveCard href={overview.publicPath} /> : null}
 
       <ol className="space-y-3" aria-label="Your setup">
@@ -137,55 +180,6 @@ export default async function VendorHomePage() {
 
       <Suggested markets={overview.suggestedMarkets} />
     </div>
-  );
-}
-
-function Welcome({ name }: { name: string }) {
-  const steps = [
-    { title: 'Tell shoppers about you', body: 'Your name, what you sell and a few photos. We check it once.' },
-    { title: 'Apply to your markets', body: 'Pick a market, choose your days, attach any permits it asks for.' },
-    { title: 'Show up on their pages', body: 'Once approved, you are listed on each market’s page with a link to yours.' },
-  ];
-  return (
-    <section aria-labelledby="welcome" className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xs dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="bg-gradient-to-br from-green-50 to-white px-5 pt-6 pb-5 sm:px-6 dark:from-green-950/40 dark:to-zinc-900">
-        <span
-          aria-hidden="true"
-          className="flex size-10 items-center justify-center rounded-full bg-green-700 text-white shadow-xs ring-4 ring-green-100 dark:ring-green-900/50"
-        >
-          <Store className="size-5" />
-        </span>
-        <h1 id="welcome" className="mt-4 text-2xl font-semibold tracking-tight">
-          {name ? `Welcome, ${name}` : 'Welcome'}
-        </h1>
-        <p className="mt-1.5 text-[15px] leading-6 text-zinc-700 dark:text-zinc-300">
-          Sell at a farmers market? Set up your profile once and shoppers can find you at every market you sell at.
-        </p>
-      </div>
-      <ol className="space-y-4 px-5 py-5 sm:px-6">
-        {steps.map((step, index) => (
-          <li key={step.title} className="flex gap-3">
-            <span
-              aria-hidden="true"
-              className="flex size-7 shrink-0 items-center justify-center rounded-full bg-green-100 text-sm font-semibold text-green-800 dark:bg-green-900/40 dark:text-green-300"
-            >
-              {index + 1}
-            </span>
-            <div className="min-w-0">
-              <h2 className="text-sm font-medium">{step.title}</h2>
-              <p className="mt-0.5 text-sm text-zinc-600 dark:text-zinc-400">{step.body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <div className="border-t border-zinc-200 px-5 py-4 sm:px-6 dark:border-zinc-800">
-        <Link href="/vendor/profile" className={cn(buttonVariants(), PRIMARY)}>
-          Set up your profile
-          <ChevronRight aria-hidden="true" />
-        </Link>
-        <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">Takes about five minutes. You can apply to markets while we review it.</p>
-      </div>
-    </section>
   );
 }
 

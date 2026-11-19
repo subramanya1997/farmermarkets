@@ -63,11 +63,11 @@ export default async function MarketApplyPage({ params }: { params: Promise<{ sl
         <ul className="mt-3 space-y-1.5 text-sm text-zinc-600 dark:text-zinc-400">
           <li className="flex items-center gap-2">
             <Sprout aria-hidden="true" className="size-4 shrink-0 text-green-700 dark:text-green-400" />
-            Set up a free vendor page
+            Your name and what you sell, one screen
           </li>
           <li className="flex items-center gap-2">
             <FileCheck aria-hidden="true" className="size-4 shrink-0 text-green-700 dark:text-green-400" />
-            Send this market what it asks for
+            Add a permit or insurance later, if asked
           </li>
           <li className="flex items-center gap-2">
             <Store aria-hidden="true" className="size-4 shrink-0 text-green-700 dark:text-green-400" />

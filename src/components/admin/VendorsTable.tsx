@@ -1,5 +1,6 @@
 'use client';
 
+import { Label } from '@/components/ui/label';
 import { useDeferredValue, useId, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
@@ -79,9 +80,9 @@ export function VendorsTable({ rows }: { rows: VendorTableRow[] }) {
             className="sm:w-52 sm:data-[size=default]:h-9"
           />
           <div className="relative sm:w-72">
-            <label htmlFor={inputId} className="sr-only">
+            <Label htmlFor={inputId} className="sr-only">
               Filter vendors
-            </label>
+            </Label>
             <Search aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-zinc-400" />
             <TextInput
               id={inputId}

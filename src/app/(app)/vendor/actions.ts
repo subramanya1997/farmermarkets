@@ -11,6 +11,7 @@ import {
   registerDocument,
   removeDocument,
   setAnnouncementsOptOut,
+  startVendor,
   submitApplication,
   submitVendorProfile,
   updateDocument,
@@ -34,6 +35,15 @@ export async function submitVendorProfileAction(profile: unknown): Promise<Vendo
   const user = await verifiedUser();
   if (!user) return SIGN_IN_ERROR;
   const result = await submitVendorProfile(user, profile);
+  if (result.ok) refresh();
+  return result;
+}
+
+/** The first screen: name, what you sell and markets, sent together. */
+export async function startVendorAction(input: unknown): Promise<VendorActionResult> {
+  const user = await verifiedUser();
+  if (!user) return SIGN_IN_ERROR;
+  const result = await startVendor(user, input);
   if (result.ok) refresh();
   return result;
 }

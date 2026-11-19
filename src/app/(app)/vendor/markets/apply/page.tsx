@@ -23,6 +23,10 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
   const market = await getPublishedMarket(slug);
   if (!market) notFound();
   const form = await applicationFormFor(user, market);
+  // Someone who has not started yet gets the one-screen start, with this market already picked.
+  if ((form.profileState === 'none' || form.profileState === 'draft') && !form.application) {
+    redirect(`/vendor?market=${encodeURIComponent(market.slug)}`);
+  }
 
   const application = form.application;
   const listed = application?.status === 'approved';
@@ -112,15 +116,6 @@ export default async function ApplyPage({ searchParams }: { searchParams: Promis
         <Callout title="This market is not taking vendor applications right now">Check back later, or look for another market you sell at.</Callout>
       ) : (
         <>
-          {(form.profileState === 'none' || form.profileState === 'draft') && !application?.waitingOnProfile ? (
-            <Callout tone="waiting" title="Set up your profile too">
-              You can send this now. The market sees it once your profile is approved.{' '}
-              <Link href="/vendor/profile" className={LINK}>
-                Set up your profile
-              </Link>
-            </Callout>
-          ) : null}
-
           {intro ? (
             <figure className="rounded-xl border border-zinc-200 bg-white p-4 shadow-xs sm:p-5 dark:border-zinc-800 dark:bg-zinc-900">
               <figcaption className="text-xs font-medium text-zinc-500 dark:text-zinc-400">From the market</figcaption>

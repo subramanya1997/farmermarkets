@@ -4,6 +4,7 @@ import { useId, useState, useTransition, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { Check, Copy, LoaderCircle, UserPlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { inviteVendorAction } from '@/app/(app)/admin/vendors/actions';
 import { Field, FieldErrorsContext, GREEN_CHECK, TextArea, TextInput } from '@/components/vendor/fields';
@@ -127,12 +128,12 @@ export function VendorInviteForm() {
               disabled={isPending}
               className={cn('mt-0.5 size-5', GREEN_CHECK)}
             />
-            <label htmlFor={checkId} className="text-sm leading-5">
+            <Label htmlFor={checkId} className="block text-sm leading-5 font-normal">
               Send the invite email now
               <span className="block text-xs text-zinc-500 dark:text-zinc-400">
                 Checking this emails the address above. Leave it unchecked to only create the account and share the link yourself.
               </span>
-            </label>
+            </Label>
           </div>
           <Button type="submit" disabled={isPending} className="h-11 sm:h-9">
             {isPending ? <LoaderCircle className="animate-spin" aria-hidden="true" /> : <UserPlus aria-hidden="true" />}

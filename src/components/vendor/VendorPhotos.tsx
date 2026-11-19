@@ -165,6 +165,7 @@ export function VendorPhotos({
           </p>
           <p className="text-xs text-zinc-500 dark:text-zinc-400">JPEG, PNG or WebP, up to {megabytes(maxBytes)} each. The first one is your cover.</p>
         </div>
+        {/* The browser's file picker has no shadcn equivalent: it stays hidden and the shadcn Button below opens it. */}
         <input
           ref={inputRef}
           type="file"

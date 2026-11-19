@@ -17,6 +17,7 @@ export default async function VendorLayout({ children }: { children: ReactNode }
   const admin = isAdmin(user);
   const [overview, managed] = await Promise.all([cachedVendorOverview(user), admin ? Promise.resolve([]) : managedMarketIds(user.id)]);
   const attention = overview.applications.filter(needsDocument).length;
+  const asked = overview.applications.some((application) => application.progress.active > 0 && (application.status === 'pending' || application.status === 'approved'));
 
   const groups: DashboardNavGroup[] = [
     {
@@ -24,7 +25,7 @@ export default async function VendorLayout({ children }: { children: ReactNode }
         { href: '/vendor', label: 'Overview', icon: <LayoutDashboard />, exact: true },
         { href: '/vendor/profile', label: 'Profile', icon: <Store /> },
         { href: '/vendor/markets', label: 'Markets', icon: <MapPin />, count: attention },
-        { href: '/vendor/documents', label: 'Documents', icon: <FileText /> },
+        ...(asked || overview.documents.length > 0 ? [{ href: '/vendor/documents', label: 'Documents', icon: <FileText /> }] : []),
       ],
     },
   ];

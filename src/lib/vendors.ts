@@ -26,6 +26,7 @@ import type { FarmerMarket } from '@/app/api/markets/data';
 import {
   canManageMarket,
   getMarketsByIds,
+  getPublishedMarket,
   isAdmin,
   managedMarketIds,
   managersFor,
@@ -52,6 +53,7 @@ import {
   uniqueVendorSlug,
   vendorFieldsThatDiffer,
   vendorSlugBase,
+  vendorStartSchema,
   type ChecklistItem,
   type FieldIssue,
   type MarketChecklist,
@@ -867,14 +869,9 @@ export async function submitApplication(user: SessionUser, market: FarmerMarket,
     ? await db.select().from(vendorDocumentSubmissions).where(eq(vendorDocumentSubmissions.applicationId, existing.id))
     : [];
   const currentByKey = new Map(current.map((row) => [row.requirementKey, row]));
-  const missing = active.filter((item) => item.required && !chosen.has(item.id) && !currentByKey.has(item.id));
-  if (missing.length && !listed) {
-    return {
-      ok: false,
-      error: `Attach ${missing.length === 1 ? 'the document' : 'the documents'} this market requires: ${missing.map((item) => item.label).join(', ')}.`,
-      fieldErrors: missing.map((item) => ({ path: `documents.${item.id}`, message: 'Required by this market' })),
-    };
-  }
+  // Required documents never hold an application back: the vendor applies
+  // first and adds what the market asks for afterwards. The market sees what
+  // is still missing when it decides.
 
   const now = new Date();
   let applicationId = existing?.id;
@@ -939,12 +936,50 @@ export async function submitApplication(user: SessionUser, market: FarmerMarket,
   }
   capture(vendor.id, listed ? 'Vendor Application Updated' : 'Vendor Application Submitted', { market_id: market.id, documents: chosen.size });
   if (listed) return { ok: true, message: 'Saved. Your listing at this market is updated.' };
+  const owed = active.filter((item) => item.required && !chosen.has(item.id) && !currentByKey.has(item.id)).length;
+  const next = owed ? ` This market asks for ${owed === 1 ? 'a document' : `${owed} documents`}. Add ${owed === 1 ? 'it' : 'them'} when you can.` : '';
   return {
     ok: true,
-    message: live.hasLiveProfile
-      ? 'Application sent. We will email you when it is decided.'
-      : 'Application saved. The market will see it once your profile is approved.',
+    message: `${live.hasLiveProfile ? 'Application sent. We will email you when it is decided.' : 'Application saved. The market will see it once your profile is approved.'}${next}`,
   };
+}
+
+/**
+ * The first screen in one go: the profile goes to review with a name and what
+ * the vendor sells, and an application is opened at each market they picked.
+ * Only for an account that has never sent a profile; after that the profile
+ * editor and the markets page take over.
+ */
+export async function startVendor(user: SessionUser, input: unknown): Promise<VendorActionResult> {
+  const parsed = vendorStartSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      error: 'Add your business name and what you sell.',
+      fieldErrors: parsed.error.issues.map((issue) => ({ path: String(issue.path[0] ?? ''), message: issue.message })),
+    };
+  }
+  const start = parsed.data;
+  const vendor = await getVendorForUser(user.id);
+  if (vendor && (vendor.status !== 'draft' || vendor.profile)) {
+    return { ok: false, error: 'You already sent your profile. Reload the page to see it.' };
+  }
+  // An invite may have left a draft (a description, a website): keep it.
+  const profile = { ...readVendorDraft(vendor?.proposed ?? null), name: start.name, products: start.products };
+  const sent = await submitVendorProfile(user, profile);
+  if (!sent.ok) return sent;
+
+  const skipped: string[] = [];
+  let applied = 0;
+  for (const slug of [...new Set(start.markets)]) {
+    const market = await getPublishedMarket(slug);
+    const result = market ? await submitApplication(user, market, { days: [] }) : null;
+    if (result?.ok) applied += 1;
+    else skipped.push(market?.name ?? slug);
+  }
+  const where = applied === 0 ? '' : applied === 1 ? ' and applied to 1 market' : ` and applied to ${applied} markets`;
+  const problems = skipped.length ? ` We could not add ${skipped.join(', ')}; try from Markets.` : '';
+  return { ok: true, message: `Sent for review${where}. We will email you, usually within two business days.${problems}` };
 }
 
 export async function withdrawApplication(user: SessionUser, applicationId: string): Promise<VendorActionResult> {

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Field, FieldErrorsContext, TextInput } from './fields';
 import { Pill, fileKind, fileSize, formatDay, plural, type LockerDocument } from './bits';
+import { ExpiryPicker } from './ExpiryPicker';
 import { toErrorMap } from './StickyBar';
 
 /** The vendor's documents, each with open, edit and delete. */
@@ -130,7 +131,7 @@ function EditDialog({ document, onClose }: { document: LockerDocument; onClose: 
       <DialogContent className={DIALOG}>
         <DialogHeader className="pr-8 text-left">
           <DialogTitle>Edit document</DialogTitle>
-          <DialogDescription>Change its name or expiry date. The file stays the same.</DialogDescription>
+          <DialogDescription>Change its name or when it runs out. The file stays the same.</DialogDescription>
         </DialogHeader>
         <FieldErrorsContext.Provider value={errors}>
           <form
@@ -143,9 +144,7 @@ function EditDialog({ document, onClose }: { document: LockerDocument; onClose: 
             <Field label="Name" path="label">
               {(control) => <TextInput {...control} value={label} maxLength={80} onChange={(event) => setLabel(event.target.value)} />}
             </Field>
-            <Field label="Expires on" optional path="expires_on">
-              {(control) => <TextInput {...control} type="date" value={expires} onChange={(event) => setExpires(event.target.value)} />}
-            </Field>
+            <ExpiryPicker value={expires} onChange={setExpires} />
             {error ? (
               <p role="alert" className="text-sm font-medium text-red-700 dark:text-red-400">
                 {error}
