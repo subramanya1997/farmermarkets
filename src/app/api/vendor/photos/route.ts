@@ -3,9 +3,10 @@
  *
  * The browser uploads straight to the public photo store; this route only
  * says yes or no. A token is issued only to a signed-in, verified account,
- * only for that account's own vendor folder, only for JPEG/PNG/WebP up to
- * 8 MB. The photo goes public only when an admin approves the profile it
- * is part of; the profile action checks the folder again.
+ * only for that account's own vendor folder, only for JPEG/PNG/WebP/HEIC/HEIF
+ * up to 8 MB (the file as sent). HEIC/HEIF go on to `./convert`, which turns
+ * them into JPEG. The photo goes public only when an admin approves the
+ * profile it is part of; the profile action checks the folder again.
  */
 import { NextResponse } from 'next/server';
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
