@@ -1003,7 +1003,7 @@ if (!reachable) {
         assert.deepEqual(sitemaps, [`${CANONICAL_ORIGIN}/sitemap.xml`]);
       });
 
-      check(group, 'disallows /api/* and the private organizer pages, nothing else', () => {
+      check(group, 'disallows /api/*, the private account pages and the QR scan page, nothing else', () => {
         const disallowed = [...body.matchAll(/^\s*Disallow:\s*(\S*)\s*$/gim)]
           .map((m) => m[1])
           .filter(Boolean);
@@ -1015,11 +1015,14 @@ if (!reachable) {
         // noindex, so they are the one deliberate addition. `/vendor/` is the
         // signed-in vendor area; it keeps its trailing slash because rules
         // match by prefix and `/vendor` would also block public `/vendors/`.
+        // `/v/` is the stall QR landing page: noindex, canonical to the vendor
+        // page, and a crawler visit should never reach a vendor's scan count.
         assert.deepEqual(disallowed, [
           '/api/*',
           '/dashboard',
           '/admin',
           '/vendor/',
+          '/v/',
           '/sign-in',
           '/sign-up',
           '/forgot-password',
