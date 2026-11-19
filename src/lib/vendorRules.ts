@@ -36,6 +36,21 @@ export function applicationVisibleToOrganizer(vendor: { hasLiveProfile: boolean;
   return vendor.hasLiveProfile && !vendor.suspended && status !== 'withdrawn';
 }
 
+/**
+ * What a decision does to an application. Approve takes a pending one live.
+ * Deny turns down a pending one, or removes an approved vendor from the
+ * market (their vendor account stays). Null: nothing to decide from here.
+ */
+export function applicationDecision(
+  approve: boolean,
+  current: ApplicationStatus,
+): { to: 'approved' | 'denied'; removing: boolean } | null {
+  if (approve) return current === 'pending' ? { to: 'approved', removing: false } : null;
+  if (current === 'pending') return { to: 'denied', removing: false };
+  if (current === 'approved') return { to: 'denied', removing: true };
+  return null;
+}
+
 /** The badge is earned only when one of the market's own organizers said yes. */
 export function confirmedByMarket(application: { status: ApplicationStatus; decidedRole: string | null }): boolean {
   return application.status === 'approved' && application.decidedRole === 'organizer';

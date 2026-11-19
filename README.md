@@ -384,9 +384,11 @@ scripts/
   build-market-enrichment.mjs Validate and compile research batches in memory
   build-consolidated-markets.mjs
                               Build and loss-check the canonical market file
+  check-data-freshness.mjs    Fail when either source snapshot is too old
 .github/workflows/
   update-government-markets.yml
-                              Nightly data refresh
+                              Monthly official data refresh
+  data-freshness.yml          Weekly staleness check for both snapshots
 ```
 
 ## Data Source
@@ -425,16 +427,17 @@ Important normalized fields include:
 
 If the source data changes, confirm that each record still has a stable `name` and preferably a stable `slug`. Records without a slug are assigned one with `generateSlug()`.
 
-### Nightly update behavior
+### Monthly update behavior
 
-The GitHub Actions workflow runs daily at 08:17 UTC and can also be started manually. It:
+The GitHub Actions workflow runs monthly, at 08:17 UTC on the 1st, and can also be started manually. It:
 
 1. Fetches every enabled government source with timeouts and retries.
 2. Normalizes source-specific fields and groups duplicate operating-day rows.
 3. Rejects invalid coordinates, duplicate IDs/slugs, counts below the configured minimum, and suspicious drops versus the previous snapshot.
 4. Retains the last good records for an individual failed source while allowing healthy sources to update.
 5. Runs parser tests, checksum validation, and the production build before committing generated files.
-6. Marks the workflow failed after committing a valid partial snapshot so source failures remain visible in GitHub Actions.
+6. Keeps a market's id and URL when its source reissues record ids but the market is plainly the same (same name and place).
+7. Warns on a partial run, and fails and opens the issue "Official data refresh is failing" when any step errors or a source fails two runs in a row. A weekly check (`.github/workflows/data-freshness.yml`) also opens "Market data is stale" when either snapshot is older than its limit. Thresholds and what to do: [docs/data-refresh.md](docs/data-refresh.md).
 
 To test with pre-downloaded payloads instead of network requests, name the fixture files as listed in the source registry and run:
 
@@ -490,6 +493,8 @@ The same notice logic (`src/lib/freshness.ts`) independently flags any record wh
 If the upstream ever returns drastically fewer listings than the snapshot holds, that is a broken upstream rather than a mass extinction, and the script refuses to write at all instead of flagging thousands of records.
 
 #### Refresh cadence
+
+Step by step, including what to commit: [docs/data-refresh.md](docs/data-refresh.md). The weekly freshness check opens an issue when the snapshot is more than 180 days old.
 
 Run the refresh **in early spring, before the seasonal search-volume spike**, and again mid-season:
 

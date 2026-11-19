@@ -62,6 +62,7 @@ import {
 } from './vendorProfile';
 import {
   applicationDecider,
+  applicationDecision,
   applicationVisibleToOrganizer,
   canReadDocument,
   checklistProgress,
@@ -1296,21 +1297,23 @@ export async function decideApplication(
   if (!isAdmin(user) && !applicationVisibleToOrganizer(live, row.application.status)) return { ok: false, error: 'Unknown application.' };
   if (approve && !live.hasLiveProfile) return { ok: false, error: 'Approve the vendor profile first; then this application can be approved.' };
 
-  const from: ApplicationStatus[] = approve ? ['pending'] : ['pending', 'approved'];
-  const removing = !approve && row.application.status === 'approved';
+  const decision = applicationDecision(approve, row.application.status);
+  if (!decision) return { ok: false, error: 'This application was already decided.' };
+  const { removing } = decision;
   const manages = (await managedMarketIds(user.id)).includes(row.application.marketId);
   const now = new Date();
   const [decided] = await db
     .update(vendorApplications)
     .set({
-      status: approve ? 'approved' : 'denied',
+      status: decision.to,
       decidedBy: user.id,
       decidedRole: manages ? 'organizer' : 'admin',
       decisionNote: note || null,
       decidedAt: now,
       updatedAt: now,
     })
-    .where(and(eq(vendorApplications.id, applicationId), inArray(vendorApplications.status, from)))
+    // Only from the status we decided on, so two people deciding at once cannot both win.
+    .where(and(eq(vendorApplications.id, applicationId), eq(vendorApplications.status, row.application.status)))
     .returning({ id: vendorApplications.id });
   if (!decided) return { ok: false, error: 'This application was already decided.' };
 

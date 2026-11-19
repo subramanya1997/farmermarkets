@@ -2,41 +2,23 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { CheckCircle2, UserPlus } from 'lucide-react';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { CheckCircle2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { posthogRequestHeaders, trackEvent } from '@/lib/analytics';
 
-type Purpose = 'get_listed' | 'update_listing';
-
-const PURPOSES: { id: Purpose; label: string; detail: string }[] = [
-  {
-    id: 'get_listed',
-    label: 'List a market',
-    detail: 'Your market is not in the directory yet.',
-  },
-  {
-    id: 'update_listing',
-    label: 'Claim or update a listing',
-    detail: 'Your market is listed and you want to manage or correct it.',
-  },
-];
-
 /**
- * The request form on `/for-market-operators`.
+ * The "my market is not listed" form on `/for-market-operators`. Claiming an
+ * existing listing happens above it (`OperatorClaimStart`); this is for
+ * markets the directory does not have yet.
  *
  * Posts to the same `/api/discovery` endpoint the survey uses (Resend email,
- * nothing stored client-side), with `helpTopics` narrowed to the two operator
- * intents. Only "get listed" uses that anonymous form now: updating an
- * existing listing goes through an organizer account (sign up, claim, then
- * edit), so that purpose shows the way in instead. A `?market=<slug>` on the
- * URL preselects it and carries the market through sign-up to its claim form.
+ * nothing stored client-side) with the `get_listed` topic, then records a
+ * `new_market` row in `/api/submissions` for the review queue.
  */
 export function OperatorRequestForm() {
-  const [purpose, setPurpose] = useState<Purpose>('get_listed');
   const [name, setName] = useState('');
   const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
@@ -44,7 +26,6 @@ export function OperatorRequestForm() {
   const [contactPermission, setContactPermission] = useState(false);
   // Honeypot, mirrored from the survey: bots fill it, people never see it.
   const [website, setWebsite] = useState('');
-  const [marketSlug, setMarketSlug] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
   const [error, setError] = useState<string | null>(null);
   const [confirmationSent, setConfirmationSent] = useState(false);
@@ -58,17 +39,6 @@ export function OperatorRequestForm() {
     sentRef.current?.focus({ preventScroll: true });
     sentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [status]);
-
-  useEffect(() => {
-    const slug = new URLSearchParams(window.location.search).get('market');
-    if (!slug || !/^[a-z0-9-]+$/.test(slug)) return;
-    // Post-hydration on purpose: the page is statically rendered, so the
-    // query string is only knowable on the client, and seeding state here
-    // avoids a server/client hydration mismatch.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMarketSlug(slug);
-    setPurpose('update_listing');
-  }, []);
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -91,15 +61,14 @@ export function OperatorRequestForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           intent: 'farmers_market',
-          helpTopics: [purpose],
+          helpTopics: ['get_listed'],
+          source: '/for-market-operators',
           name,
           organization,
           email: email.trim(),
           phone: '',
           message,
           contactPermission,
-          country: 'Market operators page',
-          resultCount: 0,
           website,
         }),
       });
@@ -119,8 +88,7 @@ export function OperatorRequestForm() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', ...posthogRequestHeaders() },
           body: JSON.stringify({
-            type: purpose === 'get_listed' ? 'new_market' : 'claim',
-            ...(marketSlug ? { market_slug: marketSlug } : {}),
+            type: 'new_market',
             email: email.trim(),
             payload: {
               source: 'for-market-operators',
@@ -136,11 +104,11 @@ export function OperatorRequestForm() {
         stored = 'network_error';
       }
       if (stored === 'network_error' || stored >= 400) {
-        trackEvent('Operator Request Not Stored', { purpose, status: String(stored) });
+        trackEvent('Operator Request Not Stored', { purpose: 'get_listed', status: String(stored) });
       }
 
       setStatus('sent');
-      trackEvent('Operator Request Sent', { purpose });
+      trackEvent('Operator Request Sent', { purpose: 'get_listed' });
     } catch {
       setStatus('idle');
       setError('Your request could not be sent. Please try again in a moment.');
@@ -182,165 +150,79 @@ export function OperatorRequestForm() {
   }
 
   return (
-    <div className="flex flex-col gap-5">
-      <fieldset>
-        <legend className="mb-2 text-sm font-medium">What do you need?</legend>
-        <RadioGroup
-          name="purpose"
-          value={purpose}
-          onValueChange={(value) => setPurpose(value as Purpose)}
-          className="grid gap-2 sm:grid-cols-2"
-        >
-          {PURPOSES.map((option) => (
-            <label
-              key={option.id}
-              className={`flex cursor-pointer flex-col gap-0.5 rounded-lg border p-3 text-sm transition-colors ${
-                purpose === option.id
-                  ? 'border-green-600 bg-green-50 dark:border-green-500 dark:bg-green-900/20'
-                  : 'border-zinc-200 hover:border-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-600'
-              }`}
-            >
-              <span className="flex items-center gap-2 font-medium">
-                <RadioGroupItem
-                  value={option.id}
-                  className="size-4 border-zinc-400 bg-white text-green-600 data-[state=checked]:border-green-600 dark:text-green-500 dark:border-zinc-500 dark:bg-zinc-900 dark:data-[state=checked]:border-green-500 [&_svg]:fill-green-600 dark:[&_svg]:fill-green-500"
-                />
-                {option.label}
-              </span>
-              <span className="pl-6 text-xs text-zinc-500 dark:text-zinc-400">{option.detail}</span>
-            </label>
-          ))}
-        </RadioGroup>
-      </fieldset>
-
-      {purpose === 'update_listing' ? (
-        <ClaimWithAccount marketSlug={marketSlug} />
-      ) : (
-        <form onSubmit={submit} className="flex flex-col gap-5">
-          <div className="grid gap-3 sm:grid-cols-2">
-            <label className="space-y-1 text-sm font-medium">
-              Name <span className="font-normal text-zinc-500">(optional)</span>
-              <Input value={name} onChange={(event) => setName(event.target.value)} maxLength={100} autoComplete="name" />
-            </label>
-            <label className="space-y-1 text-sm font-medium">
-              Market or organization <span className="font-normal text-zinc-500">(optional)</span>
-              <Input value={organization} onChange={(event) => setOrganization(event.target.value)} maxLength={120} autoComplete="organization" />
-            </label>
-          </div>
-
-          <label className="block space-y-1 text-sm font-medium">
-            Email
-            <Input
-              type="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              maxLength={254}
-              autoComplete="email"
-              placeholder="you@example.com"
-              required
-            />
-          </label>
-
-          <label className="block space-y-1 text-sm font-medium">
-            Your market and what should change
-            <Textarea
-              value={message}
-              onChange={(event) => setMessage(event.target.value)}
-              maxLength={1200}
-              rows={4}
-              // field-sizing-fixed and min-h-0 keep the four-row box (shadcn's Textarea grows with its text).
-              className="field-sizing-fixed min-h-0 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm shadow-none outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 focus-visible:border-green-600 focus-visible:ring-2 focus-visible:ring-green-600/20 dark:border-zinc-700 dark:bg-transparent"
-              placeholder="Market name, where it runs, and what you want listed or corrected. A link to the listing or your website helps."
-            />
-          </label>
-
-          <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
-            <label>
-              Website
-              {/* Honeypot: hidden from people, so it stays a plain input rather than shadcn's Input. */}
-              <input tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
-            </label>
-          </div>
-
-          <label className="flex items-start gap-2 text-sm text-zinc-700 dark:text-zinc-300">
-            <Checkbox
-              checked={contactPermission}
-              onCheckedChange={(checked) => setContactPermission(checked === true)}
-              className="mt-0.5 size-4 border-zinc-400 bg-white data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white dark:border-zinc-500 dark:bg-zinc-900 dark:data-[state=checked]:border-green-500 dark:data-[state=checked]:bg-green-600"
-            />
-            <span>You may contact me about this request using the details I provided.</span>
-          </label>
-
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">
-            Contact details and your message are sent privately by email and are not included in Google
-            or Vercel Analytics. See our{' '}
-            <Link href="/privacy" className="underline hover:text-green-700">
-              privacy policy
-            </Link>
-            .
-          </p>
-
-          {error ? (
-            <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:text-red-300">
-              {error}
-            </p>
-          ) : null}
-
-          <Button type="submit" disabled={status === 'sending'} className="w-fit bg-green-600 px-8 hover:bg-green-700">
-            {status === 'sending' ? 'Sending...' : 'Send request'}
-          </Button>
-        </form>
-      )}
-    </div>
-  );
-}
-
-/**
- * The "update my listing" path: organizers make an account, claim the
- * market, then edit the listing themselves. Every claim and edit is still
- * reviewed before it goes live.
- */
-function ClaimWithAccount({ marketSlug }: { marketSlug: string | null }) {
-  // A market's claim page signs in with an emailed code and creates the
-  // account on the way; without a market, sign-in does the same.
-  const start = marketSlug ? `/markets/${marketSlug}/claim` : '/sign-in?next=%2Fdashboard%2Fclaim';
-  const steps = [
-    'Enter your email and the code we send you. No password needed.',
-    marketSlug ? 'Tap your role at the market.' : 'Find your market and tap your role.',
-    'Start updating hours, details and photos right away. They go live once we confirm it is you.',
-  ];
-
-  return (
-    <div className="flex flex-col gap-4 rounded-xl border border-zinc-200 p-5 dark:border-zinc-700">
-      <div>
-        <p className="font-semibold">Manage your listing with an organizer account</p>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          It takes a couple of minutes. A person reviews each claim and change before it goes live.
-        </p>
+    <form onSubmit={submit} className="flex flex-col gap-5">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <label className="space-y-1 text-sm font-medium">
+          Name <span className="font-normal text-zinc-500">(optional)</span>
+          <Input value={name} onChange={(event) => setName(event.target.value)} maxLength={100} autoComplete="name" />
+        </label>
+        <label className="space-y-1 text-sm font-medium">
+          Market or organization <span className="font-normal text-zinc-500">(optional)</span>
+          <Input value={organization} onChange={(event) => setOrganization(event.target.value)} maxLength={120} autoComplete="organization" />
+        </label>
       </div>
-      <ol className="flex flex-col gap-2 text-sm text-zinc-700 dark:text-zinc-300">
-        {steps.map((step, index) => (
-          <li key={step} className="flex gap-2.5">
-            <span
-              aria-hidden="true"
-              className="flex size-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-semibold text-green-800 dark:bg-green-900/40 dark:text-green-300"
-            >
-              {index + 1}
-            </span>
-            <span>{step}</span>
-          </li>
-        ))}
-      </ol>
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Link
-          href={start}
-          onClick={() => trackEvent('Operator Account Start', { has_market: Boolean(marketSlug) })}
-          className={buttonVariants({ className: 'h-11 bg-green-700 px-6 text-white hover:bg-green-800 sm:h-9' })}
-        >
-          <UserPlus aria-hidden="true" />
-          {marketSlug ? 'Claim this listing' : 'Sign in or create an account'}
+
+      <label className="block space-y-1 text-sm font-medium">
+        Email
+        <Input
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          maxLength={254}
+          autoComplete="email"
+          placeholder="you@example.com"
+          required
+        />
+      </label>
+
+      <label className="block space-y-1 text-sm font-medium">
+        About your market
+        <Textarea
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+          maxLength={1200}
+          rows={4}
+          // field-sizing-fixed and min-h-0 keep the four-row box (shadcn's Textarea grows with its text).
+          className="field-sizing-fixed min-h-0 w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm shadow-none outline-none focus:border-green-600 focus:ring-2 focus:ring-green-600/20 focus-visible:border-green-600 focus-visible:ring-2 focus-visible:ring-green-600/20 dark:border-zinc-700 dark:bg-transparent"
+          placeholder="Market name, where and when it runs, and your website if you have one."
+        />
+      </label>
+
+      <div className="absolute -left-[10000px] top-auto h-px w-px overflow-hidden" aria-hidden="true">
+        <label>
+          Website
+          {/* Honeypot: hidden from people, so it stays a plain input rather than shadcn's Input. */}
+          <input tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
+        </label>
+      </div>
+
+      <label className="flex items-start gap-2 text-sm text-zinc-700 dark:text-zinc-300">
+        <Checkbox
+          checked={contactPermission}
+          onCheckedChange={(checked) => setContactPermission(checked === true)}
+          className="mt-0.5 size-4 border-zinc-400 bg-white data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white dark:border-zinc-500 dark:bg-zinc-900 dark:data-[state=checked]:border-green-500 dark:data-[state=checked]:bg-green-600"
+        />
+        <span>You may contact me about this request using the details I provided.</span>
+      </label>
+
+      <p className="text-xs text-zinc-500 dark:text-zinc-400">
+        Contact details and your message are sent privately by email and are not included in Google
+        or Vercel Analytics. See our{' '}
+        <Link href="/privacy" className="underline hover:text-green-700">
+          privacy policy
         </Link>
-      </div>
-    </div>
+        .
+      </p>
+
+      {error ? (
+        <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/30 dark:text-red-300">
+          {error}
+        </p>
+      ) : null}
+
+      <Button type="submit" disabled={status === 'sending'} className="w-fit bg-green-600 px-8 hover:bg-green-700">
+        {status === 'sending' ? 'Sending...' : 'Send request'}
+      </Button>
+    </form>
   );
 }

@@ -18,10 +18,12 @@ import {
   phoneSchema,
   socialProfileSchema,
 } from './listingEdits.ts';
+import { UPLOAD_PHOTO_TYPES, isHeicPathname } from './photoTypes.ts';
 
 export const MAX_VENDOR_PHOTOS = 7;
 export const MAX_VENDOR_PHOTO_BYTES = 8 * 1024 * 1024;
-export const VENDOR_PHOTO_CONTENT_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+/** HEIC/HEIF uploads are converted to JPEG by `/api/vendor/photos/convert` before they join a profile. */
+export const VENDOR_PHOTO_CONTENT_TYPES = UPLOAD_PHOTO_TYPES;
 
 export const MAX_DOCUMENT_BYTES = 10 * 1024 * 1024;
 export const DOCUMENT_CONTENT_TYPES = ['application/pdf', 'image/jpeg', 'image/png'];
@@ -42,13 +44,16 @@ const optionalEmail = z
   .optional();
 
 /** A photo already uploaded to the public Blob store, under `vendors/<vendor id>/`. */
-export const vendorPhotoSchema = z.object({
-  url: z.string().url().max(1000),
-  pathname: z.string().min(1).max(500),
-  width: z.number().int().positive().max(20000).optional(),
-  height: z.number().int().positive().max(20000).optional(),
-  alt: line(200),
-});
+export const vendorPhotoSchema = z
+  .object({
+    url: z.string().url().max(1000),
+    pathname: z.string().min(1).max(500),
+    width: z.number().int().positive().max(20000).optional(),
+    height: z.number().int().positive().max(20000).optional(),
+    alt: line(200),
+  })
+  // An unconverted HEIC original: browsers cannot show it, so it never joins a profile.
+  .refine((photo) => !isHeicPathname(photo.pathname), { message: 'Upload this photo again' });
 
 export const vendorProfileSchema = z
   .object({

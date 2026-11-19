@@ -28,7 +28,7 @@ export interface DashboardNavItem {
   label: string;
   /** A rendered lucide icon. Without one, the label's first letter stands in. */
   icon?: ReactNode;
-  /** Active only on `href` itself. Otherwise `href` and anything below it. */
+  /** Active only on `href` itself (and `also`). Otherwise `href` and anything below it. */
   exact?: boolean;
   /** More path prefixes that count as this item ("/admin/claims" for the review queue). */
   also?: string[];
@@ -67,8 +67,10 @@ export interface DashboardNavProps {
 }
 
 function isActive(item: DashboardNavItem, path: string): boolean {
-  if (item.exact) return path === item.href;
-  return [item.href, ...(item.also ?? [])].some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
+  const under = (prefix: string) => path === prefix || path.startsWith(`${prefix}/`);
+  // `exact` limits `href` to itself; `also` prefixes still count.
+  if (item.exact) return path === item.href || (item.also ?? []).some(under);
+  return [item.href, ...(item.also ?? [])].some(under);
 }
 
 function initials(name: string, email: string): string {
