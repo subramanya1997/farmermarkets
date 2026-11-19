@@ -64,6 +64,8 @@ export interface MarketSeoRecord extends GeoRecord {
   wic?: boolean;
   fmnp?: boolean;
   sfmnp?: boolean;
+  /** Vendors with an approved account at this market; they count as a vendor list. */
+  vendor_profiles?: readonly unknown[] | null;
 }
 
 /**
@@ -203,7 +205,12 @@ function visitTopics(market: MarketSeoRecord): string[] {
   const topics = ['Hours'];
   if (firstParty.access?.parking?.availability) topics.push('Parking');
   else if (firstParty.access?.transit?.length) topics.push('Directions');
-  if (firstParty.vendors?.directory_url || firstParty.vendors?.count || firstParty.vendors?.roster?.length) topics.push('Vendors');
+  if (
+    firstParty.vendors?.directory_url ||
+    firstParty.vendors?.count ||
+    firstParty.vendors?.roster?.length ||
+    market.vendor_profiles?.length
+  ) topics.push('Vendors');
   return topics;
 }
 
@@ -1129,4 +1136,70 @@ export function marketAddressParts(market: MarketSeoRecord): MarketAddressParts 
     : undefined;
 
   return { street: location.street, cityLabel, postalCode };
+}
+
+/* ------------------------------------------------------------------ *
+ * Vendor pages (`/vendors/{slug}`)
+ * ------------------------------------------------------------------ */
+
+/** "Green Gold Farm, farmers market vendor", shortened until it fits. */
+export function vendorTitle(rawName: string): string {
+  const name = clean(rawName);
+  const candidates = [`${name}, farmers market vendor`, `${name}, market vendor`, name];
+  return candidates.find((candidate) => candidate.length <= TITLE_MAX_LENGTH) ?? truncateOnWordBoundary(name, TITLE_MAX_LENGTH);
+}
+
+export interface VendorDescriptionInput {
+  name: string;
+  /** Already labeled and capitalized as on the page: "Fruits and vegetables", "Sourdough". */
+  sells: readonly string[];
+  /** The markets the vendor is approved at, in page order. */
+  markets: readonly { name: string; place?: string }[];
+}
+
+function joinAnd(parts: readonly string[]): string {
+  if (parts.length <= 1) return parts[0] ?? '';
+  return `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
+}
+
+/**
+ * Meta description for a vendor page: what they sell, then where to find
+ * them. Every clause comes from the record; a missing one is dropped, never
+ * left as an empty slot.
+ */
+export function vendorDescription({ name: rawName, sells, markets }: VendorDescriptionInput): string {
+  const name = clean(rawName);
+  const goods = sells.map((item) => clean(item)).filter(Boolean);
+  const places = markets
+    .map((market) => ({ name: displayName(market.name), place: clean(market.place) }))
+    .filter((market) => market.name);
+
+  // Without a market, the opening itself says what the business is.
+  const from = places.length ? `${name}.` : `${name}, a farmers market vendor.`;
+  const openings: string[] = [];
+  for (let count = Math.min(goods.length, 4); count >= 1; count -= 1) {
+    const list = goods.slice(0, count).map((item, index) => (index === 0 ? item : item.charAt(0).toLowerCase() + item.slice(1)));
+    openings.push(`${joinAnd(list)} from ${from}`);
+  }
+  openings.push(`${name} sells at farmers markets.`);
+
+  const whereOptions: string[] = [];
+  if (places.length === 1) {
+    const [only] = places;
+    if (only.place) whereOptions.push(`Find them at ${only.name} in ${only.place}.`);
+    whereOptions.push(`Find them at ${only.name}.`);
+  } else if (places.length > 1) {
+    const [first] = places;
+    const others = places.length - 1;
+    whereOptions.push(`Find them at ${first.name} and ${others} more ${others === 1 ? 'market' : 'markets'}.`);
+    whereOptions.push(`Find them at ${places.length} farmers markets.`);
+  } else {
+    whereOptions.push('');
+  }
+
+  for (const opening of openings) {
+    const where = whereOptions.find((sentence) => `${opening} ${sentence}`.length <= DESCRIPTION_MAX_LENGTH);
+    if (where !== undefined) return `${opening} ${where}`.replace(/\s+/g, ' ').trim();
+  }
+  return truncateOnWordBoundary(openings[openings.length - 1], DESCRIPTION_MAX_LENGTH);
 }

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { compactPublishedHours, eventDateBlock, eventDisplayState, eventSpan, marketHighlights, publishedEventDate, publishedLocalHours, rosterPeriodHasEnded, rosterSubhead, safeHighlightUrl, vendorHasDetails } from './marketHighlights.ts';
+import { compactPublishedHours, eventDateBlock, eventDisplayState, eventSpan, marketHighlights, mergeMarketVendors, publishedEventDate, publishedLocalHours, rosterPeriodHasEnded, rosterSubhead, safeHighlightUrl, splitVisibleVendors, vendorHasDetails } from './marketHighlights.ts';
 
 test('published date-only events stay on the stated day across server time zones', () => {
   const original = process.env.TZ;
@@ -140,4 +140,51 @@ test('event rows get a date block, a span for multi-day events and short clocks'
   assert.equal(compactPublishedHours('5 PM - 8 PM'), '5-8pm');
   assert.equal(compactPublishedHours('All day'), 'All day');
   assert.equal(compactPublishedHours(''), undefined);
+});
+
+test('an account vendor hides the typed roster entry for the same business', () => {
+  const evidence = { source_ids: ['official'], verified_at: '2026-09-30' };
+  const accounts = [{ slug: 'green-and-gold-farm', name: 'Green & Gold Farm' }];
+  const result = marketHighlights({
+    vendors: {
+      roster: [
+        { id: 'gg', value: { name: 'The Green and Gold Farms, LLC' }, ...evidence },
+        { id: 'tp', value: { name: 'Twin Pines Farm' }, ...evidence },
+      ],
+    },
+  }, new Date('2026-10-01T12:00:00Z'), accounts);
+  assert.deepEqual(result.accounts.map((vendor) => vendor.slug), ['green-and-gold-farm']);
+  assert.deepEqual(result.roster.map((item) => item.id), ['tp']);
+  assert.equal(result.typedRosterCount, 2);
+});
+
+test('a market with only account vendors still has a vendor list', () => {
+  const result = marketHighlights(undefined, new Date('2026-10-01T12:00:00Z'), [{ name: 'Hill Bakery' }]);
+  assert.equal(result.events.length, 0);
+  assert.equal(result.programs.length, 0);
+  assert.equal(result.roster.length, 0);
+  assert.equal(result.typedRosterCount, 0);
+  assert.deepEqual(result.accounts, [{ name: 'Hill Bakery' }]);
+  assert.deepEqual(marketHighlights(undefined).accounts, [], 'no accounts by default');
+});
+
+test('account vendors with a blank name or the same name twice are dropped', () => {
+  const { accounts } = mergeMarketVendors([{ name: '  ' }, { name: 'Hill Bakery' }, { name: 'hill bakery' }], []);
+  assert.deepEqual(accounts, [{ name: 'Hill Bakery' }]);
+});
+
+test('the visible vendor count takes account vendors first', () => {
+  const accounts = ['a', 'b', 'c'];
+  const roster = ['r1', 'r2', 'r3', 'r4'];
+  assert.deepEqual(splitVisibleVendors(accounts, roster, 5), {
+    visible: { accounts: ['a', 'b', 'c'], roster: ['r1', 'r2'] },
+    hidden: { accounts: [], roster: ['r3', 'r4'] },
+    hiddenCount: 2,
+  });
+  assert.deepEqual(splitVisibleVendors(accounts, roster, 2), {
+    visible: { accounts: ['a', 'b'], roster: [] },
+    hidden: { accounts: ['c'], roster: ['r1', 'r2', 'r3', 'r4'] },
+    hiddenCount: 5,
+  });
+  assert.equal(splitVisibleVendors(accounts, [], 12).hiddenCount, 0);
 });

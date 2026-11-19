@@ -11,6 +11,7 @@ import {
   type DatasetPageData,
 } from '@/lib/datasetPage';
 import { SITE_FRAME_GUTTER } from '@/lib/ui';
+import { jsonLdHtml } from '@/lib/jsonLd';
 
 export const revalidate = 86400;
 
@@ -145,7 +146,7 @@ export default async function AboutTheDataPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema(data)) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(datasetSchema(data)) }}
       />
 
       <div className="flex min-h-[calc(100vh-4rem)] flex-col">

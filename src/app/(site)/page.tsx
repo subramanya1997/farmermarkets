@@ -8,6 +8,7 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import type { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { SITE_FRAME } from "@/lib/ui";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 // Statically rendered and revalidated daily. The dataset is a versioned
 // snapshot in the repo, so a 24h window is well inside its update cadence.
@@ -68,7 +69,7 @@ export default async function Home() {
       <>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(websiteSchema) }}
         />
         <div className="flex flex-col min-h-[calc(100vh-4rem)]">
           {/* Compact hero: what the site is, in one line, then straight into

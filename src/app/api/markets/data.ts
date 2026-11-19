@@ -12,6 +12,9 @@ import { mergeEnrichment } from '@/lib/enrichment';
 import { marketHours, marketWeekdays } from '@/lib/seo';
 import { cardDates } from '@/lib/marketDisplay';
 import { effectiveDistance, listingStrength, marketRichness } from '@/lib/marketRichness';
+// Type only: erased at compile time, so the `server-only` module is never
+// bundled into the client components that read `FarmerMarket`.
+import type { MarketVendorCard } from '@/lib/vendorLayer';
 import marketPopularity from '../../../../data/market-popularity.json';
 export { mergeEnrichment };
 
@@ -114,6 +117,13 @@ export interface FarmerMarket {
   cover_photo?: { url: string; width?: number; height?: number; alt?: string };
   /** Slim API only: the season as a card shows it (see `cardDates`); empty when none fits. */
   season_label?: string;
+  /**
+   * Vendors with an approved account and an approved application here
+   * (src/lib/vendorLayer.ts). Kept apart from `first_party.vendors.roster`:
+   * that roster is what the organizer typed, and the listing editor prefills
+   * from it.
+   */
+  vendor_profiles?: MarketVendorCard[];
   provenance?: {
     official: boolean;
     source_id: string;
@@ -564,14 +574,33 @@ export function rawFromMarket(market: FarmerMarket): RawMarketData {
  */
 async function withOrganizerLayer(market: FarmerMarket | null | undefined): Promise<FarmerMarket | null> {
   if (!market) return null;
+  let layered = market;
   try {
     const { applyPublishedLayer } = await import('@/lib/marketOverrides');
-    return await applyPublishedLayer(market, {
+    layered = await applyPublishedLayer(market, {
       toRaw: rawFromMarket,
       fromRaw: (raw) => scoreMarket(mapRawMarket(raw, 0)),
     });
   } catch (error) {
     if (process.env.NODE_ENV !== 'test') console.error('Organizer layer unavailable:', error);
+  }
+  // After the organizer layer, never before: that layer rebuilds the record
+  // from its raw form, which has no place for account vendors.
+  return withVendorCards(layered);
+}
+
+/**
+ * Attaches the market's published account vendors, for every market that
+ * has any (with or without an organizer). Same contract as the organizer
+ * layer: a failure to load them leaves the market as it was.
+ */
+async function withVendorCards(market: FarmerMarket): Promise<FarmerMarket> {
+  try {
+    const { getMarketVendorCards } = await import('@/lib/vendorLayer');
+    const cards = await getMarketVendorCards(market.id);
+    return cards.length ? { ...market, vendor_profiles: cards } : market;
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'test') console.error('Vendor layer unavailable:', error);
     return market;
   }
 }

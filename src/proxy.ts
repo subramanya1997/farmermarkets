@@ -1,8 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
 
-/** Organizer and admin areas: a visitor with no session cookie goes straight to sign-in. */
-const SIGNED_IN_AREAS = /^\/(dashboard|admin)(\/|$)/;
+/**
+ * Organizer, vendor and admin areas: a visitor with no session cookie goes
+ * straight to sign-in. `/vendor` is the signed-in area; public vendor pages
+ * live under `/vendors/` and are not matched.
+ */
+const SIGNED_IN_AREAS = /^\/(dashboard|admin|vendor)(\/|$)/;
 
 /**
  * URL normalization: lowercase paths, no trailing slash.

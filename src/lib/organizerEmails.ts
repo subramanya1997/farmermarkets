@@ -27,6 +27,8 @@ export function escapeHtml(value: string): string {
 }
 
 const FOOTER = 'You are getting this because someone used this address for a market organizer account on Farmer Markets.';
+/** The sign-in code goes to organizers and vendors alike. */
+const SIGN_IN_FOOTER = 'You are getting this because someone used this address to sign in to Farmer Markets.';
 
 export function verificationEmail(url: string): EmailContent {
   return {
@@ -51,7 +53,7 @@ export function signInCodeEmail(code: string): EmailContent {
       body: `<p ${EMAIL_P}>Enter this code on the page where you asked for it:</p>
 <p style="margin:0 0 16px;font-size:32px;font-weight:700;letter-spacing:8px;color:#15803d;font-family:ui-monospace,Menlo,monospace">${escapeHtml(code)}</p>
 <p ${EMAIL_P}>The code works for 10 minutes. If you did not ask for it, you can ignore this email.</p>`,
-      footer: FOOTER,
+      footer: SIGN_IN_FOOTER,
     }),
   };
 }

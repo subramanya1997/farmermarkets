@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AnalyticsProviders } from "@/components/AnalyticsProviders";
 import { SITE_URL, absoluteUrl, organizationSameAs } from "@/lib/site";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -144,7 +145,7 @@ export default function RootLayout({
       <body className={`${inter.className} h-full`}>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(organizationSchema) }}
         />
         {/* No visible frame here. Each route group brings its own:
             (site) the public header, footer and visitor prompts; (app) the

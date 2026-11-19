@@ -9,7 +9,7 @@ import { Muted, Panel, TimeAgo } from '@/components/admin/bits';
 import { PhotoReviewCard } from '@/components/admin/PhotoReviewCard';
 import { LegacyHandledButton } from '@/components/admin/LegacyHandledButton';
 import { formatTimestamp, placeLabel, roleLabel, timeAgo } from '@/components/admin/format';
-import { cachedReviewQueue } from '../_lib/queue';
+import { cachedReviewQueue, cachedVendorQueue } from '../_lib/queue';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,13 +23,16 @@ const DONE_MESSAGES: Record<string, string> = {
   'claim-rejected': 'Claim rejected.',
   'change-published': 'Published. The live page updates within a minute.',
   'change-rejected': 'Update rejected.',
+  'vendor-published': 'Vendor profile published. The vendor has been emailed.',
+  'vendor-rejected': 'Vendor profile rejected. The vendor has been emailed your note.',
 };
 
 type Queue = Awaited<ReturnType<typeof reviewQueue>>;
+type VendorQueue = Awaited<ReturnType<typeof cachedVendorQueue>>;
 
 export default async function AdminQueuePage({ searchParams }: { searchParams: Promise<{ done?: string | string[] }> }) {
   await requireAdmin();
-  const [{ done }, queue] = await Promise.all([searchParams, cachedReviewQueue()]);
+  const [{ done }, queue, vendorQueue] = await Promise.all([searchParams, cachedReviewQueue(), cachedVendorQueue()]);
   const notice = typeof done === 'string' ? DONE_MESSAGES[done] : undefined;
 
   const legacyIds = queue.legacyClaims.map((row) => row.marketId).filter((id): id is string => Boolean(id));
@@ -40,6 +43,8 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
     { id: 'updates', label: 'Listing updates', count: queue.changes.length },
     { id: 'photos', label: 'Photos', count: queue.photos.length },
     { id: 'older', label: 'Older contact-form claims', count: queue.legacyClaims.length },
+    { id: 'vendor-profiles', label: 'Vendor profiles', count: vendorQueue.profiles.length },
+    { id: 'vendor-applications', label: 'Vendor applications', count: vendorQueue.applications.length },
   ];
   const waiting = counts.reduce((sum, item) => sum + item.count, 0);
 
@@ -67,7 +72,7 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
         </div>
       ) : null}
 
-      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-zinc-200 sm:grid-cols-4 dark:bg-zinc-800">
+      <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-zinc-200 sm:grid-cols-3 lg:grid-cols-6 dark:bg-zinc-800">
         {counts.map((item) => (
           <a key={item.id} href={`#${item.id}`} className="bg-white px-4 py-3 hover:bg-zinc-50 dark:bg-zinc-900 dark:hover:bg-zinc-800/60">
             <dt className="text-xs text-zinc-500 dark:text-zinc-400">{item.label}</dt>
@@ -82,7 +87,7 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
         <div className="flex flex-col items-center gap-2 rounded-lg border border-dashed bg-white px-6 py-14 text-center dark:bg-zinc-900">
           <Inbox className="size-8 text-zinc-400" aria-hidden="true" />
           <p className="font-medium">Nothing is waiting for review</p>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">New claims, listing updates and photos show up here.</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">New claims, listing updates, photos and vendor reviews show up here.</p>
         </div>
       ) : (
         <>
@@ -90,6 +95,8 @@ export default async function AdminQueuePage({ searchParams }: { searchParams: P
           <ChangesSection queue={queue} />
           <PhotosSection queue={queue} />
           <LegacySection rows={queue.legacyClaims} markets={legacyMarkets} />
+          <VendorProfilesSection queue={vendorQueue} />
+          <VendorApplicationsSection queue={vendorQueue} />
         </>
       )}
     </div>
@@ -282,5 +289,81 @@ function LegacySection({ rows, markets }: { rows: Queue['legacyClaims']; markets
         </ul>
       )}
     </Panel>
+  );
+}
+
+function VendorProfilesSection({ queue }: { queue: VendorQueue }) {
+  return (
+    <Panel id="vendor-profiles" title={`Vendor profiles (${queue.profiles.length})`}>
+      {queue.profiles.length === 0 ? (
+        <Empty>No vendor profiles waiting.</Empty>
+      ) : (
+        <ul className="divide-y">
+          {queue.profiles.map((profile) => (
+            <li
+              key={profile.id}
+              className="grid items-center gap-x-4 gap-y-1.5 px-4 py-3 text-sm md:grid-cols-[minmax(0,1.3fr)_minmax(0,1.3fr)_6rem_6.5rem_auto]"
+            >
+              <div className="min-w-0 truncate font-medium">{profile.name}</div>
+              <div className="min-w-0 truncate text-zinc-700 dark:text-zinc-300">{profile.email}</div>
+              <div className="text-zinc-700 dark:text-zinc-300">{profile.firstTime ? 'New vendor' : 'Update'}</div>
+              {profile.submittedAt ? (
+                <TimeAgo date={profile.submittedAt} className="text-xs text-zinc-500 dark:text-zinc-400" />
+              ) : (
+                <span className="text-xs text-zinc-500 dark:text-zinc-400">Unknown</span>
+              )}
+              <ReviewLink href={`/admin/vendors/${profile.id}`} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </Panel>
+  );
+}
+
+function VendorApplicationsSection({ queue }: { queue: VendorQueue }) {
+  return (
+    <Panel id="vendor-applications" title={`Vendor applications (${queue.applications.length})`}>
+      <p className="border-b px-4 py-2 text-xs text-zinc-500 dark:text-zinc-400">
+        These markets have no organizer on the site, so the decision is yours.
+      </p>
+      {queue.applications.length === 0 ? (
+        <Empty>No vendor applications waiting.</Empty>
+      ) : (
+        <ul className="divide-y">
+          {queue.applications.map((application) => (
+            <li
+              key={application.id}
+              className="grid items-center gap-x-4 gap-y-1.5 px-4 py-3 text-sm md:grid-cols-[minmax(0,1.3fr)_minmax(0,1.5fr)_6.5rem_auto]"
+            >
+              <div className="min-w-0 truncate font-medium">{application.vendorName || 'No name yet'}</div>
+              <div className="min-w-0">
+                {application.market ? (
+                  <Link href={`/markets/${application.market.slug}`} className="block truncate hover:underline">
+                    {application.market.name}
+                  </Link>
+                ) : (
+                  <span className="text-zinc-500 dark:text-zinc-400">Unknown market</span>
+                )}
+              </div>
+              <TimeAgo date={application.createdAt} className="text-xs text-zinc-500 dark:text-zinc-400" />
+              <ReviewLink href={`/admin/vendors/${application.vendorId}`} />
+            </li>
+          ))}
+        </ul>
+      )}
+    </Panel>
+  );
+}
+
+function ReviewLink({ href }: { href: string }) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex min-h-11 items-center gap-1 justify-self-start text-sm font-medium text-green-700 hover:underline md:min-h-0 md:justify-self-end dark:text-green-400"
+    >
+      Review
+      <ArrowRight className="size-3.5" aria-hidden="true" />
+    </Link>
   );
 }
