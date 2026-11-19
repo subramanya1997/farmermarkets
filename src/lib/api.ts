@@ -99,6 +99,17 @@ export interface FarmerMarket {
   cover_photo?: { url: string; width?: number; height?: number; alt?: string };
   /** Slim API only: the season as a card shows it (see `cardDates`); empty when none fits. */
   season_label?: string;
+  /** Vendors with an approved profile that this market approved (src/lib/vendorLayer.ts). */
+  vendor_profiles?: {
+    slug: string;
+    name: string;
+    products: string[];
+    items: string[];
+    cover?: { url: string; width?: number; height?: number; alt?: string };
+    days: string[];
+    stall_note?: string;
+    confirmed: boolean;
+  }[];
   provenance?: {
     official: boolean;
     source_id: string;

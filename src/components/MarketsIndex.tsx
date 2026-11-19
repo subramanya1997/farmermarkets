@@ -10,6 +10,7 @@ import { getStateHubSummaries } from '@/lib/statePage';
 import { getTopicSummaries } from '@/lib/topicPage';
 import { absoluteUrl } from '@/lib/site';
 import { SITE_FRAME } from "@/lib/ui";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 interface MarketsIndexProps {
   page: number;
@@ -60,7 +61,7 @@ export async function MarketsIndex({ page }: MarketsIndexProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(collectionSchema) }}
       />
       <div className="min-h-[calc(100vh-4rem)]">
         {isFirst ? (

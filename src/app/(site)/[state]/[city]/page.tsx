@@ -16,6 +16,7 @@ import { SITE_FRAME } from "@/lib/ui";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { CityPromptContext } from "@/components/CityPromptContext";
 import { PageQuestion } from "@/components/PageQuestion";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 export const revalidate = 86400;
 // Only the cities in the geo index exist; see the note on the state hub for
@@ -171,7 +172,7 @@ export default async function CityPage({ params }: CityPageProps) {
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(node) }}
         />
       ))}
 

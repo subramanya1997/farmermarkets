@@ -1012,16 +1012,24 @@ if (!reachable) {
         // public directory, which is a decision, not a tidy-up — see the
         // rationale in `src/app/robots.ts` and `docs/seo-decisions.md`. The
         // organizer account pages are private (sign-in, dashboard, admin) and
-        // noindex, so they are the one deliberate addition.
+        // noindex, so they are the one deliberate addition. `/vendor/` is the
+        // signed-in vendor area; it keeps its trailing slash because rules
+        // match by prefix and `/vendor` would also block public `/vendors/`.
         assert.deepEqual(disallowed, [
           '/api/*',
           '/dashboard',
           '/admin',
+          '/vendor/',
           '/sign-in',
           '/sign-up',
           '/forgot-password',
           '/reset-password',
         ]);
+      });
+
+      check(group, 'leaves public vendor pages crawlable', () => {
+        const disallowed = [...body.matchAll(/^\s*Disallow:\s*(\S*)\s*$/gim)].map((m) => m[1]).filter(Boolean);
+        assert.ok(!disallowed.some((rule) => '/vendors/some-farm'.startsWith(rule.replace(/\*$/, ''))));
       });
 
       check(group, 'singles out no crawler', () => {

@@ -176,7 +176,8 @@ The app can run locally without required environment variables. Server-side API 
 | `BETTER_AUTH_SECRET` | Signs organizer session cookies. Required wherever sign-in is used; generate with `openssl rand -base64 32`. |
 | `BETTER_AUTH_URL` | Public origin for auth links in emails (`https://www.farmermarkets.app` in production, `http://localhost:3000` locally). Preview deployments use their own URL when unset. |
 | `ADMIN_EMAILS` | Comma-separated verified emails allowed into `/admin`; they also get the review alerts. Falls back to `DISCOVERY_NOTIFICATION_EMAIL`. |
-| `BLOB_READ_WRITE_TOKEN` | Vercel Blob store `farmermarkets-photos`, for organizer photo uploads. Added by the Vercel Blob integration. |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob store `farmermarkets-photos`, for organizer and vendor photo uploads. Added by the Vercel Blob integration. |
+| `VENDOR_DOCS_READ_WRITE_TOKEN` | Private Vercel Blob store `farmermarkets-vendor-docs`, for vendor documents. Connect the store to the project with the custom prefix `VENDOR_DOCS`. Without it, document upload says it is not available yet. |
 | `ORGANIZER_EMAIL_LOG_ONLY` | Set to `1` locally to print organizer emails (verification and reset links included) to the server console instead of sending them. |
 | `INDEXNOW_KEY` | Overrides the committed IndexNow key during a rotation. |
 | `INDEXNOW_DISABLE` | Set to `1` to skip all IndexNow submissions (CI, local runs). |
@@ -327,6 +328,18 @@ Nothing an organizer sends goes live on its own:
 Admins can edit any market from `/admin/markets/[slug]` with the same editor plus admin-only sections (name, street address, ZIP, location note, map pin, hide map). Admin edits publish immediately and leave an approved history row; "Reset to original data" removes a section from `market_overrides`. City and state are not editable because they decide which city page a market belongs on. A listing shows "kept up to date by the market organizer" only when the market has a verified organizer; otherwise the footer credits Farmer Markets.
 
 Bulk views (`/markets`, topic pages, near-me, sitemap, `llms.txt`) read the dataset directly and pick up organizer edits at the next deploy, when the build reads every published layer in one query. Every page, server action and route checks the session itself (`requireOrganizer`, `requireAdmin` in `src/lib/organizer.ts`); `src/proxy.ts` only redirects visitors with no session cookie.
+
+## Vendor accounts
+
+Vendors (farms, bakers, makers) sign in with the same emailed code and work in `/vendor`. One account has one vendor business (`vendors`), and the same account can also manage markets as an organizer.
+
+1. **Profile.** The vendor fills in a `VendorProfile` (`src/lib/vendorProfile.ts`: name, what they sell, about, links, public contact, up to 7 photos). Sending it stores it in `vendors.proposed` and emails `ADMIN_EMAILS`. An admin compares before and after on `/admin/vendors/[id]`; approving copies it to `vendors.profile`, which is the only thing public pages read. A live profile stays up while a change waits. The page address `/vendors/<slug>` is set at the first approval and never moves.
+2. **Markets.** Picking a market creates a `vendor_applications` row. The market's organizer decides it on `/dashboard/markets/[slug]/vendors`; a market with no organizer on the site falls to `/admin/review`. Admins can always decide. An organizer only sees an application once the vendor's profile has been approved, so strangers cannot reach organizers. An organizer's approval shows "Confirmed by the market" publicly.
+3. **Documents.** Each organizer sets a checklist for their market (`market_vendor_checklists`). Vendors upload a file once to their locker (`vendor_documents`) and attach it wherever it is asked for (`vendor_document_submissions`); the organizer approves or denies each one with a note. Files live in a separate private Blob store and are only served by `/api/vendor/documents/[id]`, to the vendor, an admin, or an organizer of a market the document was sent to.
+4. **Public pages.** `src/lib/vendorLayer.ts` reads every approved vendor once per render (once per build). Market pages show account vendors first in the Vendors section and hide an organizer-typed entry with the same name (`mergeVendorRoster` in `src/lib/vendorRules.ts`). A vendor is listed at a market only when the profile is approved, not taken down, and that market's application is approved.
+5. **Outreach.** `/admin/vendors` lists every vendor with a CSV download and an invite form; `/admin/vendors/announce` emails vendors through Resend with a one-click unsubscribe; the outreach bot can set vendors up through `POST /api/bot/vendor-access` (`docs/vendor-bot.md`).
+
+The rules (who decides, who may open a document, when a vendor is public) are pure functions in `src/lib/vendorRules.ts` with tests (`bun run test:vendors`). `src/lib/vendors.ts` holds the database logic: every action loads rows by id and owner, and every decision starts with a guarded update because the neon-http driver has no interactive transactions.
 
 ## Project Structure
 

@@ -1,5 +1,6 @@
 import type { MarketFirstPartyFacts } from './enrichment.ts';
 import { clean } from './geo.ts';
+import { mergeVendorRoster } from './vendorRules.ts';
 
 /** Only absolute public web links are suitable for these source-backed cards. */
 export function safeHighlightUrl(value?: string | null): string | undefined {
@@ -132,7 +133,12 @@ type RosterItem = NonNullable<NonNullable<MarketFirstPartyFacts['vendors']>['ros
  * state), and an attendance note repeated across the roster says something
  * about the list, not the vendor, so it is dropped from every card.
  */
-export function marketHighlights(firstParty?: MarketFirstPartyFacts, now = new Date()) {
+export function marketHighlights<A extends { name: string } = { name: string }>(
+  firstParty?: MarketFirstPartyFacts,
+  now = new Date(),
+  /** Vendors with an approved account here (`FarmerMarket.vendor_profiles`). */
+  accountVendors: readonly A[] = [],
+) {
   const events = (firstParty?.events ?? []).filter(
     (item) => clean(item.value.name) && eventDisplayState(item.value, now) !== 'Past event'
   );
@@ -156,7 +162,45 @@ export function marketHighlights(firstParty?: MarketFirstPartyFacts, now = new D
     const href = safeHighlightUrl(link?.fact.value);
     return link && href ? [{ ...link, href }] : [];
   });
-  return { events, programs, roster, vendorLinks, attendanceIsDynamic: vendors?.attendance_is_dynamic?.value === true };
+  const merged = mergeMarketVendors(accountVendors, roster);
+  return {
+    events,
+    programs,
+    accounts: merged.accounts,
+    roster: merged.roster,
+    /**
+     * The typed roster before the merge. The vendor directory links sit in
+     * the Vendors heading only when there is one; otherwise the facts block's
+     * contact row carries them (src/components/MarketFacts.tsx).
+     */
+    typedRosterCount: roster.length,
+    vendorLinks,
+    attendanceIsDynamic: vendors?.attendance_is_dynamic?.value === true,
+  };
+}
+
+/**
+ * One vendor list for a market: account vendors first, then the typed
+ * roster without the names an account already covers.
+ */
+export function mergeMarketVendors<A extends { name: string }>(
+  accounts: readonly A[],
+  roster: readonly RosterItem[],
+): { accounts: A[]; roster: RosterItem[] } {
+  return mergeVendorRoster(accounts.filter((vendor) => clean(vendor.name)), roster, (item) => clean(item.value.name));
+}
+
+/**
+ * The first `limit` vendors stay on screen and the rest fold away, counting
+ * account vendors first.
+ */
+export function splitVisibleVendors<A, R>(accounts: readonly A[], roster: readonly R[], limit: number) {
+  const rosterRoom = Math.max(0, limit - accounts.length);
+  return {
+    visible: { accounts: accounts.slice(0, limit), roster: roster.slice(0, rosterRoom) },
+    hidden: { accounts: accounts.slice(limit), roster: roster.slice(rosterRoom) },
+    hiddenCount: Math.max(0, accounts.length - limit) + Math.max(0, roster.length - rosterRoom),
+  };
 }
 
 /** A roster entry with something besides its name earns a card; the rest are chips. */

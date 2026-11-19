@@ -7,6 +7,7 @@ import { absoluteUrl } from "@/lib/site";
 import { SITE_FRAME } from "@/lib/ui";
 import { displaySerif } from "@/lib/fonts";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 // Same static/ISR posture as the rest of the site; posts are code, so a new
 // deploy is what publishes one.
@@ -84,7 +85,7 @@ export default function BlogIndexPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdHtml(blogSchema) }}
       />
       <div className="min-h-[calc(100vh-4rem)] bg-white dark:bg-zinc-950">
         {/* Masthead */}

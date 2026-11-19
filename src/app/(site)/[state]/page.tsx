@@ -11,6 +11,7 @@ import { getAllStateParams, getStatePageData, type StatePageData, type StateWeek
 import { topicPath } from '@/lib/topicPage';
 import { absoluteUrl } from '@/lib/site';
 import { SITE_FRAME } from "@/lib/ui";
+import { jsonLdHtml } from "@/lib/jsonLd";
 
 export const revalidate = 86400;
 // This segment sits at the site root, so it also catches every mistyped or
@@ -210,7 +211,7 @@ export default async function StateHubPage({ params }: StatePageProps) {
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdHtml(node) }}
         />
       ))}
 

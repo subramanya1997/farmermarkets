@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { Eye, Info, LayoutDashboard, LifeBuoy, Plus, Settings } from 'lucide-react';
+import { Eye, Info, LayoutDashboard, LifeBuoy, Plus, Settings, Store } from 'lucide-react';
 import { isAdmin, organizerPreviewMarket, requireOrganizer } from '@/lib/organizer';
+import { getVendorForUser, pendingApplicationCounts } from '@/lib/vendors';
 import { Button } from '@/components/ui/button';
 import { endOrganizerPreviewAction } from './actions';
 import { DashboardShell, type DashboardArea, type DashboardNavGroup, type DashboardNavItem } from '@/components/dashboard/DashboardShell';
@@ -16,7 +17,13 @@ export const metadata: Metadata = {
 
 export default async function DashboardLayout({ children }: { children: ReactNode }) {
   const user = await requireOrganizer('/dashboard');
-  const [markets, preview] = await Promise.all([cachedOrganizerOverview(user), organizerPreviewMarket(user)]);
+  const [markets, preview, vendor] = await Promise.all([
+    cachedOrganizerOverview(user),
+    organizerPreviewMarket(user),
+    getVendorForUser(user.id),
+  ]);
+  // Vendor applications waiting on each market this account manages.
+  const waiting = await pendingApplicationCounts(markets.map(({ market }) => market.id));
 
   const groups: DashboardNavGroup[] = [
     {
@@ -30,7 +37,18 @@ export default async function DashboardLayout({ children }: { children: ReactNod
       items: markets.map(({ market, pending }) => ({
         href: `/dashboard/markets/${market.slug}`,
         label: market.name,
+        // The vendor desk below is its own entry, so only the listing itself lights this one.
+        exact: true,
         dot: pending ? 'Update waiting for review' : undefined,
+      })),
+    },
+    {
+      label: 'Vendors',
+      items: markets.map(({ market }) => ({
+        href: `/dashboard/markets/${market.slug}/vendors`,
+        label: markets.length === 1 ? 'Applications' : market.name,
+        icon: <Store />,
+        count: waiting.get(market.id) || undefined,
       })),
     },
   ];
@@ -41,12 +59,12 @@ export default async function DashboardLayout({ children }: { children: ReactNod
     { href: '/dashboard/about', label: 'About', icon: <Info /> },
   ];
 
-  const areas: DashboardArea[] = isAdmin(user)
-    ? [
-        { href: '/dashboard', label: 'Organizer', current: true },
-        { href: '/admin', label: 'Admin' },
-      ]
-    : [{ href: '/dashboard', label: 'Organizer', current: true }];
+  const areas: DashboardArea[] = [
+    { href: '/dashboard', label: 'Organizer', current: true },
+    // An account can run a market and sell at markets too.
+    ...(vendor ? [{ href: '/vendor', label: 'Vendor' }] : []),
+    ...(isAdmin(user) ? [{ href: '/admin', label: 'Admin' }] : []),
+  ];
 
   return (
     <DashboardShell

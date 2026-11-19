@@ -29,6 +29,13 @@
       "when": 1794866356772,
       "tag": "0003_organizer_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794891237654,
+      "tag": "0004_vendor_accounts",
+      "breakpoints": true
     }
   ]
 }

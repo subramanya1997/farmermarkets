@@ -46,7 +46,10 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       // Organizer sign-in, dashboard and admin pages are private and noindex.
-      disallow: ['/api/*', '/dashboard', '/admin', '/sign-in', '/sign-up', '/forgot-password', '/reset-password'],
+      // `/vendor/` keeps its trailing slash on purpose: rules match by prefix,
+      // and `/vendor` alone would also block the public `/vendors/...` pages.
+      // The bare `/vendor` page redirects signed-out visitors and is noindex.
+      disallow: ['/api/*', '/dashboard', '/admin', '/vendor/', '/sign-in', '/sign-up', '/forgot-password', '/reset-password'],
     },
     sitemap: absoluteUrl('/sitemap.xml'),
   };
