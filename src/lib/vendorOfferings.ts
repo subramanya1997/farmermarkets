@@ -23,7 +23,7 @@ import {
 } from './offeringRules';
 import { readDays } from './vendorProfile';
 import { resolveMarketId, type ApplicationStatus } from './vendorRules';
-import { getVendorForUser, type VendorActionResult } from './vendors';
+import { deskVendor, getVendorForUser, type VendorActionResult } from './vendors';
 import mergedMarkets from '../../data/overrides/merged-markets.json';
 
 const { vendorApplications, vendorOfferings } = dbSchema;
@@ -92,7 +92,7 @@ function deskOffering(row: typeof vendorOfferings.$inferSelect): DeskOffering {
 
 /** What the vendor desk shows: approved markets and their open posts. Creates nothing. */
 export async function offeringsDesk(user: SessionUser): Promise<OfferingsDesk> {
-  const vendor = await getVendorForUser(user.id);
+  const vendor = await deskVendor(user);
   if (!vendor) return { markets: [], public: false };
   const today = usToday();
   const [applications, rows, recent] = await Promise.all([

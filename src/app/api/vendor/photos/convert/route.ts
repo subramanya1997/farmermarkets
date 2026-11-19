@@ -12,7 +12,7 @@ import { getSessionUser } from '@/lib/organizer';
 import { requestOriginAllowed } from '@/lib/formGuards';
 import { webPhotoForUpload } from '@/lib/photoConvert';
 import { isHeicPathname } from '@/lib/photoTypes';
-import { ensureVendor, vendorPhotoPathPrefix } from '@/lib/vendors';
+import { ensureVendor, inVendorPreview, vendorPhotoPathPrefix } from '@/lib/vendors';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -28,6 +28,7 @@ export async function POST(request: Request) {
   }
   const user = await getSessionUser();
   if (!user?.emailVerified) return NextResponse.json({ error: 'Sign in to upload photos.' }, { status: 401 });
+  if (await inVendorPreview(user)) return NextResponse.json({ error: 'This is a preview, so nothing was saved.' }, { status: 403 });
 
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success || !isHeicPathname(parsed.data.pathname)) {

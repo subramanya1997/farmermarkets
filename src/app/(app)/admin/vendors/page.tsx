@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Download, Megaphone } from 'lucide-react';
+import { Download, Eye, Megaphone } from 'lucide-react';
+import { startVendorPreviewAction } from '@/app/(app)/vendor/actions';
+import { Button } from '@/components/ui/button';
 import { requireAdmin } from '@/lib/organizer';
-import { adminVendors } from '@/lib/vendors';
+import { adminVendors, VENDOR_PREVIEW_NEW } from '@/lib/vendors';
 import { VendorsTable, type VendorTableRow } from '@/components/admin/VendorsTable';
 import { VendorInviteForm } from '@/components/admin/VendorInviteForm';
 import { vendorStatus } from '@/components/admin/VendorStatus';
@@ -56,6 +58,12 @@ export default async function AdminVendorsPage() {
             <Megaphone className="size-4" aria-hidden="true" />
             Send an announcement
           </Link>
+          <form action={startVendorPreviewAction.bind(null, VENDOR_PREVIEW_NEW)}>
+            <Button type="submit" variant="outline" className="h-11 sm:h-9">
+              <Eye aria-hidden="true" />
+              Preview as a new vendor
+            </Button>
+          </form>
         </div>
       </div>
 

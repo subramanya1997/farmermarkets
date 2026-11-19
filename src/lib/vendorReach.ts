@@ -14,7 +14,7 @@ import type { SessionUser } from './organizer';
 import { FOOTPRINT_DAYS, followRefusal, isLikelyBot, isPrefetch, scanDecision, type Footprint, type HourBucket, type ScanDecision } from './reachRules';
 import { visitorHash } from './visitorHash';
 import { vendorPagePublic } from './vendorRules';
-import { getVendorForUser, type VendorActionResult } from './vendors';
+import { deskVendor, getVendorForUser, type VendorActionResult } from './vendors';
 
 const { vendors, vendorFollows, vendorQrScans } = dbSchema;
 
@@ -160,7 +160,7 @@ async function hourBuckets(vendorId: string, since: Date): Promise<HourBucket[]>
 
 /** The signed-in vendor's own Footprint, or null without a vendor. Never another vendor's. */
 export async function vendorFootprint(user: SessionUser, now = new Date()): Promise<Footprint | null> {
-  const vendor = await getVendorForUser(user.id);
+  const vendor = await deskVendor(user);
   if (!vendor) return null;
   const db = getDb();
   const monthAgo = new Date(now.getTime() - FOOTPRINT_DAYS * 86_400_000);

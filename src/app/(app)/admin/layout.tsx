@@ -41,6 +41,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       areas={[
         { href: '/admin', label: 'Admin', current: true },
         { href: '/dashboard', label: 'Organizer' },
+        { href: '/vendor', label: 'Vendor' },
       ]}
       user={{ name: admin.name, email: admin.email }}
       settingsHref="/admin/settings"

@@ -14,7 +14,7 @@ import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { getSessionUser } from '@/lib/organizer';
 import { requestOriginAllowed } from '@/lib/formGuards';
 import { DOCUMENT_CONTENT_TYPES, MAX_DOCUMENT_BYTES } from '@/lib/vendorProfile';
-import { documentPathPrefix, documentsToken, ensureVendor } from '@/lib/vendors';
+import { documentPathPrefix, documentsToken, ensureVendor, inVendorPreview } from '@/lib/vendors';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -41,6 +41,7 @@ export async function POST(request: Request) {
       onBeforeGenerateToken: async (pathname) => {
         const user = await getSessionUser();
         if (!user?.emailVerified) throw new Error('Sign in to upload documents.');
+        if (await inVendorPreview(user)) throw new Error('This is a preview, so nothing was saved.');
         const vendor = await ensureVendor(user);
         if (!pathname.startsWith(documentPathPrefix(vendor.id))) throw new Error('Upload path does not match your account.');
         return {
@@ -62,6 +63,7 @@ export async function POST(request: Request) {
 export async function GET() {
   const user = await getSessionUser();
   if (!user?.emailVerified) return NextResponse.json({ error: 'Sign in to upload documents.' }, { status: 401 });
+  if (await inVendorPreview(user)) return NextResponse.json({ error: 'This is a preview, so nothing was saved.' }, { status: 403 });
   if (!documentsToken()) return NextResponse.json({ error: 'Document uploads are not available yet.' }, { status: 503 });
   const vendor = await ensureVendor(user);
   return NextResponse.json({ pathPrefix: documentPathPrefix(vendor.id) }, { headers: { 'Cache-Control': 'private, no-store' } });

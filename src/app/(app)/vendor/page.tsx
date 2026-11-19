@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { ArrowUpRight, Check, ChevronRight, FileText, MapPin, Store } from 'lucide-react';
 import { StartForm, type StartMarket } from '@/components/vendor/StartForm';
 import { SuggestedList } from '@/components/vendor/SuggestedMarkets';
-import { getPublishedMarket, requireOrganizer } from '@/lib/organizer';
-import { getChecklist } from '@/lib/vendors';
+import { getPublishedMarket, isAdmin, requireOrganizer } from '@/lib/organizer';
+import { adminVendors, getChecklist, vendorPreview } from '@/lib/vendors';
+import { VendorPreviewPicker } from '@/components/admin/VendorPreviewPicker';
 import { MAX_START_MARKETS } from '@/lib/vendorProfile';
 import { absoluteUrl } from '@/lib/site';
 import type { MarketRef, VendorOverview } from '@/lib/vendors';
@@ -110,8 +111,10 @@ async function linkedMarket(raw: string | string[] | undefined): Promise<StartMa
 
 export default async function VendorHomePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const user = await requireOrganizer('/vendor');
-  const overview = await cachedVendorOverview(user);
-  const name = firstName(user.name);
+  const [overview, preview] = await Promise.all([cachedVendorOverview(user), vendorPreview(user)]);
+  const name = preview ? '' : firstName(user.name);
+  // Admins outside a preview get a picker, like the organizer preview on /dashboard.
+  const picker = isAdmin(user) && !preview ? <VendorPreviewPicker vendors={await adminVendors()} /> : null;
   const business = overview.live?.name || overview.draft.name;
 
   // Never sent a profile: the whole start is one screen.
@@ -124,6 +127,7 @@ export default async function VendorHomePage({ searchParams }: { searchParams: P
     const initialMarkets = [...new Map(picked.filter((market) => !applied.includes(market.slug)).map((market) => [market.slug, market])).values()].slice(0, MAX_START_MARKETS);
     return (
       <div className="mx-auto max-w-2xl space-y-4">
+        {picker}
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Start your vendor page</h1>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">Your name, what you sell and where. That is all we need to begin.</p>
@@ -140,6 +144,7 @@ export default async function VendorHomePage({ searchParams }: { searchParams: P
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
+      {picker}
       <div>
         {/* The business name leads: invited accounts carry it as the account name too. */}
         <h1 className="text-2xl font-semibold tracking-tight break-words">{business || (name ? `Hi, ${name}` : 'Welcome back')}</h1>
