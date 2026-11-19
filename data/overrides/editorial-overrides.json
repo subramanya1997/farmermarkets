@@ -4169,7 +4169,7 @@
       "id": 308798,
       "path": "operations.days",
       "value": [
-        "Monday — 3:00 pm to 7:00 pm"
+        "Mondays, 3pm to 6pm (winter hours)"
       ]
     },
     {
@@ -4204,6 +4204,14 @@
           "kind": "first_party",
           "scope": "market",
           "accessed_at": "2026-08-21"
+        },
+        {
+          "title": "Pacific Grove Certified Farmers' Market | Everyone's Harvest, with the Monday winter hours (3pm to 6pm) and the 2026 holiday break confirmed by Everyone's Harvest by email on November 18, 2026",
+          "url": "https://www.everyonesharvest.org/farmers-markets/pacific-grove/",
+          "fields": [
+            "operations.days",
+            "operations.season"
+          ]
         }
       ]
     },
@@ -15128,6 +15136,54 @@
             "location.zip_code",
             "location.coordinates",
             "google_maps_url",
+            "operations.days",
+            "operations.season"
+          ]
+        },
+        {
+          "title": "California WIC Authorized Farmers’ Markets | California Department of Public Health",
+          "url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
+          "fields": [
+            "payment.food_assistance.wic"
+          ]
+        }
+      ]
+    },
+    {
+      "index": 1966,
+      "id": 308798,
+      "path": "operations.season",
+      "value": "Year-round, with a holiday break: the last market of 2026 is December 14, and the market reopens January 4, 2027"
+    },
+    {
+      "index": 1923,
+      "id": 308755,
+      "path": "operations.days",
+      "value": [
+        "Sundays, 10am to 2pm"
+      ]
+    },
+    {
+      "index": 1923,
+      "id": 308755,
+      "path": "operations.season",
+      "value": "Year-round, with a holiday break: the last market of 2026 is December 13, and the market reopens January 3, 2027"
+    },
+    {
+      "index": 1923,
+      "id": 308755,
+      "path": "payment.food_assistance.wic",
+      "value": true
+    },
+    {
+      "index": 1923,
+      "id": 308755,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Marina Certified Farmers' Market | Everyone's Harvest, with the Sunday hours (10am to 2pm) and the 2026 holiday break confirmed by Everyone's Harvest by email on November 18, 2026",
+          "url": "https://www.everyonesharvest.org/farmers-markets/marina-certified-farmers-market",
+          "fields": [
             "operations.days",
             "operations.season"
           ]

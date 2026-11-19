@@ -73,6 +73,18 @@
       "name": "Grass Valley Farmers Market",
       "into": "308864",
       "reason": "California WIC row for the Grass Valley Farmers Market at 650 Freeman Ln (Pine Creek Shopping Center); the market confirmed by email on 2026-11-18 that it is one market with a Saturday and a seasonal Tuesday day. Its WIC authorization moves to the survivor through an editorial override. The survivor keeps the operator's organizer access."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:22d17b75bc83b73a",
+      "name": "Pacific Grove Certified Farmers Market",
+      "into": "308798",
+      "reason": "California WIC row for the Pacific Grove Certified Farmers' Market at Central and Grand Ave; Everyone's Harvest runs one Monday market there. Merge requested by the operator by email, recorded on 2026-11-18. The survivor already lists WIC and keeps the operator's organizer access."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:f58d4cc8f9038a03",
+      "name": "Marina Certified Farmers Market",
+      "into": "308755",
+      "reason": "California WIC row for the Marina Certified Farmers' Market at 215 Reservation Rd; Everyone's Harvest runs one Sunday market there. Merge requested by the operator by email, recorded on 2026-11-18. Its WIC authorization moves to the survivor through an editorial override, and the survivor keeps the operator's organizer access."
     }
   ]
 }

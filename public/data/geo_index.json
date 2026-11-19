@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-19T01:27:21.429Z",
-  "market_count": 9135,
+  "generated_at": "2026-11-19T02:26:16.486Z",
+  "market_count": 9133,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 959,
+      "market_count": 957,
       "city_count": 407,
       "cities": [
         {
@@ -6041,15 +6041,6 @@
           ]
         },
         {
-          "name": "Marina",
-          "slug": "marina",
-          "market_count": 2,
-          "market_slugs": [
-            "marina-certified-farmers-market-marina",
-            "marina-cfm-marina-9bd239f1"
-          ]
-        },
-        {
           "name": "Mariposa",
           "slug": "mariposa",
           "market_count": 2,
@@ -6218,15 +6209,6 @@
           "market_slugs": [
             "orinda-famers-market-orinda",
             "orinda-fm-orinda-4a41b84a"
-          ]
-        },
-        {
-          "name": "Pacific Grove",
-          "slug": "pacific-grove",
-          "market_count": 2,
-          "market_slugs": [
-            "pacific-grove-cfm-pacific-grove-4578572c",
-            "pacific-grove-farmers-market-pacific-grove"
           ]
         },
         {
@@ -7385,6 +7367,14 @@
           ]
         },
         {
+          "name": "Marina",
+          "slug": "marina",
+          "market_count": 1,
+          "market_slugs": [
+            "marina-certified-farmers-market-marina"
+          ]
+        },
+        {
           "name": "Mednik Los Angeles",
           "slug": "mednik-los-angeles",
           "market_count": 1,
@@ -7542,6 +7532,14 @@
           "market_count": 1,
           "market_slugs": [
             "glenn-county-certified-farmers-market"
+          ]
+        },
+        {
+          "name": "Pacific Grove",
+          "slug": "pacific-grove",
+          "market_count": 1,
+          "market_slugs": [
+            "pacific-grove-farmers-market-pacific-grove"
           ]
         },
         {
