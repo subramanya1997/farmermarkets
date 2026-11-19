@@ -22,17 +22,50 @@ interface SearchResult {
 const ROW =
   'flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-green-50 focus-visible:bg-green-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-green-700 dark:hover:bg-green-950/30 dark:focus-visible:bg-green-950/30';
 
+interface ClaimSearchProps {
+  initialQuery?: string;
+  purpose?: 'claim' | 'preview';
+  /** Runs a search. Defaults to the signed-in organizer search. */
+  search?: (query: string) => Promise<MarketSearchHit[]>;
+  /** Where a result's Claim link goes. Defaults to the dashboard claim form. */
+  claimHref?: (slug: string) => string;
+  /** Where "Ask us to list it" goes after a search, or null to leave it out. */
+  notListedHref?: string | null;
+  /** Called each time a search's results (or its failure) are on screen. */
+  onResults?: (result: { count: number; failed: boolean; queryLength: number }) => void;
+  /** Called when a result's Claim link is followed; `position` starts at 1. */
+  onClaim?: (market: MarketSearchHit, position: number, resultCount: number) => void;
+}
+
+const dashboardClaimHref = (slug: string) => `/dashboard/claim?market=${encodeURIComponent(slug)}`;
+
 /**
  * Find a market. Organizers use it to claim one: each result opens the claim
  * form. Admins also use it with `purpose="preview"` to see the organizer
- * dashboard for that market as if they had claimed it.
+ * dashboard for that market as if they had claimed it. The public operators
+ * page passes its own `search` and `claimHref` so signed-out visitors can
+ * find their market first and sign in on its claim page.
  */
-export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQuery?: string; purpose?: 'claim' | 'preview' }) {
+export function ClaimSearch({
+  initialQuery = '',
+  purpose = 'claim',
+  search = searchMarketsAction,
+  claimHref = dashboardClaimHref,
+  notListedHref = '/for-market-operators',
+  onResults,
+  onClaim,
+}: ClaimSearchProps) {
   const inputId = useId();
   const statusId = useId();
   const [query, setQuery] = useState(initialQuery);
   const [result, setResult] = useState<SearchResult | null>(null);
   const latest = useRef(0);
+  // Kept in a ref so a parent passing a fresh callback each render does not
+  // restart the search.
+  const onResultsRef = useRef(onResults);
+  useEffect(() => {
+    onResultsRef.current = onResults;
+  });
 
   const text = query.trim();
   const active = text.length >= MIN_QUERY;
@@ -41,15 +74,18 @@ export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQ
     const request = ++latest.current;
     if (!active) return;
     const timer = setTimeout(async () => {
+      let next: SearchResult;
       try {
-        const hits = await searchMarketsAction(text);
-        if (request === latest.current) setResult({ query: text, hits, failed: false });
+        next = { query: text, hits: await search(text), failed: false };
       } catch {
-        if (request === latest.current) setResult({ query: text, hits: [], failed: true });
+        next = { query: text, hits: [], failed: true };
       }
+      if (request !== latest.current) return;
+      setResult(next);
+      onResultsRef.current?.({ count: next.hits.length, failed: next.failed, queryLength: text.length });
     }, DEBOUNCE_MS);
     return () => clearTimeout(timer);
-  }, [text, active]);
+  }, [text, active, search]);
 
   // Results only show for the query on screen, so a stale answer never flashes.
   const current = active && result?.query === text ? result : null;
@@ -96,7 +132,7 @@ export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQ
 
       {results.length > 0 ? (
         <ul className="divide-y divide-zinc-200 overflow-hidden rounded-lg border border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
-          {results.map((market) => (
+          {results.map((market, index) => (
             <li key={market.slug}>
               {purpose === 'preview' ? (
                 <form action={startOrganizerPreviewAction.bind(null, market.slug)}>
@@ -117,7 +153,11 @@ export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQ
                   </Button>
                 </form>
               ) : (
-                <Link href={`/dashboard/claim?market=${encodeURIComponent(market.slug)}`} className={ROW}>
+                <Link
+                  href={claimHref(market.slug)}
+                  onClick={() => onClaim?.(market, index + 1, results.length)}
+                  className={ROW}
+                >
                   <span className="min-w-0 flex-1">
                     <span className="block font-medium text-zinc-900 dark:text-zinc-100">{market.name}</span>
                     {market.city || market.state ? (
@@ -138,10 +178,10 @@ export function ClaimSearch({ initialQuery = '', purpose = 'claim' }: { initialQ
         </ul>
       ) : null}
 
-      {purpose === 'claim' && current && !current.failed ? (
+      {purpose === 'claim' && notListedHref && current && !current.failed ? (
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           Not in the directory?{' '}
-          <Link href="/for-market-operators" className={TEXT_LINK}>
+          <Link href={notListedHref} className={TEXT_LINK}>
             Ask us to list it
           </Link>
           .

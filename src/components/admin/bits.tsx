@@ -17,6 +17,8 @@ const STATUS_TONES: Record<string, string> = {
   approved: 'border-green-300 bg-green-50 text-green-800 dark:border-green-700/60 dark:bg-green-900/30 dark:text-green-200',
   rejected: 'border-red-300 bg-red-50 text-red-800 dark:border-red-700/60 dark:bg-red-900/30 dark:text-red-200',
   removed: 'border-zinc-300 bg-zinc-50 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300',
+  applied: 'border-green-300 bg-green-50 text-green-800 dark:border-green-700/60 dark:bg-green-900/30 dark:text-green-200',
+  dismissed: 'border-zinc-300 bg-zinc-50 text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300',
 };
 
 const STATUS_TEXT: Record<string, string> = {
@@ -24,6 +26,8 @@ const STATUS_TEXT: Record<string, string> = {
   approved: 'Approved',
   rejected: 'Rejected',
   removed: 'Removed',
+  applied: 'Published',
+  dismissed: 'Dismissed',
 };
 
 export function StatusPill({ status, className }: { status: string; className?: string }) {

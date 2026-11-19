@@ -27,6 +27,7 @@ import { Muted, Panel, StatusPill, TimeAgo } from '@/components/admin/bits';
 import { formatTimestamp, placeLabel, timeAgo } from '@/components/admin/format';
 import { startOrganizerPreviewAction } from '@/app/(app)/dashboard/actions';
 import { Button } from '@/components/ui/button';
+import { botActionsFor, describeBotAction } from '@/lib/botActions';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,7 +48,7 @@ export default async function AdminMarketPage({ params }: { params: Promise<{ sl
   const market = await getPublishedMarket(slug);
   if (!market) notFound();
 
-  const [values, edited, changes, photoRows, managers, accounts] = await Promise.all([
+  const [values, edited, changes, photoRows, managers, accounts, botRows] = await Promise.all([
     editorValuesFor(market, { admin: true }),
     editedSectionsFor(market.id),
     recentChangesFor(market.id, 20),
@@ -55,6 +56,7 @@ export default async function AdminMarketPage({ params }: { params: Promise<{ sl
     managersFor(market.id),
     // Only for names in the history list; recentChangesFor returns user ids.
     adminOrganizers(),
+    botActionsFor(market.id, 20),
   ]);
   const people = new Map(accounts.map((account) => [account.id, account]));
 
@@ -190,6 +192,36 @@ export default async function AdminMarketPage({ params }: { params: Promise<{ sl
               </ul>
             )}
             <AddManagerForm slug={market.slug} />
+          </Panel>
+
+          <Panel title="Outreach bot">
+            {botRows.length === 0 ? (
+              <p className="px-4 py-3 text-sm text-zinc-500 dark:text-zinc-400">The bot has not changed this listing.</p>
+            ) : (
+              <ul className="divide-y text-sm">
+                {botRows.map((row) => {
+                  const { title, detail } = describeBotAction(row);
+                  return (
+                    <li key={row.id} className="space-y-1 px-4 py-2.5">
+                      <span className="flex items-center justify-between gap-2">
+                        <StatusPill status={row.status} />
+                        <TimeAgo date={row.createdAt} className="text-xs text-zinc-500 dark:text-zinc-400" />
+                      </span>
+                      <span className="block text-zinc-800 dark:text-zinc-200">
+                        {title}
+                        {detail ? <Muted> · {detail}</Muted> : null}
+                      </span>
+                      <span className="block line-clamp-3 text-xs text-zinc-600 dark:text-zinc-400">{row.note}</span>
+                      {row.status === 'pending' ? (
+                        <Link href="/admin/review#bot" className="block text-xs font-medium text-green-700 hover:underline dark:text-green-400">
+                          Review in the queue
+                        </Link>
+                      ) : null}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </Panel>
 
           <Panel title="History">

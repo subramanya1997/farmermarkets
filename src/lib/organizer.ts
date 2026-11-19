@@ -547,7 +547,7 @@ export async function removePhoto(user: SessionUser, market: FarmerMarket, photo
   return { ok: true, message: 'Photo removed.' };
 }
 
-async function deleteBlob(url: string) {
+export async function deleteBlob(url: string) {
   try {
     await del(url);
   } catch (error) {
@@ -581,12 +581,23 @@ export async function reviewQueue() {
       .where(eq(marketPhotos.status, 'pending'))
       .orderBy(asc(marketPhotos.createdAt)),
   ]);
-  const legacyClaims = await db
-    .select()
-    .from(dbSchema.submissions)
-    .where(and(eq(dbSchema.submissions.type, 'claim'), eq(dbSchema.submissions.status, 'pending')))
-    .orderBy(asc(dbSchema.submissions.createdAt));
-  const marketIds = [...new Set([...claims.map((c) => c.claim.marketId), ...changes.map((c) => c.change.marketId), ...photos.map((p) => p.photo.marketId)])];
+  const [legacyClaims, botRequests] = await Promise.all([
+    db
+      .select()
+      .from(dbSchema.submissions)
+      .where(and(eq(dbSchema.submissions.type, 'claim'), eq(dbSchema.submissions.status, 'pending')))
+      .orderBy(asc(dbSchema.submissions.createdAt)),
+    // Removals and closures the outreach bot may not publish (src/lib/botActions.ts).
+    db.select().from(dbSchema.botActions).where(eq(dbSchema.botActions.status, 'pending')).orderBy(asc(dbSchema.botActions.createdAt)),
+  ]);
+  const marketIds = [
+    ...new Set([
+      ...claims.map((c) => c.claim.marketId),
+      ...changes.map((c) => c.change.marketId),
+      ...photos.map((p) => p.photo.marketId),
+      ...botRequests.map((row) => row.marketId),
+    ]),
+  ];
   const markets = new Map((await getMarketsByIds(marketIds)).map((market) => [market.id, market]));
   // `photos` keeps its row shape for the queue UI; `photoUploaders` adds who sent each one.
   return {
@@ -595,6 +606,7 @@ export async function reviewQueue() {
     photos: photos.map((row) => row.photo),
     photoUploaders: new Map(photos.map((row) => [row.photo.id, row.uploader])),
     legacyClaims,
+    botRequests,
     markets,
   };
 }
@@ -719,14 +731,9 @@ export async function decideChange(
   const now = new Date();
 
   if (approve) {
-    const [current] = await db.select().from(marketOverrides).where(eq(marketOverrides.marketId, review.change.marketId)).limit(1);
-    const currentEdits = current ? listingEditsSchema.safeParse(current.data) : null;
-    const merged = mergeListingEdits(currentEdits?.success ? currentEdits.data : undefined, review.proposed);
+    const merged = mergeListingEdits(await currentOverride(review.change.marketId), review.proposed);
     await db.batch([
-      db
-        .insert(marketOverrides)
-        .values({ marketId: review.change.marketId, data: merged, updatedAt: now, updatedBy: admin.id })
-        .onConflictDoUpdate({ target: marketOverrides.marketId, set: { data: merged, updatedAt: now, updatedBy: admin.id } }),
+      upsertOverride(review.change.marketId, merged, admin.id, now),
       db
         .update(marketChangeRequests)
         .set({ status: 'approved', reviewNote: note || null, reviewedAt: now, reviewedBy: admin.id, updatedAt: now })
@@ -802,11 +809,24 @@ export async function markLegacySubmissionReviewed(id: string, note?: string): P
  * Admin editing: publish directly, reset sections, managers, overview
  * ------------------------------------------------------------------ */
 
-async function currentOverride(marketId: string): Promise<ListingEdits | undefined> {
+/** The published edits for a market, if any. */
+export async function currentOverride(marketId: string): Promise<ListingEdits | undefined> {
   const [row] = await getDb().select().from(marketOverrides).where(eq(marketOverrides.marketId, marketId)).limit(1);
   if (!row) return undefined;
   const parsed = listingEditsSchema.safeParse(row.data);
   return parsed.success ? parsed.data : undefined;
+}
+
+/**
+ * The one way published edits are stored: the whole merged `ListingEdits`
+ * for a market (merge with `mergeListingEdits` first). Returned unexecuted
+ * so callers batch it with their history row.
+ */
+export function upsertOverride(marketId: string, merged: ListingEdits, updatedBy: string, now = new Date()) {
+  return getDb()
+    .insert(marketOverrides)
+    .values({ marketId, data: merged, updatedAt: now, updatedBy })
+    .onConflictDoUpdate({ target: marketOverrides.marketId, set: { data: merged, updatedAt: now, updatedBy } });
 }
 
 /**
@@ -827,10 +847,7 @@ export async function adminPublish(admin: SessionUser, market: FarmerMarket, inp
   const now = new Date();
   const merged = mergeListingEdits(await currentOverride(market.id), changes);
   await db.batch([
-    db
-      .insert(marketOverrides)
-      .values({ marketId: market.id, data: merged, updatedAt: now, updatedBy: admin.id })
-      .onConflictDoUpdate({ target: marketOverrides.marketId, set: { data: merged, updatedAt: now, updatedBy: admin.id } }),
+    upsertOverride(market.id, merged, admin.id, now),
     db.insert(marketChangeRequests).values({
       marketId: market.id,
       userId: admin.id,
