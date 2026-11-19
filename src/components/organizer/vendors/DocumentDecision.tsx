@@ -18,13 +18,11 @@ const MAX_NOTE = 1000;
 export function DocumentDecision({
   slug,
   submissionId,
-  documentLabel,
   status,
   note,
 }: {
   slug: string;
   submissionId: string;
-  documentLabel: string;
   status: DocumentStatus;
   note: string | null;
 }) {
@@ -65,7 +63,7 @@ export function DocumentDecision({
     return (
       <div className="flex flex-col gap-3">
         <Field
-          label={status === 'rejected' ? 'What needs fixing' : `Why are you denying ${documentLabel}?`}
+          label={status === 'rejected' ? 'What needs fixing' : 'Why are you denying this document?'}
           hint={status === 'rejected' ? 'Saved with the document for the vendor to see.' : 'We email this to the vendor so they can send a new one.'}
         >
           {(control) => (

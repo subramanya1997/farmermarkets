@@ -145,9 +145,15 @@ ${note ? `<p ${EMAIL_P}><strong>Note:</strong> ${escapeHtml(note)}</p>` : ''}
   };
 }
 
-export function documentDeniedEmail(input: { documentLabel: string; marketName: string; note?: string | null }): EmailContent {
+/**
+ * `itemLabel` is what the market asked for ("Organic certificate");
+ * `documentLabel` is the vendor's own name for the file they sent. They differ
+ * when one file is reused for several items, so the email names both.
+ */
+export function documentDeniedEmail(input: { itemLabel: string; documentLabel: string; marketName: string; note?: string | null }): EmailContent {
   const url = absoluteUrl('/vendor/markets');
-  const lead = `${input.marketName} could not accept your document "${input.documentLabel}". You can upload a new one and attach it to your application.`;
+  const sent = input.documentLabel.trim() && input.documentLabel.trim() !== input.itemLabel.trim() ? ` You sent "${input.documentLabel}".` : '';
+  const lead = `${input.marketName} could not accept what you sent for "${input.itemLabel}".${sent} You can upload a new one and attach it to your application.`;
   const note = input.note?.trim();
   return {
     subject: `A document needs another look for ${input.marketName}`,
