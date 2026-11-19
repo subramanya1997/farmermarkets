@@ -4,6 +4,7 @@
 import { revalidatePath } from 'next/cache';
 import { marketService } from '@/app/api/markets/data';
 import { searchMarkets } from '@/lib/marketSearch';
+import { decideBotAction } from '@/lib/botActions';
 import type { ListingSection } from '@/lib/listingEdits';
 import {
   addManagerByEmail,
@@ -51,6 +52,15 @@ export async function decidePhotoAction(photoId: string, approve: boolean): Prom
   const user = await admin();
   if (!user) return NOT_ALLOWED;
   const result = await decidePhoto(user, photoId, approve);
+  revalidatePath('/admin');
+  return result;
+}
+
+/** Approve or dismiss a removal or closure the outreach bot asked for. */
+export async function decideBotActionAction(id: string, approve: boolean, note?: string): Promise<ActionResult> {
+  const user = await admin();
+  if (!user) return NOT_ALLOWED;
+  const result = await decideBotAction(user, id, approve, cleanNote(note));
   revalidatePath('/admin');
   return result;
 }

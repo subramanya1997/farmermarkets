@@ -143,6 +143,11 @@ const nextConfig: NextConfig = {
   // otherwise redirect away. Page URLs keep their no-trailing-slash canonical
   // form because `src/proxy.ts` now issues that redirect itself.
   skipTrailingSlashRedirect: true,
+  // HEIC photo decoding (src/lib/photoConvert.ts): libheif-js embeds a
+  // multi-megabyte WebAssembly build, which is loaded from node_modules at
+  // run time rather than run through the server bundler. sharp is external
+  // by default.
+  serverExternalPackages: ['heic-decode', 'libheif-js'],
   // Organizer photos are uploaded to Vercel Blob (src/app/api/organizer/photos).
   images: {
     remotePatterns: [

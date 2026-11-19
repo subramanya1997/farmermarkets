@@ -29,6 +29,8 @@ import { PageQuestion } from "@/components/PageQuestion";
 import { MarketFacts, MarketGlanceCard } from "@/components/MarketFacts";
 import { MarketHighlights } from "@/components/MarketHighlights";
 import { MarketFreshnessNotice } from "@/components/MarketFreshnessNotice";
+import { MarketShopperUpdates } from "@/components/MarketShopperUpdates";
+import { getShopperUpdates } from "@/lib/marketUpdatesLayer";
 import { MarketSourceNote } from "@/components/MarketSourceNote";
 import { NearbyMarkets } from "@/components/NearbyMarkets";
 import { TrackedMarketClaimLink } from "@/components/TrackedMarketClaimLink";
@@ -249,6 +251,10 @@ export default async function MarketDetailPage({
   // the legacy ones, which name no publisher to credit.
   const provenance = await getMarketProvenance(market);
 
+  // Short notes from the market's managers (closures, special hours). Plain
+  // text beside the listing, never merged into it; see src/lib/marketUpdatesLayer.ts.
+  const shopperUpdates = await getShopperUpdates(market.id);
+
   // One `@graph` per page: GroceryStore/LocalBusiness, the recurring Event
   // when a day *and* a time are known, and the FAQPage mirroring the visible
   // block below. Every property is built from fields this record actually has
@@ -384,6 +390,9 @@ export default async function MarketDetailPage({
                 <p className="text-sm font-medium text-amber-800 dark:text-amber-200">Imported address; check the location note below before visiting.</p>
               )}
               <MarketFreshnessNotice market={market} />
+              {shopperUpdates.length > 0 && (
+                <MarketShopperUpdates updates={shopperUpdates} renderedAt={new Date().toISOString()} />
+              )}
               {canonicalMarket && (
                 <p className="max-w-[75ch] text-sm text-zinc-700 dark:text-zinc-300">
                   This is one listing from a public dataset. The full guide to this market, with hours,

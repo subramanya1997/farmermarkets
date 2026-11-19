@@ -7,6 +7,7 @@ import { upload } from '@vercel/blob/client';
 import { AlertCircle, ArrowDown, ArrowUp, CheckCircle2, Clock, ImagePlus, Loader2, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { registerPhotoAction, removePhotoAction, reorderPhotosAction, updatePhotoAction } from '@/app/(app)/dashboard/actions';
+import { PHOTO_FORMATS_LABEL, PHOTO_TYPE_ERROR, isHeicType, photoAccept, photoContentType, photoFileName } from '@/lib/photoTypes';
 import { cn } from '@/lib/utils';
 import { SectionCard, TextInput } from './fields';
 
@@ -37,22 +38,10 @@ type UploadItem = {
   name: string;
   progress: number;
   state: 'uploading' | 'saving' | 'done' | 'error';
+  /** HEIC photos are converted while saving, which takes a few seconds. */
+  converting?: boolean;
   error?: string;
 };
-
-const EXTENSIONS: Record<string, string> = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
-
-/** A safe, readable Blob file name: "Market Day!.JPG" becomes "market-day.jpg". */
-function blobFileName(file: File): string {
-  const base = file.name
-    .replace(/\.[^.]+$/, '')
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 60);
-  return `${base || 'photo'}.${EXTENSIONS[file.type] ?? 'jpg'}`;
-}
 
 async function imageSize(file: File): Promise<{ width?: number; height?: number }> {
   try {
@@ -116,17 +105,18 @@ export function PhotoManager({
   const patchUpload = (key: string, patch: Partial<UploadItem>) =>
     setUploads((items) => items.map((item) => (item.key === key ? { ...item, ...patch } : item)));
 
-  async function uploadOne(file: File, key: string) {
+  async function uploadOne(file: File, contentType: string, key: string) {
     try {
-      const { width, height } = await imageSize(file);
-      const blob = await upload(`${pathPrefix}${blobFileName(file)}`, file, {
+      // Most browsers cannot decode HEIC; the server measures it after converting.
+      const { width, height } = isHeicType(contentType) ? {} : await imageSize(file);
+      const blob = await upload(`${pathPrefix}${photoFileName(file.name, contentType)}`, file, {
         access: 'public',
         handleUploadUrl: '/api/organizer/photos',
         clientPayload: JSON.stringify({ slug }),
-        contentType: file.type,
+        contentType,
         onUploadProgress: ({ percentage }) => patchUpload(key, { progress: Math.round(percentage) }),
       });
-      patchUpload(key, { state: 'saving', progress: 100 });
+      patchUpload(key, { state: 'saving', progress: 100, converting: isHeicType(contentType) });
       const result = await registerPhotoAction(slug, { url: blob.url, pathname: blob.pathname, width, height });
       if (!result.ok) throw new Error(result.error);
       patchUpload(key, { state: 'done' });
@@ -141,13 +131,14 @@ export function PhotoManager({
     if (!files || files.length === 0) return;
     const picked = Array.from(files);
     const items: UploadItem[] = [];
-    const accepted: { file: File; key: string }[] = [];
+    const accepted: { file: File; contentType: string; key: string }[] = [];
     let room = slotsLeft;
 
     for (const file of picked) {
       const key = `${file.name}-${file.size}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+      const contentType = photoContentType(file, contentTypes);
       let problem: string | undefined;
-      if (!contentTypes.includes(file.type)) problem = 'Use a JPEG, PNG or WebP photo.';
+      if (!contentType) problem = PHOTO_TYPE_ERROR;
       else if (file.size > maxBytes) problem = `This photo is over ${megabytes(maxBytes)}. Try a smaller one.`;
       else if (room <= 0) problem = `A listing can have up to ${maxPhotos} photos.`;
       if (problem) {
@@ -155,13 +146,13 @@ export function PhotoManager({
       } else {
         room -= 1;
         items.push({ key, name: file.name, progress: 0, state: 'uploading' });
-        accepted.push({ file, key });
+        accepted.push({ file, contentType: contentType!, key });
       }
     }
     setUploads((current) => [...current.filter((item) => item.state !== 'done'), ...items]);
     if (inputRef.current) inputRef.current.value = '';
 
-    await Promise.all(accepted.map(({ file, key }) => uploadOne(file, key)));
+    await Promise.all(accepted.map(({ file, contentType, key }) => uploadOne(file, contentType, key)));
     if (accepted.length) router.refresh();
   }
 
@@ -211,14 +202,14 @@ export function PhotoManager({
             {order.length} of {maxPhotos} photos
           </p>
           <p className="text-xs text-zinc-500 dark:text-zinc-400">
-            JPEG, PNG or WebP, up to {megabytes(maxBytes)} each. Landscape works best.
+            {PHOTO_FORMATS_LABEL}, up to {megabytes(maxBytes)} each. Landscape works best.
           </p>
         </div>
         {/* Native on purpose: shadcn has no file picker, and the Button below opens this hidden input. */}
         <input
           ref={inputRef}
           type="file"
-          accept={contentTypes.join(',')}
+          accept={photoAccept(contentTypes)}
           multiple
           className="sr-only"
           tabIndex={-1}
@@ -297,7 +288,7 @@ function UploadRow({ item, onDismiss }: { item: UploadItem; onDismiss: () => voi
             Dismiss
           </Button>
         ) : (
-          <span className="text-xs text-zinc-500 tabular-nums">{item.state === 'saving' ? 'Saving' : `${item.progress}%`}</span>
+          <span className="text-xs text-zinc-500 tabular-nums">{item.state === 'saving' ? (item.converting ? 'Converting' : 'Saving') : `${item.progress}%`}</span>
         )}
       </div>
       {failed ? (

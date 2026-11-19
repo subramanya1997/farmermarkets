@@ -167,6 +167,30 @@ export function ListingEditor({
     }
   }, [tab]);
 
+  // A link to #hours (or any tab id) opens that tab: the market dashboard's
+  // "Hours and season" entry point lands here. Picking a tab by hand drops the
+  // hash, so the same link works again later.
+  useEffect(() => {
+    const open = () => {
+      const id = window.location.hash.slice(1);
+      const target = tabs.find((item) => item.id === id);
+      if (!target) return;
+      setTab(target.id);
+      document.getElementById('listing')?.scrollIntoView({ block: 'start' });
+    };
+    const first = window.setTimeout(open, 0);
+    window.addEventListener('hashchange', open);
+    return () => {
+      window.clearTimeout(first);
+      window.removeEventListener('hashchange', open);
+    };
+  }, [tabs]);
+
+  function pickTab(value: TabId) {
+    setTab(value);
+    if (window.location.hash) window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
+  }
+
   const payloadKey = useMemo(() => payloadFingerprint(edits, initialValues), [edits, initialValues]);
   const baselineKey = useMemo(() => payloadFingerprint(baseline, initialValues), [baseline, initialValues]);
   const dirty = payloadKey !== baselineKey;
@@ -269,7 +293,7 @@ export function ListingEditor({
       {/* Not a <form>: Enter in a field should never send the whole listing,
           and the photo tab saves on its own. */}
       <div>
-        <Tabs value={tab} onValueChange={(value) => setTab(value as TabId)}>
+        <Tabs value={tab} onValueChange={(value) => pickTab(value as TabId)}>
           {/* Underline tabs, left aligned. The strip scrolls sideways when it
               does not fit, so no tab is ever cut off out of reach. No focus
               box: a focused tab is always the open one, so keyboard focus

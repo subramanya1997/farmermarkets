@@ -8,7 +8,7 @@ import test from 'node:test';
 // pings switched off, so this suite never touches the network.
 process.env.INDEXNOW_DISABLE = '1';
 
-const { parsers, parseCsv, updateGovernmentMarkets, changedMarketSlugs, refreshUrls } =
+const { parsers, parseCsv, updateGovernmentMarkets, changedMarketSlugs, refreshUrls, carryForwardIdentities } =
   await import('./update-government-markets.mjs');
 
 const retrievedAt = '2026-08-14T00:00:00.000Z';
@@ -189,6 +189,118 @@ test('a failed source retains its previous records while healthy sources update'
   assert.equal(result.manifest.status, 'partial');
   assert.deepEqual(written.map((market) => market.provenance.source_id).sort(), ['failed', 'good']);
   assert.equal(result.manifest.sources.find((entry) => entry.id === 'failed').status, 'stale');
+});
+
+test('a failed source keeps its last good retrieval date and counts its failures', async () => {
+  const temporaryDirectory = await fs.mkdtemp(path.join(os.tmpdir(), 'government-markets-streak-'));
+  const fixturesDirectory = path.join(temporaryDirectory, 'fixtures');
+  await fs.mkdir(fixturesDirectory);
+  const goodSource = source('good', 'new_york_socrata', { fixture_file: 'good.json' });
+  const flakySource = source('flaky', 'new_york_socrata', { fixture_file: 'flaky.json' });
+  const options = {
+    registry: path.join(temporaryDirectory, 'registry.json'),
+    output: path.join(temporaryDirectory, 'markets.json'),
+    manifest: path.join(temporaryDirectory, 'manifest.json'),
+    fixturesDir: fixturesDirectory,
+    ping: async () => ({ ok: true })
+  };
+  const row = (name) => JSON.stringify([{ market_name: name, city: 'Albany', state: 'NY', zip: '12207' }]);
+  await Promise.all([
+    fs.writeFile(options.registry, JSON.stringify({ schema_version: 1, sources: [goodSource, flakySource] })),
+    fs.writeFile(path.join(fixturesDirectory, 'good.json'), row('Good Market')),
+    fs.writeFile(path.join(fixturesDirectory, 'flaky.json'), row('Flaky Market'))
+  ]);
+  const entry = (manifest, id) => manifest.sources.find((candidate) => candidate.id === id);
+
+  const first = await updateGovernmentMarkets({ ...options, now: new Date('2026-09-01T08:17:00.000Z') });
+  assert.equal(first.manifest.status, 'ok');
+  assert.equal(first.manifest.consecutive_partial_runs, 0);
+  assert.equal(entry(first.manifest, 'flaky').retrieved_at, '2026-09-01T08:17:00.000Z');
+
+  await fs.rm(path.join(fixturesDirectory, 'flaky.json'));
+  const second = await updateGovernmentMarkets({ ...options, now: new Date('2026-10-01T08:17:00.000Z') });
+  const third = await updateGovernmentMarkets({ ...options, now: new Date('2026-11-01T08:17:00.000Z') });
+  const written = JSON.parse(await fs.readFile(options.output, 'utf8'));
+
+  assert.equal(second.manifest.consecutive_partial_runs, 1);
+  assert.equal(third.manifest.status, 'partial');
+  assert.equal(third.manifest.consecutive_partial_runs, 2);
+  assert.deepEqual(
+    { status: entry(third.manifest, 'flaky').status, retrieved_at: entry(third.manifest, 'flaky').retrieved_at, last_attempted_at: entry(third.manifest, 'flaky').last_attempted_at, consecutive_failures: entry(third.manifest, 'flaky').consecutive_failures },
+    { status: 'stale', retrieved_at: '2026-09-01T08:17:00.000Z', last_attempted_at: '2026-11-01T08:17:00.000Z', consecutive_failures: 2 },
+    'a failed attempt must not look like a fresh retrieval'
+  );
+  assert.equal(entry(third.manifest, 'good').retrieved_at, '2026-11-01T08:17:00.000Z');
+  assert.ok(written.some((market) => market.name === 'Flaky Market'), 'the last good records stay published');
+
+  await fs.writeFile(path.join(fixturesDirectory, 'flaky.json'), row('Flaky Market'));
+  const recovered = await updateGovernmentMarkets({ ...options, now: new Date('2026-12-01T08:17:00.000Z') });
+  assert.equal(recovered.manifest.status, 'ok');
+  assert.equal(recovered.manifest.consecutive_partial_runs, 0);
+  assert.equal(entry(recovered.manifest, 'flaky').consecutive_failures, 0);
+  assert.equal(entry(recovered.manifest, 'flaky').retrieved_at, '2026-12-01T08:17:00.000Z');
+});
+
+test('a source that reissues record ids keeps the same market ids and URLs', () => {
+  const market = (id, name, coordinates, address = '1 Main St') => ({
+    id: `gov:dc:${id}`, slug: `${id}-slug`, name, location: { address, coordinates }
+  });
+  const previous = [
+    market('old-a', 'Dupont Circle Market', { latitude: 38.9097, longitude: -77.0433 }),
+    market('old-b', 'Farmers Market Sw', { latitude: 38.8800, longitude: -77.0200 }),
+    market('old-c', 'Moved Market', { latitude: 38.9000, longitude: -77.0000 }),
+    market('old-d', 'No Coordinates Market', undefined, '5 Elm St'),
+    market('old-e', 'Twin Market', { latitude: 38.95, longitude: -77.05 }),
+    market('kept', 'Stable Market', { latitude: 38.91, longitude: -77.01 })
+  ];
+  const current = [
+    market('new-a', 'Dupont Circle Market', { latitude: 38.9098, longitude: -77.0432 }),
+    market('new-b', 'FARMERS MARKET SW', { latitude: 38.8801, longitude: -77.0201 }),
+    market('new-c', 'Moved Market', { latitude: 39.2000, longitude: -77.0000 }),
+    market('new-d', 'No Coordinates Market', undefined, '5 Elm St.'),
+    market('new-e1', 'Twin Market', { latitude: 38.95, longitude: -77.05 }),
+    market('new-e2', 'Twin Market', { latitude: 38.95, longitude: -77.05 }),
+    market('kept', 'Stable Market', { latitude: 38.91, longitude: -77.01 }),
+    market('brand-new', 'Brand New Market', { latitude: 38.92, longitude: -77.02 })
+  ];
+
+  const { records, carried } = carryForwardIdentities(current, previous);
+  const idFor = (name, index = 0) => records.filter((record) => record.name === name)[index].id;
+
+  assert.equal(carried, 3);
+  assert.equal(idFor('Dupont Circle Market'), 'gov:dc:old-a');
+  assert.equal(records.find((record) => record.id === 'gov:dc:old-a').slug, 'old-a-slug');
+  assert.equal(idFor('FARMERS MARKET SW'), 'gov:dc:old-b', 'a case change is the same market');
+  assert.equal(idFor('No Coordinates Market'), 'gov:dc:old-d', 'without coordinates the address decides');
+  assert.equal(idFor('Moved Market'), 'gov:dc:new-c', 'a market 33 km away is a different market');
+  assert.equal(idFor('Twin Market', 0), 'gov:dc:new-e1', 'an ambiguous name is never guessed');
+  assert.equal(idFor('Twin Market', 1), 'gov:dc:new-e2');
+  assert.equal(idFor('Stable Market'), 'gov:dc:kept');
+  assert.equal(idFor('Brand New Market'), 'gov:dc:brand-new');
+});
+
+test('a carried id stays with its source record id after a rename or a new namesake', () => {
+  const market = (id, sourceRecordId, name, latitude) => ({
+    id: `gov:dc:${id}`, slug: `${id}-slug`, name,
+    location: { address: '1 Main St', coordinates: { latitude, longitude: -77 } },
+    provenance: { source_record_id: sourceRecordId }
+  });
+  // Last month the reissue was matched by name: old ids, new source record ids.
+  const previous = [
+    market('old-rose', 'new-rose', 'Rose Park Farmers Market', 38.91),
+    market('old-river', 'new-river', 'Riverdale Park Market', 38.96)
+  ];
+  const current = [
+    market('new-rose', 'new-rose', 'Rose Park Market', 38.91),
+    market('new-river', 'new-river', 'Riverdale Park Market', 38.96),
+    market('other-river', 'other-river', 'Riverdale Park Market', 39.4)
+  ];
+
+  const { records, carried } = carryForwardIdentities(current, previous);
+  assert.equal(carried, 2);
+  assert.deepEqual(records.map((record) => record.id), ['gov:dc:old-rose', 'gov:dc:old-river', 'gov:dc:other-river']);
+  assert.equal(records[0].slug, 'old-rose-slug');
+  assert.deepEqual(carryForwardIdentities(records, records).records, records, 'a second run changes nothing');
 });
 
 test('changed markets are the added and edited records, never the deleted ones', () => {

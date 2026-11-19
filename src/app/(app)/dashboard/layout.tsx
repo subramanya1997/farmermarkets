@@ -37,8 +37,9 @@ export default async function DashboardLayout({ children }: { children: ReactNod
       items: markets.map(({ market, pending }) => ({
         href: `/dashboard/markets/${market.slug}`,
         label: market.name,
-        // The vendor desk below is its own entry, so only the listing itself lights this one.
+        // The vendor desk below is its own entry, so only the market home and its updates light this one.
         exact: true,
+        also: [`/dashboard/markets/${market.slug}/updates`],
         dot: pending ? 'Update waiting for review' : undefined,
       })),
     },

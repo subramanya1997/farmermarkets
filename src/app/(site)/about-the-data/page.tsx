@@ -188,10 +188,10 @@ export default async function AboutTheDataPage() {
               <p>
                 Each record is converted to the same set of fields, placed in its state and city,
                 and checked before it goes live; a source that fails those checks keeps its last
-                good records. A scheduled job checks the government sources daily and publishes
-                only changes that pass
+                good records. A scheduled job checks the government sources once a month and
+                publishes only changes that pass
                 {data.lastRetrievedAt
-                  ? `, and they were last retrieved on ${formatDate(data.lastRetrievedAt)}.`
+                  ? `. The most recent retrieval was on ${formatDate(data.lastRetrievedAt)}, and each source below shows its own date.`
                   : '.'}{' '}
                 The USDA listings are refreshed a few times a year, mostly before and during the
                 market season, and every listing shows its source&rsquo;s own date, not the day we

@@ -4,9 +4,10 @@
  * The browser uploads straight to Blob (photos are larger than a server
  * action body allows); this route only says yes or no. A token is issued
  * only to a signed-in, verified organizer who manages the market, only for
- * that market's folder, only for JPEG/PNG/WebP up to 8 MB. The browser then
- * registers the finished upload with a server action, which checks the same
- * things again and queues the photo for review.
+ * that market's folder, only for JPEG/PNG/WebP/HEIC/HEIF up to 8 MB (the
+ * file as sent). The browser then registers the finished upload with a
+ * server action, which checks the same things again, converts HEIC/HEIF to
+ * JPEG (src/lib/photoConvert.ts) and queues the photo for review.
  */
 import { NextResponse } from 'next/server';
 import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';

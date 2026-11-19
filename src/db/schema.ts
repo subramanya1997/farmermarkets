@@ -358,6 +358,28 @@ export const marketPhotos = pgTable(
   ],
 );
 
+/**
+ * Short notes from a market's managers to shoppers ("Closed Saturday for the
+ * parade"). Shown on the market page between `starts_at` and `ends_at`
+ * unless withdrawn. They sit beside the listing: they never touch
+ * `market_overrides` or the dataset. Rules in src/lib/marketUpdateRules.ts.
+ */
+export const marketUpdates = pgTable(
+  'market_updates',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    marketId: text('market_id').notNull(),
+    body: text('body').notNull(),
+    startsAt: timestamp('starts_at', { withTimezone: true }).notNull(),
+    endsAt: timestamp('ends_at', { withTimezone: true }).notNull(),
+    createdBy: text('created_by').references(() => user.id, { onDelete: 'set null' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+    withdrawnAt: timestamp('withdrawn_at', { withTimezone: true }),
+  },
+  (t) => [index('market_updates_market_idx').on(t.marketId), index('market_updates_ends_idx').on(t.endsAt)],
+);
+
 /* ------------------------------------------------------------------ *
  * Vendor accounts (src/lib/vendors.ts)
  *
@@ -563,3 +585,42 @@ export const vendorAnnouncements = pgTable('vendor_announcements', {
   sentBy: text('sent_by'),
   sentAt: timestamp('sent_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+/* ------------------------------------------------------------------ *
+ * Outreach bot audit log (src/lib/botActions.ts, docs/organizer-bot.md)
+ * ------------------------------------------------------------------ */
+
+/**
+ * `applied`: the bot published it. `pending`: a removal or closure the bot
+ * may not publish, waiting for an admin. `approved` / `dismissed`: an
+ * admin's decision on a pending one.
+ */
+export const botActionStatus = pgEnum('bot_action_status', ['applied', 'pending', 'approved', 'dismissed']);
+
+/**
+ * Everything the outreach bot did or asked for, one row per call. `details`
+ * holds a summary (sections, photo ids, the requested change for pending
+ * items), never raw image bytes.
+ */
+export const botActions = pgTable(
+  'bot_actions',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    action: text('action').notNull(),
+    marketId: text('market_id').notNull(),
+    actor: text('actor').notNull().default('outreach-bot'),
+    note: text('note').notNull(),
+    operatorEmail: text('operator_email'),
+    details: jsonb('details').notNull(),
+    status: botActionStatus('status').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+    reviewedBy: text('reviewed_by'),
+    reviewNote: text('review_note'),
+  },
+  (t) => [
+    index('bot_actions_market_idx').on(t.marketId),
+    index('bot_actions_status_idx').on(t.status),
+    index('bot_actions_created_idx').on(t.createdAt),
+  ],
+);
