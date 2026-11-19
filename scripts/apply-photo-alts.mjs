@@ -9,6 +9,9 @@
 //
 //   node --env-file=.env.local scripts/apply-photo-alts.mjs --in data/photo-alts/drafts.json [--apply]
 //
+// Corrections to already-written alts use the same script: a file whose
+// old_alt is the alt now live (see data/photo-alts/fixes-*.json).
+//
 // Drafts with "skip": true, or listed in --exclude (comma separated ids), are left alone.
 import fs from 'node:fs/promises';
 import { parseArgs } from 'node:util';
@@ -38,7 +41,9 @@ async function main() {
   const blocked = [];
   for (const draft of drafts) {
     if (draft.skip || excluded.has(draft.id)) continue;
-    const problems = checkAlt(draft.alt, draft.market_name).filter((problem) => BLOCKING.has(problem));
+    // A correction may put an off-topic photo back on its import template.
+    const revert = draft.template === true && /^Photo of \S/.test(draft.alt);
+    const problems = revert ? [] : checkAlt(draft.alt, draft.market_name).filter((problem) => BLOCKING.has(problem));
     if (problems.length) blocked.push({ id: draft.id, alt: draft.alt, problems });
     else staged.push({ id: draft.id, alt: draft.alt, old_alt: draft.old_alt });
   }
@@ -82,7 +87,7 @@ async function main() {
     if (before.found !== before.staged) console.log(`${before.staged - before.found} drafted rows no longer exist (left alone)`);
     if (before.already) console.log(`${before.already} rows already have the drafted alt`);
     const changed = before.found - before.eligible - before.already;
-    if (changed) console.log(`${changed} rows changed by someone else since drafting (left alone)`);
+    if (changed) console.log(`${changed} rows edited or no longer approved since drafting (left alone)`);
     for (const row of updated.slice(0, 5)) console.log(`  ${row.market_id} ${row.alt}`);
     if (args.apply) {
       await client.query('COMMIT');

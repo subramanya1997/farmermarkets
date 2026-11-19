@@ -12,13 +12,12 @@
 //   node --env-file=.env.local scripts/draft-photo-alts.mjs \
 //     --out data/photo-alts/drafts.json --cache /tmp/photo-alts [--limit 30]
 //     [--batch 10] [--concurrency 6] [--model sonnet] [--ids id1,id2]
-import { spawn } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { parseArgs } from 'node:util';
 import { neon } from '@neondatabase/serverless';
-import sharp from 'sharp';
 import { altMarketName, checkAlt, normalizeAlt } from './lib/photo-alt.mjs';
+import { cachedImage, runClaude } from './lib/photo-alt-model.mjs';
 
 const { values: args } = parseArgs({
   options: {
@@ -70,19 +69,6 @@ async function readJson(file, fallback) {
   }
 }
 
-async function cachedImage(row, cacheDir) {
-  const file = path.join(cacheDir, `${row.id}.jpg`);
-  try {
-    await fs.access(file);
-    return file;
-  } catch {}
-  const response = await fetch(row.blob_url);
-  if (!response.ok) throw new Error(`${response.status} fetching ${row.blob_url}`);
-  const input = Buffer.from(await response.arrayBuffer());
-  await sharp(input).rotate().resize({ width: 800, height: 800, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 80 }).toFile(file);
-  return file;
-}
-
 const PROMPT = (items) => `You are writing image alt text for photos on farmermarkets.app, a directory of farmers markets. The alt text is read by screen readers and by Google Images, so it must say plainly what is in each picture.
 
 Read each image file listed below with the Read tool, look at it carefully, then write one alt for it.
@@ -102,39 +88,6 @@ ${items.map((item) => `- id ${item.id}: file ${item.file}; market name "${item.n
 
 Reply with only a JSON array, one object per image, in this shape and nothing else:
 [{"id": "<id>", "alt": "<alt text>", "kind": "photo|graphic|logo|map|illustration|ai_generated|unrelated", "confidence": "high|medium|low", "note": "<optional, under 15 words, only if something is uncertain>"}]`;
-
-function runClaude(prompt, cwd, model) {
-  return new Promise((resolve, reject) => {
-    const child = spawn('claude', [
-      '-p', prompt,
-      '--model', model,
-      '--tools', 'Read',
-      '--allowedTools', 'Read',
-      '--setting-sources', '',
-      '--strict-mcp-config',
-      '--disable-slash-commands',
-      '--no-session-persistence',
-      '--output-format', 'json',
-    ], { cwd, stdio: ['ignore', 'pipe', 'pipe'] });
-    let stdout = '';
-    let stderr = '';
-    child.stdout.on('data', (chunk) => { stdout += chunk; });
-    child.stderr.on('data', (chunk) => { stderr += chunk; });
-    child.on('error', reject);
-    child.on('close', (code) => {
-      if (code !== 0) return reject(new Error(`claude exited ${code}: ${stderr.slice(0, 500)}`));
-      try {
-        const envelope = JSON.parse(stdout);
-        if (envelope.is_error) return reject(new Error(`claude error: ${String(envelope.result).slice(0, 500)}`));
-        const text = String(envelope.result ?? '');
-        const json = text.slice(text.indexOf('['), text.lastIndexOf(']') + 1);
-        resolve({ drafts: JSON.parse(json), cost: envelope.total_cost_usd ?? 0 });
-      } catch (error) {
-        reject(new Error(`unparseable reply: ${error.message}: ${stdout.slice(0, 500)}`));
-      }
-    });
-  });
-}
 
 async function main() {
   if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL is not set (run with --env-file=.env.local)');

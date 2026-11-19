@@ -9226,10 +9226,12 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/308774/editorial-38ac54d13f18785d319b421f8ddda3419b9e8899e3d68a829a40de141579280c.webp",
       "market_name": "Mountain View Farmers’ Market",
       "old_alt": "Photo of Mountain View Farmers’ Market",
-      "alt": "Mountain View Farmers’ Market, stand with carrots, beets, turnips, radishes and green onions stacked on a red tablecloth",
+      "alt": "Mountain View Farmers’ Market, tomatoes, peaches, blueberries, raspberries, radishes, green beans, lettuce and grapes on display",
       "kind": "photo",
       "confidence": "high",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Mountain View Farmers’ Market, stand with carrots, beets, turnips, radishes and green onions stacked on a red tablecloth",
+      "edited": "verify-pass"
     },
     {
       "id": "b4aa502d-b939-4995-8df5-ebfadea25a13",
@@ -9238,10 +9240,12 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/308774/editorial-4f2bdddc34ea038c576bf1897b74aefa72510b6d5ac21d0e6878e2f2941ebfe1.webp",
       "market_name": "Mountain View Farmers’ Market",
       "old_alt": "Photo of Mountain View Farmers’ Market",
-      "alt": "Mountain View Farmers’ Market, crowd of shoppers including children walking along a street under tents and trees",
+      "alt": "Mountain View Farmers’ Market, market table piled with carrots, beets, turnips, radishes and green onions under a red tablecloth",
       "kind": "photo",
       "confidence": "high",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Mountain View Farmers’ Market, crowd of shoppers including children walking along a street under tents and trees",
+      "edited": "verify-pass"
     },
     {
       "id": "6f56f09b-620c-4b79-8f2c-9757550dcdb2",
@@ -9250,11 +9254,13 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/308774/editorial-718ec091a3cc710ad0e90d06c362ffb835735ecc82ee8a933ee62a19866c9bcd.webp",
       "market_name": "Mountain View Farmers’ Market",
       "old_alt": "Photo of Mountain View Farmers’ Market",
-      "alt": "Mountain View Farmers’ Market, fruit and vegetables",
+      "alt": "Mountain View Farmers’ Market, crowd of shoppers walking down a street lined with white and red tents",
       "kind": "photo",
       "confidence": "low",
       "note": "File was not viewed in order; no distinct image for this id was returned.",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Mountain View Farmers’ Market, fruit and vegetables",
+      "edited": "verify-pass"
     },
     {
       "id": "bf627384-98f9-42e6-8528-f70a7f7ec5b8",
@@ -9723,11 +9729,13 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/308846/editorial-bba106bb99e64e2a8d07297ece01f6cebb3fe1604e4856f53e02cb9bd1f6b097.webp",
       "market_name": "Chico Certified Farmers’ Market",
       "old_alt": "Photo of Chico Certified Farmers’ Market",
-      "alt": "Chico Certified Farmers’ Market, two people sorting used books on a table in a room with bookshelves",
+      "alt": "Chico Certified Farmers’ Market, bunches of colorful anemone flowers on a stall with shoppers standing behind",
       "kind": "photo",
       "confidence": "medium",
       "note": "Indoor book sorting scene, not clearly a market stand",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Chico Certified Farmers’ Market, two people sorting used books on a table in a room with bookshelves",
+      "edited": "verify-pass"
     },
     {
       "id": "946b7d01-e596-4ed3-bd2b-a2888bbac28e",
@@ -9736,10 +9744,14 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/308849/editorial-353d071a81f0ee914abade3a954d5f784a3fc746ec6237748e54b0429d78c4f0.webp",
       "market_name": "Claremont Farmers’ Market",
       "old_alt": "Photo of Claremont Farmers’ Market",
-      "alt": "Claremont Farmers’ Market, close view of fresh cut flower bunches in white, pink and purple with shoppers behind",
+      "alt": "Photo of Claremont Farmers’ Market",
       "kind": "photo",
       "confidence": "high",
-      "problems": []
+      "problems": [],
+      "skip": true,
+      "skip_reason": "not a photo of the market; candidate for removal (found by verify pass)",
+      "swapped_alt": "Claremont Farmers’ Market, close view of fresh cut flower bunches in white, pink and purple with shoppers behind",
+      "edited": "verify-pass"
     },
     {
       "id": "12cf89d1-9e09-44ed-9b77-a0d7c3fa0f3b",
@@ -13770,10 +13782,12 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/309859/editorial-7cf178aabbb68d8da95ec1540a7665a2bd1e619c12b839cf5d7699df19ec7921.webp",
       "market_name": "Lincoln Square Farmers Market",
       "old_alt": "Photo of Lincoln Square Farmers Market",
-      "alt": "Lincoln Square Farmers Market, view from above of tents and crowds of shoppers on a closed street",
+      "alt": "Lincoln Square Farmers Market, white tents and a few shoppers beside a street with a train station staircase behind",
       "kind": "photo",
       "confidence": "high",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Lincoln Square Farmers Market, view from above of tents and crowds of shoppers on a closed street",
+      "edited": "verify-pass"
     },
     {
       "id": "0ce062ad-e235-4692-a85d-41e88e0c2bcf",
@@ -13782,11 +13796,13 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/309859/editorial-9492fa055feec89475962529601da0ac2310d67d12b6db457fe3dc853af2391f.webp",
       "market_name": "Lincoln Square Farmers Market",
       "old_alt": "Photo of Lincoln Square Farmers Market",
-      "alt": "Lincoln Square Farmers Market, shoppers browsing green beans and yellow peppers at a stand under a tent",
+      "alt": "Lincoln Square Farmers Market, overhead view of white and blue vendor tents and shoppers along a street lined with trees",
       "kind": "photo",
       "confidence": "medium",
       "note": "Yellow items look like peppers but could be squash",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Lincoln Square Farmers Market, shoppers browsing green beans and yellow peppers at a stand under a tent",
+      "edited": "verify-pass"
     },
     {
       "id": "8c6ec10f-9528-49d4-b2c8-7bfe5b5531c8",
@@ -13795,11 +13811,13 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/309859/editorial-b7069e442d6be45ee42c21345b2393649555e2ea241755c3c6c0f7d596ce2527.webp",
       "market_name": "Lincoln Square Farmers Market",
       "old_alt": "Photo of Lincoln Square Farmers Market",
-      "alt": "Lincoln Square Farmers Market, white tents and shoppers on a street below an elevated train station",
+      "alt": "Lincoln Square Farmers Market, shoppers browsing stalls of green beans and yellow peppers under white tents",
       "kind": "photo",
       "confidence": "medium",
       "note": "Station structure assumed from the stairs and platform",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Lincoln Square Farmers Market, white tents and shoppers on a street below an elevated train station",
+      "edited": "verify-pass"
     },
     {
       "id": "2dd80a29-4958-4bd3-843a-a0e407090e57",
@@ -15010,10 +15028,14 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/310197/editorial-4867762ca1c9c34233a5ce99237751b627db5473e10ca719d914e48a7f585f89.webp",
       "market_name": "Ft Madison Farmers Market",
       "old_alt": "Photo of Ft Madison Farmers Market",
-      "alt": "Ft Madison Farmers Market, two vendors seated behind a table of vegetables and herbs with hanging flower baskets in front",
+      "alt": "Photo of Ft Madison Farmers Market",
       "kind": "photo",
       "confidence": "high",
-      "problems": []
+      "problems": [],
+      "skip": true,
+      "skip_reason": "not a photo of the market; candidate for removal (found by verify pass)",
+      "swapped_alt": "Ft Madison Farmers Market, two vendors seated behind a table of vegetables and herbs with hanging flower baskets in front",
+      "edited": "verify-pass"
     },
     {
       "id": "31b6a533-0c4a-493b-a155-19ca5c7ee791",
@@ -27742,10 +27764,12 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/gov-be_brussels_food_markets-7bc4d6c3596bd3c5/editorial-0dcb4053ce113cae6ceebe1a6d132912c69c96f67c74ce3544e744b7b1b4a9b8.webp",
       "market_name": "Marché DE Wand / Markt DE Wand",
       "old_alt": "Photo of Marché DE Wand / Markt DE Wand",
-      "alt": "Marché DE Wand / Markt DE Wand, a food truck on a grass lawn with straw bales and a wooden table in front",
+      "alt": "Marché DE Wand / Markt DE Wand, shiny metal balls in a tree shaded square with market stalls and tents behind",
       "kind": "photo",
       "confidence": "high",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Marché DE Wand / Markt DE Wand, a food truck on a grass lawn with straw bales and a wooden table in front",
+      "edited": "verify-pass"
     },
     {
       "id": "30972e6b-b1bf-4e58-9f48-9afcd940e066",
@@ -27754,10 +27778,12 @@
       "blob_url": "https://cjcdffkwfk72gdpf.public.blob.vercel-storage.com/markets/gov-be_brussels_food_markets-7bc4d6c3596bd3c5/editorial-9738d36f7d4a7ed67e9d3156a8f16ff21507b87cd5281b97275b9996a3a92363.webp",
       "market_name": "Marché DE Wand / Markt DE Wand",
       "old_alt": "Photo of Marché DE Wand / Markt DE Wand",
-      "alt": "Marché DE Wand / Markt DE Wand, market stalls and tents beside a park with large metal balls and a sand court",
+      "alt": "Marché DE Wand / Markt DE Wand, black food truck on a street with straw bales and a wooden table on grass",
       "kind": "photo",
       "confidence": "high",
-      "problems": []
+      "problems": [],
+      "swapped_alt": "Marché DE Wand / Markt DE Wand, market stalls and tents beside a park with large metal balls and a sand court",
+      "edited": "verify-pass"
     },
     {
       "id": "7034236d-ad84-4932-980f-792b902f5662",
