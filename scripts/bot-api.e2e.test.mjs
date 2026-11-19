@@ -160,3 +160,16 @@ test('photos: HEIC and non-images are refused, a JPEG publishes approved', async
   const [still] = await sql`select status from market_photos where id = ${body.photos[0].id}`;
   assert.equal(still.status, 'approved');
 });
+
+test('metrics: 401 without a token, counts with one', async () => {
+  const none = await fetch(`${BASE}/api/bot/metrics`);
+  assert.equal(none.status, 401);
+  const response = await fetch(`${BASE}/api/bot/metrics`, { headers: { authorization: `Bearer ${TOKEN}` } });
+  assert.equal(response.status, 200);
+  const body = await response.json();
+  assert.equal(body.ok, true);
+  assert.equal(body.schema_version, 1);
+  assert.ok(body.listings.total > 0);
+  for (const key of ['listings', 'organizers', 'edits', 'bot', 'submissions', 'newsletter', 'vendors', 'last_7_days']) assert.ok(body[key], key);
+  assert.ok(!JSON.stringify(body).includes('@'), 'no email addresses');
+});
