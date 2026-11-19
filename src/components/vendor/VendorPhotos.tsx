@@ -6,6 +6,7 @@ import { upload } from '@vercel/blob/client';
 import { AlertCircle, ArrowDown, ArrowUp, ImagePlus, Loader2, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { VendorPhoto } from '@/lib/vendorProfile';
+import { PHOTO_FORMATS_LABEL, PHOTO_TYPE_ERROR, isHeicType, photoAccept, photoContentType, photoFileName } from '@/lib/photoTypes';
 import { cn } from '@/lib/utils';
 import { Field, FieldError, TextInput, useFieldError } from './fields';
 
@@ -13,23 +14,9 @@ type UploadItem = {
   key: string;
   name: string;
   progress: number;
-  state: 'uploading' | 'error';
+  state: 'uploading' | 'converting' | 'error';
   error?: string;
 };
-
-const EXTENSIONS: Record<string, string> = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
-
-/** A safe, readable Blob file name: "Market Day!.JPG" becomes "market-day.jpg". */
-function blobFileName(file: File): string {
-  const base = file.name
-    .replace(/\.[^.]+$/, '')
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 60);
-  return `${base || 'photo'}.${EXTENSIONS[file.type] ?? 'jpg'}`;
-}
 
 async function imageSize(file: File): Promise<{ width?: number; height?: number }> {
   try {
@@ -83,7 +70,7 @@ export function VendorPhotos({
   const inputRef = useRef<HTMLInputElement>(null);
   const prefix = useRef<string | null>(null);
   const [uploads, setUploads] = useState<UploadItem[]>([]);
-  const inFlight = uploads.filter((item) => item.state === 'uploading').length;
+  const inFlight = uploads.filter((item) => item.state !== 'error').length;
   const slotsLeft = Math.max(0, maxPhotos - photos.length - inFlight);
   const listError = useFieldError('photos');
 
@@ -98,33 +85,50 @@ export function VendorPhotos({
     return body.pathPrefix;
   }
 
-  async function uploadOne(file: File, key: string) {
+  async function uploadOne(file: File, contentType: string, key: string) {
     try {
-      const [folder, size] = await Promise.all([pathPrefix(), imageSize(file)]);
-      const blob = await upload(`${folder}${blobFileName(file)}`, file, {
+      const heic = isHeicType(contentType);
+      // Most browsers cannot decode HEIC; the server measures it after converting.
+      const [folder, size] = await Promise.all([pathPrefix(), heic ? ({} as { width?: number; height?: number }) : imageSize(file)]);
+      const blob = await upload(`${folder}${photoFileName(file.name, contentType)}`, file, {
         access: 'public',
         handleUploadUrl: '/api/vendor/photos',
-        contentType: file.type,
+        contentType,
         onUploadProgress: ({ percentage }) => patch(key, { progress: Math.round(percentage) }),
       });
-      onChange((current) =>
-        current.length >= maxPhotos ? current : [...current, { url: blob.url, pathname: blob.pathname, width: size.width, height: size.height, alt: undefined }],
-      );
+      let photo: VendorPhoto = { url: blob.url, pathname: blob.pathname, width: size.width, height: size.height, alt: undefined };
+      if (heic) {
+        patch(key, { state: 'converting', progress: 100 });
+        photo = { ...(await convertHeic(blob.url, blob.pathname)), alt: undefined };
+      }
+      onChange((current) => (current.length >= maxPhotos ? current : [...current, photo]));
       setUploads((items) => items.filter((item) => item.key !== key));
     } catch (cause) {
       patch(key, { state: 'error', error: cause instanceof Error && cause.message ? cause.message : 'Upload failed. Please try again.' });
     }
   }
 
+  async function convertHeic(url: string, pathname: string): Promise<Omit<VendorPhoto, 'alt'>> {
+    const response = await fetch('/api/vendor/photos/convert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, pathname }),
+    });
+    const body = (await response.json().catch(() => ({}))) as Partial<Omit<VendorPhoto, 'alt'>> & { error?: string };
+    if (!response.ok || !body.url || !body.pathname) throw new Error(body.error || 'The photo did not save. Please try again.');
+    return { url: body.url, pathname: body.pathname, width: body.width, height: body.height };
+  }
+
   async function onFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
     const items: UploadItem[] = [];
-    const accepted: { file: File; key: string }[] = [];
+    const accepted: { file: File; contentType: string; key: string }[] = [];
     let room = slotsLeft;
     for (const file of Array.from(files)) {
       const key = `${file.name}-${file.size}-${Math.random().toString(36).slice(2, 9)}`;
+      const contentType = photoContentType(file, contentTypes);
       let problem: string | undefined;
-      if (!contentTypes.includes(file.type)) problem = 'Use a JPEG, PNG or WebP photo.';
+      if (!contentType) problem = PHOTO_TYPE_ERROR;
       else if (file.size > maxBytes) problem = `This photo is over ${megabytes(maxBytes)}. Try a smaller one.`;
       else if (room <= 0) problem = `A profile can have up to ${maxPhotos} photos.`;
       if (problem) {
@@ -132,7 +136,7 @@ export function VendorPhotos({
       } else {
         room -= 1;
         items.push({ key, name: file.name, progress: 0, state: 'uploading' });
-        accepted.push({ file, key });
+        accepted.push({ file, contentType: contentType!, key });
       }
     }
     setUploads((current) => [...current, ...items]);
@@ -140,7 +144,7 @@ export function VendorPhotos({
     if (accepted.length === 0) return;
     onUploadingChange(true);
     try {
-      await Promise.all(accepted.map(({ file, key }) => uploadOne(file, key)));
+      await Promise.all(accepted.map(({ file, contentType, key }) => uploadOne(file, contentType, key)));
     } finally {
       onUploadingChange(false);
     }
@@ -163,13 +167,13 @@ export function VendorPhotos({
           <p className="font-medium text-zinc-900 dark:text-zinc-100">
             {photos.length} of {maxPhotos} photos
           </p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400">JPEG, PNG or WebP, up to {megabytes(maxBytes)} each. The first one is your cover.</p>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">{PHOTO_FORMATS_LABEL}, up to {megabytes(maxBytes)} each. The first one is your cover.</p>
         </div>
         {/* The browser's file picker has no shadcn equivalent: it stays hidden and the shadcn Button below opens it. */}
         <input
           ref={inputRef}
           type="file"
-          accept={contentTypes.join(',')}
+          accept={photoAccept(contentTypes)}
           multiple
           className="sr-only"
           tabIndex={-1}
@@ -241,7 +245,7 @@ function UploadRow({ item, onDismiss }: { item: UploadItem; onDismiss: () => voi
             Dismiss
           </Button>
         ) : (
-          <span className="text-xs text-zinc-500 tabular-nums">{item.progress}%</span>
+          <span className="text-xs text-zinc-500 tabular-nums">{item.state === 'converting' ? 'Converting' : `${item.progress}%`}</span>
         )}
       </div>
       {failed ? (
