@@ -9765,7 +9765,9 @@
       "skip": true,
       "skip_reason": "not a photo of the market; candidate for removal (found by verify pass)",
       "swapped_alt": "Claremont Farmers’ Market, close view of fresh cut flower bunches in white, pink and purple with shoppers behind",
-      "edited": "verify-pass"
+      "edited": "verify-pass",
+      "outcome": "removed",
+      "outcome_note": "Status set to removed on 2026-11-18 after owner review: same bookshop photo as removed row b1557e15 (Claremont CA), no market shown."
     },
     {
       "id": "12cf89d1-9e09-44ed-9b77-a0d7c3fa0f3b",

@@ -21,3 +21,5 @@ The apply script changes only `alt`, in one transaction, and only on rows whose 
 The 57 drafts the model marked `unrelated` or `ai_generated` were reviewed by eye. 56 rows (55 of them plus `f6088f38`, see below) were set to `status = 'removed'` in production and on the dev branch, in one transaction; each carries `"outcome": "removed"`. Two were kept with `"outcome": "kept"`: `31b6a533` (a real market stand) and `aca87cd4` (the library the market is held at).
 
 `31b6a533` (Historic Valley Junction) and `f6088f38` (Ft Madison) came back from the same drafting batch with their alts swapped. The drafts now hold the right alt for each. Batching ten photos per model call can mix up descriptions, so a published alt is not guaranteed to match its photo.
+
+Later the same day `946b7d01` (Claremont Farmers’ Market, NH) was removed too. It is the same bookshop image as removed row `b1557e15`; the swap check had put it back on the template alt. That makes 57 removed editorial rows in all.
