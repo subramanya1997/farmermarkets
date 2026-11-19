@@ -12737,12 +12737,6 @@
       "value": "https://www.google.com/maps/search/?api=1&query=Moreno%20Valley%20CFM%2C%2026520%20CACTUS%20AVE"
     },
     {
-      "index": 8247,
-      "id": "gov:us_ca_wic_farmers_markets:94927ad780dd499e",
-      "path": "google_maps_url",
-      "value": "https://www.google.com/maps/search/?api=1&query=Downtown%20SLO%20FM%2C%20HIGUERA%20STREET%20BETWEEN%20CHORRO%20AND%20OSOS%20ST"
-    },
-    {
       "index": 8248,
       "id": "gov:us_ca_wic_farmers_markets:95294fd081cd8b32",
       "path": "google_maps_url",
@@ -15196,6 +15190,67 @@
           ]
         }
       ]
+    },
+    {
+      "index": 1799,
+      "id": 308632,
+      "path": "operations.days",
+      "value": [
+        "Thursdays, 6pm to 8:30pm, November 5, 2026 to March 11, 2027",
+        "Thursdays, 6pm to 9pm, March 18 to November 11, 2027"
+      ]
+    },
+    {
+      "index": 1799,
+      "id": 308632,
+      "path": "operations.season",
+      "value": "Year-round, every Thursday night"
+    },
+    {
+      "index": 1799,
+      "id": 308632,
+      "path": "payment.food_assistance.wic",
+      "value": true
+    },
+    {
+      "index": 829,
+      "id": 301571,
+      "path": "operations.days",
+      "value": [
+        "Saturdays, 9am to 2pm"
+      ]
+    },
+    {
+      "index": 829,
+      "id": 301571,
+      "path": "operations.season",
+      "value": "Year-round"
+    },
+    {
+      "index": 829,
+      "id": 301571,
+      "path": "location.description",
+      "value": "Marshall Amphitheater, El Dorado Hills Town Center"
+    },
+    {
+      "index": 829,
+      "id": 301571,
+      "path": "location.site_type",
+      "value": ""
+    },
+    {
+      "index": 1990,
+      "id": 308823,
+      "path": "operations.days",
+      "value": [
+        "Saturdays, 8am to 1pm, through November 28, 2026"
+      ]
+    },
+    {
+      "index": 1990,
+      "id": 308823,
+      "path": "operations.season",
+      "value": "April through November. The last market of 2026 is Saturday, November 28, and the market returns in April 2027"
     }
   ]
 }
