@@ -36,6 +36,13 @@
       "when": 1794891237654,
       "tag": "0004_vendor_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1795059869477,
+      "tag": "0005_market_updates",
+      "breakpoints": true
     }
   ]
 }
