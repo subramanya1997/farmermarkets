@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Download } from 'lucide-react';
 import { requireOrganizer } from '@/lib/organizer';
-import { getVendorForUser } from '@/lib/vendors';
+import { deskVendor } from '@/lib/vendors';
 import { vendorFootprint } from '@/lib/vendorReach';
 import { vendorPagePublic } from '@/lib/vendorRules';
 import { qrSvg, scanUrl } from '@/lib/vendorQr';
@@ -31,7 +31,7 @@ function Stat({ label, value, hint }: { label: string; value: number; hint: stri
 
 export default async function VendorFootprintPage() {
   const user = await requireOrganizer('/vendor/footprint');
-  const vendor = await getVendorForUser(user.id);
+  const vendor = await deskVendor(user);
   const live = vendor ? vendorPagePublic({ hasLiveProfile: vendor.profile !== null, suspended: vendor.suspendedAt !== null }) : false;
   const [footprint, svg] = await Promise.all([vendorFootprint(user), vendor && live ? qrSvg(vendor.slug) : Promise.resolve(null)]);
   const url = vendor && live ? scanUrl(vendor.slug) : null;

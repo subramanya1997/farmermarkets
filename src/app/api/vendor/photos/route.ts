@@ -13,7 +13,7 @@ import { handleUpload, type HandleUploadBody } from '@vercel/blob/client';
 import { getSessionUser } from '@/lib/organizer';
 import { requestOriginAllowed } from '@/lib/formGuards';
 import { MAX_VENDOR_PHOTO_BYTES, VENDOR_PHOTO_CONTENT_TYPES } from '@/lib/vendorProfile';
-import { ensureVendor, vendorPhotoPathPrefix } from '@/lib/vendors';
+import { ensureVendor, inVendorPreview, vendorPhotoPathPrefix } from '@/lib/vendors';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -37,6 +37,7 @@ export async function POST(request: Request) {
       onBeforeGenerateToken: async (pathname) => {
         const user = await getSessionUser();
         if (!user?.emailVerified) throw new Error('Sign in to upload photos.');
+        if (await inVendorPreview(user)) throw new Error('This is a preview, so nothing was saved.');
         const vendor = await ensureVendor(user);
         if (!pathname.startsWith(vendorPhotoPathPrefix(vendor.id))) throw new Error('Upload path does not match your account.');
         return {
@@ -58,6 +59,7 @@ export async function POST(request: Request) {
 export async function GET() {
   const user = await getSessionUser();
   if (!user?.emailVerified) return NextResponse.json({ error: 'Sign in to upload photos.' }, { status: 401 });
+  if (await inVendorPreview(user)) return NextResponse.json({ error: 'This is a preview, so nothing was saved.' }, { status: 403 });
   const vendor = await ensureVendor(user);
   return NextResponse.json({ pathPrefix: vendorPhotoPathPrefix(vendor.id) }, { headers: { 'Cache-Control': 'private, no-store' } });
 }

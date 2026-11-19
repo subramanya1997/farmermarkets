@@ -19,6 +19,7 @@ import 'server-only';
 import { cache } from 'react';
 import { randomBytes } from 'node:crypto';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 import { and, asc, count, desc, eq, gt, inArray, isNotNull, isNull, lt, ne, or } from 'drizzle-orm';
 import { del, head, list } from '@vercel/blob';
 import { dbSchema, getDb } from '@/db';
@@ -141,6 +142,43 @@ export const getVendorForUser = cache(async (userId: string): Promise<VendorRow 
   const [row] = await getDb().select().from(vendors).where(eq(vendors.userId, userId)).limit(1);
   return row ?? null;
 });
+
+/**
+ * Admins can preview the vendor desk as any vendor, or as someone who has not
+ * started yet (`new`). The choice lives in a cookie and is ignored for anyone
+ * who is not an admin. A preview is read only: every vendor write refuses
+ * while one is on, so nothing an admin clicks changes a vendor's data.
+ */
+export const VENDOR_PREVIEW_COOKIE = 'fm_vendor_preview';
+export const VENDOR_PREVIEW_NEW = 'new';
+
+export interface VendorPreview {
+  /** Null while previewing a vendor who has not started. */
+  vendor: VendorRow | null;
+  label: string;
+}
+
+export const vendorPreview = cache(async (user: SessionUser | null): Promise<VendorPreview | null> => {
+  if (!isAdmin(user)) return null;
+  const value = (await cookies()).get(VENDOR_PREVIEW_COOKIE)?.value ?? '';
+  if (value === VENDOR_PREVIEW_NEW) return { vendor: null, label: 'a new vendor' };
+  if (!UUID.test(value)) return null;
+  const [row] = await getDb().select().from(vendors).where(eq(vendors.id, value)).limit(1);
+  return row ? { vendor: row, label: row.name || 'this vendor' } : null;
+});
+
+/** True when an admin preview is on: vendor writes refuse with PREVIEW_ERROR. */
+export async function inVendorPreview(user: SessionUser | null): Promise<boolean> {
+  return (await vendorPreview(user)) !== null;
+}
+
+export const PREVIEW_ERROR: VendorActionResult = { ok: false, error: 'This is a preview, so nothing was saved. Exit the preview to make changes.' };
+
+/** The vendor whose desk this account sees: its own, or the one an admin previews. For reads only. */
+export async function deskVendor(user: SessionUser): Promise<VendorRow | null> {
+  const preview = await vendorPreview(user);
+  return preview ? preview.vendor : getVendorForUser(user.id);
+}
 
 /** The account's vendor row, created empty on first use. */
 export async function ensureVendor(user: SessionUser, source: 'self' | 'outreach-bot' | 'admin-invite' = 'self'): Promise<VendorRow> {
@@ -402,7 +440,7 @@ async function documentViews(vendorId: string): Promise<VendorDocumentView[]> {
 
 /** Everything the vendor area shows for this account. Creates nothing. */
 export async function vendorOverview(user: SessionUser): Promise<VendorOverview> {
-  const vendor = await getVendorForUser(user.id);
+  const vendor = await deskVendor(user);
   if (!vendor) {
     return {
       vendorId: null,
@@ -751,7 +789,7 @@ export interface ApplicationForm {
 
 /** What the apply page needs for one market. Creates nothing. */
 export async function applicationFormFor(user: SessionUser, market: FarmerMarket): Promise<ApplicationForm> {
-  const vendor = await getVendorForUser(user.id);
+  const vendor = await deskVendor(user);
   const [checklist, organizers] = await Promise.all([getChecklist(market.id), marketsWithOrganizers([market.id])]);
   let application: VendorApplicationView | null = null;
   let documents: VendorDocumentView[] = [];

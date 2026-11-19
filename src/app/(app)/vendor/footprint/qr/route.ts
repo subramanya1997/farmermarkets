@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getSessionUser } from '@/lib/organizer';
-import { getVendorForUser } from '@/lib/vendors';
+import { deskVendor } from '@/lib/vendors';
 import { vendorPagePublic } from '@/lib/vendorRules';
 import { qrPng, qrSvg } from '@/lib/vendorQr';
 
@@ -8,7 +8,7 @@ import { qrPng, qrSvg } from '@/lib/vendorQr';
 export async function GET(request: NextRequest) {
   const user = await getSessionUser();
   if (!user?.emailVerified) return NextResponse.json({ error: 'Sign in first.' }, { status: 401 });
-  const vendor = await getVendorForUser(user.id);
+  const vendor = await deskVendor(user);
   if (!vendor || !vendorPagePublic({ hasLiveProfile: vendor.profile !== null, suspended: vendor.suspendedAt !== null })) {
     return NextResponse.json({ error: 'Your QR code is ready once your page is live.' }, { status: 404 });
   }

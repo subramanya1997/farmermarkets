@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ArrowRight } from 'lucide-react';
+import { startVendorPreviewAction } from '@/app/(app)/vendor/actions';
+import { Button } from '@/components/ui/button';
 import { requireAdmin } from '@/lib/organizer';
 import { adminVendor } from '@/lib/vendors';
 import { attendanceLabel } from '@/lib/vendorRules';
@@ -68,6 +71,12 @@ export default async function AdminVendorPage({ params }: { params: Promise<{ id
           <h1 className="text-2xl font-semibold tracking-tight break-words">{name}</h1>
           <VendorStatusPill status={status} />
         </div>
+        <form action={startVendorPreviewAction.bind(null, vendor.id)}>
+          <Button type="submit" variant="link" className="h-auto gap-1 p-0 text-green-700 has-[>svg]:px-0 dark:text-green-400">
+            Preview as vendor
+            <ArrowRight aria-hidden="true" className="size-3.5" />
+          </Button>
+        </form>
       </div>
 
       <Panel title="Account">
