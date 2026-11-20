@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-20T02:24:36.138Z",
-  "market_count": 9131,
+  "generated_at": "2026-11-20T18:48:25.363Z",
+  "market_count": 9121,
   "states": [
     {
       "code": "NY",
@@ -4365,13 +4365,13 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 955,
+      "market_count": 953,
       "city_count": 407,
       "cities": [
         {
           "name": "Los Angeles",
           "slug": "los-angeles",
-          "market_count": 64,
+          "market_count": 63,
           "market_slugs": [
             "adams-and-vermont-cfm-los-angeles-c9818fea",
             "adamsvermont-farmers-market",
@@ -4404,7 +4404,6 @@
             "helen-albert-cfm-west-hollywood-los-angeles-df5cd57c",
             "historic-downtown-la-certified-farmers-market",
             "hollywood-farmers-market-los-angeles",
-            "hollywood-fm-los-angeles-3ab61fcb",
             "howard-hughes-center-farmers-market",
             "kaiser-permanente-los-angeles-medical-center-farmers-market-at-barnsdall-art-park-los-angeles",
             "la-cienega-18th-street-los-angeles-decce2c8",
@@ -5939,15 +5938,6 @@
           ]
         },
         {
-          "name": "La Jolla",
-          "slug": "la-jolla",
-          "market_count": 2,
-          "market_slugs": [
-            "la-jolla-cfm-la-jolla-e56705e5",
-            "la-jolla-elementary-certified-farmers-market-la-jolla"
-          ]
-        },
-        {
           "name": "LA Mesa",
           "slug": "la-mesa",
           "market_count": 2,
@@ -7250,6 +7240,14 @@
           "market_count": 1,
           "market_slugs": [
             "la-caada-flintridge-farmers-market"
+          ]
+        },
+        {
+          "name": "La Jolla",
+          "slug": "la-jolla",
+          "market_count": 1,
+          "market_slugs": [
+            "la-jolla-elementary-certified-farmers-market-la-jolla"
           ]
         },
         {
@@ -12837,13 +12835,13 @@
       "name": "Illinois",
       "country_code": "US",
       "slug": "illinois",
-      "market_count": 366,
+      "market_count": 367,
       "city_count": 196,
       "cities": [
         {
           "name": "Chicago",
           "slug": "chicago",
-          "market_count": 70,
+          "market_count": 71,
           "market_slugs": [
             "4-veggies-3-fruits-farmers-market-chicago",
             "61st-street-farmers-market",
@@ -12871,6 +12869,7 @@
             "garfield-park-neighborhood-market-indoor-season-chicago",
             "gatelypullman-chicago-farmers-market-chicago",
             "glenwood-sunday-market-chicago",
+            "green-city-market-avondale-chicago-il",
             "green-city-market-lincoln-park-chicago",
             "green-city-market-west-loop-chicago",
             "hegewisch-farmers-market",
@@ -18008,6 +18007,1314 @@
       "uncategorized_slugs": []
     },
     {
+      "code": "WI",
+      "name": "Wisconsin",
+      "country_code": "US",
+      "slug": "wisconsin",
+      "market_count": 239,
+      "city_count": 151,
+      "cities": [
+        {
+          "name": "Milwaukee",
+          "slug": "milwaukee",
+          "market_count": 13,
+          "market_slugs": [
+            "east-side-green-market",
+            "east-town-market",
+            "fondy-farmers-market-milwaukee",
+            "garden-district-farmers-market",
+            "jackson-park-farmers-market",
+            "milwaukee-county-winter-farmers-market",
+            "milwaukee-public-market-milwaukee",
+            "milwaukee-riverwest-gardeners-market",
+            "milwaukee-winter-farmers-market-milwaukee",
+            "south-shore-farmers-market-milwaukee",
+            "vliet-street-green-market-milwaukee",
+            "walker-square-farmers-market",
+            "westown-farmers-market"
+          ]
+        },
+        {
+          "name": "Madison",
+          "slug": "madison",
+          "market_count": 12,
+          "market_slugs": [
+            "dane-county-farmers-market-saturday-on-the-square-wi",
+            "dane-county-holiday-farmers-market-madison-wi",
+            "dane-county-winter-farmers-market-madison-wi",
+            "eastside-farmers-market-1",
+            "elver-park-farmers-market-madison",
+            "monroe-street-farmers-market-wi",
+            "northside-farmers-market-madison",
+            "south-madison-community-market-madison",
+            "south-madison-farmers-market",
+            "tuesday-eastside-farmers-market-madison",
+            "westside-community-market-madison",
+            "westside-community-market-madison-1"
+          ]
+        },
+        {
+          "name": "Kenosha",
+          "slug": "kenosha",
+          "market_count": 9,
+          "market_slugs": [
+            "kenosha-farmers-market-baker-park",
+            "kenosha-farmers-market-columbus-park",
+            "kenosha-farmers-market-lincoln-park",
+            "kenosha-farmers-market-pennoyer-park",
+            "kenosha-harbor-market",
+            "kenosha-public-market",
+            "kenosha-public-market-kenosha",
+            "kenosha-public-market-summer-outdoor-kenosha",
+            "kenosha-public-market-winter-indoor-kenosha"
+          ]
+        },
+        {
+          "name": "Appleton",
+          "slug": "appleton",
+          "market_count": 6,
+          "market_slugs": [
+            "appleton-downtown-farm-market-appleton",
+            "appleton-indoor-farmers-market",
+            "appleton-wednesday-farmers-market",
+            "downtown-appleton-farmers-market",
+            "festival-foods-darboy-farmers-market",
+            "festival-foods-northland-farmers-market"
+          ]
+        },
+        {
+          "name": "Racine",
+          "slug": "racine",
+          "market_count": 6,
+          "market_slugs": [
+            "downtown-racine-farmers-market",
+            "great-lakes-farmers-market",
+            "racine-county-indoor-outdoor-farmers-market-llc-racine",
+            "racine-farmers-market",
+            "st-andrew-farmers-market-racine",
+            "west-racine-farmers-market-racine"
+          ]
+        },
+        {
+          "name": "Oshkosh",
+          "slug": "oshkosh",
+          "market_count": 4,
+          "market_slugs": [
+            "festival-foods-oshkosh-farmers-market",
+            "oshkosh-farmers-market-in-the-park",
+            "oshkosh-winter-farmers-market",
+            "roosevelt-farmers-market-oshkosh"
+          ]
+        },
+        {
+          "name": "Sheboygan",
+          "slug": "sheboygan",
+          "market_count": 4,
+          "market_slugs": [
+            "festival-foods-sheboygan-farmers-market",
+            "scio-farmers-market-wisconsin",
+            "sheboygan-farmers-market",
+            "sheboygan-winter-farmers-market"
+          ]
+        },
+        {
+          "name": "Beloit",
+          "slug": "beloit",
+          "market_count": 3,
+          "market_slugs": [
+            "beloit-farmers-market",
+            "downtown-beloit-farmers-market-summer",
+            "downtown-beloit-farmers-market-winter"
+          ]
+        },
+        {
+          "name": "Columbus",
+          "slug": "columbus",
+          "market_count": 3,
+          "market_slugs": [
+            "columbus-downtown-farmers-market",
+            "the-beaver-dam-farmers-market",
+            "virtumarket-waterloo-producers-market"
+          ]
+        },
+        {
+          "name": "Eau Claire",
+          "slug": "eau-claire",
+          "market_count": 3,
+          "market_slugs": [
+            "eau-claire-downtown-farmers-market",
+            "eau-claire-farmers-market",
+            "festival-foods-eau-claire-farmers-market"
+          ]
+        },
+        {
+          "name": "Green Bay",
+          "slug": "green-bay",
+          "market_count": 3,
+          "market_slugs": [
+            "farmers-market-on-broadway",
+            "festival-foods-suamico-farmers-market",
+            "green-bay-farmers-market"
+          ]
+        },
+        {
+          "name": "Manitowoc",
+          "slug": "manitowoc",
+          "market_count": 3,
+          "market_slugs": [
+            "grow-it-forward-farmers-market-manitowoc",
+            "manitowoc-farmers-market",
+            "manitowoc-festival-foods-market"
+          ]
+        },
+        {
+          "name": "Marshfield",
+          "slug": "marshfield",
+          "market_count": 3,
+          "market_slugs": [
+            "festival-foods-marshfield-farmers-market",
+            "main-street-marshfield-downtown-farmers-market-marshfield",
+            "main-street-marshfield-farmers-market"
+          ]
+        },
+        {
+          "name": "Oconomowoc",
+          "slug": "oconomowoc",
+          "market_count": 3,
+          "market_slugs": [
+            "oconomowoc-chamber-farmers-market-oconomowoc",
+            "oconomowoc-farmers-market",
+            "oconomowoc-mid-week-marketplace"
+          ]
+        },
+        {
+          "name": "Superior",
+          "slug": "superior",
+          "market_count": 3,
+          "market_slugs": [
+            "barkers-island-farmers-market",
+            "superior-downtown-farmers-market",
+            "superior-farmers-market"
+          ]
+        },
+        {
+          "name": "Viroqua",
+          "slug": "viroqua",
+          "market_count": 3,
+          "market_slugs": [
+            "viroqua-farmers-market-viroqua",
+            "viroqua-public-market-viroqua",
+            "winter-viroqua-farmers-market"
+          ]
+        },
+        {
+          "name": "Algoma",
+          "slug": "algoma",
+          "market_count": 2,
+          "market_slugs": [
+            "algoma-sunday-farmers-market-algoma",
+            "kewaunee-county-farmers-market"
+          ]
+        },
+        {
+          "name": "Baldwin",
+          "slug": "baldwin",
+          "market_count": 2,
+          "market_slugs": [
+            "baldwins-main-st-farmers-market-baldwin",
+            "river-falls-farmers-market"
+          ]
+        },
+        {
+          "name": "Barron",
+          "slug": "barron",
+          "market_count": 2,
+          "market_slugs": [
+            "country-lane-farmers-market-barron",
+            "general-store-market-barron"
+          ]
+        },
+        {
+          "name": "Burlington",
+          "slug": "burlington",
+          "market_count": 2,
+          "market_slugs": [
+            "burlington-farmers-market-2",
+            "northwind-perennial-farm-market-burlington"
+          ]
+        },
+        {
+          "name": "Dousman",
+          "slug": "dousman",
+          "market_count": 2,
+          "market_slugs": [
+            "dousman-area-farmers-market",
+            "dousman-farmers-market-dousman"
+          ]
+        },
+        {
+          "name": "Fort Atkinson",
+          "slug": "fort-atkinson",
+          "market_count": 2,
+          "market_slugs": [
+            "fort-atkinson-farmers-market",
+            "fort-healthcare-farmers-market-fort-atkinson"
+          ]
+        },
+        {
+          "name": "Grantsburg",
+          "slug": "grantsburg",
+          "market_count": 2,
+          "market_slugs": [
+            "alpha-burnett-county-farmers-markets-grantsburg",
+            "grantsburg-burnett-county-farmers-markets-grantsburg"
+          ]
+        },
+        {
+          "name": "Hayward",
+          "slug": "hayward",
+          "market_count": 2,
+          "market_slugs": [
+            "hayward-farmers-market",
+            "hayward-farmers-market-wisconsin-hayward"
+          ]
+        },
+        {
+          "name": "Kewaskum",
+          "slug": "kewaskum",
+          "market_count": 2,
+          "market_slugs": [
+            "kewaskum-farm-market",
+            "lomira-farmers-market"
+          ]
+        },
+        {
+          "name": "LA Crosse",
+          "slug": "la-crosse",
+          "market_count": 2,
+          "market_slugs": [
+            "bridgeview-plaza-farmers-market",
+            "hmong-mutual-assistance-association-farmers-market"
+          ]
+        },
+        {
+          "name": "Ladysmith",
+          "slug": "ladysmith",
+          "market_count": 2,
+          "market_slugs": [
+            "bruce-community-farmers-market",
+            "rusk-county-farmers-market-ladysmith"
+          ]
+        },
+        {
+          "name": "Monroe",
+          "slug": "monroe",
+          "market_count": 2,
+          "market_slugs": [
+            "monroe-farmers-market-monroe",
+            "monroe-farmers-market-on-the-square"
+          ]
+        },
+        {
+          "name": "Mukwonago",
+          "slug": "mukwonago",
+          "market_count": 2,
+          "market_slugs": [
+            "mukwonago-area-farmers-market",
+            "mukwonago-farmers-market-mukwonago"
+          ]
+        },
+        {
+          "name": "Neenah",
+          "slug": "neenah",
+          "market_count": 2,
+          "market_slugs": [
+            "festival-foods-neenah-farmers-market",
+            "future-neenah-farmers-market-neenah"
+          ]
+        },
+        {
+          "name": "Port Washington",
+          "slug": "port-washington",
+          "market_count": 2,
+          "market_slugs": [
+            "port-washington-farmers-market",
+            "port-washington-winter-farmers-market"
+          ]
+        },
+        {
+          "name": "Ridgeway",
+          "slug": "ridgeway",
+          "market_count": 2,
+          "market_slugs": [
+            "dodgeville-farmers-market",
+            "ridgeway-farmers-market-ridgeway"
+          ]
+        },
+        {
+          "name": "Ripon",
+          "slug": "ripon",
+          "market_count": 2,
+          "market_slugs": [
+            "berlin-farmers-artists-market",
+            "watson-street-farmers-market"
+          ]
+        },
+        {
+          "name": "Siren",
+          "slug": "siren",
+          "market_count": 2,
+          "market_slugs": [
+            "burnett-county-farmers-market",
+            "siren-burnett-county-farmers-markets-siren"
+          ]
+        },
+        {
+          "name": "Stevens Point",
+          "slug": "stevens-point",
+          "market_count": 2,
+          "market_slugs": [
+            "stevens-point-area-winter-farmers-market",
+            "stevens-point-farmers-market"
+          ]
+        },
+        {
+          "name": "Sturtevant",
+          "slug": "sturtevant",
+          "market_count": 2,
+          "market_slugs": [
+            "southshore-outdoor-market-sturtevant",
+            "sturtevant-farmers-market-sturtevant"
+          ]
+        },
+        {
+          "name": "Verona",
+          "slug": "verona",
+          "market_count": 2,
+          "market_slugs": [
+            "verona-downtown-farmers-market",
+            "verona-farmers-market"
+          ]
+        },
+        {
+          "name": "Wauwatosa",
+          "slug": "wauwatosa",
+          "market_count": 2,
+          "market_slugs": [
+            "enderis-park-farmers-market",
+            "tosa-farmers-market-wauwatosa"
+          ]
+        },
+        {
+          "name": "Abbotsford",
+          "slug": "abbotsford",
+          "market_count": 1,
+          "market_slugs": [
+            "abbotsford-farmers-market"
+          ]
+        },
+        {
+          "name": "Allenton",
+          "slug": "allenton",
+          "market_count": 1,
+          "market_slugs": [
+            "allenton-farmers-market"
+          ]
+        },
+        {
+          "name": "Antigo",
+          "slug": "antigo",
+          "market_count": 1,
+          "market_slugs": [
+            "antigo-farmers-market-inc-antigo"
+          ]
+        },
+        {
+          "name": "Arcadia",
+          "slug": "arcadia",
+          "market_count": 1,
+          "market_slugs": [
+            "arcadia-farmers-market-arcadia"
+          ]
+        },
+        {
+          "name": "Ashland",
+          "slug": "ashland",
+          "market_count": 1,
+          "market_slugs": [
+            "ashland-area-farmers-market-ashland"
+          ]
+        },
+        {
+          "name": "Balsam Lake",
+          "slug": "balsam-lake",
+          "market_count": 1,
+          "market_slugs": [
+            "balsam-lake-farmers-market"
+          ]
+        },
+        {
+          "name": "Baraboo",
+          "slug": "baraboo",
+          "market_count": 1,
+          "market_slugs": [
+            "turners-corners-hwy-12-growers-farmers-market-baraboo"
+          ]
+        },
+        {
+          "name": "Bay",
+          "slug": "bay",
+          "market_count": 1,
+          "market_slugs": [
+            "green-bay-farmers-market-on-broadway-bay"
+          ]
+        },
+        {
+          "name": "Black Creek",
+          "slug": "black-creek",
+          "market_count": 1,
+          "market_slugs": [
+            "wagners-market-black-creek"
+          ]
+        },
+        {
+          "name": "Black River Falls",
+          "slug": "black-river-falls",
+          "market_count": 1,
+          "market_slugs": [
+            "black-river-falls-downtown-farmers-market"
+          ]
+        },
+        {
+          "name": "Bristol",
+          "slug": "bristol",
+          "market_count": 1,
+          "market_slugs": [
+            "bristol-farmers-market-bristol"
+          ]
+        },
+        {
+          "name": "Brookfield",
+          "slug": "brookfield",
+          "market_count": 1,
+          "market_slugs": [
+            "brookfield-farmers-market-1"
+          ]
+        },
+        {
+          "name": "Brown Deer",
+          "slug": "brown-deer",
+          "market_count": 1,
+          "market_slugs": [
+            "brown-deer-farmers-market"
+          ]
+        },
+        {
+          "name": "Butler",
+          "slug": "butler",
+          "market_count": 1,
+          "market_slugs": [
+            "butler-farmers-market"
+          ]
+        },
+        {
+          "name": "Cadott",
+          "slug": "cadott",
+          "market_count": 1,
+          "market_slugs": [
+            "cadott-farmers-market"
+          ]
+        },
+        {
+          "name": "Caledonia",
+          "slug": "caledonia",
+          "market_count": 1,
+          "market_slugs": [
+            "caledonia-outdoor-market-caledonia"
+          ]
+        },
+        {
+          "name": "Cambridge",
+          "slug": "cambridge",
+          "market_count": 1,
+          "market_slugs": [
+            "cambridge-open-air-market"
+          ]
+        },
+        {
+          "name": "Catawba",
+          "slug": "catawba",
+          "market_count": 1,
+          "market_slugs": [
+            "southern-price-county-farmers-market"
+          ]
+        },
+        {
+          "name": "Cedarburg",
+          "slug": "cedarburg",
+          "market_count": 1,
+          "market_slugs": [
+            "cedarburg-farmers-market"
+          ]
+        },
+        {
+          "name": "Chippewa Falls",
+          "slug": "chippewa-falls",
+          "market_count": 1,
+          "market_slugs": [
+            "chippewa-falls-farmers-market-chippewa-falls"
+          ]
+        },
+        {
+          "name": "City",
+          "slug": "city",
+          "market_count": 1,
+          "market_slugs": [
+            "mosinee-farm-market-city"
+          ]
+        },
+        {
+          "name": "Crosse",
+          "slug": "crosse",
+          "market_count": 1,
+          "market_slugs": [
+            "village-shopping-center-friday-farmers-market-crosse"
+          ]
+        },
+        {
+          "name": "Cudahy",
+          "slug": "cudahy",
+          "market_count": 1,
+          "market_slugs": [
+            "cudahy-farmers-market"
+          ]
+        },
+        {
+          "name": "DE Pere",
+          "slug": "de-pere",
+          "market_count": 1,
+          "market_slugs": [
+            "de-pere-farmers-market"
+          ]
+        },
+        {
+          "name": "DeForest",
+          "slug": "deforest",
+          "market_count": 1,
+          "market_slugs": [
+            "deforest-area-farmers-market"
+          ]
+        },
+        {
+          "name": "Delafield",
+          "slug": "delafield",
+          "market_count": 1,
+          "market_slugs": [
+            "delafield-farmers-market"
+          ]
+        },
+        {
+          "name": "Delavan",
+          "slug": "delavan",
+          "market_count": 1,
+          "market_slugs": [
+            "delavan-fresh-market-delavan"
+          ]
+        },
+        {
+          "name": "Downtown Janesville",
+          "slug": "downtown-janesville",
+          "market_count": 1,
+          "market_slugs": [
+            "janesville-farmers-market-inc-downtown-janesville"
+          ]
+        },
+        {
+          "name": "Eagle River",
+          "slug": "eagle-river",
+          "market_count": 1,
+          "market_slugs": [
+            "eagle-river-farmers-market"
+          ]
+        },
+        {
+          "name": "East Troy",
+          "slug": "east-troy",
+          "market_count": 1,
+          "market_slugs": [
+            "east-troy-farmers-market"
+          ]
+        },
+        {
+          "name": "Elk Mound",
+          "slug": "elk-mound",
+          "market_count": 1,
+          "market_slugs": [
+            "elk-mound-area-farmers-market"
+          ]
+        },
+        {
+          "name": "Elkhart Lake",
+          "slug": "elkhart-lake",
+          "market_count": 1,
+          "market_slugs": [
+            "elkhart-lake-farmers-and-artisans-market"
+          ]
+        },
+        {
+          "name": "Evansville",
+          "slug": "evansville",
+          "market_count": 1,
+          "market_slugs": [
+            "evansville-farmers-market"
+          ]
+        },
+        {
+          "name": "Exeland",
+          "slug": "exeland",
+          "market_count": 1,
+          "market_slugs": [
+            "upper-northwoods-farmers-market-exeland"
+          ]
+        },
+        {
+          "name": "Ferryville",
+          "slug": "ferryville",
+          "market_count": 1,
+          "market_slugs": [
+            "ferryville-market-in-the-park"
+          ]
+        },
+        {
+          "name": "Fish Creek",
+          "slug": "fish-creek",
+          "market_count": 1,
+          "market_slugs": [
+            "fish-creek-settlement-shops-farm-market"
+          ]
+        },
+        {
+          "name": "Fitchburg",
+          "slug": "fitchburg",
+          "market_count": 1,
+          "market_slugs": [
+            "fitchburg-center-farmers-market"
+          ]
+        },
+        {
+          "name": "Fond Du Lac",
+          "slug": "fond-du-lac",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-fond-du-lac-farmers-market-fond-du-lac"
+          ]
+        },
+        {
+          "name": "Fox Point",
+          "slug": "fox-point",
+          "market_count": 1,
+          "market_slugs": [
+            "fox-point-farmers-market"
+          ]
+        },
+        {
+          "name": "Germantown",
+          "slug": "germantown",
+          "market_count": 1,
+          "market_slugs": [
+            "germantown-farmers-market-1"
+          ]
+        },
+        {
+          "name": "Greendale",
+          "slug": "greendale",
+          "market_count": 1,
+          "market_slugs": [
+            "greendale-open-market"
+          ]
+        },
+        {
+          "name": "Greenfield",
+          "slug": "greenfield",
+          "market_count": 1,
+          "market_slugs": [
+            "greenfield-farmers-market-greenfield"
+          ]
+        },
+        {
+          "name": "Greenville",
+          "slug": "greenville",
+          "market_count": 1,
+          "market_slugs": [
+            "sustain-greenville-farmers-market"
+          ]
+        },
+        {
+          "name": "Hartford",
+          "slug": "hartford",
+          "market_count": 1,
+          "market_slugs": [
+            "wednesday-farmers-market-hartford"
+          ]
+        },
+        {
+          "name": "Hartland",
+          "slug": "hartland",
+          "market_count": 1,
+          "market_slugs": [
+            "hartland-farmers-market"
+          ]
+        },
+        {
+          "name": "Hillsboro",
+          "slug": "hillsboro",
+          "market_count": 1,
+          "market_slugs": [
+            "hillsboro-farmers-market"
+          ]
+        },
+        {
+          "name": "Jackson",
+          "slug": "jackson",
+          "market_count": 1,
+          "market_slugs": [
+            "jackson-food-farm-market-jackson"
+          ]
+        },
+        {
+          "name": "Janesville",
+          "slug": "janesville",
+          "market_count": 1,
+          "market_slugs": [
+            "rock-county-farmers-market"
+          ]
+        },
+        {
+          "name": "Jefferson",
+          "slug": "jefferson",
+          "market_count": 1,
+          "market_slugs": [
+            "jefferson-farmers-market"
+          ]
+        },
+        {
+          "name": "Kaukauna",
+          "slug": "kaukauna",
+          "market_count": 1,
+          "market_slugs": [
+            "kaukauna-farmers-market"
+          ]
+        },
+        {
+          "name": "Kiel",
+          "slug": "kiel",
+          "market_count": 1,
+          "market_slugs": [
+            "kiel-farmers-market"
+          ]
+        },
+        {
+          "name": "Kronenwetter",
+          "slug": "kronenwetter",
+          "market_count": 1,
+          "market_slugs": [
+            "kronenwetter-farmers-market-kronenwetter"
+          ]
+        },
+        {
+          "name": "LA Pointe",
+          "slug": "la-pointe",
+          "market_count": 1,
+          "market_slugs": [
+            "madeline-island-farmers-market"
+          ]
+        },
+        {
+          "name": "Lake Geneva",
+          "slug": "lake-geneva",
+          "market_count": 1,
+          "market_slugs": [
+            "lake-geneva-farmers-market"
+          ]
+        },
+        {
+          "name": "Lodi",
+          "slug": "lodi",
+          "market_count": 1,
+          "market_slugs": [
+            "lodi-valley-farmers-market"
+          ]
+        },
+        {
+          "name": "Luxemburg",
+          "slug": "luxemburg",
+          "market_count": 1,
+          "market_slugs": [
+            "luxemburg-farmers-market-luxemburg"
+          ]
+        },
+        {
+          "name": "Marinette",
+          "slug": "marinette",
+          "market_count": 1,
+          "market_slugs": [
+            "marinette-artisan-farm-market-marinette"
+          ]
+        },
+        {
+          "name": "Mauston",
+          "slug": "mauston",
+          "market_count": 1,
+          "market_slugs": [
+            "mauston-farmers-market-mauston"
+          ]
+        },
+        {
+          "name": "Mcfarland",
+          "slug": "mcfarland",
+          "market_count": 1,
+          "market_slugs": [
+            "mcfarland-farmers-market-mcfarland"
+          ]
+        },
+        {
+          "name": "Menasha",
+          "slug": "menasha",
+          "market_count": 1,
+          "market_slugs": [
+            "menasha-farm-fresh-market-terrace-in-front-of-the-marina-menasha"
+          ]
+        },
+        {
+          "name": "Menomonee Falls",
+          "slug": "menomonee-falls",
+          "market_count": 1,
+          "market_slugs": [
+            "menomonee-falls-farmers-market"
+          ]
+        },
+        {
+          "name": "Merrill",
+          "slug": "merrill",
+          "market_count": 1,
+          "market_slugs": [
+            "merrill-area-farmers-market"
+          ]
+        },
+        {
+          "name": "Middleton",
+          "slug": "middleton",
+          "market_count": 1,
+          "market_slugs": [
+            "greenway-station-farmers-market"
+          ]
+        },
+        {
+          "name": "Mineral Point",
+          "slug": "mineral-point",
+          "market_count": 1,
+          "market_slugs": [
+            "mineral-point-farmers-market"
+          ]
+        },
+        {
+          "name": "Mount Horeb",
+          "slug": "mount-horeb",
+          "market_count": 1,
+          "market_slugs": [
+            "mount-horeb-farmers-market"
+          ]
+        },
+        {
+          "name": "Mt. Horeb",
+          "slug": "mt-horeb",
+          "market_count": 1,
+          "market_slugs": [
+            "mt-horeb-farmers-market-mt-horeb"
+          ]
+        },
+        {
+          "name": "Multi-Purpose Room Oshkosh",
+          "slug": "multi-purpose-room-oshkosh",
+          "market_count": 1,
+          "market_slugs": [
+            "oshkosh-farmers-market-multi-purpose-room-oshkosh"
+          ]
+        },
+        {
+          "name": "Muskego",
+          "slug": "muskego",
+          "market_count": 1,
+          "market_slugs": [
+            "muskego-green-market"
+          ]
+        },
+        {
+          "name": "New Berlin",
+          "slug": "new-berlin",
+          "market_count": 1,
+          "market_slugs": [
+            "new-berlin-farmers-market"
+          ]
+        },
+        {
+          "name": "New Holstein",
+          "slug": "new-holstein",
+          "market_count": 1,
+          "market_slugs": [
+            "new-holstein-farmers-market"
+          ]
+        },
+        {
+          "name": "New Richmond",
+          "slug": "new-richmond",
+          "market_count": 1,
+          "market_slugs": [
+            "new-richmond-farmers-market"
+          ]
+        },
+        {
+          "name": "Oak Creek",
+          "slug": "oak-creek",
+          "market_count": 1,
+          "market_slugs": [
+            "oak-creek-farmers-market-oak-creek"
+          ]
+        },
+        {
+          "name": "Omro",
+          "slug": "omro",
+          "market_count": 1,
+          "market_slugs": [
+            "omro-thursday-night-market"
+          ]
+        },
+        {
+          "name": "Oneida",
+          "slug": "oneida",
+          "market_count": 1,
+          "market_slugs": [
+            "oneida-farmers-market-oneida"
+          ]
+        },
+        {
+          "name": "Oregon",
+          "slug": "oregon",
+          "market_count": 1,
+          "market_slugs": [
+            "oregon-farmers-market-oregon"
+          ]
+        },
+        {
+          "name": "Park Falls",
+          "slug": "park-falls",
+          "market_count": 1,
+          "market_slugs": [
+            "park-falls-farmers-market"
+          ]
+        },
+        {
+          "name": "Phillips",
+          "slug": "phillips",
+          "market_count": 1,
+          "market_slugs": [
+            "phillips-farmers-market"
+          ]
+        },
+        {
+          "name": "Portage",
+          "slug": "portage",
+          "market_count": 1,
+          "market_slugs": [
+            "portage-farmers-market"
+          ]
+        },
+        {
+          "name": "Poynette",
+          "slug": "poynette",
+          "market_count": 1,
+          "market_slugs": [
+            "poynette-area-farmers-market"
+          ]
+        },
+        {
+          "name": "Prairie Du Chien",
+          "slug": "prairie-du-chien",
+          "market_count": 1,
+          "market_slugs": [
+            "blackhawk-junction-farmers-market"
+          ]
+        },
+        {
+          "name": "Princeton",
+          "slug": "princeton",
+          "market_count": 1,
+          "market_slugs": [
+            "princeton-farm-to-fork-farmers-market"
+          ]
+        },
+        {
+          "name": "Reedsburg",
+          "slug": "reedsburg",
+          "market_count": 1,
+          "market_slugs": [
+            "reedsburg-area-medical-center-farmers-market"
+          ]
+        },
+        {
+          "name": "Rice Lake",
+          "slug": "rice-lake",
+          "market_count": 1,
+          "market_slugs": [
+            "rice-lake-farmers-market"
+          ]
+        },
+        {
+          "name": "Richfield",
+          "slug": "richfield",
+          "market_count": 1,
+          "market_slugs": [
+            "richfield-wi-farmers-market-wi"
+          ]
+        },
+        {
+          "name": "Richland Center",
+          "slug": "richland-center",
+          "market_count": 1,
+          "market_slugs": [
+            "richland-area-farmers-market"
+          ]
+        },
+        {
+          "name": "Rome",
+          "slug": "rome",
+          "market_count": 1,
+          "market_slugs": [
+            "rome-farmers-market-business-park-rome"
+          ]
+        },
+        {
+          "name": "Saint Francis",
+          "slug": "saint-francis",
+          "market_count": 1,
+          "market_slugs": [
+            "clare-oasis-indooroutdoor-farmers-market-saint-francis"
+          ]
+        },
+        {
+          "name": "Shawano",
+          "slug": "shawano",
+          "market_count": 1,
+          "market_slugs": [
+            "shawano-farmers-market-shawano"
+          ]
+        },
+        {
+          "name": "Shorewood",
+          "slug": "shorewood",
+          "market_count": 1,
+          "market_slugs": [
+            "shorewood-farmers-market-shorewood"
+          ]
+        },
+        {
+          "name": "Somerset",
+          "slug": "somerset",
+          "market_count": 1,
+          "market_slugs": [
+            "somerset-farmers-market-craft-somerset"
+          ]
+        },
+        {
+          "name": "South Milwaukee",
+          "slug": "south-milwaukee",
+          "market_count": 1,
+          "market_slugs": [
+            "south-milwaukee-downtown-market-south-milwaukee"
+          ]
+        },
+        {
+          "name": "Spring Valley",
+          "slug": "spring-valley",
+          "market_count": 1,
+          "market_slugs": [
+            "spring-valley-farmers-market"
+          ]
+        },
+        {
+          "name": "St. Croix Falls",
+          "slug": "st-croix-falls",
+          "market_count": 1,
+          "market_slugs": [
+            "st-croix-falls-farmers-market-st-croix-falls"
+          ]
+        },
+        {
+          "name": "Star Prairie",
+          "slug": "star-prairie",
+          "market_count": 1,
+          "market_slugs": [
+            "star-prairie-farmers-market"
+          ]
+        },
+        {
+          "name": "Stoughton",
+          "slug": "stoughton",
+          "market_count": 1,
+          "market_slugs": [
+            "stoughton-community-farmers-market"
+          ]
+        },
+        {
+          "name": "Stoughton Plaza Stoughton",
+          "slug": "stoughton-plaza-stoughton",
+          "market_count": 1,
+          "market_slugs": [
+            "stoughton-farmers-market-stoughton-plaza-stoughton"
+          ]
+        },
+        {
+          "name": "Sturgeon Bay",
+          "slug": "sturgeon-bay",
+          "market_count": 1,
+          "market_slugs": [
+            "sturgeon-bay-farm-and-craft-market"
+          ]
+        },
+        {
+          "name": "Sun Prairie",
+          "slug": "sun-prairie",
+          "market_count": 1,
+          "market_slugs": [
+            "sun-prairie-farmers-market"
+          ]
+        },
+        {
+          "name": "Thiensville",
+          "slug": "thiensville",
+          "market_count": 1,
+          "market_slugs": [
+            "thiensville-farmers-market"
+          ]
+        },
+        {
+          "name": "Tomahawk",
+          "slug": "tomahawk",
+          "market_count": 1,
+          "market_slugs": [
+            "tomahawk-main-street-farmers-market"
+          ]
+        },
+        {
+          "name": "Twin Lakes",
+          "slug": "twin-lakes",
+          "market_count": 1,
+          "market_slugs": [
+            "st-johns-farmers-market-twin-lakes"
+          ]
+        },
+        {
+          "name": "Two Rivers",
+          "slug": "two-rivers",
+          "market_count": 1,
+          "market_slugs": [
+            "two-rivers-farmers-crafters-market"
+          ]
+        },
+        {
+          "name": "Union Grove",
+          "slug": "union-grove",
+          "market_count": 1,
+          "market_slugs": [
+            "union-grove-farmers-market"
+          ]
+        },
+        {
+          "name": "Washburn",
+          "slug": "washburn",
+          "market_count": 1,
+          "market_slugs": [
+            "washburn-farmers-market"
+          ]
+        },
+        {
+          "name": "Watertown",
+          "slug": "watertown",
+          "market_count": 1,
+          "market_slugs": [
+            "watertown-farmers-market-2"
+          ]
+        },
+        {
+          "name": "Waukesha",
+          "slug": "waukesha",
+          "market_count": 1,
+          "market_slugs": [
+            "waukesha-farmers-market"
+          ]
+        },
+        {
+          "name": "Waupun",
+          "slug": "waupun",
+          "market_count": 1,
+          "market_slugs": [
+            "waupun-area-farmers-market"
+          ]
+        },
+        {
+          "name": "Wausau",
+          "slug": "wausau",
+          "market_count": 1,
+          "market_slugs": [
+            "marketplace-thursdays"
+          ]
+        },
+        {
+          "name": "West Allis",
+          "slug": "west-allis",
+          "market_count": 1,
+          "market_slugs": [
+            "west-allis-farmers-market-wi"
+          ]
+        },
+        {
+          "name": "West Bend",
+          "slug": "west-bend",
+          "market_count": 1,
+          "market_slugs": [
+            "downtown-west-bend-farmers-market"
+          ]
+        },
+        {
+          "name": "West Salem",
+          "slug": "west-salem",
+          "market_count": 1,
+          "market_slugs": [
+            "west-salem-farmers-market"
+          ]
+        },
+        {
+          "name": "Whitefish Bay",
+          "slug": "whitefish-bay",
+          "market_count": 1,
+          "market_slugs": [
+            "whitefish-bay-farmers-market-whitefish-bay"
+          ]
+        },
+        {
+          "name": "Wisconsin Rapids",
+          "slug": "wisconsin-rapids",
+          "market_count": 1,
+          "market_slugs": [
+            "peach-street-farmers-market"
+          ]
+        }
+      ],
+      "uncategorized_slugs": [
+        "oak-creek-winter-farmers-market-wi"
+      ]
+    },
+    {
       "code": "TX",
       "name": "Texas",
       "country_code": "US",
@@ -20211,1312 +21518,6 @@
         }
       ],
       "uncategorized_slugs": []
-    },
-    {
-      "code": "WI",
-      "name": "Wisconsin",
-      "country_code": "US",
-      "slug": "wisconsin",
-      "market_count": 237,
-      "city_count": 151,
-      "cities": [
-        {
-          "name": "Milwaukee",
-          "slug": "milwaukee",
-          "market_count": 13,
-          "market_slugs": [
-            "east-side-green-market",
-            "east-town-market",
-            "fondy-farmers-market-milwaukee",
-            "garden-district-farmers-market",
-            "jackson-park-farmers-market",
-            "milwaukee-county-winter-farmers-market",
-            "milwaukee-public-market-milwaukee",
-            "milwaukee-riverwest-gardeners-market",
-            "milwaukee-winter-farmers-market-milwaukee",
-            "south-shore-farmers-market-milwaukee",
-            "vliet-street-green-market-milwaukee",
-            "walker-square-farmers-market",
-            "westown-farmers-market"
-          ]
-        },
-        {
-          "name": "Madison",
-          "slug": "madison",
-          "market_count": 10,
-          "market_slugs": [
-            "dane-county-farmers-market-saturday-on-the-square-wi",
-            "eastside-farmers-market-1",
-            "elver-park-farmers-market-madison",
-            "monroe-street-farmers-market-wi",
-            "northside-farmers-market-madison",
-            "south-madison-community-market-madison",
-            "south-madison-farmers-market",
-            "tuesday-eastside-farmers-market-madison",
-            "westside-community-market-madison",
-            "westside-community-market-madison-1"
-          ]
-        },
-        {
-          "name": "Kenosha",
-          "slug": "kenosha",
-          "market_count": 9,
-          "market_slugs": [
-            "kenosha-farmers-market-baker-park",
-            "kenosha-farmers-market-columbus-park",
-            "kenosha-farmers-market-lincoln-park",
-            "kenosha-farmers-market-pennoyer-park",
-            "kenosha-harbor-market",
-            "kenosha-public-market",
-            "kenosha-public-market-kenosha",
-            "kenosha-public-market-summer-outdoor-kenosha",
-            "kenosha-public-market-winter-indoor-kenosha"
-          ]
-        },
-        {
-          "name": "Appleton",
-          "slug": "appleton",
-          "market_count": 6,
-          "market_slugs": [
-            "appleton-downtown-farm-market-appleton",
-            "appleton-indoor-farmers-market",
-            "appleton-wednesday-farmers-market",
-            "downtown-appleton-farmers-market",
-            "festival-foods-darboy-farmers-market",
-            "festival-foods-northland-farmers-market"
-          ]
-        },
-        {
-          "name": "Racine",
-          "slug": "racine",
-          "market_count": 6,
-          "market_slugs": [
-            "downtown-racine-farmers-market",
-            "great-lakes-farmers-market",
-            "racine-county-indoor-outdoor-farmers-market-llc-racine",
-            "racine-farmers-market",
-            "st-andrew-farmers-market-racine",
-            "west-racine-farmers-market-racine"
-          ]
-        },
-        {
-          "name": "Oshkosh",
-          "slug": "oshkosh",
-          "market_count": 4,
-          "market_slugs": [
-            "festival-foods-oshkosh-farmers-market",
-            "oshkosh-farmers-market-in-the-park",
-            "oshkosh-winter-farmers-market",
-            "roosevelt-farmers-market-oshkosh"
-          ]
-        },
-        {
-          "name": "Sheboygan",
-          "slug": "sheboygan",
-          "market_count": 4,
-          "market_slugs": [
-            "festival-foods-sheboygan-farmers-market",
-            "scio-farmers-market-wisconsin",
-            "sheboygan-farmers-market",
-            "sheboygan-winter-farmers-market"
-          ]
-        },
-        {
-          "name": "Beloit",
-          "slug": "beloit",
-          "market_count": 3,
-          "market_slugs": [
-            "beloit-farmers-market",
-            "downtown-beloit-farmers-market-summer",
-            "downtown-beloit-farmers-market-winter"
-          ]
-        },
-        {
-          "name": "Columbus",
-          "slug": "columbus",
-          "market_count": 3,
-          "market_slugs": [
-            "columbus-downtown-farmers-market",
-            "the-beaver-dam-farmers-market",
-            "virtumarket-waterloo-producers-market"
-          ]
-        },
-        {
-          "name": "Eau Claire",
-          "slug": "eau-claire",
-          "market_count": 3,
-          "market_slugs": [
-            "eau-claire-downtown-farmers-market",
-            "eau-claire-farmers-market",
-            "festival-foods-eau-claire-farmers-market"
-          ]
-        },
-        {
-          "name": "Green Bay",
-          "slug": "green-bay",
-          "market_count": 3,
-          "market_slugs": [
-            "farmers-market-on-broadway",
-            "festival-foods-suamico-farmers-market",
-            "green-bay-farmers-market"
-          ]
-        },
-        {
-          "name": "Manitowoc",
-          "slug": "manitowoc",
-          "market_count": 3,
-          "market_slugs": [
-            "grow-it-forward-farmers-market-manitowoc",
-            "manitowoc-farmers-market",
-            "manitowoc-festival-foods-market"
-          ]
-        },
-        {
-          "name": "Marshfield",
-          "slug": "marshfield",
-          "market_count": 3,
-          "market_slugs": [
-            "festival-foods-marshfield-farmers-market",
-            "main-street-marshfield-downtown-farmers-market-marshfield",
-            "main-street-marshfield-farmers-market"
-          ]
-        },
-        {
-          "name": "Oconomowoc",
-          "slug": "oconomowoc",
-          "market_count": 3,
-          "market_slugs": [
-            "oconomowoc-chamber-farmers-market-oconomowoc",
-            "oconomowoc-farmers-market",
-            "oconomowoc-mid-week-marketplace"
-          ]
-        },
-        {
-          "name": "Superior",
-          "slug": "superior",
-          "market_count": 3,
-          "market_slugs": [
-            "barkers-island-farmers-market",
-            "superior-downtown-farmers-market",
-            "superior-farmers-market"
-          ]
-        },
-        {
-          "name": "Viroqua",
-          "slug": "viroqua",
-          "market_count": 3,
-          "market_slugs": [
-            "viroqua-farmers-market-viroqua",
-            "viroqua-public-market-viroqua",
-            "winter-viroqua-farmers-market"
-          ]
-        },
-        {
-          "name": "Algoma",
-          "slug": "algoma",
-          "market_count": 2,
-          "market_slugs": [
-            "algoma-sunday-farmers-market-algoma",
-            "kewaunee-county-farmers-market"
-          ]
-        },
-        {
-          "name": "Baldwin",
-          "slug": "baldwin",
-          "market_count": 2,
-          "market_slugs": [
-            "baldwins-main-st-farmers-market-baldwin",
-            "river-falls-farmers-market"
-          ]
-        },
-        {
-          "name": "Barron",
-          "slug": "barron",
-          "market_count": 2,
-          "market_slugs": [
-            "country-lane-farmers-market-barron",
-            "general-store-market-barron"
-          ]
-        },
-        {
-          "name": "Burlington",
-          "slug": "burlington",
-          "market_count": 2,
-          "market_slugs": [
-            "burlington-farmers-market-2",
-            "northwind-perennial-farm-market-burlington"
-          ]
-        },
-        {
-          "name": "Dousman",
-          "slug": "dousman",
-          "market_count": 2,
-          "market_slugs": [
-            "dousman-area-farmers-market",
-            "dousman-farmers-market-dousman"
-          ]
-        },
-        {
-          "name": "Fort Atkinson",
-          "slug": "fort-atkinson",
-          "market_count": 2,
-          "market_slugs": [
-            "fort-atkinson-farmers-market",
-            "fort-healthcare-farmers-market-fort-atkinson"
-          ]
-        },
-        {
-          "name": "Grantsburg",
-          "slug": "grantsburg",
-          "market_count": 2,
-          "market_slugs": [
-            "alpha-burnett-county-farmers-markets-grantsburg",
-            "grantsburg-burnett-county-farmers-markets-grantsburg"
-          ]
-        },
-        {
-          "name": "Hayward",
-          "slug": "hayward",
-          "market_count": 2,
-          "market_slugs": [
-            "hayward-farmers-market",
-            "hayward-farmers-market-wisconsin-hayward"
-          ]
-        },
-        {
-          "name": "Kewaskum",
-          "slug": "kewaskum",
-          "market_count": 2,
-          "market_slugs": [
-            "kewaskum-farm-market",
-            "lomira-farmers-market"
-          ]
-        },
-        {
-          "name": "LA Crosse",
-          "slug": "la-crosse",
-          "market_count": 2,
-          "market_slugs": [
-            "bridgeview-plaza-farmers-market",
-            "hmong-mutual-assistance-association-farmers-market"
-          ]
-        },
-        {
-          "name": "Ladysmith",
-          "slug": "ladysmith",
-          "market_count": 2,
-          "market_slugs": [
-            "bruce-community-farmers-market",
-            "rusk-county-farmers-market-ladysmith"
-          ]
-        },
-        {
-          "name": "Monroe",
-          "slug": "monroe",
-          "market_count": 2,
-          "market_slugs": [
-            "monroe-farmers-market-monroe",
-            "monroe-farmers-market-on-the-square"
-          ]
-        },
-        {
-          "name": "Mukwonago",
-          "slug": "mukwonago",
-          "market_count": 2,
-          "market_slugs": [
-            "mukwonago-area-farmers-market",
-            "mukwonago-farmers-market-mukwonago"
-          ]
-        },
-        {
-          "name": "Neenah",
-          "slug": "neenah",
-          "market_count": 2,
-          "market_slugs": [
-            "festival-foods-neenah-farmers-market",
-            "future-neenah-farmers-market-neenah"
-          ]
-        },
-        {
-          "name": "Port Washington",
-          "slug": "port-washington",
-          "market_count": 2,
-          "market_slugs": [
-            "port-washington-farmers-market",
-            "port-washington-winter-farmers-market"
-          ]
-        },
-        {
-          "name": "Ridgeway",
-          "slug": "ridgeway",
-          "market_count": 2,
-          "market_slugs": [
-            "dodgeville-farmers-market",
-            "ridgeway-farmers-market-ridgeway"
-          ]
-        },
-        {
-          "name": "Ripon",
-          "slug": "ripon",
-          "market_count": 2,
-          "market_slugs": [
-            "berlin-farmers-artists-market",
-            "watson-street-farmers-market"
-          ]
-        },
-        {
-          "name": "Siren",
-          "slug": "siren",
-          "market_count": 2,
-          "market_slugs": [
-            "burnett-county-farmers-market",
-            "siren-burnett-county-farmers-markets-siren"
-          ]
-        },
-        {
-          "name": "Stevens Point",
-          "slug": "stevens-point",
-          "market_count": 2,
-          "market_slugs": [
-            "stevens-point-area-winter-farmers-market",
-            "stevens-point-farmers-market"
-          ]
-        },
-        {
-          "name": "Sturtevant",
-          "slug": "sturtevant",
-          "market_count": 2,
-          "market_slugs": [
-            "southshore-outdoor-market-sturtevant",
-            "sturtevant-farmers-market-sturtevant"
-          ]
-        },
-        {
-          "name": "Verona",
-          "slug": "verona",
-          "market_count": 2,
-          "market_slugs": [
-            "verona-downtown-farmers-market",
-            "verona-farmers-market"
-          ]
-        },
-        {
-          "name": "Wauwatosa",
-          "slug": "wauwatosa",
-          "market_count": 2,
-          "market_slugs": [
-            "enderis-park-farmers-market",
-            "tosa-farmers-market-wauwatosa"
-          ]
-        },
-        {
-          "name": "Abbotsford",
-          "slug": "abbotsford",
-          "market_count": 1,
-          "market_slugs": [
-            "abbotsford-farmers-market"
-          ]
-        },
-        {
-          "name": "Allenton",
-          "slug": "allenton",
-          "market_count": 1,
-          "market_slugs": [
-            "allenton-farmers-market"
-          ]
-        },
-        {
-          "name": "Antigo",
-          "slug": "antigo",
-          "market_count": 1,
-          "market_slugs": [
-            "antigo-farmers-market-inc-antigo"
-          ]
-        },
-        {
-          "name": "Arcadia",
-          "slug": "arcadia",
-          "market_count": 1,
-          "market_slugs": [
-            "arcadia-farmers-market-arcadia"
-          ]
-        },
-        {
-          "name": "Ashland",
-          "slug": "ashland",
-          "market_count": 1,
-          "market_slugs": [
-            "ashland-area-farmers-market-ashland"
-          ]
-        },
-        {
-          "name": "Balsam Lake",
-          "slug": "balsam-lake",
-          "market_count": 1,
-          "market_slugs": [
-            "balsam-lake-farmers-market"
-          ]
-        },
-        {
-          "name": "Baraboo",
-          "slug": "baraboo",
-          "market_count": 1,
-          "market_slugs": [
-            "turners-corners-hwy-12-growers-farmers-market-baraboo"
-          ]
-        },
-        {
-          "name": "Bay",
-          "slug": "bay",
-          "market_count": 1,
-          "market_slugs": [
-            "green-bay-farmers-market-on-broadway-bay"
-          ]
-        },
-        {
-          "name": "Black Creek",
-          "slug": "black-creek",
-          "market_count": 1,
-          "market_slugs": [
-            "wagners-market-black-creek"
-          ]
-        },
-        {
-          "name": "Black River Falls",
-          "slug": "black-river-falls",
-          "market_count": 1,
-          "market_slugs": [
-            "black-river-falls-downtown-farmers-market"
-          ]
-        },
-        {
-          "name": "Bristol",
-          "slug": "bristol",
-          "market_count": 1,
-          "market_slugs": [
-            "bristol-farmers-market-bristol"
-          ]
-        },
-        {
-          "name": "Brookfield",
-          "slug": "brookfield",
-          "market_count": 1,
-          "market_slugs": [
-            "brookfield-farmers-market-1"
-          ]
-        },
-        {
-          "name": "Brown Deer",
-          "slug": "brown-deer",
-          "market_count": 1,
-          "market_slugs": [
-            "brown-deer-farmers-market"
-          ]
-        },
-        {
-          "name": "Butler",
-          "slug": "butler",
-          "market_count": 1,
-          "market_slugs": [
-            "butler-farmers-market"
-          ]
-        },
-        {
-          "name": "Cadott",
-          "slug": "cadott",
-          "market_count": 1,
-          "market_slugs": [
-            "cadott-farmers-market"
-          ]
-        },
-        {
-          "name": "Caledonia",
-          "slug": "caledonia",
-          "market_count": 1,
-          "market_slugs": [
-            "caledonia-outdoor-market-caledonia"
-          ]
-        },
-        {
-          "name": "Cambridge",
-          "slug": "cambridge",
-          "market_count": 1,
-          "market_slugs": [
-            "cambridge-open-air-market"
-          ]
-        },
-        {
-          "name": "Catawba",
-          "slug": "catawba",
-          "market_count": 1,
-          "market_slugs": [
-            "southern-price-county-farmers-market"
-          ]
-        },
-        {
-          "name": "Cedarburg",
-          "slug": "cedarburg",
-          "market_count": 1,
-          "market_slugs": [
-            "cedarburg-farmers-market"
-          ]
-        },
-        {
-          "name": "Chippewa Falls",
-          "slug": "chippewa-falls",
-          "market_count": 1,
-          "market_slugs": [
-            "chippewa-falls-farmers-market-chippewa-falls"
-          ]
-        },
-        {
-          "name": "City",
-          "slug": "city",
-          "market_count": 1,
-          "market_slugs": [
-            "mosinee-farm-market-city"
-          ]
-        },
-        {
-          "name": "Crosse",
-          "slug": "crosse",
-          "market_count": 1,
-          "market_slugs": [
-            "village-shopping-center-friday-farmers-market-crosse"
-          ]
-        },
-        {
-          "name": "Cudahy",
-          "slug": "cudahy",
-          "market_count": 1,
-          "market_slugs": [
-            "cudahy-farmers-market"
-          ]
-        },
-        {
-          "name": "DE Pere",
-          "slug": "de-pere",
-          "market_count": 1,
-          "market_slugs": [
-            "de-pere-farmers-market"
-          ]
-        },
-        {
-          "name": "DeForest",
-          "slug": "deforest",
-          "market_count": 1,
-          "market_slugs": [
-            "deforest-area-farmers-market"
-          ]
-        },
-        {
-          "name": "Delafield",
-          "slug": "delafield",
-          "market_count": 1,
-          "market_slugs": [
-            "delafield-farmers-market"
-          ]
-        },
-        {
-          "name": "Delavan",
-          "slug": "delavan",
-          "market_count": 1,
-          "market_slugs": [
-            "delavan-fresh-market-delavan"
-          ]
-        },
-        {
-          "name": "Downtown Janesville",
-          "slug": "downtown-janesville",
-          "market_count": 1,
-          "market_slugs": [
-            "janesville-farmers-market-inc-downtown-janesville"
-          ]
-        },
-        {
-          "name": "Eagle River",
-          "slug": "eagle-river",
-          "market_count": 1,
-          "market_slugs": [
-            "eagle-river-farmers-market"
-          ]
-        },
-        {
-          "name": "East Troy",
-          "slug": "east-troy",
-          "market_count": 1,
-          "market_slugs": [
-            "east-troy-farmers-market"
-          ]
-        },
-        {
-          "name": "Elk Mound",
-          "slug": "elk-mound",
-          "market_count": 1,
-          "market_slugs": [
-            "elk-mound-area-farmers-market"
-          ]
-        },
-        {
-          "name": "Elkhart Lake",
-          "slug": "elkhart-lake",
-          "market_count": 1,
-          "market_slugs": [
-            "elkhart-lake-farmers-and-artisans-market"
-          ]
-        },
-        {
-          "name": "Evansville",
-          "slug": "evansville",
-          "market_count": 1,
-          "market_slugs": [
-            "evansville-farmers-market"
-          ]
-        },
-        {
-          "name": "Exeland",
-          "slug": "exeland",
-          "market_count": 1,
-          "market_slugs": [
-            "upper-northwoods-farmers-market-exeland"
-          ]
-        },
-        {
-          "name": "Ferryville",
-          "slug": "ferryville",
-          "market_count": 1,
-          "market_slugs": [
-            "ferryville-market-in-the-park"
-          ]
-        },
-        {
-          "name": "Fish Creek",
-          "slug": "fish-creek",
-          "market_count": 1,
-          "market_slugs": [
-            "fish-creek-settlement-shops-farm-market"
-          ]
-        },
-        {
-          "name": "Fitchburg",
-          "slug": "fitchburg",
-          "market_count": 1,
-          "market_slugs": [
-            "fitchburg-center-farmers-market"
-          ]
-        },
-        {
-          "name": "Fond Du Lac",
-          "slug": "fond-du-lac",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-fond-du-lac-farmers-market-fond-du-lac"
-          ]
-        },
-        {
-          "name": "Fox Point",
-          "slug": "fox-point",
-          "market_count": 1,
-          "market_slugs": [
-            "fox-point-farmers-market"
-          ]
-        },
-        {
-          "name": "Germantown",
-          "slug": "germantown",
-          "market_count": 1,
-          "market_slugs": [
-            "germantown-farmers-market-1"
-          ]
-        },
-        {
-          "name": "Greendale",
-          "slug": "greendale",
-          "market_count": 1,
-          "market_slugs": [
-            "greendale-open-market"
-          ]
-        },
-        {
-          "name": "Greenfield",
-          "slug": "greenfield",
-          "market_count": 1,
-          "market_slugs": [
-            "greenfield-farmers-market-greenfield"
-          ]
-        },
-        {
-          "name": "Greenville",
-          "slug": "greenville",
-          "market_count": 1,
-          "market_slugs": [
-            "sustain-greenville-farmers-market"
-          ]
-        },
-        {
-          "name": "Hartford",
-          "slug": "hartford",
-          "market_count": 1,
-          "market_slugs": [
-            "wednesday-farmers-market-hartford"
-          ]
-        },
-        {
-          "name": "Hartland",
-          "slug": "hartland",
-          "market_count": 1,
-          "market_slugs": [
-            "hartland-farmers-market"
-          ]
-        },
-        {
-          "name": "Hillsboro",
-          "slug": "hillsboro",
-          "market_count": 1,
-          "market_slugs": [
-            "hillsboro-farmers-market"
-          ]
-        },
-        {
-          "name": "Jackson",
-          "slug": "jackson",
-          "market_count": 1,
-          "market_slugs": [
-            "jackson-food-farm-market-jackson"
-          ]
-        },
-        {
-          "name": "Janesville",
-          "slug": "janesville",
-          "market_count": 1,
-          "market_slugs": [
-            "rock-county-farmers-market"
-          ]
-        },
-        {
-          "name": "Jefferson",
-          "slug": "jefferson",
-          "market_count": 1,
-          "market_slugs": [
-            "jefferson-farmers-market"
-          ]
-        },
-        {
-          "name": "Kaukauna",
-          "slug": "kaukauna",
-          "market_count": 1,
-          "market_slugs": [
-            "kaukauna-farmers-market"
-          ]
-        },
-        {
-          "name": "Kiel",
-          "slug": "kiel",
-          "market_count": 1,
-          "market_slugs": [
-            "kiel-farmers-market"
-          ]
-        },
-        {
-          "name": "Kronenwetter",
-          "slug": "kronenwetter",
-          "market_count": 1,
-          "market_slugs": [
-            "kronenwetter-farmers-market-kronenwetter"
-          ]
-        },
-        {
-          "name": "LA Pointe",
-          "slug": "la-pointe",
-          "market_count": 1,
-          "market_slugs": [
-            "madeline-island-farmers-market"
-          ]
-        },
-        {
-          "name": "Lake Geneva",
-          "slug": "lake-geneva",
-          "market_count": 1,
-          "market_slugs": [
-            "lake-geneva-farmers-market"
-          ]
-        },
-        {
-          "name": "Lodi",
-          "slug": "lodi",
-          "market_count": 1,
-          "market_slugs": [
-            "lodi-valley-farmers-market"
-          ]
-        },
-        {
-          "name": "Luxemburg",
-          "slug": "luxemburg",
-          "market_count": 1,
-          "market_slugs": [
-            "luxemburg-farmers-market-luxemburg"
-          ]
-        },
-        {
-          "name": "Marinette",
-          "slug": "marinette",
-          "market_count": 1,
-          "market_slugs": [
-            "marinette-artisan-farm-market-marinette"
-          ]
-        },
-        {
-          "name": "Mauston",
-          "slug": "mauston",
-          "market_count": 1,
-          "market_slugs": [
-            "mauston-farmers-market-mauston"
-          ]
-        },
-        {
-          "name": "Mcfarland",
-          "slug": "mcfarland",
-          "market_count": 1,
-          "market_slugs": [
-            "mcfarland-farmers-market-mcfarland"
-          ]
-        },
-        {
-          "name": "Menasha",
-          "slug": "menasha",
-          "market_count": 1,
-          "market_slugs": [
-            "menasha-farm-fresh-market-terrace-in-front-of-the-marina-menasha"
-          ]
-        },
-        {
-          "name": "Menomonee Falls",
-          "slug": "menomonee-falls",
-          "market_count": 1,
-          "market_slugs": [
-            "menomonee-falls-farmers-market"
-          ]
-        },
-        {
-          "name": "Merrill",
-          "slug": "merrill",
-          "market_count": 1,
-          "market_slugs": [
-            "merrill-area-farmers-market"
-          ]
-        },
-        {
-          "name": "Middleton",
-          "slug": "middleton",
-          "market_count": 1,
-          "market_slugs": [
-            "greenway-station-farmers-market"
-          ]
-        },
-        {
-          "name": "Mineral Point",
-          "slug": "mineral-point",
-          "market_count": 1,
-          "market_slugs": [
-            "mineral-point-farmers-market"
-          ]
-        },
-        {
-          "name": "Mount Horeb",
-          "slug": "mount-horeb",
-          "market_count": 1,
-          "market_slugs": [
-            "mount-horeb-farmers-market"
-          ]
-        },
-        {
-          "name": "Mt. Horeb",
-          "slug": "mt-horeb",
-          "market_count": 1,
-          "market_slugs": [
-            "mt-horeb-farmers-market-mt-horeb"
-          ]
-        },
-        {
-          "name": "Multi-Purpose Room Oshkosh",
-          "slug": "multi-purpose-room-oshkosh",
-          "market_count": 1,
-          "market_slugs": [
-            "oshkosh-farmers-market-multi-purpose-room-oshkosh"
-          ]
-        },
-        {
-          "name": "Muskego",
-          "slug": "muskego",
-          "market_count": 1,
-          "market_slugs": [
-            "muskego-green-market"
-          ]
-        },
-        {
-          "name": "New Berlin",
-          "slug": "new-berlin",
-          "market_count": 1,
-          "market_slugs": [
-            "new-berlin-farmers-market"
-          ]
-        },
-        {
-          "name": "New Holstein",
-          "slug": "new-holstein",
-          "market_count": 1,
-          "market_slugs": [
-            "new-holstein-farmers-market"
-          ]
-        },
-        {
-          "name": "New Richmond",
-          "slug": "new-richmond",
-          "market_count": 1,
-          "market_slugs": [
-            "new-richmond-farmers-market"
-          ]
-        },
-        {
-          "name": "Oak Creek",
-          "slug": "oak-creek",
-          "market_count": 1,
-          "market_slugs": [
-            "oak-creek-farmers-market-oak-creek"
-          ]
-        },
-        {
-          "name": "Omro",
-          "slug": "omro",
-          "market_count": 1,
-          "market_slugs": [
-            "omro-thursday-night-market"
-          ]
-        },
-        {
-          "name": "Oneida",
-          "slug": "oneida",
-          "market_count": 1,
-          "market_slugs": [
-            "oneida-farmers-market-oneida"
-          ]
-        },
-        {
-          "name": "Oregon",
-          "slug": "oregon",
-          "market_count": 1,
-          "market_slugs": [
-            "oregon-farmers-market-oregon"
-          ]
-        },
-        {
-          "name": "Park Falls",
-          "slug": "park-falls",
-          "market_count": 1,
-          "market_slugs": [
-            "park-falls-farmers-market"
-          ]
-        },
-        {
-          "name": "Phillips",
-          "slug": "phillips",
-          "market_count": 1,
-          "market_slugs": [
-            "phillips-farmers-market"
-          ]
-        },
-        {
-          "name": "Portage",
-          "slug": "portage",
-          "market_count": 1,
-          "market_slugs": [
-            "portage-farmers-market"
-          ]
-        },
-        {
-          "name": "Poynette",
-          "slug": "poynette",
-          "market_count": 1,
-          "market_slugs": [
-            "poynette-area-farmers-market"
-          ]
-        },
-        {
-          "name": "Prairie Du Chien",
-          "slug": "prairie-du-chien",
-          "market_count": 1,
-          "market_slugs": [
-            "blackhawk-junction-farmers-market"
-          ]
-        },
-        {
-          "name": "Princeton",
-          "slug": "princeton",
-          "market_count": 1,
-          "market_slugs": [
-            "princeton-farm-to-fork-farmers-market"
-          ]
-        },
-        {
-          "name": "Reedsburg",
-          "slug": "reedsburg",
-          "market_count": 1,
-          "market_slugs": [
-            "reedsburg-area-medical-center-farmers-market"
-          ]
-        },
-        {
-          "name": "Rice Lake",
-          "slug": "rice-lake",
-          "market_count": 1,
-          "market_slugs": [
-            "rice-lake-farmers-market"
-          ]
-        },
-        {
-          "name": "Richfield",
-          "slug": "richfield",
-          "market_count": 1,
-          "market_slugs": [
-            "richfield-wi-farmers-market-wi"
-          ]
-        },
-        {
-          "name": "Richland Center",
-          "slug": "richland-center",
-          "market_count": 1,
-          "market_slugs": [
-            "richland-area-farmers-market"
-          ]
-        },
-        {
-          "name": "Rome",
-          "slug": "rome",
-          "market_count": 1,
-          "market_slugs": [
-            "rome-farmers-market-business-park-rome"
-          ]
-        },
-        {
-          "name": "Saint Francis",
-          "slug": "saint-francis",
-          "market_count": 1,
-          "market_slugs": [
-            "clare-oasis-indooroutdoor-farmers-market-saint-francis"
-          ]
-        },
-        {
-          "name": "Shawano",
-          "slug": "shawano",
-          "market_count": 1,
-          "market_slugs": [
-            "shawano-farmers-market-shawano"
-          ]
-        },
-        {
-          "name": "Shorewood",
-          "slug": "shorewood",
-          "market_count": 1,
-          "market_slugs": [
-            "shorewood-farmers-market-shorewood"
-          ]
-        },
-        {
-          "name": "Somerset",
-          "slug": "somerset",
-          "market_count": 1,
-          "market_slugs": [
-            "somerset-farmers-market-craft-somerset"
-          ]
-        },
-        {
-          "name": "South Milwaukee",
-          "slug": "south-milwaukee",
-          "market_count": 1,
-          "market_slugs": [
-            "south-milwaukee-downtown-market-south-milwaukee"
-          ]
-        },
-        {
-          "name": "Spring Valley",
-          "slug": "spring-valley",
-          "market_count": 1,
-          "market_slugs": [
-            "spring-valley-farmers-market"
-          ]
-        },
-        {
-          "name": "St. Croix Falls",
-          "slug": "st-croix-falls",
-          "market_count": 1,
-          "market_slugs": [
-            "st-croix-falls-farmers-market-st-croix-falls"
-          ]
-        },
-        {
-          "name": "Star Prairie",
-          "slug": "star-prairie",
-          "market_count": 1,
-          "market_slugs": [
-            "star-prairie-farmers-market"
-          ]
-        },
-        {
-          "name": "Stoughton",
-          "slug": "stoughton",
-          "market_count": 1,
-          "market_slugs": [
-            "stoughton-community-farmers-market"
-          ]
-        },
-        {
-          "name": "Stoughton Plaza Stoughton",
-          "slug": "stoughton-plaza-stoughton",
-          "market_count": 1,
-          "market_slugs": [
-            "stoughton-farmers-market-stoughton-plaza-stoughton"
-          ]
-        },
-        {
-          "name": "Sturgeon Bay",
-          "slug": "sturgeon-bay",
-          "market_count": 1,
-          "market_slugs": [
-            "sturgeon-bay-farm-and-craft-market"
-          ]
-        },
-        {
-          "name": "Sun Prairie",
-          "slug": "sun-prairie",
-          "market_count": 1,
-          "market_slugs": [
-            "sun-prairie-farmers-market"
-          ]
-        },
-        {
-          "name": "Thiensville",
-          "slug": "thiensville",
-          "market_count": 1,
-          "market_slugs": [
-            "thiensville-farmers-market"
-          ]
-        },
-        {
-          "name": "Tomahawk",
-          "slug": "tomahawk",
-          "market_count": 1,
-          "market_slugs": [
-            "tomahawk-main-street-farmers-market"
-          ]
-        },
-        {
-          "name": "Twin Lakes",
-          "slug": "twin-lakes",
-          "market_count": 1,
-          "market_slugs": [
-            "st-johns-farmers-market-twin-lakes"
-          ]
-        },
-        {
-          "name": "Two Rivers",
-          "slug": "two-rivers",
-          "market_count": 1,
-          "market_slugs": [
-            "two-rivers-farmers-crafters-market"
-          ]
-        },
-        {
-          "name": "Union Grove",
-          "slug": "union-grove",
-          "market_count": 1,
-          "market_slugs": [
-            "union-grove-farmers-market"
-          ]
-        },
-        {
-          "name": "Washburn",
-          "slug": "washburn",
-          "market_count": 1,
-          "market_slugs": [
-            "washburn-farmers-market"
-          ]
-        },
-        {
-          "name": "Watertown",
-          "slug": "watertown",
-          "market_count": 1,
-          "market_slugs": [
-            "watertown-farmers-market-2"
-          ]
-        },
-        {
-          "name": "Waukesha",
-          "slug": "waukesha",
-          "market_count": 1,
-          "market_slugs": [
-            "waukesha-farmers-market"
-          ]
-        },
-        {
-          "name": "Waupun",
-          "slug": "waupun",
-          "market_count": 1,
-          "market_slugs": [
-            "waupun-area-farmers-market"
-          ]
-        },
-        {
-          "name": "Wausau",
-          "slug": "wausau",
-          "market_count": 1,
-          "market_slugs": [
-            "marketplace-thursdays"
-          ]
-        },
-        {
-          "name": "West Allis",
-          "slug": "west-allis",
-          "market_count": 1,
-          "market_slugs": [
-            "west-allis-farmers-market-wi"
-          ]
-        },
-        {
-          "name": "West Bend",
-          "slug": "west-bend",
-          "market_count": 1,
-          "market_slugs": [
-            "downtown-west-bend-farmers-market"
-          ]
-        },
-        {
-          "name": "West Salem",
-          "slug": "west-salem",
-          "market_count": 1,
-          "market_slugs": [
-            "west-salem-farmers-market"
-          ]
-        },
-        {
-          "name": "Whitefish Bay",
-          "slug": "whitefish-bay",
-          "market_count": 1,
-          "market_slugs": [
-            "whitefish-bay-farmers-market-whitefish-bay"
-          ]
-        },
-        {
-          "name": "Wisconsin Rapids",
-          "slug": "wisconsin-rapids",
-          "market_count": 1,
-          "market_slugs": [
-            "peach-street-farmers-market"
-          ]
-        }
-      ],
-      "uncategorized_slugs": [
-        "oak-creek-winter-farmers-market-wi"
-      ]
     },
     {
       "code": "FL",
@@ -34669,147 +34670,6 @@
       "uncategorized_slugs": []
     },
     {
-      "code": "DC",
-      "name": "Washington, D.C.",
-      "country_code": "US",
-      "slug": "washington-d-c",
-      "market_count": 123,
-      "city_count": 1,
-      "cities": [
-        {
-          "name": "Washington",
-          "slug": "washington",
-          "market_count": 123,
-          "market_slugs": [
-            "14-and-u-market-nw-farmers-market-washington",
-            "14-u-farmers-market",
-            "14th-kennedy-farmers-market",
-            "14u-farmers-market",
-            "adams-morgan-farmers-market",
-            "adams-morgan-farmers-market-washington-c4ceb11c",
-            "anacostia-farmers-market-washington",
-            "arcadia-mobile-market",
-            "arcadia-mobile-market-at-bellevue-library-washington-2c16704e",
-            "arcadia-mobile-market-at-oxon-run-washington-1d68dbae",
-            "arcadia-mobile-market-at-parkside-washington-d3fa742e",
-            "arcadia-mobile-market-at-sibley-hospital-washington-8e934d17",
-            "arcadia-mobile-market-at-wah-luck-washington-7aaf9e88",
-            "aya-community-markets",
-            "bloomingdale-farmers-market-washington",
-            "bloomingdale-farmers-market-washington-2ea751be",
-            "broad-branch-chevy-chase-farmers-market",
-            "brookland-farmers-market",
-            "burleith-glover-park-farmers-market-washington",
-            "capital-harvest-farmers-market",
-            "capital-harvest-on-the-plaza-washington-842b6b91",
-            "chevy-chase-farmers-market-washington",
-            "chevy-chase-farmers-market-washington-f76a4f35",
-            "city-center-dc-freshfarm-market",
-            "cleveland-park-farmers-market-washington",
-            "cleveland-park-farmers-market-washington-1",
-            "co-op-farmers-market-washington-97fd677c",
-            "columbia-heights-community-marketplace",
-            "common-good-city-farm-washington-9f90b756",
-            "community-foodworks-reston-farmers-market-washington",
-            "dc-farmers-market-washington",
-            "dc-open-air-farmers-market-at",
-            "dreaming-out-loud-s-anacostia-farmers-market-washington-692dc7ad",
-            "dreaming-out-loud-s-kelly-miller-market-washington-f95e5af4",
-            "dupont-circle-freshfarm-market",
-            "eastern-market",
-            "eastern-market-sat-sun-washington-d641fb5c",
-            "edgewood-market-washington-e1bf3c5f",
-            "farmers-market-sw-washington-5636fa8e",
-            "foggy-bottom-farmers-market",
-            "forest-hills-row-farmers-market",
-            "freshfarm-anacostia-community-museum-washington-27580807",
-            "freshfarm-by-the-white-house-washington-53283274",
-            "freshfarm-cesar-chavez-washington-bc0492ce",
-            "freshfarm-citycenterdc-washington-1baca64d",
-            "freshfarm-cleveland-park-washington-572ef8f4",
-            "freshfarm-columbia-heights-saturday-washington",
-            "freshfarm-columbia-heights-saturday-washington-1",
-            "freshfarm-columbia-heights-wed-sat-washington-4a4d376c",
-            "freshfarm-dupont-circle-sunday-washington",
-            "freshfarm-dupont-circle-sunday-washington-1",
-            "freshfarm-dupont-circle-washington-cdcac0e9",
-            "freshfarm-dupont-market-washington",
-            "freshfarm-dupont-market-washington-1",
-            "freshfarm-foggy-bottom-washington",
-            "freshfarm-foggy-bottom-washington-074b8055",
-            "freshfarm-foggy-bottom-washington-1",
-            "freshfarm-h-st-ne-washington",
-            "freshfarm-h-st-ne-washington-1",
-            "freshfarm-h-street-ne-washington-5c66e2af",
-            "freshfarm-kenilworth-rec-center-washington-d001898b",
-            "freshfarm-market-at-citycenterdc",
-            "freshfarm-market-by-the-white-house",
-            "freshfarm-minnesota-ave-washington-3bb505ef",
-            "freshfarm-monroe-street-washington",
-            "freshfarm-monroe-street-washington-1",
-            "freshfarm-monroe-street-washington-3cbf664a",
-            "freshfarm-mount-vernon-triangle-washington",
-            "freshfarm-mount-vernon-triangle-washington-1",
-            "freshfarm-mount-vernon-triangle-washington-4d4c4162",
-            "freshfarm-penn-quarter-washington",
-            "freshfarm-penn-quarter-washington-1",
-            "freshfarm-simon-elementary-farm-stand-washington-c111bc34",
-            "freshfarm-thearc-washington-089169ba",
-            "freshfarm-union-market-district-washington-18b7b3a1",
-            "freshfarm-uptown-washington-0f66198c",
-            "freshfarm-whittier-elementary-farm-stand-washington-5f57ca5b",
-            "glover-park-burleith-farmers-market",
-            "h-street-ne-freshfarm-market",
-            "half-street-central-farm-market-dc",
-            "half-street-central-farm-market-washington-d3e37d4a",
-            "historic-brookland-farmers-market-sunday-washington",
-            "historic-brookland-farmers-market-tuesday-washington",
-            "historic-brookland-farmers-market-washington",
-            "maret-school-farmers-market-washington-531c77e1",
-            "mount-pleasant-farmers-market-washington",
-            "mount-pleasant-farmers-market-washington-1",
-            "mount-pleasant-farmers-market-washington-7f5ec4a7",
-            "mount-vernon-triangle-freshfarm-market",
-            "new-morning-farm-at-sheridan-school-sat-washington-2ad78d9c",
-            "new-morning-farm-at-sheridan-school-tue-washington-3f32bee4",
-            "new-morning-farmers-market-saturday-sheridan-school-washington",
-            "noma-farmers-market",
-            "noma-farmers-market-on-third-street-dc",
-            "noma-farmers-market-washington-83ef8ae2",
-            "open-air-farmers-market",
-            "palisades-farmers-market",
-            "palisades-farmers-market-washington-bc387bc2",
-            "pcdc-edgewood-farmers-market",
-            "penn-quarter-freshfarm-market",
-            "petworth-community-market",
-            "petworth-community-market-washington-b4afd882",
-            "petworth-corner-market-washington-6301d905",
-            "rfk-open-air-market-washington-af5b94c5",
-            "rfk-stadium-open-air-market-washington",
-            "riverside-heritage-park-farmers-market-washington",
-            "rose-park-farmers-market-washington-d9c494ec",
-            "stanton-turner-open-air-farmers-market",
-            "tenley-town-farmers-market-whole-foods-market-washington",
-            "the-marketplace-in-woodrige-washington",
-            "trinidad-farmers-market-washington-791a8e41",
-            "udc-east-capitol-farmers-market-washington-0ca3de2f",
-            "udc-farmers-market",
-            "udc-lamont-riggs-farmers-market-washington-fc81872d",
-            "udc-van-ness-farmers-market-washington-4f2a1122",
-            "union-market",
-            "us-dept-of-health-human-services-freshfarm-market",
-            "usda-farmers-market-at-dept-of-transportation-plaza-level-washington",
-            "usda-farmers-market-washington",
-            "ward-8-farmers-market",
-            "ward-8-farmers-market-at-st-elizabeths-hopital-east",
-            "ward-8-farmers-market-washington-9b373338",
-            "woodridge-market-washington-5fa9f217"
-          ]
-        }
-      ],
-      "uncategorized_slugs": []
-    },
-    {
       "code": "AL",
       "name": "Alabama",
       "country_code": "US",
@@ -36098,6 +35958,136 @@
       "uncategorized_slugs": [
         "old-ellicott-city-farmers-market-main-street-ellicott-city"
       ]
+    },
+    {
+      "code": "DC",
+      "name": "Washington, D.C.",
+      "country_code": "US",
+      "slug": "washington-d-c",
+      "market_count": 112,
+      "city_count": 1,
+      "cities": [
+        {
+          "name": "Washington",
+          "slug": "washington",
+          "market_count": 112,
+          "market_slugs": [
+            "14-and-u-market-nw-farmers-market-washington",
+            "14-u-farmers-market",
+            "14th-kennedy-farmers-market",
+            "14u-farmers-market",
+            "adams-morgan-farmers-market",
+            "adams-morgan-farmers-market-washington-c4ceb11c",
+            "anacostia-farmers-market-washington",
+            "arcadia-mobile-market",
+            "arcadia-mobile-market-at-bellevue-library-washington-2c16704e",
+            "arcadia-mobile-market-at-oxon-run-washington-1d68dbae",
+            "arcadia-mobile-market-at-parkside-washington-d3fa742e",
+            "arcadia-mobile-market-at-sibley-hospital-washington-8e934d17",
+            "arcadia-mobile-market-at-wah-luck-washington-7aaf9e88",
+            "aya-community-markets",
+            "bloomingdale-farmers-market-washington",
+            "bloomingdale-farmers-market-washington-2ea751be",
+            "broad-branch-chevy-chase-farmers-market",
+            "brookland-farmers-market",
+            "burleith-glover-park-farmers-market-washington",
+            "capital-harvest-farmers-market",
+            "capital-harvest-on-the-plaza-washington-842b6b91",
+            "chevy-chase-farmers-market-washington",
+            "chevy-chase-farmers-market-washington-f76a4f35",
+            "city-center-dc-freshfarm-market",
+            "cleveland-park-farmers-market-washington",
+            "cleveland-park-farmers-market-washington-1",
+            "co-op-farmers-market-washington-97fd677c",
+            "columbia-heights-community-marketplace",
+            "common-good-city-farm-washington-9f90b756",
+            "community-foodworks-reston-farmers-market-washington",
+            "dc-farmers-market-washington",
+            "dc-open-air-farmers-market-at",
+            "dreaming-out-loud-s-anacostia-farmers-market-washington-692dc7ad",
+            "dreaming-out-loud-s-kelly-miller-market-washington-f95e5af4",
+            "eastern-market",
+            "eastern-market-sat-sun-washington-d641fb5c",
+            "edgewood-market-washington-e1bf3c5f",
+            "farmers-market-sw-washington-5636fa8e",
+            "foggy-bottom-farmers-market",
+            "forest-hills-row-farmers-market",
+            "freshfarm-anacostia-community-museum-washington-27580807",
+            "freshfarm-by-the-white-house-washington-53283274",
+            "freshfarm-cesar-chavez-washington-bc0492ce",
+            "freshfarm-citycenterdc-washington-1baca64d",
+            "freshfarm-cleveland-park-washington-572ef8f4",
+            "freshfarm-columbia-heights-saturday-washington",
+            "freshfarm-columbia-heights-wed-sat-washington-4a4d376c",
+            "freshfarm-dupont-circle-sunday-washington",
+            "freshfarm-foggy-bottom-washington",
+            "freshfarm-foggy-bottom-washington-074b8055",
+            "freshfarm-h-st-ne-washington",
+            "freshfarm-h-street-ne-washington-5c66e2af",
+            "freshfarm-kenilworth-rec-center-washington-d001898b",
+            "freshfarm-market-at-citycenterdc",
+            "freshfarm-market-by-the-white-house",
+            "freshfarm-minnesota-ave-washington-3bb505ef",
+            "freshfarm-monroe-street-washington",
+            "freshfarm-monroe-street-washington-3cbf664a",
+            "freshfarm-mount-vernon-triangle-washington",
+            "freshfarm-mount-vernon-triangle-washington-4d4c4162",
+            "freshfarm-penn-quarter-washington",
+            "freshfarm-simon-elementary-farm-stand-washington-c111bc34",
+            "freshfarm-thearc-washington-089169ba",
+            "freshfarm-union-market-district-washington-18b7b3a1",
+            "freshfarm-uptown-washington-0f66198c",
+            "freshfarm-whittier-elementary-farm-stand-washington-5f57ca5b",
+            "glover-park-burleith-farmers-market",
+            "h-street-ne-freshfarm-market",
+            "half-street-central-farm-market-dc",
+            "half-street-central-farm-market-washington-d3e37d4a",
+            "historic-brookland-farmers-market-sunday-washington",
+            "historic-brookland-farmers-market-tuesday-washington",
+            "historic-brookland-farmers-market-washington",
+            "maret-school-farmers-market-washington-531c77e1",
+            "mount-pleasant-farmers-market-washington",
+            "mount-pleasant-farmers-market-washington-1",
+            "mount-pleasant-farmers-market-washington-7f5ec4a7",
+            "mount-vernon-triangle-freshfarm-market",
+            "new-morning-farm-at-sheridan-school-sat-washington-2ad78d9c",
+            "new-morning-farm-at-sheridan-school-tue-washington-3f32bee4",
+            "new-morning-farmers-market-saturday-sheridan-school-washington",
+            "noma-farmers-market",
+            "noma-farmers-market-on-third-street-dc",
+            "noma-farmers-market-washington-83ef8ae2",
+            "open-air-farmers-market",
+            "palisades-farmers-market",
+            "palisades-farmers-market-washington-bc387bc2",
+            "pcdc-edgewood-farmers-market",
+            "penn-quarter-freshfarm-market",
+            "petworth-community-market",
+            "petworth-community-market-washington-b4afd882",
+            "petworth-corner-market-washington-6301d905",
+            "rfk-open-air-market-washington-af5b94c5",
+            "rfk-stadium-open-air-market-washington",
+            "riverside-heritage-park-farmers-market-washington",
+            "rose-park-farmers-market-washington-d9c494ec",
+            "stanton-turner-open-air-farmers-market",
+            "tenley-town-farmers-market-whole-foods-market-washington",
+            "the-marketplace-in-woodrige-washington",
+            "trinidad-farmers-market-washington-791a8e41",
+            "udc-east-capitol-farmers-market-washington-0ca3de2f",
+            "udc-farmers-market",
+            "udc-lamont-riggs-farmers-market-washington-fc81872d",
+            "udc-van-ness-farmers-market-washington-4f2a1122",
+            "union-market",
+            "us-dept-of-health-human-services-freshfarm-market",
+            "usda-farmers-market-at-dept-of-transportation-plaza-level-washington",
+            "usda-farmers-market-washington",
+            "ward-8-farmers-market",
+            "ward-8-farmers-market-at-st-elizabeths-hopital-east",
+            "ward-8-farmers-market-washington-9b373338",
+            "woodridge-market-washington-5fa9f217"
+          ]
+        }
+      ],
+      "uncategorized_slugs": []
     },
     {
       "code": "AZ",

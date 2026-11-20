@@ -709,5 +709,96 @@
       "catalog_url": "https://www.wcfma.org/foster-city",
       "retrieved_at": "2026-11-19"
     }
+  },
+  {
+    "id": "added:dane-county-holiday-farmers-market-madison-wi",
+    "slug": "dane-county-holiday-farmers-market-madison-wi",
+    "name": "Dane County Farmers’ Market - Holiday Farmers’ Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "1 John Nolen Drive",
+      "city": "Madison",
+      "state": "Wisconsin",
+      "description": "Monona Terrace Community & Convention Center."
+    },
+    "contact": {
+      "websites": [
+        "https://dcfm.org/markets/holiday-market"
+      ]
+    },
+    "operations": {},
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Dane County Farmers’ Market",
+      "dataset_name": "Holiday Farmers’ Market",
+      "catalog_url": "https://dcfm.org/markets/holiday-market",
+      "retrieved_at": "2026-11-20"
+    }
+  },
+  {
+    "id": "added:dane-county-winter-farmers-market-madison-wi",
+    "slug": "dane-county-winter-farmers-market-madison-wi",
+    "name": "Dane County Farmers’ Market - Winter Farmers’ Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "3241 Garver Green",
+      "city": "Madison",
+      "state": "Wisconsin",
+      "description": "Garver Feed Mill."
+    },
+    "contact": {
+      "websites": [
+        "https://dcfm.org/markets/late-winter-market"
+      ]
+    },
+    "operations": {
+      "season": "January 2-April 3, 2027",
+      "days": [
+        "Saturday 8:00 am-12:00 pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Dane County Farmers’ Market",
+      "dataset_name": "Winter Farmers’ Market",
+      "catalog_url": "https://dcfm.org/markets/late-winter-market",
+      "retrieved_at": "2026-11-20"
+    }
+  },
+  {
+    "id": "added:green-city-market-avondale-chicago-il",
+    "slug": "green-city-market-avondale-chicago-il",
+    "name": "Green City Market Avondale",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "3031 N Rockwell St",
+      "city": "Chicago",
+      "state": "Illinois"
+    },
+    "contact": {
+      "websites": [
+        "https://www.greencitymarket.org/calendar/details/green-city-market-avondale-12-05-2026"
+      ]
+    },
+    "operations": {
+      "season": "December 5, 2026-March 20, 2027",
+      "days": [
+        "Saturday"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Green City Market",
+      "dataset_name": "Green City Market Avondale",
+      "catalog_url": "https://www.greencitymarket.org/calendar/details/green-city-market-avondale-12-05-2026",
+      "retrieved_at": "2026-11-20"
+    },
+    "visitor_note": "The indoor market opens at 8:00 am on Saturday, December 5, 2026."
   }
 ]

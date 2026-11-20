@@ -1893,12 +1893,14 @@
             "amenities.features",
             "amenities.parking",
             "visitor_note",
-            "first_party.access"
+            "first_party.access",
+            "organization.description",
+            "location.description"
           ],
           "id": "website-audit-dea367b20467-1",
           "kind": "first_party",
           "scope": "market",
-          "accessed_at": "2026-08-21"
+          "accessed_at": "2026-11-20"
         },
         {
           "url": "https://foodaccessla.org/contact",
@@ -2939,14 +2941,6 @@
             "contact.phone_numbers"
           ]
         }
-      ]
-    },
-    {
-      "index": 1115,
-      "id": 307661,
-      "path": "operations.days",
-      "value": [
-        "The free lot is open for customers 7 am to 2 pm on Saturdays and Sundays all season long."
       ]
     },
     {
@@ -15272,6 +15266,77 @@
             "location.coordinates",
             "google_maps_url"
           ]
+        }
+      ]
+    },
+    {
+      "index": 621,
+      "id": 301346,
+      "path": "organization.description",
+      "value": "The Hollywood Farmers’ Market is run by Food Access LA."
+    },
+    {
+      "index": 621,
+      "id": 301346,
+      "path": "location.description",
+      "value": "At the corner of Ivar and Selma avenues."
+    },
+    {
+      "index": 1894,
+      "id": 308726,
+      "path": "name",
+      "value": "La Jolla Open Aire Market"
+    },
+    {
+      "index": 1894,
+      "id": 308726,
+      "path": "location.address",
+      "value": "7337 Girard Ave, La Jolla, CA 92037"
+    },
+    {
+      "index": 1894,
+      "id": 308726,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "La Jolla Open Aire Market",
+          "url": "https://lajollamarket.org/",
+          "fields": [
+            "name",
+            "location.address",
+            "contact.websites",
+            "google_maps_url",
+            "operations.days"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
+        }
+      ]
+    },
+    {
+      "index": 683,
+      "id": 301409,
+      "path": "location.address",
+      "value": "900 W Monroe St, Chicago, IL 60607"
+    },
+    {
+      "index": 683,
+      "id": 301409,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Green City Market West Loop - Green City Market",
+          "url": "https://www.greencitymarket.org/market/details/west",
+          "fields": [
+            "location.address",
+            "operations.days",
+            "operations.season",
+            "google_maps_url"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
         }
       ]
     }

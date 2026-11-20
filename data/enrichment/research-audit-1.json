@@ -1504,7 +1504,7 @@
   {
     "id": "301409",
     "market_name": "Green City Market West Loop",
-    "verified_at": "2026-08-21",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
@@ -1513,9 +1513,9 @@
     },
     "operations": {
       "days": [
-        "GCM West Loop opens on Saturday, May 2nd. The market will be open 8am-1pm on Saturdays.",
-        "The West Loop Saturday market opens on Saturday, May 2nd! The market will be open 8am-1pm on Saturdays."
-      ]
+        "Saturday 8:00 am-1:00 pm"
+      ],
+      "season": "May 2-November 21, 2026"
     },
     "payment": {
       "methods": [
@@ -1533,10 +1533,14 @@
           "contact.websites",
           "operations.days",
           "payment.methods",
-          "payment.food_assistance.snap"
-        ]
+          "payment.food_assistance.snap",
+          "google_maps_url",
+          "operations.season"
+        ],
+        "accessed_at": "2026-11-20"
       }
-    ]
+    ],
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Mary+Bartelme+Park%2C+900+W+Monroe+St%2C+Chicago%2C+IL+60607"
   },
   {
     "id": "301437",
@@ -1967,7 +1971,7 @@
   {
     "id": "307661",
     "market_name": "St. Paul Farmers’ Market",
-    "verified_at": "2026-08-21",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
@@ -1976,7 +1980,8 @@
     },
     "operations": {
       "days": [
-        "The free lot is open for customers 7 AM to 2 PM on Saturdays and Sundays all season long."
+        "Saturday and Sunday 8:00 am-1:00 pm (downtown outdoor winter market)",
+        "Saturday and Sunday 9:00 am-1:00 pm (indoor winter market)"
       ]
     },
     "amenities": {
@@ -1991,10 +1996,13 @@
         "fields": [
           "contact.websites",
           "operations.days",
-          "amenities.features"
-        ]
+          "amenities.features",
+          "visitor_note"
+        ],
+        "accessed_at": "2026-11-20"
       }
-    ]
+    ],
+    "visitor_note": "Thanksgiving market: Wednesday, November 25, 2026, 9:00 am-1:00 pm."
   },
   {
     "id": "307710",
@@ -8430,11 +8438,11 @@
   {
     "id": "gov:us_ny_farmers_markets:04082a4097e28be4",
     "market_name": "Ithaca Winter Farmers’ Market",
-    "verified_at": "2026-08-21",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
-        "https://www.ithacamarket.com/"
+        "https://ithacamarket.com/markets/winter-market/"
       ],
       "social_media": [
         "https://www.instagram.com/ithacafarmersmarket/"
@@ -8445,11 +8453,28 @@
         "title": "Ithaca Farmers Market",
         "url": "https://www.ithacamarket.com/",
         "fields": [
-          "contact.websites",
           "contact.social_media"
         ]
+      },
+      {
+        "title": "Winter Market | Ithaca Farmers Market",
+        "url": "https://ithacamarket.com/markets/winter-market/",
+        "fields": [
+          "contact.websites",
+          "operations.season",
+          "operations.days"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
       }
-    ]
+    ],
+    "operations": {
+      "season": "January 9-March 27, 2027",
+      "days": [
+        "Saturday 10:30 am-2:00 pm"
+      ]
+    }
   },
   {
     "id": "gov:us_ny_farmers_markets:0843b080c1ef2b7f",

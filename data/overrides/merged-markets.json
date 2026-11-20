@@ -103,6 +103,84 @@
       "name": "Kaiser Redwood City Farmers Market",
       "into": "308713",
       "reason": "Second legacy USDA row for the Kaiser Permanente Redwood City Farmers’ Market at the old 1150 Veterans Blvd. address, with no hours of its own. West Coast Farmers Markets Association runs one Tuesday market at 1100 Veterans Blvd.; address correction sent by the operator by email on 2026-11-19 and merge approved by the site owner the same day. The survivor keeps the operator's organizer access."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:3dd732de98ced56e",
+      "name": "Hollywood Farmers Market",
+      "into": "301346",
+      "reason": "California WIC row for the same Sunday market at 1600 Ivar Avenue (Ivar and Selma) listed by Food Access LA."
+    },
+    {
+      "id": "gov:us_ca_wic_farmers_markets:c2a175b23e6cadcd",
+      "name": "LA Jolla Certified Farmers Market",
+      "into": "308726",
+      "reason": "California WIC row for the same Sunday market at La Jolla Elementary School. La Jolla Open Aire Market publishes 7337 Girard Ave on lajollamarket.org."
+    },
+    {
+      "id": "311222",
+      "name": "FRESHFARM Dupont Circle (Sunday)",
+      "into": "301699",
+      "reason": "Duplicate of the Sunday FRESHFARM Dupont Circle market on 20th St NW. The rows point to the same official FRESHFARM Dupont Circle page."
+    },
+    {
+      "id": "gov:us_dc_farmers_markets:{15D8105F-3F48-4661-8826-767EE88C7C1B}",
+      "name": "FRESHFARM Dupont Circle",
+      "into": "301699",
+      "reason": "Duplicate of the Sunday FRESHFARM Dupont Circle market on 20th St NW. The rows point to the same official FRESHFARM Dupont Circle page."
+    },
+    {
+      "id": "311217",
+      "name": "Dupont Circle FRESHFARM Market",
+      "into": "301699",
+      "reason": "Duplicate of the Sunday FRESHFARM Dupont Circle market on 20th St NW. The rows point to the same official FRESHFARM Dupont Circle page."
+    },
+    {
+      "id": "300575",
+      "name": "FRESHFARM Dupont Market",
+      "into": "301699",
+      "reason": "Duplicate of the Sunday FRESHFARM Dupont Circle market on 20th St NW. The rows point to the same official FRESHFARM Dupont Circle page."
+    },
+    {
+      "id": "311223",
+      "name": "FRESHFARM Dupont Market",
+      "into": "301699",
+      "reason": "Duplicate of the Sunday FRESHFARM Dupont Circle market on 20th St NW. The rows point to the same official FRESHFARM Dupont Circle page."
+    },
+    {
+      "id": "311224",
+      "name": "FRESHFARM Foggy Bottom",
+      "into": "301701",
+      "reason": "Second legacy listing with the same market name and street address (901 23rd St NW, Washington, DC 20052, USA)."
+    },
+    {
+      "id": "311230",
+      "name": "FRESHFARM Penn Quarter",
+      "into": "301711",
+      "reason": "Second legacy listing with the same market name and street address (801 F St NW Washington, DC 20004)."
+    },
+    {
+      "id": "311225",
+      "name": "FRESHFARM H St NE",
+      "into": "301702",
+      "reason": "Second legacy listing with the same market name and street address (800 13th St NE, Washington, DC 20002, USA)."
+    },
+    {
+      "id": "311221",
+      "name": "FRESHFARM Columbia Heights (Saturday)",
+      "into": "301697",
+      "reason": "Second legacy listing with the same market name and street address (Park Rd NW & 14th St NW, Washington, DC 20010, USA)."
+    },
+    {
+      "id": "311228",
+      "name": "FRESHFARM Monroe Street",
+      "into": "301705",
+      "reason": "Second legacy listing with the same market name and street address (716 Monroe St NE, Washington, DC 20017, USA)."
+    },
+    {
+      "id": "311229",
+      "name": "FRESHFARM Mount Vernon Triangle",
+      "into": "301708",
+      "reason": "Second legacy listing with the same market name and street address (499 I St NW, Washington, DC 20001, USA)."
     }
   ]
 }

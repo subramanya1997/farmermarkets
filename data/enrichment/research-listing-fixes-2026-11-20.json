@@ -1,0 +1,100 @@
+[
+  {
+    "id": "313403",
+    "market_name": "Olympia Farmers’ Market",
+    "verified_at": "2026-11-20",
+    "verification_scope": "partial",
+    "operations": {
+      "season": "Year-round",
+      "days": [
+        "Saturday and Sunday 10:00 am-3:00 pm (November-December)",
+        "Saturday 10:00 am-3:00 pm (January-March)",
+        "Thursday-Sunday 10:00 am-3:00 pm (April-October)"
+      ]
+    },
+    "visitor_note": "The 2026 holiday season ends Sunday, December 20. The market also opens Friday, December 18 for Holiday Shoppers Delight.",
+    "sources": [
+      {
+        "title": "Market Hours & Seasons | Olympia Farmers Market",
+        "url": "https://www.olympiafarmersmarket.com/hours",
+        "fields": [
+          "operations.days",
+          "operations.season",
+          "visitor_note"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
+      }
+    ]
+  },
+  {
+    "id": "added:dane-county-holiday-farmers-market-madison-wi",
+    "market_name": "Dane County Farmers’ Market - Holiday Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-20",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Chicago",
+          "source_ids": [
+            "dcfm-holiday-market"
+          ],
+          "verified_at": "2026-11-20"
+        },
+        "schedules": [
+          {
+            "id": "regular-holiday-dates",
+            "value": {
+              "recurrence": {
+                "kind": "dates",
+                "dates": [
+                  "2026-11-21",
+                  "2026-12-12",
+                  "2026-12-19"
+                ]
+              },
+              "opens": "07:30",
+              "closes": "12:00"
+            },
+            "source_ids": [
+              "dcfm-holiday-market"
+            ],
+            "verified_at": "2026-11-20"
+          },
+          {
+            "id": "december-5-extended-hours",
+            "value": {
+              "recurrence": {
+                "kind": "dates",
+                "dates": [
+                  "2026-12-05"
+                ]
+              },
+              "opens": "07:30",
+              "closes": "13:00"
+            },
+            "source_ids": [
+              "dcfm-holiday-market"
+            ],
+            "verified_at": "2026-11-20"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "title": "Holiday Farmers’ Market | Dane County Farmers’ Market",
+        "url": "https://dcfm.org/markets/holiday-market",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20",
+        "id": "dcfm-holiday-market"
+      }
+    ]
+  }
+]

@@ -22897,7 +22897,7 @@
   {
     "id": "301705",
     "market_name": "FRESHFARM Monroe Street",
-    "verified_at": "2026-08-30",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
@@ -22925,8 +22925,12 @@
           "contact.websites",
           "contact.social_media",
           "operations.days",
-          "operations.season"
-        ]
+          "operations.season",
+          "payment.food_assistance.snap",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp"
+        ],
+        "accessed_at": "2026-11-20"
       },
       {
         "title": "Contact Us – FRESHFARM",
@@ -22935,7 +22939,14 @@
           "contact.phone_numbers"
         ]
       }
-    ]
+    ],
+    "payment": {
+      "food_assistance": {
+        "snap": true,
+        "wic": true,
+        "sfmnp": true
+      }
+    }
   },
   {
     "id": "301707",
@@ -49002,11 +49013,11 @@
   {
     "id": "308726",
     "market_name": "LA Jolla Elementary Certified Farmers’ Market",
-    "verified_at": "2026-08-30",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
-        "https://lajollamarket.com/"
+        "https://lajollamarket.org/"
       ],
       "phone_numbers": [
         "(858) 454-1699"
@@ -49018,7 +49029,7 @@
     },
     "operations": {
       "days": [
-        "Sundays from 9:00am - 1:00pm"
+        "Sunday 9:00 am-1:00 pm"
       ],
       "season": "Year-round"
     },
@@ -49027,14 +49038,25 @@
         "title": "Home - La Jolla MarketLa Jolla Market",
         "url": "https://lajollamarket.com/",
         "fields": [
-          "contact.websites",
           "contact.phone_numbers",
           "contact.social_media",
-          "operations.days",
           "operations.season"
         ]
+      },
+      {
+        "title": "La Jolla Open Aire Market",
+        "url": "https://lajollamarket.org/",
+        "fields": [
+          "contact.websites",
+          "google_maps_url",
+          "operations.days"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
       }
-    ]
+    ],
+    "google_maps_url": "https://maps.app.goo.gl/nGN9NGdAVqiVSJ68A"
   },
   {
     "id": "308729",
