@@ -210767,13 +210767,13 @@
     "name": "Kaiser Permanente Redwood City Farmers’ Market",
     "last_updated": "2023-03-20T22:52:09",
     "location": {
-      "address": "1150 Veterans Blvd., Redwood City, CA, 94063",
+      "address": "1100 Veterans Blvd., Redwood City, CA 94063",
       "city": "Redwood City",
       "state": "California",
       "zip_code": "94063",
       "coordinates": {
-        "longitude": -122.22319603579528,
-        "latitude": 37.489579994910166
+        "longitude": -122.2242762,
+        "latitude": 37.4891882
       },
       "description": "",
       "site_type": "",
@@ -210833,7 +210833,7 @@
     "slug": "kaiser-permanente-redwood-city-farmers-market",
     "country": "United States",
     "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.489579994910166%2C-122.22319603579528",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.4891882%2C-122.2242762",
     "amenities": {
       "features": []
     },
@@ -210842,13 +210842,16 @@
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Redwood City Kaiser Permanente — West Coast Farmers Markets — West Coast Farmers Markets",
+          "title": "Redwood City Kaiser Permanente | West Coast Farmers Markets, with the 1100 Veterans Blvd. address confirmed by the operator by email on November 19, 2026",
           "url": "https://www.wcfma.org/redwood-city-kaiser-permanente",
           "fields": [
             "contact.websites",
             "contact.phone_numbers",
             "operations.days",
-            "operations.season"
+            "operations.season",
+            "location.address",
+            "location.coordinates",
+            "google_maps_url"
           ]
         }
       ]
@@ -211442,95 +211445,6 @@
     "audit": {
       "checked_at": "2026-08-21",
       "status": "identity_ambiguous"
-    }
-  },
-  {
-    "id": 308720,
-    "name": "Kaiser Redwood City Farmers Market",
-    "last_updated": "2023-03-20T22:52:09",
-    "location": {
-      "address": "1150 Veterans Boulevard Redwood City, CA 94063",
-      "city": "Redwood City",
-      "state": "California",
-      "zip_code": "94063",
-      "coordinates": {
-        "longitude": -122.22319603579528,
-        "latitude": 37.489579994910166
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [
-        "(415) 996-8179"
-      ],
-      "emails": [],
-      "websites": [],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "kaiser-redwood-city-farmers-market-redwood-city",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.489579994910166%2C-122.22319603579528",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for Kaiser Redwood City Farmers’ Market",
-          "url": "https://www.google.com.au/maps/place/Kaiser+Redwood+City+Farmers%27+Market/data=!4m7!3m6!1s0x808fa370aa4dc4b7:0x49b345caa1de03cb!8m2!3d37.488658!4d-122.223695!16s%2Fg%2F11s39t15d1!19sChIJt8RNqnCjj4ARywPeocpFs0k?authuser=0&hl=en&g_ep=EgoyMDI2MDgxOS4wIJJjKgBIAVAD&rclk=1",
-          "fields": [
-            "contact.phone_numbers"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
     }
   },
   {
@@ -869819,6 +869733,134 @@
           "kind": "first_party",
           "scope": "market",
           "accessed_at": "2026-11-18"
+        }
+      ]
+    }
+  },
+  {
+    "id": "added:kaiser-permanente-foster-city-farmers-market",
+    "slug": "kaiser-permanente-foster-city-farmers-market",
+    "name": "Kaiser Permanente Foster City Farmers’ Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "1010 Metro Center Blvd., Foster City, CA 94404",
+      "city": "Foster City",
+      "state": "California",
+      "zip_code": "94404",
+      "coordinates": {
+        "longitude": -122.2714447,
+        "latitude": 37.5620589
+      },
+      "description": ""
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Run by the West Coast Farmers Markets Association, which also calls it the Foster City Farmers’ Market. This is the Saturday market on Metro Center Blvd., not the Tuesday market at the Peninsula Jewish Community Center."
+    },
+    "contact": {
+      "phone_numbers": [],
+      "emails": [],
+      "websites": [
+        "https://www.wcfma.org/foster-city"
+      ],
+      "social_media": [
+        "https://www.instagram.com/fostercityfarmersmarket/"
+      ]
+    },
+    "operations": {
+      "season": "Year-round",
+      "days": [
+        "Saturday 09:00-13:00"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "West Coast Farmers Markets Association",
+      "dataset_name": "Foster City Farmers' Market | West Coast Farmers Markets, with the Saturday hours, year-round season and 1010 Metro Center Blvd. location from the operator's page, and the Kaiser Permanente Foster City name sent by the operator by email on November 19, 2026",
+      "catalog_url": "https://www.wcfma.org/foster-city",
+      "retrieved_at": "2026-11-19"
+    },
+    "schema_version": 2,
+    "first_party": {
+      "identity": {
+        "operator_name": {
+          "value": "West Coast Farmers Markets Association",
+          "source_ids": [
+            "wcfma-foster-city"
+          ],
+          "verified_at": "2026-11-19"
+        }
+      },
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "wcfma-foster-city"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "wcfma-foster-city"
+          ],
+          "verified_at": "2026-11-19"
+        },
+        "schedules": [
+          {
+            "id": "saturday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "saturday"
+                ]
+              },
+              "opens": "09:00",
+              "closes": "13:00"
+            },
+            "source_ids": [
+              "wcfma-foster-city"
+            ],
+            "verified_at": "2026-11-19"
+          }
+        ]
+      }
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=37.5620589%2C-122.2714447",
+    "payment": {
+      "food_assistance": {},
+      "methods": []
+    },
+    "amenities": {
+      "features": []
+    },
+    "products": {
+      "items": [],
+      "production_methods": [],
+      "categories": {}
+    },
+    "enrichment": {
+      "verified_at": "2026-11-19",
+      "verification_scope": "partial",
+      "sources": [
+        {
+          "id": "wcfma-foster-city",
+          "title": "Foster City Farmers' Market | West Coast Farmers Markets, with the Saturday hours, year-round season and 1010 Metro Center Blvd. location from the operator's page, and the Kaiser Permanente Foster City name sent by the operator by email on November 19, 2026",
+          "url": "https://www.wcfma.org/foster-city",
+          "fields": [
+            "first_party.identity",
+            "first_party.operations"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-19"
         }
       ]
     }

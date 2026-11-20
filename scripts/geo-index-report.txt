@@ -1,5 +1,5 @@
 Geo index build report
-generated_at            2026-11-19T22:26:25.041Z
+generated_at            2026-11-20T02:24:36.138Z
 
 Records
   total                 9131

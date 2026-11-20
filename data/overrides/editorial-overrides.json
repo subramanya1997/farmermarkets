@@ -4001,20 +4001,6 @@
       ]
     },
     {
-      "index": 1888,
-      "id": 308720,
-      "path": "enrichment.sources",
-      "value": [
-        {
-          "title": "Google Maps listing for Kaiser Redwood City Farmers’ Market",
-          "url": "https://www.google.com.au/maps/place/Kaiser+Redwood+City+Farmers%27+Market/data=!4m7!3m6!1s0x808fa370aa4dc4b7:0x49b345caa1de03cb!8m2!3d37.488658!4d-122.223695!16s%2Fg%2F11s39t15d1!19sChIJt8RNqnCjj4ARywPeocpFs0k?authuser=0&hl=en&g_ep=EgoyMDI2MDgxOS4wIJJjKgBIAVAD&rclk=1",
-          "fields": [
-            "contact.phone_numbers"
-          ]
-        }
-      ]
-    },
-    {
       "index": 1890,
       "id": 308722,
       "path": "enrichment.sources",
@@ -15251,6 +15237,43 @@
       "id": 308823,
       "path": "operations.season",
       "value": "April through November. The last market of 2026 is Saturday, November 28, and the market returns in April 2027"
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "location.address",
+      "value": "1100 Veterans Blvd., Redwood City, CA 94063"
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -122.2242762,
+        "latitude": 37.4891882
+      }
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=37.4891882%2C-122.2242762"
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Redwood City Kaiser Permanente | West Coast Farmers Markets, with the 1100 Veterans Blvd. address confirmed by the operator by email on November 19, 2026",
+          "url": "https://www.wcfma.org/redwood-city-kaiser-permanente",
+          "fields": [
+            "location.address",
+            "location.coordinates",
+            "google_maps_url"
+          ]
+        }
+      ]
     }
   ]
 }
