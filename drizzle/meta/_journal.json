@@ -64,6 +64,13 @@
       "when": 1795067798191,
       "tag": "0008_vendor_qr_follows",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1795216861440,
+      "tag": "0009_listing_bot",
+      "breakpoints": true
     }
   ]
 }

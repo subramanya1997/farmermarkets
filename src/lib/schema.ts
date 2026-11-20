@@ -904,6 +904,9 @@ export function marketSchemaGraph(
     openingHoursSpecification: openingHours,
     specialOpeningHoursSpecification: marketSpecialOpeningHours(market, now),
     paymentAccepted: marketPaymentAccepted(market),
+    parentOrganization: clean(market.first_party?.identity?.operator_name?.value)
+      ? { '@type': 'Organization', name: clean(market.first_party?.identity?.operator_name?.value) }
+      : undefined,
   };
 
   const nodes: unknown[] = [business];

@@ -11,6 +11,8 @@ The outreach bot (Grok) talks to market operators by email. It can:
 - read the scoreboard ([`GET /api/bot/metrics`](#metrics)).
 
 Every call uses the same token and error shapes ([Auth and errors](#auth-and-errors)).
+The operator-growth bot's fuller listing API (field-level PATCH, structured
+schedules, photo order, new pages, merges) is in [listing-bot.md](listing-bot.md).
 Edits and photos go live at once and are logged in `bot_actions`. Anything that
 takes a listing or a photo down only creates a request for an admin
 ([The deletion rule](#the-deletion-rule)).

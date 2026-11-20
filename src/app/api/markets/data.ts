@@ -572,6 +572,38 @@ export function rawFromMarket(market: FarmerMarket): RawMarketData {
  * market. Loaded lazily so this module stays importable outside Next (bun
  * tests, scripts): any failure there means "no layer", never a broken page.
  */
+/** A raw dataset-shaped record as the site reads it (mapped and scored). */
+export function marketFromRaw(raw: RawMarketData): FarmerMarket {
+  return scoreMarket(mapRawMarket(raw, 0));
+}
+
+/**
+ * A market the listing bot created, for a slug the dataset does not have.
+ * A database failure reads as "no such market", like any unknown slug.
+ */
+async function botMarketBySlug(slug: string): Promise<FarmerMarket | null> {
+  try {
+    const { botMarketRecordBySlug } = await import('@/lib/botMarkets');
+    const raw = await botMarketRecordBySlug(slug);
+    return raw ? marketFromRaw(raw) : null;
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'test') console.error('Bot market lookup failed:', error);
+    return null;
+  }
+}
+
+async function botMarketById(id: string): Promise<FarmerMarket | null> {
+  if (!id.startsWith('bot-')) return null;
+  try {
+    const { botMarketRecordsByIds } = await import('@/lib/botMarkets');
+    const [raw] = await botMarketRecordsByIds([id]);
+    return raw ? marketFromRaw(raw) : null;
+  } catch (error) {
+    if (process.env.NODE_ENV !== 'test') console.error('Bot market lookup failed:', error);
+    return null;
+  }
+}
+
 async function withOrganizerLayer(market: FarmerMarket | null | undefined): Promise<FarmerMarket | null> {
   if (!market) return null;
   let layered = market;
@@ -927,13 +959,25 @@ export const marketService = {
   getMarketById: async (id: string) => {
     const markets = await loadMarketsData();
     const market = markets.find(m => String(m.id) === id);
-    return withOrganizerLayer(market);
+    return withOrganizerLayer(market ?? (await botMarketById(id)));
   },
 
   // Get a single market by slug (O(1) lookup through the memoized slug index)
   getMarketBySlug: async (slug: string) => {
     const index = await getSlugIndex();
-    return withOrganizerLayer(index.get(slug));
+    return withOrganizerLayer(index.get(slug) ?? (await botMarketBySlug(slug)));
+  },
+
+  // Markets the listing bot created, which the dataset file does not have
+  // yet (src/lib/botMarkets.ts), without their organizer layer.
+  getBotMarkets: async (): Promise<FarmerMarket[]> => {
+    try {
+      const { allBotMarketRecords } = await import('@/lib/botMarkets');
+      return withListLayers((await allBotMarketRecords()).map(marketFromRaw));
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'test') console.error('Bot markets unavailable:', error);
+      return [];
+    }
   },
 
   // The dataset record alone, without the organizer layer: what the editor

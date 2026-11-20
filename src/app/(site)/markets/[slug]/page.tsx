@@ -47,6 +47,7 @@ import { OFFER_COVERED_TERMS, marketOffers } from "@/lib/marketOffers";
 import { marketWinterAnswer } from "@/lib/marketWinter";
 import { prerenderSampleSize, sampleEvenly } from "@/lib/prerenderSample";
 import { jsonLdHtml } from "@/lib/jsonLd";
+import { runtimeRedirectFor } from "@/lib/marketRedirects";
 
 export const revalidate = 86400;
 // Slugs outside generateStaticParams (legacy numeric IDs, records added by a
@@ -190,6 +191,12 @@ export default async function MarketDetailPage({
     notFound();
   }
 
+  // A duplicate merged at runtime (POST /api/bot/markets/:slug/redirect).
+  // src/proxy.ts answers these with a 301 first; this covers the minute
+  // before its cache catches up.
+  const merged = await runtimeRedirectFor(market.slug);
+  if (merged) permanentRedirect(`/markets/${merged.toSlug}`);
+
   const rawAddress = getMarketAddress(market);
   // clean() also strips upstream punctuation flaws ('Portland , Oregon').
   const address = clean(rawAddress.replace(/^[,\s]+/, ''));
@@ -200,6 +207,8 @@ export default async function MarketDetailPage({
   const prose = await getMarketProse(market);
 
   const addressParts = marketAddressParts(market);
+  // Who runs it, when the organizer or the listing bot named them.
+  const operatorName = clean(market.first_party?.identity?.operator_name?.value) || undefined;
 
   // The city page this market is listed on, when the geo index placed it in a
   // city. Linking the location line both gives the reader the obvious next
@@ -382,6 +391,9 @@ export default async function MarketDetailPage({
                     address
                   )}
                 </address>
+              )}
+              {operatorName && (
+                <p className="text-sm text-zinc-600 dark:text-zinc-400">Run by {operatorName}</p>
               )}
               {/* "Last verified in 2020", or "no longer in the USDA
                   directory" — high enough on the page to be honest, muted

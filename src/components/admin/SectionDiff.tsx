@@ -70,7 +70,19 @@ type Section<K extends ListingSection> = NonNullable<ListingEdits[K]>;
 function scheduleItems(value?: Section<'schedules'>): Item[] {
   return (value ?? []).map((schedule) => ({
     main: `${schedule.weekdays.map(weekdayLabel).join(', ')}, ${span(schedule.opens, schedule.closes)}`,
-    detail: schedule.label,
+    detail:
+      [schedule.label, span(schedule.start_date, schedule.end_date, formatDay) || (schedule.end_date ? `through ${formatDay(schedule.end_date)}` : '')]
+        .filter(Boolean)
+        .join(' · ') || undefined,
+  }));
+}
+
+const EXCEPTION_LABELS = { closed: 'Closed', special_opening: 'Extra market day', modified_hours: 'Different hours' } as const;
+
+function exceptionItems(value?: Section<'exceptions'>): Item[] {
+  return (value ?? []).map((item) => ({
+    main: `${span(item.start_date, item.end_date, formatDay)}: ${EXCEPTION_LABELS[item.status]}${item.opens ? `, ${span(item.opens, item.closes)}` : ''}`,
+    detail: item.note,
   }));
 }
 
@@ -83,7 +95,10 @@ function seasonText(value?: Section<'season'>): string | undefined {
 function partsFor(section: ListingSection, before: ListingEdits, after: ListingEdits): Part[] {
   switch (section) {
     case 'identity':
-      return [scalar('Name', before.identity?.name, after.identity?.name)];
+      return [
+        scalar('Name', before.identity?.name, after.identity?.name),
+        scalar('Run by', before.identity?.operator_name, after.identity?.operator_name),
+      ];
     case 'location': {
       const pin = (value?: { lat: number; lon: number }) => (value ? `${value.lat.toFixed(5)}, ${value.lon.toFixed(5)}` : undefined);
       const hidden = (value?: boolean) => (value === undefined ? undefined : value ? 'Hidden' : 'Shown');
@@ -108,6 +123,8 @@ function partsFor(section: ListingSection, before: ListingEdits, after: ListingE
       return [scalar('Season', seasonText(before.season), seasonText(after.season))];
     case 'schedules':
       return [list('Days and hours', scheduleItems(before.schedules), scheduleItems(after.schedules))];
+    case 'exceptions':
+      return [list('Special dates and closures', exceptionItems(before.exceptions), exceptionItems(after.exceptions))];
     case 'about':
       return [
         scalar('Description', before.about?.description, after.about?.description, { multiline: true }),

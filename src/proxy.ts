@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getSessionCookie } from 'better-auth/cookies';
+import { runtimeRedirectTarget } from '@/lib/redirectCache';
 
 /**
  * Organizer, vendor and admin areas: a visitor with no session cookie goes
@@ -24,9 +25,24 @@ const SIGNED_IN_AREAS = /^\/(dashboard|admin|vendor)(\/|$)/;
  * the matcher below keeps `/_next`, `/api`, `/ingest` and any path with a file
  * extension (static assets) out of the way.
  */
-export function proxy(request: NextRequest) {
+/** A market page or its claim/apply page: `/markets/<slug>[/claim|/apply]`. */
+const MARKET_PAGE = /^\/markets\/([a-z0-9-]{1,200})(\/(?:claim|apply))?$/;
+
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const normalized = pathname.toLowerCase().replace(/(?!^)\/+$/, '');
+
+  // Duplicates the listing bot merged into another page (market_redirects)
+  // answer with a 301, like the build-time merges in next.config.ts.
+  const market = MARKET_PAGE.exec(normalized);
+  if (market) {
+    const target = await runtimeRedirectTarget(market[1]);
+    if (target && target !== market[1]) {
+      const url = new URL(request.url);
+      url.pathname = `/markets/${target}${market[2] ?? ''}`;
+      return NextResponse.redirect(url, 301);
+    }
+  }
 
   if (pathname === normalized) {
     // Only a cheap cookie-presence check. Pages and server actions verify

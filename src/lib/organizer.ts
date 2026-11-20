@@ -172,7 +172,12 @@ export async function getMarketsByIds(ids: string[]): Promise<FarmerMarket[]> {
   if (ids.length === 0) return [];
   const wanted = new Set(ids);
   const all = await marketService.getAllMarkets();
-  return all.filter((market) => wanted.has(market.id));
+  const found = all.filter((market) => wanted.has(market.id));
+  // Markets the listing bot created live in the database, not the dataset.
+  if (ids.some((id) => id.startsWith('bot-') && !found.some((market) => market.id === id))) {
+    found.push(...(await marketService.getBotMarkets()).filter((market) => wanted.has(market.id)));
+  }
+  return found;
 }
 
 /**
