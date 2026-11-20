@@ -9482,22 +9482,45 @@
   {
     "id": "gov:us_ny_farmers_markets:83f79a4a97ac40d2",
     "market_name": "Ithaca Farmers’ Market (Steamboat Sat)",
-    "verified_at": "2026-08-21",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
-        "https://www.ithacamarket.com/"
+        "https://ithacamarket.com/markets/"
       ]
     },
     "sources": [
       {
-        "title": "Ithaca Farmers Market",
-        "url": "https://www.ithacamarket.com/",
+        "title": "Markets of the week | Ithaca Farmers Market",
+        "url": "https://ithacamarket.com/markets/",
         "fields": [
-          "contact.websites"
-        ]
+          "contact.websites",
+          "operations.days",
+          "operations.season"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
+      },
+      {
+        "title": "Rutabaga Curl | Ithaca Farmers Market",
+        "url": "https://ithacamarket.com/markets/rutabaga-curl/",
+        "fields": [
+          "operations.days",
+          "operations.season"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
       }
-    ]
+    ],
+    "operations": {
+      "season": "April 4-December 19, 2026",
+      "days": [
+        "Saturday 9:00 am-3:00 pm (April 4-October 31, 2026)",
+        "Saturday 10:00 am-2:00 pm (November through December 19, 2026)"
+      ]
+    }
   },
   {
     "id": "gov:us_ny_farmers_markets:86b17688dc1aa180",

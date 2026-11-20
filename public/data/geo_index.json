@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-11-20T18:48:25.363Z",
-  "market_count": 9121,
+  "generated_at": "2026-11-20T19:52:59.371Z",
+  "market_count": 9120,
   "states": [
     {
       "code": "NY",
       "name": "New York",
       "country_code": "US",
       "slug": "new-york",
-      "market_count": 1085,
+      "market_count": 1084,
       "city_count": 466,
       "cities": [
         {
@@ -392,21 +392,6 @@
           ]
         },
         {
-          "name": "Ithaca",
-          "slug": "ithaca",
-          "market_count": 8,
-          "market_slugs": [
-            "danby-farmers-market-ithaca",
-            "finger-lakes-winter-market-ithaca-49fde2bf",
-            "indian-creek-farm-farm-stand-ithaca-ef97e431",
-            "ithaca-farmers-market-east-hill-wed-ithaca-a162b838",
-            "ithaca-farmers-market-saturday-rt-13-ithaca",
-            "ithaca-farmers-market-steamboat-sat-ithaca-30659d75",
-            "ithaca-farmers-market-steamboat-sun-ithaca-1454f249",
-            "ithaca-winter-farmers-market-ithaca-eda21e6c"
-          ]
-        },
-        {
           "name": "Binghamton",
           "slug": "binghamton",
           "market_count": 7,
@@ -432,6 +417,20 @@
             "slate-valley-farmers-market-ny",
             "slate-valley-farmers-market-ny-12832",
             "slateville-farm-stand-granville-5aa9504c"
+          ]
+        },
+        {
+          "name": "Ithaca",
+          "slug": "ithaca",
+          "market_count": 7,
+          "market_slugs": [
+            "danby-farmers-market-ithaca",
+            "finger-lakes-winter-market-ithaca-49fde2bf",
+            "indian-creek-farm-farm-stand-ithaca-ef97e431",
+            "ithaca-farmers-market-east-hill-wed-ithaca-a162b838",
+            "ithaca-farmers-market-steamboat-sat-ithaca-30659d75",
+            "ithaca-farmers-market-steamboat-sun-ithaca-1454f249",
+            "ithaca-winter-farmers-market-ithaca-eda21e6c"
           ]
         },
         {
