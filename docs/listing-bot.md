@@ -14,7 +14,7 @@ these endpoints, instead of sending prompts to a person:
 | [`PATCH /api/bot/markets/:slug/photos/:id`](#edit-a-photo) | Caption, credit, alt text |
 | [`DELETE /api/bot/markets/:slug/photos/:id`](#hide-a-photo) | Hide a photo (never a hard delete) |
 | [`POST /api/bot/markets`](#create-a-market) | New market page; returns the slug and claim URL |
-| [`POST /api/bot/markets/:slug/redirect`](#merge-a-duplicate) | Merge a duplicate into the page we keep, with a 301 |
+| [`POST /api/bot/markets/:slug/redirect`](#merge-a-duplicate) | Ask to merge a duplicate into the page we keep (301 once an admin approves) |
 
 The older outreach endpoints (`/api/bot/listing-edits`, `/api/bot/photos`, ...)
 in [organizer-bot.md](organizer-bot.md) keep working unchanged.
@@ -22,16 +22,11 @@ in [organizer-bot.md](organizer-bot.md) keep working unchanged.
 ## Auth
 
 ```
-Authorization: Bearer $LISTING_BOT_TOKEN
+Authorization: Bearer $ORGANIZER_BOT_TOKEN
 ```
 
-| Token (Vercel env) | Logged as | May |
-|---|---|---|
-| `LISTING_BOT_TOKEN` | `listing-bot` | Everything below except publishing merges |
-| `LISTING_BOT_MERGE_TOKEN` | `listing-bot` | Also publish a merge that names `approved_by` |
-| `ORGANIZER_BOT_TOKEN` | `outreach-bot` | Same as `LISTING_BOT_TOKEN`, until that one is set |
-
-Each token must be at least 32 characters. A missing or wrong token gets `401`.
+The same token as the outreach endpoints. Writes are logged with actor
+`outreach-bot`. A missing or wrong token gets `401`.
 
 ## Rules every write follows
 
@@ -267,11 +262,11 @@ POST /api/bot/markets/north-berkeley-fm-berkeley-caca4200/redirect
 }
 ```
 
-Merges need Subramanya's sign-off. A merge is published only when the call
-uses `LISTING_BOT_MERGE_TOKEN` **and** names `approved_by`. Otherwise it is
-queued for an admin in `/admin/review` (`202`, `"pending": true`), where
-approving it publishes the redirect. Asking for the same merge again does not
-queue it twice.
+Merges need Subramanya's sign-off, so this call never publishes one. It
+queues the merge for an admin in `/admin/review` (`202`, `"pending": true`),
+where approving it publishes the redirect. `approved_by` is optional and is
+recorded with the request. Asking for the same merge again does not queue it
+twice; a dry run returns the diff.
 
 Once published, the duplicate's URL (and its `/claim` page) answers with a
 `301` to the page we keep, within a minute everywhere. Writes to the merged

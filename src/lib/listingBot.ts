@@ -13,7 +13,7 @@ import 'server-only';
 import { createHash, randomUUID } from 'node:crypto';
 import { lookup } from 'node:dns/promises';
 import { isIP } from 'node:net';
-import { and, asc, desc, eq, inArray, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, inArray } from 'drizzle-orm';
 import { put } from '@vercel/blob';
 import { dbSchema, getDb } from '@/db';
 import { marketFromRaw, marketService, type FarmerMarket, type RawMarketData } from '@/app/api/markets/data';
@@ -703,43 +703,21 @@ export async function mergeBotMarket(
   const chained = await db.select().from(marketRedirects).where(eq(marketRedirects.toSlug, from.slug));
   for (const row of chained) changes.push({ path: `redirect.${row.fromSlug}`, old: { to_slug: from.slug }, new: { to_slug: to.slug } });
 
-  const publish = Boolean(approvedBy) && ctx.identity.canMerge;
-  const result = { pending: !publish, from_slug: from.slug, to_slug: to.slug };
+  // Merges need Subramanya's sign-off: the bot only ever queues one for
+  // /admin/review, where approving it publishes the 301 (decideBotAction).
+  const result = { pending: true, from_slug: from.slug, to_slug: to.slug };
   if (ctx.dryRun) return { ok: true, changed: true, dry_run: true, changes, audit_id: null, ...result };
 
   const details = { from_slug: from.slug, to_slug: to.slug, to_market_id: to.id, approved_by: approvedBy ?? null, changes };
-  if (!publish) {
-    // Already waiting for the same merge: do not queue it twice.
-    const waiting = await db
-      .select({ id: botActions.id, details: botActions.details })
-      .from(botActions)
-      .where(and(eq(botActions.marketId, from.id), eq(botActions.action, 'merge_redirect'), eq(botActions.status, 'pending')));
-    const same = waiting.find((row) => (row.details as { to_slug?: string }).to_slug === to.slug);
-    if (same) return { ok: true, changed: false, dry_run: false, changes, audit_id: same.id, ...result };
-    const [row] = await auditRow(from, 'merge_redirect', ctx, details, 'pending');
-    return { ok: true, changed: true, dry_run: false, changes, audit_id: row?.id ?? null, ...result };
-  }
-
-  const now = new Date();
-  const [audit] = await db.batch([
-    auditRow(from, 'merge_redirect', ctx, details, 'applied', now),
-    ...publishRedirect(from, to, approvedBy!, ctx.identity.actor, ctx.sourceNote, now),
-    // A request for this merge that was waiting in /admin/review is settled by this one.
-    db
-      .update(botActions)
-      .set({ status: 'approved', reviewedAt: now, reviewedBy: approvedBy!, reviewNote: 'Published with the merge token' })
-      .where(
-        and(
-          eq(botActions.marketId, from.id),
-          eq(botActions.action, 'merge_redirect'),
-          eq(botActions.status, 'pending'),
-          sql`${botActions.details}->>'to_slug' = ${to.slug}`,
-        ),
-      ),
-  ]);
-  await revalidateMarket(from.slug);
-  await revalidateMarket(to.slug);
-  return { ok: true, changed: true, dry_run: false, changes, audit_id: audit[0]?.id ?? null, ...result };
+  // Already waiting for the same merge: do not queue it twice.
+  const waiting = await db
+    .select({ id: botActions.id, details: botActions.details })
+    .from(botActions)
+    .where(and(eq(botActions.marketId, from.id), eq(botActions.action, 'merge_redirect'), eq(botActions.status, 'pending')));
+  const same = waiting.find((row) => (row.details as { to_slug?: string }).to_slug === to.slug);
+  if (same) return { ok: true, changed: false, dry_run: false, changes, audit_id: same.id, ...result };
+  const [row] = await auditRow(from, 'merge_redirect', ctx, details, 'pending');
+  return { ok: true, changed: true, dry_run: false, changes, audit_id: row?.id ?? null, ...result };
 }
 
 /** The writes that make `from` answer with a 301 to `to` (and re-point pages merged into `from`). */
