@@ -33,6 +33,7 @@ import { MarketShopperUpdates } from "@/components/MarketShopperUpdates";
 import { getShopperUpdates } from "@/lib/marketUpdatesLayer";
 import { MarketSourceNote } from "@/components/MarketSourceNote";
 import { NearbyMarkets } from "@/components/NearbyMarkets";
+import { MarketTopicLinks } from "@/components/MarketTopicLinks";
 import { TrackedMarketClaimLink } from "@/components/TrackedMarketClaimLink";
 import { SITE_FRAME } from "@/lib/ui";
 import { marketAlias } from "@/lib/marketAliases";
@@ -506,6 +507,8 @@ export default async function MarketDetailPage({
                     cityHref={cityPageHref}
                     cityName={placement?.city.name}
                   />
+
+                  <MarketTopicLinks market={market} />
 
                   <MarketSourceNote
                     organizerUpdatedAt={market.organizer?.updated_at}
