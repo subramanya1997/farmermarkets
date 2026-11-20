@@ -123,3 +123,33 @@ export function tidyHours(value: string): string {
     .replace(/(\d{1,2}):00(?=[ap]m)/g, '$1');
   return text;
 }
+
+const CLOCK = /^(\d{1,2})(?::(\d{2}))?([ap]m)$/;
+
+/** Minutes after midnight for a `tidyHours` clock reading ("9am", "8:30am"). */
+export function clockMinutes(text: string): number | undefined {
+  const match = CLOCK.exec(text);
+  if (!match) return undefined;
+  const hour = Number(match[1]);
+  const minute = Number(match[2] ?? 0);
+  if (hour < 1 || hour > 12 || minute > 59) return undefined;
+  return ((hour % 12) + (match[3] === 'pm' ? 12 : 0)) * 60 + minute;
+}
+
+/** "9am", "8:30am", "12pm": the house spelling `tidyHours` produces. */
+export function clockLabel(minutes: number): string {
+  const hour24 = Math.floor(minutes / 60);
+  const minute = minutes % 60;
+  const hour = hour24 % 12 === 0 ? 12 : hour24 % 12;
+  return `${hour}${minute ? `:${String(minute).padStart(2, '0')}` : ''}${hour24 < 12 ? 'am' : 'pm'}`;
+}
+
+/** Open and close minutes for a single "9am-1pm" window; anything else is skipped. */
+export function hoursWindow(hours: string): { open: number; close: number } | undefined {
+  const parts = hours.split('-');
+  if (parts.length !== 2) return undefined;
+  const open = clockMinutes(parts[0]);
+  const close = clockMinutes(parts[1]);
+  if (open === undefined || close === undefined || close <= open) return undefined;
+  return { open, close };
+}

@@ -5,9 +5,12 @@ import { newerInstant, toIsoInstant } from './dates.ts';
 import {
   TITLE_MAX_LENGTH,
   DESCRIPTION_MAX_LENGTH,
+  clockLabel,
+  clockMinutes,
   fitDescription,
   fitTitle,
   formatCount,
+  hoursWindow,
   joinWithAnd,
   placesPhrase,
   pluralMarkets,
@@ -123,4 +126,30 @@ test('newerInstant ignores the missing side', () => {
     '2025-01-01T00:00:00.000Z'
   );
   assert.equal(newerInstant(undefined, undefined), undefined);
+});
+
+test('clockMinutes reads the house clock spelling and rejects anything else', () => {
+  assert.equal(clockMinutes('9am'), 9 * 60);
+  assert.equal(clockMinutes('8:30am'), 8 * 60 + 30);
+  assert.equal(clockMinutes('12pm'), 12 * 60);
+  assert.equal(clockMinutes('12am'), 0);
+  assert.equal(clockMinutes('3:15pm'), 15 * 60 + 15);
+  assert.equal(clockMinutes('13pm'), undefined);
+  assert.equal(clockMinutes('9'), undefined);
+  assert.equal(clockMinutes('noon'), undefined);
+});
+
+test('clockLabel round-trips through clockMinutes', () => {
+  for (const label of ['9am', '8:30am', '12pm', '1pm', '3:15pm', '12am']) {
+    assert.equal(clockLabel(clockMinutes(label)!), label);
+  }
+});
+
+test('hoursWindow only accepts one forward window', () => {
+  assert.deepEqual(hoursWindow('9am-1pm'), { open: 540, close: 780 });
+  assert.deepEqual(hoursWindow('3:30pm-7pm'), { open: 930, close: 1140 });
+  assert.equal(hoursWindow('1pm-9am'), undefined);
+  assert.equal(hoursWindow('9am-1pm, 4pm-7pm'), undefined);
+  assert.equal(hoursWindow('Sunrise-noon'), undefined);
+  assert.equal(hoursWindow('9am'), undefined);
 });

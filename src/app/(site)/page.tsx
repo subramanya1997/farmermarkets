@@ -4,6 +4,8 @@ import { getMarketsPage } from "@/lib/marketsIndex";
 import { getStateHubSummaries } from "@/lib/statePage";
 import { MarketsExplorer } from "@/components/MarketsExplorer";
 import { BrowseByState } from "@/components/BrowseByState";
+import { BrowseByTopic } from "@/components/BrowseByTopic";
+import { getTopicSummaries } from "@/lib/topicPage";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import type { Metadata } from "next";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
@@ -29,6 +31,7 @@ export default async function Home() {
     homeData = await Promise.all([
       getStateHubSummaries(),
       getMarketsPage(1),
+      getTopicSummaries(),
     ]);
   } catch (error) {
     console.error('Error fetching markets for homepage:', error);
@@ -46,7 +49,7 @@ export default async function Home() {
     );
   }
 
-  const [states, indexPage] = homeData;
+  const [states, indexPage, topics] = homeData;
   const totalMarkets = indexPage?.total ?? 0;
 
   const websiteSchema = {
@@ -73,7 +76,8 @@ export default async function Home() {
         />
         <div className="flex flex-col min-h-[calc(100vh-4rem)]">
           {/* Compact hero: what the site is, in one line, then straight into
-              the explorer. Topic links live on /markets and in the footer. */}
+              the explorer. The topic pages get a crawlable row below the
+              state hubs, as well as their footer links. */}
           <section className="relative w-full bg-gradient-to-b from-green-50 to-white py-6 dark:from-green-900/20 dark:to-zinc-950 sm:py-8">
             <div className={SITE_FRAME}>
               <div className="mx-auto flex max-w-3xl flex-col items-center gap-2 text-center">
@@ -97,6 +101,10 @@ export default async function Home() {
           {/* Every state hub, one crawlable hop from the homepage; the
               explorer itself is client-rendered. */}
           <BrowseByState states={states} />
+
+          {/* The topic pages one hop from the homepage, in the body rather
+              than only in site-wide navigation. */}
+          <BrowseByTopic topics={topics} />
 
           <section className="w-full bg-white py-10 dark:bg-zinc-900 sm:py-14">
             <div className={SITE_FRAME}>

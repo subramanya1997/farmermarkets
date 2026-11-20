@@ -33,6 +33,7 @@ import { statePath } from './statePage';
 import { newerInstant, toIsoInstant } from './dates';
 import { isYearRoundMarket } from './marketWinter';
 import { settingLabel } from './marketFacts';
+import { blogPath, getPost } from './blog';
 import {
   WEEKDAY_NAMES,
   displayName,
@@ -45,6 +46,9 @@ import {
   fitTitle,
   formatCount,
   joinWithAnd,
+  clockLabel,
+  clockMinutes,
+  hoursWindow,
   placesPhrase,
   pluralMarkets,
   pluralShort,
@@ -152,8 +156,15 @@ export interface TopicPageData {
   states: TopicStateRow[];
   /** The markets the page names, mirrored by its ItemList JSON-LD. */
   topMarkets: TopicMarketRow[];
-  /** Two or three questions the rest of the page does not already answer. */
+  /**
+   * The questions the rest of the page does not already answer. The first ones
+   * are worded the way shoppers ask an assistant ("How can I check whether a
+   * farmers market accepts EBT before visiting?"), so an answer engine that
+   * reads the page finds that exact question with a direct answer under it.
+   */
   faqs: TopicFaq[];
+  /** The blog guide that covers this topic in depth, when there is one. */
+  guide?: { href: string; title: string };
   /** Newest `last_updated` among the matching markets, for the sitemap. */
   lastModified?: string;
 }
@@ -406,6 +417,41 @@ function isDefined<T>(value: T | undefined | false): value is T {
 }
 
 /* ------------------------------------------------------------------ *
+ * Typical opening and closing times
+ * ------------------------------------------------------------------ */
+
+function mostCommon(values: number[]): number | undefined {
+  const frequency = new Map<number, number>();
+  for (const value of values) frequency.set(value, (frequency.get(value) ?? 0) + 1);
+  return [...frequency.entries()].sort((left, right) => right[1] - left[1] || left[0] - right[0])[0]?.[0];
+}
+
+/**
+ * Below this many readable windows a "most markets open at" sentence would
+ * describe a handful of records, so it is dropped instead.
+ */
+const MIN_TIMED_MARKETS = 25;
+
+/** The most common opening time and the most common closing time in a selection. */
+function typicalTimes(entries: TopicEntry[]): { open: string; close: string; count: number } | undefined {
+  const windows = entries
+    .map((entry) => (entry.hours ? hoursWindow(entry.hours) : undefined))
+    .filter(isDefined);
+  if (windows.length < MIN_TIMED_MARKETS) return undefined;
+
+  const open = mostCommon(windows.map((window) => window.open));
+  const close = mostCommon(windows.map((window) => window.close));
+  if (open === undefined || close === undefined || close <= open) return undefined;
+  return { open: clockLabel(open), close: clockLabel(close), count: windows.length };
+}
+
+/** The blog post a topic page points to for the long version. */
+function guideFor(slug: string): { href: string; title: string } | undefined {
+  const post = getPost(slug);
+  return post ? { href: blogPath(post.slug), title: post.title } : undefined;
+}
+
+/* ------------------------------------------------------------------ *
  * /markets/snap-ebt
  * ------------------------------------------------------------------ */
 
@@ -428,7 +474,51 @@ export async function getSnapTopicPage(): Promise<TopicPageData> {
       : undefined,
   ].filter(isDefined);
 
+  // How a market says it takes EBT, from the USDA directory's own field.
+  const boothCount = countMatching(entries, (entry) =>
+    /central location/i.test(entry.market.snap_option ?? '')
+  );
+  const stallCount = countMatching(entries, (entry) =>
+    /individual POS/i.test(entry.market.snap_option ?? '')
+  );
+  const [topState] = states;
+
   const faqs: TopicFaq[] = [
+    count > 0 && {
+      question: 'How do I find farmers markets near me that accept SNAP/EBT?',
+      answer: `${pluralMarkets(count)} accept SNAP/EBT${where}. Pick your state on this page to see them city by city, with market days and hours${
+        topState ? `. ${topState.name} has the most, with ${formatCount(topState.count)}` : ''
+      }.`,
+    },
+    {
+      question: 'How can I check whether a farmers market accepts EBT before visiting?',
+      answer:
+        "Look for the SNAP badge on the market's page here, then confirm on the market's own website or social page, or ask at its information booth, because EBT and token programs can change from season to season. The USDA SNAP Retailer Locator also lists markets that are authorized to take EBT.",
+    },
+    (boothCount > 0 || stallCount > 0) && {
+      question: 'How do you pay with an EBT card at a farmers market?',
+      answer: [
+        boothCount > 0
+          ? `${pluralShort(boothCount)} take EBT at a central booth: you swipe your card there and get tokens or vouchers to spend with vendors.`
+          : undefined,
+        stallCount > 0
+          ? `At ${pluralShort(stallCount)}, some vendors take EBT at their own stall.`
+          : undefined,
+        'Vendors usually cannot give cash change for SNAP tokens, so it helps to swipe a smaller amount first.',
+      ]
+        .filter(isDefined)
+        .join(' '),
+    },
+    {
+      question: 'What can I buy with EBT at a farmers market?',
+      answer:
+        'SNAP covers fruit and vegetables, meat, fish, eggs, dairy, bread, honey, and seeds and plants that grow food. It does not cover hot prepared food, alcohol, or non-food items such as crafts and cut flowers.',
+    },
+    {
+      question: 'Do farmers markets match SNAP dollars, like Double Up Food Bucks?',
+      answer:
+        "Many do. Programs such as Double Up Food Bucks add extra money for fruit and vegetables when you spend SNAP, usually up to a daily limit. The programs and limits differ by state and market, so ask at the information booth. When a market reports a match, its page here lists it under Save with.",
+    },
     benefitClauses.length > 0 && {
       question: 'Do SNAP farmers markets also take WIC or senior coupons?',
       answer: `Many do. ${joinWithAnd(benefitClauses)}.`,
@@ -471,6 +561,7 @@ export async function getSnapTopicPage(): Promise<TopicPageData> {
       entry.market.wic === true ? ['WIC'] : []
     ),
     faqs,
+    guide: guideFor('how-to-use-snap-ebt-at-farmers-markets'),
     lastModified: lastModifiedOf(entries),
   };
 }
@@ -643,7 +734,34 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
     .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name, 'en'))
     .slice(0, TOP_CITY_LIMIT);
 
+  const weekendTimes = typicalTimes(entries.filter((entry) => entry.days.some((day) => WEEKEND.includes(day))));
+  const weekdayTimes = typicalTimes(
+    entries.filter((entry) => entry.days.every((day) => !WEEKEND.includes(day)))
+  );
+
   const faqs: TopicFaq[] = [
+    weekendTimes && {
+      question: 'What time do farmers markets usually open and close on weekends?',
+      answer: [
+        `Weekend markets most often open at ${weekendTimes.open} and close at ${weekendTimes.close}.`,
+        weekdayTimes && (clockMinutes(weekdayTimes.open) ?? 0) > (clockMinutes(weekendTimes.open) ?? 0)
+          ? `Weekday markets run later, most often from ${weekdayTimes.open} to ${weekdayTimes.close}.`
+          : undefined,
+        'Hours change with the season, so check the market before you go.',
+      ]
+        .filter(isDefined)
+        .join(' '),
+    },
+    {
+      question: 'How can I find farmers markets by opening hours and days of operation?',
+      answer:
+        'Pick a day on this page to see every market open that day, state by state. Each city page lists its markets with their days and hours side by side, so you can compare them at a glance.',
+    },
+    {
+      question: 'Where can I check the current hours for a farmers market near me?',
+      answer:
+        "Each market page here shows its market days, hours and season, when the listing was last updated, and a link to the market's own website when it has one. Hours shift between summer and winter seasons, so confirm on the market's site or social page before you go.",
+    },
     sunday && {
       question: 'Are farmers markets open on Sundays?',
       answer: `Some are: ${pluralShort(sunday.count)} open on Sunday${
@@ -696,6 +814,7 @@ export async function getHoursTopicPage(): Promise<HoursTopicPageData> {
     dayRows,
     commonHours: hours,
     topCities,
+    guide: guideFor('farmers-market-seasons-and-hours'),
   };
 }
 
@@ -751,7 +870,34 @@ export async function getDayTopicPage(day: Weekday): Promise<DayTopicPageData> {
     }))
   ).filter((row) => row.count > 0);
 
+  const times = typicalTimes(entries);
+  const otherWeekendDay = day === 'Saturday' ? 'Sunday' : day === 'Sunday' ? 'Saturday' : undefined;
+  const otherWeekendCount = otherWeekendDay
+    ? countMatching(withDays, (entry) => entry.days.includes(otherWeekendDay))
+    : 0;
+  const [topState] = states;
+
   const faqs: TopicFaq[] = [
+    count > 0 && {
+      question: `What farmers markets are open on ${day}s near me?`,
+      answer: `${pluralMarkets(count)} open on ${day}${where}. Pick your state on this page, then your city, to see each one with its hours${
+        topState ? `. ${topState.name} has the most, with ${formatCount(topState.count)}` : ''
+      }.`,
+    },
+    times && {
+      question: `What time do ${day} farmers markets open?`,
+      answer: `They most often open at ${times.open} and close at ${times.close}${
+        hours && hours.hours !== `${times.open}-${times.close}`
+          ? `, and ${hours.hours} is the most common schedule`
+          : ''
+      }. Hours change with the season, so check the market's page before you go.`,
+    },
+    otherWeekendDay && otherWeekendCount > 0 && {
+      question: 'Which farmers markets are open this weekend?',
+      answer: `${pluralShort(day === 'Saturday' ? count : otherWeekendCount)} open on Saturday and ${formatCount(
+        day === 'Sunday' ? count : otherWeekendCount
+      )} on Sunday. Many only run from spring to fall, so check a market's season on its page before you go.`,
+    },
     alsoOtherDayCount > 0 && {
       question: `Are ${day} farmers markets open on other days too?`,
       answer: `${formatCount(alsoOtherDayCount)} of them are${
@@ -857,7 +1003,18 @@ export async function getYearRoundTopicPage(): Promise<YearRoundTopicPageData> {
   })).filter((row) => row.count > 0);
 
   const [first, second, third] = states;
+  const topCities = cityRows(entries, TOP_CITY_LIMIT);
   const faqs: TopicFaq[] = [
+    count > 0 && {
+      question: 'Which farmers markets are open year-round instead of seasonally?',
+      answer: `${pluralMarkets(count)}${where} run year-round instead of closing for winter. Pick your state on this page to see them by city${
+        topCities.length > 0
+          ? `. The cities with the most are ${joinWithAnd(
+              topCities.slice(0, 3).map((city) => `${city.name} (${formatCount(city.count)})`)
+            )}`
+          : ''
+      }.`,
+    },
     count > 0 && {
       question: 'Are farmers markets open in winter?',
       answer: `Many are. ${pluralMarkets(count)} run year-round${where}${
@@ -913,7 +1070,7 @@ export async function getYearRoundTopicPage(): Promise<YearRoundTopicPageData> {
     topMarkets: sampleByState(entries, states),
     faqs,
     lastModified: lastModifiedOf(entries),
-    topCities: cityRows(entries, TOP_CITY_LIMIT),
+    topCities,
     dayRows,
   };
 }
@@ -964,6 +1121,16 @@ export async function getNearMeTopicPage(): Promise<NearMeTopicPageData> {
     yearRoundCount > 0 && {
       question: 'Are farmers markets near me open in winter?',
       answer: `${pluralMarkets(yearRoundCount)} run year-round. The Year-round tab shows the ones closest to you.`,
+    },
+    {
+      question: 'What is the best way to find local farmers markets by ZIP code?',
+      answer:
+        'Type the ZIP code into the search box on the Markets page to see the markets listed there. This page lists the closest markets in every direction instead, and Use my exact location narrows it to where you are, which helps near the edge of a ZIP code.',
+    },
+    {
+      question: 'Are there reliable online directories for finding farmers markets in the United States?',
+      answer:
+        "The USDA Local Food Directories are the national source most others draw on. This directory is built from that data and from official state and city open-data portals, refreshed from those publishers. Each market page names its source and the date it was last updated, and links to the market's own website so you can confirm the details.",
     },
   ].filter(isDefined);
 

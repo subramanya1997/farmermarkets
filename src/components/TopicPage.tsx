@@ -272,6 +272,24 @@ export function TopicMarketList({ markets }: { markets: TopicMarketRow[] }) {
   return <TopicMarketCard markets={markets} />;
 }
 
+/** A pointer to the blog guide that covers the topic in depth. */
+function TopicGuide({ data }: { data: TopicPageData }) {
+  if (!data.guide) return null;
+
+  return (
+    <p className="text-sm text-zinc-700 sm:text-base dark:text-zinc-300">
+      For the full walkthrough, read our guide:{' '}
+      <Link
+        href={data.guide.href}
+        className="font-medium text-green-700 underline underline-offset-2 hover:text-green-800 dark:text-green-500 dark:hover:text-green-400"
+      >
+        {data.guide.title}
+      </Link>
+      .
+    </p>
+  );
+}
+
 /** The FAQ block, mirrored exactly by the FAQPage JSON-LD above. */
 function TopicFaqs({ data }: { data: TopicPageData }) {
   if (data.faqs.length === 0) return null;
@@ -344,6 +362,7 @@ export function TopicPageShell({
           <div className={SITE_FRAME}>
             <div className="mx-auto w-full max-w-4xl space-y-10">
               {children}
+              <TopicGuide data={data} />
               <TopicFaqs data={data} />
               <TopicCrossLinks current={data.slug} />
             </div>
