@@ -181,6 +181,12 @@
       "name": "FRESHFARM Mount Vernon Triangle",
       "into": "301708",
       "reason": "Second legacy listing with the same market name and street address (499 I St NW, Washington, DC 20001, USA)."
+    },
+    {
+      "id": "311954",
+      "name": "Ithaca Farmers Market (Saturday)",
+      "into": "gov:us_ny_farmers_markets:83f79a4a97ac40d2",
+      "reason": "Second listing for the Saturday Ithaca Farmers Market at Steamboat Landing, 545 Third Street. The operator publishes one Saturday market at the pavilion."
     }
   ]
 }

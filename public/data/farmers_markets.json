@@ -543806,107 +543806,6 @@
     }
   },
   {
-    "id": 311954,
-    "name": "Ithaca Farmers Market (Saturday)",
-    "last_updated": "2023-03-27T10:30:01",
-    "location": {
-      "address": "545 3rd Street on waterfront, Rt. 13 Ithaca, NY 14850",
-      "city": "Rt. 13 Ithaca",
-      "state": "New York",
-      "zip_code": "14850",
-      "coordinates": {
-        "longitude": -76.50817160752592,
-        "latitude": 42.449922422126946
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [
-        "607-273-7109"
-      ],
-      "emails": [],
-      "websites": [
-        "https://ithacamarket.com/"
-      ],
-      "social_media": [
-        "https://www.facebook.com/ithacamarket",
-        "https://www.instagram.com/ithacafarmersmarket/"
-      ]
-    },
-    "operations": {
-      "season": "April 4th through December 19th, 2026",
-      "days": [
-        "Saturdays 9AM – 3PM, April 4th – October 31st",
-        "Saturdays 10AM – 2PM, November 6th – December 19th"
-      ],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "ithaca-farmers-market-saturday-rt-13-ithaca",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=42.449922422126946%2C-76.50817160752592",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-30",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Ithaca Farmers Market",
-          "url": "https://ithacamarket.com/",
-          "fields": [
-            "contact.websites",
-            "contact.phone_numbers",
-            "contact.social_media",
-            "operations.days",
-            "operations.season"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    }
-  },
-  {
     "id": 311955,
     "name": "Jackson Heights Greenmarket",
     "last_updated": "2023-03-27T10:30:01",
@@ -843868,16 +843767,17 @@
         "6072737109"
       ],
       "websites": [
-        "https://www.ithacamarket.com/",
+        "https://ithacamarket.com/markets/",
         "http://www.ithacamarket.com"
       ],
       "social_media": [],
       "emails": []
     },
     "operations": {
-      "season": "April 4-December 19",
+      "season": "April 4-December 19, 2026",
       "days": [
-        "Sat 9am-3pm"
+        "Saturday 9:00 am-3:00 pm (April 4-October 31, 2026)",
+        "Saturday 10:00 am-2:00 pm (November through December 19, 2026)"
       ]
     },
     "payment": {
@@ -843908,15 +843808,31 @@
       "categories": {}
     },
     "enrichment": {
-      "verified_at": "2026-08-21",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
-          "title": "Ithaca Farmers Market",
-          "url": "https://www.ithacamarket.com/",
+          "title": "Markets of the week | Ithaca Farmers Market",
+          "url": "https://ithacamarket.com/markets/",
           "fields": [
-            "contact.websites"
-          ]
+            "contact.websites",
+            "operations.days",
+            "operations.season"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
+        },
+        {
+          "title": "Rutabaga Curl | Ithaca Farmers Market",
+          "url": "https://ithacamarket.com/markets/rutabaga-curl/",
+          "fields": [
+            "operations.days",
+            "operations.season"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
         }
       ]
     },
