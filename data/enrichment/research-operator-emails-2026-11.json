@@ -815,5 +815,129 @@
         "accessed_at": "2026-11-19"
       }
     ]
+  },
+  {
+    "id": "301225",
+    "market_name": "North Berkeley Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-20",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "ecology-center-north-berkeley"
+          ],
+          "verified_at": "2026-11-20"
+        },
+        "season": {
+          "value": {
+            "kind": "year_round"
+          },
+          "source_ids": [
+            "ecology-center-north-berkeley"
+          ],
+          "verified_at": "2026-11-20"
+        },
+        "schedules": [
+          {
+            "id": "thursday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "thursday"
+                ]
+              },
+              "opens": "15:00",
+              "closes": "19:00"
+            },
+            "source_ids": [
+              "ecology-center-north-berkeley"
+            ],
+            "verified_at": "2026-11-20"
+          }
+        ],
+        "exceptions": [
+          {
+            "id": "thanksgiving-2026",
+            "value": {
+              "start_date": "2026-11-26",
+              "end_date": "2026-11-26",
+              "status": "closed",
+              "note": "Closed for Thanksgiving"
+            },
+            "source_ids": [
+              "ecology-center-north-berkeley"
+            ],
+            "verified_at": "2026-11-20"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "ecology-center-north-berkeley",
+        "title": "Berkeley Farmers’ Markets - Ecology Center, with the Thursday hours (3pm to 7pm), year-round season and Thanksgiving closure (Thursday, November 26, 2026) confirmed by the Ecology Center / Berkeley Farmers’ Markets on November 20, 2026",
+        "url": "https://ecologycenter.org/food-farming/berkeley-farmers-markets",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
+      }
+    ]
+  },
+  {
+    "id": "301226",
+    "market_name": "South Berkeley Farmers’ Market",
+    "schema_version": 2,
+    "verified_at": "2026-11-20",
+    "verification_scope": "partial",
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Los_Angeles",
+          "source_ids": [
+            "ecology-center-south-berkeley"
+          ],
+          "verified_at": "2026-11-20"
+        },
+        "schedules": [
+          {
+            "id": "tuesday",
+            "value": {
+              "recurrence": {
+                "kind": "weekly",
+                "weekdays": [
+                  "tuesday"
+                ]
+              },
+              "opens": "14:00",
+              "closes": "18:30"
+            },
+            "source_ids": [
+              "ecology-center-south-berkeley"
+            ],
+            "verified_at": "2026-11-20"
+          }
+        ]
+      }
+    },
+    "sources": [
+      {
+        "id": "ecology-center-south-berkeley",
+        "title": "Berkeley Farmers’ Markets - Ecology Center, with the Tuesday hours (2pm to 6:30pm) confirmed by the Ecology Center / Berkeley Farmers’ Markets on November 20, 2026",
+        "url": "https://ecologycenter.org/food-farming/berkeley-farmers-markets",
+        "fields": [
+          "first_party.operations"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
+      }
+    ]
   }
 ]
