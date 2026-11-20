@@ -5,6 +5,7 @@ import { ArrowUpRight, AtSign, CalendarCheck, Globe, Mail, Map as MapIcon, Phone
 import type { FarmerMarket } from '@/lib/api';
 import type { AnalyticsProperties } from '@/lib/analytics';
 import { marketFacts, socialLinks, telHref, type MarketGlance } from '@/lib/marketFacts';
+import { upcomingExceptions } from '@/lib/planVisit';
 import { marketHighlights, safeHighlightUrl } from '@/lib/marketHighlights';
 import { TrackedExternalLink } from '@/components/TrackedExternalLink';
 import { WeekStrip } from '@/components/WeekStrip';
@@ -115,7 +116,10 @@ function FactValues({ values }: { values: string[] }) {
  */
 export function MarketFacts({ market, analyticsProperties, omitTerms, hasPlanCard }: MarketFactsProps) {
   const highlights = marketHighlights(market.first_party);
-  const facts = marketFacts(market).filter((fact) =>
+  // Closures and one-off market days still ahead (the page revalidates
+  // daily). The Plan card lists them itself, so it covers this term.
+  const specialDates = upcomingExceptions(market.first_party, new Date().toISOString().slice(0, 10), 6);
+  const facts = [...marketFacts(market), ...(specialDates.length ? [{ term: 'Special dates', values: specialDates }] : [])].filter((fact) =>
     !omitTerms?.has(fact.term) &&
     // Events and programs have their own sections below.
     !(fact.term === 'Events' && market.first_party?.events?.length) &&

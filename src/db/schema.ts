@@ -350,11 +350,18 @@ export const marketPhotos = pgTable(
     uploadedBy: text('uploaded_by').references(() => user.id, { onDelete: 'set null' }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+    /** Who took it, when the uploader named someone ("Pat Lee"). Also folded into `caption` for display. */
+    credit: text('credit'),
+    /** Where it came from ("provided by operator Pat Lee by email, Nov 18"). Listing bot uploads only. */
+    sourceNote: text('source_note'),
+    /** SHA-256 of the stored file, so sending the same photo twice adds it once. Listing bot uploads only. */
+    contentHash: text('content_hash'),
   },
   (t) => [
     index('market_photos_market_idx').on(t.marketId),
     index('market_photos_status_idx').on(t.status),
     uniqueIndex('market_photos_pathname_idx').on(t.pathname),
+    index('market_photos_hash_idx').on(t.marketId, t.contentHash),
   ],
 );
 
@@ -623,4 +630,51 @@ export const botActions = pgTable(
     index('bot_actions_status_idx').on(t.status),
     index('bot_actions_created_idx').on(t.createdAt),
   ],
+);
+
+/* ------------------------------------------------------------------ *
+ * Listing bot (src/lib/listingBot.ts, docs/listing-bot.md)
+ * ------------------------------------------------------------------ */
+
+/**
+ * Markets the listing bot created (a holiday or winter market the dataset
+ * does not have yet). `record` is a raw dataset-shaped record, read by
+ * `marketService` when a slug is not in the dataset file, and the base the
+ * usual `market_overrides` layer applies over. The next data refresh can
+ * fold them into the file; nothing here is ever hard-deleted.
+ */
+export const botMarkets = pgTable(
+  'bot_markets',
+  {
+    id: text('id').primaryKey(),
+    slug: text('slug').notNull(),
+    name: text('name').notNull(),
+    city: text('city'),
+    state: text('state'),
+    record: jsonb('record').notNull(),
+    createdBy: text('created_by').notNull(),
+    sourceNote: text('source_note').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('bot_markets_slug_idx').on(t.slug)],
+);
+
+/**
+ * Market slugs merged into another page at runtime, each answered with a
+ * 301 (src/proxy.ts) on top of the build-time `data/slug-redirects.json`.
+ * Only written once an admin signed off (`approved_by`).
+ */
+export const marketRedirects = pgTable(
+  'market_redirects',
+  {
+    fromSlug: text('from_slug').primaryKey(),
+    toSlug: text('to_slug').notNull(),
+    fromMarketId: text('from_market_id'),
+    toMarketId: text('to_market_id'),
+    approvedBy: text('approved_by').notNull(),
+    createdBy: text('created_by').notNull(),
+    sourceNote: text('source_note').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index('market_redirects_to_idx').on(t.toSlug)],
 );

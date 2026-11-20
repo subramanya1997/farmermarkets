@@ -35,6 +35,7 @@ import {
   listingEditsSchema,
   phoneSchema,
   programSchema,
+  scheduleExceptionSchema,
   socialProfileSchema,
   vendorSchema,
   type ListingEdits,
@@ -164,6 +165,12 @@ export function applyListingEdits<T extends OverlayableMarket>(raw: T, edits: Li
 
   if (edits.identity) {
     next.name = edits.identity.name;
+    const { operator_name: _previous, ...identity } = firstParty.identity ?? {};
+    void _previous;
+    firstParty.identity = {
+      ...identity,
+      ...(edits.identity.operator_name ? { operator_name: sv(edits.identity.operator_name) } : {}),
+    };
   }
 
   if (edits.location) {
@@ -193,6 +200,8 @@ export function applyListingEdits<T extends OverlayableMarket>(raw: T, edits: Li
       recurrence: { kind: 'weekly' as const, weekdays: schedule.weekdays as Weekday[] },
       opens: schedule.opens,
       closes: schedule.closes,
+      ...(schedule.start_date ? { start_date: schedule.start_date } : {}),
+      ...(schedule.end_date ? { end_date: schedule.end_date } : {}),
     }));
     firstParty.operations = {
       ...firstParty.operations,
@@ -201,6 +210,32 @@ export function applyListingEdits<T extends OverlayableMarket>(raw: T, edits: Li
       exceptions: firstParty.operations?.exceptions?.filter((item) => item.source_ids.includes(ORGANIZER_SOURCE_ID)),
     };
     next.operations!.days = schedules.flatMap((schedule) => formatStructuredSchedule(schedule));
+  }
+
+  // After schedules: new hours drop exceptions from other sources, and this
+  // section, when sent, is the whole list.
+  if (edits.exceptions) {
+    const exceptions = edits.exceptions.map((item) =>
+      item.status === 'closed'
+        ? {
+            status: 'closed' as const,
+            start_date: item.start_date,
+            ...(item.end_date ? { end_date: item.end_date } : {}),
+            ...(item.note ? { note: item.note } : {}),
+          }
+        : {
+            status: item.status,
+            start_date: item.start_date,
+            ...(item.end_date ? { end_date: item.end_date } : {}),
+            opens: item.opens!,
+            closes: item.closes!,
+            ...(item.note ? { note: item.note } : {}),
+          },
+    );
+    firstParty.operations = {
+      ...firstParty.operations,
+      exceptions: items(exceptions, itemIds(exceptions.map((item) => `${item.start_date}-${item.status}`), 'organizer-date')),
+    };
   }
 
   if (edits.about) {
@@ -469,7 +504,9 @@ export function listingEditsFromMarket(market: PrefillableMarket, today = new Da
   const fp = market.first_party;
   const ops = fp?.operations;
   const draft: Record<ListingSection, unknown> = {
-    identity: market.name ? { name: market.name } : undefined,
+    identity: market.name
+      ? { name: market.name, ...(fp?.identity?.operator_name ? { operator_name: fp.identity.operator_name.value } : {}) }
+      : undefined,
     location: {
       address: market.address ?? '',
       zip_code: market.zip_code ?? '',
@@ -489,7 +526,28 @@ export function listingEditsFromMarket(market: PrefillableMarket, today = new Da
         opens: item.value.opens,
         closes: item.value.closes,
         label: item.value.label,
+        start_date: item.value.start_date,
+        end_date: item.value.end_date,
       })),
+    exceptions: (() => {
+      const upcoming = keepValid(
+        scheduleExceptionSchema,
+        (ops?.exceptions ?? [])
+          .map((item) => item.value)
+          .filter((value) => (value.end_date ?? value.start_date) >= today)
+          .sort((left, right) => left.start_date.localeCompare(right.start_date))
+          .map((value) => ({
+            status: value.status,
+            start_date: value.start_date,
+            end_date: value.end_date,
+            opens: 'opens' in value ? value.opens : undefined,
+            closes: 'closes' in value ? value.closes : undefined,
+            note: value.note,
+          })),
+        40,
+      );
+      return upcoming.length ? upcoming : undefined;
+    })(),
     about: { description: market.organization_description, visitor_note: market.visitor_note },
     contact: {
       websites: keepValid(httpUrl, market.websites ?? [], 3),

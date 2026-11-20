@@ -130,8 +130,44 @@ export const scheduleSchema = z
     opens: time,
     closes: time,
     label: line(80),
+    /** Only between these dates (a winter or holiday run). The editor keeps them as they are. */
+    start_date: isoDate.optional(),
+    end_date: isoDate.optional(),
   })
-  .refine((value) => value.opens < value.closes, { message: 'Closing time must be after opening time', path: ['closes'] });
+  .refine((value) => value.opens < value.closes, { message: 'Closing time must be after opening time', path: ['closes'] })
+  .refine((value) => !value.start_date || !value.end_date || value.end_date >= value.start_date, {
+    message: 'End date is before start date',
+    path: ['end_date'],
+  });
+
+export const EXCEPTION_STATUSES = ['closed', 'special_opening', 'modified_hours'] as const;
+
+/**
+ * One date (or run of dates) that differs from the weekly hours: a closure,
+ * an extra market day, or different hours on a usual day.
+ */
+export const scheduleExceptionSchema = z
+  .object({
+    status: z.enum(EXCEPTION_STATUSES),
+    start_date: isoDate,
+    end_date: isoDate.optional(),
+    opens: time.optional(),
+    closes: time.optional(),
+    note: line(200),
+  })
+  .refine((value) => !value.end_date || value.end_date >= value.start_date, { message: 'End date is before start date', path: ['end_date'] })
+  .refine((value) => value.status === 'closed' || Boolean(value.opens && value.closes), {
+    message: 'Give opening and closing times',
+    path: ['opens'],
+  })
+  .refine((value) => value.status !== 'closed' || (!value.opens && !value.closes), {
+    message: 'A closure has no hours',
+    path: ['opens'],
+  })
+  .refine((value) => !value.opens || !value.closes || value.opens < value.closes, {
+    message: 'Closing time must be after opening time',
+    path: ['closes'],
+  });
 
 export const seasonSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('year_round') }),
@@ -211,7 +247,13 @@ export const organizerEditsSchema = z
  */
 export const listingEditsSchema = organizerEditsSchema
   .extend({
-    identity: z.object({ name: z.string().trim().min(2, 'Enter the market name').max(150) }).optional(),
+    identity: z
+      .object({
+        name: z.string().trim().min(2, 'Enter the market name').max(150),
+        /** Who runs it ("Ecology Center"). */
+        operator_name: line(150),
+      })
+      .optional(),
     location: z
       .object({
         address: line(200),
@@ -223,21 +265,26 @@ export const listingEditsSchema = organizerEditsSchema
         suppress_map: z.boolean().optional(),
       })
       .optional(),
+    /** Closures and one-off dates, replaced as a whole like `schedules`. */
+    exceptions: z.array(scheduleExceptionSchema).max(40).optional(),
   })
   .strict();
 
 export type ListingEdits = z.infer<typeof listingEditsSchema>;
 export type ListingSection = keyof ListingEdits;
 
-export const ADMIN_ONLY_SECTIONS = ['identity', 'location'] as const satisfies readonly ListingSection[];
+export const ADMIN_ONLY_SECTIONS = ['identity', 'location', 'exceptions'] as const satisfies readonly ListingSection[];
 
 export const ORGANIZER_SECTIONS = [
   'status', 'season', 'schedules', 'about', 'contact', 'payments',
   'products', 'amenities', 'vendors', 'events', 'programs',
 ] as const satisfies readonly ListingSection[];
 
-/** Every section in display order: admin-only ones first. */
-export const LISTING_SECTIONS = [...ADMIN_ONLY_SECTIONS, ...ORGANIZER_SECTIONS] as const;
+/** Every section in display order: name and location first, special dates right after the hours. */
+export const LISTING_SECTIONS = [
+  'identity', 'location', 'status', 'season', 'schedules', 'exceptions', 'about', 'contact',
+  'payments', 'products', 'amenities', 'vendors', 'events', 'programs',
+] as const satisfies readonly ListingSection[];
 
 /** Drops admin-only sections, for anything an organizer sees or sends. */
 export function withoutAdminSections(edits: ListingEdits): ListingEdits {
@@ -252,6 +299,7 @@ export const SECTION_LABELS: Record<ListingSection, string> = {
   status: 'Market status',
   season: 'Season',
   schedules: 'Days and hours',
+  exceptions: 'Special dates and closures',
   about: 'About the market',
   contact: 'Links and contact',
   payments: 'Payments and food assistance',

@@ -31,21 +31,37 @@ import {
 import { SECTION_LABELS, mergeListingEdits, sectionsThatDiffer, type ListingEdits, type ListingSection } from './listingEdits';
 import { listingEditsFromMarket } from './organizerOverlay';
 import { IMAGE_CONTENT_TYPES, photoCaption, sniffImage, splitBotEdits } from './botRequests';
+import { publishRedirect } from './listingBot';
 
 const { botActions, marketPhotos } = dbSchema;
 
-/** Published by the bot. */
-export type AppliedBotAction = 'listing_edit' | 'photo_upload';
-/** Waiting for an admin. */
-export type PendingBotAction = 'remove_listing' | 'close_listing' | 'remove_photos';
+/** Published by a bot (the listing API's kinds are in src/lib/listingBot.ts). */
+export type AppliedBotAction =
+  | 'listing_edit'
+  | 'photo_upload'
+  | 'schedule_replace'
+  | 'photo_reorder'
+  | 'photo_cover'
+  | 'photo_details'
+  | 'photo_remove'
+  | 'market_create';
+/** Waiting for an admin. `merge_redirect` is applied directly when an approved merge comes with the merge token. */
+export type PendingBotAction = 'remove_listing' | 'close_listing' | 'remove_photos' | 'merge_redirect';
 export type BotActionKind = AppliedBotAction | PendingBotAction;
 
 export const BOT_ACTION_LABELS: Record<BotActionKind, string> = {
   listing_edit: 'Listing edit',
   photo_upload: 'Photos added',
+  schedule_replace: 'Hours and dates replaced',
+  photo_reorder: 'Photos reordered',
+  photo_cover: 'Cover photo changed',
+  photo_details: 'Photo caption edited',
+  photo_remove: 'Photo hidden',
+  market_create: 'New market page',
   remove_listing: 'Remove listing',
   close_listing: 'Mark permanently closed',
   remove_photos: 'Remove photos',
+  merge_redirect: 'Merge duplicate page (301)',
 };
 
 export type BotActionRow = typeof botActions.$inferSelect;
@@ -341,6 +357,23 @@ export async function decideBotAction(admin: SessionUser, id: string, approve: b
     };
   }
 
+  if (row.action === 'merge_redirect') {
+    const toSlug = typeof details.to_slug === 'string' ? details.to_slug : '';
+    const fromSlug = typeof details.from_slug === 'string' ? details.from_slug : '';
+    const [to] = await getMarketsByIds([typeof details.to_market_id === 'string' ? details.to_market_id : '']);
+    if (!market || !to || to.slug !== toSlug || market.slug !== fromSlug) {
+      return { ok: false, error: 'One of these pages changed since the request, so this can only be dismissed.' };
+    }
+    const [settled] = await db.batch([
+      settle,
+      ...publishRedirect(market, to, admin.email || admin.id, row.actor, row.note, now),
+    ]);
+    if (settled.length === 0) return { ok: false, error: 'This request was already handled.' };
+    await revalidateMarket(market.slug);
+    await revalidateMarket(to.slug);
+    return { ok: true, message: `Merged. /markets/${market.slug} now answers with a 301 to /markets/${to.slug}.` };
+  }
+
   const settled = await settle;
   if (settled.length === 0) return { ok: false, error: 'This request was already handled.' };
   return { ok: true, message: 'Approved. Take the listing out of the dataset to remove it.' };
@@ -365,6 +398,16 @@ export function describeBotAction(row: BotActionRow): { title: string; detail: s
     }
     case 'close_listing':
       return { title, detail: (details.changes as ListingEdits | undefined)?.status?.note ?? null, approveLabel: 'Publish' };
+    case 'merge_redirect':
+      return {
+        title,
+        detail: `/markets/${String(details.from_slug ?? '')} → /markets/${String(details.to_slug ?? '')}${details.approved_by ? ` (approved by ${String(details.approved_by)})` : ''}`,
+        approveLabel: 'Merge',
+      };
+    case 'schedule_replace': {
+      const sections = stringList(details.sections) as ListingSection[];
+      return { title, detail: sections.map((section) => SECTION_LABELS[section] ?? section).join(', ') || null, approveLabel: '' };
+    }
     default:
       return { title, detail: null, approveLabel: 'Approve' };
   }

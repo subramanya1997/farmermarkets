@@ -41,7 +41,18 @@ export function IdentitySection({
             maxLength={150}
             autoComplete="off"
             value={value?.name ?? ''}
-            onChange={(event) => onChange({ name: event.target.value })}
+            onChange={(event) => onChange({ ...value, name: event.target.value })}
+          />
+        )}
+      </Field>
+      <Field label="Run by" optional path="identity.operator_name" hint="The organization that runs the market, if it has one.">
+        {(control) => (
+          <TextInput
+            {...control}
+            maxLength={150}
+            autoComplete="organization"
+            value={value?.operator_name ?? ''}
+            onChange={(event) => onChange({ name: value?.name ?? '', ...value, operator_name: event.target.value })}
           />
         )}
       </Field>

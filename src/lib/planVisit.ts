@@ -37,7 +37,7 @@ export interface PlanVisitRow {
 
 /** `MarketFacts` terms the summary already answers, so they are not repeated. */
 export const PLAN_VISIT_COVERED_TERMS: Record<PlanVisitRow['key'], string[]> = {
-  when: ['Schedule', 'Days', 'Hours', 'Season', 'Current status'],
+  when: ['Schedule', 'Days', 'Hours', 'Season', 'Current status', 'Special dates'],
   'getting-there': ['Transit', 'Parking', 'Bike parking'],
   paying: ['Payment', 'Save with'],
   sold: ['Sold here'],
