@@ -15339,6 +15339,28 @@
           "accessed_at": "2026-11-20"
         }
       ]
+    },
+    {
+      "index": 500,
+      "id": 301225,
+      "path": "operations.days",
+      "value": [
+        "Thursdays, 3pm to 7pm"
+      ]
+    },
+    {
+      "index": 500,
+      "id": 301225,
+      "path": "operations.season",
+      "value": "Year-round"
+    },
+    {
+      "index": 501,
+      "id": 301226,
+      "path": "operations.days",
+      "value": [
+        "Tuesdays, 2pm to 6:30pm"
+      ]
     }
   ]
 }
