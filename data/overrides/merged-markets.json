@@ -97,6 +97,12 @@
       "name": "Redwood City Kiwanis Farmers Market",
       "into": "308823",
       "reason": "Second legacy USDA row for the Redwood City Kiwanis Farmers Market (850 Winslow St), with no hours of its own. Redwood City Kiwanis runs one Saturday market; merge requested by the operator by email, recorded on 2026-11-19. The survivor keeps the operator's organizer access."
+    },
+    {
+      "id": "308720",
+      "name": "Kaiser Redwood City Farmers Market",
+      "into": "308713",
+      "reason": "Second legacy USDA row for the Kaiser Permanente Redwood City Farmers’ Market at the old 1150 Veterans Blvd. address, with no hours of its own. West Coast Farmers Markets Association runs one Tuesday market at 1100 Veterans Blvd.; address correction sent by the operator by email on 2026-11-19 and merge approved by the site owner the same day. The survivor keeps the operator's organizer access."
     }
   ]
 }

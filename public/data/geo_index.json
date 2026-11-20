@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-20T02:15:06.021Z",
-  "market_count": 9132,
+  "generated_at": "2026-11-20T02:24:36.138Z",
+  "market_count": 9131,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 956,
+      "market_count": 955,
       "city_count": 407,
       "cities": [
         {
@@ -4865,18 +4865,6 @@
           ]
         },
         {
-          "name": "Redwood City",
-          "slug": "redwood-city",
-          "market_count": 5,
-          "market_slugs": [
-            "kaiser-permanente-redwood-city-farmers-market",
-            "kaiser-redwood-city-farmers-market-redwood-city",
-            "redwood-city-kiwanis-certified-farmers-market-redwood-city",
-            "redwood-city-kiwanis-cfm-redwood-city-0d1e0dab",
-            "west-coast-farmers-markets-association-redwood-city"
-          ]
-        },
-        {
           "name": "San Mateo",
           "slug": "san-mateo",
           "market_count": 5,
@@ -5032,6 +5020,17 @@
             "country-farm-craft-market-paso-robles-d5cc0d78",
             "paso-robles-farmers-market-city-park-paso-robles",
             "paso-robles-fm-paso-robles-7b1811d1"
+          ]
+        },
+        {
+          "name": "Redwood City",
+          "slug": "redwood-city",
+          "market_count": 4,
+          "market_slugs": [
+            "kaiser-permanente-redwood-city-farmers-market",
+            "redwood-city-kiwanis-certified-farmers-market-redwood-city",
+            "redwood-city-kiwanis-cfm-redwood-city-0d1e0dab",
+            "west-coast-farmers-markets-association-redwood-city"
           ]
         },
         {
