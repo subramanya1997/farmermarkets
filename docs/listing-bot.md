@@ -174,7 +174,7 @@ Multipart with a file:
 
 ```bash
 curl https://www.farmermarkets.app/api/bot/markets/north-berkeley-farmers-market-berkeley/photos \
-  -H "Authorization: Bearer $LISTING_BOT_TOKEN" \
+  -H "Authorization: Bearer $ORGANIZER_BOT_TOKEN" \
   -F "source_note=Provided by operator Pat Lee by email, Nov 18, 2026" \
   -F "caption=Stalls on Shattuck" -F "credit=Pat Lee" \
   -F photo=@stalls.jpg
