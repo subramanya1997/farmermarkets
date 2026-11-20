@@ -661,5 +661,53 @@
       "catalog_url": "https://marincommunityfarmersmarkets.com/markets/mill-valley-tuesday",
       "retrieved_at": "2026-11-18"
     }
+  },
+  {
+    "id": "added:kaiser-permanente-foster-city-farmers-market",
+    "slug": "kaiser-permanente-foster-city-farmers-market",
+    "name": "Kaiser Permanente Foster City Farmers’ Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "1010 Metro Center Blvd., Foster City, CA 94404",
+      "city": "Foster City",
+      "state": "California",
+      "zip_code": "94404",
+      "coordinates": {
+        "longitude": -122.2714447,
+        "latitude": 37.5620589
+      },
+      "description": ""
+    },
+    "organization": {
+      "types": [
+        "Independently researched listing"
+      ],
+      "description": "Run by the West Coast Farmers Markets Association, which also calls it the Foster City Farmers’ Market. This is the Saturday market on Metro Center Blvd., not the Tuesday market at the Peninsula Jewish Community Center."
+    },
+    "contact": {
+      "phone_numbers": [],
+      "emails": [],
+      "websites": [
+        "https://www.wcfma.org/foster-city"
+      ],
+      "social_media": [
+        "https://www.instagram.com/fostercityfarmersmarket/"
+      ]
+    },
+    "operations": {
+      "season": "Year-round",
+      "days": [
+        "Saturdays, 9am to 1pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "West Coast Farmers Markets Association",
+      "dataset_name": "Foster City Farmers' Market | West Coast Farmers Markets, with the Saturday hours, year-round season and 1010 Metro Center Blvd. location from the operator's page, and the Kaiser Permanente Foster City name sent by the operator by email on November 19, 2026",
+      "catalog_url": "https://www.wcfma.org/foster-city",
+      "retrieved_at": "2026-11-19"
+    }
   }
 ]

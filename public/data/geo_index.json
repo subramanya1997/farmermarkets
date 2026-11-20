@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-19T22:26:25.041Z",
-  "market_count": 9131,
+  "generated_at": "2026-11-20T02:15:06.021Z",
+  "market_count": 9132,
   "states": [
     {
       "code": "NY",
@@ -4365,7 +4365,7 @@
       "name": "California",
       "country_code": "US",
       "slug": "california",
-      "market_count": 955,
+      "market_count": 956,
       "city_count": 407,
       "cities": [
         {
@@ -5850,6 +5850,15 @@
           ]
         },
         {
+          "name": "Foster City",
+          "slug": "foster-city",
+          "market_count": 2,
+          "market_slugs": [
+            "foster-city-farmers-market-foster-city",
+            "kaiser-permanente-foster-city-farmers-market"
+          ]
+        },
+        {
           "name": "Fullerton",
           "slug": "fullerton",
           "market_count": 2,
@@ -7034,14 +7043,6 @@
           "market_count": 1,
           "market_slugs": [
             "fort-bragg-cfm-fort-bragg-ebf1e994"
-          ]
-        },
-        {
-          "name": "Foster City",
-          "slug": "foster-city",
-          "market_count": 1,
-          "market_slugs": [
-            "foster-city-farmers-market-foster-city"
           ]
         },
         {

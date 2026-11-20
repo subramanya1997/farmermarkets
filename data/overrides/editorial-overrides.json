@@ -15251,6 +15251,43 @@
       "id": 308823,
       "path": "operations.season",
       "value": "April through November. The last market of 2026 is Saturday, November 28, and the market returns in April 2027"
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "location.address",
+      "value": "1100 Veterans Blvd., Redwood City, CA 94063"
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "location.coordinates",
+      "value": {
+        "longitude": -122.2242762,
+        "latitude": 37.4891882
+      }
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "google_maps_url",
+      "value": "https://www.google.com/maps/search/?api=1&query=37.4891882%2C-122.2242762"
+    },
+    {
+      "index": 1880,
+      "id": 308713,
+      "path": "enrichment.sources",
+      "value": [
+        {
+          "title": "Redwood City Kaiser Permanente | West Coast Farmers Markets, with the 1100 Veterans Blvd. address confirmed by the operator by email on November 19, 2026",
+          "url": "https://www.wcfma.org/redwood-city-kaiser-permanente",
+          "fields": [
+            "location.address",
+            "location.coordinates",
+            "google_maps_url"
+          ]
+        }
+      ]
     }
   ]
 }
