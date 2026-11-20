@@ -2521,7 +2521,7 @@
   {
     "id": "301701",
     "market_name": "FRESHFARM Foggy Bottom",
-    "verified_at": "2026-08-21",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
@@ -2535,8 +2535,27 @@
         "fields": [
           "contact.websites"
         ]
+      },
+      {
+        "title": "FRESHFARM Foggy Bottom – FRESHFARM",
+        "url": "https://www.freshfarm.org/markets/foggy-bottom",
+        "fields": [
+          "payment.food_assistance.snap",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
       }
-    ]
+    ],
+    "payment": {
+      "food_assistance": {
+        "snap": true,
+        "wic": true,
+        "sfmnp": true
+      }
+    }
   },
   {
     "id": "301704",
@@ -2561,7 +2580,7 @@
   {
     "id": "301708",
     "market_name": "FRESHFARM Mount Vernon Triangle",
-    "verified_at": "2026-08-21",
+    "verified_at": "2026-11-20",
     "verification_scope": "partial",
     "contact": {
       "websites": [
@@ -2575,8 +2594,35 @@
         "fields": [
           "contact.websites"
         ]
+      },
+      {
+        "title": "FRESHFARM Mount Vernon Triangle – FRESHFARM",
+        "url": "https://www.freshfarm.org/markets/mount-vernon-triangle",
+        "fields": [
+          "payment.food_assistance.snap",
+          "payment.food_assistance.wic",
+          "payment.food_assistance.sfmnp",
+          "operations.days",
+          "operations.season"
+        ],
+        "kind": "first_party",
+        "scope": "market",
+        "accessed_at": "2026-11-20"
       }
-    ]
+    ],
+    "payment": {
+      "food_assistance": {
+        "snap": true,
+        "wic": true,
+        "sfmnp": true
+      }
+    },
+    "operations": {
+      "days": [
+        "Saturday 9:00 am-1:00 pm"
+      ],
+      "season": "Year-round"
+    }
   },
   {
     "id": "301712",

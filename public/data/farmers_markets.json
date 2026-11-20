@@ -33394,116 +33394,6 @@
     }
   },
   {
-    "id": 300575,
-    "name": "FRESHFARM Dupont Market",
-    "last_updated": "2020-08-06T11:50:08",
-    "location": {
-      "address": "1624 20th St NW, Washington, District of Columbia 20009",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20009",
-      "coordinates": {
-        "longitude": -77.044967,
-        "latitude": 38.911806
-      },
-      "description": "20th Street NW between Massachusetts Avenue and Hillyer Place",
-      "site_type": "Closed-off public street",
-      "indoor_outdoor": "Outdoor"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/dupont-circle"
-      ],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [
-        "SUNDAYS, 8:30AM TO 1:30PM"
-      ],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [
-        "Organic (USDA Certified)"
-      ],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [
-        "SNAP/EBT",
-        "WIC",
-        "FMNP",
-        "Credit/Debit"
-      ],
-      "food_assistance": {
-        "wic": true,
-        "sfmnp": true,
-        "fmnp": true,
-        "snap": true,
-        "snap_option": "Accept EBT at a central location;"
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-dupont-market-washington",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.ca/maps/search/?api=1&query=FRESHFARM%20Dupont%20Market%2C%201624%2020th%20St%20NW%20%2C%20Washington%2C%20District%20of%20Columbia%2020009%2C%20Washington%2C%20District%20of%20Columbia%2C%2020009",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "FRESHFARM Dupont Circle Market - Google Maps",
-          "url": "https://www.google.ca/maps/place/FRESHFARM+Dupont+Circle+Market/@38.9116391,-77.0448648,17z/data=!3m1!4b1!4m6!3m5!1s0x89b7b7c77112ae2d:0xf427331e871b2beb!8m2!3d38.9116391!4d-77.0448648!16s%2Fg%2F1hc7fsslw?entry=ttu&g_ep=EgoyMDI2MDgxOS4wIKXMDSoASAFQAw%3D%3D",
-          "fields": [
-            "google_maps_url"
-          ]
-        },
-        {
-          "title": "Dupont Circle – FRESHFARM",
-          "url": "https://www.freshfarm.org/markets/dupont-circle",
-          "fields": [
-            "contact.websites",
-            "operations.days",
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
     "id": 300581,
     "name": "Celina’s Friday Night Market",
     "last_updated": "2020-08-03T13:50:15",
@@ -73379,13 +73269,13 @@
         "longitude": -118.32819,
         "latitude": 34.099639
       },
-      "description": "",
+      "description": "At the corner of Ivar and Selma avenues.",
       "site_type": "Closed-off public street",
       "indoor_outdoor": "Outdoor"
     },
     "organization": {
       "types": [],
-      "description": ""
+      "description": "The Hollywood Farmers’ Market is run by Food Access LA."
     },
     "contact": {
       "phone_numbers": [
@@ -73509,12 +73399,14 @@
             "amenities.features",
             "amenities.parking",
             "visitor_note",
-            "first_party.access"
+            "first_party.access",
+            "organization.description",
+            "location.description"
           ],
           "id": "website-audit-dea367b20467-1",
           "kind": "first_party",
           "scope": "market",
-          "accessed_at": "2026-08-21"
+          "accessed_at": "2026-11-20"
         },
         {
           "url": "https://foodaccessla.org/contact",
@@ -80947,7 +80839,7 @@
     "name": "Green City Market West Loop",
     "last_updated": "2021-01-27T11:25:19",
     "location": {
-      "address": "115 S. Sangamon St, Chicago, Illinois 60607",
+      "address": "900 W Monroe St, Chicago, IL 60607",
       "city": "Chicago",
       "state": "Illinois",
       "zip_code": "60607",
@@ -80976,10 +80868,9 @@
       ]
     },
     "operations": {
-      "season": null,
+      "season": "May 2-November 21, 2026",
       "days": [
-        "GCM West Loop opens on Saturday, May 2nd. The market will be open 8am-1pm on Saturdays.",
-        "The West Loop Saturday market opens on Saturday, May 2nd! The market will be open 8am-1pm on Saturdays."
+        "Saturday 8:00 am-1:00 pm"
       ],
       "vendor_count": null
     },
@@ -81093,13 +80984,13 @@
         }
       ]
     },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=41.880039%2C-87.650439",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Mary+Bartelme+Park%2C+900+W+Monroe+St%2C+Chicago%2C+IL+60607",
     "amenities": {
       "features": [],
       "parking": true
     },
     "enrichment": {
-      "verified_at": "2026-08-21",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
@@ -81110,14 +81001,17 @@
             "operations.days",
             "payment.methods",
             "payment.food_assistance.snap",
+            "google_maps_url",
+            "operations.season",
             "first_party.payments",
             "first_party.access",
-            "first_party.faq_facts"
+            "first_party.faq_facts",
+            "location.address"
           ],
+          "accessed_at": "2026-11-20",
           "id": "website-audit-02f179a52211-1",
           "kind": "first_party",
-          "scope": "market",
-          "accessed_at": "2026-08-21"
+          "scope": "market"
         },
         {
           "title": "Overture Maps places, release 2026-10-21.0",
@@ -112088,8 +111982,8 @@
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
+        "wic": true,
+        "sfmnp": true,
         "fmnp": false,
         "snap": true,
         "snap_option": null
@@ -112118,7 +112012,7 @@
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-21",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
@@ -112129,18 +112023,23 @@
           ]
         },
         {
+          "title": "FRESHFARM Foggy Bottom – FRESHFARM",
+          "url": "https://www.freshfarm.org/markets/foggy-bottom",
+          "fields": [
+            "payment.food_assistance.snap",
+            "payment.food_assistance.wic",
+            "payment.food_assistance.sfmnp"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
+        },
+        {
           "title": "Overture Maps places, release 2026-10-21.0",
           "url": "https://overturemaps.org/",
           "fields": [
             "contact.phone_numbers",
             "contact.social_media"
-          ]
-        },
-        {
-          "title": "USDA SNAP Retailer Locator, store type Farmers and Markets",
-          "url": "https://www.fns.usda.gov/snap/retailer-locator",
-          "fields": [
-            "payment.food_assistance.snap"
           ]
         }
       ]
@@ -112572,10 +112471,10 @@
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
+        "wic": true,
+        "sfmnp": true,
         "fmnp": false,
-        "snap": false,
+        "snap": true,
         "snap_option": null
       }
     },
@@ -112602,7 +112501,7 @@
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
@@ -112612,8 +112511,12 @@
             "contact.websites",
             "contact.social_media",
             "operations.days",
-            "operations.season"
-          ]
+            "operations.season",
+            "payment.food_assistance.snap",
+            "payment.food_assistance.wic",
+            "payment.food_assistance.sfmnp"
+          ],
+          "accessed_at": "2026-11-20"
         },
         {
           "title": "Contact Us – FRESHFARM",
@@ -112781,8 +112684,10 @@
       "social_media": []
     },
     "operations": {
-      "season": null,
-      "days": [],
+      "season": "Year-round",
+      "days": [
+        "Saturday 9:00 am-1:00 pm"
+      ],
       "vendor_count": null
     },
     "products": {
@@ -112793,10 +112698,10 @@
     "payment": {
       "methods": [],
       "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
+        "wic": true,
+        "sfmnp": true,
         "fmnp": false,
-        "snap": false,
+        "snap": true,
         "snap_option": null
       }
     },
@@ -112823,7 +112728,7 @@
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-21",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
@@ -112832,6 +112737,20 @@
           "fields": [
             "contact.websites"
           ]
+        },
+        {
+          "title": "FRESHFARM Mount Vernon Triangle – FRESHFARM",
+          "url": "https://www.freshfarm.org/markets/mount-vernon-triangle",
+          "fields": [
+            "payment.food_assistance.snap",
+            "payment.food_assistance.wic",
+            "payment.food_assistance.sfmnp",
+            "operations.days",
+            "operations.season"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
         }
       ]
     },
@@ -130549,7 +130468,8 @@
     "operations": {
       "season": null,
       "days": [
-        "The free lot is open for customers 7 am to 2 pm on Saturdays and Sundays all season long."
+        "Saturday and Sunday 8:00 am-1:00 pm (downtown outdoor winter market)",
+        "Saturday and Sunday 9:00 am-1:00 pm (indoor winter market)"
       ],
       "vendor_count": null
     },
@@ -130615,6 +130535,7 @@
       }
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=44.9496697%2C-93.0851336",
+    "visitor_note": "Thanksgiving market: Wednesday, November 25, 2026, 9:00 am-1:00 pm.",
     "amenities": {
       "features": [
         "Free parking for both locations is at 420 Prince St. E!"
@@ -130622,7 +130543,7 @@
       "parking": true
     },
     "enrichment": {
-      "verified_at": "2026-08-21",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
@@ -130632,12 +130553,13 @@
             "contact.websites",
             "operations.days",
             "amenities.features",
+            "visitor_note",
             "first_party.access"
           ],
+          "accessed_at": "2026-08-21",
           "id": "website-audit-c93ef855ae19-1",
           "kind": "first_party",
-          "scope": "market",
-          "accessed_at": "2026-08-21"
+          "scope": "market"
         },
         {
           "title": "Overture Maps places, release 2026-10-21.0",
@@ -211956,10 +211878,10 @@
   },
   {
     "id": 308726,
-    "name": "LA Jolla Elementary Certified Farmers’ Market",
+    "name": "La Jolla Open Aire Market",
     "last_updated": "2023-03-20T22:52:10",
     "location": {
-      "address": "7335 Girard Ave. LA Jolla, CA 92037",
+      "address": "7337 Girard Ave, La Jolla, CA 92037",
       "city": "La Jolla",
       "state": "California",
       "zip_code": "92037",
@@ -211981,7 +211903,7 @@
       ],
       "emails": [],
       "websites": [
-        "https://lajollamarket.com/"
+        "https://lajollamarket.org/"
       ],
       "social_media": [
         "https://www.facebook.com/pages/La-Jolla-Open-Aire-Market/106322796070734",
@@ -211991,7 +211913,7 @@
     "operations": {
       "season": "Year-round",
       "days": [
-        "Sundays from 9:00am - 1:00pm"
+        "Sunday 9:00 am-1:00 pm"
       ],
       "vendor_count": null
     },
@@ -212028,24 +211950,36 @@
     "slug": "la-jolla-elementary-certified-farmers-market-la-jolla",
     "country": "United States",
     "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=32.838935446781704%2C-117.27198447697856",
+    "google_maps_url": "https://maps.app.goo.gl/nGN9NGdAVqiVSJ68A",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-08-30",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
           "title": "Home - La Jolla MarketLa Jolla Market",
           "url": "https://lajollamarket.com/",
           "fields": [
-            "contact.websites",
             "contact.phone_numbers",
             "contact.social_media",
-            "operations.days",
             "operations.season"
           ]
+        },
+        {
+          "title": "La Jolla Open Aire Market",
+          "url": "https://lajollamarket.org/",
+          "fields": [
+            "contact.websites",
+            "google_maps_url",
+            "operations.days",
+            "name",
+            "location.address"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
         }
       ]
     },
@@ -470908,119 +470842,6 @@
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.90887321715417%2C-76.99791110428124"
   },
   {
-    "id": 311217,
-    "name": "Dupont Circle FRESHFARM Market",
-    "last_updated": "2023-03-27T09:13:22",
-    "location": {
-      "address": "1560 20th St. NW, Washington, DC, 20036",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20036",
-      "coordinates": {
-        "longitude": -77.04488919658158,
-        "latitude": 38.910727432662846
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [
-        "202.391.7353"
-      ],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/dupont-circle"
-      ],
-      "social_media": [
-        "https://www.facebook.com/freshfarmdc/",
-        "https://www.instagram.com/freshfarmdc/"
-      ]
-    },
-    "operations": {
-      "season": "Year-Round Market (Jan 4 – Dec 27)",
-      "days": [
-        "Sundays, 8:30am to 1:30pm"
-      ],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": true,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "dupont-circle-freshfarm-market",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.910727432662846%2C-77.04488919658158",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-30",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Dupont Circle – FRESHFARM",
-          "url": "https://www.freshfarm.org/markets/dupont-circle",
-          "fields": [
-            "contact.websites",
-            "contact.social_media",
-            "operations.days",
-            "operations.season"
-          ]
-        },
-        {
-          "title": "Contact Us – FRESHFARM",
-          "url": "http://freshfarm.org/contact-us",
-          "fields": [
-            "contact.phone_numbers"
-          ]
-        },
-        {
-          "title": "USDA SNAP Retailer Locator, store type Farmers and Markets",
-          "url": "https://www.fns.usda.gov/snap/retailer-locator",
-          "fields": [
-            "payment.food_assistance.snap"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    }
-  },
-  {
     "id": 311218,
     "name": "Eastern Market",
     "last_updated": "2023-03-27T09:13:22",
@@ -471339,513 +471160,6 @@
     }
   },
   {
-    "id": 311221,
-    "name": "FRESHFARM Columbia Heights (Saturday)",
-    "last_updated": "2023-03-27T09:13:22",
-    "location": {
-      "address": "Park Rd NW & 14th St NW, Washington, DC 20010, USA",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20010",
-      "coordinates": {
-        "longitude": -77.03274999607017,
-        "latitude": 38.9302300004895
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/columbia-heights-sat"
-      ],
-      "social_media": [
-        "https://www.instagram.com/freshfarmdc/",
-        "https://www.facebook.com/freshfarmdc/",
-        "https://twitter.com/FRESHFARMDC",
-        "https://www.youtube.com/@freshfarmdc"
-      ]
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [
-        "SNAP/EBT"
-      ],
-      "food_assistance": {
-        "wic": true,
-        "sfmnp": false,
-        "fmnp": true,
-        "snap": true,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-columbia-heights-saturday-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.9302300004895%2C-77.03274999607017",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for FRESHFARM Columbia Heights Farmers Market",
-          "url": "https://www.google.com.au/maps/search/?api=1&query=FRESHFARM%20Columbia%20Heights%20(Saturday)%2C%20Park%20Rd%20NW%20%26%2014th%20St%20NW%2C%20Washington%2C%20DC%2020010%2C%20USA%2C%20Washington%2C%20District%20of%20Columbia%2C%2020010",
-          "fields": [
-            "contact.websites"
-          ]
-        },
-        {
-          "title": "FRESHFARM Columbia Heights (Saturday) - freshfarm.org",
-          "url": "https://www.freshfarm.org/markets/columbia-heights-sat",
-          "fields": [
-            "contact.social_media",
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
-    "id": 311222,
-    "name": "FRESHFARM Dupont Circle (Sunday)",
-    "last_updated": "2023-03-27T09:13:22",
-    "location": {
-      "address": "1600 20th St NW, Washington, DC 20009, USA",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20009",
-      "coordinates": {
-        "longitude": -77.04489119723463,
-        "latitude": 38.91118665787802
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/dupont-circle"
-      ],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [
-        "SNAP/EBT"
-      ],
-      "food_assistance": {
-        "wic": true,
-        "sfmnp": false,
-        "fmnp": true,
-        "snap": true,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-dupont-circle-sunday-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.91118665787802%2C-77.04489119723463",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for FRESHFARM Dupont Circle Market",
-          "url": "https://www.google.co.nz/maps/search/?api=1&query=FRESHFARM%20Dupont%20Circle%20(Sunday)%2C%201600%2020th%20St%20NW%2C%20Washington%2C%20DC%2020009%2C%20USA%2C%20Washington%2C%20District%20of%20Columbia%2C%2020009",
-          "fields": [
-            "contact.websites"
-          ]
-        },
-        {
-          "title": "FRESHFARM Dupont Circle (Sunday) - freshfarm.org",
-          "url": "https://www.freshfarm.org/markets/dupont-circle",
-          "fields": [
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
-    "id": 311223,
-    "name": "FRESHFARM Dupont Market",
-    "last_updated": "2023-03-27T09:13:22",
-    "location": {
-      "address": "1624 20th St NW, Washington, District of Columbia 20009",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20009",
-      "coordinates": {
-        "longitude": -77.0448860109964,
-        "latitude": 38.91133965190613
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/dupont-circle"
-      ],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [
-        "SUNDAYS, 8:30AM TO 1:30PM"
-      ],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [
-        "SNAP/EBT",
-        "WIC",
-        "FMNP"
-      ],
-      "food_assistance": {
-        "wic": true,
-        "sfmnp": false,
-        "fmnp": true,
-        "snap": true,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-dupont-market-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.91133965190613%2C-77.0448860109964",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Dupont Circle – FRESHFARM",
-          "url": "https://www.freshfarm.org/markets/dupont-circle",
-          "fields": [
-            "contact.websites",
-            "operations.days",
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
-    "id": 311224,
-    "name": "FRESHFARM Foggy Bottom",
-    "last_updated": "2023-03-27T09:13:22",
-    "location": {
-      "address": "901 23rd St NW, Washington, DC 20052, USA",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20052",
-      "coordinates": {
-        "longitude": -77.05012105952777,
-        "latitude": 38.90080243899954
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [
-        "(202) 391-7353"
-      ],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/foggy-bottom"
-      ],
-      "social_media": [
-        "https://www.instagram.com/freshfarmdc/",
-        "https://www.facebook.com/freshfarmdc/",
-        "https://twitter.com/FRESHFARMDC",
-        "https://www.youtube.com/@freshfarmdc"
-      ]
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [
-        "SNAP/EBT"
-      ],
-      "food_assistance": {
-        "wic": true,
-        "sfmnp": false,
-        "fmnp": true,
-        "snap": true,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-foggy-bottom-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.90080243899954%2C-77.05012105952777",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for FRESHFARM Foggy Bottom Market",
-          "url": "https://www.google.co.nz/maps/search/?api=1&query=FRESHFARM%20Foggy%20Bottom%2C%20901%2023rd%20St%20NW%2C%20Washington%2C%20DC%2020052%2C%20USA%2C%20Washington%2C%20District%20of%20Columbia%2C%2020052",
-          "fields": [
-            "contact.websites",
-            "contact.phone_numbers"
-          ]
-        },
-        {
-          "title": "FRESHFARM Foggy Bottom - freshfarm.org",
-          "url": "https://www.freshfarm.org/markets/foggy-bottom",
-          "fields": [
-            "contact.social_media",
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
-    "id": 311225,
-    "name": "FRESHFARM H St NE",
-    "last_updated": "2023-03-27T09:13:23",
-    "location": {
-      "address": "800 13th St NE, Washington, DC 20002, USA",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20002",
-      "coordinates": {
-        "longitude": -76.98831330101022,
-        "latitude": 38.90024936127185
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/h-street-ne"
-      ],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-h-st-ne-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.90024936127185%2C-76.98831330101022",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for FRESHFARM H Street NE Market",
-          "url": "https://www.google.ie/maps/search/?api=1&query=FRESHFARM%20H%20St%20NE%2C%20800%2013th%20St%20NE%2C%20Washington%2C%20DC%2020002%2C%20USA%2C%20Washington%2C%20District%20of%20Columbia%2C%2020002",
-          "fields": [
-            "contact.websites"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
     "id": 311226,
     "name": "FRESHFARM Market at CityCenterDC",
     "last_updated": "2023-03-27T09:13:23",
@@ -472073,319 +471387,6 @@
       "checked_at": "2026-08-21",
       "status": "verified_update"
     }
-  },
-  {
-    "id": 311228,
-    "name": "FRESHFARM Monroe Street",
-    "last_updated": "2023-03-27T09:13:23",
-    "location": {
-      "address": "716 Monroe St NE, Washington, DC 20017, USA",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20017",
-      "coordinates": {
-        "longitude": -76.99591305491016,
-        "latitude": 38.93237358268101
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/monroe-st"
-      ],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": true,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": true,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-monroe-street-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "schema_version": 2,
-    "first_party": {
-      "payments": {
-        "assistance": [
-          {
-            "id": "snap-ebt",
-            "value": {
-              "code": "snap_ebt"
-            },
-            "source_ids": [
-              "website-audit-df26d70d2d2e-1"
-            ],
-            "verified_at": "2026-08-21"
-          },
-          {
-            "id": "wic",
-            "value": {
-              "code": "wic"
-            },
-            "source_ids": [
-              "website-audit-df26d70d2d2e-1"
-            ],
-            "verified_at": "2026-08-21"
-          }
-        ]
-      },
-      "access": {
-        "transit": [
-          {
-            "id": "rail-access",
-            "value": {
-              "mode": "rail",
-              "note": "Founded in 2014, the FRESHFARM Monroe Street Market is a neighborhood destination for many living in DC’s Ward 5. Located adjacent to the Brookland/CUA metro stop, the market hosts local farmers and specialty food producers, plus special events like yoga practices and live music. The market shares t"
-            },
-            "source_ids": [
-              "website-audit-df26d70d2d2e-1"
-            ],
-            "verified_at": "2026-08-21"
-          }
-        ]
-      }
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.93237358268101%2C-76.99591305491016",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Google Maps listing for FRESHFARM Monroe Street Farmers Market",
-          "url": "https://www.google.fr/maps/search/?api=1&query=FRESHFARM%20Monroe%20Street%2C%20716%20Monroe%20St%20NE%2C%20Washington%2C%20DC%2020017%2C%20USA%2C%20Washington%2C%20District%20of%20Columbia%2C%2020017",
-          "fields": [
-            "contact.websites"
-          ]
-        },
-        {
-          "id": "website-audit-df26d70d2d2e-1",
-          "title": "Monroe Street – FRESHFARM",
-          "url": "https://www.freshfarm.org/markets/monroe-st",
-          "fields": [
-            "first_party.payments",
-            "first_party.access"
-          ],
-          "kind": "first_party",
-          "scope": "market",
-          "accessed_at": "2026-08-21"
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
-    "id": 311229,
-    "name": "FRESHFARM Mount Vernon Triangle",
-    "last_updated": "2023-03-27T09:13:23",
-    "location": {
-      "address": "499 I St NW, Washington, DC 20001, USA",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20001",
-      "coordinates": {
-        "longitude": -77.01882385195556,
-        "latitude": 38.90132862568712
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [
-        "https://www.freshfarm.org/markets/mount-vernon-triangle"
-      ],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [
-        "SATURDAYS, 9AM TO 1PM"
-      ],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "payment": {
-      "methods": [
-        "SNAP/EBT",
-        "WIC",
-        "FMNP"
-      ],
-      "food_assistance": {
-        "wic": true,
-        "sfmnp": false,
-        "fmnp": true,
-        "snap": true,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-mount-vernon-triangle-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.90132862568712%2C-77.01882385195556",
-    "amenities": {
-      "features": []
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Mount Vernon Triangle – FRESHFARM",
-          "url": "https://www.freshfarm.org/markets/mount-vernon-triangle",
-          "fields": [
-            "contact.websites",
-            "operations.days",
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
-  },
-  {
-    "id": 311230,
-    "name": "FRESHFARM Penn Quarter",
-    "last_updated": "2023-03-27T09:13:23",
-    "location": {
-      "address": "801 F St NW Washington, DC 20004",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20004",
-      "coordinates": {
-        "longitude": -77.02303338409807,
-        "latitude": 38.89721564791791
-      },
-      "description": "",
-      "site_type": "",
-      "indoor_outdoor": "Unknown"
-    },
-    "organization": {
-      "types": [],
-      "description": ""
-    },
-    "contact": {
-      "phone_numbers": [],
-      "emails": [],
-      "websites": [],
-      "social_media": []
-    },
-    "operations": {
-      "season": null,
-      "days": [],
-      "vendor_count": null
-    },
-    "products": {
-      "items": [],
-      "production_methods": []
-    },
-    "payment": {
-      "methods": [],
-      "food_assistance": {
-        "wic": false,
-        "sfmnp": false,
-        "fmnp": false,
-        "snap": false,
-        "snap_option": null
-      }
-    },
-    "sales_channels": {
-      "online_ordering": {
-        "available": false,
-        "links": []
-      },
-      "phone_ordering": false,
-      "csa": {
-        "available": false,
-        "description": null
-      },
-      "delivery": {
-        "available": false,
-        "methods": null
-      }
-    },
-    "slug": "freshfarm-penn-quarter-washington-1",
-    "country": "United States",
-    "country_code": "US",
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "identity_ambiguous"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.89721564791791%2C-77.02303338409807"
   },
   {
     "id": 311233,
@@ -669255,8 +668256,12 @@
       ]
     },
     "operations": {
-      "season": null,
-      "days": [],
+      "season": "Year-round",
+      "days": [
+        "Saturday and Sunday 10:00 am-3:00 pm (November-December)",
+        "Saturday 10:00 am-3:00 pm (January-March)",
+        "Thursday-Sunday 10:00 am-3:00 pm (April-October)"
+      ],
       "vendor_count": null
     },
     "products": {
@@ -669293,13 +668298,26 @@
     "country": "United States",
     "country_code": "US",
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=47.05042601891347%2C-122.90252099880136",
+    "visitor_note": "The 2026 holiday season ends Sunday, December 20. The market also opens Friday, December 18 for Holiday Shoppers Delight.",
     "amenities": {
       "features": []
     },
     "enrichment": {
-      "verified_at": "2026-11-12",
-      "verification_scope": "register",
+      "verified_at": "2026-11-20",
+      "verification_scope": "partial",
       "sources": [
+        {
+          "title": "Market Hours & Seasons | Olympia Farmers Market",
+          "url": "https://www.olympiafarmersmarket.com/hours",
+          "fields": [
+            "operations.days",
+            "operations.season",
+            "visitor_note"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
+        },
         {
           "title": "Overture Maps places, release 2026-10-21.0",
           "url": "https://overturemaps.org/",
@@ -799629,51 +798647,6 @@
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Tustin%20CFM%2C%20EL%20CAMINO%20REAL%20%26%203RD%20ST"
   },
   {
-    "id": "gov:us_ca_wic_farmers_markets:3dd732de98ced56e",
-    "slug": "hollywood-fm-los-angeles-3ab61fcb",
-    "name": "Hollywood Farmers Market",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "1600 Ivar Ave",
-      "city": "Los Angeles",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Sunday 08:00 am - 01:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "3dd732de98ced56e",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Hollywood%20FM%2C%201600%20IVAR%20AVE"
-  },
-  {
     "id": "gov:us_ca_wic_farmers_markets:3f98cf79e9dbd66c",
     "slug": "ascendkemet-cfm-of-city-heights-san-diego-fb02a49b",
     "name": "Ascendkemet Certified Farmers Market of City Heights",
@@ -808696,51 +807669,6 @@
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Cotati%20Community%20FM%2C%208167%20LA%20PLAZA"
   },
   {
-    "id": "gov:us_ca_wic_farmers_markets:c2a175b23e6cadcd",
-    "slug": "la-jolla-cfm-la-jolla-e56705e5",
-    "name": "LA Jolla Certified Farmers Market",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "7300 Girard Ave",
-      "city": "La Jolla",
-      "state": "California"
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ],
-      "description": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "Sunday 09:00 am - 01:00 pm"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "wic": true
-      }
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_ca_wic_farmers_markets",
-      "source_record_id": "c2a175b23e6cadcd",
-      "publisher": "California Department of Public Health",
-      "dataset_name": "California WIC Authorized Farmers’ Markets",
-      "catalog_url": "https://data.chhs.ca.gov/dataset/wic-authorized-farmers-markets",
-      "data_url": "https://data.chhs.ca.gov/dataset/29e1c07b-4a4a-46e4-b25d-de180802d0a1/resource/99ebc5b3-314c-4d54-b257-c8a8c26bb8c6/download/ca-farmersmarket.csv",
-      "license": "Creative Commons Attribution",
-      "scope_note": "Program-authorized subset; this is not a complete list of every California farmers’ market."
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "official_source_reviewed"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=La%20Jolla%20CFM%2C%207300%20GIRARD%20AVE"
-  },
-  {
     "id": "gov:us_ca_wic_farmers_markets:c2a466c912b67cdb",
     "slug": "irvine-cfm-irvine-068e3a57",
     "name": "Irvine Certified Farmers Market",
@@ -813405,122 +812333,6 @@
       "status": "official_source_reviewed"
     },
     "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.940158852966356%2C-76.97558577177479"
-  },
-  {
-    "id": "gov:us_dc_farmers_markets:{15D8105F-3F48-4661-8826-767EE88C7C1B}",
-    "slug": "freshfarm-dupont-circle-washington-cdcac0e9",
-    "name": "FRESHFARM Dupont Circle",
-    "last_updated": "2026-06-09T23:02:04Z",
-    "country": "United States",
-    "country_code": "US",
-    "location": {
-      "address": "1600 20th St NW, Washington, DC 20009",
-      "city": "Washington",
-      "state": "District of Columbia",
-      "zip_code": "20009",
-      "coordinates": {
-        "longitude": -77.0452095547436,
-        "latitude": 38.911322074511766
-      }
-    },
-    "organization": {
-      "types": [
-        "Official government dataset"
-      ]
-    },
-    "contact": {
-      "websites": [
-        "https://www.freshfarm.org/markets",
-        "https://www.freshfarm.org/markets/dupont-circle"
-      ],
-      "social_media": [
-        "https://www.instagram.com/freshfarmdc/",
-        "https://twitter.com/freshfarmdc"
-      ],
-      "phone_numbers": [
-        "202-391-7353"
-      ],
-      "emails": []
-    },
-    "operations": {
-      "season": "Year-round",
-      "days": [
-        "SUNDAYS, 8:30AM TO 1:30PM"
-      ]
-    },
-    "payment": {
-      "food_assistance": {
-        "fmnp": true,
-        "sfmnp": true,
-        "snap": true,
-        "wic": true
-      },
-      "methods": [
-        "SNAP/EBT",
-        "WIC",
-        "FMNP"
-      ]
-    },
-    "amenities": {
-      "parking": false,
-      "features": []
-    },
-    "provenance": {
-      "official": true,
-      "source_id": "us_dc_farmers_markets",
-      "source_record_id": "{15D8105F-3F48-4661-8826-767EE88C7C1B}",
-      "publisher": "District of Columbia Government",
-      "dataset_name": "Farmers Market Locations",
-      "catalog_url": "https://catalog.data.gov/dataset/farmers-market-locations",
-      "data_url": "https://opendata.dc.gov/api/download/v1/items/f2e1c2ef9eb44f2899f4a310a80ecec9/geojson?layers=2",
-      "license": "District of Columbia open data terms"
-    },
-    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=38.911322074511766%2C-77.0452095547436",
-    "products": {
-      "items": [],
-      "production_methods": [],
-      "categories": {}
-    },
-    "enrichment": {
-      "verified_at": "2026-08-21",
-      "verification_scope": "partial",
-      "sources": [
-        {
-          "title": "Farmers Markets – FRESHFARM",
-          "url": "https://www.freshfarm.org/markets",
-          "fields": [
-            "contact.websites",
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        },
-        {
-          "title": "Dupont Circle – FRESHFARM",
-          "url": "https://www.freshfarm.org/markets/dupont-circle",
-          "fields": [
-            "contact.websites",
-            "operations.days",
-            "payment.methods",
-            "payment.food_assistance.snap",
-            "payment.food_assistance.wic",
-            "payment.food_assistance.fmnp"
-          ]
-        },
-        {
-          "title": "Overture Maps places, release 2026-10-21.0",
-          "url": "https://overturemaps.org/",
-          "fields": [
-            "contact.phone_numbers"
-          ]
-        }
-      ]
-    },
-    "audit": {
-      "checked_at": "2026-08-21",
-      "status": "verified_update"
-    }
   },
   {
     "id": "gov:us_dc_farmers_markets:{17E39C62-9A79-45AF-8211-9E07FDF837FD}",
@@ -820309,7 +819121,7 @@
         "6072737109"
       ],
       "websites": [
-        "https://www.ithacamarket.com/",
+        "https://ithacamarket.com/markets/winter-market/",
         "http://www.ithacamarket.com"
       ],
       "social_media": [
@@ -820318,9 +819130,9 @@
       "emails": []
     },
     "operations": {
-      "season": "January 3-March 28",
+      "season": "January 9-March 27, 2027",
       "days": [
-        "Sat 10:30am-2pm"
+        "Saturday 10:30 am-2:00 pm"
       ]
     },
     "payment": {
@@ -820351,16 +819163,27 @@
       "categories": {}
     },
     "enrichment": {
-      "verified_at": "2026-08-21",
+      "verified_at": "2026-11-20",
       "verification_scope": "partial",
       "sources": [
         {
           "title": "Ithaca Farmers Market",
           "url": "https://www.ithacamarket.com/",
           "fields": [
-            "contact.websites",
             "contact.social_media"
           ]
+        },
+        {
+          "title": "Winter Market | Ithaca Farmers Market",
+          "url": "https://ithacamarket.com/markets/winter-market/",
+          "fields": [
+            "contact.websites",
+            "operations.season",
+            "operations.days"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20"
         }
       ]
     },
@@ -869864,5 +868687,188 @@
         }
       ]
     }
+  },
+  {
+    "id": "added:dane-county-holiday-farmers-market-madison-wi",
+    "slug": "dane-county-holiday-farmers-market-madison-wi",
+    "name": "Dane County Farmers’ Market - Holiday Farmers’ Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "1 John Nolen Drive",
+      "city": "Madison",
+      "state": "Wisconsin",
+      "description": "Monona Terrace Community & Convention Center."
+    },
+    "contact": {
+      "websites": [
+        "https://dcfm.org/markets/holiday-market"
+      ],
+      "social_media": [],
+      "phone_numbers": [],
+      "emails": []
+    },
+    "operations": {
+      "days": [
+        "2026-11-21 07:30-12:00",
+        "2026-12-12 07:30-12:00",
+        "2026-12-19 07:30-12:00",
+        "2026-12-05 07:30-13:00"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Dane County Farmers’ Market",
+      "dataset_name": "Holiday Farmers’ Market",
+      "catalog_url": "https://dcfm.org/markets/holiday-market",
+      "retrieved_at": "2026-11-20"
+    },
+    "schema_version": 2,
+    "first_party": {
+      "operations": {
+        "timezone": {
+          "value": "America/Chicago",
+          "source_ids": [
+            "dcfm-holiday-market"
+          ],
+          "verified_at": "2026-11-20"
+        },
+        "schedules": [
+          {
+            "id": "regular-holiday-dates",
+            "value": {
+              "recurrence": {
+                "kind": "dates",
+                "dates": [
+                  "2026-11-21",
+                  "2026-12-12",
+                  "2026-12-19"
+                ]
+              },
+              "opens": "07:30",
+              "closes": "12:00"
+            },
+            "source_ids": [
+              "dcfm-holiday-market"
+            ],
+            "verified_at": "2026-11-20"
+          },
+          {
+            "id": "december-5-extended-hours",
+            "value": {
+              "recurrence": {
+                "kind": "dates",
+                "dates": [
+                  "2026-12-05"
+                ]
+              },
+              "opens": "07:30",
+              "closes": "13:00"
+            },
+            "source_ids": [
+              "dcfm-holiday-market"
+            ],
+            "verified_at": "2026-11-20"
+          }
+        ]
+      }
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Dane%20County%20Farmers%E2%80%99%20Market%20-%20Holiday%20Farmers%E2%80%99%20Market%2C%201%20John%20Nolen%20Drive",
+    "payment": {
+      "food_assistance": {},
+      "methods": []
+    },
+    "amenities": {
+      "features": []
+    },
+    "products": {
+      "items": [],
+      "production_methods": [],
+      "categories": {}
+    },
+    "enrichment": {
+      "verified_at": "2026-11-20",
+      "verification_scope": "partial",
+      "sources": [
+        {
+          "title": "Holiday Farmers’ Market | Dane County Farmers’ Market",
+          "url": "https://dcfm.org/markets/holiday-market",
+          "fields": [
+            "first_party.operations"
+          ],
+          "kind": "first_party",
+          "scope": "market",
+          "accessed_at": "2026-11-20",
+          "id": "dcfm-holiday-market"
+        }
+      ]
+    }
+  },
+  {
+    "id": "added:dane-county-winter-farmers-market-madison-wi",
+    "slug": "dane-county-winter-farmers-market-madison-wi",
+    "name": "Dane County Farmers’ Market - Winter Farmers’ Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "3241 Garver Green",
+      "city": "Madison",
+      "state": "Wisconsin",
+      "description": "Garver Feed Mill."
+    },
+    "contact": {
+      "websites": [
+        "https://dcfm.org/markets/late-winter-market"
+      ]
+    },
+    "operations": {
+      "season": "January 2-April 3, 2027",
+      "days": [
+        "Saturday 8:00 am-12:00 pm"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Dane County Farmers’ Market",
+      "dataset_name": "Winter Farmers’ Market",
+      "catalog_url": "https://dcfm.org/markets/late-winter-market",
+      "retrieved_at": "2026-11-20"
+    },
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Dane%20County%20Farmers%E2%80%99%20Market%20-%20Winter%20Farmers%E2%80%99%20Market%2C%203241%20Garver%20Green"
+  },
+  {
+    "id": "added:green-city-market-avondale-chicago-il",
+    "slug": "green-city-market-avondale-chicago-il",
+    "name": "Green City Market Avondale",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "3031 N Rockwell St",
+      "city": "Chicago",
+      "state": "Illinois"
+    },
+    "contact": {
+      "websites": [
+        "https://www.greencitymarket.org/calendar/details/green-city-market-avondale-12-05-2026"
+      ]
+    },
+    "operations": {
+      "season": "December 5, 2026-March 20, 2027",
+      "days": [
+        "Saturday"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Green City Market",
+      "dataset_name": "Green City Market Avondale",
+      "catalog_url": "https://www.greencitymarket.org/calendar/details/green-city-market-avondale-12-05-2026",
+      "retrieved_at": "2026-11-20"
+    },
+    "visitor_note": "The indoor market opens at 8:00 am on Saturday, December 5, 2026.",
+    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=Green%20City%20Market%20Avondale%2C%203031%20N%20Rockwell%20St"
   }
 ]
