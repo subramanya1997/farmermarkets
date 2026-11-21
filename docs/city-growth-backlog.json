@@ -225,6 +225,30 @@
       "market": null,
       "issue": "Missing market: Audubon Park Community Market, Mondays 5-8pm, 1842 E Winter Park Rd, Orlando FL 32803, takes SNAP with Fresh Access Bucks. Sources: audubonmarket.com/location, audubonmarket.com/shop-with-snap.",
       "status": "open"
+    },
+    {
+      "city": "north-carolina/charlotte",
+      "market": "south-end-farmers-market-nc",
+      "issue": "South End Farmers Market is listed three times: south-end-market-at-atherton-charlotte (2000 South Blvd), atherton-mill-and-market (2104 South Blvd) and south-end-farmers-market-nc (2000 South Boulevard). All three point at southendmkt.com (checked 2026-11-20), which describes one Saturday market at Atherton Mill, 2000 South Blvd. Two of the rows should be merged into one.",
+      "status": "open"
+    },
+    {
+      "city": "north-carolina/charlotte",
+      "market": "uptown-farmers-market-nc",
+      "issue": "Dataset has no days or season. uptownfarmersmarket.com (checked 2026-11-20) gives the 2026 season as Saturdays only: winter market January 10 - March 14, 10am-12pm; spring market April 11 - December 12, 8am-12:30pm. Not added as an enrichment batch because the structured schedule shape was not clear from the README.",
+      "status": "open"
+    },
+    {
+      "city": "north-carolina/charlotte",
+      "market": "rosa-parks-farmers-market-charlotte",
+      "issue": "Dataset address is 2020 Beatties Ford Road. The market's own site (rosaparksfarmersmarket.godaddysites.com, copyright 2023, checked 2026-11-20) shows 1600 West Trade Street on the home page and its FAQ lists a Tuesday market at 1601 W. Trade St and a Saturday market at 2647 Freedom Dr, both 3-7pm. The site is undated, so the current location needs confirming before any change; left out of the guide.",
+      "status": "open"
+    },
+    {
+      "city": "north-carolina/charlotte",
+      "market": "charlotte-tailgate-farmers-market-charlotte",
+      "issue": "Charlotte Tailgate, Newell and Pickles farmers markets have no website, days or season in the dataset and none was found on an official page (2026-11-20). They may be closed.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -271,9 +295,21 @@
         {
           "date": "2026-10-23",
           "changes": "Added 4 sourced FAQs (Market House daily 8am-8pm, East Nashville pet rule, East Nashville location and overflow lots, Richland Park 80+ vendors)."
+        },
+        {
+          "date": "2026-11-20",
+          "changes": "Measurement only (first check).",
+          "measurements": {
+            "window": "2026-10-22 to 2026-11-18",
+            "clicks": 0,
+            "impressions": 29,
+            "ctr": 0,
+            "position": 40.4,
+            "notes": "Page-level, /tennessee/nashville. 'farmers market nashville' pos 11 and 'nashville farmers market' pos 16 on 1 impression each; 'nashville farmers' market schedule' pos 6. Too few impressions to judge; this is the baseline for the next check."
+          }
         }
       ],
-      "next_check": "2026-11-18"
+      "next_check": "2026-12-18"
     },
     {
       "priority": 2,
@@ -292,9 +328,21 @@
         {
           "date": "2026-10-23",
           "changes": "Page now lists 8 markets (5 added from their own pages). Replaced the OhioHealth tip (staff-only market) with Conservatory EBT and Produce Perks; Clintonville joined the late-season tip."
+        },
+        {
+          "date": "2026-11-20",
+          "changes": "Measurement only (first check).",
+          "measurements": {
+            "window": "2026-10-22 to 2026-11-18",
+            "clicks": 0,
+            "impressions": 10,
+            "ctr": 0,
+            "position": 37,
+            "notes": "Page-level, /ohio/columbus. 'columbus oh farmers market' pos 56, 'columbus farmer's market' pos 89, 'holiday farmers market' pos 11, 1 impression each. Too few impressions to judge; this is the baseline for the next check."
+          }
         }
       ],
-      "next_check": "2026-11-20"
+      "next_check": "2026-12-18"
     },
     {
       "priority": 3,
@@ -439,8 +487,15 @@
       "keyword": "farmers market charlotte",
       "volume": 9900,
       "difficulty": 20,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-20",
+          "changes": "First guide: 6 sourced tips (Regional market Wed-Sun year-round, South End year-round and Uptown season to Dec 12, Uptown holiday market Dec 5 and 12, free parking, South End light rail, Double Bucks SNAP match), 4 FAQs (dog rules, Triple on the Third, Uptown by bus and bike, Uptown restrooms and carts), title and description override.",
+          "baseline": "No GSC measurement taken yet for /north-carolina/charlotte; first check on 2026-12-18."
+        }
+      ],
+      "next_check": "2026-12-18"
     },
     {
       "priority": 12,

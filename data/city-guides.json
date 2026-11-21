@@ -1016,6 +1016,97 @@
           "url": "https://www.charitiesofhunterscreek.org/monthly-market"
         }
       ]
+    },
+    "north-carolina/charlotte": {
+      "verified_at": "2026-11-20",
+      "title": "Charlotte Farmers Markets: Winter Hours, Parking, Light Rail",
+      "description": "{count} farmers markets in Charlotte, NC. The Regional market is open Wed-Sun 8am-5pm all year, South End and Uptown run Saturdays. Parking and SNAP tips.",
+      "tips": [
+        {
+          "label": "Open 5 days",
+          "text": "Charlotte Regional Farmers Market, 1801 Yorkmont Rd, is open year-round Wednesday-Sunday 8am-5pm. It is closed Monday and Tuesday.",
+          "source_ids": ["crfm"]
+        },
+        {
+          "label": "Winter",
+          "text": "South End Farmers Market runs Saturdays 8am-1pm all year. Uptown Farmers Market's 2026 Saturday season runs through December 12, 8am-12:30pm.",
+          "source_ids": ["sefm", "ufm-home"]
+        },
+        {
+          "label": "Holiday market",
+          "text": "Uptown Farmers Market hosts its first Holiday Market on December 5 and 12, adding local handmade crafts and artwork to the last two Saturdays of its season.",
+          "source_ids": ["ufm-holiday"]
+        },
+        {
+          "label": "Parking",
+          "text": "Parking is free on site at the Regional market. Uptown sets up in the front lot of First Baptist Charlotte, 300 S Davidson St, with free parking during market hours.",
+          "source_ids": ["crfm", "ufm-home", "ufm-visit"]
+        },
+        {
+          "label": "By train",
+          "text": "South End Farmers Market is outdoors at Atherton Mill, across from the Rail Trail and less than two blocks from the East/West light rail stop. Walk in from Tremont Ave.",
+          "source_ids": ["sefm"]
+        },
+        {
+          "label": "SNAP/EBT",
+          "text": "South End and Uptown both match SNAP dollar for dollar up to $20 through Mecklenburg County's Double Bucks. Swipe your EBT card at the market tent to get tokens.",
+          "source_ids": ["sefm", "ufm-snap"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I bring my dog to Charlotte farmers markets?",
+          "answer": "At the Regional market, leashed pets are welcome in the outdoor areas but not inside any buildings, sheds or shops. Uptown allows well-behaved pets on a short leash and keeps pick-up bags at the Welcome Tent.",
+          "source_ids": ["crfm", "ufm-visit"]
+        },
+        {
+          "question": "What is Triple on the Third at Uptown Farmers Market?",
+          "answer": "On the third week of every month, Uptown adds an extra match for EBT shoppers on top of Double Bucks, paid for by the market's corporate sponsors. Tokens never expire, but they only work at Uptown.",
+          "source_ids": ["ufm-snap"]
+        },
+        {
+          "question": "How do I get to Uptown Farmers Market without a car?",
+          "answer": "CATS routes 48x, 53x, 61x, 62x, 77x, 82x, 85x and 88 serve the market, and the LYNX stop is Charlotte Transportation Center. Cyclists will find two bike racks behind the Welcome Tent and two beside the gymnasium on S Davidson St.",
+          "source_ids": ["ufm-snap", "ufm-visit"]
+        },
+        {
+          "question": "Are there restrooms at Uptown Farmers Market?",
+          "answer": "Yes. The market itself is all outdoors, so ask at the Welcome Tent for a fob to use the restrooms in the gymnasium on site. You can also borrow a pull cart there while you shop.",
+          "source_ids": ["ufm-visit"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "crfm",
+          "title": "Charlotte Regional Farmers Market",
+          "url": "https://www.ncagr.gov/divisions/marketing/farmers-markets-agricultural-centers/charlotte-regional-farmers-market"
+        },
+        {
+          "id": "sefm",
+          "title": "South End Farmers Market",
+          "url": "https://southendmkt.com/"
+        },
+        {
+          "id": "ufm-home",
+          "title": "Uptown Farmers Market",
+          "url": "https://www.uptownfarmersmarket.com/"
+        },
+        {
+          "id": "ufm-visit",
+          "title": "Before you visit, Uptown",
+          "url": "https://www.uptownfarmersmarket.com/before-you-visit"
+        },
+        {
+          "id": "ufm-snap",
+          "title": "SNAP customers, Uptown",
+          "url": "https://www.uptownfarmersmarket.com/snap"
+        },
+        {
+          "id": "ufm-holiday",
+          "title": "2026 Holiday Market, Uptown",
+          "url": "https://www.uptownfarmersmarket.com/apply-to-be-a-holiday-vendor"
+        }
+      ]
     }
   }
 }
