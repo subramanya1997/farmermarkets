@@ -61,4 +61,23 @@ What is left in the 109 second `build` job: prerendering 62 s (4,920 of the 5,64
 
 ## The other long wait: the production deploy
 
-CI is a signal, not the gate: Vercel builds and deploys every push to `main` on its own, and that takes about 5 minutes. It prerenders all pages on purpose so no visitor or crawler waits on a cold render. Prerendering only the most visited markets there and rendering the rest on first request would shorten it, at the cost of a slower first hit on the long tail. That is a product and SEO decision, not a CI one.
+CI is a signal, not the gate: Vercel builds and deploys every push to `main` on its own, and that took about 6 minutes in November 2026.
+
+Measured on November 21, 2026 with `VERCEL=1 bun run build` on a 4-core machine (the size of Vercel's standard builder), from a cold `.next`:
+
+| | Before | After |
+|---|---|---|
+| `next build` wall time | 2 m 19 s | 1 m 34 s |
+| Pages prerendered | 14,271 | 6,151 |
+| Build output (`.next`) | 4.2 GB | 1.9 GB |
+| Files in the output | 116,613 | 51,653 |
+
+Inside the build, the time went to compile (16 s), type-check (15 s) and prerendering (about 100 s). The rest of the 6 minutes is outside `next build`: install, the build cache, and Vercel uploading and processing the output. Each prerendered market page writes about 300 KB (HTML, the RSC payload and five segment prefetch files), so the 9,120 market pages alone were 2.7 GB.
+
+What changed: Vercel builds prerender the top 1,000 markets instead of all of them (`prerenderMarketLimit` and `topMarkets` in `src/lib/prerenderSample.ts`). The order is visits in the last 30 days (`data/market-popularity.json`), then listing strength. In November 2026 only 576 markets had any visits, so every visited market is prerendered. Every other market renders on its first request (about 1.5 s on a local server) and is then cached for a day like any prerendered page. `PRERENDER_MARKET_LIMIT` in the Vercel environment changes the number, and `all` restores the old behaviour.
+
+City pages and state hubs still prerender in full, for the reason above. They are now most of the prerender time.
+
+Not done yet:
+
+- **Type-check inside the Vercel build (15 s).** CI already type-checks every pull request, but Vercel deploys `main` without waiting for CI, so the check in the build is the only one in front of production.

@@ -45,7 +45,8 @@ import { MarketOffers } from "@/components/MarketOffers";
 import { MarketWinter } from "@/components/MarketWinter";
 import { OFFER_COVERED_TERMS, marketOffers } from "@/lib/marketOffers";
 import { marketWinterAnswer } from "@/lib/marketWinter";
-import { prerenderSampleSize, sampleEvenly } from "@/lib/prerenderSample";
+import { prerenderMarketLimit, prerenderSampleSize, sampleEvenly, topMarkets } from "@/lib/prerenderSample";
+import marketPopularity from "../../../../../data/market-popularity.json";
 import { jsonLdHtml } from "@/lib/jsonLd";
 import { runtimeRedirectFor } from "@/lib/marketRedirects";
 
@@ -55,24 +56,31 @@ export const revalidate = 86400;
 export const dynamicParams = true;
 
 /**
- * Prerender every market.
+ * Prerender the markets most worth having ready; the rest render on demand.
  *
- * Measured in CI in November 2026: prerendering all ~14,300 pages of the site
- * (9,132 of them markets) takes about 138 seconds on 3 workers, roughly 10 ms
- * of wall time a page. Production and the nightly data refresh pay that and
- * prerender everything, so no visitor or crawler waits on a cold render.
+ * Measured in November 2026 on a 4-core builder: all 14,271 pages of the site
+ * (9,120 of them markets) prerender in about 100 seconds, and the output is
+ * about 4.2 GB in 116,000 files, 2.7 GB of it market pages. Vercel uploads and
+ * processes that output on every deploy, which was most of a ~6 minute deploy.
  *
- * CI sets `PRERENDER_MARKET_SAMPLE` and prerenders an even sample instead:
- * every market shares this one template, and `dynamicParams = true` above
- * means the rest still render on demand for the route checks. See
- * `src/lib/prerenderSample.ts` and `docs/ci-performance.md`.
+ * Vercel builds now prerender the top 1,000 markets by recent visits, then by
+ * listing strength (`topMarkets` in `src/lib/prerenderSample.ts`). Every other
+ * market renders on its first request and is then cached for `revalidate`
+ * like any prerendered page, which `dynamicParams = true` above allows.
+ * `PRERENDER_MARKET_LIMIT` changes the number, or `all` restores the old
+ * behaviour.
+ *
+ * CI sets `PRERENDER_MARKET_SAMPLE` instead, an even sample across the whole
+ * list, so its route checks still exercise every part of the alphabet. See
+ * `docs/ci-performance.md`.
  */
 export async function generateStaticParams() {
-  const markets = await getMarkets();
-  const params = markets
-    .filter((market) => market.slug)
-    .map((market) => ({ slug: market.slug }));
-  return sampleEvenly(params, prerenderSampleSize(process.env.PRERENDER_MARKET_SAMPLE));
+  const markets = (await getMarkets()).filter((market) => market.slug);
+  const sampleSize = prerenderSampleSize(process.env.PRERENDER_MARKET_SAMPLE);
+  const chosen = sampleSize
+    ? sampleEvenly(markets, sampleSize)
+    : topMarkets(markets, marketPopularity.markets, prerenderMarketLimit(process.env));
+  return chosen.map((market) => ({ slug: market.slug }));
 }
 
 /**
