@@ -61,4 +61,38 @@ What is left in the 109 second `build` job: prerendering 62 s (4,920 of the 5,64
 
 ## The other long wait: the production deploy
 
-CI is a signal, not the gate: Vercel builds and deploys every push to `main` on its own, and that takes about 5 minutes. It prerenders all pages on purpose so no visitor or crawler waits on a cold render. Prerendering only the most visited markets there and rendering the rest on first request would shorten it, at the cost of a slower first hit on the long tail. That is a product and SEO decision, not a CI one.
+CI is a signal, not the gate: Vercel builds and deploys every push to `main` on its own, and that took about 6 minutes in November 2026. Production prerenders every page on purpose, so no visitor or crawler waits on a cold render. Prerendering only the most visited markets was considered and turned down for that reason (November 21, 2026).
+
+### Where the build time goes (measured November 21, 2026)
+
+`VERCEL=1 bun run build` on a 4-core machine (the size of Vercel's standard builder) took 2 m 19 s: compile 16 s, type-check 15 s, prerendering 14,271 pages about 100 s. The output was 4.2 GB in 116,613 files, and each market page about 300 KB (HTML, the RSC payload and its segment prefetch files). The rest of the 6 minutes is outside `next build`: install, the build cache, and Vercel uploading and processing the output.
+
+The prerender workers were profiled by loading an `inspector` hook through `NODE_OPTIONS` (`--cpu-prof` does not work there, because the workers are killed rather than exiting). Of their busy time:
+
+| | Share |
+|---|---|
+| React and Next rendering the pages | 71% |
+| Garbage collection | 14% |
+| Our own code: data lookups, page logic | 9% |
+| Compression and file writes | 6% |
+
+Two things follow. The data source is not the bottleneck: the dataset is parsed once per worker and every lookup after that is in memory, so reading it from Postgres instead would add a network round trip per page. And the render cost scales with how much markup a page has, so the way to speed it up is to render less.
+
+### Experiment log
+
+Prerender phase timed with `next build --experimental-build-mode generate` after one compile, so compile and type-check are left out.
+
+| Date | Change | Result | Kept |
+|---|---|---|---|
+| 2026-11-21 | Baseline | 117 s | |
+| 2026-11-21 | `--max-semi-space-size=64` for the workers | 111 s | Yes |
+| 2026-11-21 | Root `not-found.tsx` without `SiteChrome`; unmatched URLs answered by `global-not-found.tsx` | 106 s; each market page 120 KB to 111 KB of HTML and 62 KB to 55 KB of RSC | Yes |
+| 2026-11-21 | Both together | 97 to 100 s, output 4.2 GB to 3.8 GB, files 116,613 to 102,393 | Yes |
+| 2026-11-21 | Prerender only the top 1,000 markets on Vercel | Build 2 m 19 s to 1 m 34 s, output to 1.9 GB | No: every page stays prerendered |
+
+Why the not-found change helps: Next sends the root `not-found.tsx` inside every page's payload, not only with 404s. It used to wrap the 404 body in the site header and footer, so all ~14,000 pages carried a second, unused copy of both. `global-not-found.tsx` is only sent with a real 404.
+
+### Not done yet
+
+- **Type-check inside the Vercel build (15 s).** CI already type-checks every pull request, but Vercel deploys `main` without waiting for CI, so the check in the build is the only one in front of production.
+- **Lighter page markup.** Rendering is 71% of the prerender time and scales with markup. The shared chrome (header, footer, the states menu) and long utility-class strings repeat on every page.
