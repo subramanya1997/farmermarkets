@@ -162,6 +162,10 @@ const nextConfig: NextConfig = {
   // local builds leave it unset and keep the check.
   typescript: { ignoreBuildErrors: process.env.SKIP_BUILD_TYPECHECK === '1' },
   experimental: {
+    // Unmatched URLs render `src/app/global-not-found.tsx`, a whole document
+    // with the public frame. The root `not-found.tsx` stays small because
+    // Next ships it inside every page's payload; see that file.
+    globalNotFound: true,
     // Next defaults to cores-1 workers, which leaves one of the Vercel
     // builder's 4 cores idle through the ~100s static-generation phase while
     // the coordinator process sits at ~3% CPU (measured via --cpu-prof).
@@ -169,6 +173,21 @@ const nextConfig: NextConfig = {
     ...(process.env.VERCEL ? { cpus: Math.max(1, cpus().length) } : {}),
   },
 };
+
+/**
+ * A larger young generation for the prerender workers on Vercel.
+ *
+ * Profiling the static-generation workers (November 2026) put 14% of their
+ * CPU time in garbage collection: each page allocates a large React tree that
+ * dies as soon as the page is written, and V8's default 16 MB semi-space
+ * collects it many times per page. 64 MB cut the prerender phase by about 5%.
+ * Next builds each worker's NODE_OPTIONS from this process's when it starts
+ * them, which happens after this file is loaded, so setting it here reaches
+ * the workers.
+ */
+if (process.env.VERCEL && !process.env.NODE_OPTIONS?.includes("--max-semi-space-size")) {
+  process.env.NODE_OPTIONS = `${process.env.NODE_OPTIONS ?? ""} --max-semi-space-size=64`.trim();
+}
 
 const posthogPersonalApiKey = process.env.POSTHOG_API_KEY;
 const posthogProjectId = process.env.POSTHOG_PROJECT_ID;
