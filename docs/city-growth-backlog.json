@@ -249,6 +249,61 @@
       "market": "charlotte-tailgate-farmers-market-charlotte",
       "issue": "Charlotte Tailgate, Newell and Pickles farmers markets have no website, days or season in the dataset and none was found on an official page (2026-11-20). They may be closed.",
       "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "logan-square-farmers-market-chicago-il",
+      "issue": "Logan Square Farmers Market was missing from the dataset.",
+      "status": "fixed",
+      "resolution": "Added to data/enrichment/added-markets.json from logansquarefarmersmarket.org (2026-11-25)."
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "(several)",
+      "issue": "Chicago lists 70 markets but many are duplicate rows of one market: Uptown (uptown-farmers-market-chicago, uptown-farmers-market-il-60640), Lincoln Square (2 rows), Hyde Park (2 rows), Division Street (2 rows), Federal Plaza (2 rows), SOAR at the MCA (2 rows), Pullman (2 rows), Austin (2 rows), Englewood (2 rows). Needs a merge pass like the Los Angeles one.",
+      "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "hyde-park-farmers-market",
+      "issue": "secc-chicago.org/hpfm (checked 2026-11-25): 2026 season ran Sundays June 7 to September 27, 10am-3pm at 1516 E 54th St; no winter or holiday market in 2026; the 2027 venue and opening date are not set because the Hyde Park Bank site is changing.",
+      "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "iman-health-and-wellness-farmers-market-chicago",
+      "issue": "The listed site (imancentral.org/fresh-market, checked 2026-11-25) describes the Go Green Community Fresh Market, a grocery store at 1207 West 63rd Street open daily, not a farmers market. Listing may need to be reclassified or removed.",
+      "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "star-farm-back-of-the-yards-farmers-market-chicago",
+      "issue": "starfarmchicago.com (checked 2026-11-25) describes an urban farm with a CSA, mobile market and storefront; no farmers market dates or hours are given.",
+      "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "roscoe-village-farmers-market-chicago",
+      "issue": "Listed website lakeviewroscoevillage.org/rv-farmers-market returns 404 (2026-11-25). low-line-market-at-southport-chicago's site (lakeviewchamber.com/low-line-market) failed with a TLS error, and faith-in-place-winter-farmers-markets-chicago-area-chicago's page (faithinplace.org/our-programs/winter-farmers-markets) returns 404.",
+      "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "61st-street-farmers-market",
+      "issue": "61market.org refused connections on 2026-11-25, so the indoor winter season could not be checked. Horner Park and Austin Town Hall sites failed with certificate errors.",
+      "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "wicker-park-farmers-market-chicago",
+      "issue": "wickerparkbucktown.com/farmers-market shows 2026-2027 winter market dates only inside an image (2026-11-25); a person needs to read them before they can be added.",
+      "status": "open"
+    },
+    {
+      "city": "illinois/chicago",
+      "market": "glenwood-sunday-market-chicago",
+      "issue": "glenwoodsundaymarket.rpba.org (checked 2026-11-25) already shows 2027: Sundays June 6 to October 31, 2027, 9am-2pm, closed June 27 and August 15, 6960 N. Glenwood.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -357,9 +412,21 @@
           "date": "2026-10-26",
           "changes": "First guide: 6 sourced tips (Lyndale market 2026 hours, Mill City indoor winter market from Nov 7, Mill City holiday-season dates, Neighborhood Roots winter markets at Bachman's, Mill City SNAP triple match, Mill City parking and light rail), 4 FAQs (Mill City dog rules, Northeast winter market, Lyndale history, Lyndale EBT and Market Bucks), title and description override.",
           "baseline": "No settled GSC baseline yet; city URL moved to /minnesota/minneapolis on 2026-10-11."
+        },
+        {
+          "date": "2026-11-25",
+          "changes": "Measurement only (first check).",
+          "measurements": {
+            "window": "2026-10-26 to 2026-11-22",
+            "clicks": 0,
+            "impressions": 0,
+            "ctr": 0,
+            "position": null,
+            "notes": "Search Console returned no rows at all for pages containing /minnesota/minneapolis (query and page dimensions). No baseline yet; worth checking the page is indexed."
+          }
         }
       ],
-      "next_check": "2026-11-23"
+      "next_check": "2026-12-23"
     },
     {
       "priority": 4,
@@ -504,8 +571,15 @@
       "keyword": "farmers market chicago",
       "volume": 9900,
       "difficulty": 41,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-25",
+          "changes": "First guide, aimed at winter: 6 sourced tips (Green City Market indoors in Avondale from Dec 5, Logan Square indoor market Nov 28 to Mar 27, Uptown Winter Edition Dec 5/12/19, Green City triple Link match up to $25, Avondale street parking and buses 77/93/94, South Loop winter market at Water Tower Place Jan 3 to Mar 21), 4 FAQs (dogs at indoor markets, Edgewater Indoor Market dates and transit, no Hyde Park holiday market in 2026, Green City outdoor locations), title and description override without {count} because the city's 70-market count includes duplicates. Added Logan Square Farmers Market to added-markets.json. City of Chicago market pages (chicago.gov) returned 403, so no City Markets or Maxwell Street facts were used.",
+          "baseline": "No GSC measurement taken yet for /illinois/chicago; first check on 2026-12-23."
+        }
+      ],
+      "next_check": "2026-12-23"
     },
     {
       "priority": 13,

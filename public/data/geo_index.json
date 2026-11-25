@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-20T23:16:27.035Z",
-  "market_count": 9120,
+  "generated_at": "2026-11-25T18:29:53.460Z",
+  "market_count": 9121,
   "states": [
     {
       "code": "NY",
@@ -12834,13 +12834,13 @@
       "name": "Illinois",
       "country_code": "US",
       "slug": "illinois",
-      "market_count": 367,
+      "market_count": 368,
       "city_count": 196,
       "cities": [
         {
           "name": "Chicago",
           "slug": "chicago",
-          "market_count": 71,
+          "market_count": 72,
           "market_slugs": [
             "4-veggies-3-fruits-farmers-market-chicago",
             "61st-street-farmers-market",
@@ -12884,6 +12884,7 @@
             "lawndale-chicago-farmers-market-chicago",
             "lincoln-square-chicago-farmers-market-chicago",
             "lincoln-square-farmers-market-chicago",
+            "logan-square-farmers-market-chicago-il",
             "low-line-market-at-southport-chicago",
             "loyola-farmers-market-chicago",
             "maxwell-street-market-chicago",

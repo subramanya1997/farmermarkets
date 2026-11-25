@@ -800,5 +800,37 @@
       "retrieved_at": "2026-11-20"
     },
     "visitor_note": "The indoor market opens at 8:00 am on Saturday, December 5, 2026."
+  },
+  {
+    "id": "added:logan-square-farmers-market-chicago-il",
+    "slug": "logan-square-farmers-market-chicago-il",
+    "name": "Logan Square Farmers Market",
+    "country": "United States",
+    "country_code": "US",
+    "location": {
+      "address": "2620 N Milwaukee Ave",
+      "city": "Chicago",
+      "state": "Illinois"
+    },
+    "contact": {
+      "websites": [
+        "https://www.logansquarefarmersmarket.org/"
+      ]
+    },
+    "operations": {
+      "season": "May 10-October 25, 2026",
+      "days": [
+        "Sunday"
+      ]
+    },
+    "provenance": {
+      "official": false,
+      "source_id": "added",
+      "publisher": "Logan Square Farmers Market",
+      "dataset_name": "Logan Square Farmers Market",
+      "catalog_url": "https://www.logansquarefarmersmarket.org/",
+      "retrieved_at": "2026-11-25"
+    },
+    "visitor_note": "The outdoor market runs Sundays 8:30 am to 3 pm. The indoor market runs Saturdays 10 am to 2 pm from November 28, 2026 to March 27, 2027 at Avondale Collective, 2800 N. Milwaukee Ave."
   }
 ]

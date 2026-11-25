@@ -1107,6 +1107,117 @@
           "url": "https://www.uptownfarmersmarket.com/apply-to-be-a-holiday-vendor"
         }
       ]
+    },
+    "illinois/chicago": {
+      "verified_at": "2026-11-25",
+      "title": "Chicago Farmers Markets: Indoor Winter Markets, Hours, SNAP",
+      "description": "Farmers markets in Chicago, IL open this winter: Green City Market in Avondale, Logan Square indoors, Uptown in December. Hours, transit and SNAP match.",
+      "tips": [
+        {
+          "label": "Winter",
+          "text": "Green City Market moves indoors to 3031 N Rockwell St in Avondale, select Saturdays 8am-1pm starting December 5. The indoor season runs to March 20.",
+          "source_ids": ["gcm-home", "gcm-avondale"]
+        },
+        {
+          "label": "Logan Square",
+          "text": "Logan Square Farmers Market is indoors at Avondale Collective, 2800 N Milwaukee Ave, Saturdays 10am-2pm from November 28, 2026 to March 27, 2027. It stays open on holidays.",
+          "source_ids": ["lsfm"]
+        },
+        {
+          "label": "December",
+          "text": "Uptown Farmers Market's Winter Edition is at Uptown Taproom (Wilson at Malden), Saturdays 11am-2pm on December 5, 12 and 19. Its 2027 dates are not announced yet.",
+          "source_ids": ["ufm"]
+        },
+        {
+          "label": "SNAP/Link",
+          "text": "Green City Market triple matches Link up to $25 per market day, so $25 becomes $75 in vouchers. Swipe your card at the information booth with the green canopy.",
+          "source_ids": ["gcm-link"]
+        },
+        {
+          "label": "Getting there",
+          "text": "For Green City Market's indoor market in Avondale, street parking is available and CTA bus routes 77, 93 and 94 stop nearby.",
+          "source_ids": ["gcm-avondale"]
+        },
+        {
+          "label": "New year",
+          "text": "South Loop Farmers Market runs indoors on the 4th floor of Water Tower Place, 835 N Michigan Ave, Sundays 12-4pm, January 3 to March 21, 2027, with free 2-hour validated parking.",
+          "source_ids": ["slfm-winter"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I bring my dog to an indoor farmers market in Chicago?",
+          "answer": "Mostly no. Green City Market does not allow dogs inside its Avondale market and Broadway Armory does not allow pets at the Edgewater Indoor Market, with service animals the exception at both. South Loop Farmers Market lists its Water Tower Place market as pet friendly.",
+          "source_ids": ["gcm-avondale", "edgewater-indoor", "slfm-winter"]
+        },
+        {
+          "question": "Is there a winter farmers market in Edgewater?",
+          "answer": "Yes. The Edgewater Indoor Market sets up in the first floor gymnasium of Broadway Armory, 5917 N Broadway, 10am-2pm on January 9, January 23, February 6 and February 20, 2027. It is less than a block from the Thorndale Red Line station and the 36 bus stops at the entrance.",
+          "source_ids": ["edgewater-indoor"]
+        },
+        {
+          "question": "Is Hyde Park Farmers Market holding a holiday market this year?",
+          "answer": "No. The organizers say there will be no winter or holiday market in 2026 because their winter home at The Promontory closed. The 2026 Sunday season ended September 27, and the 2027 opening date and location have not been announced.",
+          "source_ids": ["hpfm"]
+        },
+        {
+          "question": "Where does Green City Market set up the rest of the year?",
+          "answer": "Outdoors in two places: Lincoln Park at 1817 N Clark St and Mary Bartelme Park, 900 W Monroe St, in the West Loop. Both outdoor markets wrapped up on November 21 before the move inside.",
+          "source_ids": ["gcm-lincoln", "gcm-west"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "gcm-home",
+          "title": "Green City Market",
+          "url": "https://www.greencitymarket.org/"
+        },
+        {
+          "id": "gcm-avondale",
+          "title": "Green City Market Avondale",
+          "url": "https://www.greencitymarket.org/calendar/details/green-city-market-avondale-12-05-2026"
+        },
+        {
+          "id": "gcm-link",
+          "title": "Using Link at Green City Market",
+          "url": "https://www.greencitymarket.org/what-we-do/expanding-food-access/how-to-use-link-with-green-city-market"
+        },
+        {
+          "id": "gcm-lincoln",
+          "title": "Green City Market Lincoln Park",
+          "url": "https://www.greencitymarket.org/market/details/lincoln"
+        },
+        {
+          "id": "gcm-west",
+          "title": "Green City Market West Loop",
+          "url": "https://www.greencitymarket.org/market/details/west"
+        },
+        {
+          "id": "lsfm",
+          "title": "Logan Square Farmers Market",
+          "url": "https://www.logansquarefarmersmarket.org/"
+        },
+        {
+          "id": "ufm",
+          "title": "Uptown Farmers Market",
+          "url": "https://www.ufmchicago.com/"
+        },
+        {
+          "id": "slfm-winter",
+          "title": "South Loop winter market",
+          "url": "https://www.southloopfarmersmarket.com/market-locations/winter-indoor-on-sundays"
+        },
+        {
+          "id": "edgewater-indoor",
+          "title": "Edgewater Indoor Market",
+          "url": "https://www.edgewater.org/edgewater-indoor-market/"
+        },
+        {
+          "id": "hpfm",
+          "title": "Hyde Park Farmers Market",
+          "url": "https://secc-chicago.org/hpfm"
+        }
+      ]
     }
   }
 }

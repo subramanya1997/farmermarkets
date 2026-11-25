@@ -1,20 +1,20 @@
 Geo index build report
-generated_at            2026-11-20T23:16:27.035Z
+generated_at            2026-11-25T18:29:53.460Z
 
 Records
-  total                 9120
-  indexed               9115
+  total                 9121
+  indexed               9116
   unresolved            5
-  without coordinates   382
+  without coordinates   383
 
 Resolution method (weakest source a record needed)
-  from fields           8777
+  from fields           8778
   from address          77
   from coordinates      221
   corrupt combos fixed  1
 
 State resolution
-  from fields           8608
+  from fields           8609
   from address          2
   from coordinates      2
   missing before        511
@@ -22,7 +22,7 @@ State resolution
     of those, outside US/CA (grouped by country instead)  503
 
 City resolution
-  from fields           8762
+  from fields           8763
   from address          77
   from coordinates      221
   missing before        132
@@ -38,7 +38,7 @@ Top 10 entries by market count
    2. California                 953 markets   407 cities
    3. Minnesota                  439 markets   285 cities
    4. Ontario                    388 markets   259 cities
-   5. Illinois                   367 markets   196 cities
+   5. Illinois                   368 markets   196 cities
    6. Michigan                   340 markets   233 cities
    7. Virginia                   299 markets   162 cities
    8. Wisconsin                  239 markets   151 cities
