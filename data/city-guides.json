@@ -1218,6 +1218,112 @@
           "url": "https://secc-chicago.org/hpfm"
         }
       ]
+    },
+    "michigan/ann-arbor": {
+      "verified_at": "2026-11-27",
+      "title": "Ann Arbor Farmers Markets: Winter Hours, Parking, SNAP",
+      "description": "Farmers markets in Ann Arbor, MI: the Kerrytown market runs Saturdays all year and Wednesdays to Dec 23. Hours, free parking, buses, SNAP tokens, dog rules.",
+      "tips": [
+        {
+          "label": "This season",
+          "text": "Ann Arbor Farmers Market, 315 Detroit St in Kerrytown, runs Saturdays and Wednesdays 7am-3pm through December. The last Wednesday market of 2026 is December 23.",
+          "source_ids": ["aafm"]
+        },
+        {
+          "label": "Winter",
+          "text": "The market stays open all year. From January to April it is Saturdays only, 8am-3pm, and Wednesdays come back in May.",
+          "source_ids": ["aafm"]
+        },
+        {
+          "label": "Parking",
+          "text": "The market lot is free on Wednesdays and on winter Saturdays, and when space allows on other Saturdays. Garages are at Ann and Ashley and at Fourth and Washington.",
+          "source_ids": ["aafm", "aafm-faq"]
+        },
+        {
+          "label": "By bus or bike",
+          "text": "The market is four blocks from Blake Transit Center, where routes 3-6 and 22-34 stop. Bike racks are on Fourth Ave, Fifth Ave and Detroit Street.",
+          "source_ids": ["aafm"]
+        },
+        {
+          "label": "SNAP/EBT",
+          "text": "Swipe your Bridge Card at the market office trailer in the parking lot for $1 SNAP tokens, good all year. Double Up Food Bucks adds a match to spend on Michigan-grown produce.",
+          "source_ids": ["aafm-tokens", "aafm-faq"]
+        },
+        {
+          "label": "Paying",
+          "text": "Every vendor takes cash. If you have none, the market office sells $5 tokens by card or mobile pay ($20 minimum, no fee) and they do not expire.",
+          "source_ids": ["aafm-faq"]
+        }
+      ],
+      "faqs": [
+        {
+          "question": "Can I bring my dog to the Ann Arbor Farmers Market?",
+          "answer": "No. Only service animals are allowed inside the market because of food safety rules. Dixboro Farmers' Market also asks shoppers to keep dogs out of the market area during its 3-6pm market hours, on a short leash in the open areas around the schoolhouse.",
+          "source_ids": ["aafm-faq", "dixboro-dogs"]
+        },
+        {
+          "question": "Is there a market in Kerrytown on Sundays?",
+          "answer": "Yes, but it is an arts and crafts market. The Sunday Artisan Market uses the farmers market pavilion at Detroit Street and 5th Avenue, 11am-4pm every Sunday, and its 2026 season ends December 20. Admission is free.",
+          "source_ids": ["sunday-artisan"]
+        },
+        {
+          "question": "Which Ann Arbor area farmers markets are closed for the winter?",
+          "answer": "Dixboro Farmers' Market is closed for the season; in 2026 it ran Fridays 3-6pm from May 22 to October 23 on the Dixboro Village Green. Pittsfield Township Farmers Market, 6201 W. Michigan Ave, returns outdoors May to October 2027, 2-6pm, rain or shine.",
+          "source_ids": ["dixboro", "dixboro-season", "pittsfield"]
+        },
+        {
+          "question": "How old is the Ann Arbor Farmers Market?",
+          "answer": "It opened in 1919 along Fourth Avenue and moved to its current Detroit Street site in 1931. The roof was a Works Progress Administration project completed in 1941. Today it is producer-only, with 130 vendors from Michigan and Ohio.",
+          "source_ids": ["aafm-history", "aafm"]
+        }
+      ],
+      "sources": [
+        {
+          "id": "aafm",
+          "title": "Ann Arbor Farmers Market",
+          "url": "https://www.a2gov.org/parks-and-recreation/parks-and-places/ann-arbor-farmers-market/"
+        },
+        {
+          "id": "aafm-faq",
+          "title": "Ann Arbor market 2026 FAQ",
+          "url": "https://media-001-us.cdn.govstack.com/a2gov-002-us/media/trvptfsx/2026-frequently-asked-questions.pdf"
+        },
+        {
+          "id": "aafm-tokens",
+          "title": "Tokens and food assistance",
+          "url": "https://www.a2gov.org/parks-and-recreation/parks-and-places/ann-arbor-farmers-market/tokens-and-food-assistance/"
+        },
+        {
+          "id": "aafm-history",
+          "title": "Ann Arbor market history",
+          "url": "https://www.a2gov.org/parks-and-recreation/parks-and-places/ann-arbor-farmers-market/market-history/"
+        },
+        {
+          "id": "sunday-artisan",
+          "title": "The Sunday Artisan Market",
+          "url": "https://sundayartisanmarket.org/"
+        },
+        {
+          "id": "dixboro",
+          "title": "Dixboro Farmers' Market",
+          "url": "https://www.dixborofarmersmarket.org/"
+        },
+        {
+          "id": "dixboro-season",
+          "title": "Dixboro 2026 market season",
+          "url": "https://www.dixborofarmersmarket.org/2026-market-season.html"
+        },
+        {
+          "id": "dixboro-dogs",
+          "title": "Dixboro dog policy",
+          "url": "https://www.dixborofarmersmarket.org/farmers-market-dog-policy.html"
+        },
+        {
+          "id": "pittsfield",
+          "title": "Pittsfield Township Farmers Market",
+          "url": "https://www.pittsfield-mi.gov/760/Farmers-Market"
+        }
+      ]
     }
   }
 }

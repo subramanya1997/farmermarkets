@@ -304,6 +304,30 @@
       "market": "glenwood-sunday-market-chicago",
       "issue": "glenwoodsundaymarket.rpba.org (checked 2026-11-25) already shows 2027: Sundays June 6 to October 31, 2027, 9am-2pm, closed June 27 and August 15, 6960 N. Glenwood.",
       "status": "open"
+    },
+    {
+      "city": "michigan/ann-arbor",
+      "market": "cobblestone-farmers-market-ann-arbor",
+      "issue": "URGENT: the listed website cobblestonefarmmarket.org (http://www.cobblestonefarmmarket.org/donate.html) no longer belongs to the market. On 2026-11-27 it served an Android APK download page ('netmirror'). The link should be removed from the listing. No current official page or 2026 schedule was found for the market, so it may also be closed; the dataset's 'May 22nd - October 23rd, Tuesdays 4-7pm' is unverified.",
+      "status": "open"
+    },
+    {
+      "city": "michigan/ann-arbor",
+      "market": "ann-arbor-farmers-market-mi",
+      "issue": "Duplicate of ann-arbor-farmers-market-ann-arbor (same market, 315 Detroit Street). wednesday-evening-farmers-market-ann-arbor is also at 315 Detroit St with no website; the city's page (a2gov.org/market, checked 2026-11-27) lists only daytime Wednesday markets plus monthly Food Truck Rallies July-October, so that listing looks defunct. The city's 8-market count includes both.",
+      "status": "open"
+    },
+    {
+      "city": "michigan/ann-arbor",
+      "market": "westside-farmers-market-ann-arbor",
+      "issue": "westsidefarmersmarket.com (checked 2026-11-27) still shows the 2025 season (Thursdays 3-7pm, July 17-September 25, 2025). Third-party listings give July 9-September 24, 2026 at Zingerman's Roadhouse, but no first-party page confirmed it, so nothing was used in the guide.",
+      "status": "open"
+    },
+    {
+      "city": "michigan/ann-arbor",
+      "market": "ann-arbor-farmers-market-ann-arbor",
+      "issue": "Dataset has no schedule. a2gov.org/market (checked 2026-11-27): Saturdays 7am-3pm May-December and 8am-3pm January-April; Wednesdays 7am-3pm May 6-December 23, 2026. Double Up Food Bucks daily cap is stated as $20 in the 2026 FAQ and as both $20 and $50 on the tokens page, so the guide leaves the cap out. jewett-street-farmers-market-ann-arbor has no website and could not be verified.",
+      "status": "open"
     }
   ],
   "ideas": [
@@ -330,6 +354,10 @@
     {
       "city": "florida/orlando",
       "idea": "Hunter's Creek is a monthly market (third Sunday). Market cards could show 'Monthly' with the next date when a market publishes a date list, so visitors don't expect it every week."
+    },
+    {
+      "city": "michigan/ann-arbor",
+      "idea": "Ann Arbor's main market changes days by season (Wed and Sat May-Dec, Sat only Jan-Apr). A seasonal schedule line on the market card ('Now: Sat 8am-3pm') would answer the off-season question without a tip. Also worth a periodic check that listed websites still belong to the market (Cobblestone's domain was taken over)."
     }
   ],
   "cities": [
@@ -588,8 +616,15 @@
       "keyword": "farmers market ann arbor",
       "volume": 9900,
       "difficulty": null,
-      "status": "todo",
-      "runs": []
+      "status": "done",
+      "runs": [
+        {
+          "date": "2026-11-27",
+          "changes": "First guide, aimed at winter: 6 sourced tips (Kerrytown market Wed and Sat hours with last 2026 Wednesday on Dec 23, Saturday-only winter hours, free market lot and garages, Blake Transit Center routes and bike racks, SNAP tokens and Double Up, cash and $5 card tokens), 4 FAQs (dog rules at Ann Arbor and Dixboro, Sunday Artisan Market through Dec 20, Dixboro and Pittsfield closed until 2027, market history and 130 vendors), title and description override without {count} because the city's 8-market count includes a duplicate and unverified listings. Cobblestone's listed domain has been taken over (see data_issues).",
+          "baseline": "No GSC measurement taken yet for /michigan/ann-arbor; first check on 2026-12-25."
+        }
+      ],
+      "next_check": "2026-12-25"
     },
     {
       "priority": 14,
